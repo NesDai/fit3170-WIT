@@ -9,7 +9,8 @@ Dilshan - RTE
 
 Team RedCow:
 
-PM: Vlad, Daiki
+PM: Daiki
+PO: Vlad
 SA: Tanya
 SM: Arissha
 RTE: Elaf
