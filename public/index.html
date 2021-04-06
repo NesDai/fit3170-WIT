@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<h1>Phone number:</h1>
+    <input type="text" placeholder="Phone number" id="number"></input>
+    <div id="recaptcha-container"></div>
+    <br>
+    <br>
+    <button id="send-button" onclick="phoneAuth()">Send Pin</button>
+<h1>Pin:</h1>
+    <input type="password" placeholder="Pin" id="verification-code"></input>
+<br>
+<br>
+<button onclick="codeVerify()">Login</button>
+
+
+<script src="/__/firebase/7.18.0/firebase-app.js"></script>
+<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+<script src="/__/firebase/7.18.0/firebase-database.js"></script>
+<script src="/__/firebase/init.js?useEmulator=true"></script>
+
+
+<script src="script/login.js" type = "module"></script>
