@@ -1,21 +1,45 @@
 <!DOCTYPE html>
-<h1>Phone number:</h1>
-    <input type="text" placeholder="Phone number" id="number"></input>
-    <div id="recaptcha-container"></div>
+
+<head>
+
+</head>
+
+<body>
+    <div>
+    <h1>Phone number:</h1>
+        <input type="text" placeholder="Phone number" id="number"></input>
+        <div id="recaptcha-container"></div>
+        <br>
+        <br>
+
+        <button id="send-button" onclick="phoneAuth();">Send Pin</button>
+
+    <h1>Pin:</h1>
+        <input type="password" placeholder="Pin" id="verificationCode"></input>
     <br>
     <br>
-    <button id="send-button" onclick="phoneAuth()">Send Pin</button>
-<h1>Pin:</h1>
-    <input type="password" placeholder="Pin" id="verification-code"></input>
-<br>
-<br>
-<button onclick="codeVerify()">Login</button>
+    <button id="loginButton" onclick="codeverify();">Login</button>
+
+    </div>
 
 
-<script src="/__/firebase/7.18.0/firebase-app.js"></script>
-<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-<script src="/__/firebase/7.18.0/firebase-database.js"></script>
-<script src="/__/firebase/init.js?useEmulator=true"></script>
+    <!--FIREBASE-->
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+
+    <script src = "script/firebaseConfig.js"></script>
+
+    <!-- FIREBAS STUFF I GOT FROM YT-->
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
 
 
-<script src="script/login.js" type = "module"></script>
+    <script src="script/login.js" type = "module"></script>
+    <script src="script/login.js"></script>
+
+</body>
