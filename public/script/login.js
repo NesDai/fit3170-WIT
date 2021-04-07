@@ -14,6 +14,9 @@ window.onload = function(){
 }
 
 
+/**
+ * Function renders a recaptcha
+ */
 function render(){
 
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('send-button', {
@@ -29,6 +32,9 @@ function render(){
 
 }
 
+/**
+ * function used to authenticate the user's phone number by sending them an OTP
+ */
 function phoneAuth() {
     //get the number
     var number=document.getElementById('number').value;
@@ -38,7 +44,7 @@ function phoneAuth() {
         //s is in lowercase
         window.confirmationResult=confirmationResult;
         coderesult=confirmationResult;
-        console.log(coderesult);
+
         alert("Message sent");
     }).catch(function (error) {
         alert(error.message);
@@ -46,42 +52,50 @@ function phoneAuth() {
 }
 
 
-
+/**
+ * function checks the verification pin the user entered
+ */
 function codeverify() {
     var code=document.getElementById('verificationCode').value;
     coderesult.confirm(code).then(function (result) {
         alert("Successfully registered");
-        let exists = checkUserExistence(document.getElementById("number").value);
-        console.log(`exists ${exists}`)
 
-        if(!exists){
-            makeNewUser(document.getElementById("number").value,"bobby");
-        }
+        //check if this user is already registered
+        checkUserExistence(document.getElementById("number").value);
 
-        var user=result.user;
-        console.log(user);
 
     }).catch(function (error) {
         alert(error.message);
     });
 }
 
+/**
+ * Function used to check if the user with the given phone number of already present in the database
+ * @param {1} phone: the user's phone number 
+ * @returns boolean true if exists and false is does not
+ */
 function checkUserExistence(phone){
     let exists = false;
-    // var starCountRef = firebase.database().ref('users/');
-    // starCountRef.on('value', (snapshot) => {
-    // const data = snapshot.val();
-    // updateStarCount(postElement, data);
-    firebase.database().ref('users')
-    .equalTo(phone).once('value', data => {
-            data.forEach(() => {
-                // If it does, output an error
-                exists = true;
-            });
+    
+    firebase.database().ref(`users/${phone}`).once("value", snapshot => {
+        if (snapshot.exists()){
+           exists = true;
+        }
+     }).then(()=>{
 
-});
-    return exists
+        if(!exists){ //Create a new account
+            //!Need to ask to make up a username
+            makeNewUser(document.getElementById("number").value,"bobby");
+        }
+        else{
+            //!!LOG IN !!!
+        }
+
+     });
+        
 }
+   
+
 
 /**
  * Function that creates a new user in the firebase database
@@ -91,14 +105,7 @@ function checkUserExistence(phone){
 function makeNewUser(phone,username){
 
     firebase.database().ref(`users/${phone}`).set({
-        username: username
+        username: username,
+        phone: phone
       });
 }
-
-
-
-// let loginButton = document.getElementById("loginButton");
-// let sendButton = document.getElementById("send-button");
-
-// loginButton.onclick = codeverify();
-// sendButton.onclick = phoneAuth();
