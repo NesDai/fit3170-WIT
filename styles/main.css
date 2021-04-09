@@ -164,4 +164,7 @@ main, #messages-card {
     height: 33px;
     background-size: 33px;
   }
+  .mdl-card {
+    width: 100%;
+  }
 }
