@@ -1,28 +1,82 @@
 /* MAIN BODY CSS */
-html,
-body {
+html,body {
   font-family: "Roboto", "Helvetica", sans-serif;
+  font-size: 100%;
 }
 body {
   background-color: #eee;
 }
 
+/* HEADER CSS */
+.material-icons {
+  font-size: 36px;
+  top: 8px;
+  position: relative;
+}
+#user-container #user-pic {
+  top: -3px;
+  position: relative;
+  display: inline-block;
+  background-image: url('/images/profile_placeholder.png');
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  background-size: 40px;
+  border-radius: 20px;
+}
+#user-container #user-name {
+  font-size: 16px;
+  line-height: 36px;
+  padding-right: 10px;
+  padding-left: 20px;
+}
+
 /* CARD CSS */
+main, #messages-card {
+  height: 100%;
+  padding-bottom: 0;
+}
+#messages-card-container {
+  height: calc(100% - 35px);
+  padding-bottom: 0;
+}
+#messages-card {
+  margin-top: 15px;
+}
+.mdl-layout__header-row span {
+  margin-left: 15px;
+  margin-top: 17px;
+}
+.mdl-grid {
+  max-width: 1024px;
+  margin: auto;
+}
+.mdl-layout__header-row {
+  padding: 0;
+  margin: 0 auto;
+}
 .mdl-card {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2.5%;
   width: 60%;
   height: 40em;
+  min-height: 0;
+  background: linear-gradient(white, #f9f9f9);
+  justify-content: space-between;
 }
 #messages {
   height: 100%;
   padding: 10px;
   overflow-y: scroll;
+  height: calc(100% - 80px);
 }
 .space {
   display: inline-block;
   width: 100%;
+}
+.message-container:first-of-type {
+  border-top-width: 0;
 }
 .message-container {
   margin-left: 50px;
@@ -62,6 +116,17 @@ body {
   width: 100px;
   margin: 15px 0 0 10px;
 }
+.mdl-textfield__label:after {
+  background-color: #0288D1;
+}
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label {
+  color: #0288D1;
+}
+.mdl-button .material-icons {
+  top: -1px;
+  margin-right: 5px;
+}
+
 
 /* SCROLLBAR CSS */
 ::-webkit-scrollbar {
@@ -78,4 +143,25 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #999;
+}
+
+
+@media screen and (max-width: 610px) {
+  header {
+    height: 113px;
+    padding-bottom: 80px !important;
+  }
+  #user-container {
+    top: 72px;
+    background-color: rgb(3,155,229);
+    height: 38px;
+    padding-top: 3px;
+    padding-right: 2px;
+  }
+  #user-container #user-pic {
+    top: 2px;
+    width: 33px;
+    height: 33px;
+    background-size: 33px;
+  }
 }
