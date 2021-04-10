@@ -11,10 +11,13 @@ function greeting(){
                               </div>\
                           </div>';
 
-      messages.innerHTML += ques_template;
+      setTimeout(() => {  messages.innerHTML += ques_template; }, 750);
 
       $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
-      nextQues();
+
+      setTimeout(function(){
+        nextQues();
+      }, 1500);
 }
 
 function choose(button){
