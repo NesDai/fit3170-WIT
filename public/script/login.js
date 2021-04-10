@@ -89,6 +89,7 @@ function checkUserExistence(phone){
         }
         else{
             //!!LOG IN !!!
+            alert("successfully logged in")
         }
 
      });

@@ -57,16 +57,20 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+     https://firebase.google.com/docs/web/setup#available-libraries and https://firebase.google.com/docs/web/setup#from-the-cdn 
+	-->
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
 
-    <script src = "script/firebaseConfig.js"></script>
-
-    <!-- FIREBAS STUFF I GOT FROM YT-->
-    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+	<!-- Do we need this?? -->
+    <!-- <script src="/__/firebase/7.18.0/firebase-app.js"></script>
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
-    <script src="/__/firebase/init.js?useEmulator=true"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script> -->
+
+	<!-- Added Firebase SDKs and initialized it with the config -->
+	<script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-firestore.js"></script>
+	<script src="script/firebaseConfig.js"></script>
 
     <!-- HTML STUFF -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -76,3 +80,4 @@
     <script src="script/login.js"></script>
 
 </body>
+</html>
