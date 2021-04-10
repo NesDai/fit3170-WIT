@@ -63,52 +63,19 @@
         </div>
       </header>
 
-  <body onload = "greeting()">
+  <body>
     <main class="mdl-layout__content mdl-color--grey-100">
         <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
 
     <div id="messages-card" class="mdl-card mdl-shadow--2dp">
         <div id="messages">
-            <!-- <div class="space">
-                <div class="message-container receiver">
-                    <p>Answer 1...</p>
-                </div>
-            </div>
-            <div class="space">
-                <div class="message-container sender">
-                    <p>Question 2...</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nulla blandit erat quis sem sodales, et lacinia odio lobortis.
-                        In sed mauris dictum diam maximus tristique quis nec nisl.
-                        Nunc vel pulvinar ipsum, eget lacinia ante. Donec a lorem...</p>
-                </div>
-            </div>
-            <div class="space">
-                <div class="message-container receiver">
-                    <p>Answer 2...</p>
-                </div>
-            </div>
-            <div class="space">
-                <div class="message-container sender">
-                    <p>Question 3...</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nulla blandit erat quis sem sodales, et lacinia odio lobortis.
-                        In sed mauris dictum diam maximus tristique quis nec nisl.
-                        Nunc vel pulvinar ipsum, eget lacinia ante. Donec a lorem...</p>
-                </div>
-            </div>
-            <div class="space">
-                <div class="message-container receiver">
-                    <p>Answer 3...</p>
-                </div>
-            </div> -->
         </div>
         <form id="message-form" action="#">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
               <label class="mdl-textfield__label" for="message">Message...</label>
             </div>
-            <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <button id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="makeMessage()">
               Send
             </button>
         </form>
