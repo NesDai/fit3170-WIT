@@ -72,10 +72,10 @@
         </div>
         <form id="message-form" action="#">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
+              <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
               <label class="mdl-textfield__label" for="message">Message...</label>
             </div>
-            <button id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="makeMessage()">
+            <button id="submit" type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="addMessage()">
               Send
             </button>
         </form>
@@ -83,7 +83,7 @@
 
     <!-- USING JQUERY TO ANIMATE SCROLL -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="first_time_survey.js"></script>
+    <script src="scripts/first_time_survey.js"></script>
     <script>
         $(document).ready(function () {
             $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
