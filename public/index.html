@@ -1,26 +1,56 @@
 <!DOCTYPE html>
 
 <head>
-
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="css/fonts_login/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="css/css_login/util.css">
+	<link rel="stylesheet" type="text/css" href="css/css_login/main.css">
 </head>
 
 <body>
-    <div>
-    <h1>Phone number:</h1>
-        <input type="text" placeholder="Phone number" id="number"></input>
-        <div id="recaptcha-container"></div>
-        <br>
-        <br>
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/login.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<form class="login100-form validate-form">
+					<span class="login100-form-title p-b-49">
+						Login
+					</span>
 
-        <button id="send-button" onclick="phoneAuth();">Send Pin</button>
+					<div class="wrap-input100 validate-input m-b-23">
+						<span class="label-input100">Phone number</span>
+						<input class="input100" type="tel" id="number" placeholder="Type your phone number">
+						<span class="focus-input100" data-symbol="&#xf206;"></span>
+					</div>
+                    <br>
+                    <div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id="send-button" onclick="phoneAuth();">
+								Send Pin
+							</button>
+						</div>
+					</div>
+                    <br>
+					<div class="wrap-input100 validate-input" >
+						<span class="label-input100">Pin</span>
+						<input class="input100" type="password" name="pass" placeholder="Type your pin">
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
 
-    <h1>Pin:</h1>
-        <input type="password" placeholder="Pin" id="verificationCode"></input>
-    <br>
-    <br>
-    <button id="loginButton" onclick="codeverify();">Login</button>
+					<br>
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id="loginButton" onclick="codeverify();">
+								Login
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-    </div>
 
 
     <!--FIREBASE-->
@@ -38,7 +68,10 @@
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js?useEmulator=true"></script>
 
-
+    <!-- HTML STUFF -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="script/login.js" type = "module"></script>
     <script src="script/login.js"></script>
 
