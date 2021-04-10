@@ -8,24 +8,13 @@ function greeting(){
                               <div class="message-container sender">\
                                   <p>Hi! I am the chatbot for this App.</p>\
                                   <p>To get started, I would like to get to know you better by asking a few questions.</p>\
-                                  <p>Question ' + curr_question + '</p>\
                               </div>\
                           </div>';
-      let opt_template =  '<div class="space">\
-                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="choose(this)">\
-                                  Option 1\
-                              </button>\
-                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="choose(this)">\
-                                  Option 2\
-                              </button>\
-                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="choose(this)">\
-                                  Option 3\
-                              </button>\
-                          </div>'
-      curr_question += 1;
+
       messages.innerHTML += ques_template;
-      messages.innerHTML += opt_template;
+
       $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+      nextQues();
 }
 
 function choose(button){
