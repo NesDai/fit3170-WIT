@@ -70,15 +70,15 @@
     <div id="messages-card" class="mdl-card mdl-shadow--2dp">
         <div id="messages">
         </div>
-        <form id="message-form" action="#">
+        <div id="message-form">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
               <label class="mdl-textfield__label" for="message">Message...</label>
             </div>
-            <button id="submit" type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="addMessage()">
+            <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled onclick="addMessage()">
               Send
             </button>
-        </form>
+        </div>
     </div>
 
     <!-- USING JQUERY TO ANIMATE SCROLL -->
