@@ -1,11 +1,15 @@
 // Initialising variables
-var messages = document.getElementById('messages');
-var textboxInput = document.getElementById('message');
-var textboxArea = document.getElementById('message-form');
-var submit = document.getElementById('submit');
-var input = document.getElementById('input-box');
+let messages = document.getElementById('messages');
+let textboxInput = document.getElementById('message');
+let textboxArea = document.getElementById('message-form');
+let submit = document.getElementById('submit');
+let input = document.getElementById('input-box');
 
-var currQuestion = 1;
+let currQuestion = 1;
+
+// to ask open ended questions
+let sampleQuestions = ["Sample question 1", "Sample question 2", "Sample Question 3"];
+let currentQuestion = 0;
 
 
 
@@ -39,7 +43,7 @@ function choose(button){
                             </div>\
                         </div>';
 
-    var space = button.parentElement;
+    let space = button.parentElement;
     for (let i=0; i < space.childNodes.length; i++){
         space.childNodes[i].disabled = true;
     }
@@ -53,16 +57,16 @@ function choose(button){
 
 
 
-// Adds the following question 
+// Adds the following question
 function nextQues() {
     // Initialising question templates
-    var mcqTemplate = '<div class="space">\
+    let mcqTemplate = '<div class="space">\
                             <div class="message-container sender">\
                                 <p>Multiple-choice Question</p>\
                                 <p>Question ' + currQuestion + '...</p>\
                             </div>\
                         </div>';
-    var optTemplate = '<div class="space">\
+    let optTemplate = '<div class="space">\
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="choose(this)">\
                                 Option 1\
                             </button>\
@@ -73,7 +77,7 @@ function nextQues() {
                                 Option 3\
                             </button>\
                         </div>';
-    var openTemplate = '<div class="space">\
+    let openTemplate = '<div class="space">\
                             <div class="message-container sender">\
                                 <p>Open-ended Question</p>\
                                 <p>Question ' + currQuestion + '...</p>\
@@ -103,14 +107,14 @@ function nextQues() {
         if (Math.random() > 0.5){
             submit.disabled = true;
             input.disabled = true;
-    
+
             messages.innerHTML += mcqTemplate;
             messages.innerHTML += optTemplate;
         }
         else {
             submit.disabled = false;
             input.disabled = false;
-    
+
             messages.innerHTML += openTemplate;
         }
     }
@@ -119,8 +123,6 @@ function nextQues() {
 
     $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
 }
-
-
 
 // Adds the answer as a message
 function addMessage() {
@@ -144,5 +146,50 @@ function addMessage() {
     }, 1000);
 }
 
+// functions that ask open ended questions iteratively
+function askQues() {
+  if (currentQuestion < sampleQuestions.length) {
+    let openTemplate = '<div class="space">\
+                            <div class="message-container sender">\
+                                <p>' + sampleQuestions[currentQuestion] + '</p>\
+                                <p>Please type your answer in the box below.</p>\
+                            </div>\
+                        </div>';
+
+    messages.innerHTML += openTemplate;
+    submit.disabled = false;
+    input.disabled = false;
+  }
+}
+
+// function to get response for open ended questions
+function respondToOpen() {
+  let message = input.value;
+
+  if (message.length > 0) {
+    let messageTemplate = '<div class="space">\
+                            <div class="message-container receiver">\
+                                <p>' + message + '</p>\
+                            </div>\
+                        </div>';
+
+        messages.innerHTML += messageTemplate;
+        input.value = "";
+
+        console.log(message);
+        currentQuestion += 1;
+
+        submit.disabled = true;
+        input.disabled = true;
+
+        setTimeout(function(){
+            askQues();
+        }, 1000);
+    }
+
+    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+}
+
 // When the page loads
 greeting()
+//askQues();
