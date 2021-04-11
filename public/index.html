@@ -1,83 +1,79 @@
 <!DOCTYPE html>
 
 <head>
-	<title>Login</title>
-	<link rel="stylesheet" type="text/css" href="css/fonts_login/iconic/css/material-design-iconic-font.min.css">
-	<link rel="stylesheet" type="text/css" href="css/css_login/util.css">
-	<link rel="stylesheet" type="text/css" href="css/css_login/main.css">
+  <link rel="stylesheet" type="text/css" href="css/login.css">
+  <!--html logo-->
+  <link rel="stylesheet" type="text/css" href="css/fonts_login/iconic/css/material-design-iconic-font.min.css">
 </head>
 
 <body>
-	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/login.jpg');">
-			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form class="login100-form validate-form">
-					<span class="login100-form-title p-b-49">
-						Login
-					</span>
 
-					<div class="wrap-input100 validate-input m-b-23">
-						<span class="label-input100">Phone number</span>
-						<input class="input100" type="tel" id="number" placeholder="Type your phone number">
-						<span class="focus-input100" data-symbol="&#xf206;"></span>
-					</div>
-                    <br>
-                    <div class="container-login100-form-btn">
-						<div class="wrap-login100-form-btn">
-							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn" id="send-button" onclick="phoneAuth();">
-								Send Pin
-							</button>
-						</div>
-					</div>
-                    <br>
-					<div class="wrap-input100 validate-input" >
-						<span class="label-input100">Pin</span>
-						<input class="input100" type="password" name="pass" placeholder="Type your pin">
-						<span class="focus-input100" data-symbol="&#xf190;"></span>
-					</div>
+    <div class="limiter">
+      <div class="background">
+        <div class="wrap-login">
+          <div style="width: 100%;">
+            <span class="title">
+              Login
+            </span>
+            <br>
 
-					<br>
-					<div class="container-login100-form-btn">
-						<div class="wrap-login100-form-btn">
-							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn" id="loginButton" onclick="codeverify();">
-								Login
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+            <div class = "input_div">
+              <span class="label">Phone number</span>
+              <input class="input" type="text" id="number"  placeholder="Type your phone number">
+              <span class="focus-input_logo" data-symbol="&#xf206;"></span>
+            </div>
+            <div id ="recaptcha-container"></div>
+          <br>
 
+          <div class="btn-container">
+            <div class="btn-wrap">
+              <div class="btn-div"> </div>
+              <button class="btn" id="send-button" onclick="phoneAuth();">
+                Send Pin
+              </button>
+            </div>
+          </div>
+
+          <div class = "input_div">
+            <span class="label">Pin</span>
+            <input class="input" type="password" id="verificationCode"  placeholder="Type your pin">
+            <span class="focus-input_logo" data-symbol="&#xf190;"></span>
+          </div>
+          <br>
+          <div class="btn-container">
+            <div class="btn-wrap">
+              <div class="btn-div"> </div>
+              <button class="btn" id="loginButton" onclick="codeverify();">
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+  </div>
 
 
     <!--FIREBASE-->
 
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries and https://firebase.google.com/docs/web/setup#from-the-cdn 
-	-->
+     https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
 
-	<!-- Do we need this?? -->
-    <!-- <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src = "script/firebaseConfig.js"></script>
+
+    <!-- FIREBAS STUFF I GOT FROM YT-->
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
-    <script src="/__/firebase/init.js?useEmulator=true"></script> -->
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
 
-	<!-- Added Firebase SDKs and initialized it with the config -->
-	<script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-firestore.js"></script>
-	<script src="script/firebaseConfig.js"></script>
 
-    <!-- HTML STUFF -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="script/login.js" type = "module"></script>
     <script src="script/login.js"></script>
 
+
+  </div>
 </body>
-</html>
