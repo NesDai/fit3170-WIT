@@ -84,7 +84,7 @@ function nextQues() {
                                 <p>Please type your answer in the box below.</p>\
                             </div>\
                         </div>';
-// Creating expected behaviour from bot
+    // Creating expected behaviour from bot
     // First 3 questions are MCQ
     if (currQuestion <= 3) {
         console.log('mcq' + currQuestion)
