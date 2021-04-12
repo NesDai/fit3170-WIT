@@ -5,14 +5,12 @@ let textboxArea = document.getElementById('message-form');
 let submit = document.getElementById('submit');
 let input = document.getElementById('input-box');
 
-let currQuestion = 1;
-
 // to ask open ended questions
-let sampleQuestions = ["Sample question 1", "Sample question 2", "Sample Question 3"];
+let sampleQuestions = [{question: "Sample MCQ 1", option: ["answer 1", "answer 2", "answer 3"], answer: null}, {question: "Sample MCQ 2", option: ["answer 4", "answer 5", "answer 6"]}, {question: "Sample Open Question 1", option: [], answer: null}, {question: "Sample Open Question 2", option: [], answer: null}]
 let currentQuestion = 0;
 
-
-
+/*
+let currQuestion = 1;
 // Runs as a first-time greeting from the bot
 function greeting(){
   let quesTemplate = '<div class="space">\
@@ -144,22 +142,93 @@ function addMessage() {
     setTimeout(function(){
         nextQues();
     }, 1000);
+}*/
+
+function greeting(){
+  let quesTemplate = '<div class="space">\
+                              <div class="message-container sender">\
+                                  <p>Hi! I am the chatbot for this App.</p>\
+                                  <p>To get started, I would like to get to know you better by asking a few questions.</p>\
+                              </div>\
+                          </div>';
+
+    setTimeout(() => {  messages.innerHTML += quesTemplate; }, 750);
+
+    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+
+    setTimeout(function(){
+    askQues();
+    }, 1500);
 }
 
 // functions that ask open ended questions iteratively
 function askQues() {
   if (currentQuestion < sampleQuestions.length) {
-    let openTemplate = '<div class="space">\
-                            <div class="message-container sender">\
-                                <p>' + sampleQuestions[currentQuestion] + '</p>\
-                                <p>Please type your answer in the box below.</p>\
+    // check if current question is an open ended question
+    if (sampleQuestions[currentQuestion].option.length == 0) {
+      let openTemplate = '<div class="space">\
+                              <div class="message-container sender">\
+                                  <p>' + sampleQuestions[currentQuestion].question + '</p>\
+                                  <p>Please type your answer in the box below.</p>\
+                              </div>\
+                          </div>';
+
+      messages.innerHTML += openTemplate;
+
+      // allow user to use textbox
+      submit.disabled = false;
+      input.disabled = false;
+    } else { //else current question is a multiple choice question
+      let mcqTemplate = '<div class="space">\
+                              <div class="message-container sender">\
+                                  <p>' + sampleQuestions[currentQuestion].question + '</p>\
+                              </div>\
+                        </div>';
+
+      // making html section for options
+      let mcqOptions = "<div class=\"space\">"
+
+      for (i = 0; i < sampleQuestions[currentQuestion].option.length; i++) {
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"choose2(this), respondToClosed(" + i + ")\">" + sampleQuestions[currentQuestion].option[i] + "</button>"
+      }
+
+      mcqOptions += "</div>"
+
+      messages.innerHTML += mcqTemplate;
+      messages.innerHTML += mcqOptions;
+
+      // prevent users from using textbox
+      submit.disabled = true;
+      input.disabled = true;
+    }
+  }
+}
+
+function respondToClosed(optionNumber) {
+  sampleQuestions[currentQuestion].answer = optionNumber;
+  currentQuestion += 1;
+
+  setTimeout(function(){
+      askQues();
+  }, 1000);
+}
+
+// onclick function for option buttons
+function choose2(button){
+    let content = button.textContent.trim()
+
+    let ansTemplate = '<div class="space">\
+                            <div class="message-container receiver">\
+                                <p>' + content + '</p>\
                             </div>\
                         </div>';
 
-    messages.innerHTML += openTemplate;
-    submit.disabled = false;
-    input.disabled = false;
-  }
+    let space = button.parentElement;
+    for (let i=0; i < space.childNodes.length; i++){
+        space.childNodes[i].disabled = true;
+    }
+
+    messages.innerHTML += ansTemplate;
 }
 
 // function to get response for open ended questions
@@ -177,6 +246,7 @@ function respondToOpen() {
         input.value = "";
 
         console.log(message);
+        sampleQuestions[currentQuestion].answer = message
         currentQuestion += 1;
 
         submit.disabled = true;
@@ -192,4 +262,3 @@ function respondToOpen() {
 
 // When the page loads
 greeting()
-//askQues();
