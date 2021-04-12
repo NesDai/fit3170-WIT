@@ -1,5 +1,5 @@
 
-
+const USER_KEY = "USER";
 
 
 
@@ -58,7 +58,6 @@ function phoneAuth() {
 function codeverify() {
     var code=document.getElementById('verificationCode').value;
     coderesult.confirm(code).then(function (result) {
-        alert("Successfully registered");
 
         //check if this user is already registered
         checkUserExistence(document.getElementById("number").value);
@@ -84,11 +83,14 @@ function checkUserExistence(phone){
      }).then(()=>{
 
         if(!exists){ //Create a new account
-            //!Need to ask to make up a username
-            makeNewUser(document.getElementById("number").value,"bobby");
+            //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
+            localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
+            window.location = "username.html"; //TODO make this a proper redirect
+            // makeNewUser(document.getElementById("number").value,"bobby");
         }
         else{
             //!!LOG IN !!!
+            // localStorage.setItem(USER_KEY, JSON.stringify(user));
             alert("successfully logged in")
         }
 
