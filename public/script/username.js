@@ -25,6 +25,25 @@ function register(username,phone){
 
 }
 
+function usernameValidation() {
+
+    //var username_regex = /^\+[0-9]{11,15}$/;
+    var username_regex =/^(?=.*[a-zA-Z\d].*)[a-zA-Z\d]{7,15}$/
+    var username = document.getElementById("username").value
+
+    // test the input number based on the RegEx pattern stated
+    if (username_regex.test(username))
+    {
+        document.getElementById("username").style.visibility="visible";
+        document.getElementById("username").style.color="green";
+    }
+    else {
+        document.getElementById("username").style.visibility="visible";
+        document.getElementById("username").style.color="red";
+    }
+}
+
+
  /**
   *  Function checks the validity of the chosen username based on the existing users in the database
   * @param {*} username the chosen username of the user to be registered 

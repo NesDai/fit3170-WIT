@@ -1,9 +1,5 @@
 
 const USER_KEY = "USER";
-// const PATTERNS = {
-//     number: /^\x[\d{10,15}]$/
-// }
-// const INPUTS = document.querySelectorAll('input')
 
 // To apply the default browser preference instead of explicitly setting it.
 firebase.auth().useDeviceLanguage();
