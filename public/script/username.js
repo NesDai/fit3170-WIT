@@ -20,8 +20,8 @@ function register(username,phone){
     document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
     //todo Redirect to the main page
     setInterval(function(){ 
-        window.location = "index.html" //redirect to login for now 
-        }, 2000); //2 seconds
+        window.location = "main_page.html"
+    }, 2000); //2 seconds
 
 }
 

@@ -113,11 +113,13 @@ function checkUserExistence(phone){
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
             localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
             window.location = "username.html"; //TODO make this a proper redirect
-            // makeNewUser(document.getElementById("number").value,"bobby");
         }
         else{
             //!!LOG IN !!!
-            // localStorage.setItem(USER_KEY, JSON.stringify(user));
+            localStorage.setItem(USER_KEY, JSON.stringify(user));
+            setInterval(function(){ 
+                window.location = "main_page.html"
+            }, 2000); // after 2 seconds
             alert("successfully logged in")
         }
 
