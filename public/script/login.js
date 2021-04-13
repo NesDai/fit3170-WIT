@@ -1,7 +1,9 @@
 
 const USER_KEY = "USER";
-
-
+// const PATTERNS = {
+//     number: /^\x[\d{10,15}]$/
+// }
+// const INPUTS = document.querySelectorAll('input')
 
 // To apply the default browser preference instead of explicitly setting it.
 firebase.auth().useDeviceLanguage();
@@ -49,6 +51,29 @@ function phoneAuth() {
     }).catch(function (error) {
         alert(error.message);
     });
+}
+
+/**
+ * function that checks the validity of input phone number
+ * (may need to add further validation)
+ */
+function phoneValidation() {
+
+    var phone_regex = /^\+[0-9]{11,15}$/;
+    var telephone = document.getElementById("number").value
+
+    // test the input number based on the RegEx pattern stated
+    if (phone_regex.test(telephone))
+    {
+        //document.getElementById("telephone").innerHTML = "Valid";
+        document.getElementById("number").style.visibility="visible";
+        document.getElementById("number").style.color="green";
+    }
+    else {
+        //document.getElementById("telephone").innerHTML = "Invalid";
+        document.getElementById("number").style.visibility="visible";
+        document.getElementById("number").style.color="red";
+    }
 }
 
 
