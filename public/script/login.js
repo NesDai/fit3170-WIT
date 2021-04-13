@@ -115,8 +115,11 @@ function checkUserExistence(phone){
             window.location = "username.html"; //TODO make this a proper redirect
         }
         else{
-            //!!LOG IN !!!
-            localStorage.setItem(USER_KEY, JSON.stringify(user));
+            // !!LOG IN !!!
+            firebase.database().ref('users').orderByChild('phone').equalTo(phone).once('value', data => {
+                localStorage.setItem(USER_KEY, JSON.stringify(data.val()));
+            });
+
             setInterval(function(){ 
                 window.location = "main_page.html"
             }, 2000); // after 2 seconds
