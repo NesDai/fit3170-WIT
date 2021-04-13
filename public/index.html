@@ -19,12 +19,13 @@
 
             <div class = "input_div">
               <span class="label">Phone number</span>
-              <input class="input" type="text" id="number"  placeholder="Type your phone number">
+              <input class="input" type="text" id="number" placeholder="Enter phone number including Country Code" onchange="phoneValidation()">
+              <div id="input-error" style="color: red"></div>
               <span class="focus-input_logo" data-symbol="&#xf206;"></span>
             </div>
             <div id ="recaptcha-container"></div>
           <br>
-
+          <div id="error" style="color:red"></div>
           <div class="btn-container">
             <div class="btn-wrap">
               <div class="btn-div"> </div>
@@ -36,7 +37,7 @@
 
           <div class = "input_div">
             <span class="label">Pin</span>
-            <input class="input" type="password" id="verificationCode"  placeholder="Type your pin">
+            <input class="input" type="password" id="verificationCode"  placeholder="Enter pin">
             <span class="focus-input_logo" data-symbol="&#xf190;"></span>
           </div>
           <br>
@@ -70,9 +71,9 @@
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js?useEmulator=true"></script>
 
-
-    <script src="script/login.js" type = "module"></script>
+    <script src="script/login.js" type="module"></script>
     <script src="script/login.js"></script>
+   
 
 
   </div>

@@ -281,6 +281,7 @@ textarea:-ms-input-placeholder { color: #adadad;}
   left: 0;
 }
 
+
 @media (max-width: 576px) {
   .wrap-login {
     padding-left: 15px;
