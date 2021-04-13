@@ -43,6 +43,8 @@ function usernameValidation() {
         document.getElementById("username").style.visibility="visible";
         document.getElementById("username").style.color="red";
     }
+
+    return username_regex.test(username)
 }
 
 
@@ -53,13 +55,9 @@ function usernameValidation() {
   */
 function checkUsernameValidity(){
     let username = document.getElementById("username").value;
-    let valid = true;
+    let valid = usernameValidation();
 
-    //check invalid characters (space)
-    if (username.includes(" ")){
-        valid = false
-        document.getElementById("error").innerHTML = "<p>Username contains invalid characters. Please avoid using spaces and try again</p>";
-    }
+
     //search the username in db. similar to phone number search
     firebase.database().ref('users').orderByChild('username')
     .equalTo(username).once('value', data => {
@@ -76,6 +74,8 @@ function checkUsernameValidity(){
 
             register(username, JSON.parse(localStorage.getItem(USER_KEY)))
         }
+
+
     });
 
 
