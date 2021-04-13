@@ -37,6 +37,12 @@ function phoneAuth() {
     //get the number
     var number=document.getElementById('number').value;
     //phone number authentication function of firebase
+
+    //check invalid characters (space)
+    if (number.includes(" ")){
+        valid = false
+        document.getElementById("error").innerHTML = "<p>Phone number obtain contains invalid characters. Please avoid using spaces and try again</p>";
+    }
     //it takes two parameter first one is number,,,second one is recaptcha
     firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
@@ -61,12 +67,12 @@ function phoneValidation() {
     // test the input number based on the RegEx pattern stated
     if (phone_regex.test(telephone))
     {
-        //document.getElementById("telephone").innerHTML = "Valid";
+        document.getElementById("input-error").innerHTML = "";
         document.getElementById("number").style.visibility="visible";
         document.getElementById("number").style.color="green";
     }
     else {
-        //document.getElementById("telephone").innerHTML = "Invalid";
+        document.getElementById("input-error").innerHTML = "Invalid phone number. Do avoid any letters, special characters and spaces. Please try again.";
         document.getElementById("number").style.visibility="visible";
         document.getElementById("number").style.color="red";
     }

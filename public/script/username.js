@@ -28,16 +28,18 @@ function register(username,phone){
 function usernameValidation() {
 
     //var username_regex = /^\+[0-9]{11,15}$/;
-    var username_regex =/^(?=.*[a-zA-Z\d].*)[a-zA-Z\d]{7,15}$/
+    var username_regex =/^(?=.*[a-zA-Z\d].*)[a-zA-Z\d]{5,15}$/
     var username = document.getElementById("username").value
 
     // test the input number based on the RegEx pattern stated
     if (username_regex.test(username))
     {
+        document.getElementById("error").innerHTML = "";
         document.getElementById("username").style.visibility="visible";
         document.getElementById("username").style.color="green";
     }
     else {
+        document.getElementById("error").innerHTML = "<p>Username should be 5 to 15 characters long and not have any special characters. Please try again.<p>";
         document.getElementById("username").style.visibility="visible";
         document.getElementById("username").style.color="red";
     }

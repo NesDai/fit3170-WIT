@@ -20,11 +20,12 @@
             <div class = "input_div">
               <span class="label">Phone number</span>
               <input class="input" type="text" id="number" placeholder="Enter phone number including Country Code" onchange="phoneValidation()">
+              <div id="input-error" style="color: red"></div>
               <span class="focus-input_logo" data-symbol="&#xf206;"></span>
             </div>
             <div id ="recaptcha-container"></div>
           <br>
-
+          <div id="error" style="color:red"></div>
           <div class="btn-container">
             <div class="btn-wrap">
               <div class="btn-div"> </div>
@@ -36,14 +37,14 @@
 
           <div class = "input_div">
             <span class="label">Pin</span>
-            <input name = "pincode" class="input" type="password" id="verificationCode"  placeholder="Enter pin" onchange="pinVerification">
+            <input class="input" type="password" id="verificationCode"  placeholder="Enter pin">
             <span class="focus-input_logo" data-symbol="&#xf190;"></span>
           </div>
           <br>
           <div class="btn-container">
             <div class="btn-wrap">
               <div class="btn-div"> </div>
-              <button class="btn" id="loginButton" onclick="codeverify();"  onchange = "checkPin()">
+              <button class="btn" id="loginButton" onclick="codeverify();">
                 Login
               </button>
             </div>
