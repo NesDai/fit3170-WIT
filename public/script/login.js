@@ -56,8 +56,11 @@ function phoneAuth() {
 }
 
 /**
- * function that checks the validity of input phone number
- * (may need to add further validation)
+ * Function that checks the validity of input phone number given by user based on the
+ * RegEx pattern given in the function.
+ * @returns a bool where true will be shown green, false will be shown red where
+ *          it indicates if the input phone number follows the criteria of using
+ *          a valid international phone number
  */
 function phoneValidation() {
 

@@ -25,6 +25,13 @@ function register(username,phone){
 
 }
 
+/**
+ * Function that checks the validity of the input username written by user based on the
+ * RegEx pattern given in the function.
+ * @returns a boolean indicating whether the input username follows the criteria of
+ *          only having alphanumeric usernames; no special characters are allowed with 
+ *          length between 5 to 15 characters
+ */
 function usernameValidation() {
 
     //var username_regex = /^\+[0-9]{11,15}$/;
