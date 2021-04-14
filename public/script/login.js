@@ -116,8 +116,13 @@ function checkUserExistence(phone){
         }
         else{
             // !!LOG IN !!!
-            firebase.database().ref('users').orderByChild('phone').equalTo(phone).once('value', data => {
-                localStorage.setItem(USER_KEY, JSON.stringify(data.val()));
+            //Figure this out later 
+            firebase.database().ref(`users/${phone}`).once('value', data => {
+                let user = {
+                    phone: phone,
+                    username: data.val().username
+                };
+                localStorage.setItem(USER_KEY, JSON.stringify(user));
             });
 
             setInterval(function(){ 
