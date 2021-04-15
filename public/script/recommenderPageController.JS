@@ -22,12 +22,12 @@ function transitionRatePage(){
 
 // Executes when the user gives a positive rating
 function positiveRating(){
-  document.getElementById("positiveImage").src = "./recommenderUiSketch_files/thumbs_up_activated.png";
-  document.getElementById("negativeImage").src = "./recommenderUiSketch_files/thumbs_down.png";
+  document.getElementById("positiveImage").src = "./css/images/thumbs_up_activated.png";
+  document.getElementById("negativeImage").src = "./css/images/thumbs_down.png";
 }
 
 // Executes when the user gives a negative rating
 function negativeRating(){
-  document.getElementById("positiveImage").src = "./recommenderUiSketch_files/thumbs_up.png";
-  document.getElementById("negativeImage").src = "./recommenderUiSketch_files/thumbs_down_activated.png";
+  document.getElementById("positiveImage").src = "./css/images/thumbs_up.png";
+  document.getElementById("negativeImage").src = "./css/images/thumbs_down_activated.png";
 }
