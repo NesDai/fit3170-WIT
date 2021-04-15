@@ -2,26 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/css/material-design-iconic-font.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/css/material-design-iconic-font.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/images/login.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/css/login.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/main_page.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/pictures/chatbot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/pictures/forum.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/pictures/recommender.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/script/firebaseConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/script/login.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/script/main_page.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/script/username.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Redcow/username.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/main_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team404/index.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
