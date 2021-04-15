@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/css/material-design-iconic-font.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/css/material-design-iconic-font.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/fonts_login/iconic/fonts/Material-Design-Iconic-Font.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/images/login.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/css/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/main_page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/pictures/chatbot.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/pictures/forum.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/pictures/recommender.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/script/firebaseConfig.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/script/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/script/main_page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/script/username.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Redcow/username.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1qwOgxQ1ea30KQDmd1p1lO8ZSRK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Year 2 sem 1/FIT2099/Coding" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="" />
+      <created>1617987300646</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617987300646</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1618137746831">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1618137746831" />
+  </component>
+</project>
