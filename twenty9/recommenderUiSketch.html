@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" hc="a3" hcx="3">
+
+  <!-- Head -->
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="">
+					<meta name="author" content="">
+						<title>Recommender page</title>
+							<!-- Bootstrap core CSS -->
+							<link href="./recommenderUiSketch_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Style -->
+		<style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+		<style id="hc_style" type="text/css"></style>
+
+		<!-- video.js links -->
+	</head>
+
+  <!-- Body -->
+	<body>
+
+    <!-- Body > Header -->
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+	    <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+	      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+	    </a>
+
+			<!-- Navigation buttons -->
+	    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+	      <li><a href="#" class="nav-link px-2 link-dark">Main Page</a></li>
+				<li><a href="#" class="nav-link px-2 link-dark">Chatbot</a></li>
+				<li><a href="#" class="nav-link px-2 link-secondary">Recommendations</a></li>
+				<li><a href="#" class="nav-link px-2 link-dark">Forum</a></li>
+	    </ul>
+
+			
+	    <div class="col-md-3 text-end"></div>
+    </header>
+
+    <!-- Body > main -->
+		<main>
+
+			<!-- Upper (header) section -->
+			<section class="py-5 text-center container" id="upperSection">
+				<div style="height: 20%;">
+					<div class="h-50 col-lg-6 col-md-8 mx-auto">
+						<h1 class="fw-light" id="upperSectionHeader">Our recommendations for you</h1>
+						<p class="lead text-muted" id="upperSectionSubHeader">This is a curated selection of jobs which we think you may be interested in.</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Middle (video) section -->
+      <section class="py-5 text-center container" id="middleSection">
+				<video style="width:50%; height:50%; display: inline;" id="videoOutput" controls>
+				  <source src="test.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<p style="font-size: 2em;" class="lead text-muted" id="videoDescription">
+					<img style="height: 1em; width: auto; display: inline;" src="./recommenderUiSketch_files/speaker_symbol.png" alt="Click to listen">
+					This is the description for this job.
+				</p>
+				<img id = "positiveImage" src = "./recommenderUiSketch_files/thumbs_up.png" style = "height: 5%; width: 5%; display: none" hspace = "10" vspace = "10" onclick = "positiveRating()"></img>
+				<img id = "negativeImage" src = "./recommenderUiSketch_files/thumbs_down.png" style = "height: 5%; width: 5%; display: none" hspace = "10" vspace = "10" onclick = "negativeRating()"></img>
+			</section>
+
+      <!-- Lower (footer) section -->
+      <section class="py-5 text-center container" id="lowerSection">
+				<div style="height: 20%;">
+					<div class="col-lg-6 col-md-8 mx-auto">
+            <button type="button" class="btn btn-primary btn-lg" onclick="transitionRatePage()" style="display: inline;" id="rateButton">Rate</button>
+						<button type="button" class="btn btn-primary btn-lg" onclick="window.location.reload()" style="display: none;" id="nextButton">NEXT</button>
+						<button type="button" class="btn btn-primary btn-lg" onclick="window.location.reload()" style="display: none;" id="backButton">BACK</button>
+					</div>
+				</div>
+			</section>
+
+		</main>
+
+		<div id="hc_extension_bkgnd" style="position: fixed; inset: 0px; z-index: -1999999999; display: block; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);"></div>
+
+    <!-- Scripts for page elements -->
+		<script src="./recommenderUiSketch_files/bootstrap.bundle.min.js.download"></script>
+    <script src="./recommenderUiSketch_files/recommenderPageController.js"></script>
+	</body>
+</html>
