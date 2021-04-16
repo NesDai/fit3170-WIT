@@ -1,0 +1,25 @@
+Team twenty9:
+
+Guo Ng - PO
+Yi Meng - PM
+Sim - SM
+Jasmine - SA
+Dilshan - RTE
+
+
+Team RedCow:
+
+PM: Daiki
+PO: Vlad
+SA: Tanya
+SM: Arissha
+RTE: Elaf
+
+
+Tean 404:
+
+Morad - Scrum Master
+Kelvin - Product Owner
+Daniel - System Architect
+Yong Peng - Product Manager
+Jia Yao - RTE
