@@ -1,3 +1,14 @@
+// <!-- The core Firebase JS SDK is always required and must be listed first -->
+// <script src="/__/firebase/8.4.1/firebase-app.js"></script>
+
+// <!-- TODO: Add SDKs for Firebase products that you want to use
+//      https://firebase.google.com/docs/web/setup#available-libraries -->
+// <script src="/__/firebase/8.4.1/firebase-analytics.js"></script>
+
+// <!-- Initialize Firebase -->
+// <script src="/__/firebase/init.js"></script>
+
+
 
 const USER_KEY = "USER";
 
@@ -7,6 +18,7 @@ firebase.auth().useDeviceLanguage();
 
 
 window.onload = function(){
+
     render();
 
 }
@@ -25,8 +37,10 @@ function render(){
         }
       });
 
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    recaptchaVerifier.render();
+    recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+      updateSignInButtonUI();
+    });
 
 }
 
@@ -44,6 +58,9 @@ function phoneAuth() {
         document.getElementById("error").innerHTML = "<p>Phone number obtain contains invalid characters. Please avoid using spaces and try again</p>";
     }
     //it takes two parameter first one is number,,,second one is recaptcha
+    console.log(window.recaptchaVerifier);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
+    //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
     firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
         window.confirmationResult=confirmationResult;
@@ -52,7 +69,8 @@ function phoneAuth() {
         alert("Message sent");
     }).catch(function (error) {
         alert(error.message);
-    });
+    })
+    )
 }
 
 /**
@@ -87,10 +105,16 @@ function phoneValidation() {
  */
 function codeverify() {
     var code=document.getElementById('verificationCode').value;
-    coderesult.confirm(code).then(function (result) {
+
+    // var credential = firebase.auth.PhoneAuthProvider.credential(confirmationResult.verificationId, code);
+    // firebase.auth().signInWithCredential(credential);
+
+    coderesult.confirm(code).then((result)=> {
+        const user = result.user
 
         //check if this user is already registered
         checkUserExistence(document.getElementById("number").value);
+
 
 
     }).catch(function (error) {
@@ -116,6 +140,8 @@ function checkUserExistence(phone){
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
             localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
             window.location = "username.html"; //TODO make this a proper redirect
+
+            
         }
         else{
             // !!LOG IN !!!
@@ -127,11 +153,12 @@ function checkUserExistence(phone){
                 };
                 localStorage.setItem(USER_KEY, JSON.stringify(user));
             });
-
             setInterval(function(){ 
                 window.location = "main_page.html"
             }, 2000); // after 2 seconds
             alert("successfully logged in")
+
+        
         }
 
      });
@@ -152,3 +179,14 @@ function makeNewUser(phone,username){
         phone: phone
       });
 }
+
+
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      console.log(user)
+
+    }
+    else {
+      // User is signed out.
+    }
+  })
