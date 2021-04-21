@@ -39,7 +39,6 @@ function render(){
 
     recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
-      updateSignInButtonUI();
     });
 
 }
@@ -119,6 +118,7 @@ function codeverify() {
 
     }).catch(function (error) {
         alert(error.message);
+        recaptchaVerifier.reset();
     });
 }
 
