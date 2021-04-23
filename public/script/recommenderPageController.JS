@@ -4,8 +4,8 @@ function transitionRatePage(){
   var upperSectionHeader = document.getElementById("upperSectionHeader");
   upperSectionHeader.innerHTML = "Did you like our recommendation?";
 
-  var upperSectionSubHeader = document.getElementById("upperSectionSubHeader");
-  upperSectionSubHeader.innerHTML = "Please let us know";
+  //var upperSectionSubHeader = document.getElementById("upperSectionSubHeader");
+  //upperSectionSubHeader.innerHTML = "Please let us know";
 
   // Adjust middle to display rate positive/negative symbols
   document.getElementById("videoOutput").style="display: none";
