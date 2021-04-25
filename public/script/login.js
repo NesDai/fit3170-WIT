@@ -64,10 +64,14 @@ function phoneAuth() {
         //s is in lowercase
         window.confirmationResult=confirmationResult;
         coderesult=confirmationResult;
+        document.getElementById("input-pin").innerHTML = "A SMS with the PIN has been sent to your phone. Please insert the pin below."
+        document.getElementById("input-pin").style.color = "green";
 
         alert("Message sent");
     }).catch(function (error) {
         alert(error.message);
+        document.getElementById("input-pin").innerHTML = ""
+
     })
     )
 }
@@ -119,6 +123,8 @@ function codeverify() {
     }).catch(function (error) {
         alert(error.message);
         recaptchaVerifier.reset();
+        document.getElementById("input-pin").innerHTML = "Invalid PIN entered. Please resend a new pin and retry.";
+        document.getElementById("input-pin").style.color = "red";
     });
 }
 

@@ -4,6 +4,7 @@
   <link rel="stylesheet" type="text/css" href="css/login.css">
   <!--html logo-->
   <link rel="stylesheet" type="text/css" href="css/fonts_login/iconic/css/material-design-iconic-font.min.css">
+  <script src="https://kit.fontawesome.com/4c5fbbdc3a.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -17,13 +18,20 @@
             </span>
             <br>
 
-            <div class = "input_div">
+            <div id="input-error" style="color: red"></div>
+
+
+            <form class = "input_div">
               <span class="label">Phone number</span>
               <br>
               <input class="input" type="text" id="number" placeholder="Enter E.g. +60129356770 or +6622134567" onchange="phoneValidation()">
-              <div id="input-error" style="color: red"></div>
+
               <span class="focus-input_logo" data-symbol="&#xf206;"></span>
-            </div>
+              <!-- <i class="fa fa-mobile" aria-hidden="true" style="transform: ;" data-symbol="&#xf206;"></i> -->
+
+            </form>
+
+
             <div id ="recaptcha-container"></div>
           <br>
           <div id="error" style="color:red"></div>
@@ -36,8 +44,12 @@
             </div>
           </div>
 
+          <br>
+          <div id="input-pin" style="color: green"></div>
+          <br>
           <div class = "input_div">
             <span class="label">Pin</span>
+
             <input class="input" type="password" id="verificationCode"  placeholder="Enter 6-digit pin E.g. 123456">
             <span class="focus-input_logo" data-symbol="&#xf190;"></span>
           </div>
