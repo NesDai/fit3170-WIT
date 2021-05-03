@@ -151,7 +151,6 @@ function checkUserExistence(phone){
         }
         else{
             // !!LOG IN !!!
-            //Figure this out later 
             firebase.database().ref(`users/${phone}`).once('value', data => {
                 let user = {
                     phone: phone,
