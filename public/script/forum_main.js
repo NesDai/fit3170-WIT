@@ -11,26 +11,44 @@ function checkUserExistence() {
     }
 }
 
+//making a new post 
+//TODO: create post id 
+//TODO: validation of title, description, tags required 
 
-function makeNewPost(title, description, tags){
+function makeNewPost(title, description){
     if (checkUserExistence()) {
-            //TODO: validation of title, description, tags required 
-
-        firebase.database().ref(`posts/${phone}`).set({
-            // Posts table
-            // posts
-            // |
-            // __ +81802323453 phone acts as like a user id? hmmmhmmm
-            //         |_ title:
-            //         |_ description:
-            //         |_ tags <- array for this??
-
+        firebase.database().ref(`posts/${current_user["phone"]}`).set({
             title: title,
             description: description, 
-            tags:tags
+            // tags:tags
         });
 
     } else {
         window.location("index.html")
     }
+}
+
+function getPostsByCurrentUser() {
+    firebase.database().ref(`posts/${current_user["phone"]}`).once('value', data => {
+        data = data.val();
+        //just one for now can do for each loop
+        pos_title = user["title"];
+        pos_description = user["description"];
+        console.log(pos_title);
+        console.log(pos_description);
+    });
+}
+
+function updatePost(title, description) {
+    user_phone = current_user["phone"];
+    let update_data = {
+        title: title, 
+        description: description
+    };
+    firebase.database().ref(`posts/${user_phone}`).update(update_data);
+}
+
+function removePost() {
+    user_phone = current_user["phone"];
+    firebase.database().ref(`posts/${user_phone}`).remove();
 }
