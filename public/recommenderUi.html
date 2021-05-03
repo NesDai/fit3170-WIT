@@ -120,25 +120,26 @@
       <div id="recommendation-card" class="mdl-card mdl-shadow--2dp" style="align-items: center;">
         <span class="mdl-card__title" id="upperSectionHeader">Our recommendation for you:</span>
         <span class="mdl-card__subtitle-text" id="video-title"></span>
-        <video style="width:100%; height:100%; display: inline;" id="videoOutput" controls>
-  			  <source src="test.mp4" type="video/mp4">
-  			    Your browser does not support the video tag.
-  		  </video>
-        <img id="positiveImage" src = "./css/images/thumbs_up.png" style = "height: 20%; width: 20%; display: none" hspace = "10" vspace = "10" onclick = "positiveRating()"></img>
-				<img id="negativeImage" src = "./css/images/thumbs_down.png" style = "height: 20%; width: 20%; display: none" hspace = "10" vspace = "10" onclick = "negativeRating()"></img>
-        <span class="mdl-card__subtitle-text" id="videoDescription">This is the description for this job.</span>
+            <div id="player"></div>
+        <span class="mdl-card__subtitle-text" id="videoDescription">This is the description for this video.</span>
         <div class="mdl-card__actions mdl-card--border">
-          <a id="rateButton" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="transitionRatePage()">
-            RATE
+          <a>
+            <img id="positiveImage" src = "./css/images/thumbs_up.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "positiveRating()"></img>
           </a>
 
-          <a id="nextButton" style="display: none;" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="window.location.reload()">
-            NEXT
+          <a>
+            <img id="negativeImage" src = "./css/images/thumbs_down.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "negativeRating()"></img>
           </a>
-          <a id="backButton" style="display: none;" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="window.location.reload()">
-            BACK
+          
+          <a>
+            <img id = "favoriteIcon"  src = "./css/images/heart_icon.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "favoriteRating()"></img>
           </a>
-          <button id="favouriteButton" class = "mdl-button mdl-js-button mdl-button--raised mdl-button--colored">+ Favourite</button>
+
+          <div id="messagePopUp" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+          </div>
+
         </div>
       </div>
 
@@ -146,6 +147,7 @@
     </main>
 
     <script src="./script/recommenderPageController.js"></script>
+    <script src="./script/skipChatbotPreference.js"></script>
 
   </body>
 </html>
