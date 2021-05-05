@@ -178,97 +178,79 @@ function saveResponse(question_id, question, answer) {
     // Formulating the response object
 
     // Retrieve the set id
-    let document = readFromFirestore(userBranch, date);
-    if (document === null) {
-        // If the document doesn't exist, that means the user
-        // is doing the survey for the first time for the
-        // current date.
-
-        // Initialize set_id to 0
-        document = {set_id: 0}
-
-        // Write it to the database
-        let content = document;
-        writeToFirestore(userBranch, content, date);
-    }
-
-    let responseObject = {
-        question_id: question_id,
-        type: question.type,
-        question: question.question,
-        restrictions: question.restrictions,
-        set_id: document.set_id,
-        answer: answer,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    };
-
-    // Writing a response object to the firestore database
-    writeToFirestore(branch, responseObject);
-}
-
-/**
- * Retrieves a document object at the specified collection
- * path.
- *
- * @param branch The collection's path
- * @param selector The document's ID
- */
-function readFromFirestore(branch, selector) {
-    let reference = firebase.firestore().collection(branch).doc(selector);
+    let reference = firebase.firestore().collection(userBranch).doc(date);
 
     reference.get().then((document) => {
         if (document.exists) {
-            console.log("Document data:", document.data());
-            return document.data();
+            // If the date branch exists, that means this isn't the first
+            // survey instance for the day
+            let timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+            // Writing a response object to survey_responses
+            let responseObject = {
+                question_id: question_id,
+                type: question.type,
+                question: question.question,
+                restrictions: question.restrictions,
+                set_id: document.data().set_id,
+                answer: answer,
+                timestamp: timestamp
+            };
+
+            // Add an auto-ID response entry to the date branch
+            firebase.firestore().collection(branch).add(responseObject)
+                .then((docRef) => {
+                    console.log("Response object written with ID: ", docRef.id);
+
+                    // After writing the response to survey_responses, also
+                    // write it to survey_questions/question_id
+                    let reducedResponseObject = {
+                        phone: phone,
+                        date: date,
+                        answer: answer,
+                        timestamp: timestamp
+                    };
+                    let responsesBranch =
+                        `chatbot/survey_questions/questions/${question_id}/responses`
+
+                    firebase.firestore().collection(responsesBranch)
+                        .doc(docRef.id) // The response ID we got in the first store
+                        .set(reducedResponseObject)
+                        .then(() => {
+                            console.log("Response written with ID: ", docRef.id,
+                                " at survey_questions branch.");
+                        })
+                        .catch((error) => {
+                            console.error("Error writing response copy at" +
+                                "survey_questions branch: ", error);
+                        });
+                })
+                .catch((error) => {
+                    console.error("Error writing reponse at survey_responses " +
+                        "branch: ", error);
+                });
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
+
+            // If the document doesn't exist, it means that this
+            // is the first survey instance for the day.
+
+            // Initialize set_id to 0 and write it to the database
+            db.collection(date).doc(id).set({set_id: 0})
+                .then(() => {
+                    console.log("Document written with ID: ", id);
+                    documentID = id;
+                    if (then !== null)
+                        then(documentID);
+                })
+                .catch((error) => {
+                    console.error("Error writing content: ", error);
+                });
         }
     }).catch((error) => {
         console.log("Error getting document:", error);
     });
-
-    return null;
-}
-
-/**
- * Writes the specified content as a new document with
- * an auto ID at the specified collection.
- *
- * @param branch The collection's path
- * @param content An object to be written
- * @param id (Optional) The document id. If not specified,
- * an auto ID will be generated.
- */
-function writeToFirestore(branch, content, id = null) {
-    let db = firebase.firestore();
-
-    // You might ask, why not just throw null in as the param?
-    // Doesn't work for some reason :/
-
-    if (id == null) {
-        // Generating a random document ID, and assigning
-        // content to that document
-        db.collection(branch).doc().set(content)
-            .then(() => {
-                console.log("Content successfully written!");
-            })
-            .catch((error) => {
-                console.error("Error writing content: ", error);
-            });
-    } else {
-        // Making a new document with the specified document ID,
-        // and assigning content to that document
-        db.collection(branch).doc(id).set(content)
-            .then(() => {
-                console.log("Content successfully written!");
-            })
-            .catch((error) => {
-                console.error("Error writing content: ", error);
-            });
-    }
-
-
 }
 
 /**
@@ -282,10 +264,11 @@ function initFirebaseAuth() {
         currentUser = firebase.auth().currentUser;
     });
 }
+
 let currentUser = null;
 
 // Initialize only when firebase has been fully loaded
 // Things get funky if I don't do this
-window.onload = function() {
+window.onload = function () {
     initFirebaseAuth();
 }
