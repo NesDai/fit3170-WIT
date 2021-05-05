@@ -237,12 +237,10 @@ function saveResponse(question_id, question, answer) {
             // is the first survey instance for the day.
 
             // Initialize set_id to 0 and write it to the database
-            db.collection(date).doc(id).set({set_id: 0})
+            firebase.firestore().collection(userBranch).doc(date)
+                .set({set_id: 0})
                 .then(() => {
-                    console.log("Document written with ID: ", id);
-                    documentID = id;
-                    if (then !== null)
-                        then(documentID);
+                    console.log("Document written with ID: ", date);
                 })
                 .catch((error) => {
                     console.error("Error writing content: ", error);
