@@ -1,26 +1,103 @@
-let sub_questions_1_14 = [
+// Indicates the question type as numeric
+const TYPE_NUMERIC = "numeric";
+
+// Indicates the question type as multiple choice
+const TYPE_MULTIPLE_CHOICE = "multiple-choice";
+
+// Indicates a multiple choice question with an
+// "Others" free text input
+const TYPE_MULTIPLE_CHOICE_OTHERS = "multiple-choice-others";
+
+// Indicates a question accepting short text inputs
+const TYPE_SHORT_TEXT = "short-text";
+
+// Indicates a question accepting long text inputs
+const TYPE_LONG_TEXT = "long-text";
+
+// Indicates a long question (a questions containing sub-questions)
+const TYPE_LONG_QUESTION = "long-question";
+
+// Represents a logical survey skip operation
+// that ends the survey
+const SKIP_END_SURVEY = "end_survey";
+
+// Contains title strings for the survey parts
+const PART_TITLE = [
+    "",
+    // The above title is a placeholder to allow 1-indexing
+
+    "Part 1: About yourself",
+    "Part 2: About your employment",
+    "Part 3: About your mobile phone usage",
+    "Part 4: About your learning interest",
+    "Part 4: About your learning engagement"
+]
+
+const SUB_QUESTIONS_1_14 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
     "living with someone at home?",
     "living alone at home?",
     "living with someone at aged care setting?",
     "living alone at aged care setting?"
 ];
 
-let sub_questions_1_15 = [
+// TODO Fill in tooltips
+const SUB_QUESTIONS_HINTS_1_14 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder"
+];
+
+const SUB_QUESTIONS_1_15 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
     "Depending on others to meet my needs.",
     "Not being able to get medical treatment.",
     "Had no money to buy groceries.",
     "Not being able to pay at least one bill.",
 ];
 
-let sub_questions_1_16 = [
+// TODO Fill in tooltips
+const SUB_QUESTIONS_HINTS_1_15 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder"
+];
+
+const SUB_QUESTIONS_1_16 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
     "In most ways my life is closed to my ideal.",
     "The conditions of my life are excellent.",
     "I am satisfied with my life."
-]
+];
 
-let part1 = [
+// TODO Fill in tooltips
+const SUB_QUESTIONS_HINTS_1_16 = [
     "",
-    // TODO The above question is a placeholder to allow 1-indexing
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder"
+];
+
+const PART1 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
 
     "What is your age in years? (enter a number)",
     "What is your gender?",
@@ -39,16 +116,55 @@ let part1 = [
     "How many other relatives do you feel close to? (enter a number)",
     "How many close friends do you have? (enter a number)",
     "Are you currently...",
+
+    // The question above this line is a long question (1.14)
+
     "In the past 6 months, have you experienced the following situations?",
+
+    // The question above this line is a long question (1.15)
 
     "How satisfied are you with your current life now? (Rate from 1 to 5)\n" +
     "[1] Very dissatisfied, [2] dissatisfied, [3] moderately satisfied,\n" +
     "[5] satisfied, [6] very satisfied"
-]
 
-let part2 = [
+    // The question above this line is a long question (1.16)
+];
+
+// TODO Fill in tooltips
+const HINTS_PART1 = [
     "",
-    // TODO The above question is a placeholder to allow 1-indexing
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+
+    // The question above this line is question 1.10
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+
+    "placeholder",
+    // The question above this line is a long question (1.14)
+
+    "placeholder",
+    // The question above this line is a long question (1.15)
+
+    "placeholder"
+    // The question above this line is a long question (1.16)
+];
+
+const PART2 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
 
     "What is your current employment status?",
     "What is your current job/ occupation/ profession?",
@@ -60,9 +176,23 @@ let part2 = [
     "Did you lose your earning income due to the COVID-19 pandemic?",
     "How confident are you in finding a new job in the near future?",
     "How confident are you in being able to keep your current job in the near future?",
-]
+];
 
-let sub_questions_3_2 = [
+// TODO Fill in tooltips
+const HINTS_PART2 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+];
+
+const SUB_QUESTIONS_3_2 = [
     "SMS, text messaging (such as Whatsapp, WeChat, etc.)",
     "Browsing/ surfing websites",
     "Watching videos",
@@ -72,8 +202,10 @@ let sub_questions_3_2 = [
     "Online shopping or e-commerce (such as Lazada, Shopee, etc.)",
     // TODO Thailand will update the relevant app name for the above question
     "Using mobile banking/ e-wallet (such as GrabPay, BoostPay, FavePay, Touch N" +
-    // TODO Thailand will update the relevant app name for the above question
     "Go Pay, etc.)",
+    // TODO Thailand will update the relevant app name for the above question
+    // The question above this line is question 3.2g
+
     "Online ordering for food or groceries",
     "Using social network (such as Facebook, Instagram, Twitter, etc.)",
     "Taking a photo",
@@ -83,50 +215,130 @@ let sub_questions_3_2 = [
     "Taking notes (such as shopping lists or tasks) that I need to do",
     "Filming a video",
     "Using social network (such as Facebook, Instagram, Twitter, etc.)",
+    // The question above this line is question 3.2p
+
     "Listening to music",
     "Playing games",
     "Using to contact government authorities",
-]
+];
 
-let part3 = [
+// TODO Fill in tooltips
+const SUB_QUESTIONS_HINTS_3_2 = [
     "",
-    // TODO The above question is a placeholder to allow 1-indexing
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    // TODO Thailand will update the app name for the above question
+    "placeholder",
+    // TODO Thailand will update the relevant app name for the above question
+    "placeholder",
+    // TODO Thailand will update the relevant app name for the above question
+    // The question above this line is question 3.2g
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    // The question above this line is question 3.2p
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+];
+
+const PART3 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
 
     "How do you access the Internet using your mobile phone?",
+    // The question above this line is question 3.1
+
     "How confident are you in using the following platforms? (Rate from 1 to 5)\n" +
     "[1] Not confident at all, [2] Somewhat not confident, [3] Moderately confident,\n" +
     "[4] Somewhat confident, [5] Extremely confident."
-]
+    // The question above this line is a long question (3.2)
+];
 
-let sub_questions_4_3 = [
+// TODO Fill in tooltips
+const HINTS_PART3 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    // The question above this line is question 3.1
+
+    "",
+    // The question above this line is a long question (3.2)
+
+];
+
+const SUB_QUESTIONS_4_3 = [
     "ICT/ technology skills (such as how to use mobile phone or computer software",
     "Social communication skills (such as how to improve relationships or interact" +
     "with others)",
     "Complementary skills (such as learning non-work-related skills or hobbies)" +
     "Work-related skills (such as how to increase job/ business productivity)"
-]
+];
 
-let part4 = [
+// TODO Fill in tooltips
+const SUB_QUESTIONS_HINTS_4_3 = [
     "",
-    // TODO The above question is a placeholder to allow 1-indexing
+    // The above question is a placeholder to allow 1-indexing
+    "placeholder",
+    "placeholder",
+    "placeholder"
+];
+
+const PART4 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
 
     "How long have you been trying to learn something new or useful using a mobile\n" +
     "phone? (Rate from 1 to 7)\n" +
     "[1] Never, [2] Once a month, [3] Few times a month,\n" +
     "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day",
+
     "How many hours per week do you devote to learning something new or useful" +
     "using a mobile phone? (enter a number)",
+    // The question above this line is question 4.2
+
     "How interested are you to learn the following skills using a mobile phone?" +
     "(Rate from 1 to 7)\n" +
     "[1] extremely not interested, [2] very not interested, [3] not interested," +
     "[4] moderately interested, [5] highly interested, [6] very interested," +
     "[7] extremely interested",
+    // The question above this line is a long question (4.3)
+
     "What do you wish to learn using a mobile phone?",
+];
+
+// TODO Fill in tooltips
+const HINTS_PART4 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    // The question above this line is question 4.2
+
+    "",
+    // The question above this line is a long question (4.3)
+
+    "placeholder",
 ]
 
-let part5 = [
+const PART5 = [
     "",
-    // TODO The above question is a placeholder to allow 1-indexing
+    // The above question is a placeholder to allow 1-indexing
 
     "What are you interested in learning using a mobile phone?",
     "What resources do you wish to have for learning using a mobile phone?",
@@ -135,321 +347,549 @@ let part5 = [
     "Tell us about your problems or challenges faced at work."
 ]
 
+// TODO Fill in tooltips
+const HINTS_PART5 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
 
-let questionObject = {
-    question_number: "1.1",
-    category: "Part I: About yourself",
-    type: "numeric",
-    question: "What is your age in years? (enter a number)",
-    restrictions: {
-        lowerRange: 50,
-        upperRange: 200,
-        skipIfInvalid: true
-    },
-    hint: "placeholder"
-}
-
-let questionObject2 = {
-    question_number: "1.2",
-    category: "Part I: About yourself",
-    type: "multiple-choice",
-    question: "What is your gender?",
-    restrictions: {
-        choices: ["Male", "Female"],
-        skipChoice: "Male",
-        skipTarget: "end_survey"
-    },
-    hint: "placeholder"
-}
-
-let questionObject3 = {
-    question_number: "1.3",
-    category: "Part I: About yourself",
-    type: "multiple-choice",
-    question: "What is your ethnic group?",
-    restrictions: {
-        choices: ["Malay", "Chinese", "Indian", "Thai", "Others"],
-        skipChoice: null,
-        skipTarget: null
-    },
-    hint: "placeholder"
-}
-
-let questionObject14 = {
-    question_number: "1.14a",
-    category: "Part I: About yourself",
-    type: "multiple-choice",
-    question: "Are you currently living with someone at home?",
-    restrictions: {
-        choices: ["Yes", "No"],
-        skipChoice: "Yes",
-        //TODO
-        skipTarget: "insert 1.15 question id here"
-    },
-    hint: "placeholder"
-}
-
-let question_2_1 = {
-    question_number: "2.1",
-    category: "Part II: About your employment",
-    type: "multiple-choice-others",
-    question: "What is your current employment status?",
-    restrictions: {
-        choices: ["Working", "Retired", "Semi-retired", "Not working",
-            "Not working but doing voluntary work",
-            "Not working but looking for a job"],
-        skipChoices: ["Retired", "Not working",
-            "Not working but doing voluntary work",
-            "Not working but looking for a job"],
-        //TODO
-        skipTarget: "insert 2.1 question id here"
-    },
-    hint: "placeholder"
-}
-
-let question_2_2 = {
-    question_number: "2.2",
-    category: "Part II: About your employment",
-    type: "short-text",
-    question: "What is your current job/ occupation/ profession?",
-    restrictions: null,
-    hint: "placeholder"
-}
-
-let question_5_1 = {
-    question_number: "5.1",
-    category: "Part V: About your learning engagement",
-    type: "long-text",
-    question: "Why are you interested in learning using a mobile phone?",
-    restrictions: null,
-    hint: "placeholder"
-}
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder"
+]
 
 // TODO Weird questions: Last survey question & Question 4.5
 // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
 
 function pushPart1Questions() {
+    // Set part index to 1 and reset
+    // the question counter
+    setPartNumber(1);
+
     // Question 1.1
-    let hint_1_1 = "placeholder";
-    // TODO
-    pushNumeric(part1[1], 50, 200, true,
-        hint_1_1);
+    pushNumeric(PART1[1], 50, 200, true,
+        HINTS_PART1[1]);
 
     // Question 1.2
     let choices_1_2 = ["Male", "Female"]
-    let hint_1_2 = "placeholder";
-    // TODO
-    pushMultipleChoice(part1[2], choices_1_2, "Male",
-        "end_survey", hint_1_2);
+    let skip_choices_1_2 = ["Male"];
+    pushMultipleChoice(PART1[2], choices_1_2, skip_choices_1_2,
+        SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
     let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
-    let hint_1_3 = "placeholder";
-    // TODO
-    pushMultipleChoice(part1[3], choices_1_3, null, null,
-        hint_1_3);
+    pushMultipleChoice(PART1[3], choices_1_3, null, null,
+        HINTS_PART1[3]);
 
     // Question 1.4
     let choices_1_4 = ["urban area", "rural area"];
-    let hint_1_4 = "placeholder";
-    // TODO
-    pushMultipleChoice(part1[4], choices_1_4, null, null,
-        hint_1_4);
+    pushMultipleChoice(PART1[4], choices_1_4, null, null,
+        HINTS_PART1[4]);
 
     // Question 1.5
     let choices_1_5 = ["No income", "less than MYR2500", "MYR2501-3169",
         "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
-    let hint_1_5 = "placeholder";
-    // TODO
-    pushMultipleChoice(part1[5], choices_1_5, null, null,
-        hint_1_5);
+    pushMultipleChoice(PART1[5], choices_1_5, null, null,
+        HINTS_PART1[5]);
     // TODO Thailand will update the THB equivalent currency
 
     // Question 1.6
     let choices_1_6 = ["No formal education", "Primary school",
         "Secondary/ high school", "Vocational/ technical certification",
         "University"];
-    let hint_1_6 = "placeholder";
-    // TODO
-    pushMultipleChoice(part1[6], choices_1_6, null, null,
-        hint_1_6);
+    pushMultipleChoice(PART1[6], choices_1_6, null, null,
+        HINTS_PART1[6]);
     // TODO Thailand will update the secondary/high classification
 
     // Question 1.7
     let choices_1_7 = ["Single", "Married", "Divorced", "Widowed",
         "Other relationship"];
-    let hint_1_7 = "placeholder";
-    // TODO
-    pushMultipleChoice(part1[7], choices_1_7, null, null,
-        hint_1_7);
+    pushMultipleChoice(PART1[7], choices_1_7, null, null,
+        HINTS_PART1[7]);
 
     // Question 1.8
-    let hint_1_8 = "placeholder";
-    // TODO
-    pushNumeric(part1[8], 0, 999, hint_1_8);
-    // TODO What's the right upper bound for the number of children
-    //  raised? :thinking:
+    pushNumeric(PART1[8], 0, 999, HINTS_PART1[8]);
 
     // Question 1.9
-    let hint_1_9 = "placeholder";
-    // TODO
-    pushNumeric(part1[9], 0, 999, hint_1_9);
+    pushNumeric(PART1[9], 0, 999, HINTS_PART1[9]);
 
     // Question 1.10
-    let hint_1_10 = "placeholder";
-    // TODO
-    pushNumeric(part1[10], 0, 999, hint_1_10);
+    pushNumeric(PART1[10], 0, 999, HINTS_PART1[10]);
 
     // Question 1.11
-    let hint_1_11 = "placeholder";
-    // TODO
-    pushNumeric(part1[11], 0, 999, hint_1_11);
+    pushNumeric(PART1[11], 0, 999, HINTS_PART1[11]);
 
     // Question 1.12
-    let hint_1_12 = "placeholder";
-    // TODO
-    pushNumeric(part1[12], 0, 999, hint_1_12);
+    pushNumeric(PART1[12], 0, 999, HINTS_PART1[12]);
 
     // Question 1.13
-    let hint_1_13 = "placeholder";
-    // TODO
-    pushNumeric(part1[13], 0, 999, hint_1_13);
+    pushNumeric(PART1[13], 0, 999, HINTS_PART1[13]);
 
-    // Question 1.14 // TODO subquestion 1.14 to 1.16
-    let hint_1_14 = "placeholder";
-    // TODO
-    pushNumeric(part1[14], 0, 999, hint_1_14);
+    // Question 1.14
+    pushLongQuestion(PART1[14]).then(id => {
+        // Question 1.14a
+        let choices_1_14 = ["Yes", "No"];
+        let skip_choices_1_14 = ["Yes"];
+        appendMultipleChoice(id, SUB_QUESTIONS_1_14[1], choices_1_14,
+            skip_choices_1_14, "insert question 1.15 id here",
+            SUB_QUESTIONS_HINTS_1_14[1]) // TODO
 
+        // Question 1.14b
+        appendMultipleChoice(id, SUB_QUESTIONS_1_14[2], choices_1_14,
+            skip_choices_1_14, "insert question 1.15 id here",
+            SUB_QUESTIONS_HINTS_1_14[2]);  // TODO
+
+        // Question 1.14c
+        appendMultipleChoice(id, SUB_QUESTIONS_1_14[3], choices_1_14,
+            skip_choices_1_14, "insert question 1.15 id here",
+            SUB_QUESTIONS_HINTS_1_14[3]);  // TODO
+
+        // Question 1.14d
+        appendMultipleChoice(id, SUB_QUESTIONS_1_14[4], choices_1_14,
+            skip_choices_1_14, "insert question 1.15 id here",
+            SUB_QUESTIONS_HINTS_1_14[4]);  // TODO
+    });
+
+    // Question 1.15
+    pushLongQuestion(PART1[15]).then(id => {
+        // Question 1.15a
+        let choices_1_15 = ["Yes", "No"];
+        appendMultipleChoice(id, SUB_QUESTIONS_1_15[1], choices_1_15,
+            null, null,
+            SUB_QUESTIONS_HINTS_1_15[1]);
+
+        // Question 1.15b
+        appendMultipleChoice(id, SUB_QUESTIONS_1_15[2], choices_1_15,
+            null, null,
+            SUB_QUESTIONS_HINTS_1_15[2]);
+
+        // Question 1.15c
+        appendMultipleChoice(id, SUB_QUESTIONS_1_15[3], choices_1_15,
+            null, null,
+            SUB_QUESTIONS_HINTS_1_15[3]);
+
+        // Question 1.15d
+        appendMultipleChoice(id, SUB_QUESTIONS_1_15[4], choices_1_15,
+            null, null,
+            SUB_QUESTIONS_HINTS_1_15[4]);
+    });
+
+    // Question 1.16
+    pushLongQuestion(PART1[16]).then(id => {
+        // Question 1.16a
+        appendNumeric(id, UB_QUESTIONS_1_16[1], 1, 5,
+            SUB_QUESTIONS_HINTS_1_16[1]);
+
+        // Question 1.16b
+        appendNumeric(id, SUB_QUESTIONS_1_16[2], 1, 5,
+            SUB_QUESTIONS_HINTS_1_16[2]);
+
+        // Question 1.16c
+        appendNumeric(id, SUB_QUESTIONS_1_16[3], 1, 5,
+            SUB_QUESTIONS_HINTS_1_16[3]);
+    });
 }
 
 function pushPart2Questions() {
+    // Set part index to 2 and reset
+    // the question counter
+    setPartNumber(2);
+
     // Question 2.1
     let choices_2_1 = ["Working", "Retired", "Semi-retired", "Not working",
         "Not working but doing voluntary work", "Not working but looking for a" +
         "job"];
-    let hint_2_1 = "placeholder";
-    // TODO
-    pushMultipleChoiceOthers(part2[1], choices_2_1,
-        ["Retired", "Not working",
-            "Not working but doing voluntary work",
-            "Not working but looking for a job"],
+    let skip_choices_2_1 = ["Retired", "Not working",
+        "Not working but doing voluntary work",
+        "Not working but looking for a job"];
+    pushMultipleChoiceOthers(PART2[1], choices_2_1,
+        skip_choices_2_1,
         "insert question 2.3 id here", // TODO
-        hint_2_1);
+        HINTS_PART2[1]);
 
     // Question 2.2
-    let hint_2_2 = "placeholder";
-    // TODO
-    pushShortText(part2[2], hint_2_2);
+    pushShortText(PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    let hint_2_3 = "placeholder";
-    // TODO
-    pushNumeric(part2[3], 1, 7, false,
-        hint_2_3);
+    pushNumeric(PART2[3], 1, 7, false,
+        HINTS_PART2[3]);
 
     // Question 2.4
     let choices_2_4 = ["Yes", "No", "Not applicable"];
-    let hint_2_4 = "placeholder";
-    // TODO
-    pushMultipleChoice(part2[4], choices_2_4, null,
-        null, hint_2_4);
+    pushMultipleChoice(PART2[4], choices_2_4, null,
+        null, HINTS_PART2[4]);
 
-    // Question 2.4
+    // Question 2.5
     let choices_2_5 = ["Yes", "No", "Not applicable"];
-    let hint_2_5 = "placeholder";
-    // TODO
-    pushMultipleChoice(part2[4], choices_2_5, null,
-        null, hint_2_5);
+    pushMultipleChoice(PART2[5], choices_2_5, null,
+        null, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
+
+    // Question 2.6
+    let choices_2_6 = ["Not confident at all", "Somewhat not confident",
+        "Moderately confident", "Somewhat confident", "Extremely confident",
+        "Not applicable"];
+    pushMultipleChoice(PART2[6], choices_2_6, null,
+        null, HINTS_PART2[6]);
+
+    // Question 2.7
+    let choices_2_7 = ["Not confident at all", "Somewhat not confident",
+        "Moderately confident", "Somewhat confident", "Extremely confident",
+        "Not applicable"];
+    pushMultipleChoice(PART2[7], choices_2_7, null,
+        null, HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
+    // Set part index to 3 and reset
+    // the question counter
+    setPartNumber(3);
+
     // Question 3.1
     let choices_3_1 = [
         "prepaid mobile data plan",
         "postpaid mobile data plan",
         "home WiFi broadband plan",
-        "public WiFi broadband plan",
         "public WiFi hotspot",
         "I don't have access to Internet"
     ];
-    let hint_3_1 = "placeholder";
-    // TODO
-    pushMultipleChoice(part3[1], choices_3_1, null,
-        null, hint_3_1);
+    pushMultipleChoice(PART3[1], choices_3_1, null,
+        null, HINTS_PART3[1]);
 
-    // TODO Q3.2 subquestions
+    // Question 1.16
+    pushLongQuestion(PART3[2]).then(id => {
+        // Questions 3.2 a to s (19 questions in total)
+        for (let i = 1; i < 20; i++) {
+            appendNumeric(id, SUB_QUESTIONS_3_2[i], 1, 5,
+                SUB_QUESTIONS_HINTS_3_2[i]);
+        }
+    });
 }
 
 function pushPart4Questions() {
+    // Set part index to 4 and reset
+    // the question counter
+    setPartNumber(4);
+
     // Question 4.1
-    let hint_4_1 = "placeholder";
-    // TODO
-    pushNumeric(part4[1], 1, 7, false,
-        hint_4_1);
+    pushNumeric(PART4[1], 1, 7, false,
+        HINTS_PART4[1]);
 
     // Question 4.2
-    let hint_4_2 = "placeholder";
-    // TODO
-    pushNumeric(part4[2],0, 168, hint_4_2);
+    pushNumeric(PART4[2], 0, 168, HINTS_PART4[2]);
 
-    // TODO 4.3 subq
+    // Question 4.3
+    pushLongQuestion(PART4[3]).then(id => {
+        // Questions 4.3 a to d (4 questions in total)
+        for (let i = 1; i < 5; i++) {
+            appendNumeric(id, SUB_QUESTIONS_4_3[i], 1, 7,
+                SUB_QUESTIONS_HINTS_4_3[i]);
+        }
+    });
 
     // Question 4.4
-    let hint_4_4 = "placeholder";
-    // TODO
-    pushShortText(part4[4], hint_4_4);
+    pushShortText(PART4[4], HINTS_PART4[4]);
 
+    // Question 4.5
     // TODO Weird questions: Last survey question & Question 4.5
 }
 
 function pushPart5Questions() {
+    // Set part index to 5 and reset
+    // the question counter
+    setPartNumber(5);
+
     // Question 5.1
-    let hint_5_1 = "placeholder";
-    // TODO
-    pushLongText(part5[1], hint_5_1);
+    pushLongText(PART5[1], HINTS_PART5[1]);
 
     // Question 5.2
-    let hint_5_2 = "placeholder";
-    // TODO
-    pushLongText(part5[2], hint_5_2);
+    pushLongText(PART5[2], HINTS_PART5[2]);
 
     // Question 5.3
-    let hint_5_3 = "placeholder";
-    // TODO
-    pushLongText(part5[3], hint_5_3);
+    pushLongText(PART5[3], HINTS_PART5[3]);
 
     // Question 5.4
-    let hint_5_4 = "placeholder";
-    // TODO
-    pushLongText(part5[4], hint_5_4);
+    pushLongText(PART5[4], HINTS_PART5[4]);
 }
 
 function pushNumeric(questionText, lowerRange, upperRange, skipIfInvalid,
                      hint) {
+    // Leaving this here as a reference to numeric
+    // question objects.
+    let reference = {
+        question_number: "1.1",
+        category: "Part I: About yourself",
+        type: "numeric",
+        question: "What is your age in years? (enter a number)",
+        restrictions: {
+            lowerRange: 50,
+            upperRange: 200,
+            skipIfInvalid: true
+        },
+        hint: "placeholder"
+    };
 
+    let questionObject = {
+        question_number: `${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_NUMERIC,
+        question: questionText,
+        restrictions: {
+            lowerRange: lowerRange,
+            upperRange: upperRange,
+            skipIfInvalid: skipIfInvalid
+        },
+        hint: hint
+    };
 }
 
-function pushMultipleChoice(questionText, choices, skipChoice, skipTarget,
+function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
                             hint) {
+    // Leaving these here as references to multiple choice
+    // question objects.
+    let reference = {
+        question_number: "1.2",
+        category: "Part I: About yourself",
+        type: "multiple-choice",
+        question: "What is your gender?",
+        restrictions: {
+            choices: ["Male", "Female"],
+            skipChoice: ["Male"],
+            skipTarget: "end_survey"
+        },
+        hint: "placeholder"
+    };
 
+    let reference2 = {
+        question_number: "1.3",
+        category: "Part I: About yourself",
+        type: "multiple-choice",
+        question: "What is your ethnic group?",
+        restrictions: {
+            choices: ["Malay", "Chinese", "Indian", "Thai", "Others"],
+            skipChoices: null,
+            skipTarget: null
+        },
+        hint: "placeholder"
+    };
+
+    let reference3 = {
+        question_number: "1.14a",
+        category: "Part I: About yourself",
+        type: "multiple-choice",
+        question: "Are you currently living with someone at home?",
+        restrictions: {
+            choices: ["Yes", "No"],
+            skipChoices: "Yes",
+            //TODO
+            skipTarget: "insert 1.15 question id here"
+        },
+        hint: "placeholder"
+    };
+
+    let questionObject = {
+        question_number:`${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_MULTIPLE_CHOICE,
+        question: questionText,
+        restrictions: {
+            choices: choices,
+            skipChoices: skipChoices,
+            skipTarget: skipTarget
+        },
+        hint: hint
+    };
 }
 
-function pushMultipleChoiceOthers(questionText, choices, skipChoice, skipTarget,
-                                  hint) {
 
+function pushMultipleChoiceOthers(questionText, choices, skipChoices, skipTarget,
+                                  hint) {
+    // Leaving this here as a reference to multiple choice
+    // question objects with an "Others" free text input
+    let reference = {
+        question_number: "2.1",
+        category: "Part II: About your employment",
+        type: "multiple-choice-others",
+        question: "What is your current employment status?",
+        restrictions: {
+            choices: ["Working", "Retired", "Semi-retired", "Not working",
+                "Not working but doing voluntary work",
+                "Not working but looking for a job"],
+            skipChoices: ["Retired", "Not working",
+                "Not working but doing voluntary work",
+                "Not working but looking for a job"],
+            //TODO
+            skipTarget: "insert 2.1 question id here"
+        },
+        hint: "placeholder"
+    };
+
+    let questionObject = {
+        question_number:`${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_MULTIPLE_CHOICE_OTHERS,
+        question: questionText,
+        restrictions: {
+            choices: choices,
+            skipChoices: skipChoices,
+            skipTarget: skipTarget
+        },
+        hint: hint
+    };
 }
 
 function pushShortText(questionText, hint) {
+    // Leaving this here as a reference to short text
+    // question objects.
+    let reference = {
+        question_number: "2.2",
+        category: "Part II: About your employment",
+        type: "short-text",
+        question: "What is your current job/ occupation/ profession?",
+        restrictions: null,
+        hint: "placeholder"
+    };
 
+    let questionObject = {
+        question_number:`${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_SHORT_TEXT,
+        question: questionText,
+        restrictions: null,
+        hint: hint
+    };
 }
 
 function pushLongText(questionText, hint) {
+    // Leaving this here as a reference to long text
+    // question objects.
+    let reference = {
+        question_number: "5.1",
+        category: "Part V: About your learning engagement",
+        type: "long-text",
+        question: "Why are you interested in learning using a mobile phone?",
+        restrictions: null,
+        hint: "placeholder"
+    };
 
+    let questionObject = {
+        question_number:`${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_LONG_TEXT,
+        question: questionText,
+        restrictions: null,
+        hint: hint
+    };
 }
 
-function pushLongQuestion() {
+function pushLongQuestion(questionText) {
+    // Leaving this here as a reference to long questions
+    // (questions with sub-questions)
+    let reference = {
+        question_number: "4.3",
+        category: "Part IV: About your learning interest",
+        type: "long-question",
+        question: "How interested are you to learn the following skills" +
+            "using a mobile phone ? (Rate from 1 to 7)" +
+            "[1] extremely not interested, [2] very not interested, " +
+            "[3] not interested," +
+            "[4] moderately interested, [5] highly interested, " +
+            "[6] very interested," +
+            "[7] extremely interested",
+        restrictions: null,
+        hint: "placeholder"
+    };
 
+    let questionObject = {
+        question_number:`${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_LONG_QUESTION,
+        question: questionText,
+        restrictions: null,
+        hint: null
+    };
+}
+
+function appendNumeric(longQuestionId, questionText, lowerRange, upperRange,
+                       skipIfInvalid, hint) {
+    // Leaving this here as a reference to numeric
+    // question objects.
+    let reference = {
+        question_number: "1.1",
+        category: "Part I: About yourself",
+        type: "numeric",
+        question: "What is your age in years? (enter a number)",
+        restrictions: {
+            lowerRange: 50,
+            upperRange: 200,
+            skipIfInvalid: true
+        },
+        hint: "placeholder"
+    };
+
+    let questionObject = {
+        question_number: `${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_NUMERIC,
+        question: questionText,
+        restrictions: {
+            lowerRange: lowerRange,
+            upperRange: upperRange,
+            skipIfInvalid: skipIfInvalid
+        },
+        hint: hint
+    };
+}
+
+function appendMultipleChoice(longQuestionId, questionText, choices, skipChoices,
+                              skipTarget, hint) {
+    // Leaving this here as a reference to multiple choice
+    // question objects.
+    let reference = {
+        question_number: "1.2",
+        category: "Part I: About yourself",
+        type: "multiple-choice",
+        question: "What is your gender?",
+        restrictions: {
+            choices: ["Male", "Female"],
+            skipChoice: ["Male"],
+            skipTarget: "end_survey"
+        },
+        hint: "placeholder"
+    };
+
+    let questionObject = {
+        question_number:`${partNumber}.${questionNumber}`,
+        category: PART_TITLE[partNumber],
+        type: TYPE_MULTIPLE_CHOICE,
+        question: questionText,
+        restrictions: {
+            choices: choices,
+            skipChoices: skipChoices,
+            skipTarget: skipTarget
+        },
+        hint: hint
+    };
+}
+
+function pushQuestionObject(branch, object) {
+}
+
+
+let partNumber = 0;
+let questionNumber = 0;
+
+function setPartNumber(number) {
+    partNumber = number;
+    questionNumber = 0;
+}
+
+function uploadQuestions() {
+    pushPart1Questions();
+    pushPart2Questions();
+    pushPart3Questions();
+    pushPart4Questions();
+    pushPart5Questions();
 }
