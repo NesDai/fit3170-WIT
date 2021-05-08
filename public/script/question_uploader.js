@@ -21,6 +21,10 @@ const TYPE_LONG_QUESTION = "long-question";
 // that ends the survey
 const SKIP_END_SURVEY = "end_survey";
 
+// Represents a skip logic that doesn't allow skips
+const SKIP_NOT_ALLOWED = "skip_not_allowed";
+
+
 // Contains title strings for the survey parts
 const PART_TITLE = [
     "",
@@ -32,6 +36,10 @@ const PART_TITLE = [
     "Part 4: About your learning interest",
     "Part 4: About your learning engagement"
 ]
+
+// The path for storing/retrieving questions from
+// the Firebase Firestore Database
+const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
 
 const SUB_QUESTIONS_1_14 = [
     "",
@@ -193,6 +201,9 @@ const HINTS_PART2 = [
 ];
 
 const SUB_QUESTIONS_3_2 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
     "SMS, text messaging (such as Whatsapp, WeChat, etc.)",
     "Browsing/ surfing websites",
     "Watching videos",
@@ -282,10 +293,13 @@ const HINTS_PART3 = [
 ];
 
 const SUB_QUESTIONS_4_3 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
     "ICT/ technology skills (such as how to use mobile phone or computer software",
     "Social communication skills (such as how to improve relationships or interact" +
     "with others)",
-    "Complementary skills (such as learning non-work-related skills or hobbies)" +
+    "Complementary skills (such as learning non-work-related skills or hobbies)",
     "Work-related skills (such as how to increase job/ business productivity)"
 ];
 
@@ -293,6 +307,7 @@ const SUB_QUESTIONS_4_3 = [
 const SUB_QUESTIONS_HINTS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
+    "placeholder",
     "placeholder",
     "placeholder",
     "placeholder"
@@ -379,18 +394,18 @@ function pushPart1Questions() {
 
     // Question 1.3
     let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
-    pushMultipleChoice(PART1[3], choices_1_3, null, null,
+    pushMultipleChoice(PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[3]);
 
     // Question 1.4
     let choices_1_4 = ["urban area", "rural area"];
-    pushMultipleChoice(PART1[4], choices_1_4, null, null,
+    pushMultipleChoice(PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[4]);
 
     // Question 1.5
     let choices_1_5 = ["No income", "less than MYR2500", "MYR2501-3169",
         "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
-    pushMultipleChoice(PART1[5], choices_1_5, null, null,
+    pushMultipleChoice(PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[5]);
     // TODO Thailand will update the THB equivalent currency
 
@@ -398,96 +413,129 @@ function pushPart1Questions() {
     let choices_1_6 = ["No formal education", "Primary school",
         "Secondary/ high school", "Vocational/ technical certification",
         "University"];
-    pushMultipleChoice(PART1[6], choices_1_6, null, null,
+    pushMultipleChoice(PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[6]);
     // TODO Thailand will update the secondary/high classification
 
     // Question 1.7
     let choices_1_7 = ["Single", "Married", "Divorced", "Widowed",
         "Other relationship"];
-    pushMultipleChoice(PART1[7], choices_1_7, null, null,
+    pushMultipleChoice(PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[7]);
 
     // Question 1.8
-    pushNumeric(PART1[8], 0, 999, HINTS_PART1[8]);
+    pushNumeric(PART1[8], 0, 999, false,
+        HINTS_PART1[8]);
 
     // Question 1.9
-    pushNumeric(PART1[9], 0, 999, HINTS_PART1[9]);
+    pushNumeric(PART1[9], 0, 999, false,
+        HINTS_PART1[9]);
 
     // Question 1.10
-    pushNumeric(PART1[10], 0, 999, HINTS_PART1[10]);
+    pushNumeric(PART1[10], 0, 999, false,
+        HINTS_PART1[10]);
 
     // Question 1.11
-    pushNumeric(PART1[11], 0, 999, HINTS_PART1[11]);
+    pushNumeric(PART1[11], 0, 999, false,
+        HINTS_PART1[11]);
 
     // Question 1.12
-    pushNumeric(PART1[12], 0, 999, HINTS_PART1[12]);
+    pushNumeric(PART1[12], 0, 999, false,
+        HINTS_PART1[12]);
 
     // Question 1.13
-    pushNumeric(PART1[13], 0, 999, HINTS_PART1[13]);
+    pushNumeric(PART1[13], 0, 999, false,
+        HINTS_PART1[13]);
 
     // Question 1.14
-    pushLongQuestion(PART1[14]).then(id => {
+    pushLongQuestion(PART1[14]).then((docRef) => {
+        // Record the id of the question itself
+        questionIds.push(docRef.id);
+
+        // Log it in the console
+        recordLongQuestionPush(14, docRef)
+
+        // Start preparing for the pushes of its sub-questions
+        initLongQuestionParams();
+
         // Question 1.14a
         let choices_1_14 = ["Yes", "No"];
         let skip_choices_1_14 = ["Yes"];
-        appendMultipleChoice(id, SUB_QUESTIONS_1_14[1], choices_1_14,
-            skip_choices_1_14, "insert question 1.15 id here",
+        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[1],
+            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[1]) // TODO
 
         // Question 1.14b
-        appendMultipleChoice(id, SUB_QUESTIONS_1_14[2], choices_1_14,
-            skip_choices_1_14, "insert question 1.15 id here",
+        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[2],
+            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[2]);  // TODO
 
         // Question 1.14c
-        appendMultipleChoice(id, SUB_QUESTIONS_1_14[3], choices_1_14,
-            skip_choices_1_14, "insert question 1.15 id here",
+        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[3],
+            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[3]);  // TODO
 
         // Question 1.14d
-        appendMultipleChoice(id, SUB_QUESTIONS_1_14[4], choices_1_14,
-            skip_choices_1_14, "insert question 1.15 id here",
+        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[4],
+            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[4]);  // TODO
     });
 
     // Question 1.15
-    pushLongQuestion(PART1[15]).then(id => {
+    pushLongQuestion(PART1[15]).then((docRef) => {
+        // Record the id of the question itself
+        questionIds.push(docRef.id);
+
+        // Log it in the console
+        recordLongQuestionPush(15, docRef)
+
+        // Start preparing for the pushes of its sub-questions
+        initLongQuestionParams();
+
         // Question 1.15a
         let choices_1_15 = ["Yes", "No"];
-        appendMultipleChoice(id, SUB_QUESTIONS_1_15[1], choices_1_15,
-            null, null,
+        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[1],
+            choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[1]);
 
         // Question 1.15b
-        appendMultipleChoice(id, SUB_QUESTIONS_1_15[2], choices_1_15,
-            null, null,
+        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[2],
+            choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[2]);
 
         // Question 1.15c
-        appendMultipleChoice(id, SUB_QUESTIONS_1_15[3], choices_1_15,
-            null, null,
+        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[3],
+            choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[3]);
 
         // Question 1.15d
-        appendMultipleChoice(id, SUB_QUESTIONS_1_15[4], choices_1_15,
-            null, null,
+        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[4],
+            choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[4]);
     });
 
     // Question 1.16
-    pushLongQuestion(PART1[16]).then(id => {
+    pushLongQuestion(PART1[16]).then((docRef) => {
+        // Record the id of the question itself
+        questionIds.push(docRef.id);
+
+        // Log it in the console
+        recordLongQuestionPush(16, docRef)
+
+        // Start preparing for the pushes of its sub-questions
+        initLongQuestionParams();
+
         // Question 1.16a
-        appendNumeric(id, UB_QUESTIONS_1_16[1], 1, 5,
-            SUB_QUESTIONS_HINTS_1_16[1]);
+        appendNumeric(16, docRef.id, SUB_QUESTIONS_1_16[1],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_16[1]);
 
         // Question 1.16b
-        appendNumeric(id, SUB_QUESTIONS_1_16[2], 1, 5,
-            SUB_QUESTIONS_HINTS_1_16[2]);
+        appendNumeric(16, docRef.id, SUB_QUESTIONS_1_16[2],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_16[2]);
 
         // Question 1.16c
-        appendNumeric(id, SUB_QUESTIONS_1_16[3], 1, 5,
-            SUB_QUESTIONS_HINTS_1_16[3]);
+        appendNumeric(16, docRef.id, SUB_QUESTIONS_1_16[3],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_16[3]);
     });
 }
 
@@ -517,13 +565,13 @@ function pushPart2Questions() {
 
     // Question 2.4
     let choices_2_4 = ["Yes", "No", "Not applicable"];
-    pushMultipleChoice(PART2[4], choices_2_4, null,
-        null, HINTS_PART2[4]);
+    pushMultipleChoice(PART2[4], choices_2_4, [],
+        SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
     let choices_2_5 = ["Yes", "No", "Not applicable"];
-    pushMultipleChoice(PART2[5], choices_2_5, null,
-        null, HINTS_PART2[5]);
+    pushMultipleChoice(PART2[5], choices_2_5, [],
+        SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
@@ -531,15 +579,15 @@ function pushPart2Questions() {
     let choices_2_6 = ["Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident",
         "Not applicable"];
-    pushMultipleChoice(PART2[6], choices_2_6, null,
-        null, HINTS_PART2[6]);
+    pushMultipleChoice(PART2[6], choices_2_6, [],
+        SKIP_NOT_ALLOWED, HINTS_PART2[6]);
 
     // Question 2.7
     let choices_2_7 = ["Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident",
         "Not applicable"];
-    pushMultipleChoice(PART2[7], choices_2_7, null,
-        null, HINTS_PART2[7]);
+    pushMultipleChoice(PART2[7], choices_2_7, [],
+        SKIP_NOT_ALLOWED, HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
@@ -555,14 +603,24 @@ function pushPart3Questions() {
         "public WiFi hotspot",
         "I don't have access to Internet"
     ];
-    pushMultipleChoice(PART3[1], choices_3_1, null,
-        null, HINTS_PART3[1]);
+    pushMultipleChoice(PART3[1], choices_3_1, [],
+        SKIP_NOT_ALLOWED, HINTS_PART3[1]);
 
     // Question 1.16
-    pushLongQuestion(PART3[2]).then(id => {
+    pushLongQuestion(PART3[2]).then((docRef) => {
+        // Record the id of the question itself
+        questionIds.push(docRef.id);
+
+        // Log it in the console
+        recordLongQuestionPush(2, docRef)
+
+        // Start preparing for the pushes of its sub-questions
+        initLongQuestionParams();
+
         // Questions 3.2 a to s (19 questions in total)
         for (let i = 1; i < 20; i++) {
-            appendNumeric(id, SUB_QUESTIONS_3_2[i], 1, 5,
+            appendNumeric(2, docRef.id, SUB_QUESTIONS_3_2[i],
+                1, 5, false,
                 SUB_QUESTIONS_HINTS_3_2[i]);
         }
     });
@@ -578,13 +636,24 @@ function pushPart4Questions() {
         HINTS_PART4[1]);
 
     // Question 4.2
-    pushNumeric(PART4[2], 0, 168, HINTS_PART4[2]);
+    pushNumeric(PART4[2], 0, 168, false,
+        HINTS_PART4[2]);
 
     // Question 4.3
-    pushLongQuestion(PART4[3]).then(id => {
+    pushLongQuestion(PART4[3]).then((docRef) => {
+        // Record the id of the question itself
+        questionIds.push(docRef.id);
+
+        // Log it in the console
+        recordLongQuestionPush(3, docRef)
+
+        // Start preparing for the pushes of its sub-questions
+        initLongQuestionParams();
+
         // Questions 4.3 a to d (4 questions in total)
         for (let i = 1; i < 5; i++) {
-            appendNumeric(id, SUB_QUESTIONS_4_3[i], 1, 7,
+            appendNumeric(4, docRef.id, SUB_QUESTIONS_4_3[i],
+                1, 7, false,
                 SUB_QUESTIONS_HINTS_4_3[i]);
         }
     });
@@ -643,6 +712,13 @@ function pushNumeric(questionText, lowerRange, upperRange, skipIfInvalid,
         },
         hint: hint
     };
+
+    // Increment the question number
+    questionNumber++;
+
+    // Record the IDs
+    pushQuestionObject(questionObject)
+        .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
 function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
@@ -669,8 +745,8 @@ function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
         question: "What is your ethnic group?",
         restrictions: {
             choices: ["Malay", "Chinese", "Indian", "Thai", "Others"],
-            skipChoices: null,
-            skipTarget: null
+            skipChoices: [],
+            skipTarget: "skip_not_allowed"
         },
         hint: "placeholder"
     };
@@ -701,6 +777,13 @@ function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
         },
         hint: hint
     };
+
+    // Increment the question number
+    questionNumber++;
+
+    // Record the IDs
+    pushQuestionObject(questionObject)
+        .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
 
@@ -738,6 +821,13 @@ function pushMultipleChoiceOthers(questionText, choices, skipChoices, skipTarget
         },
         hint: hint
     };
+
+    // Increment the question number
+    questionNumber++;
+
+    // Record the IDs
+    pushQuestionObject(questionObject)
+        .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
 function pushShortText(questionText, hint) {
@@ -748,7 +838,7 @@ function pushShortText(questionText, hint) {
         category: "Part II: About your employment",
         type: "short-text",
         question: "What is your current job/ occupation/ profession?",
-        restrictions: null,
+        restrictions: {},
         hint: "placeholder"
     };
 
@@ -757,9 +847,16 @@ function pushShortText(questionText, hint) {
         category: PART_TITLE[partNumber],
         type: TYPE_SHORT_TEXT,
         question: questionText,
-        restrictions: null,
+        restrictions: {},
         hint: hint
     };
+
+    // Increment the question number
+    questionNumber++;
+
+    // Record the IDs
+    pushQuestionObject(questionObject)
+        .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
 function pushLongText(questionText, hint) {
@@ -770,7 +867,7 @@ function pushLongText(questionText, hint) {
         category: "Part V: About your learning engagement",
         type: "long-text",
         question: "Why are you interested in learning using a mobile phone?",
-        restrictions: null,
+        restrictions: {},
         hint: "placeholder"
     };
 
@@ -779,9 +876,16 @@ function pushLongText(questionText, hint) {
         category: PART_TITLE[partNumber],
         type: TYPE_LONG_TEXT,
         question: questionText,
-        restrictions: null,
+        restrictions: {},
         hint: hint
     };
+
+    // Increment the question number
+    questionNumber++;
+
+    // Record the IDs
+    pushQuestionObject(questionObject)
+        .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
 function pushLongQuestion(questionText) {
@@ -798,7 +902,7 @@ function pushLongQuestion(questionText) {
             "[4] moderately interested, [5] highly interested, " +
             "[6] very interested," +
             "[7] extremely interested",
-        restrictions: null,
+        restrictions: {},
         hint: "placeholder"
     };
 
@@ -807,30 +911,35 @@ function pushLongQuestion(questionText) {
         category: PART_TITLE[partNumber],
         type: TYPE_LONG_QUESTION,
         question: questionText,
-        restrictions: null,
-        hint: null
+        restrictions: {},
+        hint: {}
     };
+
+    // Increment the question number
+    questionNumber++;
+
+    return pushQuestionObject(questionObject);
 }
 
-function appendNumeric(longQuestionId, questionText, lowerRange, upperRange,
-                       skipIfInvalid, hint) {
+function appendNumeric(questionNumber, longQuestionId, questionText, lowerRange,
+                       upperRange, skipIfInvalid, hint) {
     // Leaving this here as a reference to numeric
     // question objects.
     let reference = {
-        question_number: "1.1",
-        category: "Part I: About yourself",
+        question_number: "3.2b",
+        category: "Part III: About your mobile phone usage",
         type: "numeric",
-        question: "What is your age in years? (enter a number)",
+        question: "SMS, text messaging (such as Whatsapp, WeChat, etc.)",
         restrictions: {
-            lowerRange: 50,
-            upperRange: 200,
-            skipIfInvalid: true
+            lowerRange: 1,
+            upperRange: 5,
+            skipIfInvalid: false
         },
         hint: "placeholder"
     };
 
     let questionObject = {
-        question_number: `${partNumber}.${questionNumber}`,
+        question_number: getLongQuestionNumber(questionNumber),
         category: PART_TITLE[partNumber],
         type: TYPE_NUMERIC,
         question: questionText,
@@ -841,9 +950,15 @@ function appendNumeric(longQuestionId, questionText, lowerRange, upperRange,
         },
         hint: hint
     };
+
+    // Increment the alphabetIndex (the alphabetic numericals of sub-questions)
+    alphabetIndex++;
+
+    pushQuestionObject(questionObject)
+        .then((docRef) => recordSubQuestionPush(questionObject, docRef));
 }
 
-function appendMultipleChoice(longQuestionId, questionText, choices, skipChoices,
+function appendMultipleChoice(questionNumber, longQuestionId, questionText, choices, skipChoices,
                               skipTarget, hint) {
     // Leaving this here as a reference to multiple choice
     // question objects.
@@ -861,7 +976,7 @@ function appendMultipleChoice(longQuestionId, questionText, choices, skipChoices
     };
 
     let questionObject = {
-        question_number:`${partNumber}.${questionNumber}`,
+        question_number: getLongQuestionNumber(questionNumber),
         category: PART_TITLE[partNumber],
         type: TYPE_MULTIPLE_CHOICE,
         question: questionText,
@@ -872,18 +987,71 @@ function appendMultipleChoice(longQuestionId, questionText, choices, skipChoices
         },
         hint: hint
     };
+
+    // Increment the alphabetIndex (the alphabetic numericals of sub-questions)
+    alphabetIndex++;
+
+    pushQuestionObject(questionObject)
+        .then((docRef) => recordSubQuestionPush(questionObject, docRef));
 }
 
-function pushQuestionObject(branch, object) {
+function pushQuestionObject(questionObject) {
+    return firebase.firestore().collection(QUESTIONS_BRANCH).add(questionObject);
 }
-
 
 let partNumber = 0;
 let questionNumber = 0;
+let alphabetIndex = 0;
+
+// A list of question IDs of the current survey part
+let questionIds = [];
+
+// A list of question IDs for sub-questions within the current long question
+let subQuestionIds = [];
+
+function recordQuestionPush(questionObject, docRef) {
+    // Print some logs, maybe even display the questions via HTML
+    console.log(
+        `Question ${questionObject.question_number} pushed with ID ${docRef.id}`
+    );
+}
+
+function recordLongQuestionPush(questionNumber, docRef) {
+    // Print some logs, maybe even display the questions via HTML
+    console.log(
+        `Question ${partNumber}.${questionNumber} pushed with ID ${docRef.id}`
+    );
+}
 
 function setPartNumber(number) {
     partNumber = number;
-    questionNumber = 0;
+    questionNumber = 1;
+}
+
+function recordSubQuestionPush(questionObject, docRef) {
+    // Record the ID of the current sub-question
+    subQuestionIds.push(docRef.id);
+
+    // Increment the alphabet index
+    alphabetIndex++;
+
+    // Print some logs, maybe even display the questions via HTML
+    console.log(
+        `Sub-question ${questionObject.question_number} pushed with ID ${docRef.id}`
+    );
+}
+
+function initLongQuestionParams() {
+    // Initialize the ASCII code to 97 for 'a'
+    alphabetIndex = 97;
+}
+
+/**
+ * Returns the alphabetic numeral of the current sub-question
+ */
+function getLongQuestionNumber(questionNumber) {
+    let alphabet = String.fromCharCode(alphabetIndex);
+    return `${partNumber}.${questionNumber}${alphabet}`;
 }
 
 function uploadQuestions() {
