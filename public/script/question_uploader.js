@@ -447,74 +447,79 @@ function pushPart1Questions() {
     pushNumeric(PART1[13], 0, 999, false,
         HINTS_PART1[13]);
 
-    // Question 1.14
-    pushLongQuestion(PART1[14]).then((docRef) => {
-        // Record the id of the question itself
-        questionIds.push(docRef.id);
-        longQuestionIds.push(docRef.id);
-
-        // Log it in the console
-        let questionNumber = "1.14";
-        recordLongQuestionPush(questionNumber, docRef);
-
-        // Start preparing for the pushes of its sub-questions
-        initLongQuestionParams();
-
-        // Question 1.14a
-        let choices_1_14 = ["Yes", "No"];
-        let skip_choices_1_14 = ["Yes"];
-
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[1],
-            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
-            SUB_QUESTIONS_HINTS_1_14[1]) // TODO
-
-        // Question 1.14b
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[2],
-            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
-            SUB_QUESTIONS_HINTS_1_14[2]);  // TODO
-
-        // Question 1.14c
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[3],
-            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
-            SUB_QUESTIONS_HINTS_1_14[3]);  // TODO
-
-        // Question 1.14d
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[4],
-            choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
-            SUB_QUESTIONS_HINTS_1_14[4]);  // TODO
-    });
-
     // Question 1.15
-    pushLongQuestion(PART1[15]).then((docRef) => {
+    pushLongQuestion(PART1[15]).then((q15docRef) => {
+        // [START]                  Question 1.14                   [START]
+        // Inserted after Question 1.15
+
+        pushLongQuestion(PART1[14]).then((q14docRef) => {
+            // Record the id of the question itself
+            questionIds.push(q14docRef.id);
+            longQuestionIds.push(q14docRef.id);
+
+            // Log it in the console
+            let questionNumber = "1.14";
+            recordLongQuestionPush(questionNumber, q14docRef);
+
+            // Start preparing for the pushes of its sub-questions
+            initLongQuestionParams();
+
+            // Question 1.14a
+            let choices_1_14 = ["Yes", "No"];
+            let skip_choices_1_14 = ["Yes"];
+
+            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[1],
+                choices_1_14, skip_choices_1_14, q15docRef.id,
+                SUB_QUESTIONS_HINTS_1_14[1]);
+
+            // Question 1.14b
+            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[2],
+                choices_1_14, skip_choices_1_14, q15docRef.id,
+                SUB_QUESTIONS_HINTS_1_14[2]);
+
+            // Question 1.14c
+            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[3],
+                choices_1_14, skip_choices_1_14, q15docRef.id,
+                SUB_QUESTIONS_HINTS_1_14[3]);
+
+            // Question 1.14d
+            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[4],
+                choices_1_14, skip_choices_1_14, q15docRef.id,
+                SUB_QUESTIONS_HINTS_1_14[4]);
+        });
+
+        // [END]                       Question 1.14                    [END]
+
+
         // Record the id of the question itself
-        questionIds.push(docRef.id);
-        longQuestionIds.push(docRef.id);
+        questionIds.push(q15docRef.id);
+        longQuestionIds.push(q15docRef.id);
 
         // Log it in the console
         let questionNumber = "1.15";
-        recordLongQuestionPush(questionNumber, docRef)
+        recordLongQuestionPush(questionNumber, q15docRef)
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
         // Question 1.15a
         let choices_1_15 = ["Yes", "No"];
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[1],
+        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[1],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[1]);
 
         // Question 1.15b
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[2],
+        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[2],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[2]);
 
         // Question 1.15c
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[3],
+        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[3],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[3]);
 
         // Question 1.15d
-        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[4],
+        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[4],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[4]);
     });
