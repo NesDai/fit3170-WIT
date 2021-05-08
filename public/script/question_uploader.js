@@ -451,9 +451,11 @@ function pushPart1Questions() {
     pushLongQuestion(PART1[14]).then((docRef) => {
         // Record the id of the question itself
         questionIds.push(docRef.id);
+        longQuestionIds.push(docRef.id);
 
         // Log it in the console
-        recordLongQuestionPush(14, docRef)
+        let questionNumber = "1.14";
+        recordLongQuestionPush(questionNumber, docRef);
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
@@ -461,22 +463,23 @@ function pushPart1Questions() {
         // Question 1.14a
         let choices_1_14 = ["Yes", "No"];
         let skip_choices_1_14 = ["Yes"];
-        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[1],
+
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[1],
             choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[1]) // TODO
 
         // Question 1.14b
-        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[2],
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[2],
             choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[2]);  // TODO
 
         // Question 1.14c
-        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[3],
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[3],
             choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[3]);  // TODO
 
         // Question 1.14d
-        appendMultipleChoice(14, docRef.id, SUB_QUESTIONS_1_14[4],
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_14[4],
             choices_1_14, skip_choices_1_14, "insert question 1.15 id here",
             SUB_QUESTIONS_HINTS_1_14[4]);  // TODO
     });
@@ -485,31 +488,33 @@ function pushPart1Questions() {
     pushLongQuestion(PART1[15]).then((docRef) => {
         // Record the id of the question itself
         questionIds.push(docRef.id);
+        longQuestionIds.push(docRef.id);
 
         // Log it in the console
-        recordLongQuestionPush(15, docRef)
+        let questionNumber = "1.15";
+        recordLongQuestionPush(questionNumber, docRef)
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
         // Question 1.15a
         let choices_1_15 = ["Yes", "No"];
-        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[1],
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[1],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[1]);
 
         // Question 1.15b
-        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[2],
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[2],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[2]);
 
         // Question 1.15c
-        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[3],
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[3],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[3]);
 
         // Question 1.15d
-        appendMultipleChoice(15, docRef.id, SUB_QUESTIONS_1_15[4],
+        appendMultipleChoice(questionNumber, docRef.id, SUB_QUESTIONS_1_15[4],
             choices_1_15, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[4]);
     });
@@ -518,23 +523,25 @@ function pushPart1Questions() {
     pushLongQuestion(PART1[16]).then((docRef) => {
         // Record the id of the question itself
         questionIds.push(docRef.id);
+        longQuestionIds.push(docRef.id);
 
         // Log it in the console
-        recordLongQuestionPush(16, docRef)
+        let questionNumber = "1.16";
+        recordLongQuestionPush(questionNumber, docRef)
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
         // Question 1.16a
-        appendNumeric(16, docRef.id, SUB_QUESTIONS_1_16[1],
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[1],
             1, 5, false, SUB_QUESTIONS_HINTS_1_16[1]);
 
         // Question 1.16b
-        appendNumeric(16, docRef.id, SUB_QUESTIONS_1_16[2],
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[2],
             1, 5, false, SUB_QUESTIONS_HINTS_1_16[2]);
 
         // Question 1.16c
-        appendNumeric(16, docRef.id, SUB_QUESTIONS_1_16[3],
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[3],
             1, 5, false, SUB_QUESTIONS_HINTS_1_16[3]);
     });
 }
@@ -610,16 +617,19 @@ function pushPart3Questions() {
     pushLongQuestion(PART3[2]).then((docRef) => {
         // Record the id of the question itself
         questionIds.push(docRef.id);
+        longQuestionIds.push(docRef.id);
 
         // Log it in the console
-        recordLongQuestionPush(2, docRef)
+        let questionNumber = "3.2";
+        recordLongQuestionPush(questionNumber, docRef);
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
         // Questions 3.2 a to s (19 questions in total)
         for (let i = 1; i < 20; i++) {
-            appendNumeric(2, docRef.id, SUB_QUESTIONS_3_2[i],
+
+            appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_3_2[i],
                 1, 5, false,
                 SUB_QUESTIONS_HINTS_3_2[i]);
         }
@@ -643,16 +653,18 @@ function pushPart4Questions() {
     pushLongQuestion(PART4[3]).then((docRef) => {
         // Record the id of the question itself
         questionIds.push(docRef.id);
+        longQuestionIds.push(docRef.id);
 
         // Log it in the console
-        recordLongQuestionPush(3, docRef)
+        let questionNumber = "4.3";
+        recordLongQuestionPush(questionNumber, docRef);
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
         // Questions 4.3 a to d (4 questions in total)
         for (let i = 1; i < 5; i++) {
-            appendNumeric(4, docRef.id, SUB_QUESTIONS_4_3[i],
+            appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_4_3[i],
                 1, 7, false,
                 SUB_QUESTIONS_HINTS_4_3[i]);
         }
@@ -903,7 +915,8 @@ function pushLongQuestion(questionText) {
             "[6] very interested," +
             "[7] extremely interested",
         restrictions: {},
-        hint: "placeholder"
+        hint: "placeholder",
+        arrangement: []
     };
 
     let questionObject = {
@@ -912,7 +925,8 @@ function pushLongQuestion(questionText) {
         type: TYPE_LONG_QUESTION,
         question: questionText,
         restrictions: {},
-        hint: {}
+        hint: {},
+        arrangement: []
     };
 
     // Increment the question number
@@ -921,8 +935,8 @@ function pushLongQuestion(questionText) {
     return pushQuestionObject(questionObject);
 }
 
-function appendNumeric(questionNumber, longQuestionId, questionText, lowerRange,
-                       upperRange, skipIfInvalid, hint) {
+function appendNumeric(questionNumber, longQuestionId, questionText,
+                       lowerRange, upperRange, skipIfInvalid, hint) {
     // Leaving this here as a reference to numeric
     // question objects.
     let reference = {
@@ -955,11 +969,14 @@ function appendNumeric(questionNumber, longQuestionId, questionText, lowerRange,
     alphabetIndex++;
 
     pushQuestionObject(questionObject)
-        .then((docRef) => recordSubQuestionPush(questionObject, docRef));
+        .then((docRef) => {
+            recordSubQuestionPush(longQuestionId, questionObject, docRef)
+        });
 }
 
-function appendMultipleChoice(questionNumber, longQuestionId, questionText, choices, skipChoices,
-                              skipTarget, hint) {
+function appendMultipleChoice(questionNumber, longQuestionId,
+                              questionText, choices, skipChoices, skipTarget,
+                              hint) {
     // Leaving this here as a reference to multiple choice
     // question objects.
     let reference = {
@@ -992,7 +1009,9 @@ function appendMultipleChoice(questionNumber, longQuestionId, questionText, choi
     alphabetIndex++;
 
     pushQuestionObject(questionObject)
-        .then((docRef) => recordSubQuestionPush(questionObject, docRef));
+        .then((docRef) => {
+            recordSubQuestionPush(longQuestionId, questionObject, docRef)
+        });
 }
 
 function pushQuestionObject(questionObject) {
@@ -1006,10 +1025,18 @@ let alphabetIndex = 0;
 // A list of question IDs of the current survey part
 let questionIds = [];
 
-// A list of question IDs for sub-questions within the current long question
-let subQuestionIds = [];
+// A sequence of IDs of long questions, will come in handy
+// when we need to append the IDs of sub-questions to them.
+let longQuestionIds = [];
+
+// A dictionary for storing IDs of sub-questions where the key
+// is the question ID of its associated long question
+let subQuestionIds = {};
 
 function recordQuestionPush(questionObject, docRef) {
+    // Save the question ID
+    questionIds.push(docRef.id);
+
     // Print some logs, maybe even display the questions via HTML
     console.log(
         `Question ${questionObject.question_number} pushed with ID ${docRef.id}`
@@ -1017,9 +1044,12 @@ function recordQuestionPush(questionObject, docRef) {
 }
 
 function recordLongQuestionPush(questionNumber, docRef) {
+    // Save the question ID
+    questionIds.push(docRef.id);
+
     // Print some logs, maybe even display the questions via HTML
     console.log(
-        `Question ${partNumber}.${questionNumber} pushed with ID ${docRef.id}`
+        `Question ${questionNumber} pushed with ID ${docRef.id}`
     );
 }
 
@@ -1028,9 +1058,14 @@ function setPartNumber(number) {
     questionNumber = 1;
 }
 
-function recordSubQuestionPush(questionObject, docRef) {
+function recordSubQuestionPush(longQuestionId, questionObject, docRef) {
     // Record the ID of the current sub-question
-    subQuestionIds.push(docRef.id);
+    if (!(longQuestionId in subQuestionIds)) {
+        // List does not exist in dictionary, make one
+        // before pushing
+        subQuestionIds[longQuestionId] = [];
+    }
+    subQuestionIds[longQuestionId].push(docRef.id);
 
     // Increment the alphabet index
     alphabetIndex++;
@@ -1051,7 +1086,34 @@ function initLongQuestionParams() {
  */
 function getLongQuestionNumber(questionNumber) {
     let alphabet = String.fromCharCode(alphabetIndex);
-    return `${partNumber}.${questionNumber}${alphabet}`;
+    return `${questionNumber}${alphabet}`;
+}
+
+/**
+ * "What the **** is up with this long function name?" - Probably you
+ * <br>
+ * "Hey, you only need to call it once, why fret?" - Probably me
+ */
+function updateLongQuestionsWithSubQuestionIds() {
+    for (let longQuestionId of Object.getOwnPropertyNames(subQuestionIds)) {
+        // For each long question, update its
+        // arrangement attribute with a list
+        // of IDs representing its sub-questions.
+
+        let arrangement = subQuestionIds[longQuestionId];
+
+        firebase.firestore().collection(QUESTIONS_BRANCH).doc(longQuestionId)
+            .update({
+                "arrangement": arrangement
+            })
+            .then(() => {
+                let info = "Long question with id " +
+                    longQuestionId +
+                    "has been updated with subQuestionIds:";
+                console.log(info);
+                console.log(arrangement);
+            });
+    }
 }
 
 function uploadQuestions() {
@@ -1060,4 +1122,37 @@ function uploadQuestions() {
     pushPart3Questions();
     pushPart4Questions();
     pushPart5Questions();
+}
+
+/**
+ * Call this manually AFTER uploadQuestions() has completely finished to
+ * <br>
+ * 1. Output the question IDs for each part and
+ * <br>
+ * 2. To update the long question objects with IDs of their sub-questions.
+ */
+function housekeeping() {
+    updateLongQuestionsWithSubQuestionIds();
+
+    let result = [];
+    // Try to output the list of question Ids for each part
+    // 16 questions for part 1
+    // 7 questions for part 2
+    // 2 questions for part 3
+    // 5 questions for part 4, 4 implemented
+    // 4 questions for part 5
+
+    // These are the indices where the survey part gets changed
+    let startingIndex = 0;
+    let indices = [16, 23, 25, 29, 33];
+    for (let endingIndex of indices) {
+        result.push(questionIds.slice(startingIndex, endingIndex));
+        startingIndex = endingIndex;
+    }
+
+    // Print em' to the console!
+    for (let i = 0; i < result.length; i++) {
+        console.log(`Part ${i + 1} IDs:`);
+        console.log(result[i]);
+    }
 }
