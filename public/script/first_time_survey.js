@@ -1,58 +1,112 @@
-// Initialising variables
-let messages = document.getElementById('messages');
-let textboxInput = document.getElementById('message');
-let submit = document.getElementById('submit');
-let input = document.getElementById('input-box');
+// A list of IDs of question objects that are stored in
+// the Firestore Database
+const QUESTION_IDS = [
+    "bLpb14LU78F3Qg8Rn2WY",
+    "7a0n5h3lneB2fqNsKtuO",
+    "dMZJyk7DZoeBIQd5xyyX",
+    "aE2dmGt23cwAgXMk5ZDh",
+    "0auWxufj6xLC5iYg7lfy",
+    "GHesoB9iZVOHccbOXZHV",
+    "iU3aKAUZctHQ2RK0A9nf",
+    "dIzgM6Q9kcqk17CMdbEo",
+    "KcDaybedgRBvfTWf8Cl4",
+    "OjmKlnJzHHRn1R9QP2Bi",
+    "wZstrbn7rbrGuOhlvsap",
+    "dzdJAKosEo5cHgelX6F2",
+    "xPGzYhaCAjCvJPosH4vq",
+    "dm9odnVFH35xgtGL1ysG",
+    "dm9odnVFH35xgtGL1ysG",
+    "l10CXfmS8DuPqOHboZPH",
+    // Part 1 question IDs above
 
+    "l10CXfmS8DuPqOHboZPH",
+    "MrKwbkqayRL86Tb3YkVd",
+    "lDQiOygENhgilzyM7hu9",
+    "h9gBeRV9il5Sqlga0YPJ",
+    "iu1Itgy8rRA3pYpdGQZM",
+    "f0N7Bfgt3keSyKlZ9ejU",
+    "wiPxWBsXUVBaMjhfBI8A",
+    // Part 2 question IDs above
 
-// to ask open ended questions
-let sampleQuestions = [{
-    question: "Sample MCQ 1",
-    option: ["Answer 1", "Answer 2", "Answer 3"],
-    mcq: true
-},
-    {
-        question: "Sample MCQ 2",
-        option: ["Answer 4", "Answer 5", "Answer 6"],
-        mcq: true
-    },
-    {
-        question: "Sample Open Question 1",
-        option: [],
-        mcq: false
-    },
-    {
-        question: "Sample Open Question 2",
-        option: [],
-        mcq: false
-    }]
-let currentQuestion = 0;
+    "V1BhcYdWrkjDqU9QLuPa",
+    "XrPWt5Csa8tszyeShIZD",
+    // Part 3 question IDs above
 
+    "N0CRo2tA81MLuYAOvqGS",
+    "N0CRo2tA81MLuYAOvqGS",
+    "xfQJ7SRSjwMUtDvcCxhe",
+    "fPPvrcib7Sfc5q4jUToj",
+    // Part 4 question IDs above
+
+    "BF7CeIhINBgeikwp5jgo",
+    "BF7CeIhINBgeikwp5jgo",
+    "fuxd0845z1Wjr1VSzUnw",
+    "ON9ijDsniz5SHDb5DUVT"
+    // Part 5 question IDs above
+];
+
+// Initializing variables
+let messages = document.getElementById("messages");
+let textBoxInput = document.getElementById("message");
+let submit = document.getElementById("submit");
+let input = document.getElementById("input-box");
+
+/*
+The user object of the currently logged in user
+<br>
+Can be used to retrieve details such as phone number
+and user ID.
+ */
+let currentUser = null;
+
+let currentQuestionId = null;
+let currentQuestionObject = null;
+let currentSetId = 0;
+
+/*
+Stores the index of the current question object
+<br>
+Used to retrieve the current question object's ID from
+QUESTION_IDS
+ */
+let questionIndex = 0;
+
+/*
+Used when displaying sub-questions
+ */
+let subQuestionIndex = 0;
+let currentSubQuestionIds = null;
 
 // Runs as a first-time greeting from the bot
+greeting();
+
 function greeting() {
-    let quesTemplate = '<div class="space">\
-                              <div class="message-container sender">\
-                                  <p>Hi! I am the chatbot for this App.</p>\
-                                  <p>To get started, I would like to get to know you better by asking a few questions.</p>\
-                              </div>\
-                          </div>';
+    let quesTemplate =
+        "<div class='space'>" +
+        "<div class='message-container sender'>" +
+        "<p>Hi! I am the chatbot for this App.</p>" +
+        "<p>To get started, I would like to get to know " +
+        "you better by asking a few questions.</p>" +
+        "</div>" +
+        "</div>";
 
     setTimeout(() => {
         messages.innerHTML += quesTemplate;
     }, 750);
 
-    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+    scrollToBottom();
 
-    setTimeout(function () {
-        nextQues();
+    setTimeout(() => {
+        nextQuestion();
     }, 1500);
 }
 
-
-// onclick function for option buttons
-function choose(button) {
-    let content = button.textContent.trim()
+/**
+ * onclick function for option buttons.
+ * @param button The option button
+ */
+function select(button) {
+    let content = button.textContent.trim();
 
     let ansTemplate = '<div class="space">\
                             <div class="message-container receiver">\
@@ -67,107 +121,289 @@ function choose(button) {
 
     messages.innerHTML += ansTemplate;
 
-    setTimeout(function () {
-        nextQues();
-    }, 1000);
+    setTimeout(() => {
+        nextQuestion();
+    }, 1000)
+
+    saveResponse(input.value);
 }
 
-
-// Adds the answer as a message
+/**
+ * Adds the user response as a chat bot message
+ */
 function addMessage() {
     let message = input.value;
 
     if (message.length > 0) {
-        let messageTemplate = '<div class="space">\
-                            <div class="message-container receiver">\
-                                <p>' + message + '</p>\
-                            </div>\
-                        </div>';
+        let messageTemplate =
+            "<div class='space'>" +
+            "<div class='message-container receiver'>" +
+            `<p>${message}</p>` +
+            "</div>" +
+            "</div>";
 
         messages.innerHTML += messageTemplate;
         input.value = "";
     }
 
-    // prevent users from using textbox
+    // Prevent users from using text box
     submit.disabled = true;
     input.disabled = true;
 
-    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+    scrollToBottom();
 
-    // TODO: Code for writing to database 
-    //   ...
-
-    setTimeout(function () {
-        nextQues();
+    setTimeout(() => {
+        nextQuestion();
     }, 1000);
+
+    let question_id = "";
+
+    saveResponse(currentQuestionObject, input.value);
 }
-
-
-// functions that ask open ended questions iteratively
-function nextQues() {
-    if (currentQuestion < sampleQuestions.length) {
-        // if it is an open ended questions
-        if (sampleQuestions[currentQuestion].mcq == false) {
-            messages.innerHTML += '<div class="space">\
-                                        <div class="message-container sender">\
-                                            <p>' + sampleQuestions[currentQuestion].question + '</p>\
-                                            <p>Please type your answer in the box below.</p>\
-                                        </div>\
-                                    </div>';
-
-            // enable users to use textbox
-            submit.disabled = false;
-            input.disabled = false;
-        }
-        // if it is a MCQ
-        else {
-            messages.innerHTML += '<div class="space">\
-                                        <div class="message-container sender">\
-                                            <p>' + sampleQuestions[currentQuestion].question + '</p>\
-                                        </div>\
-                                    </div>';
-
-            let mcqOptions = "<div class=\"space\">"
-            for (i = 0; i < sampleQuestions[currentQuestion].option.length; i++) {
-                mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"choose(this)\">" + sampleQuestions[currentQuestion].option[i] + "</button>"
-            }
-            mcqOptions += "</div>"
-
-            messages.innerHTML += mcqOptions;
-
-            // prevent users from using textbox
-            submit.disabled = true;
-            input.disabled = true;
-        }
-        currentQuestion += 1;
-    } else {
-        messages.innerHTML += '<div class="space">\
-        <div class="message-container sender">\
-            <p>That\'s all the questions we have for you right now. You can either continue asking questions, or browse the rest of the application!</p>\
-        </div>\
-        </div>';
-    }
-
-    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
-
-    // TODO: Code for writing to database 
-    //   ...
-}
-
-
-// When the page loads
-greeting()
 
 /**
- * Saves a user response to a survey question to the
+ * Increments the question counter by 1 and moves on to the next
+ * question.
+ */
+function nextQuestion() {
+    if (currentSubQuestionIds !== null) {
+        // If the user is answering sub-questions
+        if (subQuestionIndex === currentSubQuestionIds.length - 1) {
+            // If the user has completed answering sub-questions,
+            // increment the questionIndex and move on
+            questionIndex++;
+            currentSubQuestionIds = null;
+            showQuestion(false);
+        } else {
+            showQuestion(true);
+        }
+    } else if (questionIndex < QUESTION_IDS.length - 1) {
+        // If the user is answering normal questions
+        showQuestion(false);
+    } else {
+        let endingMessage = "That's all the questions we have for you " +
+            "right now. You can either continue asking questions, or" +
+            " browse the rest of the application!"
+        showMessage(endingMessage);
+    }
+}
+
+/**
+ * Appends a message bubble to the chat bot containing
+ * the specified message string.
+ * @param message A message string
+ */
+function showMessage(message) {
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
+}
+
+/**
+ * Appends a message bubble to the chat bot containing
+ * the specified question string with the prompt
+ * "Please type your answer in the box below."
+ * @param questionString The question string
+ */
+function showShortQuestionMessage(questionString) {
+    document.getElementById("messages").innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender'>" +
+        `<p>${questionString}</p>` +
+        "<p>Please type your answer in the box below.</p>" +
+        "</div>" +
+        "</div>";
+}
+
+function scrollToBottom() {
+    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+}
+
+function showQuestion(isSubQuestion) {
+    // Get the ID of the current question
+    if (isSubQuestion) {
+        currentQuestionId = currentSubQuestionIds[subQuestionIndex];
+    } else {
+        currentQuestionId = QUESTION_IDS[questionIndex];
+    }
+    console.log("Reading ", currentQuestionId);
+
+    firebase.firestore().collection(QUESTIONS_BRANCH)
+        .doc(currentQuestionId)
+        .get()
+        .then((docRef) => {
+            let questionObject = docRef.data();
+            let questionType = questionObject.type;
+
+            console.log(questionObject);
+            currentQuestionObject = questionObject;
+
+            switch (questionType) {
+                case TYPE_NUMERIC:
+                    showNumeric(questionObject);
+                    break;
+                case TYPE_MULTIPLE_CHOICE:
+                    showMultipleChoice(questionObject);
+                    break;
+                case TYPE_MULTIPLE_CHOICE_OTHERS:
+                    showMultipleChoiceOthers(questionObject);
+                    break;
+                case TYPE_SHORT_TEXT:
+                    showShortText(questionObject);
+                    break;
+                case TYPE_LONG_TEXT:
+                    showLongText(questionObject);
+                    break;
+                case TYPE_LONG_QUESTION:
+                    showLongQuestion(questionObject);
+                    break;
+                default:
+                    let errorLog = "[ERROR]Invalid question type supplied: " +
+                        questionType +
+                        "\nQuestion object: " +
+                        questionObject;
+                    console.log(errorLog)
+            }
+
+            // Scroll the chat box window to the correct position
+            scrollToBottom()
+        });
+
+    if (isSubQuestion) {
+        subQuestionIndex++;
+    } else {
+        questionIndex++;
+    }
+}
+
+function showNumeric(questionObject) {
+    //TODO To be implemented
+    showShortText(questionObject);
+}
+
+function showMultipleChoice(questionObject) {
+    // Leaving these here as references to multiple choice
+    // question objects.
+    let reference = {
+        question_number: "1.2",
+        category: "Part I: About yourself",
+        type: "multiple-choice",
+        question: "What is your gender?",
+        restrictions: {
+            choices: ["Male", "Female"],
+            skipChoice: ["Male"],
+            skipTarget: "end_survey"
+        },
+        hint: "placeholder"
+    };
+
+    let question = questionObject.question;
+    let choices = questionObject.restrictions.choices;
+
+    // TODO Implement validation checks and skip logic
+
+    showMessage(question);
+    showOptions(choices);
+}
+
+function showMultipleChoiceOthers(questionObject) {
+    //TODO To be implemented
+    showMultipleChoice(questionObject);
+}
+
+function showLongQuestion(questionObject) {
+    // Leaving this here as a reference to long questions
+    // (questions with sub-questions)
+    let reference = {
+        question_number: "4.3",
+        category: "Part IV: About your learning interest",
+        type: "long-question",
+        question: "How interested are you to learn the following skills" +
+            "using a mobile phone ? (Rate from 1 to 7)" +
+            "[1] extremely not interested, [2] very not interested, " +
+            "[3] not interested," +
+            "[4] moderately interested, [5] highly interested, " +
+            "[6] very interested," +
+            "[7] extremely interested",
+        restrictions: {},
+        hint: "placeholder",
+        arrangement: []
+    };
+
+    showMessage(questionObject.question);
+
+    // Initialize fields for looping over the sub-question IDs
+    // array
+    subQuestionIndex = 0;
+    currentSubQuestionIds = questionObject.arrangement;
+    showQuestion(true);
+}
+
+function showShortText(questionObject) {
+    let question = questionObject.question;
+
+    // TODO Implement validation
+
+    showShortQuestionMessage(questionObject.question);
+    enableTextBox();
+}
+
+function showLongText(questionObject) {
+    //TODO To be implemented
+    showShortText(questionObject);
+}
+
+function showOptions(choices) {
+    let mcqOptions = "<div class=\"space\">"
+    for (let choice of choices) {
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"select(this)\">" + choice + "</button>";
+    }
+    mcqOptions += "</div>";
+    messages.innerHTML += mcqOptions;
+
+    disableTextBox();
+}
+
+/**
+ * Prevents users from using the input text box
+ */
+function disableTextBox() {
+    submit.disabled = true;
+    input.disabled = true;
+}
+
+/**
+ * Enables users to use the input text box
+ */
+function enableTextBox() {
+    submit.disabled = false;
+    input.disabled = false;
+}
+
+/**
+ * Listen for changes in the firebase auth system
+ * and initializes the user object.
+ */
+function initFirebaseAuth() {
+    // Listen to auth state changes.
+    firebase.auth().onAuthStateChanged(() => {
+        // Initialize current user object
+        currentUser = firebase.auth().currentUser;
+        initSetId();
+    });
+}
+
+/**
+ * Saves a user response to a survey question into the
  * Firestore Database.
  *
- * @param question_id The question's id (AKA its document ID)
- * @param question A question object (AKA the document object itself)
  * @param answer A string indicating the user's selected or typed answer.
  *               Objects are also accepted in more complex scenarios.
  */
-function saveResponse(question_id, question, answer) {
+function saveResponse(answer) {
     // Formulating the branch
     let phone = currentUser.phoneNumber;
     let today = new Date();
@@ -177,64 +413,91 @@ function saveResponse(question_id, question, answer) {
 
     // Formulating the response object
 
+    let timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+    // Writing a response object to survey_responses
+    let responseObject = {
+        question_id: currentQuestionId,
+        type: currentQuestionObject.type,
+        question: currentQuestionObject.question,
+        restrictions: currentQuestionObject.restrictions,
+        set_id: currentSetId,
+        answer: answer,
+        timestamp: timestamp
+    };
+
+    // Add an auto-ID response entry to the data branch
+    firebase.firestore().collection(branch).add(responseObject)
+        .then((docRef) => {
+            console.log("Response object written with ID: ", docRef.id);
+
+            // After writing the response to survey_responses, also
+            // write it to survey_questions/question_id
+            let reducedResponseObject = {
+                phone: phone,
+                data: date,
+                answer: answer,
+                timestamp: timestamp
+            };
+            let responseBranch = `chatbot/survey_questions/questions/
+                    ${currentQuestionId}/responses`
+
+            firebase.firestore().collection(responseBranch)
+                .doc(docRef.id)
+                // The response ID we got in the first store
+                .set(reducedResponseObject)
+                .then(() => {
+                    console.log("Response written with ID: ", docRef.id,
+                        " at survey_questions branch");
+                })
+                .catch((error) => {
+                    console.error("Error writing response copy at" +
+                        " survey_questions branch: ", error);
+                });
+        })
+        .catch((error) => {
+            console.error("Error writing response at survey_responses" +
+                " branch: ", error);
+        });
+}
+
+function initSetId() {
+    // Formulating the branch
+    let phone = currentUser.phoneNumber;
+    let today = new Date();
+    let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    let userBranch = `chatbot/survey_responses/${phone}`;
+
+    // Formulating the response object
+
     // Retrieve the set id
     let reference = firebase.firestore().collection(userBranch).doc(date);
 
     reference.get().then((document) => {
         if (document.exists) {
-            // If the date branch exists, that means this isn't the first
-            // survey instance for the day
-            let timestamp = firebase.firestore.FieldValue.serverTimestamp();
+            // If the data branch exists, that means this isn't the first
+            // survey instance for the day.
+            currentSetId = document.data().set_id + 1;
 
-            // Writing a response object to survey_responses
-            let responseObject = {
-                question_id: question_id,
-                type: question.type,
-                question: question.question,
-                restrictions: question.restrictions,
-                set_id: document.data().set_id,
-                answer: answer,
-                timestamp: timestamp
-            };
-
-            // Add an auto-ID response entry to the date branch
-            firebase.firestore().collection(branch).add(responseObject)
-                .then((docRef) => {
-                    console.log("Response object written with ID: ", docRef.id);
-
-                    // After writing the response to survey_responses, also
-                    // write it to survey_questions/question_id
-                    let reducedResponseObject = {
-                        phone: phone,
-                        date: date,
-                        answer: answer,
-                        timestamp: timestamp
-                    };
-                    let responsesBranch =
-                        `chatbot/survey_questions/questions/${question_id}/responses`
-
-                    firebase.firestore().collection(responsesBranch)
-                        .doc(docRef.id) // The response ID we got in the first store
-                        .set(reducedResponseObject)
-                        .then(() => {
-                            console.log("Response written with ID: ", docRef.id,
-                                " at survey_questions branch.");
-                        })
-                        .catch((error) => {
-                            console.error("Error writing response copy at" +
-                                "survey_questions branch: ", error);
-                        });
+            // Increment the set_id at the Firestore Database by 1
+            // Initialize set_id to 0 and write it to the database
+            firebase.firestore().collection(userBranch).doc(date)
+                .set({set_id: currentSetId})
+                .then(() => {
+                    console.log("Document written with ID: ", date);
                 })
                 .catch((error) => {
-                    console.error("Error writing reponse at survey_responses " +
-                        "branch: ", error);
+                    console.error("Error writing content: ", error);
                 });
         } else {
+            // The user is taking the survey for the first time
+            // at this moment.
+
             // doc.data() will be undefined in this case
             console.log("No such document!");
 
             // If the document doesn't exist, it means that this
-            // is the first survey instance for the day.
+            // is the first surevy instance for the day.
 
             // Initialize set_id to 0 and write it to the database
             firebase.firestore().collection(userBranch).doc(date)
@@ -246,24 +509,8 @@ function saveResponse(question_id, question, answer) {
                     console.error("Error writing content: ", error);
                 });
         }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
     });
 }
-
-/**
- * Listen for changes in the firebase auth system
- * and initialize the  user object.
- */
-function initFirebaseAuth() {
-    // Listen to auth state changes.
-    firebase.auth().onAuthStateChanged(() => {
-        // Initialize current user object
-        currentUser = firebase.auth().currentUser;
-    });
-}
-
-let currentUser = null;
 
 // Initialize only when firebase has been fully loaded
 // Things get funky if I don't do this

@@ -1,45 +1,9 @@
-// Indicates the question type as numeric
-const TYPE_NUMERIC = "numeric";
-
-// Indicates the question type as multiple choice
-const TYPE_MULTIPLE_CHOICE = "multiple-choice";
-
-// Indicates a multiple choice question with an
-// "Others" free text input
-const TYPE_MULTIPLE_CHOICE_OTHERS = "multiple-choice-others";
-
-// Indicates a question accepting short text inputs
-const TYPE_SHORT_TEXT = "short-text";
-
-// Indicates a question accepting long text inputs
-const TYPE_LONG_TEXT = "long-text";
-
-// Indicates a long question (a questions containing sub-questions)
-const TYPE_LONG_QUESTION = "long-question";
-
-// Represents a logical survey skip operation
-// that ends the survey
-const SKIP_END_SURVEY = "end_survey";
-
-// Represents a skip logic that doesn't allow skips
-const SKIP_NOT_ALLOWED = "skip_not_allowed";
-
-
-// Contains title strings for the survey parts
-const PART_TITLE = [
-    "",
-    // The above title is a placeholder to allow 1-indexing
-
-    "Part 1: About yourself",
-    "Part 2: About your employment",
-    "Part 3: About your mobile phone usage",
-    "Part 4: About your learning interest",
-    "Part 4: About your learning engagement"
-]
-
-// The path for storing/retrieving questions from
-// the Firebase Firestore Database
-const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
+/**
+ * This file is used to automatically upload the survey questions
+ * to the Firestore Database.
+ *
+ * @author Yong Peng (ychi0014@student.monash.edu)
+ */
 
 const SUB_QUESTIONS_1_14 = [
     "",
@@ -565,7 +529,8 @@ function pushPart2Questions() {
         "Not working but looking for a job"];
     pushMultipleChoiceOthers(PART2[1], choices_2_1,
         skip_choices_2_1,
-        "insert question 2.3 id here", // TODO
+        "insert question 2.3 id here",
+        // TODO please insert this manually every time after a push
         HINTS_PART2[1]);
 
     // Question 2.2
@@ -776,7 +741,6 @@ function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
         restrictions: {
             choices: ["Yes", "No"],
             skipChoices: "Yes",
-            //TODO
             skipTarget: "insert 1.15 question id here"
         },
         hint: "placeholder"
@@ -820,7 +784,6 @@ function pushMultipleChoiceOthers(questionText, choices, skipChoices, skipTarget
             skipChoices: ["Retired", "Not working",
                 "Not working but doing voluntary work",
                 "Not working but looking for a job"],
-            //TODO
             skipTarget: "insert 2.1 question id here"
         },
         hint: "placeholder"
