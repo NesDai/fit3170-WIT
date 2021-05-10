@@ -107,8 +107,19 @@
         .demo-card-wide{
           width: 100%;
           border-radius: 20px;
-          background: #439889;
-          
+          /* background: #439889; */
+          background: #008e76;
+        }
+        #back_btn{
+            border-radius: 20px;
+            background-color: #439889;
+            color: white;
+        }
+        #back_btn:hover {
+            background-color:#4db6ac;
+        }
+        #back_btn_icon{
+            padding: 0%;
         }
         
     </style>
@@ -123,7 +134,14 @@
     <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-             <h3><i class="material-icons"><!-- MDL Icon code --> </i> Forum </h3>
+             <h4><i class="material-icons"><!-- MDL Icon code --> </i> Create New Post</h4>
+             <div class="mdl-layout-spacer"></div>
+             <!-- <button class="mdl-button mdl-js-button" id="back_btn">
+                <i class="material-icons" id="back_btn_icon" style="font-size: 25px; color: white;">arrow_back</i> Go Back
+              </button> -->
+              <button class="mdl-button mdl-js-button" id="back_btn">
+                Button
+              </button>
           </div>
         </div>
     </header>
@@ -155,59 +173,16 @@
           </div>
           
           <div class="mdl-cell mdl-cell--8-col">
-            <div class="forum-posts">
+            <div class="new-post">
           
-            <!-- DISPLAY ALL POST BY OTHER USERS -->
-              <br>
-              <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title">
-                  <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 1</h2>
+                <!-- CREATE NEW POST CARD -->
+                <br>
+                <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 1</h2>
+                    </div>
                 </div>
-              </div>
-
-              <br>
-              <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title">
-                  <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 2</h2>
-                </div>
-              </div>
-
-              <br>
-              <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title">
-                  <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 3</h2>
-                </div>
-              </div>
-
-              <!-- <br>
-              <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title">
-                  <h2 class="mdl-card__title-text mdl-color-text--white">New Post</h2>
-                </div>
-              </div>
-
-              <br>
-              <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title">
-                  <h2 class="mdl-card__title-text mdl-color-text--white">New Post</h2>
-                </div>
-              </div>
-
-              <br>
-              <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title">
-                  <h2 class="mdl-card__title-text mdl-color-text--white">New Post</h2>
-                </div>
-              </div>
-
-              <br>
-              <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title">
-                  <h2 class="mdl-card__title-text mdl-color-text--white">New Post</h2>
-                </div>
-              </div> -->
             </div>
-          </div>
 
           <div class="mdl-cell mdl-cell--2-col">
           </div>
