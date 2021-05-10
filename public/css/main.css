@@ -51,6 +51,9 @@ main, #messages-card {
   max-width: 1024px;
   margin: auto;
 }
+.mdl-layout__header{
+  background-color: #00796b;
+}
 .mdl-layout__header-row {
   padding: 0;
   margin: 0 auto;
