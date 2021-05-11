@@ -119,9 +119,65 @@
             background-color:#4db6ac;
         }
         #back_btn_icon{
-            padding: 0%;
+            font-size: 20px;
         }
-        
+        input[type=text] {
+            width: 85%;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        #post_description{
+            /* margin: 0 0 5px 0; */
+            width: 95%;
+            resize: none;
+            /* width: 300px; */
+            height: 150px;
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+        #post_title{
+            border-radius: 10px;
+        }
+        .new_post_form{
+            padding: 16px 10px;
+        }
+        #user_interest_btn{
+            border-radius: 20px;
+            height: 30px;
+            margin: 5px;
+        }
+        .input, .label{
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+        #top-interests{
+            border-radius: 10px;
+            background-color: #ff7539;
+            color: white;
+            width: 100px;
+            height: 30px;
+        }
+        #post_btn{
+            float: right;
+            border-radius: 10px;
+            margin: 10px;
+            width: 100px;
+        }
+        #link-icon{
+            color: white;
+            font-size: 30px;
+            float: right;
+            margin: 5px;
+        }
+        #link-icon:hover{
+            background-color:#003d33;
+            border: 5px;
+            border-radius: 10px;
+        }
+        #g_translate_icon{
+            font-size: 30px;
+            color: white;
+            padding: 5px 16px;
+        }
     </style>
     
     <title>Forum</title>
@@ -134,13 +190,17 @@
     <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-             <h4><i class="material-icons"><!-- MDL Icon code --> </i> Create New Post</h4>
+             <h4><i class="material-icons">create</i>  Create New Post</h4>
              <div class="mdl-layout-spacer"></div>
-             <!-- <button class="mdl-button mdl-js-button" id="back_btn">
-                <i class="material-icons" id="back_btn_icon" style="font-size: 25px; color: white;">arrow_back</i> Go Back
-              </button> -->
-              <button class="mdl-button mdl-js-button" id="back_btn">
-                Button
+
+             <!-- TRANSLATE BUTTON -->
+             <button class="mdl-button mdl-js-button" id="translate_btn">
+                <i class="material-icons" id="g_translate_icon">g_translate</i> 
+             </button>
+            
+             <!-- BACK BUTTON -->
+              <button class="mdl-button mdl-js-button" id="back_btn" onclick='window.location.href = "./forum.html"'>
+                <i class="material-icons" id="back_btn_icon">arrow_back</i>Go Back
               </button>
           </div>
         </div>
@@ -179,8 +239,59 @@
                 <br>
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                     <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 1</h2>
+                        <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post</h2>
                     </div>
+                    <form class="new_post_form">
+                        <!-- POST TITLE -->
+                        
+                        <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
+                        <input class="input" type="text" id="post_title" name="post_title" placeholder="A lot has been going on? Share it with the community!" required><br>
+
+                        <!-- POST DESCRIPTION -->
+                        <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
+
+                        <!-- INTEREST  -->
+                        <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Add to your post</b></h6> 
+
+                        <!-- INTEREST BUTTON -->
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="user_interest_btn"
+                        style="background-color: #ff3d00;">
+                            interest 1
+                        </button>
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="user_interest_btn"
+                        style="background-color: #f9a825 ;">
+                            interest 2
+                        </button>
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="user_interest_btn"
+                        style="background-color: #d05ce3;">
+                            interest 3
+                        </button>
+
+                        <!-- DROPDOWN LIST -->
+                        <select name="top-interests" id="top-interests"> 
+                            <option value="interests">TOP 1</option>
+                            <option value="interests">TOP 2</option>
+                            <option value="interests">TOP 3</option>
+                            <option value="interests">TOP 4</option>
+                            <option value="interests">TOP 5</option>
+                        </select><br>
+
+                        
+
+                        <!-- POST BUTTON -->
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="post_btn"
+                        style="background-color: teal; border: white;">
+                            POST
+                        </button>
+
+                        <!-- Multiline Tooltip -->
+                        <div id="link-icon" class="icon material-icons">insert_link</div>
+                        <div class="mdl-tooltip" for="link-icon">
+                        Share your content<br>recommended to you
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -188,7 +299,7 @@
           </div>
 
         </div>
-
+        <script src="script/forum.js"></script>
   </body>
 </html>
 
