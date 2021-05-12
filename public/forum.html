@@ -75,15 +75,11 @@
             width: 100%;
             }
         }
-        /* eisya start here */
         .img-centre {
           margin-left: auto;
           margin-right: auto;
           display: block;
         }
-        /* .mdl-layout__drawer{
-          width: 300px;
-        } */
         #nav-icons{
           font-size: 30px;
           padding-bottom: 20px;
@@ -105,12 +101,80 @@
           padding: 0;
         }
         .demo-card-wide{
-          width: 100%;
+          width: 110%;
           border-radius: 20px;
           background: #439889;
-          
         }
-        
+        .comment_input, #comment_reply_input{
+          width: 60%;
+          margin: 10px;
+          border-radius: 10px;
+          height: 30px;
+        }
+        #send_comment_btn{
+          color: white;
+          border-radius: 15px;
+          height: 30px;
+          width: 80px;
+          cursor: pointer;
+          border: white;
+          border:10px;
+          margin: 5px;
+        }
+        #send_comment_btn:hover{
+          border: black;
+        }
+        #g_translate_icon{
+            font-size: 30px;
+            color: white;
+            padding: 5px 16px;
+        }
+        .mdl-checkbox{
+          position: absolute;
+          display:inline;
+          margin-top: 17px;
+          margin-left: 10px;
+        }
+        .comment_section{
+          margin:10px;
+        }
+        .mdl-checkbox__label{
+          font-weight: 400;
+          color: white;
+        }
+        p{
+          margin: 0 0 10px 20px;
+          font-size: medium;
+          font-weight: 400;
+          border: 1px solid #4db6ac;
+          border-radius: 20px;
+          padding: 10px;
+          background-color: #4db6ac;
+          max-width: 70%;
+        }
+        /* #reply_comment_btn{
+          margin: 10px;
+        } */
+        button.reply{
+          width: 80px;
+          padding: 10px;
+        }
+        #reply_comment_icon{
+          font-size: 20px;
+        }
+        #like_comment_icon, #dislike_comment_icon{
+          font-size: 17px;
+        }
+        button.like, button.reply, button.dislike{
+          border-radius: 15px;
+          margin: 0 0 0 20px;
+        }
+        .hideTextInput, .hideButton {
+          display: none;
+        }
+        .showTextInput, .showButton {
+          display: block;
+        }
     </style>
     
     <title>Forum</title>
@@ -123,7 +187,13 @@
     <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-             <h3><i class="material-icons"><!-- MDL Icon code --> </i> Forum </h3>
+             <h3><i class="material-icons">forum</i> Forum </h3>
+             <div class="mdl-layout-spacer"></div>
+
+             <!-- TRANSLATE BUTTON -->
+             <button class="mdl-button mdl-js-button" id="translate_btn">
+                <i class="material-icons" id="g_translate_icon">g_translate</i> 
+             </button>
           </div>
         </div>
     </header>
@@ -163,6 +233,76 @@
                 <div class="mdl-card__title">
                   <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 1</h2>
                 </div>
+                <hr style="margin: 0;">
+                <div class="post_comments_header" style="margin:0 10px;">
+                  <h5 class="comment_header mdl-color-text--white">WRITE A COMMENT</h5>
+                </div>
+
+                <!-- COMMENT FORM -->
+                <form class="post_comment">
+
+                  <!-- COMMENT INPUT -->
+                  <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">     
+                  
+                  <!-- SEND BUTTON -->
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                  style="background-color: #00b686;" id="send_comment_btn" type="submit">
+                    SEND
+                  </button>
+
+                  <!-- ANONYMOUS CHECKBOX BUTTON -->
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="anonymous">
+                    <input type="checkbox" id="anonymous" class="mdl-checkbox__input" checked>
+                    <span class="mdl-checkbox__label">Stay Anonymous</span>
+                  </label>
+                </form>
+                <hr style="margin: 0;">
+
+                <div class="comment_section">
+                  <h5 class="comment_section_header mdl-color-text--white" style="margin-top: 5px;">COMMENTS</h5>
+
+                  <!-- COMMENT ONE --> <!-- EXAMPLE -->
+                  <p name="username" id="username-1">@Annie123
+                    <span id = "user_comment"> I love that you like the dress you made! It really suits you so much!</span>
+                  </p>
+
+                  <!-- COMMENT REPLY TEXT BOX -->
+                  <div class="comment_replies">
+                    <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply...">
+                  </div>
+
+                  <!-- SEND REPLY FOR COMMENT -->
+                  
+                  <button class="hideButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                  style="background-color: #00b686;" id="send_reply_btn" type="submit">
+                  SEND
+                  </button>
+                  <!-- ADD REPLY BUTTON FOR COMMENT -->
+
+                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                  style="background-color:#00b686;" id="reply_comment_btn" type="submit" onclick="addReply()">
+                    <i class="material-icons" id="reply_comment_icon">reply</i>
+                    add reply
+                  </button>
+
+                  <!--  LIKE DISLIKE FOR COMMENT -->
+                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                  style="background-color:#2bbd7e;" id="like_comment_btn">
+                    <i class="material-icons" id="like_comment_icon">thumb_up</i>
+                    LIKE
+                  </button>
+
+                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                  style="background-color:#e53935;" id="dislike_comment_btn">
+                    <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
+                    LIKE
+                  </button>
+
+
+
+                </div>
+
+
               </div>
 
               <br>
@@ -170,6 +310,7 @@
                 <div class="mdl-card__title">
                   <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 2</h2>
                 </div>
+                <hr style="margin: 0;">
               </div>
 
               <br>
@@ -177,6 +318,7 @@
                 <div class="mdl-card__title">
                   <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post 3</h2>
                 </div>
+                <hr style="margin: 0;">
               </div>
 
               <!-- <br>
@@ -213,7 +355,7 @@
           </div>
 
         </div>
-
+        <script src="./script/forum.js"></script>
   </body>
 </html>
 
