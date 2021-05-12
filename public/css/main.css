@@ -31,6 +31,11 @@ body {
   background-color: #777;
 }
 
+.tabcontent{
+  display: none;
+  height: 100%;
+}
+
 #user-container #user-pic {
   top: -3px;
   position: relative;

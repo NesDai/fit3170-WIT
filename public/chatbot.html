@@ -49,8 +49,9 @@
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
             <h3><i class="material-icons">chat_bubble_outline</i> Chatbot</h3>
-            <button class="tablink" onclick="">Live Chat</button>
-            <button class="tablink" onclick="">History</button>
+            <button class="tablink" onclick="openPage('Live',this)" id="defaultOpen" >Live Chat</button>
+            <button class="tablink" onclick="openPage('History',this)">History</button>
+
           </div>
         </div>
       </header>
@@ -62,12 +63,11 @@
           <a class="mdl-navigation__link" href="recommenderUi.html">Recommended Content</a>
         </nav>
       </div>
-
   <body>
-    <main class="mdl-layout__content mdl-color--grey-100">
+    <main id = "Live" class= "tabcontent" class="mdl-layout__content mdl-color--grey-100">
         <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
-
     <div id="messages-card" class="mdl-card mdl-shadow--2dp">
+
         <div id="messages">
         </div>
         <div id="message-form">
@@ -75,13 +75,17 @@
               <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
               <label class="mdl-textfield__label" for="message">Message...</label>
             </div>
-
             <!-- <button id="submit" type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="respondToOpen()"> -->
             <button id="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled onclick="addMessage()">
               Send
             </button>
         </div>
     </div>
+    </div>
+    </main>
+    <div id = "History" class = " tabcontent">
+      <h3>TEST</h3>
+      </div>
 
     <!-- USING JQUERY TO ANIMATE SCROLL -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -101,5 +105,7 @@
 
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
+
+    <script src = "script/tabdisplay.js"></script>
   </body>
 </html>
