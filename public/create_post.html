@@ -35,6 +35,8 @@
 
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <!-- jquery to choose limited number of interests -->
+    <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
     <style>
         html,body {
             font-family: "Roboto", "Helvetica", sans-serif;
@@ -96,9 +98,9 @@
         }
         .mdl-navigation__link{
           font-size: 16px;
-          text-align: center;
+          text-align: left;
           padding-left: 0;
-          padding-right: 0;
+          padding-right: 3;
         }
         .mdl-grid-body{
           margin: 0;
@@ -108,7 +110,7 @@
           width: 100%;
           border-radius: 20px;
           /* background: #439889; */
-          background: #008e76;
+          background: #E4E4E4;
         }
         #back_btn{
             border-radius: 20px;
@@ -163,7 +165,7 @@
             width: 100px;
         }
         #link-icon{
-            color: white;
+            color: black;
             font-size: 30px;
             float: right;
             margin: 5px;
@@ -172,12 +174,43 @@
             background-color:#003d33;
             border: 5px;
             border-radius: 10px;
+            color: white
         }
         #g_translate_icon{
             font-size: 30px;
-            color: white;
+            color: #00796b;
             padding: 5px 16px;
+            padding-bottom: 20px;
         }
+        .label {
+            color: white;
+            padding: 8px;
+            font-family: Arial;
+        }
+        .success {background-color: #00b686;
+            border-radius:10px;} /* Green */
+        #interests_box {
+            border: 2px solid #00b686;
+            padding: 3px 5px 10px;
+            border-top-right-radius:    10px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            }
+            @media all and (min-width:551px) {
+                .desktop-br {display: inline;}
+                .mobile-br {display: none;}
+                .checkbox-inline { padding-left:15px; }
+
+            }
+            @media all and (max-width: 1000px) {
+                .desktop-br {display: none;}
+                .mobile-br {display: inline;}
+                .checkbox-inline { padding-left:30px; }
+                .checkbox-inline { padding-top:100px; }
+                .top_title  { padding-right:200px; }
+}
+}
+
     </style>
     
     <title>Forum</title>
@@ -190,13 +223,9 @@
     <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-             <h4><i class="material-icons">create</i>  Create New Post</h4>
+             <h4 class='top_title' style="padding-left: 50px"><i class="material-icons">create</i>  Create New Post</h4>
              <div class="mdl-layout-spacer"></div>
 
-             <!-- TRANSLATE BUTTON -->
-             <button class="mdl-button mdl-js-button" id="translate_btn">
-                <i class="material-icons" id="g_translate_icon">g_translate</i> 
-             </button>
             
              <!-- BACK BUTTON -->
               <button class="mdl-button mdl-js-button" id="back_btn" onclick='window.location.href = "./forum.html"'>
@@ -206,16 +235,18 @@
         </div>
     </header>
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title" style="text-align: center;">Welcome</span>
+          <br>
         <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
         <br>
         <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" id="translate_btn">  <i class="material-icons icon-teal" id="nav-icons" >g_translate</i> Translate </a>
           <a class="mdl-navigation__link" href="./main_page.html"><i class="material-icons icon-teal" id="nav-icons">home</i> Home Page</a>
           <a class="mdl-navigation__link" href="./forum.html"><i class="material-icons icon-teal" id="nav-icons">forum</i> Forum Page</a>
-          <a class="mdl-navigation__link" href=""><i class="material-icons icon-teal" id="nav-icons">question_answer</i> Recommended Content</a>
+          <a class="mdl-navigation__link" href=""><i class="material-icons icon-teal" id="nav-icons">question_answer</i> Recommended</a>
+         </button>
           <hr>
           <h5 style="text-align: center;">DISCOVER</h5>
-          <a class="mdl-navigation__link" href="./create_post.html" id="interests"><i class="material-icons icon-teal2" id="nav-icons">create</i> Create New Post</a>
+          <!-- <a class="mdl-navigation__link" href="./create_post.html" id="interests"><i class="material-icons icon-teal2" id="nav-icons">create</i> Create New Post</a> -->
           <a class="mdl-navigation__link" href="" id="interests"><i class="material-icons icon-teal2" id="nav-icons">check</i> Interest 1</a>
           <a class="mdl-navigation__link" href="" id="interests"><i class="material-icons icon-teal2" id="nav-icons">check</i> Interest 2</a>
           <a class="mdl-navigation__link" href="" id="interests"><i class="material-icons icon-teal2" id="nav-icons">check</i> Interest 3</a>
@@ -227,6 +258,7 @@
   <body>
     <main class="mdl-layout__content mdl-color--grey-100">
         <!-- Insert Page Content Here -->
+       
 
         <div class="mdl-grid mdl-grid-body">
           <div class="mdl-cell mdl-cell--2-col">
@@ -239,46 +271,77 @@
                 <br>
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                     <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post</h2>
+                        <h2 class="mdl-card__title-text mdl-color-text--black" style="font-weight: bold;">New Forum Post</h2>
                     </div>
+                    <hr style="margin: 0;">
                     <div class="new_post_form">
                         <!-- POST TITLE -->
                         
                         <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
-                        <input class="input" type="text" id="post_title" name="post_title" placeholder="A lot has been going on? Share it with the community!" required></input><br>
+                        <input class="input" type="text" id="post_title" name="post_title" placeholder=" Share your thoughts with the community!" required></input><br>
 
                         <!-- POST DESCRIPTION -->
                         <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
 
-                        <!-- INTEREST  -->
-                        <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Add to your post</b></label> 
+                        <br>
+                        <br>
+
+                        <!-- INTEREST  --> 
+                        <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Choose 2 interests for your post</b></label> </span>
+                        <br>
+                        
 
                         <!-- INTEREST BUTTON -->
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="user_interest_btn"
-                        style="background-color: #ff3d00;">
-                            interest 1
-                        </button>
+                        <div id="interests_box">
+                          <br >
 
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="user_interest_btn"
-                        style="background-color: #f9a825 ;">
-                            interest 2
-                        </button>
+                          <label class="checkbox-inline" >
+                            <input type="checkbox" name="interests" value="interest1" /> #interest1
+                          </label>
+                          <label class="checkbox-inline" >
+                            <input type="checkbox" name="interests" value="interest2" /> #interest2
+                          </label>
 
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="user_interest_btn"
-                        style="background-color: #d05ce3;">
-                            interest 3
-                        </button>
+                          <br class="mobile-br">
+                          <label class="checkbox-inline" >
+                            <input type="checkbox" name="interests" value="interest3" /> #interest3
+                          </label>
+                          <label class="checkbox-inline" >
+                            <input type="checkbox" name="interests" value="interest4" /> #interest4
+                          </label>
 
-                        <!-- DROPDOWN LIST -->
-                        <select name="top-interests" id="top-interests"> 
-                            <option value="interests">TOP 1</option>
-                            <option value="interests">TOP 2</option>
-                            <option value="interests">TOP 3</option>
-                            <option value="interests">TOP 4</option>
-                            <option value="interests">TOP 5</option>
-                        </select><br>
+                          <br class="mobile-br">
+                          <label class="checkbox-inline" >
+                            <input type="checkbox" name="interests" value="interest5" /> #interest5
+                          </label>
+                          <br class="desktop-br">
+                          <br class="desktop-br">
 
-                        
+                          <label class="checkbox-inline">
+                            <input type="checkbox" name="interests" value="interest6" /> #interest6
+                          </label>
+
+                          <br class="mobile-br">
+                          <label class="checkbox-inline">
+                            <input type="checkbox" name="interests" value="interest7" /> #interest7
+                          </label>
+
+                        </div>
+
+
+                          <script type="text/javascript">
+                             $(document).ready(function () {
+                                $("input[name='interests']").change(function () {
+                                    var maxAllowed = 2;
+                                    var cnt = $("input[name='interests']:checked").length;
+                                    if (cnt > maxAllowed) {
+                                        $(this).prop("checked", "");
+                                        alert('You can select maximum ' + maxAllowed + ' interests!!');
+                                    }
+                                });
+                            });
+                          </script>
+                        <br>
 
                         <!-- POST BUTTON -->
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="post_btn"
@@ -298,7 +361,8 @@
           <div class="mdl-cell mdl-cell--2-col">
           </div>
 
-        </div>
+        
+    </div>
             <!--FIREBASE-->
 
         <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
@@ -316,6 +380,7 @@
         <script src="/__/firebase/init.js?useEmulator=true"></script>
 
         <script src="script/forum.js"></script>
+
   </body>
 </html>
 
