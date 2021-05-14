@@ -37,7 +37,7 @@
         <div class="trans-section">
           <h3 style="color: white;">Select Language</h3>
           <div id="google_translate_element" style="display: none;"></div>
-          <select class="selectpicker" id = "language" data-width="fit" onchange="changeLanguage(this.value); translateLanguage(this.value);">
+          <select class="selectpicker" id = "language" data-width="fit" onchange="translateLanguage(this.value);changeLanguage(this.value);">
 
               <option  data-content='<span class="flag-icon flag-icon-us"></span> English' value="English">English</option>
 
@@ -126,6 +126,8 @@
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js?useEmulator=true"></script>
 
+
+    <script src="script/translation.js"></script>
     <script src="script/login.js" type="module"></script>
     <script src="script/login.js"></script>
 
@@ -137,24 +139,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
-        }
-
-        function translateLanguage(lang) {
-            googleTranslateElementInit();
-            var $frame = $('.goog-te-menu-frame:first');
-            if (!$frame.size()) {
-                alert("Error: Could not find Google translate frame.");
-                return false;
-            }
-            $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
-            return false;
-        }
 
         $(function(){
-            $('.selectpicker').selectpicker();
+            $('.selectpicker').selectpicker();  // used to display flags 
         });
+
     </script>
    
 

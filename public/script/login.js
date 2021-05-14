@@ -14,10 +14,19 @@ const USER_KEY = "USER";
 
 // To apply the default browser preference instead of explicitly setting it.
 // firebase.auth().useDeviceLanguage();
-let LANGUAGE_KEY = "LANGUAGE"
-let language = "en"  // default language
+const LANGUAGE_KEY = "LANGUAGE"
 
-firebase.auth().languageCode = "en";
+
+let language = localStorage.getItem(LANGUAGE_KEY)
+
+if (language == null){
+    firebase.auth().languageCode = "en";
+    localStorage.setItem(LANGUAGE_KEY,"en")
+}
+else{
+    firebase.auth().languageCode = language;    
+}
+
 
 function changeLanguage(newLanguage){
     if (newLanguage == "Malay")
@@ -29,9 +38,13 @@ function changeLanguage(newLanguage){
     else
         language = "en"
 
-    firebase.auth().languageCode = language;
-    recaptchaVerifier.reset()  // re rerender the captcha
+    // save language for the user upon login
+    localStorage.setItem(LANGUAGE_KEY, language)
+    recaptchaVerifier.reset()
+    // window.location = window.location  // refresh the page to reinitialize captcha
 }
+
+
 
 
 window.onload = function(){
@@ -45,7 +58,6 @@ window.onload = function(){
  * Function renders a recaptcha
  */
 function render(){
-    console.log(language)
 
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('send-button', {
         'size': 'invisible',
