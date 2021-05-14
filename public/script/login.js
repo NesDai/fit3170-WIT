@@ -13,8 +13,25 @@
 const USER_KEY = "USER";
 
 // To apply the default browser preference instead of explicitly setting it.
-firebase.auth().useDeviceLanguage();
+// firebase.auth().useDeviceLanguage();
+let LANGUAGE_KEY = "LANGUAGE"
+let language = "en"  // default language
 
+firebase.auth().languageCode = "en";
+
+function changeLanguage(newLanguage){
+    if (newLanguage == "Malay")
+        language = "ms";
+    else if (newLanguage == "Chinese (Simplified)")
+        language = "zh-CN";
+    else if (newLanguage == "Thai")
+        language = "th"
+    else
+        language = "en"
+
+    firebase.auth().languageCode = language;
+    recaptchaVerifier.reset()  // re rerender the captcha
+}
 
 
 window.onload = function(){
@@ -28,6 +45,7 @@ window.onload = function(){
  * Function renders a recaptcha
  */
 function render(){
+    console.log(language)
 
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('send-button', {
         'size': 'invisible',
@@ -67,7 +85,7 @@ function phoneAuth() {
         document.getElementById("input-pin").innerHTML = "A SMS with the PIN has been sent to your phone. Please insert the pin below."
         document.getElementById("input-pin").style.color = "green";
 
-        alert("Message sent");
+        // alert("Message sent");
     }).catch(function (error) {
         alert(error.message);
         document.getElementById("input-pin").innerHTML = ""
