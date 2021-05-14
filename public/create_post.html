@@ -182,7 +182,7 @@
     
     <title>Forum</title>
     <!-- TODO: Enable First Input Delay polyfill library. -->
-    <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
+    <!-- <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script> -->
   </head>
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
 
@@ -241,17 +241,17 @@
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text mdl-color-text--white">New Forum Post</h2>
                     </div>
-                    <form class="new_post_form">
+                    <div class="new_post_form">
                         <!-- POST TITLE -->
                         
                         <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
-                        <input class="input" type="text" id="post_title" name="post_title" placeholder="A lot has been going on? Share it with the community!" required><br>
+                        <input class="input" type="text" id="post_title" name="post_title" placeholder="A lot has been going on? Share it with the community!" required></input><br>
 
                         <!-- POST DESCRIPTION -->
                         <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
 
                         <!-- INTEREST  -->
-                        <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Add to your post</b></h6> 
+                        <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Add to your post</b></label> 
 
                         <!-- INTEREST BUTTON -->
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="user_interest_btn"
@@ -291,7 +291,7 @@
                         <div class="mdl-tooltip" for="link-icon">
                         Share your content<br>recommended to you
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
 
@@ -314,8 +314,8 @@
         <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
         <script src="/__/firebase/7.18.0/firebase-database.js"></script>
         <script src="/__/firebase/init.js?useEmulator=true"></script>
-        <script src="./script/forum.js" type="module"></script>
-        <script src="./script/forum.js"></script>
+
+        <script src="script/forum.js"></script>
   </body>
 </html>
 

@@ -43,9 +43,13 @@ function makeNewPost() {
             userID: current_user["phone"],
         }
 
-        myRef.push(newData);
+
+        myRef.push(newData).then(() => {
+            alert("Posted successfully. Redirecting back to forum")
+            window.location = "forum.html";
+        });
     } else {
-        window.location("forum.html")
+        window.location = "forum.html";
     }
 }
 
