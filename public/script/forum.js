@@ -29,23 +29,23 @@ function makeNewPost() {
     if (checkUserExistence()) {
 
         // error handling if it is empty??
-        let title = document.getElementById("post_title").textContent
-        let description = document.getElementById("post_description").textContent
-        let interest = document.getElementById("top-interests") // hmm? 
+        let title = document.getElementById("post_title").value
+        let description = document.getElementById("post_description").value
+        // let interest = document.getElementById("top-interests") // hmm? 
 
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.key; // generate a key for post id 
 
         let newData = { 
             description: description,
-            interest: interest,
+            interest: "a",
             title: title,
             userID: current_user["phone"],
         }
 
         myRef.push(newData);
     } else {
-        window.location("index.html")
+        window.location("forum.html")
     }
 }
 
