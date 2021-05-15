@@ -355,21 +355,25 @@
                               </p>
                            </div>
                            <!--  LIKE DISLIKE FOR COMMENT -->
-                           <a id='like_button_comment' href="#">
+                           
+                           <span id='like_button_comment' href="#">
                            <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
                            <i class="material-icons" id="like_comment_icon">thumb_up</i>
                            </button>
-                           </a>
+                           </span>
+
                            <script>
                               jQuery('button.like').click.each(function() {
                               jQuery(this).toggleClass("like_button_comment_liked");
                               });           
                            </script> 
-                           <a id='dislike_button_comment' href="#">
+
+                           <span id='dislike_button_comment' href="#">
                            <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#e53935; " id="dislike_comment_btn">
                            <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
                            </button>
-                           </a>
+                           </span>
+
                            <!-- COMMENT REPLY TEXT BOX -->
                            <div class="comment_replies">
                               <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply...">
@@ -398,20 +402,22 @@
                                     </p>
                                  </div>
                                  <!--  LIKE DISLIKE FOR COMMENT -->
-                                 <a id='like_button_comment' href="#">
+                                 <span id='like_button_comment' href="#">
                                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
                                  <i class="material-icons" id="like_comment_icon">thumb_up</i>
                                  </button>
-                                 </a>
+                              </span>
                                  <script>
                                     jQuery('button.like').click.each(function() {
                                     jQuery(this).toggleClass("like_button_comment_liked");
                                     });           
                                  </script> 
+                                 <span>
                                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                                     style="background-color:#e53935;" id="dislike_comment_btn">
                                  <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
                                  </button>
+                                 </span>
                                  <!-- COMMENT REPLY TEXT BOX -->
                                  <div class="comment_replies">
                                     <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply...">
@@ -442,20 +448,22 @@
                               </p>
                            </div>
                            <!--  LIKE DISLIKE FOR COMMENT -->
-                           <a id='like_button_comment' href="#">
+                           <span id='like_button_comment' href="#">
                            <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
                            <i class="material-icons" id="like_comment_icon">thumb_up</i>
                            </button>
-                           </a>
+                        </span>
                            <script>
                               jQuery('button.like').click(function() {
                               jQuery(this).toggleClass("like_button_comment_liked");
                               });           
                            </script> 
+                           <span>
                            <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                               style="background-color:#e53935;" id="dislike_comment_btn">
                            <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
                            </button>
+                           </span>
                            <!-- COMMENT REPLY TEXT BOX -->
                            <div class="comment_replies">
                               <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply..." style="margin-left: 20px;">
