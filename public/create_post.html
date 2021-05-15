@@ -125,20 +125,12 @@
         }
         input[type=text] {
             width: 85%;
-            padding: 10px 15px;
+            padding: 10px 20px;
             margin: 10px 0;
-        }
-        #post_description{
-            /* margin: 0 0 5px 0; */
-            width: 95%;
-            resize: none;
-            /* width: 300px; */
-            height: 150px;
-            padding: 10px 15px;
-            border-radius: 10px;
         }
         #post_title{
             border-radius: 10px;
+            
         }
         .new_post_form{
             padding: 16px 10px;
@@ -200,16 +192,49 @@
                 .desktop-br {display: inline;}
                 .mobile-br {display: none;}
                 .checkbox-inline { padding-left:15px; }
-
+                .top_title{
+                            position: relative;
+                            right: 100px
+                          }
+                #post_description{
+                          width: 95%;
+                          resize: none;
+                          height: 150px;
+                          padding: 10px 15px;
+                          border-radius: 10px;
+                      }
             }
             @media all and (max-width: 1000px) {
                 .desktop-br {display: none;}
                 .mobile-br {display: inline;}
                 .checkbox-inline { padding-left:30px; }
                 .checkbox-inline { padding-top:100px; }
-                .top_title  { padding-right:200px; }
-}
-}
+                .top_title{
+                            position: relative;
+                            right: 40px
+                          }
+                }
+                .mobileHide { display: inline; }
+
+              /* Smartphone Portrait and Landscape */
+              @media only screen
+                and (min-device-width : 320px)
+                and (max-device-width : 480px){
+                .mobileHide { display: none;}
+                #back_btn {
+                  position: relative;
+                  right: 10px;
+                  top:10px
+                }
+                #post_description{
+                          width: 91%;
+                          resize: none;
+                          height: 150px;
+                          padding: 10px 15px;
+                          border-radius: 10px;
+                      }
+              }
+              
 
     </style>
     
@@ -223,13 +248,13 @@
     <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-             <h4 class='top_title' style="padding-left: 50px"><i class="material-icons">create</i>  Create New Post</h4>
+             <h4 class='top_title' ><i class="material-icons">create</i>  Create New Post</h4>
              <div class="mdl-layout-spacer"></div>
 
             
              <!-- BACK BUTTON -->
               <button class="mdl-button mdl-js-button" id="back_btn" onclick='window.location.href = "./forum.html"'>
-                <i class="material-icons" id="back_btn_icon">arrow_back</i>Go Back
+                <i class="material-icons" id="back_btn_icon">arrow_back</i><span class="mobileHide">Back</span> 
               </button>
           </div>
         </div>

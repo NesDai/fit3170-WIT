@@ -175,8 +175,13 @@
          #reply_comment_icon{
          font-size: 20px;
          }
-         #like_comment_icon, #dislike_comment_icon, #send_reply_icon, #like_post_icon, #dislike_post_icon{
+         #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
          font-size: 17px;
+         text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+         }
+         #send_reply_icon
+         {
+            font-size: 17px;
          }
          button.like, button.reply, button.dislike, button.hideReply{
          border-radius: 15px;
@@ -209,13 +214,43 @@
          {
          background-color:white;
          }
+         /* To change the like button back and forth */
          .like_button_comment_not_liked {
          color: white;
          border: 2px solid #04AA6D;
-         /* background-color:#54E1A8; */
          } 
          .like_button_comment_liked {
-         background-color:#2bbd7e; } 
+         background-color:#2bbd7e; 
+         } 
+         .like_button_comment_liked:hover
+         {
+            background-color:#2bbd7e;
+         }
+
+         .like_button_comment_not_liked {
+         color: white;
+         border: 2px solid #04AA6D;
+         } 
+         .like_button_comment_liked {
+         background-color:#2bbd7e; 
+         } 
+         .like_button_comment_liked:hover
+         {
+            background-color:#2bbd7e;
+         }
+
+         .dislike_button_comment_not_clicked {
+         color: white;
+         border: 2px solid #e53935;
+         } 
+         .dislike_button_comment_clicked {
+         background-color:#e53935; 
+         } 
+         .dislike_button_comment_clicked:hover
+         {
+            background-color:#e53935;
+         }
+
          .reply{
          position: relative;
          bottom:38px;
@@ -369,10 +404,16 @@
                            </script> 
 
                            <span id='dislike_button_comment' href="#">
-                           <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#e53935; " id="dislike_comment_btn">
+                           <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
                            <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
                            </button>
                            </span>
+
+                           <script>
+                              jQuery('button.dislike').click.each(function() {
+                              jQuery(this).toggleClass("dislike_button_comment_clicked");
+                              });           
+                           </script> 
 
                            <!-- COMMENT REPLY TEXT BOX -->
                            <div class="comment_replies">
@@ -412,12 +453,17 @@
                                     jQuery(this).toggleClass("like_button_comment_liked");
                                     });           
                                  </script> 
-                                 <span>
-                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                                    style="background-color:#e53935;" id="dislike_comment_btn">
-                                 <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
-                                 </button>
-                                 </span>
+                                 <span id='dislike_button_comment' href="#">
+                                    <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
+                                    <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
+                                    </button>
+                                    </span>
+         
+                                    <script>
+                                       jQuery('button.dislike').click.each(function() {
+                                       jQuery(this).toggleClass("dislike_button_comment_clicked");
+                                       });           
+                                    </script> 
                                  <!-- COMMENT REPLY TEXT BOX -->
                                  <div class="comment_replies">
                                     <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply...">
@@ -458,12 +504,17 @@
                               jQuery(this).toggleClass("like_button_comment_liked");
                               });           
                            </script> 
-                           <span>
-                           <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                              style="background-color:#e53935;" id="dislike_comment_btn">
-                           <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
-                           </button>
-                           </span>
+                           <span id='dislike_button_comment' href="#">
+                              <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
+                              <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
+                              </button>
+                              </span>
+   
+                              <script>
+                                 jQuery('button.dislike').click(function() {
+                                 jQuery(this).toggleClass("dislike_button_comment_clicked");
+                                 });           
+                              </script> 
                            <!-- COMMENT REPLY TEXT BOX -->
                            <div class="comment_replies">
                               <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply..." style="margin-left: 20px;">
