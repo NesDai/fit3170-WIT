@@ -14,20 +14,11 @@ const USER_KEY = "USER";
 
 // To apply the default browser preference instead of explicitly setting it.
 // firebase.auth().useDeviceLanguage();
-const LANGUAGE_KEY = "LANGUAGE"
 
 
-let language = localStorage.getItem(LANGUAGE_KEY)
-
-if (language == null){
-    firebase.auth().languageCode = "en";
-    localStorage.setItem(LANGUAGE_KEY,"en")
-}
-else{
-    firebase.auth().languageCode = language;    
-}
 
 
+// Used to change language of the captcha
 function changeLanguage(newLanguage){
     if (newLanguage == "Malay")
         language = "ms";
@@ -48,6 +39,18 @@ function changeLanguage(newLanguage){
 
 
 window.onload = function(){
+
+    let language = getUserLanguage()
+
+    if (language == null){
+        firebase.auth().languageCode = "en";
+        localStorage.setItem(LANGUAGE_KEY,"en")
+    }
+    else{
+        firebase.auth().languageCode = language;    
+    }
+
+
 
     render();
 
