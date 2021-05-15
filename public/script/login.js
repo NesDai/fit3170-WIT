@@ -17,6 +17,19 @@ const USER_KEY = "USER";
 
 
 
+function setAuthLanguage(){
+
+    let language = localStorage.getItem(LANGUAGE_KEY);
+
+    if (language == null){
+        firebase.auth().languageCode = "en";
+        localStorage.setItem(LANGUAGE_KEY,"en")
+    }
+    else{
+        firebase.auth().languageCode = language;    
+    }
+}
+
 
 // Used to change language of the captcha
 function changeLanguage(newLanguage){
@@ -30,7 +43,10 @@ function changeLanguage(newLanguage){
         language = "en"
 
     // save language for the user upon login
-    localStorage.setItem(LANGUAGE_KEY, language)
+    localStorage.setItem(LANGUAGE_KEY, language);
+
+    setAuthLanguage();
+
     recaptchaVerifier.reset()
     // window.location = window.location  // refresh the page to reinitialize captcha
 }
@@ -39,19 +55,8 @@ function changeLanguage(newLanguage){
 
 
 window.onload = function(){
-
-    let language = getUserLanguage()
-
-    if (language == null){
-        firebase.auth().languageCode = "en";
-        localStorage.setItem(LANGUAGE_KEY,"en")
-    }
-    else{
-        firebase.auth().languageCode = language;    
-    }
-
-
-
+    
+    setAuthLanguage();
     render();
 
 }
