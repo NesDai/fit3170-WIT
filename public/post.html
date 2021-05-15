@@ -95,11 +95,7 @@
          margin: 0;
          padding: 0;
          }
-         .demo-card-wide{
-         width: 110%;
-         border-radius: 20px;
-         background: #E4E4E4;
-         }
+         
          #back_btn{
          border-radius: 20px;
          background-color: #439889;
@@ -123,16 +119,7 @@
          border-radius: 10px;
          height: 30px;
          }
-         #send_comment_btn{
-         color: white;
-         border-radius: 13px;
-         height: 35px;
-         width: 170px;
-         cursor: pointer;
-         border: white;
-         border:10px;
-         margin-left: 510px;
-         }
+         
          #send_comment_btn:hover{
          border: black;
          }
@@ -267,6 +254,112 @@
          height: 155px;
          bottom: 10px
          }
+         @media all and (min-width:551px) {
+            .mobile-br {display: none;}
+            .demo-card-wide{
+                           width: 110%;
+                           border-radius: 20px;
+                           background: #E4E4E4;
+                           }
+            #date_posted{
+               text-align: right; 
+               float: right; 
+               display: inline;
+               padding-left:300px;
+               position: relative; 
+               right: 10px
+            }
+            #interest1_id
+               {
+                  background-color: #ffcc99; 
+                  margin-left: 440px;  
+                  border-radius: 12px; 
+                  width: 17%
+               }
+            #interest2_id
+            {
+               background-color: #ff9999 ;
+               margin:300 px; 
+               border-radius: 12px;
+            }
+            #send_comment_btn{
+               color: white;
+               border-radius: 13px;
+               height: 35px;
+               width: 170px;
+               cursor: pointer;
+               border: white;
+               border:10px;
+               margin-left: 510px;
+               }
+            }
+            @media all and (max-width: 1000px) {
+               .mobile-br {display:inline;}
+               .demo-card-wide{
+                           width: 100%;
+                           border-radius: 20px;
+                           background: #E4E4E4;
+                           }
+               #date_posted{
+                           text-align: left; 
+                           float: left;
+                           display: inline;
+                           position: relative; 
+                           left: 10px;
+                           top: 5px;
+                           }
+               #interest1_id
+                     {
+                        background-color: #ffcc99; 
+                        border-radius: 12px; 
+                        position:relative;
+                        left:18px;
+                        width: 35%
+                     }
+               #interest2_id
+                     {
+                        background-color: #ff9999 ;
+                        position:relative;
+                        left:20px;
+                        width: 35%;
+                        border-radius: 12px;
+                     }
+                     #send_comment_btn{
+                        color: white;
+                        border-radius: 13px;
+                        height: 35px;
+                        width: 100px;
+                        cursor: pointer;
+                        border: white;
+                        border:10px;
+                        margin-left:241px;
+                        }
+                }
+
+                .mobileHide { display: inline; }
+
+                  /* Smartphone Portrait and Landscape */
+                  @media only screen
+                  and (min-device-width : 320px)
+                  and (max-device-width : 480px){
+                  .mobileHide { display: none;}
+                  #back_btn {
+                     position: relative;
+                     left: 25px;
+                     top:5px
+                  }
+                  }
+                  #like_post_btn
+                  {
+                     background-color:#2bbd7e;
+                     width: 100px
+                  }
+                  #dislike_post_btn
+                  {
+                     background-color:#e53935;  
+                     width: 100px 
+                  }
+                  
       </style>
       <title>Forum</title>
       <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -281,7 +374,7 @@
                <div class="mdl-layout-spacer"></div>
                <!-- BACK BUTTON -->
                <button class="mdl-button mdl-js-button" id="back_btn" onclick='window.location.href = "./forum.html"'>
-               <i class="material-icons" id="back_btn_icon">arrow_back</i>Go Back
+               <i class="material-icons" id="back_btn_icon">arrow_back</i><span class="mobileHide">Back</span>
                </button>
             </div>
          </div>
@@ -317,41 +410,35 @@
                   <br>
                   <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                      <!-- POST HEADER -->
-                     <br>
-                     <div class="f">
-                        <h2 class="mdl-card__title-text mdl-color-text--black" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@Vanessa123</h2>
-                        <h2 class="mdl-card__title-text mdl-color-text--black" style="text-align: right; float: right; display: inline;padding-left:300px; position: relative; right: 10px" id='date_posted'>4:33 PM Apr 25, 2021</h2>
-                     </div>
-                     <br>
-                     <div class="post_header" style="margin:0 10px; background-color: white">
-                        <h5 class="post_header mdl-color-text--black;"style="padding-left:18px">Learnt a new hobby today!</h5>
-                     </div>
-                     <!-- POST FORM -->
-                     <form class="post_content" style="margin:0 10px; background-color: white">
-                        <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
-                        <br>
-                        <div style='inline-block'>
-                           <button class="mdl-button mdl-js-button  mdl-color-text--black" style="background-color: #ffcc99; margin-left: 440px;  border-radius: 12px; width: 17%">
-                           #interest 1
-                           </button>
-                           <button class="mdl-button mdl-js-button mdl-color-text--black" style= "background-color: #ff9999 ; margin:300 px; border-radius: 12px;">
-                           #interest 2
-                           </button>
-                        </div>
-                        <br>
-                     </form>
-                     <div>
-                        <!--  LIKE DISLIKE FOR POST -->
-                        <br>
-                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                           style="background-color:#2bbd7e;  width: 15%;" id="like_post_btn">
-                        <i class="material-icons" id="like_post_icon">thumb_up</i>
-                        LIKE
-                        </button>
-                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#e53935;   width: 15%;" id="dislike_post_btn">
-                        <i class="material-icons" id="dislike_post_icon">thumb_down</i>
-                        DISLIKE
-                        </button>
+            <br>
+            <div class="f">
+               <h2 class="mdl-card__title-text mdl-color-text--black" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'><b>@Vanessa123</b></h2>
+               <br class="mobile-br">
+               <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>4:33 PM Apr 25, 2021</h2>
+            </div>
+            <br>
+            <div class="post_header" style="margin:0 10px; background-color: white">
+               <h5 class="post_header mdl-color-text--black;"style="padding-left:18px">Learnt a new hobby today!</h5>
+            </div>
+            <!-- POST FORM -->
+            <form class="post_content" style="margin:0 10px; background-color: white">
+               <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
+               <br>
+               <div style='inline-block'>
+                  <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
+                  <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
+               </div>
+               <br>
+            </form>
+            <div>
+               <!--  LIKE DISLIKE FOR POST -->
+               <br>
+               <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="like_post_btn">
+                  <i class="material-icons" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                  </button>
+                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="dislike_post_btn">
+                  <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                  </button>
                      </div>
                      <br>
                      <hr style="margin: 0;">
