@@ -288,6 +288,16 @@
          input[id="radio-3"]:checked ~ .glider {
          transform: translateX(240%);
          }
+         #more_btn
+         {
+            border-radius: 10px;
+            margin: 0 0 0 20px;
+            color: white;
+            background-color: #00796b;
+            position: relative;
+            width: 160px;
+            left: 290px
+         }
          }
          @media all and (max-width: 1000px) {
          /* mobile */
@@ -327,8 +337,17 @@
          input[id="radio-3"]:checked ~ .glider {
          transform: translateX(200%);
          }
+         #more_btn
+         {
+            border-radius: 10px;
+            margin: 0 0 0 20px;
+            color: white;
+            background-color: #00796b;
+            position: relative;
+            width: 60px;
+            left: 10px
          }
-     
+         }
       </style>
       <title>Forum</title>
       <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -422,7 +441,12 @@
                   <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="dislike_post_btn">
                   <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                   </button>
+
+                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn">
+                     <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                  </button>
                </div>
+               
          </span>
          <br>
       </div>

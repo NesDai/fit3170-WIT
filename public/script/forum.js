@@ -147,7 +147,7 @@ function findCurrentUserPosts() {
 function printAllPosts(){
 
     let field = document.getElementById("postField");
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    // field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .once('value', x => {
@@ -186,6 +186,9 @@ function printAllPosts(){
                           <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="dislike_post_btn">
                           <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                           </button>
+                          <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn">
+                            <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                          </button>
                        </div>
                        <br>
                  </span></div>`;
@@ -197,7 +200,7 @@ function printAllPosts(){
 function printUserPosts(){
 
     let field = document.getElementById("postField");
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    // field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .orderByChild('username')
@@ -237,6 +240,9 @@ function printUserPosts(){
                                 </button>
                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="dislike_post_btn">
                                 <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                </button>
+                                <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn">
+                                    <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                                 </button>
                             </div>
                         </span></div>`;
