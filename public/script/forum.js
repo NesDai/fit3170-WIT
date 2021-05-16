@@ -49,9 +49,11 @@ function makeNewPost() {
         let description = document.getElementById("post_description").value
 
         let myRef = firebase.database().ref(`posts`);
-        let key = myRef.key; // generate a key for post id 
+        let key = myRef.push().key;
+        // let key = myRef.key; // generate a key for post id 
 
         let newData = { 
+            id: key,
             description: description,
             interest: interest_arr,
             title: title,
@@ -60,14 +62,20 @@ function makeNewPost() {
             created: new Date().toString()
         }
 
-
-        myRef.push(newData).then(() => {
+        firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
             alert("Posted successfully. Redirecting back to forum")
             window.location = "forum.html";
         });
-    } else {
-        window.location = "forum.html";
-    }
+     } else{
+            window.location = "forum.html";
+        }
+    //     myRef.push(newData).then(() => {
+    //         alert("Posted successfully. Redirecting back to forum")
+    //         window.location = "forum.html";
+    //     });
+    // } else {
+    //     window.location = "forum.html";
+    // }
 }
 
 
