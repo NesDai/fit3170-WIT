@@ -95,7 +95,6 @@
          margin: 0;
          padding: 0;
          }
-         
          #back_btn{
          border-radius: 20px;
          background-color: #439889;
@@ -119,7 +118,6 @@
          border-radius: 10px;
          height: 30px;
          }
-         
          #send_comment_btn:hover{
          border: black;
          }
@@ -165,10 +163,11 @@
          #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
          font-size: 17px;
          text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+         color: white !important;
          }
          #send_reply_icon
          {
-            font-size: 17px;
+         font-size: 17px;
          }
          button.like, button.reply, button.dislike, button.hideReply{
          border-radius: 15px;
@@ -203,41 +202,29 @@
          }
          /* To change the like button back and forth */
          .like_button_comment_not_liked {
-         color: white;
          border: 2px solid #04AA6D;
          } 
          .like_button_comment_liked {
          background-color:#2bbd7e; 
+         color: white !important;
          } 
          .like_button_comment_liked:hover
          {
-            background-color:#2bbd7e;
+         background-color:#2bbd7e;
          }
-
-         .like_button_comment_not_liked {
-         color: white;
-         border: 2px solid #04AA6D;
-         } 
-         .like_button_comment_liked {
-         background-color:#2bbd7e; 
-         } 
-         .like_button_comment_liked:hover
-         {
-            background-color:#2bbd7e;
-         }
-
          .dislike_button_comment_not_clicked {
-         color: white;
          border: 2px solid #e53935;
+         color: white !important;
          } 
          .dislike_button_comment_clicked {
+            color: white !important;
          background-color:#e53935; 
          } 
          .dislike_button_comment_clicked:hover
          {
-            background-color:#e53935;
+            color: white !important;
+         background-color:#e53935;
          }
-
          .reply{
          position: relative;
          bottom:38px;
@@ -255,111 +242,110 @@
          bottom: 10px
          }
          @media all and (min-width:551px) {
-            .mobile-br {display: none;}
-            .demo-card-wide{
-                           width: 110%;
-                           border-radius: 20px;
-                           background: #E4E4E4;
-                           }
-            #date_posted{
-               text-align: right; 
-               float: right; 
-               display: inline;
-               padding-left:300px;
-               position: relative; 
-               right: 10px
-            }
-            #interest1_id
-               {
-                  background-color: #ffcc99; 
-                  margin-left: 440px;  
-                  border-radius: 12px; 
-                  width: 17%
-               }
-            #interest2_id
-            {
-               background-color: #ff9999 ;
-               margin:300 px; 
-               border-radius: 12px;
-            }
-            #send_comment_btn{
-               color: white;
-               border-radius: 13px;
-               height: 35px;
-               width: 170px;
-               cursor: pointer;
-               border: white;
-               border:10px;
-               margin-left: 510px;
-               }
-            }
-            @media all and (max-width: 1000px) {
-               .mobile-br {display:inline;}
-               .demo-card-wide{
-                           width: 100%;
-                           border-radius: 20px;
-                           background: #E4E4E4;
-                           }
-               #date_posted{
-                           text-align: left; 
-                           float: left;
-                           display: inline;
-                           position: relative; 
-                           left: 10px;
-                           top: 5px;
-                           }
-               #interest1_id
-                     {
-                        background-color: #ffcc99; 
-                        border-radius: 12px; 
-                        position:relative;
-                        left:18px;
-                        width: 35%
-                     }
-               #interest2_id
-                     {
-                        background-color: #ff9999 ;
-                        position:relative;
-                        left:20px;
-                        width: 35%;
-                        border-radius: 12px;
-                     }
-                     #send_comment_btn{
-                        color: white;
-                        border-radius: 13px;
-                        height: 35px;
-                        width: 100px;
-                        cursor: pointer;
-                        border: white;
-                        border:10px;
-                        margin-left:241px;
-                        }
-                }
-
-                .mobileHide { display: inline; }
-
-                  /* Smartphone Portrait and Landscape */
-                  @media only screen
-                  and (min-device-width : 320px)
-                  and (max-device-width : 480px){
-                  .mobileHide { display: none;}
-                  #back_btn {
-                     position: relative;
-                     left: 25px;
-                     top:5px
-                  }
-                  }
-                  #like_post_btn
-                  {
-                     background-color:#2bbd7e;
-                     width: 100px
-                  }
-                  #dislike_post_btn
-                  {
-                     background-color:#e53935;  
-                     width: 100px 
-                  }
-                  
+         .mobile-br {display: none;}
+         .demo-card-wide{
+         width: 110%;
+         border-radius: 20px;
+         background: #E4E4E4;
+         }
+         #date_posted{
+         text-align: right; 
+         float: right; 
+         display: inline;
+         padding-left:300px;
+         position: relative; 
+         right: 10px
+         }
+         #interest1_id
+         {
+         background-color: #ffcc99; 
+         margin-left: 440px;  
+         border-radius: 12px; 
+         width: 17%
+         }
+         #interest2_id
+         {
+         background-color: #ff9999 ;
+         margin:300 px; 
+         border-radius: 12px;
+         }
+         #send_comment_btn{
+         color: white;
+         border-radius: 13px;
+         height: 35px;
+         width: 170px;
+         cursor: pointer;
+         border: white;
+         border:10px;
+         margin-left: 510px;
+         }
+         }
+         @media all and (max-width: 1000px) {
+         .mobile-br {display:inline;}
+         .demo-card-wide{
+         width: 100%;
+         border-radius: 20px;
+         background: #E4E4E4;
+         }
+         #date_posted{
+         text-align: left; 
+         float: left;
+         display: inline;
+         position: relative; 
+         left: 10px;
+         top: 5px;
+         }
+         #interest1_id
+         {
+         background-color: #ffcc99; 
+         border-radius: 12px; 
+         position:relative;
+         left:18px;
+         width: 35%
+         }
+         #interest2_id
+         {
+         background-color: #ff9999 ;
+         position:relative;
+         left:20px;
+         width: 35%;
+         border-radius: 12px;
+         }
+         #send_comment_btn{
+         color: white;
+         border-radius: 13px;
+         height: 35px;
+         width: 100px;
+         cursor: pointer;
+         border: white;
+         border:10px;
+         margin-left:241px;
+         }
+         }
+         .mobileHide { display: inline; }
+         /* Smartphone Portrait and Landscape */
+         @media only screen
+         and (min-device-width : 320px)
+         and (max-device-width : 480px){
+         .mobileHide { display: none;}
+         #back_btn {
+         position: relative;
+         left: 25px;
+         top:5px
+         }
+         }
+         #like_post_btn
+         {
+         color: black;
+         border: 2px solid #04AA6D;
+         width: 100px
+         }
+         #dislike_post_btn
+         {
+         color: black;
+         border: 2px solid #e53935;
+         width: 100px 
+         }
       </style>
       <title>Forum</title>
       <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -410,35 +396,35 @@
                   <br>
                   <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                      <!-- POST HEADER -->
-            <br>
-            <div class="f">
-               <h2 class="mdl-card__title-text mdl-color-text--black" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'><b>@Vanessa123</b></h2>
-               <br class="mobile-br">
-               <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>4:33 PM Apr 25, 2021</h2>
-            </div>
-            <br>
-            <div class="post_header" style="margin:0 10px; background-color: white">
-               <h5 class="post_header mdl-color-text--black;"style="padding-left:18px">Learnt a new hobby today!</h5>
-            </div>
-            <!-- POST FORM -->
-            <form class="post_content" style="margin:0 10px; background-color: white">
-               <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
-               <br>
-               <div style='inline-block'>
-                  <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
-                  <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
-               </div>
-               <br>
-            </form>
-            <div>
-               <!--  LIKE DISLIKE FOR POST -->
-               <br>
-               <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="like_post_btn">
-                  <i class="material-icons" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
-                  </button>
-                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="dislike_post_btn">
-                  <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
-                  </button>
+                     <br>
+                     <div class="f">
+                        <h2 class="mdl-card__title-text mdl-color-text--black" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'><b>@Vanessa123</b></h2>
+                        <br class="mobile-br">
+                        <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>4:33 PM Apr 25, 2021</h2>
+                     </div>
+                     <br>
+                     <div class="post_header" style="margin:0 10px; background-color: white">
+                        <h5 class="post_header mdl-color-text--black;"style="padding-left:18px">Learnt a new hobby today!</h5>
+                     </div>
+                     <!-- POST FORM -->
+                     <form class="post_content" style="margin:0 10px; background-color: white">
+                        <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
+                        <br>
+                        <div style='inline-block'>
+                           <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
+                           <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
+                        </div>
+                        <br>
+                     </form>
+                     <div>
+                        <!--  LIKE DISLIKE FOR POST -->
+                        <br>
+                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                        <i class="material-icons" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                        </button>
+                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                        <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                        </button>
                      </div>
                      <br>
                      <hr style="margin: 0;">
@@ -477,31 +463,16 @@
                               </p>
                            </div>
                            <!--  LIKE DISLIKE FOR COMMENT -->
-                           
                            <span id='like_button_comment' href="#">
                            <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
                            <i class="material-icons" id="like_comment_icon">thumb_up</i>
                            </button>
                            </span>
-
-                           <script>
-                              jQuery('button.like').click.each(function() {
-                              jQuery(this).toggleClass("like_button_comment_liked");
-                              });           
-                           </script> 
-
                            <span id='dislike_button_comment' href="#">
                            <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
                            <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
                            </button>
                            </span>
-
-                           <script>
-                              jQuery('button.dislike').click.each(function() {
-                              jQuery(this).toggleClass("dislike_button_comment_clicked");
-                              });           
-                           </script> 
-
                            <!-- COMMENT REPLY TEXT BOX -->
                            <div class="comment_replies">
                               <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply...">
@@ -534,23 +505,12 @@
                                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
                                  <i class="material-icons" id="like_comment_icon">thumb_up</i>
                                  </button>
-                              </span>
-                                 <script>
-                                    jQuery('button.like').click.each(function() {
-                                    jQuery(this).toggleClass("like_button_comment_liked");
-                                    });           
-                                 </script> 
+                                 </span>
                                  <span id='dislike_button_comment' href="#">
-                                    <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                                    <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
-                                    </button>
-                                    </span>
-         
-                                    <script>
-                                       jQuery('button.dislike').click.each(function() {
-                                       jQuery(this).toggleClass("dislike_button_comment_clicked");
-                                       });           
-                                    </script> 
+                                 <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
+                                 <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
+                                 </button>
+                                 </span>
                                  <!-- COMMENT REPLY TEXT BOX -->
                                  <div class="comment_replies">
                                     <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply...">
@@ -585,23 +545,12 @@
                            <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
                            <i class="material-icons" id="like_comment_icon">thumb_up</i>
                            </button>
-                        </span>
-                           <script>
-                              jQuery('button.like').click(function() {
-                              jQuery(this).toggleClass("like_button_comment_liked");
-                              });           
-                           </script> 
+                           </span>
                            <span id='dislike_button_comment' href="#">
-                              <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                              <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
-                              </button>
-                              </span>
-   
-                              <script>
-                                 jQuery('button.dislike').click(function() {
-                                 jQuery(this).toggleClass("dislike_button_comment_clicked");
-                                 });           
-                              </script> 
+                           <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
+                           <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
+                           </button>
+                           </span>
                            <!-- COMMENT REPLY TEXT BOX -->
                            <div class="comment_replies">
                               <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply..." style="margin-left: 20px;">
@@ -626,6 +575,17 @@
          </div>
          <div class="mdl-cell mdl-cell--2-col">
          </div>
+         <!-- LIKES CHANGE COLOR -->
+         <script>
+            jQuery('button.like').click(function() {
+            jQuery(this).toggleClass("like_button_comment_liked");
+            });           
+         </script>
+         <script>
+            jQuery('button.dislike').click(function() {
+            jQuery(this).toggleClass("dislike_button_comment_clicked");
+            });           
+         </script> 
    </div>
    <!--FIREBASE-->
    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>

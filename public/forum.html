@@ -31,7 +31,6 @@
       <script src="js/scripts.js"></script>
       <!-- App Styling -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-
       <style>
          html,body {
          font-family: "Roboto", "Helvetica", sans-serif;
@@ -104,6 +103,7 @@
          #like_post_icon, #dislike_post_icon{
          font-size: 17px;
          text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+         color: white
          }
          button.like, button.dislike{
          border-radius: 15px;
@@ -178,12 +178,14 @@
          }
          #like_post_btn
          {
-         background-color:#2bbd7e;
+         color: black;
+         border: 2px solid #04AA6D;
          width: 100px
          }
          #dislike_post_btn
          {
-         background-color:#e53935;  
+         color: black;
+         border: 2px solid #e53935;
          width: 100px 
          }
          /* All below is for the tab navigation */
@@ -242,21 +244,21 @@
          }
          #tab1
          {
-            position: relative; 
-            bottom: 10px; 
-            left: 40px
+         position: relative; 
+         bottom: 10px; 
+         left: 40px
          }
          #tab2
          {
-            position: relative; 
-            bottom: 10px; 
-            left: 40px
+         position: relative; 
+         bottom: 10px; 
+         left: 40px
          }
          #tab3
          {
-            position: relative; 
-            bottom: 10px; 
-            left: 75px
+         position: relative; 
+         bottom: 10px; 
+         left: 75px
          }
          input[type="radio"]:checked + label {
          color: var(--primary-color);
@@ -290,13 +292,13 @@
          }
          #more_btn
          {
-            border-radius: 10px;
-            margin: 0 0 0 20px;
-            color: white;
-            background-color: #00796b;
-            position: relative;
-            width: 160px;
-            left: 290px
+         border-radius: 10px;
+         margin: 0 0 0 20px;
+         color: white;
+         background-color: #00796b;
+         position: relative;
+         width: 160px;
+         left: 290px
          }
          }
          @media all and (max-width: 1000px) {
@@ -339,15 +341,34 @@
          }
          #more_btn
          {
-            border-radius: 10px;
-            margin: 0 0 0 20px;
-            color: white;
-            background-color: #00796b;
-            position: relative;
-            width: 60px;
-            left: 10px
+         border-radius: 10px;
+         margin: 0 0 0 20px;
+         color: white;
+         background-color: #00796b;
+         position: relative;
+         width: 60px;
+         left: 10px
          }
          }
+         /* To change the like button back and forth */
+         .like_button_comment_liked {
+         color: white !important ;
+         background-color:#2bbd7e; 
+         } 
+         .like_button_comment_liked:hover
+         {
+         color: white;
+         background-color:#2bbd7e;
+         }
+         .dislike_button_comment_clicked {
+         color: white !important ;
+         background-color:#e53935; 
+         } 
+         .dislike_button_comment_clicked:hover
+         {
+         background-color:#e53935;
+         }
+        
       </style>
       <title>Forum</title>
       <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -385,20 +406,18 @@
    <body>
       <main class="mdl-layout__content mdl-color--grey-100">
       <!-- Insert Page Content Here -->
-
-         <div class="container">
-            <!-- Tab navigation -->
-            <div class="tabs">
-               <input type="radio" id="radio-1" name="tabs" onclick="printAllPosts();" checked/>
-               <label class="tab" for="radio-1" id="tab1">Feed</label>
-               <input type="radio" id="radio-2" name="tabs" onclick="console.log(2)"/>
-               <label class="tab" for="radio-2" id="tab2">Discover</label>
-               <input type="radio" id="radio-3" name="tabs" onclick="printUserPosts();"/>
-               <label class="tab" for="radio-3" id="tab3">Your posts</label>
-               <span class="glider"></span>
-            </div>
+      <div class="container">
+         <!-- Tab navigation -->
+         <div class="tabs">
+            <input type="radio" id="radio-1" name="tabs" onclick="printAllPosts();" checked/>
+            <label class="tab" for="radio-1" id="tab1">Feed</label>
+            <input type="radio" id="radio-2" name="tabs" onclick="console.log(2)"/>
+            <label class="tab" for="radio-2" id="tab2">Discover</label>
+            <input type="radio" id="radio-3" name="tabs" onclick="printUserPosts();"/>
+            <label class="tab" for="radio-3" id="tab3">Your posts</label>
+            <span class="glider"></span>
          </div>
-
+      </div>
       <div class="mdl-grid mdl-grid-body">
       <div class="mdl-cell mdl-cell--2-col">
       </div>
@@ -406,8 +425,6 @@
       <div class="forum-posts">
       <!-- DISPLAY ALL POST BY OTHER USERS -->
       <br>
-
-
       <div id="postField">
          <span class="post_card">
             <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -435,36 +452,38 @@
                <div>
                   <!--  LIKE DISLIKE FOR POST -->
                   <br>
-                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="like_post_btn">
+                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
                   <i class="material-icons" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
                   </button>
-                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="dislike_post_btn">
+                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
                   <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                   </button>
-
                   <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn">
-                     <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                  <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                   </button>
                </div>
-               
          </span>
          <br>
-      </div>
-
-
-
-
-      <!--  TO MAKE THE POST CARD CLICKABLE -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-      <script>
-         $(".post_card").click(function() {
-           window.location.href="./post.html"
-         });
-         
-         
-         
-      </script>
-      <br>
+         <!-- LIKES CHANGE COLOR -->
+         <script>
+            jQuery('button.like').click(function() {
+            jQuery(this).toggleClass("like_button_comment_liked");
+            });           
+         </script>
+         <script>
+            jQuery('button.dislike').click(function() {
+            jQuery(this).toggleClass("dislike_button_comment_clicked");
+            });           
+         </script> 
+         </div>
+         <!-- TO MAKE THE POST CARD CLICKABLE -->
+         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+         <script>
+            $(".post_card").click(function() {
+              window.location.href="./post.html"
+            });
+         </script> -->
+         <br>
       </div>
       <div class="mdl-cell mdl-cell--2-col">
       </div>
