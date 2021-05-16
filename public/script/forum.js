@@ -227,8 +227,8 @@ function printUserPosts(){
                                   <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
                                   <br>
                                   <div style='inline-block'>
-                                     <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
-                                     <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
+                                    <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
+                                    <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">${post.interest[1]}</button>
                                   </div>
                                   <br>
                                </form>
