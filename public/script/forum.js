@@ -39,6 +39,12 @@ function makeNewPost() {
 
 
     if (checkUserExistence()) {
+        interest_arr = [];
+        $("input:checkbox[name=interests]:checked").each(function(){
+            interest_arr.push($(this).val());
+        });
+
+        interest_json = JSON.stringify(interest_arr);
 
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
@@ -50,7 +56,7 @@ function makeNewPost() {
 
         let newData = { 
             description: description,
-            interest: "a",
+            interest: interest_arr,
             title: title,
             userID: current_user["phone"],
             username: current_user["username"],
@@ -123,23 +129,6 @@ function findAllPosts() {
     });
 }
 
-//need to fix 
-function findCurrentUserPosts() {
-    firebase.database().ref("posts").once("value").then(snapshot => {
-        let posts = [];
-        let postsObj = snapshot.val();
-        for (let post_id in postsObj) {
-            firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
-                let post = snapshot.val();
-                if (post["userID"] == current_user["phone"]) {
-                    posts.push(post);
-                }
-            });
-        }
-        console.log(posts.length);
-    });
-}
-
 
 
 
@@ -177,8 +166,8 @@ function printAllPosts(){
                           <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
                           <br>
                           <div style='inline-block'>
-                             <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
-                             <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
+                             <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
+                             <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">${post.interest[1]}</button>
                           </div>
                           <br>
                        </form>
@@ -238,8 +227,8 @@ function printUserPosts(){
                                   <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
                                   <br>
                                   <div style='inline-block'>
-                                     <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
-                                     <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
+                                    <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
+                                    <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">${post.interest[1]}</button>
                                   </div>
                                   <br>
                                </form>
