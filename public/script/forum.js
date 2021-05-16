@@ -197,7 +197,7 @@ function printAllPosts(){
                             <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                             </button>
                             <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail();">
-                            <input type="hidden" id="hidden1" value=3>
+                            <input type="hidden" id="hidden1" value=${post.id}>
                             <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                             </button>
                        </div>
@@ -210,7 +210,7 @@ function printAllPosts(){
 
 function postDetail() {
         post_id = document.getElementById("hidden1").value;
-        window.location = "post.html" + "?post_id=" + "-M_dllsYHwYMQ0FfuDn_";
+        window.location = "post.html" + "?post_id=" + post_id;
 }
 
 function printUserPosts(){
