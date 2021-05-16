@@ -180,7 +180,7 @@ function printAllPosts(){
                             <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
                             <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                             </button>
-                            <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn">
+                            <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail();">
                             <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                             </button>
                        </div>
@@ -241,7 +241,7 @@ function printUserPosts(){
                                   <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="dislike_post_btn">
                                   <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                   </button>
-                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn">
+                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail();">
                                     <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                                   </button>
                                </div>
@@ -249,4 +249,8 @@ function printUserPosts(){
                          </span></div>`;
                     }
                 });
+}
+
+function postDetail() {
+    window.location = "post.html"
 }
