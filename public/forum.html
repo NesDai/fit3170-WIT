@@ -31,6 +31,7 @@
       <script src="js/scripts.js"></script>
       <!-- App Styling -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+
       <style>
          html,body {
          font-family: "Roboto", "Helvetica", sans-serif;
@@ -365,18 +366,20 @@
    <body>
       <main class="mdl-layout__content mdl-color--grey-100">
       <!-- Insert Page Content Here -->
+
          <div class="container">
             <!-- Tab navigation -->
             <div class="tabs">
-               <input type="radio" id="radio-1" name="tabs" checked/>
+               <input type="radio" id="radio-1" name="tabs" onclick="printAllPosts();" checked/>
                <label class="tab" for="radio-1" id="tab1">Feed</label>
-               <input type="radio" id="radio-2" name="tabs" />
+               <input type="radio" id="radio-2" name="tabs" onclick="console.log(2)"/>
                <label class="tab" for="radio-2" id="tab2">Discover</label>
-               <input type="radio" id="radio-3" name="tabs" />
+               <input type="radio" id="radio-3" name="tabs" onclick="printUserPosts();"/>
                <label class="tab" for="radio-3" id="tab3">Your posts</label>
                <span class="glider"></span>
             </div>
          </div>
+
       <div class="mdl-grid mdl-grid-body">
       <div class="mdl-cell mdl-cell--2-col">
       </div>

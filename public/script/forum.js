@@ -1,5 +1,7 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
+window.onload = printAllPosts();  
+
 //check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then 
@@ -145,7 +147,7 @@ function findCurrentUserPosts() {
 function printAllPosts(){
 
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .once('value', x => {
@@ -241,5 +243,3 @@ function printUserPosts(){
                 });
 
 }
-
-window.onload = printAllPosts();  
