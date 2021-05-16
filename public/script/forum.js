@@ -147,7 +147,7 @@ function findCurrentUserPosts() {
 function printAllPosts(){
 
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .once('value', x => {
@@ -200,7 +200,7 @@ function printAllPosts(){
 function printUserPosts(){
 
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .orderByChild('username')
@@ -245,8 +245,8 @@ function printUserPosts(){
                                     <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                                 </button>
                             </div>
+                            <br>
                         </span></div>`;
                     });
                 });
-
 }
