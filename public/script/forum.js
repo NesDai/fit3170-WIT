@@ -44,12 +44,9 @@ function makeNewPost() {
             interest_arr.push($(this).val());
         });
 
-        interest_json = JSON.stringify(interest_arr);
-
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
-        // let interest = document.getElementById("top-interests") // hmm? 
 
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.key; // generate a key for post id 
@@ -85,33 +82,45 @@ function removePost(post_id) {
     });
 }
 
-// fix
-function updatePost(post_id) {
-    let title = document.getElementById("post_title").textContent
-    let description = document.getElementById("post_description").textContent
 
-    let update_data = {
-        title: title, 
-        description: description
-    };
-    if (validatePostOwner(post_id)) {
-        firebase.database().ref(`posts/${post_id}`).update(update_data);
-    } else {
-        console.log("Invalid");
-    }
+function updatePost(post_id) {
+
+    firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
+        let post = snapshot.val();
+        if (post.userID == current_user["phone"]) {
+
+            let title = document.getElementById("post_title").value
+            let description = document.getElementById("post_description").value
+            interest_arr = [];
+            $("input:checkbox[name=interests]:checked").each(function(){
+                interest_arr.push($(this).val());
+            });
+            
+            // if either of the inputs are empty then it should store the already stored one
+            let update_data = {
+                title: title, 
+                description: description,
+                interest: interest_arr
+            };
+
+            firebase.database().ref(`posts/${post_id}`).update(update_data);
+        } else {
+            console.log("Nope");
+        }
+    });
 }
 
-// fix
 function validatePostOwner(post_id) {
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
         let post = snapshot.val();
         if (post["userID"] == current_user["phone"]) {
-            return true;
+            return 1;
         } else {
-            return false;
+            return 0;
         }
     });
 }
+
 
 function findAllPosts() {
     firebase.database().ref("posts").once("value").then(snapshot => {
@@ -128,9 +137,6 @@ function findAllPosts() {
         }
     });
 }
-
-
-
 
 
 function printAllPosts(){
@@ -188,7 +194,6 @@ function printAllPosts(){
                  </span></div>`;
             }
         });
-
 }
 
 function printUserPosts(){
