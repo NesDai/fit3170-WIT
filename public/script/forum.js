@@ -235,10 +235,10 @@ function printUserPosts(){
                                <div>
                                   <!--  LIKE DISLIKE FOR POST -->
                                   <br>
-                                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="like_post_btn">
+                                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn">
                                   <i class="material-icons" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
                                   </button>
-                                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"  id="dislike_post_btn">
+                                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="dislike_post_btn">
                                   <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                   </button>
                                   <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn">
