@@ -185,6 +185,7 @@ function printAllPosts(){
                           <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                           </button>
                        </div>
+                       <br>
                  </span></div>`;
             });
         });
