@@ -1,8 +1,9 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
-
+window.onload = function(){
     printAllPosts();
     hideTranslationModal();
+}
 
 
   
