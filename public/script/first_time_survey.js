@@ -411,7 +411,10 @@ function initFirebaseAuth() {
  */
 function saveResponse(answer) {
     // Formulating the branch
-    let phone = currentUser.phoneNumber;
+    // TODO Change this back to
+    //  let phone = currentUser.phoneNumber;
+    //  when it's time to ship
+    let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
     let userBranch = `chatbot/survey_responses/${phone}`;
@@ -469,7 +472,10 @@ function saveResponse(answer) {
 
 function initSetId() {
     // Formulating the branch
-    let phone = currentUser.phoneNumber;
+    // TODO Change this back to
+    //  let phone = currentUser.phoneNumber;
+    //  when it's time to ship
+    let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
     let userBranch = `chatbot/survey_responses/${phone}`;
