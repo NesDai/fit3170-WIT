@@ -1,6 +1,12 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
-window.onload = printAllPosts();  
+window.onload = function(){
+    printAllPosts();
+    hideTranslationModal();
+}
+
+  
+
 
 //check id the user is signed in
 function checkUserExistence() {
@@ -10,6 +16,14 @@ function checkUserExistence() {
     } else {
         return false;
     }
+}
+
+function showTranslationModal(){
+    document.getElementById("myModal").style.display = "block";  
+}
+
+function hideTranslationModal(){
+    document.getElementById("myModal").style.display = "none";  
 }
 
 
