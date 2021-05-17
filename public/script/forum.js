@@ -1,9 +1,9 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
-window.onload = function(){
+
     printAllPosts();
     hideTranslationModal();
-}
+
 
   
 
@@ -165,6 +165,7 @@ function printAllPosts(){
     let data_list = [];
     let field = document.getElementById("postField");
     // field.innerHTML = ""; // emtpy the field of any previous posts
+    console.log("fuclk")
 
     firebase.database().ref('posts')
         .once('value', x => {
