@@ -1,49 +1,54 @@
 // A list of IDs of question objects that are stored in
 // the Firestore Database
 const QUESTION_IDS = [
-    "bLpb14LU78F3Qg8Rn2WY",
-    "7a0n5h3lneB2fqNsKtuO",
-    "dMZJyk7DZoeBIQd5xyyX",
-    "aE2dmGt23cwAgXMk5ZDh",
-    "0auWxufj6xLC5iYg7lfy",
-    "GHesoB9iZVOHccbOXZHV",
-    "iU3aKAUZctHQ2RK0A9nf",
-    "dIzgM6Q9kcqk17CMdbEo",
-    "KcDaybedgRBvfTWf8Cl4",
-    "OjmKlnJzHHRn1R9QP2Bi",
-    "wZstrbn7rbrGuOhlvsap",
-    "dzdJAKosEo5cHgelX6F2",
-    "xPGzYhaCAjCvJPosH4vq",
-    "dm9odnVFH35xgtGL1ysG",
-    "dm9odnVFH35xgtGL1ysG",
-    "l10CXfmS8DuPqOHboZPH",
+    "C9f4th8nrae1aEIuaMhm",
+    "Ghqr6MDsWorZMWQXSxRC",
+    "BEwvOa9ZJXIqRqoSw7o1",
+    "IWOPNfyLjs88h5q3lug0",
+    "3O2q4ttzWM2HFCtDT5W7",
+    "r4ilV1VTFPc5CL7Ap6le",
+    "w5hLv0EEepFvNMNFjgKv",
+    "c6ytyVW7e8MQR5L8ozRA",
+    "VKGObBUHAnmrphBLfzQ3",
+    "HY02rtW9DJnK9qyaru0Z",
+    "XoIdBzoYFFn4IP6xroZS",
+    "e0luWBGAtjQYKE7gUo4C",
+    "lOWvaTLShwpXMwN2nhOT",
+    "NqYbjT5TNSqhQxuHzjJA",
+    "NqYbjT5TNSqhQxuHzjJA",
+    "bvwRYIEBvfS7GIRwrEpv",
+    "bvwRYIEBvfS7GIRwrEpv",
+    "yohRsGLmPtimXXWhi5F6",
+    "e531ZREMMzKIJz3EFVIH",
+    "ZqlrgA3T9rIlFKuHOskR",
+    "2pLQA2fFpm1Wuj3iG6bK",
     // Part 1 question IDs above
 
-    "l10CXfmS8DuPqOHboZPH",
-    "MrKwbkqayRL86Tb3YkVd",
-    "lDQiOygENhgilzyM7hu9",
-    "h9gBeRV9il5Sqlga0YPJ",
-    "iu1Itgy8rRA3pYpdGQZM",
-    "f0N7Bfgt3keSyKlZ9ejU",
-    "wiPxWBsXUVBaMjhfBI8A",
+    "kBQ2IeSF7osrMUnj8asD",
+    "eMSvRnYMsQqahtrWrHeq",
+    "i5UznKa4BBsuKcYjIUqa",
+    "lGsZWCP0D9W8bT7k01hv",
+    "06WOSoGwzcUzcNgOQuWx",
+    "06WOSoGwzcUzcNgOQuWx",
+    "b7J9dGwQt6QNMerO5TNS",
     // Part 2 question IDs above
 
-    "V1BhcYdWrkjDqU9QLuPa",
-    "XrPWt5Csa8tszyeShIZD",
+    "aTA4BIGAGdlJ0CEHgKyx",
+    "zZzBFJzChehqJi0kElnm",
     // Part 3 question IDs above
 
-    "N0CRo2tA81MLuYAOvqGS",
-    "N0CRo2tA81MLuYAOvqGS",
-    "xfQJ7SRSjwMUtDvcCxhe",
-    "fPPvrcib7Sfc5q4jUToj",
+    "zZzBFJzChehqJi0kElnm",
+    "mxHQ05XCOmRDhwtbWayL",
+    "kFv1ra53xFmUR3CF7UgT",
+    "tAcX1c9fNkzioDWiXoW1",
     // Part 4 question IDs above
 
-    "BF7CeIhINBgeikwp5jgo",
-    "BF7CeIhINBgeikwp5jgo",
-    "fuxd0845z1Wjr1VSzUnw",
-    "ON9ijDsniz5SHDb5DUVT"
+    "OuQZ0TzivLgfJAZ0pBWy",
+    "evBF2Bi2i6dbhBRKe0ZL",
+    "lIDdWqTPgZ3SbFGbrpNG",
+    "lIDdWqTPgZ3SbFGbrpNG"
     // Part 5 question IDs above
-];
+]
 
 // Initializing variables
 let messages = document.getElementById("messages");
