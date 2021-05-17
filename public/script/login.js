@@ -13,12 +13,50 @@
 const USER_KEY = "USER";
 
 // To apply the default browser preference instead of explicitly setting it.
-firebase.auth().useDeviceLanguage();
+// firebase.auth().useDeviceLanguage();
+
+
+
+function setAuthLanguage(){
+
+    let language = localStorage.getItem(LANGUAGE_KEY);
+
+    if (language == null){
+        firebase.auth().languageCode = "en";
+        localStorage.setItem(LANGUAGE_KEY,"en")
+    }
+    else{
+        firebase.auth().languageCode = language;    
+    }
+}
+
+
+// Used to change language of the captcha
+function changeLanguage(newLanguage){
+    if (newLanguage == "Malay")
+        language = "ms";
+    else if (newLanguage == "Chinese (Simplified)")
+        language = "zh-CN";
+    else if (newLanguage == "Thai")
+        language = "th"
+    else
+        language = "en"
+
+    // save language for the user upon login
+    localStorage.setItem(LANGUAGE_KEY, language);
+
+    setAuthLanguage();
+
+    recaptchaVerifier.reset()
+    // window.location = window.location  // refresh the page to reinitialize captcha
+}
+
 
 
 
 window.onload = function(){
-
+    
+    setAuthLanguage();
     render();
 
 }
@@ -67,7 +105,7 @@ function phoneAuth() {
         document.getElementById("input-pin").innerHTML = "A SMS with the PIN has been sent to your phone. Please insert the pin below."
         document.getElementById("input-pin").style.color = "green";
 
-        alert("Message sent");
+        // alert("Message sent");
     }).catch(function (error) {
         alert(error.message);
         document.getElementById("input-pin").innerHTML = ""
