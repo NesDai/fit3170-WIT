@@ -125,7 +125,7 @@ function select(button) {
         nextQuestion();
     }, 1000)
 
-    saveResponse(input.value);
+    saveResponse(content);
 }
 
 /**
@@ -133,6 +133,9 @@ function select(button) {
  */
 function addMessage() {
     let message = input.value;
+
+    // Saving the response before clearing the input box
+    saveResponse(input.value);
 
     if (message.length > 0) {
         let messageTemplate =
@@ -157,8 +160,6 @@ function addMessage() {
     }, 1000);
 
     let question_id = "";
-
-    saveResponse(currentQuestionObject, input.value);
 }
 
 /**
