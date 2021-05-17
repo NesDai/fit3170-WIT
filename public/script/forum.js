@@ -159,10 +159,11 @@ function printAllPosts(){
                 data_list.push(data.val())
                 // let post = data.val()
             });
-            console.log(data_list);
+
         }).then(()=>{
             for(let i=data_list.length-1; i>=0 ; i--){
                 let post = data_list[i]
+
                 field.innerHTML +=
                 `   <div style="padding-top: 20px;"><span class="post_card">
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -196,7 +197,7 @@ function printAllPosts(){
                             <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
                             <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                             </button>
-                            <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail();">
+                            <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
                             <input type="hidden" id="hidden1" value=${post.id}>
                             <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                             </button>
@@ -207,10 +208,12 @@ function printAllPosts(){
         });
 }
 
-
-function postDetail() {
-        post_id = document.getElementById("hidden1").value;
-        window.location = "post.html" + "?post_id=" + post_id;
+const POST_ID = "POST_ID";
+function postDetail(id) {
+        console.log(id);
+        localStorage.setItem(POST_ID,id);
+        // post_id = document.getElementById("hidden1").value;
+        window.location = "post.html";// + "?post_id=" + post_id;
 }
 
 function printUserPosts(){
@@ -230,6 +233,7 @@ function printUserPosts(){
                 }).then(()=> {
                     for(let i=data_list.length-1; i>=0 ; i--){
                         let post = data_list[i]
+                        console.log(data_list[i].id);
                         field.innerHTML +=
                         `   <div style="padding-top: 20px;"><span class="post_card">
                             <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -263,9 +267,11 @@ function printUserPosts(){
                                   <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="dislike_post_btn">
                                   <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                   </button>
-                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail();">
+
+                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail(${data_list[i].id});">
                                   <input type="hidden" id="hidden1" value=3>
-                                    <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+
+                                    <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes" >More</span>
                                   </button>
                                </div>
                                <br>
