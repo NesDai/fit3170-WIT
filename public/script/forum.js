@@ -1,17 +1,6 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
-<<<<<<< HEAD
-window.onload = function(){
-    printAllPosts();
-    hideTranslationModal();
-}
-
-
-  
-
-=======
 window.onload = printAllPosts();
->>>>>>> redcow_forum
 
 //check id the user is signed in
 function checkUserExistence() {

@@ -9,7 +9,6 @@ firebase.database().ref(`posts/${params.get('post_id')}`).once("value").then(sna
 });
 
 
-<<<<<<< HEAD
 window.onload = function(){
     printPostDetails();
     hideTranslationModal();
@@ -23,10 +22,6 @@ function showTranslationModal(){
 function hideTranslationModal(){
     document.getElementById("myModal").style.display = "none";  
 }
-=======
-window.onload = printPostDetails();
-window.onload = printComments();
->>>>>>> redcow_forum
 
 //check id the user is signed in
 function checkUserExistence() {
