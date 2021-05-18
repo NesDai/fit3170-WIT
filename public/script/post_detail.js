@@ -9,8 +9,19 @@ firebase.database().ref(`posts/${params.get('post_id')}`).once("value").then(sna
 });
 
 
-window.onload = printPostDetails();
-window.onload = printComments();
+window.onload = function(){
+    printPostDetails();
+    hideTranslationModal();
+}
+
+
+function showTranslationModal(){
+    document.getElementById("myModal").style.display = "block";  
+}
+
+function hideTranslationModal(){
+    document.getElementById("myModal").style.display = "none";  
+}
 
 //check id the user is signed in
 function checkUserExistence() {

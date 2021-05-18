@@ -12,6 +12,14 @@ function checkUserExistence() {
     }
 }
 
+function showTranslationModal(){
+    document.getElementById("myModal").style.display = "block";  
+}
+
+function hideTranslationModal(){
+    document.getElementById("myModal").style.display = "none";  
+}
+
 
 function addReply(){
 
@@ -152,6 +160,7 @@ function printAllPosts(){
     let data_list = [];
     let field = document.getElementById("postField");
     // field.innerHTML = ""; // emtpy the field of any previous posts
+    console.log("fuclk")
 
     firebase.database().ref('posts')
         .once('value', x => {
@@ -193,14 +202,14 @@ function printAllPosts(){
                           <!--  LIKE DISLIKE FOR POST -->
                           <br>
                             <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
-                            <i class="material-icons" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                            <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
                             </button>
                             <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
-                            <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                            <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                             </button>
                             <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
                             <input type="hidden" id="hidden1" value=${post.id}>
-                            <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                            <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                             </button>
                        </div>
                        <br>
@@ -263,16 +272,16 @@ function printUserPosts(){
                                   <!--  LIKE DISLIKE FOR POST -->
                                   <br>
                                   <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn">
-                                  <i class="material-icons" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                                  <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
                                   </button>
                                   <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="dislike_post_btn">
-                                  <i class="material-icons" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                  <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                   </button>
 
                                   <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail(${data_list[i].id});">
                                   <input type="hidden" id="hidden1" value=3>
 
-                                    <i class="material-icons" id="more_icon">read_more</i><span id="number_of_dislikes" >More</span>
+                                    <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes" >More</span>
                                   </button>
                                </div>
                                <br>
