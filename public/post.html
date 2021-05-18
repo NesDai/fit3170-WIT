@@ -376,6 +376,10 @@
          border: 2px solid #e53935;
          width: 100px
          }
+         .mdl-checkbox {
+         display: inline;     
+         width: 200px;
+         }
       </style>
       <title>Forum</title>
       <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -475,12 +479,14 @@
                         <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
                         <br>
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
+                        <form> 
                         <div>
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="anonymous">
-                        <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
-                        <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                           <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
+                           <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                         </label>
                       </div>
+                     </form>
                         <!-- SEND BUTTON -->
                         <div>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
