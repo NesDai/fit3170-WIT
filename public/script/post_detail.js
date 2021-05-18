@@ -9,10 +9,11 @@ firebase.database().ref(`posts/${params.get('post_id')}`).once("value").then(sna
 });
 
 
-window.onload = function(){
+
+  console.log("hi");
     printPostDetails();
     hideTranslationModal();
-}
+
 
 
 function showTranslationModal(){
@@ -53,7 +54,7 @@ function printPostDetails(){
                     let post = data.val();
                     // print the post details in here
 
-                    poster_field.innerHTML = post.username;
+                    poster_field.innerHTML = `@<b>${post.username}</b>`;
                     time_field.innerHTML = post.created;
                     title_field.innerHTML = post.title;
                     description_field.innerHTML = post.description;
