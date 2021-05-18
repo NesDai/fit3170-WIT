@@ -114,13 +114,21 @@ function printComments(){
             });
       }).then(()=>{
           for(let i=data_list.length-1; i>=0 ; i--){
-              let comment = data_list[i]
-              console.log(comment.content)
+              let comment = data_list[i];
+
+              let comment_username;
+              if (comment.anonymous) {
+                console.log("hey");
+                comment_username = "Anonymous";
+              }else{
+                comment_username = comment.username;
+              };
+
               comment_section.innerHTML +=
               `<div>
                  <div style="margin:0 10px; background-color: white">
                     <span class="mdi mdi-cow"></span>
-                    <h6 name="username" id="username">@${comment.username}</h6>
+                    <h6 name="username" id="username">@${comment_username}</h6>
                     <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
                     <p>
                        <span id = "user_comment">${comment.content}</span>

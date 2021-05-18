@@ -475,22 +475,26 @@
                         <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
                         <br>
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
+                        <div>
                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="anonymous">
-                        <input type="checkbox" id="anonymous" class="mdl-checkbox__input" checked>
+                        <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
                         <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                         </label>
+                      </div>
                         <!-- SEND BUTTON -->
+                        <div>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                            style="background-color: #00b686;" id="send_comment_btn" type="submit" onclick="addComment()">
                         <i class="material-icons" id="send_reply_icon">send</i>
                         SEND
                         </button>
+                      </div>
                      </form>
                      <br>
                      <hr style="margin: 0;">
                      <div id="comment_section">
                         <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px;">COMMENTS</h5>
-                        
+
                      </div>
                   </div>
                </div>
