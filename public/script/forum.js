@@ -1,5 +1,6 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
+<<<<<<< HEAD
 window.onload = function(){
     printAllPosts();
     hideTranslationModal();
@@ -8,10 +9,13 @@ window.onload = function(){
 
   
 
+=======
+window.onload = printAllPosts();
+>>>>>>> redcow_forum
 
 //check id the user is signed in
 function checkUserExistence() {
-    // if a user is signed in then 
+    // if a user is signed in then
     if (current_user["username"] && current_user["phone"]) {
         return true;
     } else {
@@ -34,14 +38,14 @@ function addReply(){
     document.getElementById("comment_reply_input").className="showTextInput"
 
     // show send button
-    document.getElementById("send_reply_btn").className="showButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" 
+    document.getElementById("send_reply_btn").className="showButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
 
     // hide add reply button
     document.getElementById("add_reply_btn").className="hideReply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
 }
 
 
-//Making a new post 
+//Making a new post
 function makeNewPost() {
 
     const options = {  // options for Date
@@ -65,9 +69,9 @@ function makeNewPost() {
 
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
-        // let key = myRef.key; // generate a key for post id 
+        // let key = myRef.key; // generate a key for post id
 
-        let newData = { 
+        let newData = {
             id: key,
             description: description,
             interest: interest_arr,
@@ -94,6 +98,7 @@ function makeNewPost() {
 }
 
 
+
 function removePost(post_id) {
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
         let post = snapshot.val();
@@ -118,10 +123,10 @@ function updatePost(post_id) {
             $("input:checkbox[name=interests]:checked").each(function(){
                 interest_arr.push($(this).val());
             });
-            
+
             // if either of the inputs are empty then it should store the already stored one
             let update_data = {
-                title: title, 
+                title: title,
                 description: description,
                 interest: interest_arr
             };

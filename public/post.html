@@ -63,11 +63,11 @@
          .mdl-layout__header-row {
          padding: auto;
          margin: 0 auto;
-         } 
+         }
          .mdl-button .material-icons {
          top: -1px;
          margin-right: 5px;
-         } 
+         }
          @media screen and (max-width: 610px) {
          header {
          height: 80px;
@@ -200,11 +200,11 @@
          /* To change the like button back and forth */
          .like_button_comment_not_liked {
          border: 2px solid #04AA6D;
-         } 
+         }
          .like_button_comment_liked {
-         background-color:#2bbd7e; 
+         background-color:#2bbd7e;
          color: white !important;
-         } 
+         }
          .like_button_comment_liked:hover
          {
          background-color:#2bbd7e;
@@ -212,11 +212,11 @@
          .dislike_button_comment_not_clicked {
          border: 2px solid #e53935;
          color: white !important;
-         } 
+         }
          .dislike_button_comment_clicked {
          color: white !important;
-         background-color:#e53935; 
-         } 
+         background-color:#e53935;
+         }
          .dislike_button_comment_clicked:hover
          {
          color: white !important;
@@ -258,24 +258,24 @@
          }
 
          #date_posted{
-         text-align: right; 
-         float: right; 
+         text-align: right;
+         float: right;
          display: inline;
          padding-left:300px;
-         position: relative; 
+         position: relative;
          right: 10px
          }
          #interest1_id
          {
-         background-color: #ffcc99; 
-         margin-left: 440px;  
-         border-radius: 12px; 
+         background-color: #ffcc99;
+         margin-left: 440px;
+         border-radius: 12px;
          width: 17%
          }
          #interest2_id
          {
          background-color: #ff9999 ;
-         margin:300 px; 
+         margin:300 px;
          border-radius: 12px;
          }
          #send_comment_btn{
@@ -290,8 +290,8 @@
          }
          #reply_box
          {
-         margin:0 10px; 
-         background-color: white; 
+         margin:0 10px;
+         background-color: white;
          width:95%
          }
          #send_reply_btn{
@@ -317,17 +317,17 @@
          background: #E4E4E4;
          }
          #date_posted{
-         text-align: left; 
+         text-align: left;
          float: left;
          display: inline;
-         position: relative; 
+         position: relative;
          left: 10px;
          top: 5px;
          }
          #interest1_id
          {
-         background-color: #ffcc99; 
-         border-radius: 12px; 
+         background-color: #ffcc99;
+         border-radius: 12px;
          position:relative;
          left:18px;
          width: 35%
@@ -352,8 +352,8 @@
          }
          #reply_box
          {
-         margin:0 10px; 
-         background-color: white; 
+         margin:0 10px;
+         background-color: white;
          width:90%
          }
          #send_reply_btn{
@@ -393,7 +393,11 @@
          {
          color: black;
          border: 2px solid #e53935;
-         width: 100px 
+         width: 100px
+         }
+         .mdl-checkbox {
+         display: inline;     
+         width: 200px;
          }
 
          .modal {
@@ -436,7 +440,15 @@
       </style>
       <title>Forum</title>
       <!-- TODO: Enable First Input Delay polyfill library. -->
-      <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
+      <script type="text/javascript">
+      !function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";
+      function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())};
+      function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])};
+      function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()};
+      function c(){r()};
+      function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}};
+      function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);
+    </script>
    </head>
    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
       <!-- Header section containing logo -->
@@ -534,24 +546,36 @@
                      <!-- COMMENT FORM -->
                      <form class="post_comment">
                         <!-- COMMENT INPUT -->
-                        <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">     
+                        <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
                         <br>
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="anonymous">
-                        <input type="checkbox" id="anonymous" class="mdl-checkbox__input" checked>
-                        <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                        <form> 
+                        <div>
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                           <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
+                           <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                         </label>
+                      </div>
+                     </form>
                         <!-- SEND BUTTON -->
+                        <div>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+<<<<<<< HEAD
                            style="background-color: #00b686;" id="send_comment_btn" type="submit">
                         <i class="material-icons notranslate" id="send_reply_icon">send</i>
+=======
+                           style="background-color: #00b686;" id="send_comment_btn" type="submit" onclick="addComment()">
+                        <i class="material-icons" id="send_reply_icon">send</i>
+>>>>>>> redcow_forum
                         SEND
                         </button>
+                      </div>
                      </form>
                      <br>
                      <hr style="margin: 0;">
-                     <div class="comment_section">
+                     <div id="comment_section">
                         <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px;">COMMENTS</h5>
+<<<<<<< HEAD
                         <!-- COMMENT ONE --> <!-- EXAMPLE -->
                         <div>
                            <div style="margin:0 10px; background-color: white">
@@ -666,6 +690,9 @@
                            reply
                            </button>
                         </div>
+=======
+
+>>>>>>> redcow_forum
                      </div>
                   </div>
                </div>
@@ -677,13 +704,13 @@
          <script>
             jQuery('button.like').click(function() {
             jQuery(this).toggleClass("like_button_comment_liked");
-            });           
+            });
          </script>
          <script>
             jQuery('button.dislike').click(function() {
             jQuery(this).toggleClass("dislike_button_comment_clicked");
-            });           
-         </script> 
+            });
+         </script>
    </div>
 
 
