@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="../node_modules/video.js/dist/video-js.min.css" />
 
     <meta charset="utf-8">
@@ -154,9 +154,17 @@
 
     </div>
     </main>
-    <script src="../node_modules/video.js/dist/video.min.js"></script>
-    <script src="../node_modules/videojs-youtube/dist/Youtube.min.js"></script>
+
+    <!-- FIREBAS STUFF I GOT FROM YT-->
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    <script src="./script/Youtube.min.js"></script>
     <script src="./script/recommenderPageController.js"></script>
     <script src="./script/skipChatbotPreference.js"></script>
+    
   </body>
 </html>
