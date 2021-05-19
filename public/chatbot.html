@@ -83,7 +83,7 @@
     </div>
     </main>
     <div id = "History" class = " tabcontent" >
-    <p> Please choose a date to see your chatlog:</p>
+    <label for="Dropdown">Please choose a date to see your chatlog:</label>
     <div class="dropdown">
       <select onclick="dates()" class="dropbtn" id="Dropdown">
       <div id="myDropdown" class="dropdown-content">
@@ -91,6 +91,9 @@
       </div>
       <button onclick = "selectdate()"> Confirm </button>
       <p> your chosen date is: <input type= "text" id="fav"></p>
+      <div id = "attemptsection" class = "dropdown-content">
+      </div>
+      <button onclick = "selectattempt()"> Confirm </button>
     </div>
 
     </div>

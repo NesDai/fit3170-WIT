@@ -324,7 +324,39 @@ window.onclick = function(event) {
 
 function selectdate(){
   var mylist = document.getElementById('Dropdown');
+  const collectionRef = firebase.firestore().collection(currentUser.email).doc(mylist.options[mylist.selectedIndex].text);
+  collectionRef.get().then((doc) => {
+    if (doc.exists) {
+        console.log("Document data:", doc.data().set_id);
+        if (document.contains(document.getElementById("attempt"))) {
+            document.getElementById("attempt").remove();
+            document.getElementById("label_id").remove();
+          }
+        var select = document.createElement("select");
+        select.id = "attempt";
+        select.class = "dropbtn";
+        var label = document.createElement("label");
+        label.id = "label_id";
+        for (var i = 1;i<doc.data().set_id+1;i++){
+          var option = document.createElement("option");
+          option.value = i;
+          option.text = i;
+          select.appendChild(option);
+        }
+        label.innerHTML = "Choose which attempt you'd like to view: "
+        label.htmlFor = "pets";
+
+        document.getElementById("attemptsection").appendChild(label).appendChild(select);
+      }
+    }).catch((error) => {
+  console.log("Error getting document:", error);
+});
+
   document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
+}
+
+function selectattempt(){
+  
 }
 
 function showMultipleChoice(questionObject) {
