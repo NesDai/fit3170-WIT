@@ -58,6 +58,9 @@ main, #messages-card {
   padding: 0;
   margin: 0 auto;
 }
+.vjs-control-bar { 
+  font-size: 200% 
+}
 .mdl-card {
   margin-left: auto;
   margin-right: auto;
@@ -67,6 +70,9 @@ main, #messages-card {
   min-height: 0;
   background: linear-gradient(white, #f9f9f9);
   justify-content: space-between;
+}
+.mdl-card__media{
+    width: 100%;
 }
 #messages {
   height: 100%;

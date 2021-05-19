@@ -1,3 +1,5 @@
+const API_KEY = "YOUR_API_KEY";
+
 // Activated when "Rate" is pressed, transitioning the users to the screen where they will rate their last recommendation
 function transitionRatePage(){
   // Adjust header to mention to Rate
@@ -73,52 +75,46 @@ function getTopic(){
 
 }
 
-// YouTube player below
-// Depending on the data fetched from content library, may have to account for different players (vimeo, dailymotion, etc)
+// videojs player below
+// Creates the player
+var player = videojs('my-video',{
+    controls: true,
+    techOrder: ['html5','youtube'],
+    sources: [{
+        type: 'video/youtube',
+        src: 'https://www.youtube.com/watch?v=fcD94e93cCk'
+    }],
+    youtube: { "customVars": { "rel": 0 } } 
+})
 
-// This code loads the IFrame Player API code asynchronously.
-function loadYT() {
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-}  
-				
-// This function creates an <iframe> (and YouTube player)
-// after the API code downloads.
-var player;
-function onYouTubeIframeAPIReady() {
-  var id = getTopic();
-  console.log(id)
-	player = new YT.Player('player', {
-	height: '390',
-	width: '640',
-	videoId: id, // not all IDs will be valid due to restriction to third-parties
-	  events: {
-		  'onReady': onPlayerReady,
-		  'onStateChange': onPlayerStateChange
-	  }
-	});
-}
-				
-// The API will call this function when the video player is ready.
-function onPlayerReady(event) {
-	event.target.playVideo();
-}
-				
-// The API calls this function when the player's state changes.
-// The function indicates that when playing a video (state=1),
-// the player should play for six seconds and then stop.
-var done = false;
-function onPlayerStateChange(event) {
-	if (event.data == YT.PlayerState.PLAYING && !done) {
-		//setTimeout(stopVideo, 6000);
-		done = true;
-	}
-}
+// Fires when the player is ready
+player.ready(function(){
+    player.src({type: "video/youtube", src: "https://www.youtube.com/watch?v=fcD94e93cCk"})
+})
 
-function stopVideo() {
-	player.stopVideo();
-}
+// Fires when player starts playing a video
+player.on('play',function(){
+    player.requestFullscreen()
+})
 
-loadYT();
+// Fires when players finishes playing a video
+player.on('ended', function(){
+    player.resetProgressBar_();
+    player.pause()
+})
+
+// Calls the Youtube Data Api v3 to find videos based on the keyword
+function makeRequest(){
+    let request = new XMLHttpRequest();
+    let url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=kamito&key=" + API_KEY
+
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && request.status == 200) {
+            let text = JSON.parse(this.response)
+            console.log(text)
+        }
+    }
+
+    request.open('GET',url);
+    request.send()  
+}
