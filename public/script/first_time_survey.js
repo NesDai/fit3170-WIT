@@ -112,12 +112,42 @@ function greeting() {
     }, 1500);
 }
 
+function checkMultipleChoice(content) {
+    let skipChoices = currentQuestionObject.restrictions.skipChoices;
+
+    for (let i = 0; i < skipChoices.length; i++) {
+        console.log(content);
+        if (content == skipChoices[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function checkMultipleChoiceOthers(content) {
+    return true;
+}
+
 /**
  * onclick function for option buttons.
  * @param button The option button
  */
 function select(button) {
     let content = button.textContent.trim();
+
+    /***********************************************/
+    // Validating user input
+    let questionType = currentQuestionObject.type;
+    
+    switch (questionType) {
+        case TYPE_MULTIPLE_CHOICE:
+            validResponse = checkMultipleChoice(content);
+            break;
+        case TYPE_MULTIPLE_CHOICE_OTHERS:
+            validResponse = checkMultipleChoiceOthers(content);
+            break;
+    }
+    /***********************************************/
 
     let ansTemplate = '<div class="space">\
                             <div class="message-container receiver">\
@@ -131,6 +161,21 @@ function select(button) {
     }
 
     messages.innerHTML += ansTemplate;
+
+    if (validResponse) {
+        incrementIndex();
+    }
+    else {
+        if (currentQuestionObject.restrictions.skipTarget == "end_survey") {
+            end = true;
+        }
+        else {
+            setTimeout(() => {
+                showMessage("That seems to be an invalid response! Please try again.")
+            }, 1000);
+            scrollToBottom();
+        }
+    }
 
     setTimeout(() => {
         nextQuestion();
@@ -199,17 +244,6 @@ function incrementIndex() {
             questionIndex++;
         }
     }
-    else {
-        if (currentQuestionObject.restrictions.skipIfInvalid) {
-            end = true;
-        }
-        else {
-            setTimeout(() => {
-                showMessage("That seems to be an invalid response! Please try again.")
-            }, 1000);
-            scrollToBottom();
-        }
-    }
 }
 
 /**
@@ -259,7 +293,20 @@ function addMessage() {
 
     scrollToBottom();
 
-    incrementIndex();
+    if (validResponse) {
+        incrementIndex();
+    }
+    else {
+        if (currentQuestionObject.restrictions.skipIfInvalid) {
+            end = true;
+        }
+        else {
+            setTimeout(() => {
+                showMessage("That seems to be an invalid response! Please try again.")
+            }, 1000);
+            scrollToBottom();
+        }
+    }
 
     setTimeout(() => {
         nextQuestion();
