@@ -290,6 +290,41 @@ function showNumeric(questionObject) {
     showShortText(questionObject);
 }
 
+function loadOptions(){
+
+  var x = document.getElementById("Dropdown");
+  x.options.length = 0;
+  var option = document.createElement("option");
+  option.text = "Date 1";
+  x.add(option);
+  var option = document.createElement("option");
+  option.text = "Date 2";
+  x.add(option);
+  var option = document.createElement("option");
+  option.text = "Date 3";
+  x.add(option);
+}
+function dates(){
+  document.getElementById("Dropdown").classList.toggle("show");
+}
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function selectdate(){
+  var mylist = document.getElementById('Dropdown');
+  document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
+}
+
 function showMultipleChoice(questionObject) {
     // Leaving these here as references to multiple choice
     // question objects.
