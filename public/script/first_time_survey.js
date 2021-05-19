@@ -291,18 +291,20 @@ function showNumeric(questionObject) {
 }
 
 function loadOptions(){
-
   var x = document.getElementById("Dropdown");
   x.options.length = 0;
-  var option = document.createElement("option");
-  option.text = "Date 1";
-  x.add(option);
-  var option = document.createElement("option");
-  option.text = "Date 2";
-  x.add(option);
-  var option = document.createElement("option");
-  option.text = "Date 3";
-  x.add(option);
+  const collectionRef = firebase.firestore().collection(currentUser.email);
+  collectionRef.get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              var option = document.createElement("option");
+              option.text = doc.id;
+              x.add(option);
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
 }
 function dates(){
   document.getElementById("Dropdown").classList.toggle("show");
