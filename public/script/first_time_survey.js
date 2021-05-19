@@ -82,6 +82,11 @@ Used when displaying sub-questions
 let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
+/*
+Used to validate input
+*/
+let validResponse = true;
+
 // Runs as a first-time greeting from the bot
 greeting();
 
@@ -134,10 +139,99 @@ function select(button) {
 }
 
 /**
+ * Checks a numeric response from the user.
+ * @param message String containing the input from the user
+ */
+function checkNumeric(message) {
+    if (!isNaN(message)) {
+        let lowerRange = currentQuestionObject.restrictions.lowerRange;
+        let upperRange = currentQuestionObject.restrictions.upperRange;
+        
+        if ((message >= lowerRange) & (message <= upperRange)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Checks a short text response from the user.
+ * @param message String containing the input from the user
+ */
+ function checkShortText(message) {
+     return true;
+}
+
+/**
+ * Checks a short text response from the user.
+ * @param message String containing the input from the user
+ */
+ function checkShortText(message) {
+    return true;
+}
+
+/**
+ * Checks a short text response from the user.
+ * @param message String containing the input from the user
+ */
+ function checkLongText(message) {
+    return true;
+}
+
+/**
+ * Checks a short text response from the user.
+ * @param message String containing the input from the user
+ */
+ function checkLongQuestion(message) {
+    return true;
+}
+
+/**
+ * Increments the index based on the result of validResponse.
+ */
+function incrementIndex() {
+    // If invalid, don't increment questionIndex. Display error message
+    if (validResponse) {
+        if (currentSubQuestionIds !== null) {
+            subQuestionIndex++;
+        } else {
+            questionIndex++;
+        }
+    }
+    else {
+        console.log(validResponse);
+        setTimeout(() => {
+            showMessage("That seems to be an invalid response! Please try again.")
+        }, 1000);
+        scrollToBottom();
+    }
+}
+
+/**
  * Adds the user response as a chat bot message
  */
 function addMessage() {
     let message = input.value;
+    
+    /***********************************************/
+    // Validating user input
+    let questionType = currentQuestionObject.type;
+    
+    switch (questionType) {
+        case TYPE_NUMERIC:
+            validResponse = checkNumeric(message);
+            break;
+        case TYPE_SHORT_TEXT:
+            validResponse = checkShortText(message);
+            break;
+        case TYPE_LONG_TEXT:
+            validResponse = checkLongText(message);
+            break;
+        case TYPE_LONG_QUESTION:
+            validResponse = checkLongQuestion(message);
+            break;
+    }
+    /***********************************************/
 
     // Saving the response before clearing the input box
     saveResponse(input.value);
@@ -162,7 +256,9 @@ function addMessage() {
 
     setTimeout(() => {
         nextQuestion();
-    }, 1000);
+    }, 2000);
+
+    incrementIndex();
 
     let question_id = "";
 }
@@ -277,12 +373,6 @@ function showQuestion(isSubQuestion) {
             // Scroll the chat box window to the correct position
             scrollToBottom()
         });
-
-    if (isSubQuestion) {
-        subQuestionIndex++;
-    } else {
-        questionIndex++;
-    }
 }
 
 function showNumeric(questionObject) {
@@ -380,12 +470,16 @@ function showMultipleChoice(questionObject) {
     let choices = questionObject.restrictions.choices;
 
     // TODO Implement validation checks and skip logic
+    incrementIndex();
 
     showMessage(question);
     showOptions(choices);
 }
 
 function showMultipleChoiceOthers(questionObject) {
+    // TODO Implement validation checks and skip logic
+    incrementIndex();
+
     //TODO To be implemented
     showMultipleChoice(questionObject);
 }
@@ -487,7 +581,8 @@ function saveResponse(answer) {
     let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let branch = `${phone}/${date}/responses`;
+    let userBranch = `chatbot/survey_responses/${phone}`;
+    let branch = `${userBranch}/${date}/responses`;
 
     // Formulating the response object
 
@@ -517,8 +612,8 @@ function saveResponse(answer) {
                 answer: answer,
                 timestamp: timestamp
             };
-            let responseBranch = `chatbot/survey_responses/
-                    ${currentQuestionId}`;
+            let responseBranch = `chatbot/survey_questions/questions/
+                    ${currentQuestionId}/responses`
 
             firebase.firestore().collection(responseBranch)
                 .doc(docRef.id)
@@ -547,11 +642,12 @@ function initSetId() {
     let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    let userBranch = `chatbot/survey_responses/${phone}`;
 
     // Formulating the response object
 
     // Retrieve the set id
-    let reference = firebase.firestore().collection(phone).doc(date);
+    let reference = firebase.firestore().collection(userBranch).doc(date);
 
     reference.get().then((document) => {
         if (document.exists) {
@@ -561,7 +657,7 @@ function initSetId() {
 
             // Increment the set_id at the Firestore Database by 1
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(phone).doc(date)
+            firebase.firestore().collection(userBranch).doc(date)
                 .set({set_id: currentSetId})
                 .then(() => {
                     console.log("Document written with ID: ", date);
@@ -580,7 +676,7 @@ function initSetId() {
             // is the first surevy instance for the day.
 
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(phone).doc(date)
+            firebase.firestore().collection(userBranch).doc(date)
                 .set({set_id: 0})
                 .then(() => {
                     console.log("Document written with ID: ", date);
