@@ -356,7 +356,8 @@ function selectdate(){
 }
 
 function selectattempt(){
-  
+  var mylist = document.getElementById('attempt');
+  document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
 }
 
 function showMultipleChoice(questionObject) {
