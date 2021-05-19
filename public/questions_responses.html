@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendly Chat</title>
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!-- App Styling -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <style>
+        html,body {
+            font-family: "Roboto", "Helvetica", sans-serif;
+            font-size: 100%;
+        }
+        body {
+            background-color: #eee;
+        }
+        
+        /* HEADER CSS */
+        .material-icons {
+            font-size: 36px;
+            top: 8px;
+            position: relative;
+        }
+        .mdl-layout__header-row span {
+            margin-left: 15px;
+            margin-top: 17px;
+        }
+        .mdl-layout__header-row {
+            padding: auto;
+            margin: 0 auto;
+        } 
+        .mdl-button .material-icons {
+            top: -1px;
+            margin-right: 5px;
+        } 
+        @media screen and (max-width: 610px) {
+            header {
+            height: 80px;
+            padding-bottom: 80px !important;
+            }
+            .mdl-card {
+            width: 100%;
+            }
+        }
+        
+        /* CARD CSS */
+        main, #messages-card {
+          height: 100%;
+          padding-bottom: 0;
+        }
+        #messages-card-container {
+          height: calc(100% - 35px);
+          padding-bottom: 0;
+        }
+        #messages-card {
+          margin-top: 15px;
+        }
+        .mdl-layout__header-row span {
+          margin-left: 15px;
+          margin-top: 17px;
+        }
+        .mdl-grid {
+          /* max-width: 2000px; */
+          margin: auto;
+        }
+        .mdl-layout__header-row {
+          padding: 0;
+          margin: 0 auto;
+        }
+        .mdl-card {
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 2.5%;
+          width: 60%;
+          height: 40em;
+          min-height: 0;
+          background: linear-gradient(white, #f9f9f9);
+          justify-content: space-between;
+        }
+        .mdl-list {
+          display: inline-block;
+          height: 100%;
+          width: 100%;
+        }
+        #questions-list {
+          overflow-y: scroll;
+        }
+        #responses-list {
+          height: 100%;
+          overflow-y: scroll;
+        }
+        /* SCROLLBAR CSS */
+        ::-webkit-scrollbar {
+          width: 2.5px;
+          height: 12px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #f5f5f5;
+          border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background: #ccc;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #999;
+        }
+    </style>
+    
+    <title>Chat App</title>
+    <!-- TODO: Enable First Input Delay polyfill library. -->
+    <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
+  </head>
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <!-- Header section containing logo -->
+    <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+          <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+            <h3><i class="material-icons"><!-- MDL Icon code --></i> <!-- Title of page --></h3>
+          </div>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Chatbot</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="">Home</a>
+          <a class="mdl-navigation__link" href="">Forum</a>
+          <a class="mdl-navigation__link" href="">Recommended Content</a>
+        </nav>
+      </div>
+  <body>
+    <main class="mdl-layout__content mdl-color--grey-100">
+        
+      <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+        <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--10-col mdl-card mdl-grid">
+
+          <div id="questions-list" class="mdl-cell mdl-cell--4-col" style="height: 100%;">
+            <ul class="mdl-list">
+              <li id="item1" class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q1</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q2</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) Where are you from?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q3</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) What are your interests?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q4</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q5</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q6</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q7</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q8</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q9</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>Q10</span>
+                  <span class="mdl-list__item-sub-title">
+                    (sample) How old are you?
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="mdl-cell mdl-cell--8-col" style="height: 100%;">
+            <h3>Q1 responses</h3>
+            <div id="responses-list">
+              <ul class="mdl-list">
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 1...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 2...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 3...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 4...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 5...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 6...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 7...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 8...</span>
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <span>Response 9...</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
