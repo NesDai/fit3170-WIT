@@ -1,4 +1,4 @@
-const API_KEY = "YOUR_API_KEY";
+
 
 // Activated when "Rate" is pressed, transitioning the users to the screen where they will rate their last recommendation
 function transitionRatePage(){
@@ -76,6 +76,8 @@ function getTopic(){
 }
 
 // videojs player below
+const API_KEY = "YOUR_API_KEY";
+
 // Creates the player
 var player = videojs('my-video',{
     controls: true,
@@ -89,7 +91,9 @@ var player = videojs('my-video',{
 
 // Fires when the player is ready
 player.ready(function(){
-    player.src({type: "video/youtube", src: "https://www.youtube.com/watch?v=fcD94e93cCk"})
+    player.src({type: "video/youtube", src: "https://www.youtube.com/watch?v=fcD94e93cCk"});
+    let currentVideoUrl = player.currentSrc();
+    updateHistory(currentVideoUrl);
 })
 
 // Fires when player starts playing a video
@@ -99,8 +103,9 @@ player.on('play',function(){
 
 // Fires when players finishes playing a video
 player.on('ended', function(){
+    player.exitFullscreen();
     player.resetProgressBar_();
-    player.pause()
+    player.pause();
 })
 
 // Calls the Youtube Data Api v3 to find videos based on the keyword
@@ -118,3 +123,45 @@ function makeRequest(){
     request.open('GET',url);
     request.send()  
 }
+
+// Function to update watch history
+function updateHistory(currentVideoUrl){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+    let currentVideo = {
+        videoUrl: currentVideoUrl
+    }
+    
+    // Retrieves the currently stored watch history
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function(snapshot){
+        let currentHistory = []
+        let videoExist = false
+
+        // If history is not empty and video already exists in history, set videoExist to true
+        if (snapshot.exists()){
+            currentHistory = snapshot.val();
+            for (i in currentHistory){
+                if (currentHistory[i].videoUrl == currentVideoUrl){
+                    videoExist = true;
+                }
+            }
+        } 
+
+        // Add video url to history only if video doesn't exist
+        if (videoExist != true){
+            currentHistory.push(currentVideo)
+            updateFirebaseVideoHistory(currentHistory, current_user);
+        }
+    })
+}
+
+// Function to update watch history of specific user in database
+function updateFirebaseVideoHistory(currentHistory, current_user){
+    firebase.database().ref('users').child(`${current_user.phone}`).child(`videoHistory`).set(
+        currentHistory
+    , function(error){
+        if (error){
+            console.log(error)
+        }
+    })
+}
+
