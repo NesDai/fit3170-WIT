@@ -86,6 +86,7 @@ let currentSubQuestionIds = null;
 Used to validate input
 */
 let validResponse = true;
+let end = false;
 
 // Runs as a first-time greeting from the bot
 greeting();
@@ -199,11 +200,15 @@ function incrementIndex() {
         }
     }
     else {
-        console.log(validResponse);
-        setTimeout(() => {
-            showMessage("That seems to be an invalid response! Please try again.")
-        }, 1000);
-        scrollToBottom();
+        if (currentQuestionObject.restrictions.skipIfInvalid) {
+            end = true;
+        }
+        else {
+            setTimeout(() => {
+                showMessage("That seems to be an invalid response! Please try again.")
+            }, 1000);
+            scrollToBottom();
+        }
     }
 }
 
@@ -254,11 +259,11 @@ function addMessage() {
 
     scrollToBottom();
 
+    incrementIndex();
+
     setTimeout(() => {
         nextQuestion();
     }, 2000);
-
-    incrementIndex();
 
     let question_id = "";
 }
@@ -268,25 +273,32 @@ function addMessage() {
  * question.
  */
 function nextQuestion() {
-    if (currentSubQuestionIds !== null) {
-        // If the user is answering sub-questions
-        if (subQuestionIndex === currentSubQuestionIds.length - 1) {
-            // If the user has completed answering sub-questions,
-            // increment the questionIndex and move on
-            questionIndex++;
-            currentSubQuestionIds = null;
+    if (end) {
+        let invalidChoice = "Unfortunately, we believe our app isn't for " +
+            "you. Maybe recommend it to someone else!"
+        showMessage(invalidChoice);
+    }
+    else {
+        if (currentSubQuestionIds !== null) {
+            // If the user is answering sub-questions
+            if (subQuestionIndex === currentSubQuestionIds.length - 1) {
+                // If the user has completed answering sub-questions,
+                // increment the questionIndex and move on
+                questionIndex++;
+                currentSubQuestionIds = null;
+                showQuestion(false);
+            } else {
+                showQuestion(true);
+            }
+        } else if (questionIndex < QUESTION_IDS.length - 1) {
+            // If the user is answering normal questions
             showQuestion(false);
         } else {
-            showQuestion(true);
+            let endingMessage = "That's all the questions we have for you " +
+                "right now. You can either continue asking questions, or" +
+                " browse the rest of the application!"
+            showMessage(endingMessage);
         }
-    } else if (questionIndex < QUESTION_IDS.length - 1) {
-        // If the user is answering normal questions
-        showQuestion(false);
-    } else {
-        let endingMessage = "That's all the questions we have for you " +
-            "right now. You can either continue asking questions, or" +
-            " browse the rest of the application!"
-        showMessage(endingMessage);
     }
 }
 
