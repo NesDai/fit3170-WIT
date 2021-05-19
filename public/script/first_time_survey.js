@@ -1,54 +1,54 @@
 // A list of IDs of question objects that are stored in
 // the Firestore Database
 const QUESTION_IDS = [
-    "C9f4th8nrae1aEIuaMhm",
-    "Ghqr6MDsWorZMWQXSxRC",
-    "BEwvOa9ZJXIqRqoSw7o1",
-    "IWOPNfyLjs88h5q3lug0",
-    "3O2q4ttzWM2HFCtDT5W7",
-    "r4ilV1VTFPc5CL7Ap6le",
-    "w5hLv0EEepFvNMNFjgKv",
-    "c6ytyVW7e8MQR5L8ozRA",
-    "VKGObBUHAnmrphBLfzQ3",
-    "HY02rtW9DJnK9qyaru0Z",
-    "XoIdBzoYFFn4IP6xroZS",
-    "e0luWBGAtjQYKE7gUo4C",
-    "lOWvaTLShwpXMwN2nhOT",
-    "NqYbjT5TNSqhQxuHzjJA",
-    "NqYbjT5TNSqhQxuHzjJA",
-    "bvwRYIEBvfS7GIRwrEpv",
-    "bvwRYIEBvfS7GIRwrEpv",
-    "yohRsGLmPtimXXWhi5F6",
-    "e531ZREMMzKIJz3EFVIH",
-    "ZqlrgA3T9rIlFKuHOskR",
-    "2pLQA2fFpm1Wuj3iG6bK",
+    "ItW6JWwpxBv2nU0dizml",
+    "4K8V3ELQMQJyFFL1YAT3",
+    "0AC6MojrBMGJz2n4pegY",
+    "SRFwGKiJLW0Nqm7Knkj7",
+    "jr15BRqvEJ0gBZmayyDC",
+    "l9sQvBZRfjHXM3hMoJNu",
+    "fyOIsVCYtJw61VrcZaYb",
+    "EdqLD0ch162DQZZE8bHq",
+    "pDVLNgZKwrdSf7Zf0h9c",
+    "VpnnDjAL8LwCpTPjc4dg",
+    "byZuJ7VGpdmhb8j9lbE2",
+    "fFsp2re5lPTgQjSc8pzp",
+    "uH7lDlp6pBCuCOmZ33vK",
+    "akXmWdJuMNopCkd95jrg",
+    "akXmWdJuMNopCkd95jrg",
+    "i5iWZuChcZJ5cpAzNayV",
+    "i5iWZuChcZJ5cpAzNayV",
+    "3vL9sJMUCStR2tuYJyDa",
+    "kBGScaMKAPgOtDuuXoC7",
+    "ShOpmIgv54TR99jkyXVb",
+    "p0rWCI1nMhYg21mB5Tjv",
     // Part 1 question IDs above
 
-    "kBQ2IeSF7osrMUnj8asD",
-    "eMSvRnYMsQqahtrWrHeq",
-    "i5UznKa4BBsuKcYjIUqa",
-    "lGsZWCP0D9W8bT7k01hv",
-    "06WOSoGwzcUzcNgOQuWx",
-    "06WOSoGwzcUzcNgOQuWx",
-    "b7J9dGwQt6QNMerO5TNS",
+    "doO7xI7GfsXS9MCZAo7b",
+    "X6B9hFbEzXkaky8EHBzp",
+    "aH14TiKG2q8vGZUoa364",
+    "rHLDeE2GBFCPFygqBXhO",
+    "Zb6bJ0WTv7e4CtHymqoN",
+    "Zb6bJ0WTv7e4CtHymqoN",
+    "xEVnGFgNb90LgZzIb0Si",
     // Part 2 question IDs above
 
-    "aTA4BIGAGdlJ0CEHgKyx",
-    "zZzBFJzChehqJi0kElnm",
+    "H2iCX8sUBALvHJzKsayN",
+    "hNnINgXFdxErhQLJAhiX",
     // Part 3 question IDs above
 
-    "zZzBFJzChehqJi0kElnm",
-    "mxHQ05XCOmRDhwtbWayL",
-    "kFv1ra53xFmUR3CF7UgT",
-    "tAcX1c9fNkzioDWiXoW1",
+    "hNnINgXFdxErhQLJAhiX",
+    "fmYe2svpReERojxtMQkV",
+    "MJlG9Pn0AnEzuK3N2VPi",
+    "J17gx31o0Js7xozLTk5K",
     // Part 4 question IDs above
 
-    "OuQZ0TzivLgfJAZ0pBWy",
-    "evBF2Bi2i6dbhBRKe0ZL",
-    "lIDdWqTPgZ3SbFGbrpNG",
-    "lIDdWqTPgZ3SbFGbrpNG"
+    "BVaWEgEj4LQ6Wg7wk9uw",
+    "Xb08AxZHJztK0QABLdLy",
+    "DUk4sMpPImVSaA7fvzwl",
+    "DUk4sMpPImVSaA7fvzwl"
     // Part 5 question IDs above
-]
+];
 
 // Initializing variables
 let messages = document.getElementById("messages");
@@ -417,8 +417,7 @@ function saveResponse(answer) {
     let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let userBranch = `chatbot/survey_responses/${phone}`;
-    let branch = `${userBranch}/${date}/responses`;
+    let branch = `${phone}/${date}/responses`;
 
     // Formulating the response object
 
@@ -448,8 +447,8 @@ function saveResponse(answer) {
                 answer: answer,
                 timestamp: timestamp
             };
-            let responseBranch = `chatbot/survey_questions/questions/
-                    ${currentQuestionId}/responses`
+            let responseBranch = `chatbot/survey_responses/
+                    ${currentQuestionId}`;
 
             firebase.firestore().collection(responseBranch)
                 .doc(docRef.id)
@@ -478,12 +477,11 @@ function initSetId() {
     let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let userBranch = `chatbot/survey_responses/${phone}`;
 
     // Formulating the response object
 
     // Retrieve the set id
-    let reference = firebase.firestore().collection(userBranch).doc(date);
+    let reference = firebase.firestore().collection(phone).doc(date);
 
     reference.get().then((document) => {
         if (document.exists) {
@@ -493,7 +491,7 @@ function initSetId() {
 
             // Increment the set_id at the Firestore Database by 1
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userBranch).doc(date)
+            firebase.firestore().collection(phone).doc(date)
                 .set({set_id: currentSetId})
                 .then(() => {
                     console.log("Document written with ID: ", date);
@@ -512,7 +510,7 @@ function initSetId() {
             // is the first surevy instance for the day.
 
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userBranch).doc(date)
+            firebase.firestore().collection(phone).doc(date)
                 .set({set_id: 0})
                 .then(() => {
                     console.log("Document written with ID: ", date);
