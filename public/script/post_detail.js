@@ -177,7 +177,7 @@ function printComments(){
               `<div>
                  <div style="margin:0 10px; background-color: white">
                     <span class="mdi mdi-cow"></span>
-                    <h6 name="username" id="username">@${comment_username}</h6>
+                    <h6 name="username" id="username" class="notranslate">@${comment_username}</h6>
                     <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
                     <p>
                        <span id = "user_comment">${comment.content}</span>
@@ -214,7 +214,7 @@ function printComments(){
                  <div class="verticalLine">
                     <div id="reply_box">
                        <span class="mdi mdi-cow"></span>
-                       <h6 name="username" id="username-1">@Tanya2611</h6>
+                       <h6 name="username" id="username-1" class="notranslate">@Tanya2611</h6>
                        <h8 name="comment_date_posted" id="comment_date_posted">4:33 PM Apr 25, 2021</h8>
                        <p>
                           <span id = "user_comment"> I like it too! </span>
