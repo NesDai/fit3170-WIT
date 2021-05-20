@@ -24,10 +24,19 @@ function setAuthLanguage(){
     if (language == null){
         firebase.auth().languageCode = "en";
         localStorage.setItem(LANGUAGE_KEY,"English")
+        return
     }
-    else{
-        firebase.auth().languageCode = language;    
-    }
+    else if (language == "Malay")
+        language = "ms";
+    else if (language == "Chinese (Simplified)")
+        language = "zh-CN";
+    else if (language == "Thai")
+        language = "th"
+    else if (language == "English")
+        language = "en"
+
+    firebase.auth().languageCode = language;    
+
 }
 
 
