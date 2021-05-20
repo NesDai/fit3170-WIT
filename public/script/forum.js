@@ -237,7 +237,7 @@ function postDetail(id) {
 function printUserPosts(){
 
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
+    field.innerHTML = ""; // emtpy the field of any previous posts
     let data_list = []
 
     firebase.database().ref('posts')
