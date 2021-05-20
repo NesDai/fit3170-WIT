@@ -35,7 +35,6 @@ function negativeRating(){
 }
 
 // Executes when the user clicks the favourite button (for adding a video to their favourites list)
-var counter = 1
 function favoriteRating(){
   counter += 1;
 
@@ -77,25 +76,37 @@ function getTopic(){
 }
 
 // videojs player below
-const API_KEY = "YOUR_API_KEY";
-
+let videoUrl = localStorage.getItem('videoUrl')
 // Creates the player
-var player = videojs('my-video',{
-    controls: true,
-    techOrder: ['html5','youtube'],
-    sources: [{
-        type: 'video/youtube',
-        src: 'https://www.youtube.com/watch?v=fcD94e93cCk'
-    }],
-    youtube: { "customVars": { "rel": 0 } } 
-})
+if (videoUrl == null){
+    var player = videojs('my-video',{
+        controls: true,
+        techOrder: ['html5','youtube'],
+        sources: [{
+            type: 'video/youtube',
+            src: 'https://www.youtube.com/watch?v=fcD94e93cCk'
+        }],
+        youtube: { "customVars": { "rel": 0 } } 
+    })
+} else {
+    var player = videojs('my-video',{
+        controls: true,
+        techOrder: ['html5','youtube'],
+        sources: [{
+            type: 'video/youtube',
+            src: videoUrl
+        }],
+        youtube: { "customVars": { "rel": 0 } } 
+    })
+}
+
 
 // Fires when the player is ready
 player.ready(function(){
-    player.src({type: "video/youtube", src: "https://www.youtube.com/watch?v=fcD94e93cCk"});
     let currentVideoUrl = player.currentSrc();
     updateHistory(currentVideoUrl);
 })
+
 
 // Fires when player starts playing a video
 player.on('play',function(){
@@ -107,12 +118,14 @@ player.on('ended', function(){
     player.exitFullscreen();
     player.resetProgressBar_();
     player.pause();
+    localStorage.setItem('videoUrl', 'https://www.youtube.com/watch?v=ahLNCzV56yk')
+    location.reload()
 })
 
 // Calls the Youtube Data Api v3 to find videos based on the keyword
-function makeRequest(){
+function makeRequest(keyword){
     let request = new XMLHttpRequest();
-    let url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=kamito&key=" + API_KEY
+    let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${keyword}&key=${API_KEY}` 
 
     request.onreadystatechange = function() {
         if (this.readyState == 4 && request.status == 200) {
@@ -212,4 +225,14 @@ function updateFirebase(video_list, current_user, child_name){
         }
     })
 }
+
+// Function to update description based on current video (to be done)
+function updateDescription(){
+    
+}
+
+// Runs on page load
+var counter = 1
+
+const API_KEY = "YOUR_API_KEY";
 
