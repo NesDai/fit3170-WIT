@@ -347,29 +347,29 @@ function pushPart1Questions() {
     setPartNumber(1);
 
     // Question 1.1
-    pushNumeric(PART1[1], 50, 200, true,
+    pushNumeric("1.1", PART1[1], 50, 200, true,
         HINTS_PART1[1]);
 
     // Question 1.2
     let choices_1_2 = ["Male", "Female"]
     let skip_choices_1_2 = ["Male"];
-    pushMultipleChoice(PART1[2], choices_1_2, skip_choices_1_2,
+    pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2,
         SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
     let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
-    pushMultipleChoice(PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED,
+    pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[3]);
 
     // Question 1.4
     let choices_1_4 = ["urban area", "rural area"];
-    pushMultipleChoice(PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED,
+    pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[4]);
 
     // Question 1.5
     let choices_1_5 = ["No income", "less than MYR2500", "MYR2501-3169",
         "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
-    pushMultipleChoice(PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED,
+    pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[5]);
     // TODO Thailand will update the THB equivalent currency
 
@@ -377,48 +377,47 @@ function pushPart1Questions() {
     let choices_1_6 = ["No formal education", "Primary school",
         "Secondary/ high school", "Vocational/ technical certification",
         "University"];
-    pushMultipleChoice(PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED,
+    pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[6]);
     // TODO Thailand will update the secondary/high classification
 
     // Question 1.7
     let choices_1_7 = ["Single", "Married", "Divorced", "Widowed",
         "Other relationship"];
-    pushMultipleChoice(PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED,
+    pushMultipleChoice("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED,
         HINTS_PART1[7]);
 
     // Question 1.8
-    pushNumeric(PART1[8], 0, 999, false,
+    pushNumeric("1.8", PART1[8], 0, 999, false,
         HINTS_PART1[8]);
 
     // Question 1.9
-    pushNumeric(PART1[9], 0, 999, false,
+    pushNumeric("1.9", PART1[9], 0, 999, false,
         HINTS_PART1[9]);
 
     // Question 1.10
-    pushNumeric(PART1[10], 0, 999, false,
+    pushNumeric("1.10", PART1[10], 0, 999, false,
         HINTS_PART1[10]);
 
     // Question 1.11
-    pushNumeric(PART1[11], 0, 999, false,
+    pushNumeric("1.11", PART1[11], 0, 999, false,
         HINTS_PART1[11]);
 
     // Question 1.12
-    pushNumeric(PART1[12], 0, 999, false,
+    pushNumeric("1.12", PART1[12], 0, 999, false,
         HINTS_PART1[12]);
 
     // Question 1.13
-    pushNumeric(PART1[13], 0, 999, false,
+    pushNumeric("1.13", PART1[13], 0, 999, false,
         HINTS_PART1[13]);
 
     // Question 1.15
-    pushLongQuestion(PART1[15]).then((q15docRef) => {
+    pushLongQuestion("1.15", PART1[15]).then((q15docRef) => {
         // [START]                  Question 1.14                   [START]
         // Inserted after Question 1.15
 
-        pushLongQuestion(PART1[14]).then((q14docRef) => {
+        pushLongQuestion("1.14", PART1[14]).then((q14docRef) => {
             // Record the id of the question itself
-            questionIds.push(q14docRef.id);
             longQuestionIds.push(q14docRef.id);
 
             // Log it in the console
@@ -456,7 +455,6 @@ function pushPart1Questions() {
 
 
         // Record the id of the question itself
-        questionIds.push(q15docRef.id);
         longQuestionIds.push(q15docRef.id);
 
         // Log it in the console
@@ -489,9 +487,8 @@ function pushPart1Questions() {
     });
 
     // Question 1.16
-    pushLongQuestion(PART1[16]).then((docRef) => {
+    pushLongQuestion("1.16", PART1[16]).then((docRef) => {
         // Record the id of the question itself
-        questionIds.push(docRef.id);
         longQuestionIds.push(docRef.id);
 
         // Log it in the console
@@ -527,27 +524,27 @@ function pushPart2Questions() {
     let skip_choices_2_1 = ["Retired", "Not working",
         "Not working but doing voluntary work",
         "Not working but looking for a job"];
-    pushMultipleChoiceOthers(PART2[1], choices_2_1,
+    pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1,
         skip_choices_2_1,
         "insert question 2.3 id here",
         // TODO please insert this manually every time after a push
         HINTS_PART2[1]);
 
     // Question 2.2
-    pushShortText(PART2[2], HINTS_PART2[2]);
+    pushShortText("2.2", PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    pushNumeric(PART2[3], 1, 7, false,
+    pushNumeric("2.3", PART2[3], 1, 7, false,
         HINTS_PART2[3]);
 
     // Question 2.4
     let choices_2_4 = ["Yes", "No", "Not applicable"];
-    pushMultipleChoice(PART2[4], choices_2_4, [],
+    pushMultipleChoice("2.4", PART2[4], choices_2_4, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
     let choices_2_5 = ["Yes", "No", "Not applicable"];
-    pushMultipleChoice(PART2[5], choices_2_5, [],
+    pushMultipleChoice("2.5", PART2[5], choices_2_5, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
@@ -556,14 +553,14 @@ function pushPart2Questions() {
     let choices_2_6 = ["Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident",
         "Not applicable"];
-    pushMultipleChoice(PART2[6], choices_2_6, [],
+    pushMultipleChoice("2.6", PART2[6], choices_2_6, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[6]);
 
     // Question 2.7
     let choices_2_7 = ["Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident",
         "Not applicable"];
-    pushMultipleChoice(PART2[7], choices_2_7, [],
+    pushMultipleChoice("2.7", PART2[7], choices_2_7, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[7]);
 }
 
@@ -580,13 +577,12 @@ function pushPart3Questions() {
         "public WiFi hotspot",
         "I don't have access to Internet"
     ];
-    pushMultipleChoice(PART3[1], choices_3_1, [],
+    pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
 
     // Question 1.16
-    pushLongQuestion(PART3[2]).then((docRef) => {
+    pushLongQuestion("3.2", PART3[2]).then((docRef) => {
         // Record the id of the question itself
-        questionIds.push(docRef.id);
         longQuestionIds.push(docRef.id);
 
         // Log it in the console
@@ -612,17 +608,16 @@ function pushPart4Questions() {
     setPartNumber(4);
 
     // Question 4.1
-    pushNumeric(PART4[1], 1, 7, false,
+    pushNumeric("4.1", PART4[1], 1, 7, false,
         HINTS_PART4[1]);
 
     // Question 4.2
-    pushNumeric(PART4[2], 0, 168, false,
+    pushNumeric("4.2", PART4[2], 0, 168, false,
         HINTS_PART4[2]);
 
     // Question 4.3
-    pushLongQuestion(PART4[3]).then((docRef) => {
+    pushLongQuestion("4.3", PART4[3]).then((docRef) => {
         // Record the id of the question itself
-        questionIds.push(docRef.id);
         longQuestionIds.push(docRef.id);
 
         // Log it in the console
@@ -641,7 +636,7 @@ function pushPart4Questions() {
     });
 
     // Question 4.4
-    pushShortText(PART4[4], HINTS_PART4[4]);
+    pushShortText("4.4", PART4[4], HINTS_PART4[4]);
 
     // Question 4.5
     // TODO Weird questions: Last survey question & Question 4.5
@@ -653,20 +648,20 @@ function pushPart5Questions() {
     setPartNumber(5);
 
     // Question 5.1
-    pushLongText(PART5[1], HINTS_PART5[1]);
+    pushLongText("5.1", PART5[1], HINTS_PART5[1]);
 
     // Question 5.2
-    pushLongText(PART5[2], HINTS_PART5[2]);
+    pushLongText("5.2", PART5[2], HINTS_PART5[2]);
 
     // Question 5.3
-    pushLongText(PART5[3], HINTS_PART5[3]);
+    pushLongText("5.3", PART5[3], HINTS_PART5[3]);
 
     // Question 5.4
-    pushLongText(PART5[4], HINTS_PART5[4]);
+    pushLongText("5.4", PART5[4], HINTS_PART5[4]);
 }
 
-function pushNumeric(questionText, lowerRange, upperRange, skipIfInvalid,
-                     hint) {
+function pushNumeric(questionNumber, questionText, lowerRange, upperRange,
+                     skipIfInvalid, hint) {
     // Leaving this here as a reference to numeric
     // question objects.
     let reference = {
@@ -683,8 +678,8 @@ function pushNumeric(questionText, lowerRange, upperRange, skipIfInvalid,
     };
 
     let questionObject = {
-        question_number: `${partNumber}.${questionNumber}`,
-        category: PART_TITLE[partNumber],
+        question_number: questionNumber,
+        category: PART_TITLE[getPartNumber(questionNumber)],
         type: TYPE_NUMERIC,
         question: questionText,
         restrictions: {
@@ -703,8 +698,8 @@ function pushNumeric(questionText, lowerRange, upperRange, skipIfInvalid,
         .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
-function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
-                            hint) {
+function pushMultipleChoice(questionNumber, questionText, choices, skipChoices,
+                            skipTarget, hint) {
     // Leaving these here as references to multiple choice
     // question objects.
     let reference = {
@@ -747,8 +742,8 @@ function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
     };
 
     let questionObject = {
-        question_number:`${partNumber}.${questionNumber}`,
-        category: PART_TITLE[partNumber],
+        question_number: questionNumber,
+        category: PART_TITLE[getPartNumber(questionNumber)],
         type: TYPE_MULTIPLE_CHOICE,
         question: questionText,
         restrictions: {
@@ -768,8 +763,8 @@ function pushMultipleChoice(questionText, choices, skipChoices, skipTarget,
 }
 
 
-function pushMultipleChoiceOthers(questionText, choices, skipChoices, skipTarget,
-                                  hint) {
+function pushMultipleChoiceOthers(questionNumber, questionText, choices,
+                                  skipChoices, skipTarget, hint) {
     // Leaving this here as a reference to multiple choice
     // question objects with an "Others" free text input
     let reference = {
@@ -790,8 +785,8 @@ function pushMultipleChoiceOthers(questionText, choices, skipChoices, skipTarget
     };
 
     let questionObject = {
-        question_number:`${partNumber}.${questionNumber}`,
-        category: PART_TITLE[partNumber],
+        question_number: questionNumber,
+        category: PART_TITLE[getPartNumber(questionNumber)],
         type: TYPE_MULTIPLE_CHOICE_OTHERS,
         question: questionText,
         restrictions: {
@@ -810,7 +805,7 @@ function pushMultipleChoiceOthers(questionText, choices, skipChoices, skipTarget
         .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
-function pushShortText(questionText, hint) {
+function pushShortText(questionNumber, questionText, hint) {
     // Leaving this here as a reference to short text
     // question objects.
     let reference = {
@@ -823,8 +818,8 @@ function pushShortText(questionText, hint) {
     };
 
     let questionObject = {
-        question_number:`${partNumber}.${questionNumber}`,
-        category: PART_TITLE[partNumber],
+        question_number: questionNumber,
+        category: PART_TITLE[getPartNumber(questionNumber)],
         type: TYPE_SHORT_TEXT,
         question: questionText,
         restrictions: {},
@@ -839,7 +834,7 @@ function pushShortText(questionText, hint) {
         .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
-function pushLongText(questionText, hint) {
+function pushLongText(questionNumber, questionText, hint) {
     // Leaving this here as a reference to long text
     // question objects.
     let reference = {
@@ -852,8 +847,8 @@ function pushLongText(questionText, hint) {
     };
 
     let questionObject = {
-        question_number:`${partNumber}.${questionNumber}`,
-        category: PART_TITLE[partNumber],
+        question_number: questionNumber,
+        category: PART_TITLE[getPartNumber(questionNumber)],
         type: TYPE_LONG_TEXT,
         question: questionText,
         restrictions: {},
@@ -868,7 +863,7 @@ function pushLongText(questionText, hint) {
         .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
-function pushLongQuestion(questionText) {
+function pushLongQuestion(questionNumber, questionText) {
     // Leaving this here as a reference to long questions
     // (questions with sub-questions)
     let reference = {
@@ -888,8 +883,8 @@ function pushLongQuestion(questionText) {
     };
 
     let questionObject = {
-        question_number:`${partNumber}.${questionNumber}`,
-        category: PART_TITLE[partNumber],
+        question_number: questionNumber,
+        category: PART_TITLE[getPartNumber(questionNumber)],
         type: TYPE_LONG_QUESTION,
         question: questionText,
         restrictions: {},
@@ -910,27 +905,29 @@ function appendNumeric(questionNumber, longQuestionId, questionText,
     let reference = {
         question_number: "3.2b",
         category: "Part III: About your mobile phone usage",
-        type: "numeric",
+        type: "numeric-sub-question",
         question: "SMS, text messaging (such as Whatsapp, WeChat, etc.)",
         restrictions: {
             lowerRange: 1,
             upperRange: 5,
             skipIfInvalid: false
         },
-        hint: "placeholder"
+        hint: "placeholder",
+        longQuestionId: longQuestionId
     };
 
     let questionObject = {
         question_number: getLongQuestionNumber(questionNumber),
-        category: PART_TITLE[partNumber],
-        type: TYPE_NUMERIC,
+        category: PART_TITLE[getPartNumber(questionNumber)],
+        type: TYPE_NUMERIC_SUB_QUESTION,
         question: questionText,
         restrictions: {
             lowerRange: lowerRange,
             upperRange: upperRange,
             skipIfInvalid: skipIfInvalid
         },
-        hint: hint
+        hint: hint,
+        longQuestionId: longQuestionId
     };
 
     // Increment the alphabetIndex (the alphabetic numericals of sub-questions)
@@ -950,27 +947,29 @@ function appendMultipleChoice(questionNumber, longQuestionId,
     let reference = {
         question_number: "1.2",
         category: "Part I: About yourself",
-        type: "multiple-choice",
+        type: "multiple-choice-sub-question",
         question: "What is your gender?",
         restrictions: {
             choices: ["Male", "Female"],
             skipChoice: ["Male"],
             skipTarget: "end_survey"
         },
-        hint: "placeholder"
+        hint: "placeholder",
+        longQuestionId: longQuestionId
     };
 
     let questionObject = {
         question_number: getLongQuestionNumber(questionNumber),
-        category: PART_TITLE[partNumber],
-        type: TYPE_MULTIPLE_CHOICE,
+        category: PART_TITLE[getPartNumber(questionNumber)],
+        type: TYPE_MULTIPLE_CHOICE_SUB_QUESTION,
         question: questionText,
         restrictions: {
             choices: choices,
             skipChoices: skipChoices,
             skipTarget: skipTarget
         },
-        hint: hint
+        hint: hint,
+        longQuestionId: longQuestionId
     };
 
     // Increment the alphabetIndex (the alphabetic numericals of sub-questions)
@@ -1058,6 +1057,17 @@ function getLongQuestionNumber(questionNumber) {
 }
 
 /**
+ * Extracts the part number from a question number string.
+ * @param questionNumber A question number string
+ * (e.g. "1.14a" or "1.14")
+ * @return {number} An integer representing the part number
+ * (e.g. 1 if the question number is "1.14a")
+ */
+function getPartNumber(questionNumber) {
+    return parseInt(questionNumber.split(".")[0]);
+}
+
+/**
  * "What the **** is up with this long function name?" - Probably you
  * <br>
  * "Hey, you only need to call it once, why fret?" - Probably me
@@ -1113,6 +1123,12 @@ function housekeeping() {
     // These are the indices where the survey part gets changed
     let startingIndex = 0;
     let indices = [16, 23, 25, 29, 33];
+
+    // Before we start slicing, insert the last item (Q1.14)
+    // to the correct spot (before Q1.15, or before index 13)
+    let lastItem = questionIds[questionIds.length - 1];
+    questionIds.splice(12, 0, lastItem);
+
     for (let endingIndex of indices) {
         result.push(questionIds.slice(startingIndex, endingIndex));
         startingIndex = endingIndex;
