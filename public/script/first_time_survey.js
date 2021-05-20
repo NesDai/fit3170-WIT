@@ -1,52 +1,47 @@
 // A list of IDs of question objects that are stored in
 // the Firestore Database
 const QUESTION_IDS = [
-    "ItW6JWwpxBv2nU0dizml",
-    "4K8V3ELQMQJyFFL1YAT3",
-    "0AC6MojrBMGJz2n4pegY",
-    "SRFwGKiJLW0Nqm7Knkj7",
-    "jr15BRqvEJ0gBZmayyDC",
-    "l9sQvBZRfjHXM3hMoJNu",
-    "fyOIsVCYtJw61VrcZaYb",
-    "EdqLD0ch162DQZZE8bHq",
-    "pDVLNgZKwrdSf7Zf0h9c",
-    "VpnnDjAL8LwCpTPjc4dg",
-    "byZuJ7VGpdmhb8j9lbE2",
-    "fFsp2re5lPTgQjSc8pzp",
-    "uH7lDlp6pBCuCOmZ33vK",
-    "akXmWdJuMNopCkd95jrg",
-    "akXmWdJuMNopCkd95jrg",
-    "i5iWZuChcZJ5cpAzNayV",
-    "i5iWZuChcZJ5cpAzNayV",
-    "3vL9sJMUCStR2tuYJyDa",
-    "kBGScaMKAPgOtDuuXoC7",
-    "ShOpmIgv54TR99jkyXVb",
-    "p0rWCI1nMhYg21mB5Tjv",
+    "5n1QsNlHRKPvrmhW71jY",
+    "wgrN7QR3rOs5pKhfIUY1",
+    "hLcVQTr1O7MOuV8iXb3V",
+    "TnuwCqNusYJr5opYRIz7",
+    "ZDO5CSxxmMmT5FFayRT4",
+    "tIp3Y0WCljTqCSSIfIRf",
+    "QSqYtfZ1HYbdzHc12WXw",
+    "hERkPfHiDfvPbHGb9LLx",
+    "TRd2965Va4wWvYVv368n",
+    "qbogBd9fZmBTMZJ3hhQl",
+    "2tvqIz0B0J7FH1kb3Ek9",
+    "y0ZpS6oopmOrDd3QJxDy",
+    "GOhGa7nvzoPDUPbZTXm2",
+    "Xhy8UPRFxWwI1mNw2dvQ",
+    "sqIZvvWuczmqPArYRAi1",
+    "A3TquprGGEIUPK2gzc4r",
     // Part 1 question IDs above
 
-    "doO7xI7GfsXS9MCZAo7b",
-    "X6B9hFbEzXkaky8EHBzp",
-    "aH14TiKG2q8vGZUoa364",
-    "rHLDeE2GBFCPFygqBXhO",
-    "Zb6bJ0WTv7e4CtHymqoN",
-    "Zb6bJ0WTv7e4CtHymqoN",
-    "xEVnGFgNb90LgZzIb0Si",
+    "ZQrjJglsHF0wNG0ThCGD",
+    "Idxa46VmiZrsoUh2uHIw",
+    "25zvBf3KUTpUSvFbNPRX",
+    "EyAClrrURWnSqtxkBYBR",
+    "1Nr7V3Zl6J2u3WGdsBr8",
+    "4X9dGOQPMfGfZxfpLtWP",
+    "RM1vBkNuCc9kl3nANFHY",
     // Part 2 question IDs above
 
-    "H2iCX8sUBALvHJzKsayN",
-    "hNnINgXFdxErhQLJAhiX",
+    "Lc1MZhJ2Cfk2Q0EMlOxY",
+    "qFZUXIOm0N9U9gqZe8Uu",
     // Part 3 question IDs above
 
-    "hNnINgXFdxErhQLJAhiX",
-    "fmYe2svpReERojxtMQkV",
-    "MJlG9Pn0AnEzuK3N2VPi",
-    "J17gx31o0Js7xozLTk5K",
+    "iHIgD7dedkWurJRA5Trw",
+    "fVnBwlHeLJkmBMrR0Sam",
+    "S9zQ5aPswv5MHYfht32r",
+    "6YJiB7xHr0HpBqHSqE4w",
     // Part 4 question IDs above
 
-    "BVaWEgEj4LQ6Wg7wk9uw",
-    "Xb08AxZHJztK0QABLdLy",
-    "DUk4sMpPImVSaA7fvzwl",
-    "DUk4sMpPImVSaA7fvzwl"
+    "Gvxu0YtQw5oji6hKh9wk",
+    "vfn7iuF0q28Kzt2iMdaK",
+    "ilZ9KTp81Ndx4jzt53iJ",
+    "Hz9vRrBUBwfuHm8KqgwE",
     // Part 5 question IDs above
 ];
 
@@ -82,12 +77,6 @@ Used when displaying sub-questions
 let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
-/*
-Used to validate input
-*/
-let validResponse = true;
-let end = false;
-
 // Runs as a first-time greeting from the bot
 greeting();
 
@@ -112,42 +101,12 @@ function greeting() {
     }, 1500);
 }
 
-function checkMultipleChoice(content) {
-    let skipChoices = currentQuestionObject.restrictions.skipChoices;
-
-    for (let i = 0; i < skipChoices.length; i++) {
-        console.log(content);
-        if (content == skipChoices[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function checkMultipleChoiceOthers(content) {
-    return true;
-}
-
 /**
  * onclick function for option buttons.
  * @param button The option button
  */
 function select(button) {
     let content = button.textContent.trim();
-
-    /***********************************************/
-    // Validating user input
-    let questionType = currentQuestionObject.type;
-    
-    switch (questionType) {
-        case TYPE_MULTIPLE_CHOICE:
-            validResponse = checkMultipleChoice(content);
-            break;
-        case TYPE_MULTIPLE_CHOICE_OTHERS:
-            validResponse = checkMultipleChoiceOthers(content);
-            break;
-    }
-    /***********************************************/
 
     let ansTemplate = '<div class="space">\
                             <div class="message-container receiver">\
@@ -162,21 +121,6 @@ function select(button) {
 
     messages.innerHTML += ansTemplate;
 
-    if (validResponse) {
-        incrementIndex();
-    }
-    else {
-        if (currentQuestionObject.restrictions.skipTarget == "end_survey") {
-            end = true;
-        }
-        else {
-            setTimeout(() => {
-                showMessage("That seems to be an invalid response! Please try again.")
-            }, 1000);
-            scrollToBottom();
-        }
-    }
-
     setTimeout(() => {
         nextQuestion();
     }, 1000)
@@ -185,92 +129,10 @@ function select(button) {
 }
 
 /**
- * Checks a numeric response from the user.
- * @param message String containing the input from the user
- */
-function checkNumeric(message) {
-    if (!isNaN(message)) {
-        let lowerRange = currentQuestionObject.restrictions.lowerRange;
-        let upperRange = currentQuestionObject.restrictions.upperRange;
-        
-        if ((message >= lowerRange) & (message <= upperRange)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
- function checkShortText(message) {
-     return true;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
- function checkShortText(message) {
-    return true;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
- function checkLongText(message) {
-    return true;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
- function checkLongQuestion(message) {
-    return true;
-}
-
-/**
- * Increments the index based on the result of validResponse.
- */
-function incrementIndex() {
-    // If invalid, don't increment questionIndex. Display error message
-    if (validResponse) {
-        if (currentSubQuestionIds !== null) {
-            subQuestionIndex++;
-        } else {
-            questionIndex++;
-        }
-    }
-}
-
-/**
  * Adds the user response as a chat bot message
  */
 function addMessage() {
     let message = input.value;
-    
-    /***********************************************/
-    // Validating user input
-    let questionType = currentQuestionObject.type;
-    
-    switch (questionType) {
-        case TYPE_NUMERIC:
-            validResponse = checkNumeric(message);
-            break;
-        case TYPE_SHORT_TEXT:
-            validResponse = checkShortText(message);
-            break;
-        case TYPE_LONG_TEXT:
-            validResponse = checkLongText(message);
-            break;
-        case TYPE_LONG_QUESTION:
-            validResponse = checkLongQuestion(message);
-            break;
-    }
-    /***********************************************/
 
     // Saving the response before clearing the input box
     saveResponse(input.value);
@@ -293,24 +155,9 @@ function addMessage() {
 
     scrollToBottom();
 
-    if (validResponse) {
-        incrementIndex();
-    }
-    else {
-        if (currentQuestionObject.restrictions.skipIfInvalid) {
-            end = true;
-        }
-        else {
-            setTimeout(() => {
-                showMessage("That seems to be an invalid response! Please try again.")
-            }, 1000);
-            scrollToBottom();
-        }
-    }
-
     setTimeout(() => {
         nextQuestion();
-    }, 2000);
+    }, 1000);
 
     let question_id = "";
 }
@@ -320,32 +167,29 @@ function addMessage() {
  * question.
  */
 function nextQuestion() {
-    if (end) {
-        let invalidChoice = "Unfortunately, we believe our app isn't for " +
-            "you. Maybe recommend it to someone else!"
-        showMessage(invalidChoice);
-    }
-    else {
-        if (currentSubQuestionIds !== null) {
-            // If the user is answering sub-questions
-            if (subQuestionIndex === currentSubQuestionIds.length - 1) {
-                // If the user has completed answering sub-questions,
-                // increment the questionIndex and move on
-                questionIndex++;
-                currentSubQuestionIds = null;
-                showQuestion(false);
-            } else {
-                showQuestion(true);
-            }
-        } else if (questionIndex < QUESTION_IDS.length - 1) {
-            // If the user is answering normal questions
+    if (currentSubQuestionIds !== null) {
+        // If the user is answering sub-questions
+        console.log("subquestionIndex is ", subQuestionIndex);
+        if (subQuestionIndex === currentSubQuestionIds.length) {
+            // If the user has completed answering sub-questions,
+            // increment the questionIndex and move on
+            currentSubQuestionIds = null;
             showQuestion(false);
+            questionIndex++;
         } else {
-            let endingMessage = "That's all the questions we have for you " +
-                "right now. You can either continue asking questions, or" +
-                " browse the rest of the application!"
-            showMessage(endingMessage);
+            // If there are unanswered sub-questions left
+            showQuestion(true);
+            subQuestionIndex++;
         }
+    } else if (questionIndex < QUESTION_IDS.length - 1) {
+        // If the user is answering normal questions
+        showQuestion(false);
+        questionIndex++;
+    } else {
+        let endingMessage = "That's all the questions we have for you " +
+            "right now. You can either continue asking questions, or" +
+            " browse the rest of the application!"
+        showMessage(endingMessage);
     }
 }
 
@@ -439,76 +283,6 @@ function showNumeric(questionObject) {
     showShortText(questionObject);
 }
 
-function loadOptions(){
-  var x = document.getElementById("Dropdown");
-  x.options.length = 0;
-  const collectionRef = firebase.firestore().collection(currentUser.email);
-  collectionRef.get()
-      .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              var option = document.createElement("option");
-              option.text = doc.id;
-              x.add(option);
-          });
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-      });
-}
-function dates(){
-  document.getElementById("Dropdown").classList.toggle("show");
-}
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-function selectdate(){
-  var mylist = document.getElementById('Dropdown');
-  const collectionRef = firebase.firestore().collection(currentUser.email).doc(mylist.options[mylist.selectedIndex].text);
-  collectionRef.get().then((doc) => {
-    if (doc.exists) {
-        console.log("Document data:", doc.data().set_id);
-        if (document.contains(document.getElementById("attempt"))) {
-            document.getElementById("attempt").remove();
-            document.getElementById("label_id").remove();
-          }
-        var select = document.createElement("select");
-        select.id = "attempt";
-        select.class = "dropbtn";
-        var label = document.createElement("label");
-        label.id = "label_id";
-        for (var i = 1;i<doc.data().set_id+1;i++){
-          var option = document.createElement("option");
-          option.value = i;
-          option.text = i;
-          select.appendChild(option);
-        }
-        label.innerHTML = "Choose which attempt you'd like to view: "
-        label.htmlFor = "pets";
-
-        document.getElementById("attemptsection").appendChild(label).appendChild(select);
-      }
-    }).catch((error) => {
-  console.log("Error getting document:", error);
-});
-
-  document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
-}
-
-function selectattempt(){
-  var mylist = document.getElementById('attempt');
-  document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
-}
-
 function showMultipleChoice(questionObject) {
     // Leaving these here as references to multiple choice
     // question objects.
@@ -529,16 +303,12 @@ function showMultipleChoice(questionObject) {
     let choices = questionObject.restrictions.choices;
 
     // TODO Implement validation checks and skip logic
-    incrementIndex();
 
     showMessage(question);
     showOptions(choices);
 }
 
 function showMultipleChoiceOthers(questionObject) {
-    // TODO Implement validation checks and skip logic
-    incrementIndex();
-
     //TODO To be implemented
     showMultipleChoice(questionObject);
 }
@@ -648,7 +418,7 @@ function saveResponse(answer) {
 
     // Writing a response object to survey_responses
     let responseObject = {
-        question_id: currentQuestionId,
+        question_id: currentQuestionObject.id,
         type: currentQuestionObject.type,
         question: currentQuestionObject.question,
         restrictions: currentQuestionObject.restrictions,
@@ -656,6 +426,12 @@ function saveResponse(answer) {
         answer: answer,
         timestamp: timestamp
     };
+
+    if (isAnsweringSubQuestions()) {
+        // For sub-questions, append the longQuestionId attribute
+        // to the response object
+        responseObject.longQuestionId = currentQuestionId;
+    }
 
     // Add an auto-ID response entry to the data branch
     firebase.firestore().collection(branch).add(responseObject)
@@ -691,9 +467,6 @@ function saveResponse(answer) {
                 " branch: ", error);
         });
 }
-
-
-
 
 function initSetId() {
     // Formulating the branch
@@ -746,6 +519,20 @@ function initSetId() {
                 });
         }
     });
+}
+
+function isAnsweringSubQuestions() {
+    if (currentQuestionObject === null) {
+        // The current question object is not set yet,
+        // hence it is impossible for the user to be
+        // answering a question
+        return false;
+    } else {
+        // If the current question object is set,
+        // the user is answering sub-questions if
+        // the list of sub-question IDs is not null.
+        return currentSubQuestionIds !== null;
+    }
 }
 
 // Initialize only when firebase has been fully loaded
