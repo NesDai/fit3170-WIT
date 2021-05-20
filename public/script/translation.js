@@ -2,26 +2,42 @@
 
 const LANGUAGE_KEY = "LANGUAGE"
 
-// window.onload = execute();
+window.onload = disableTranslateButton();
 
-// function execute(){
-//     translateLanguage(localStorage.getItem("LANGUAGE"));
-// }
+function disableTranslateButton(){
+
+    let lang = localStorage.getItem(LANGUAGE_KEY);
+
+    if (lang == "Malay")
+        document.getElementById("lang_butt_id_m").disabled = true;
+    else if (lang == "Chinese (Simplified)")
+        document.getElementById("lang_butt_id_c").disabled = true;
+    else if (lang == "Thai")
+        document.getElementById("lang_butt_id_t").disabled = true;
+    else
+        document.getElementById("lang_butt_id_e").disabled = true;
+
+}
+
+
 
 function getUserLanguage(){
     return  localStorage.getItem(LANGUAGE_KEY)
 }
 
 function changeLang(lang){
+
+
     translateLanguage(lang)
     setTimeout(function() {
         window.location.reload(false) 
     }, 50);
-    
-
-    
-
 }
+    
+
+    
+
+
 
 function reset(){
     localStorage.setItem(LANGUAGE_KEY, "en");
@@ -39,18 +55,8 @@ function googleTranslateElementInit() {
 }
 
 function translateLanguage(lang) {
-    // reset();
 
-    // if (lang == "Malay")
-    //     language = "ms";
-    // else if (lang == "Chinese (Simplified)")
-    //     language = "zh-CN";
-    // else if (lang == "Thai")
-    //     language = "th"
-    // else
-    //     language = "en"
 
-    // save language for the user upon login
     localStorage.setItem(LANGUAGE_KEY, lang);
 
     googleTranslateElementInit();

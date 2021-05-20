@@ -23,7 +23,7 @@ function setAuthLanguage(){
 
     if (language == null){
         firebase.auth().languageCode = "en";
-        localStorage.setItem(LANGUAGE_KEY,"en")
+        localStorage.setItem(LANGUAGE_KEY,"English")
     }
     else{
         firebase.auth().languageCode = language;    
