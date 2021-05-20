@@ -74,6 +74,7 @@ let questionIndex = 0;
 /*
 Used when displaying sub-questions
  */
+let currentSubQuestionId = null;
 let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
@@ -168,7 +169,6 @@ function select(button) {
             setTimeout(() => {
                 showMessage("That seems to be an invalid response! Please try again.")
             }, 1000);
-            scrollToBottom();
         }
     }
 
@@ -177,6 +177,7 @@ function select(button) {
     }, 1000)
 
     saveResponse(content);
+    scrollToBottom();
 }
 
 /**
@@ -316,6 +317,8 @@ function addMessage() {
  * question.
  */
 function nextQuestion() {
+    console.log("nextQuestion() is called.")
+
     if (end) {
         let invalidChoice = "Unfortunately, we believe our app isn't for " +
             "you. Maybe recommend it to someone else!"
@@ -329,22 +332,21 @@ function nextQuestion() {
                 // If the user has completed answering sub-questions,
                 // increment the questionIndex and move on
                 currentSubQuestionIds = null;
-                showQuestion(false);
                 questionIndex++;
+                showQuestion(false);
             } else {
                 // If there are unanswered sub-questions left
                 showQuestion(true);
-                subQuestionIndex++;
             }
-        } else if (questionIndex < QUESTION_IDS.length - 1) {
+        } else if (questionIndex < QUESTION_IDS.length) {
             // If the user is answering normal questions
             showQuestion(false);
-            questionIndex++;
         } else {
             let endingMessage = "That's all the questions we have for you " +
                 "right now. You can either continue asking questions, or" +
                 " browse the rest of the application!"
             showMessage(endingMessage);
+            scrollToBottom();
         }
     }
 }
@@ -385,15 +387,18 @@ function scrollToBottom() {
 
 function showQuestion(isSubQuestion) {
     // Get the ID of the current question
+    let question_id = "";
     if (isSubQuestion) {
-        currentQuestionId = currentSubQuestionIds[subQuestionIndex];
+        currentSubQuestionId = currentSubQuestionIds[subQuestionIndex];
+        question_id = currentSubQuestionId;
     } else {
         currentQuestionId = QUESTION_IDS[questionIndex];
+        question_id = currentQuestionId;
     }
-    console.log("Reading ", currentQuestionId);
+    console.log("Reading ", question_id);
 
     firebase.firestore().collection(QUESTIONS_BRANCH)
-        .doc(currentQuestionId)
+        .doc(question_id)
         .get()
         .then((docRef) => {
             let questionObject = docRef.data();
@@ -564,7 +569,7 @@ function showLongQuestion(questionObject) {
     // array
     subQuestionIndex = 0;
     currentSubQuestionIds = questionObject.arrangement;
-    showQuestion(true);
+    nextQuestion();
 }
 
 function showShortText(questionObject) {
@@ -644,7 +649,7 @@ function saveResponse(answer) {
 
     // Writing a response object to survey_responses
     let responseObject = {
-        question_id: currentQuestionObject.id,
+        question_id: currentQuestionId,
         type: currentQuestionObject.type,
         question: currentQuestionObject.question,
         restrictions: currentQuestionObject.restrictions,
@@ -654,9 +659,14 @@ function saveResponse(answer) {
     };
 
     if (isAnsweringSubQuestions()) {
-        // For sub-questions, append the longQuestionId attribute
+        // For sub-questions
+        // 1. Append the longQuestionId attribute
         // to the response object
         responseObject.longQuestionId = currentQuestionId;
+
+        // 2. Change the question_id to the sub question's ID
+        // (instead of the "title" question's
+        responseObject.question_id = currentSubQuestionId;
     }
 
     // Add an auto-ID response entry to the data branch
@@ -681,15 +691,15 @@ function saveResponse(answer) {
                 .set(reducedResponseObject)
                 .then(() => {
                     console.log("Response written with ID: ", docRef.id,
-                        " at survey_questions branch");
+                        " at survey_responses branch");
                 })
                 .catch((error) => {
                     console.error("Error writing response copy at" +
-                        " survey_questions branch: ", error);
+                        " survey_responses branch: ", error);
                 });
         })
         .catch((error) => {
-            console.error("Error writing response at survey_responses" +
+            console.error("Error writing response at " + phone +
                 " branch: ", error);
         });
 }
