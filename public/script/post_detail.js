@@ -10,9 +10,9 @@ firebase.database().ref(`posts/${params.get('post_id')}`).once("value").then(sna
 
 
 
-  console.log("hi");
-    printPostDetails();
-    hideTranslationModal();
+  printPostDetails();
+  hideTranslationModal();
+
 
 
 
@@ -38,12 +38,12 @@ function printPostDetails(){
 
     let id = localStorage.getItem("POST_ID");
 
-
-    let poster_field = document.getElementById('poster_id');
-    let time_field = document.getElementById('date_posted');
-    let title_field = document.getElementById('title');
-    let description_field = document.getElementById('description');
-    let interest_field = document.getElementById('post_interests');
+    let post_details = document.getElementById("post_details");
+    // let poster_field = document.getElementById('poster_id');
+    // let time_field = document.getElementById('date_posted');
+    // let title_field = document.getElementById('title');
+    // let description_field = document.getElementById('description');
+    // let interest_field = document.getElementById('post_interests');
 
 
     firebase.database().ref('posts')
@@ -51,20 +51,57 @@ function printPostDetails(){
         .equalTo(id)
             .once('value', x => {
                 x.forEach(data => {
-                    let post = data.val();
+                  post_details.innerHTML = "";
+                  let interest = "";
+                  let post = data.val();
+                  for(let i =0; i<post.interest.length;i++){
+                    interest +=`<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #${post.interest[i]} </button>`
+              }
                     // print the post details in here
+                  post_details.innerHTML +=
+                  
+                    `<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <br>
+                       <div class="f">
+                          <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'><b>${post.username}</b></h2>
+                          <br class="mobile-br">
+                          <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                       </div>
+                       <br>
+                       <div class="post_header" style="margin:0 10px; background-color: white">
+                          <h5 class="post_header mdl-color-text--black;"style="padding-left:18px" id="title">${post.title}</h5>
+                       </div>
+                       <!-- POST FORM -->
+                       <form class="post_content" style="margin:0 10px; background-color: white">
+                          <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" id="description">
+                          ${post.description}</h6>
+                          <br>
+                          <div id="post_interests" style='inline-block'>
+                          ${interest}
+                          </div>
+                          <br>
+                       </form>
 
-                    poster_field.innerHTML = `@<b>${post.username}</b>`;
-                    time_field.innerHTML = post.created;
-                    title_field.innerHTML = post.title;
-                    description_field.innerHTML = post.description;
-                    interest_field.innerHTML = "";
-                    for(let i =0; i<post.interest.length;i++){
+                       <!--  LIKE DISLIKE FOR POST -->
+                       <br>
+                       <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                       <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                       </button>
+                       <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                       <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                       </button>
+                    </div>
+                    </div>`
 
-                        interest_field.innerHTML += `<button class="mdl-button mdl-js-button  mdl-color-text--black"> #${post.interest[i]}</button>`;
-                    }
+          
                 });
+            }).then(()=>{
+              printComments();
             })
+
+
+ 
+
 
 
 }
@@ -149,12 +186,12 @@ function printComments(){
                  <!--  LIKE DISLIKE FOR COMMENT -->
                  <span id='like_button_comment' href="#">
                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                 <i class="material-icons" id="like_comment_icon">thumb_up</i>
+                 <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
                  </button>
                  </span>
                  <span id='dislike_button_comment' href="#">
                  <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                 <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
+                 <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
                  </button>
                  </span>
                  <!-- COMMENT REPLY TEXT BOX -->
@@ -163,13 +200,13 @@ function printComments(){
                  </div>
                  <!-- SEND REPLY FOR COMMENT -->
                  <button class="hideButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="send_reply_btn">
-                 <i class="material-icons" id="send_reply_icon">send</i>
+                 <i class="material-icons notranslate" id="send_reply_icon">send</i>
                  SEND
                  </button>
                  <!-- ADD REPLY BUTTON FOR COMMENT -->
                  <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                     style="background-color:#00b686;" id="add_reply_btn" type="submit" onclick="addReply()">
-                 <i class="material-icons" id="reply_comment_icon">reply</i>
+                 <i class="material-icons notranslate" id="reply_comment_icon">reply</i>
                  reply
                  </button>
                  <!-- <h5 class="replies_section_header mdl-color-text--black" style="margin-top: 5px; position: relative; left: 35px">REPLIES</h5> -->
@@ -186,12 +223,12 @@ function printComments(){
                     <!--  LIKE DISLIKE FOR COMMENT -->
                     <span id='like_button_comment' href="#">
                     <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                    <i class="material-icons" id="like_comment_icon">thumb_up</i>
+                    <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
                     </button>
                     </span>
                     <span id='dislike_button_comment' href="#">
                     <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                    <i class="material-icons" id="dislike_comment_icon">thumb_down</i>
+                    <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
                     </button>
                     </span>
                     <!-- COMMENT REPLY TEXT BOX -->
@@ -200,13 +237,13 @@ function printComments(){
                     </div>
                     <!-- SEND REPLY FOR COMMENT -->
                     <button class="hideButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="send_reply_btn">
-                    <i class="material-icons" id="send_reply_icon">send</i>
+                    <i class="material-icons notranslate" id="send_reply_icon">send</i>
                     SEND
                     </button>
                     <!-- ADD REPLY BUTTON FOR COMMENT -->
                     <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                        style="background-color:#00b686;" id="add_reply_btn" type="submit" onclick="addReply()">
-                    <i class="material-icons" id="reply_comment_icon">reply</i>
+                    <i class="material-icons notranslate" id="reply_comment_icon">reply</i>
                     reply
                     </button>
                  </div>

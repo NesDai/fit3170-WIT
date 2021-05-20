@@ -1,6 +1,12 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
-window.onload = printAllPosts();
+
+window.onload = execute()
+
+function execute(){
+    printAllPosts();
+
+}
 
 //check id the user is signed in
 function checkUserExistence() {
@@ -216,6 +222,8 @@ function printAllPosts(){
                  </span></div>`;
             }
         });
+
+
 }
 
 const POST_ID = "POST_ID";
@@ -243,7 +251,7 @@ function printUserPosts(){
                 }).then(()=> {
                     for(let i=data_list.length-1; i>=0 ; i--){
                         let post = data_list[i]
-                        console.log(data_list[i].id);
+
                         field.innerHTML +=
                         `   <div style="padding-top: 20px;"><span class="post_card">
                             <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -288,4 +296,5 @@ function printUserPosts(){
                          </span></div>`;
                     }
                 });
+
 }

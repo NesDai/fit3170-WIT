@@ -506,38 +506,42 @@
                <div class="forum-posts">
                   <!-- DISPLAY ALL POST BY OTHER USERS -->
                   <br>
-                  <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                     <!-- POST HEADER -->
-                     <br>
-                     <div class="f">
-                        <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'><b>@Vanessa123</b></h2>
-                        <br class="mobile-br">
-                        <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>4:33 PM Apr 25, 2021</h2>
-                     </div>
-                     <br>
-                     <div class="post_header" style="margin:0 10px; background-color: white">
-                        <h5 class="post_header mdl-color-text--black;"style="padding-left:18px" id="title">Learnt a new hobby today!</h5>
-                     </div>
-                     <!-- POST FORM -->
-                     <form class="post_content" style="margin:0 10px; background-color: white">
-                        <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" id="description">I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
+                  <div id = "post_details">
+                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                        <!-- POST HEADER -->
                         <br>
-                        <div id="post_interests" style='inline-block'>
-                           <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
-                           <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
+   
+                           <div class="f">
+                              <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'><b>@Vanessa123</b></h2>
+                              <br class="mobile-br">
+                              <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>4:33 PM Apr 25, 2021</h2>
+                           </div>
+                           <br>
+                           <div class="post_header" style="margin:0 10px; background-color: white">
+                              <h5 class="post_header mdl-color-text--black;"style="padding-left:18px" id="title">Learnt a new hobby today!</h5>
+                           </div>
+                           <!-- POST FORM -->
+                           <form class="post_content" style="margin:0 10px; background-color: white">
+                              <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" id="description">I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
+                              <br>
+                              <div id="post_interests" style='inline-block'>
+                                 <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
+                                 <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
+                              </div>
+                              <br>
+                           </form>
+
+                           <!--  LIKE DISLIKE FOR POST -->
+                           <br>
+                           <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                           <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                           </button>
+                           <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                           <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                           </button>
                         </div>
-                        <br>
-                     </form>
-                     <div>
-                        <!--  LIKE DISLIKE FOR POST -->
-                        <br>
-                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
-                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
-                        </button>
-                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
-                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
-                        </button>
                      </div>
+
                      <br>
                      <hr style="margin: 0;">
                      <div class="post_comments_header" style="margin:0 10px; ">
@@ -561,7 +565,7 @@
                         <div>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                            style="background-color: #00b686;" id="send_comment_btn" type="submit" onclick="addComment()">
-                        <i class="material-icons" id="send_reply_icon">send</i>
+                        <i class="material-icons notranslate" id="send_reply_icon">send</i>
                         SEND
                         </button>
                       </div>
@@ -604,7 +608,7 @@
        </b>
      </p>
      <hr style="margin: 0;">
-     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="translateLanguage(this.value)"
+     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="reset();"
              value="English">
        <label>
          <span class="flag-icon flag-icon-us">
@@ -612,7 +616,7 @@
        </label>
      </button>
      <br>
-     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="translateLanguage(this.value)"
+     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="changeLang(this.value)"
              value="Chinese (Simplified)">
        <label>
          <span class="flag-icon flag-icon-cn">
@@ -620,7 +624,7 @@
        </label>
      </button>
      <br>
-     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="translateLanguage(this.value)"
+     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="changeLang(this.value)"
              value="Thai">
        <label>
          <span class="flag-icon flag-icon-th">
@@ -628,7 +632,7 @@
        </label>
      </button>
      <br>
-     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="translateLanguage(this.value)"
+     <button id ="lang_butt_id" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="changeLang(this.value)"
              value="Malay">
        <label>
          <span class="flag-icon flag-icon-my">
