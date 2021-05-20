@@ -640,8 +640,7 @@ function saveResponse(answer) {
     let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let userBranch = `chatbot/survey_responses/${phone}`;
-    let branch = `${userBranch}/${date}/responses`;
+    let branch = `${phone}/${date}/responses`;
 
     // Formulating the response object
 
@@ -671,8 +670,8 @@ function saveResponse(answer) {
                 answer: answer,
                 timestamp: timestamp
             };
-            let responseBranch = `chatbot/survey_questions/questions/
-                    ${currentQuestionId}/responses`
+            let responseBranch = `chatbot/survey_responses/
+                    ${currentQuestionId}`;
 
             firebase.firestore().collection(responseBranch)
                 .doc(docRef.id)
@@ -693,6 +692,9 @@ function saveResponse(answer) {
         });
 }
 
+
+
+
 function initSetId() {
     // Formulating the branch
     // TODO Change this back to
@@ -701,12 +703,11 @@ function initSetId() {
     let phone = currentUser.email;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let userBranch = `chatbot/survey_responses/${phone}`;
 
     // Formulating the response object
 
     // Retrieve the set id
-    let reference = firebase.firestore().collection(userBranch).doc(date);
+    let reference = firebase.firestore().collection(phone).doc(date);
 
     reference.get().then((document) => {
         if (document.exists) {
@@ -716,7 +717,7 @@ function initSetId() {
 
             // Increment the set_id at the Firestore Database by 1
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userBranch).doc(date)
+            firebase.firestore().collection(phone).doc(date)
                 .set({set_id: currentSetId})
                 .then(() => {
                     console.log("Document written with ID: ", date);
@@ -735,7 +736,7 @@ function initSetId() {
             // is the first surevy instance for the day.
 
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userBranch).doc(date)
+            firebase.firestore().collection(phone).doc(date)
                 .set({set_id: 0})
                 .then(() => {
                     console.log("Document written with ID: ", date);
