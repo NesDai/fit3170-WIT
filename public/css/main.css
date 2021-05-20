@@ -36,6 +36,25 @@ body {
   height: 100%;
 }
 
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
 #user-container #user-pic {
   top: -3px;
   position: relative;

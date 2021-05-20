@@ -50,7 +50,7 @@
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
             <h3><i class="material-icons">chat_bubble_outline</i> Chatbot</h3>
             <button class="tablink" onclick="openPage('Live',this)" id="defaultOpen" >Live Chat</button>
-            <button class="tablink" onclick="openPage('History',this)">History</button>
+            <button class="tablink" onclick="openPage('History',this);loadOptions();">History</button>
 
           </div>
         </div>
@@ -67,7 +67,6 @@
     <main id = "Live" class= "tabcontent" class="mdl-layout__content mdl-color--grey-100">
         <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
     <div id="messages-card" class="mdl-card mdl-shadow--2dp">
-
         <div id="messages">
         </div>
         <div id="message-form">
@@ -83,9 +82,37 @@
     </div>
     </div>
     </main>
-    <div id = "History" class = " tabcontent">
-      <h3>TEST</h3>
+    <div id = "History" class = " tabcontent" >
+    <label for="Dropdown">Please choose a date to see your chatlog:</label>
+    <div class="dropdown">
+      <select onclick="dates()" class="dropbtn" id="Dropdown">
+      <div id="myDropdown" class="dropdown-content">
+        </select>
       </div>
+      <button onclick = "selectdate()"> Confirm </button>
+      <p> your chosen date is: <input type= "text" id="fav"></p>
+      <div id = "attemptsection" class = "dropdown-content">
+      </div>
+      <button onclick = "selectattempt()"> Confirm </button>
+
+      <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+  <div id="messages-card" class="mdl-card mdl-shadow--2dp">
+      <div id="messages">
+      </div>
+      <div id="message-form">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
+            <label class="mdl-textfield__label" for="message">Message...</label>
+          </div>
+          <!-- <button id="submit" type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="respondToOpen()"> -->
+          <button id="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled onclick="addMessage()">
+            Send
+          </button>
+      </div>
+  </div>
+  </div>
+    </div>
+    </div>
 
     <!-- USING JQUERY TO ANIMATE SCROLL -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
