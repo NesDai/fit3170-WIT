@@ -44,7 +44,7 @@ function favoriteRating(){
     var snackbarContainer = document.querySelector('#messagePopUp');
     var data = {message: 'Added to Favourite Videos'};
     snackbarContainer.MaterialSnackbar.showSnackbar(data);
-    
+    addToFavourite(player.currentSrc());
   }
   else if(counter === 1){
     document.getElementById("favoriteIcon").src = "./css/images/heart_icon.png";
@@ -54,6 +54,7 @@ function favoriteRating(){
     var snackbarContainer = document.querySelector('#messagePopUp');
     var data = {message: 'Removed from Favourite Videos'};
     snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    removeFromFavourite(player.currentSrc());
   }
 
 }
@@ -149,15 +150,62 @@ function updateHistory(currentVideoUrl){
         // Add video url to history only if video doesn't exist
         if (videoExist != true){
             currentHistory.push(currentVideo)
-            updateFirebaseVideoHistory(currentHistory, current_user);
+            updateFirebase(currentHistory, current_user, 'videoHistory');
+        }
+    })
+}
+
+// Function to add video to favourites
+function addToFavourite(currentVideoUrl){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+    let currentVideo = {
+        videoUrl: currentVideoUrl
+    }
+    
+    // Retrieves the currently stored watch history
+    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function(snapshot){
+        let currentFavourites = []
+        let videoExist = false
+
+        // If favourite is not empty and video already exists in history, set videoExist to true
+        if (snapshot.exists()){
+            currentFavourites = snapshot.val();
+            for (i in currentFavourites){
+                if (currentFavourites[i].videoUrl == currentVideoUrl){
+                    videoExist = true;
+                }
+            }
+        } 
+
+        // Add video url to history only if video doesn't exist
+        if (videoExist != true){
+            currentFavourites.push(currentVideo)
+            updateFirebase(currentFavourites, current_user, 'videoFavourite');
+        }
+    })
+}
+
+// Function to remove a video from favourites
+function removeFromFavourite(currentVideoUrl){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+
+    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once('value', function(snapshot){
+        if (snapshot.exists()){
+            currentFavourites = snapshot.val();
+            for (i in currentFavourites){
+                if (currentFavourites[i].videoUrl == currentVideoUrl){
+                    currentFavourites.splice(i);
+                    updateFirebase(currentFavourites, current_user, 'videoFavourite')
+                }
+            }
         }
     })
 }
 
 // Function to update watch history of specific user in database
-function updateFirebaseVideoHistory(currentHistory, current_user){
-    firebase.database().ref('users').child(`${current_user.phone}`).child(`videoHistory`).set(
-        currentHistory
+function updateFirebase(video_list, current_user, child_name){
+    firebase.database().ref('users').child(`${current_user.phone}`).child(child_name).set(
+        video_list
     , function(error){
         if (error){
             console.log(error)
