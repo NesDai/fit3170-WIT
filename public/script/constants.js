@@ -8,12 +8,19 @@
 // Indicates the question type as numeric
 const TYPE_NUMERIC = "numeric";
 
+// Indicates a numeric sub-question
+const TYPE_NUMERIC_SUB_QUESTION = "numeric";
+
 // Indicates the question type as multiple choice
 const TYPE_MULTIPLE_CHOICE = "multiple-choice";
 
 // Indicates a multiple choice question with an
 // "Others" free text input
 const TYPE_MULTIPLE_CHOICE_OTHERS = "multiple-choice-others";
+
+// Indicates a multiple choice sub-question with an
+// "Others" free text input
+const TYPE_MULTIPLE_CHOICE_SUB_QUESTION = "multiple-choice-sub-question";
 
 // Indicates a question accepting short text inputs
 const TYPE_SHORT_TEXT = "short-text";
