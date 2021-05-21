@@ -83,6 +83,7 @@ function printPostDetails(){
                        </form>
 
                        <!--  LIKE DISLIKE FOR POST -->
+                       <div>
                        <br>
                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
@@ -90,6 +91,7 @@ function printPostDetails(){
                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                        </button>
+                       </div>
                     </div>
                     </div>`
 
