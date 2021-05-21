@@ -510,7 +510,7 @@ function selectdate(){
             select.class = "dropbtn";
             var label = document.createElement("label");
             label.id = "label_id";
-            for (var i = 1;i<doc.data().set_id+1;i++){
+            for (var i = 0;i<=doc.data().set_id;i++){
                 var option = document.createElement("option");
                 option.value = i;
                 option.text = i;
@@ -524,20 +524,18 @@ function selectdate(){
     }).catch((error) => {
         console.log("Error getting document:", error);
     });
-
-    document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
     logDate = mylist.options[mylist.selectedIndex].text;
 }
 
 function selectattempt(){
     var mylist = document.getElementById('attempt');
-    document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
     logAttempt = mylist.options[mylist.selectedIndex].text;
+    console.log(logAttempt);
     showlog();
 }
 
 function showlog(){
-  const collectionRef = firebase.firestore().collection(currentUser.email).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',logAttempt-1);
+  const collectionRef = firebase.firestore().collection(currentUser.email).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt));
       collectionRef.get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
