@@ -526,11 +526,30 @@ function selectdate(){
     });
 
     document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
+    logDate = mylist.options[mylist.selectedIndex].text;
 }
 
 function selectattempt(){
     var mylist = document.getElementById('attempt');
     document.getElementById('fav').value = mylist.options[mylist.selectedIndex].text;
+    logAttempt = mylist.options[mylist.selectedIndex].text;
+    showlog();
+}
+
+function showlog(){
+  const collectionRef = firebase.firestore().collection(currentUser.email).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',logAttempt-1);
+      collectionRef.get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data().question);
+              showQuestionLog(doc.data().question);
+              showAnswerLog(doc.data().answer);
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
 }
 
 function showMultipleChoice(questionObject) {
