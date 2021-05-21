@@ -62,7 +62,8 @@ let currentUser = null;
 let currentQuestionId = null;
 let currentQuestionObject = null;
 let currentSetId = 0;
-
+let logDate = null;
+let logAttempt = null;
 /*
 Stores the index of the current question object
 <br>
@@ -365,6 +366,24 @@ function showMessage(message) {
         "</div>"
 }
 
+function showQuestionLog(message) {
+    logs.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
+}
+
+function showAnswerLog(message) {
+    logs.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container receiver'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
+}
+
 /**
  * Appends a message bubble to the chat bot containing
  * the specified question string with the prompt
@@ -498,7 +517,7 @@ function selectdate(){
                 select.appendChild(option);
             }
             label.innerHTML = "Choose which attempt you'd like to view: "
-            label.htmlFor = "pets";
+            label.htmlFor = "attemptsection";
 
             document.getElementById("attemptsection").appendChild(label).appendChild(select);
         }
