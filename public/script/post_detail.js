@@ -67,6 +67,9 @@ function printPostDetails(){
                           <br>
                           <br>
                           <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                          <button class=" mdl-button mdl-js-button" id="delete_post_btn">
+                          <i class="material-icons-outlined notranslate" id="delete_post_icon">delete</i>
+                          </button>
                       </div>
                       <br>
                       <div class="post_header" style="margin:0 10px; background-color: white">
