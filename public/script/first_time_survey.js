@@ -64,6 +64,7 @@ let currentQuestionObject = null;
 let currentSetId = 0;
 let logDate = null;
 let logAttempt = null;
+let longQueId = null;
 /*
 Stores the index of the current question object
 <br>
@@ -538,7 +539,15 @@ function showlog(){
       collectionRef.get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-              // doc.data() is never undefined for query doc snapshots
+              if(doc.data().longQuestionId!=null && doc.data().longQuestionId!=longQueId){
+                longQueId = doc.data().longQuestionId;
+                firebase.firestore().collection('chatbot').doc('survey_questions').collection('questions').doc(longQueId).get().then((doc) => {
+                  console.log("long question:", doc.data().question);
+                  showQuestionLog(doc.data().question);
+                }).catch((error) => {
+                console.log("Error getting document:", error);
+                });
+              }
               console.log(doc.id, " => ", doc.data().question);
               showQuestionLog(doc.data().question);
               showAnswerLog(doc.data().answer);
