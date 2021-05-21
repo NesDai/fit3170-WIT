@@ -512,8 +512,8 @@ function selectdate(){
             label.id = "label_id";
             for (var i = 0;i<=doc.data().set_id;i++){
                 var option = document.createElement("option");
-                option.value = i;
-                option.text = i;
+                option.value = i+1;
+                option.text = i+1;
                 select.appendChild(option);
             }
             label.innerHTML = "Choose which attempt you'd like to view: "
@@ -530,12 +530,11 @@ function selectdate(){
 function selectattempt(){
     var mylist = document.getElementById('attempt');
     logAttempt = mylist.options[mylist.selectedIndex].text;
-    console.log(logAttempt);
     showlog();
 }
 
 function showlog(){
-  const collectionRef = firebase.firestore().collection(currentUser.email).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt));
+  const collectionRef = firebase.firestore().collection(currentUser.email).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
       collectionRef.get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
