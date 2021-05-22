@@ -97,7 +97,7 @@ const PART1 = [
 
     "How satisfied are you with your current life now? (Rate from 1 to 5)\n" +
     "[1] Very dissatisfied, [2] dissatisfied, [3] moderately satisfied,\n" +
-    "[5] satisfied, [6] very satisfied"
+    "[4] satisfied, [5] very satisfied"
 
     // The question above this line is a long question (1.16)
 ];
@@ -580,7 +580,7 @@ function pushPart3Questions() {
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
 
-    // Question 1.16
+    // Question 3.2
     pushLongQuestion("3.2", PART3[2]).then((docRef) => {
         // Record the id of the question itself
         longQuestionIds.push(docRef.id);

@@ -1,47 +1,47 @@
 // A list of IDs of question objects that are stored in
 // the Firestore Database
 const QUESTION_IDS = [
-    "5n1QsNlHRKPvrmhW71jY",
-    "wgrN7QR3rOs5pKhfIUY1",
-    "hLcVQTr1O7MOuV8iXb3V",
-    "TnuwCqNusYJr5opYRIz7",
-    "ZDO5CSxxmMmT5FFayRT4",
-    "tIp3Y0WCljTqCSSIfIRf",
-    "QSqYtfZ1HYbdzHc12WXw",
-    "hERkPfHiDfvPbHGb9LLx",
-    "TRd2965Va4wWvYVv368n",
-    "qbogBd9fZmBTMZJ3hhQl",
-    "2tvqIz0B0J7FH1kb3Ek9",
-    "y0ZpS6oopmOrDd3QJxDy",
-    "GOhGa7nvzoPDUPbZTXm2",
-    "Xhy8UPRFxWwI1mNw2dvQ",
-    "sqIZvvWuczmqPArYRAi1",
-    "A3TquprGGEIUPK2gzc4r",
+    "qC30vPwEsHpHnYvD9QXB",
+    "DwWJ09e2O6HoJhG79tVC",
+    "NQapG2Sza1k83AbogmnJ",
+    "manHOQxof67bC8XJmIj7",
+    "jbrg3JcjhHYbpvEHKzfL",
+    "wy5SfvDs5rdUC27xMvOB",
+    "bZdEsihZC2DIrWuAQq5h",
+    "FSVOpGPeTgqtzcDyxdTR",
+    "bYpaM02WbSUmRcxZRsyq",
+    "1jYu9xdifnQ7llB1DHMB",
+    "H71i9RHymtTuzhFZXCIy",
+    "82RGqhLUvMVVNLWy9FW4",
+    "rSlTouzaBKnCyAnIQR6v",
+    "NwbXmR1GXjhLg4YxY92w",
+    "tMpjXNl6AbI9WLaecgkN",
+    "WE7Vi36RErNCOob1UHEl",
     // Part 1 question IDs above
 
-    "ZQrjJglsHF0wNG0ThCGD",
-    "Idxa46VmiZrsoUh2uHIw",
-    "25zvBf3KUTpUSvFbNPRX",
-    "EyAClrrURWnSqtxkBYBR",
-    "1Nr7V3Zl6J2u3WGdsBr8",
-    "4X9dGOQPMfGfZxfpLtWP",
-    "RM1vBkNuCc9kl3nANFHY",
+    "TEOwiUE6GB7Iq1ES2V51",
+    "voPtzLatVbFW0CPW7Nk1",
+    "B8fOWT41S3rSNPW1PMR4",
+    "rn2AyiT4vsTfbVZcunk2",
+    "mougeniM918D5SuQfRch",
+    "ggrHOs3vT3XjOtmgJEiS",
+    "0osl0CmmauF3CrEARsfT",
     // Part 2 question IDs above
 
-    "Lc1MZhJ2Cfk2Q0EMlOxY",
-    "qFZUXIOm0N9U9gqZe8Uu",
+    "zRqZSkzNO47HcN603gf4",
+    "u3IlB0pTPiGSBwUCsqiQ",
     // Part 3 question IDs above
 
-    "iHIgD7dedkWurJRA5Trw",
-    "fVnBwlHeLJkmBMrR0Sam",
-    "S9zQ5aPswv5MHYfht32r",
-    "6YJiB7xHr0HpBqHSqE4w",
+    "CGTRT6raPn6VXTOIg6AW",
+    "sZ6yqev0JxB3zF9ATqn4",
+    "seaY5cG4KPn8JCFEodgE",
+    "Tf4h3sSJUyUksVgjmk8S",
     // Part 4 question IDs above
 
-    "Gvxu0YtQw5oji6hKh9wk",
-    "vfn7iuF0q28Kzt2iMdaK",
-    "ilZ9KTp81Ndx4jzt53iJ",
-    "Hz9vRrBUBwfuHm8KqgwE",
+    "lQ2uRyqYM9Q9SLBySwxR",
+    "Za7YzeVKvK6EGAUqKKAb",
+    "Y1K4EBPDvlC1zmDO0oEk",
+    "KHr0k5h5soAEv9JXy8Pk",
     // Part 5 question IDs above
 ];
 
@@ -58,7 +58,6 @@ Can be used to retrieve details such as phone number
 and user ID.
  */
 let currentUser = null;
-
 let currentQuestionId = null;
 let currentQuestionObject = null;
 let currentSetId = 0;
@@ -323,7 +322,7 @@ function nextQuestion() {
 
     if (end) {
         let invalidChoice = "Unfortunately, we believe our app isn't for " +
-            "you. Maybe recommend it to someone else!"
+            "you but please recommend it to older women who you think needs help with technology!"
         showMessage(invalidChoice);
     }
     else {
@@ -438,7 +437,7 @@ function showQuestion(isSubQuestion) {
                     showMultipleChoiceOthers(questionObject);
                     break;
                 case TYPE_SHORT_TEXT:
-                    showShortText(questionObject);
+                    showShortText(questionObject, false);
                     break;
                 case TYPE_LONG_TEXT:
                     showLongText(questionObject);
@@ -461,7 +460,7 @@ function showQuestion(isSubQuestion) {
 
 function showNumeric(questionObject) {
     //TODO To be implemented
-    showShortText(questionObject);
+    showShortText(questionObject, true);
 }
 
 function loadOptions(){
@@ -616,7 +615,7 @@ function showLongQuestion(questionObject) {
     nextQuestion();
 }
 
-function showShortText(questionObject) {
+function showShortText(questionObject, isNumeric) {
     let question = questionObject.question;
 
     // TODO Implement validation
@@ -627,7 +626,7 @@ function showShortText(questionObject) {
 
 function showLongText(questionObject) {
     //TODO To be implemented
-    showShortText(questionObject);
+    showShortText(questionObject, false);
 }
 
 function showOptions(choices) {
