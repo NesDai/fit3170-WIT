@@ -182,92 +182,10 @@ function select(button) {
 }
 
 /**
- * Checks a numeric response from the user.
- * @param message String containing the input from the user
- */
-function checkNumeric(message) {
-    if (!isNaN(message)) {
-        let lowerRange = currentQuestionObject.restrictions.lowerRange;
-        let upperRange = currentQuestionObject.restrictions.upperRange;
-
-        if ((message >= lowerRange) & (message <= upperRange)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
-function checkShortText(message) {
-    return true;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
-function checkShortText(message) {
-    return true;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
-function checkLongText(message) {
-    return true;
-}
-
-/**
- * Checks a short text response from the user.
- * @param message String containing the input from the user
- */
-function checkLongQuestion(message) {
-    return true;
-}
-
-/**
- * Increments the index based on the result of validResponse.
- */
-function incrementIndex() {
-    // If invalid, don't increment questionIndex. Display error message
-    if (validResponse) {
-        if (currentSubQuestionIds !== null) {
-            subQuestionIndex++;
-        } else {
-            questionIndex++;
-        }
-    }
-}
-
-/**
  * Adds the user response as a chat bot message
  */
 function addMessage() {
     let message = input.value;
-
-    /***********************************************/
-    // Validating user input
-    let questionType = currentQuestionObject.type;
-
-    switch (questionType) {
-        case TYPE_NUMERIC:
-            validResponse = checkNumeric(message);
-            break;
-        case TYPE_SHORT_TEXT:
-            validResponse = checkShortText(message);
-            break;
-        case TYPE_LONG_TEXT:
-            validResponse = checkLongText(message);
-            break;
-        case TYPE_LONG_QUESTION:
-            validResponse = checkLongQuestion(message);
-            break;
-    }
-    /***********************************************/
 
     // Saving the response before clearing the input box
     saveResponse(input.value);
@@ -285,31 +203,11 @@ function addMessage() {
     }
 
     // Prevent users from using text box
-    submit.disabled = true;
-    input.disabled = true;
+    disableTextInput();
+
+    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
 
     scrollToBottom();
-
-    if (validResponse) {
-        incrementIndex();
-    }
-    else {
-        if (currentQuestionObject.restrictions.skipIfInvalid) {
-            end = true;
-        }
-        else {
-            setTimeout(() => {
-                showMessage("That seems to be an invalid response! Please try again.")
-            }, 1000);
-            scrollToBottom();
-        }
-    }
-
-    setTimeout(() => {
-        nextQuestion();
-    }, 2000);
-
-    let question_id = "";
 }
 
 
@@ -320,35 +218,38 @@ function addMessage() {
 function nextQuestion() {
     console.log("nextQuestion() is called.")
 
-    if (end) {
-        let invalidChoice = "Unfortunately, we believe our app isn't for " +
-            "you but please recommend it to older women who you think needs help with technology!"
-        showMessage(invalidChoice);
-    }
-    else {
-        if (currentSubQuestionIds !== null) {
-            // If the user is answering sub-questions
-            console.log("subquestionIndex is ", subQuestionIndex);
-            if (subQuestionIndex === currentSubQuestionIds.length) {
-                // If the user has completed answering sub-questions,
-                // increment the questionIndex and move on
-                currentSubQuestionIds = null;
-                questionIndex++;
-                showQuestion(false);
-            } else {
-                // If there are unanswered sub-questions left
-                showQuestion(true);
-            }
-        } else if (questionIndex < QUESTION_IDS.length) {
-            // If the user is answering normal questions
+    if (currentQuestionObject === null) {
+        // The user is answering its first survey question
+        showQuestion(false);
+
+    } else if (currentSubQuestionIds !== null) {
+        // The user is answering sub-questions
+
+        console.log("subquestionIndex is ", subQuestionIndex);
+
+        if (subQuestionIndex === currentSubQuestionIds.length) {
+            // If the user has completed answering sub-questions,
+            // increment the questionIndex and move on
+            currentSubQuestionIds = null;
+            questionIndex++;
             showQuestion(false);
         } else {
-            let endingMessage = "That's all the questions we have for you " +
-                "right now. You can either continue asking questions, or" +
-                " browse the rest of the application!"
-            showMessage(endingMessage);
-            scrollToBottom();
+            // If there are unanswered sub-questions left
+            subQuestionIndex++;
+            showQuestion(true);
         }
+
+    } else if (questionIndex < QUESTION_IDS.length) {
+        // The user is answering a normal question
+        questionIndex++;
+        showQuestion(false);
+
+    } else {
+        let endingMessage = "That's all the questions we have for you " +
+            "right now. You can either continue asking questions, or" +
+            " browse the rest of the application!"
+        showMessage(endingMessage);
+        scrollToBottom();
     }
 }
 
@@ -437,7 +338,7 @@ function showQuestion(isSubQuestion) {
                     showMultipleChoiceOthers(questionObject);
                     break;
                 case TYPE_SHORT_TEXT:
-                    showShortText(questionObject, false);
+                    showShortText(questionObject);
                     break;
                 case TYPE_LONG_TEXT:
                     showLongText(questionObject);
@@ -462,19 +363,50 @@ function showNumeric(questionObject) {
     let lowerRange = questionObject.restrictions.lowerRange;
     let upperRange = questionObject.restrictions.upperRange;
 
-    /*input.onkeydown = () => {
-        if (isNaN(input.value)) {
-            showError("Not a number");
-            submit.onclick = repromptQuestion();
+    input.onkeydown = () => {
+        if (isNaN(message)) {
+            // If it's a number
+            if ((message >= lowerRange) && (message <= upperRange)) {
+                // If it's within range
+                errorText.style.visibility = "hidden";
+                submit.onclick = addMessage;
+            } else {
+                // If it's out of range
+                errorText.style.visibility = "visible";
+                errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
+                submit.onclick = repromptQuestion;
+            }
         } else {
-            hideError();
-            submit.onclick = nextQuestion();
+            // If it's not a number
+            errorText.style.visibility = "visible";
+            errorText.innerHTML = "the answer needs to be a number.";
+            submit.onclick = repromptQuestion;
         }
-    }*/
+    }
 
+    showShortQuestionMessage(questionObject.question);
+    enableTextInput();
+}
 
-    //TODO To be implemented
-    showShortText(questionObject, true);
+function repromptQuestion() {
+    // print error message onto chat
+    let errorMessage = errorText.value;
+    errorText.style.visibility = "hidden";
+    showMessage(errorMessage);
+
+    //getting type of question and the question itself
+    let type = currentQuestionObject.type;
+    let question = currentQuestionObject.question;
+
+    // print out the question again onto chat
+    showShortQuestionMessage(question);
+
+    // print out multiple choice options if question reprompted is a MCQ
+    if (type ===TYPE_MULTIPLE_CHOICE ||
+        type === TYPE_MULTIPLE_CHOICE_OTHERS ||
+        type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
+        showOptions(currentQuestionObject.choices);
+    }
 }
 
 function loadOptions(){
@@ -629,8 +561,11 @@ function showLongQuestion(questionObject) {
     nextQuestion();
 }
 
-function showShortText(questionObject, isNumeric) {
-    let question = questionObject.question;
+function showShortText(questionObject) {
+    let message = input.value;
+    input.onkeydown = () => {
+        if (message.length <= SHORT_TEXT_LENGTH) {
+            // If it's not too long
 
     // TODO Implement validation
 
@@ -640,7 +575,7 @@ function showShortText(questionObject, isNumeric) {
 
 function showLongText(questionObject) {
     //TODO To be implemented
-    showShortText(questionObject, false);
+    showShortText(questionObject);
 }
 
 function showOptions(choices) {
@@ -836,4 +771,4 @@ function isAnsweringSubQuestions() {
 // Things get funky if I don't do this
 window.onload = function () {
     initFirebaseAuth();
-}
+};
