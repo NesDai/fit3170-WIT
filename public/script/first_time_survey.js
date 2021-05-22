@@ -100,9 +100,7 @@ function greeting() {
 
     scrollToBottom();
 
-    setTimeout(() => {
-        nextQuestion();
-    }, 1500);
+    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
 }
 
 /**
