@@ -71,7 +71,7 @@ function printPostDetails(){
                           <br>
                           <br>
                           <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-                          <button class=" mdl-button mdl-js-button" id="delete_post_btn">
+                          <button class=" mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
                           <i class="material-icons-outlined notranslate" id="delete_post_icon">delete</i>
                           </button>
                       </div>
@@ -182,6 +182,20 @@ function addComment(){
     window.location = "post.html";
   }
 }
+
+function removePost() {
+  let post_id = localStorage.getItem("POST_ID");
+  firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
+      let post = snapshot.val();
+      if (post["userID"] == current_user["phone"]) {
+          firebase.database().ref(`posts/${post_id}`).remove();
+          window.location = "forum.html";
+      } else {
+          console.log("invalid");
+      }
+  });
+}
+
 
 function printComments(){
   let id = localStorage.getItem("POST_ID");
