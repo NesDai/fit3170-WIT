@@ -459,6 +459,20 @@ function showQuestion(isSubQuestion) {
 }
 
 function showNumeric(questionObject) {
+    let lowerRange = questionObject.restrictions.lowerRange;
+    let upperRange = questionObject.restrictions.upperRange;
+
+    /*input.onkeydown = () => {
+        if (isNaN(input.value)) {
+            showError("Not a number");
+            submit.onclick = repromptQuestion();
+        } else {
+            hideError();
+            submit.onclick = nextQuestion();
+        }
+    }*/
+
+
     //TODO To be implemented
     showShortText(questionObject, true);
 }

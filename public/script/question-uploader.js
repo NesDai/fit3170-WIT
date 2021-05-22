@@ -189,8 +189,7 @@ const SUB_QUESTIONS_3_2 = [
     "Reading online news or online magazines",
     "Taking notes (such as shopping lists or tasks) that I need to do",
     "Filming a video",
-    "Using social network (such as Facebook, Instagram, Twitter, etc.)",
-    // The question above this line is question 3.2p
+    // The question above this line is question 3.2o
 
     "Listening to music",
     "Playing games",
@@ -592,9 +591,8 @@ function pushPart3Questions() {
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
-        // Questions 3.2 a to s (19 questions in total)
-        for (let i = 1; i < 20; i++) {
-
+        // Questions 3.2 a to r (18 questions in total)
+        for (let i = 1; i < SUB_QUESTIONS_3_2.length; i++) {
             appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_3_2[i],
                 1, 5, false,
                 SUB_QUESTIONS_HINTS_3_2[i]);
