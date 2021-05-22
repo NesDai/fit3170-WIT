@@ -54,3 +54,7 @@ const PART_TITLE = [
 // The path for storing/retrieving questions from
 // the Firebase Firestore Database
 const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
+
+// The time it takes for the chat bot to output
+// a chat bubble (in milliseconds)
+const MESSAGE_OUTPUT_DELAY = 2000;

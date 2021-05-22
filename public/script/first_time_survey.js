@@ -51,6 +51,8 @@ let textBoxInput = document.getElementById("message");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 
+let errorText = document.getElementById("error-text");
+
 /*
 The user object of the currently logged in user
 <br>
@@ -79,12 +81,6 @@ let currentSubQuestionId = null;
 let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
-/*
-Used to validate input
-*/
-let validResponse = true;
-let end = false;
-
 // Runs as a first-time greeting from the bot
 greeting();
 
@@ -109,42 +105,12 @@ function greeting() {
     }, 1500);
 }
 
-function checkMultipleChoice(content) {
-    let skipChoices = currentQuestionObject.restrictions.skipChoices;
-
-    for (let i = 0; i < skipChoices.length; i++) {
-        console.log(content);
-        if (content == skipChoices[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function checkMultipleChoiceOthers(content) {
-    return true;
-}
-
 /**
  * onclick function for option buttons.
  * @param button The option button
  */
 function select(button) {
     let content = button.textContent.trim();
-
-    /***********************************************/
-    // Validating user input
-    let questionType = currentQuestionObject.type;
-
-    switch (questionType) {
-        case TYPE_MULTIPLE_CHOICE:
-            validResponse = checkMultipleChoice(content);
-            break;
-        case TYPE_MULTIPLE_CHOICE_OTHERS:
-            validResponse = checkMultipleChoiceOthers(content);
-            break;
-    }
-    /***********************************************/
 
     let ansTemplate = '<div class="space">\
                             <div class="message-container receiver">\
@@ -159,23 +125,7 @@ function select(button) {
 
     messages.innerHTML += ansTemplate;
 
-    if (validResponse) {
-        incrementIndex();
-    }
-    else {
-        if (currentQuestionObject.restrictions.skipTarget == "end_survey") {
-            end = true;
-        }
-        else {
-            setTimeout(() => {
-                showMessage("That seems to be an invalid response! Please try again.")
-            }, 1000);
-        }
-    }
-
-    setTimeout(() => {
-        nextQuestion();
-    }, 1000)
+    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
 
     saveResponse(content);
     scrollToBottom();
@@ -191,14 +141,7 @@ function addMessage() {
     saveResponse(input.value);
 
     if (message.length > 0) {
-        let messageTemplate =
-            "<div class='space'>" +
-            "<div class='message-container receiver'>" +
-            `<p>${message}</p>` +
-            "</div>" +
-            "</div>";
-
-        messages.innerHTML += messageTemplate;
+        showMessage(message);
         input.value = "";
     }
 
@@ -360,6 +303,7 @@ function showQuestion(isSubQuestion) {
 }
 
 function showNumeric(questionObject) {
+    let message = input.value;
     let lowerRange = questionObject.restrictions.lowerRange;
     let upperRange = questionObject.restrictions.upperRange;
 
@@ -522,7 +466,7 @@ function showMultipleChoice(questionObject) {
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
-    // TODO Implement validation checks and skip logic
+    //TODO To be implemented
 
     showMessage(question);
     showOptions(choices);
@@ -567,10 +511,21 @@ function showShortText(questionObject) {
         if (message.length <= SHORT_TEXT_LENGTH) {
             // If it's not too long
 
-    // TODO Implement validation
+            // TODO Spellcheck here
+
+            errorText.style.visibility = "hidden";
+            submit.onclick = addMessage;
+        } else {
+            // If it's super long
+            errorText.style.visibility = "visible";
+
+            submit.onclick = repromptQuestion;
+        }
+
+    }
 
     showShortQuestionMessage(questionObject.question);
-    enableTextBox();
+    enableTextInput();
 }
 
 function showLongText(questionObject) {
@@ -586,13 +541,13 @@ function showOptions(choices) {
     mcqOptions += "</div>";
     messages.innerHTML += mcqOptions;
 
-    disableTextBox();
+    disableTextInput();
 }
 
 /**
  * Prevents users from using the input text box
  */
-function disableTextBox() {
+function disableTextInput() {
     submit.disabled = true;
     input.disabled = true;
 }
@@ -600,7 +555,7 @@ function disableTextBox() {
 /**
  * Enables users to use the input text box
  */
-function enableTextBox() {
+function enableTextInput() {
     submit.disabled = false;
     input.disabled = false;
 }
