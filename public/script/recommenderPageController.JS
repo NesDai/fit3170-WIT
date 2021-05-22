@@ -86,7 +86,7 @@ if (videoUrl == null){
             type: 'video/youtube',
             src: 'https://www.youtube.com/watch?v=fcD94e93cCk'
         }],
-        youtube: { "customVars": { "rel": 0 } } 
+        youtube: { "customVars": { "rel": 0 } }
     })
 } else {
     var player = videojs('my-video',{
@@ -96,7 +96,7 @@ if (videoUrl == null){
             type: 'video/youtube',
             src: videoUrl
         }],
-        youtube: { "customVars": { "rel": 0 } } 
+        youtube: { "customVars": { "rel": 0 } }
     })
 }
 
@@ -125,7 +125,7 @@ player.on('ended', function(){
 // Calls the Youtube Data Api v3 to find videos based on the keyword
 function makeRequest(keyword){
     let request = new XMLHttpRequest();
-    let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${keyword}&key=${API_KEY}` 
+    let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${keyword}&key=${API_KEY}`
 
     request.onreadystatechange = function() {
         if (this.readyState == 4 && request.status == 200) {
@@ -135,7 +135,7 @@ function makeRequest(keyword){
     }
 
     request.open('GET',url);
-    request.send()  
+    request.send()
 }
 
 // Function to update watch history
@@ -144,7 +144,7 @@ function updateHistory(currentVideoUrl){
     let currentVideo = {
         videoUrl: currentVideoUrl
     }
-    
+
     // Retrieves the currently stored watch history
     firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function(snapshot){
         let currentHistory = []
@@ -158,7 +158,7 @@ function updateHistory(currentVideoUrl){
                     videoExist = true;
                 }
             }
-        } 
+        }
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true){
@@ -174,7 +174,7 @@ function addToFavourite(currentVideoUrl){
     let currentVideo = {
         videoUrl: currentVideoUrl
     }
-    
+
     // Retrieves the currently stored watch history
     firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function(snapshot){
         let currentFavourites = []
@@ -188,7 +188,7 @@ function addToFavourite(currentVideoUrl){
                     videoExist = true;
                 }
             }
-        } 
+        }
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true){
@@ -228,11 +228,31 @@ function updateFirebase(video_list, current_user, child_name){
 
 // Function to update description based on current video (to be done)
 function updateDescription(){
-    
+
 }
+
+// Function to check whether user completed survey or not
+function checkSurveyCompletion(){
+  let phoneNum = "";
+  let current_user = JSON.parse(localStorage.getItem("USER"));
+  phoneNum = current_user['phone'];
+  console.log(phoneNum);
+  let stringPath = "users/" + phoneNum;
+  let userRef = firebase.database().ref(stringPath);
+  let docRef = firebase.firestore().collection(phoneNum).doc()
+
+  docRef.get().then((doc) => {
+      if (doc.exists) {
+          userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
+          location.href = "recommenderUi.html"; // redirect to recommender page
+      } else {
+          userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
+          location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
+      }
+    });
+  }
 
 // Runs on page load
 var counter = 1
 
 const API_KEY = "YOUR_API_KEY";
-
