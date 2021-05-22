@@ -447,7 +447,14 @@
       <title>Forum</title>
       
       <!-- TODO: Enable First Input Delay polyfill library. -->
-      <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
+      <script type="text/javascript">
+      !function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";
+      function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}
+      function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}
+      function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}
+      function c(){r()}
+      function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}
+      function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
    </head>
    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
    <!-- Header section containing logo -->
@@ -492,9 +499,6 @@
       </nav>
    </div>
    <body>
-
-
-
       <main class="mdl-layout__content mdl-color--grey-100">
       <!-- Insert Page Content Here -->
       <div class="container">
@@ -538,7 +542,7 @@
                <form class="post_content" style="margin:0 10px; background-color: white">
                   <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
                   <br>
-                  <div style='inline-block'>
+                  <div style='display: inline-block'>
                      <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
                      <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
                   </div>

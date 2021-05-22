@@ -111,7 +111,7 @@
          #back_btn_icon{
          font-size: 20px;
          }
-         .comment_input{
+         .comment_input, .reply_input{
          width: 95%;
          margin: 10px;
          border-radius: 10px;
@@ -172,7 +172,7 @@
          display: none;
          }
          .showTextInput{
-         display: block;
+         display: inline-block;
          }
          .showButton{
          display: inline;
@@ -229,8 +229,8 @@
          }
          .reply{
          position: relative;
-         bottom:38px;
-         left:170px
+         /* bottom:38px; */
+         /* left:170px */
          }
          .hideButton
          {
@@ -241,7 +241,8 @@
          position: relative;
          left: 12px;
          height: 155px;
-         bottom: 10px
+         bottom: 10px;
+         display: none;
          }
          .lang_butt {
          margin: 10%; 
@@ -281,7 +282,7 @@
          margin:300 px;
          border-radius: 12px;
          }
-         #send_comment_btn{
+         #send_comment_btn, .send_reply_btn{
          color: white;
          border-radius: 13px;
          height: 35px;
@@ -525,7 +526,7 @@
                         <form class="post_content" style="margin:0 10px; background-color: white">
                            <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" id="description">I attended a knitting class today! Managed to learn the basic crochet techniques. Maybe I could try crochet a scarf next. </h6>
                            <br>
-                           <div id="post_interests" style='inline-block'>
+                           <div id="post_interests" style='display:inline-block'>
                               <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id"> #interest 1 </button>
                               <button class="mdl-button mdl-js-button mdl-color-text--black" id="interest2_id">#interest 2</button>
                            </div>

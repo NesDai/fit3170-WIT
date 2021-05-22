@@ -24,6 +24,10 @@ function hideTranslationModal(){
     document.getElementById("myModal").style.display = "none";  
 }
 
+function showReplyInput(button_num){
+  document.getElementById("add_reply_section"+button_num.toString()).style.display = "block"
+}
+
 //check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then
@@ -162,6 +166,7 @@ function addComment(){
         commenterID: current_user["phone"],
         content: comment,
         dislike:0,
+        id:key,
         like:0,
         postID: post_id,
         username: current_user["username"],
@@ -197,7 +202,6 @@ function printComments(){
 
               let comment_username;
               if (comment.anonymous) {
-                console.log("hey");
                 comment_username = "Anonymous";
               }else{
                 comment_username = comment.username;
@@ -213,33 +217,117 @@ function printComments(){
                        <span id = "user_comment">${comment.content}</span>
                     </p>
                  </div>
-                 <!--  LIKE DISLIKE FOR COMMENT -->
+                 <!--  LIKE FOR COMMENT -->
                  <span id='like_button_comment' href="#">
                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
                  <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
                  </button>
                  </span>
+
+                 <!--  DISLIKE FOR COMMENT -->
                  <span id='dislike_button_comment' href="#">
                  <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
                  <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
                  </button>
                  </span>
-                 <!-- COMMENT REPLY TEXT BOX -->
-                 <div class="comment_replies">
-                    <input class="hideTextInput" type="text" id="comment_reply_input" name="comment_reply_input" placeholder="Write a reply...">
-                 </div>
-                 <!-- SEND REPLY FOR COMMENT -->
-                 <button class="hideButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="send_reply_btn">
-                 <i class="material-icons notranslate" id="send_reply_icon">send</i>
-                 SEND
-                 </button>
+
                  <!-- ADD REPLY BUTTON FOR COMMENT -->
+                 <span>
                  <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                    style="background-color:#00b686;" id="add_reply_btn" type="submit" onclick="addReply()">
-                 <i class="material-icons notranslate" id="reply_comment_icon">reply</i>
-                 reply
-                 </button>
-                 <!-- <h5 class="replies_section_header mdl-color-text--black" style="margin-top: 5px; position: relative; left: 35px">REPLIES</h5> -->
+                    style="background-color:#00b686;" id="add_reply_btn${i}" type="submit" onclick="showReplyInput(${i})">
+                 <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                 </span>
+                 <br>
+
+                 <!-- REPLY SECTION -->
+                 <div id = "add_reply_section${i}" style="display:none">
+                    <br>
+                     <form class="post_reply"  name="post_reply${i}">
+        
+                        <!-- REPLY INPUT -->
+                        <input class="reply_input" type="text" id="reply_input${i}" name="reply_input" placeholder="Write a reply...">
+                        <br>
+                        <!-- ANONYMOUS CHECKBOX BUTTON -->
+                        
+                        <div>
+                          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                            <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
+                            <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                          </label>
+                        </div>
+                    
+                        <!-- SEND BUTTON -->
+                        <div>
+                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                            style="background-color: #00b686;" name="send_reply_btn" id="send_reply_btn${i}" type="submit" onclick="addReply(${i}, '${comment.id}')">
+                          <i class="material-icons notranslate" id="send_reply_icon">send</i>
+                          SEND
+                          </button>
+                        </div>
+                       
+                     </form>
+                    </div>
+                    <br>
+                    <div class="verticalLine" id="replies_section${i}">
+                      <h4> hibfhhbf</h4>
+                    </div>
+              </div>
+              <hr style="margin: 0;">`;
+            }
+      });
+
+}
+
+function addReply(btn_num,comment_id) {
+
+  const options = {  // options for Date
+    timeZone:"Africa/Accra",
+    hour12 : true,
+    hour:  "2-digit",
+    minute: "2-digit",
+   second: "2-digit"
+  };
+  
+  if (checkUserExistence()){
+    
+    // get reply value
+    //TODO: do error handling
+    let reply_input = document.getElementById("reply_input"+btn_num.toString()).value;
+    let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked
+    console.log(stay_anonymous);
+
+    // unique key for reply
+    let myRef = firebase.database().ref(`replies`);
+    let reply_key = myRef.push().key; 
+
+    // get the comment user is replying to
+    // need to know the comment id
+
+    // new data to upload in api
+    let newReplyData = {
+      anonymous: stay_anonymous,
+      content: reply_input,
+      created: new Date().toString(),
+      dislike:0,
+      id:reply_key,
+      like:0,
+      replierId: current_user["phone"],
+      reply_comment_parent: comment_id,
+      username: current_user["username"]
+    }
+
+    firebase.database().ref(`replies/${reply_key}`).set(newReplyData).then(() => {
+      alert("Reply made successfully!");
+      window.location = "post.html";
+    })
+  } else {
+    window.location = "post.html";
+  }
+}
+
+// REPLY TEMPLATE EXAMPLE
+/**
+ * <!-- <h5 class="replies_section_header mdl-color-text--black" style="margin-top: 5px; position: relative; left: 35px">REPLIES</h5> -->
                  <!--Reply example -->
                  <div class="verticalLine">
                     <div id="reply_box">
@@ -277,9 +365,6 @@ function printComments(){
                     reply
                     </button>
                  </div>
-              </div>
-              <hr style="margin: 0 ">`;
-          }
-      });
+ */
 
-}
+ 
