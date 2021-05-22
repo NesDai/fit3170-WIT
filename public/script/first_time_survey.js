@@ -316,7 +316,12 @@ function showNumeric(questionObject) {
                 // If it's out of range
                 errorText.style.visibility = "visible";
                 errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
-                submit.onclick = repromptQuestion;
+
+                if (questionObject.restrictions.skipIfInvalid) {
+                    submit.onclick = endSurveyText;
+                } else {
+                    submit.onclick = repromptQuestion;
+                }
             }
         } else {
             // If it's not a number
@@ -720,7 +725,7 @@ function isAnsweringSubQuestions() {
     }
 }
 
-// Initialize only when firebase has been fully loaded
+// Initialize only when firebase has b fully loaded
 // Things get funky if I don't do this
 window.onload = function () {
     initFirebaseAuth();
