@@ -67,10 +67,10 @@
     <main id = "Live" class= "tabcontent" class="mdl-layout__content mdl-color--grey-100">
         <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
     <div id="messages-card" class="mdl-card mdl-shadow--2dp">
+        <div id="messages">
+        </div>
         <div id="error-bar">
             <p id="error-text" style="text-align: center; color: red"></p>
-        </div>
-        <div id="messages">
         </div>
         <div id="message-form">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -118,8 +118,10 @@
 
     <!-- USING JQUERY TO ANIMATE SCROLL -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="script/first_time_survey.js"></script>
+
     <script src="script/constants.js"></script>
+    <script src="script/first_time_survey.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);

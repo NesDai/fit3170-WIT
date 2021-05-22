@@ -108,11 +108,11 @@ function greeting() {
  * @param button The option button
  */
 function select(button) {
-    let content = button.textContent.trim();
+    let choice = button.textContent.trim();
 
     let ansTemplate = '<div class="space">\
                             <div class="message-container receiver">\
-                                <p>' + content + '</p>\
+                                <p>' + choice + '</p>\
                             </div>\
                         </div>';
 
@@ -123,9 +123,39 @@ function select(button) {
 
     messages.innerHTML += ansTemplate;
 
-    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+    saveResponse(choice);
 
-    saveResponse(content);
+    // Implement skip here
+    let skipTarget = currentQuestionObject.restrictions.skipTarget;
+    let skipChoices = currentQuestionObject.restrictions.skipChoices;
+    switch(skipTarget) {
+        case SKIP_NOT_ALLOWED:
+            // Don't skip
+            setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+            break;
+        case SKIP_END_SURVEY:
+            endSurvey();
+            break;
+        default:
+            // Skip to a question ID if the selected answer
+            // is in skipChoices
+            if (choice in skipChoices) {
+                currentQuestionId = skipTarget;
+
+                // Set the current question index to the question before the
+                // skip target since nextQuestion increments
+                // the question index by 1
+                questionIndex = QUESTION_IDS.indexOf(skipTarget) - 1;
+
+                // In case the user was answering a long question,
+                // reset params related to long questions
+                currentSubQuestionIds = null;
+            }
+
+            setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+            break;
+    }
+
     scrollToBottom();
 }
 
@@ -301,13 +331,15 @@ function showQuestion(isSubQuestion) {
 }
 
 function showNumeric(questionObject) {
-    let message = input.value;
-    let lowerRange = questionObject.restrictions.lowerRange;
-    let upperRange = questionObject.restrictions.upperRange;
+    input.onkeyup = () => {
+        let lowerRange = questionObject.restrictions.lowerRange;
+        let upperRange = questionObject.restrictions.upperRange;
+        let message = parseInt(input.value);
 
-    input.onkeydown = () => {
-        if (isNaN(message)) {
-            // If it's a number
+        // If it's a number
+        if (!isNaN(message)) {
+            console.log("It is a number!")
+            // if age is in normal range
             if ((message >= lowerRange) && (message <= upperRange)) {
                 // If it's within range
                 errorText.style.visibility = "hidden";
@@ -324,12 +356,16 @@ function showNumeric(questionObject) {
                 }
             }
         } else {
+            console.log("It is not a number!")
+
             // If it's not a number
             errorText.style.visibility = "visible";
             errorText.innerHTML = "the answer needs to be a number.";
             submit.onclick = repromptQuestion;
         }
     }
+
+
 
     showShortQuestionMessage(questionObject.question);
     enableTextInput();
@@ -469,15 +505,36 @@ function showMultipleChoice(questionObject) {
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
-    //TODO To be implemented
-
     showMessage(question);
     showOptions(choices);
 }
 
 function showMultipleChoiceOthers(questionObject) {
-    //TODO To be implemented
-    showMultipleChoice(questionObject);
+    let message = input.value;
+    input.onkeydown = () => {
+        if (message.length <= SHORT_TEXT_LENGTH) {
+            // If it's not too long
+
+            // TODO Spellcheck here
+
+            errorText.style.visibility = "hidden";
+            submit.onclick = addMessage;
+        } else {
+            // If it's super long
+            errorText.style.visibility = "visible";
+
+            submit.onclick = repromptQuestion;
+        }
+
+    }
+
+    enableTextInput();
+
+    let question = questionObject.question;
+    let choices = questionObject.restrictions.choices;
+
+    showMessage(question);
+    showOptions(choices);
 }
 
 function showLongQuestion(questionObject) {
@@ -532,7 +589,7 @@ function showShortText(questionObject) {
 }
 
 function showLongText(questionObject) {
-    //TODO To be implemented
+    //TODO Do spellchecks here
     showShortText(questionObject);
 }
 
@@ -723,6 +780,27 @@ function isAnsweringSubQuestions() {
         // the list of sub-question IDs is not null.
         return currentSubQuestionIds !== null;
     }
+}
+
+/**
+ * Ends the survey
+ */
+function endSurvey() {
+    questionIndex = QUESTION_IDS.length;
+    nextQuestion();
+}
+
+/**
+ * End Survey and display the user's response
+ * in the chat bot window.
+ * <br>
+ * To be used by text-based survey questions ONLY
+ */
+function endSurveyText() {
+    showMessage(input.value);
+    questionIndex = QUESTION_IDS.length;
+    errorText.style.visibility = "hidden";
+    nextQuestion();
 }
 
 // Initialize only when firebase has b fully loaded
