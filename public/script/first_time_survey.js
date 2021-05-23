@@ -111,10 +111,11 @@ function select(button) {
     let choice = button.textContent.trim();
 
     let ansTemplate = '<div class="space">\
-                            <div class="message-container receiver">\
+                            <div class="message-container sender">\
                                 <p>' + choice + '</p>\
                             </div>\
                         </div>';
+    //<div class="message-container receiver">
 
     let space = button.parentElement;
     for (let i = 0; i < space.childNodes.length; i++) {
@@ -338,7 +339,6 @@ function showNumeric(questionObject) {
 
         // If it's a number
         if (!isNaN(message)) {
-            console.log("It is a number!")
             // if age is in normal range
             if ((message >= lowerRange) && (message <= upperRange)) {
                 // If it's within range
@@ -356,8 +356,6 @@ function showNumeric(questionObject) {
                 }
             }
         } else {
-            console.log("It is not a number!")
-
             // If it's not a number
             errorText.style.visibility = "visible";
             errorText.innerHTML = "the answer needs to be a number.";
