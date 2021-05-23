@@ -136,6 +136,9 @@ function printPostDetails(){
                     </div>`
                 });
             }).then(()=>{
+              //check if the user is the poster of the post
+              if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
+                document.getElementById("delete_post_btn").remove()
               printComments();
             })
 }
