@@ -236,21 +236,31 @@ function checkSurveyCompletion(){
   let phoneNum = "";
   let current_user = JSON.parse(localStorage.getItem("USER"));
   phoneNum = current_user['phone'];
-  console.log(phoneNum);
   let stringPath = "users/" + phoneNum;
   let userRef = firebase.database().ref(stringPath);
-  let docRef = firebase.firestore().collection(phoneNum).doc()
+  let docRef = firebase.firestore().collection(phoneNum);
 
-  docRef.get().then((doc) => {
-      if (doc.exists) {
-          userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
-          location.href = "recommenderUi.html"; // redirect to recommender page
-      } else {
-          userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
-          location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
-      }
-    });
-  }
+  db.collection(phoneNum).get().then((querySnapshot))=>{
+    if (doc.exists) {
+        userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
+        location.href = "recommenderUi.html"; // redirect to recommender page
+    } else {
+        userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
+        location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
+    }
+  };
+
+
+  //docRef.get().then((doc) => {
+    //  if (doc.exists) {
+      //    userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
+        //  location.href = "recommenderUi.html"; // redirect to recommender page
+      //} else {
+        //  userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
+          //location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
+    //  }
+  //  });
+}
 
 // Runs on page load
 var counter = 1
