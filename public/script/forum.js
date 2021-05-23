@@ -141,7 +141,6 @@ function printAllPosts(){
     let data_list = [];
     let field = document.getElementById("postField");
     // field.innerHTML = ""; // emtpy the field of any previous posts
-    console.log("fuclk")
 
     firebase.database().ref('posts')
         .once('value', x => {
@@ -189,7 +188,6 @@ function printAllPosts(){
                             <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                             </button>
                             <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-                            <input type="hidden" id="hidden1" value=${post.id}>
                             <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                             </button>
                        </div>
@@ -201,13 +199,6 @@ function printAllPosts(){
 
 }
 
-const POST_ID = "POST_ID";
-function postDetail(id) {
-        console.log(id);
-        localStorage.setItem(POST_ID,id);
-        // post_id = document.getElementById("hidden1").value;
-        window.location = "post.html";// + "?post_id=" + post_id;
-}
 
 function printUserPosts(){
 
@@ -261,8 +252,8 @@ function printUserPosts(){
                                   <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                   </button>
 
-                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail(${data_list[i].id});">
-                                  <input type="hidden" id="hidden1" value=3>
+                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail('${post.id}');">
+                                    <input type="hidden" id="hidden1" value=3>
 
                                     <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes" >More</span>
                                   </button>
@@ -272,4 +263,8 @@ function printUserPosts(){
                     }
                 });
 
+}
+
+function postDetail(id) {
+        window.location = "post.html" + "?post_id=" + id;
 }
