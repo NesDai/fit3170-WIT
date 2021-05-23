@@ -669,7 +669,7 @@ function pushNumeric(questionNumber, questionText, lowerRange, upperRange,
         question: "What is your age in years? (enter a number)",
         restrictions: {
             lowerRange: 50,
-            upperRange: null,
+            upperRange: 120,
             skipIfInvalid: true
         },
         hint: "placeholder"
