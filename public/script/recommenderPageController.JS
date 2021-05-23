@@ -238,11 +238,11 @@ function checkSurveyCompletion(){
   phoneNum = current_user['phone'];
   let stringPath = "users/" + phoneNum;
   let userRef = firebase.database().ref(stringPath);
-  //let docRef = firebase.firestore().collection(phoneNum);
   let db = firebase.firestore();
-  
+
+
   db.collection(phoneNum).get().then((querySnapshot) =>{
-    if (doc.exists) {
+    if (db.collection(phoneNum).exists) {
         userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
         location.href = "recommenderUi.html"; // redirect to recommender page
     } else {
@@ -250,17 +250,6 @@ function checkSurveyCompletion(){
         location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
     }
   });
-
-
-  //docRef.get().then((doc) => {
-    //  if (doc.exists) {
-      //    userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
-        //  location.href = "recommenderUi.html"; // redirect to recommender page
-      //} else {
-        //  userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
-          //location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
-    //  }
-  //  });
 }
 
 // Runs on page load
