@@ -339,31 +339,50 @@ function showNumeric(questionObject) {
 
         // If it's a number
         if (!isNaN(message)) {
-            // if age is in normal range
-            if ((message >= lowerRange) && (message <= upperRange)) {
-                // If it's within range
-                errorText.style.visibility = "hidden";
-                submit.onclick = addMessage;
-            } else {
-                // If it's out of range
-                errorText.style.visibility = "visible";
-                errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
+            // If there is no upper/lower range specified
+            if (lowerRange != null && upperRange == null){
+                upperRange = Number.POSITIVE_INFINITY;
+            }
 
-                if (questionObject.restrictions.skipIfInvalid) {
-                    submit.onclick = endSurveyText;
+            else if (lowerRange == null && upperRange != null){
+                lowerRange = Number.NEGATIVE_INFINITY;
+            }
+
+                // if number is in normal range
+                if ((message >= lowerRange) && (message <= upperRange)) {
+                    // If it's within range
+                    errorText.style.visibility = "hidden";
+                    submit.onclick = addMessage;
                 } else {
-                    submit.onclick = repromptQuestion;
+                    // If it's out of range
+                    errorText.style.visibility = "visible";
+                    if (lowerRange != Number.NEGATIVE_INFINITY && upperRange != Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
+                    }
+
+                    else if (lowerRange !=  Number.NEGATIVE_INFINITY && upperRange == Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not greater than " + lowerRange;
+                    }
+
+                    else if (lowerRange == Number.NEGATIVE_INFINITY && lowerRange != Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not lesser than " + upperRange;
+                    }
+
+                    if (questionObject.restrictions.skipIfInvalid) {
+                        submit.onclick = endSurveyText;
+                    } else {
+                        submit.onclick = repromptQuestion;
+                    }
                 }
             }
-        } else {
-            // If it's not a number
-            errorText.style.visibility = "visible";
-            errorText.innerHTML = "the answer needs to be a number.";
-            submit.onclick = repromptQuestion;
+        else
+            {
+                // If it's not a number
+                errorText.style.visibility = "visible";
+                errorText.innerHTML = "the answer needs to be a number.";
+                submit.onclick = repromptQuestion;
+            }
         }
-    }
-
-
 
     showShortQuestionMessage(questionObject.question);
     enableTextInput();
