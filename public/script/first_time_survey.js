@@ -50,8 +50,8 @@ let messages = document.getElementById("messages");
 let textBoxInput = document.getElementById("message");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
-
 let errorText = document.getElementById("error-text");
+let quesNum = 0;
 
 /*
 The user object of the currently logged in user
@@ -235,8 +235,16 @@ function showMessageSender(message) {
         "<div class='space'>" +
         "<div class='message-container sender'>" +
         `<p>${message}</p>` +
+        `<button 
+         type="button" class="btn btn-light"
+         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(quesNum-1);'>Hints
+         </button>`+
+        "<div style='display: inline-block;'>" +
+        `<p id='hintTxt${quesNum}'style='margin-left: 1em;'>hinttxt</p>` +
         "</div>" +
-        "</div>"
+        "</div>" +
+        "</div>";
+    quesNum++;
 }
 
 function showMessageReceiver(message) {
@@ -253,8 +261,15 @@ function showQuestionLog(message) {
         "<div class='space'>" +
         "<div class='message-container sender'>" +
         `<p>${message}</p>` +
+        `<button 
+         type="button" class="btn btn-light"
+         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(quesNum-1);'>Hints
+         </button>`+
+        "<div style='display: inline-block;'>" +
+        `<p id='hintTxt${quesNum}'style='margin-left: 1em;'>hinttxt</p>` +
         "</div>" +
-        "</div>"
+        "</div>" +
+        "</div>";
 }
 
 function showAnswerLog(message) {
@@ -278,8 +293,16 @@ function showShortQuestionMessage(questionString) {
         "<div class='message-container sender'>" +
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
+        `<button 
+         type="button" class="btn btn-light"
+         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(quesNum-1);'>Hints
+         </button>`+
+        "<div style='display: inline-block;'>" +
+        `<p id='hintTxt${quesNum}'style='margin-left: 1em;'>hinttxt</p>` +
+        "</div>" +
         "</div>" +
         "</div>";
+    quesNum++;
 }
 
 function scrollToBottom() {
@@ -365,15 +388,15 @@ function showNumeric(questionObject) {
                 } else {
                     // If it's out of range
                     errorText.style.visibility = "visible";
-                    if (lowerRange != Number.NEGATIVE_INFINITY && upperRange != Number.POSITIVE_INFINITY) {
+                    if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
                         errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
                     }
 
-                    else if (lowerRange !=  Number.NEGATIVE_INFINITY && upperRange == Number.POSITIVE_INFINITY) {
+                    else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
                         errorText.innerHTML = "number is not greater than " + lowerRange;
                     }
 
-                    else if (lowerRange == Number.NEGATIVE_INFINITY && lowerRange != Number.POSITIVE_INFINITY) {
+                    else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
                         errorText.innerHTML = "number is not lesser than " + upperRange;
                     }
 
@@ -628,6 +651,11 @@ function showOptions(choices) {
     messages.innerHTML += mcqOptions;
 
     disableTextInput();
+}
+
+function showHints(quesNumber) {
+    document.getElementById('hintTxt' + quesNumber).innerHTML = "hints";
+    console.log('hintTxt' + quesNumber);
 }
 
 /**
