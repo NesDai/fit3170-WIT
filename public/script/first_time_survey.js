@@ -111,7 +111,7 @@ function select(button) {
     let choice = button.textContent.trim();
 
     let ansTemplate = '<div class="space">\
-                            <div class="message-container sender">\
+                            <div class="message-container receiver">\
                                 <p>' + choice + '</p>\
                             </div>\
                         </div>';
@@ -170,7 +170,7 @@ function addMessage() {
     saveResponse(input.value);
 
     if (message.length > 0) {
-        showMessage(message);
+        showMessageReceiver(message);
         input.value = "";
     }
 
@@ -220,7 +220,7 @@ function nextQuestion() {
         let endingMessage = "That's all the questions we have for you " +
             "right now. You can either continue asking questions, or" +
             " browse the rest of the application!"
-        showMessage(endingMessage);
+        showMessageSender(endingMessage);
         scrollToBottom();
     }
 }
@@ -230,10 +230,19 @@ function nextQuestion() {
  * the specified message string.
  * @param message A message string
  */
-function showMessage(message) {
+function showMessageSender(message) {
     messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
+}
+
+function showMessageReceiver(message) {
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container receiver'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>"
@@ -392,7 +401,7 @@ function repromptQuestion() {
     // print error message onto chat
     let errorMessage = errorText.value;
     errorText.style.visibility = "hidden";
-    showMessage(errorMessage);
+    showMessageSender(errorMessage);
 
     //getting type of question and the question itself
     let type = currentQuestionObject.type;
@@ -522,7 +531,7 @@ function showMultipleChoice(questionObject) {
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
-    showMessage(question);
+    showMessageSender(question);
     showOptions(choices);
 }
 
@@ -550,7 +559,7 @@ function showMultipleChoiceOthers(questionObject) {
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
-    showMessage(question);
+    showMessageSender(question);
     showOptions(choices);
 }
 
@@ -573,7 +582,7 @@ function showLongQuestion(questionObject) {
         arrangement: []
     };
 
-    showMessage(questionObject.question);
+    showMessageSender(questionObject.question);
 
     // Initialize fields for looping over the sub-question IDs
     // array
@@ -814,7 +823,7 @@ function endSurvey() {
  * To be used by text-based survey questions ONLY
  */
 function endSurveyText() {
-    showMessage(input.value);
+    showMessageSender(input.value);
     questionIndex = QUESTION_IDS.length;
     errorText.style.visibility = "hidden";
     nextQuestion();
