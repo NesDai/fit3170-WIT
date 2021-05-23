@@ -194,7 +194,7 @@ function removePost() {
           firebase.database().ref(`posts/${post_id}`).remove();
           window.location = "forum.html";
       } else {
-          console.log("invalid");
+          alert("Only this post's owner can delete this post");
       }
   });
 }

@@ -81,19 +81,6 @@ function makeNewPost() {
 }
 
 
-
-function removePost(post_id) {
-    firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
-        let post = snapshot.val();
-        if (post["userID"] == current_user["phone"]) {
-            firebase.database().ref(`posts/${post_id}`).remove();
-        } else {
-            console.log("invalid");
-        }
-    });
-}
-
-
 function updatePost(post_id) {
 
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
