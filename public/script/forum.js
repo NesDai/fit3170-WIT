@@ -46,6 +46,12 @@ function makeNewPost() {
             interest_arr.push($(this).val());
         });
 
+        if (!interest_arr.length){
+            alert("The post needs to have at least one interest")
+            return
+        }
+
+
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
