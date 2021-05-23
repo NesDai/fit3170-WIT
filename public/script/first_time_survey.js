@@ -51,7 +51,7 @@ let textBoxInput = document.getElementById("message");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
-let quesNum = 0;
+let hintIndex = 0;
 
 /*
 The user object of the currently logged in user
@@ -220,7 +220,7 @@ function nextQuestion() {
         let endingMessage = "That's all the questions we have for you " +
             "right now. You can either continue asking questions, or" +
             " browse the rest of the application!"
-        showMessageSender(endingMessage);
+        showMessageSenderWithoutHints(endingMessage);
         scrollToBottom();
     }
 }
@@ -235,16 +235,17 @@ function showMessageSender(message) {
         "<div class='space'>" +
         "<div class='message-container sender'>" +
         `<p>${message}</p>` +
-        `<button 
+        `<button
+         id = ${hintIndex}
          type="button" class="btn btn-light"
-         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(quesNum-1);'>Hints
+         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
          </button>`+
         "<div style='display: inline-block;'>" +
-        `<p id='hintTxt${quesNum}'style='margin-left: 1em;'>hinttxt</p>` +
+        `<p id='hintTxt${hintIndex}'style='margin-left: 1em;'></p>` +
         "</div>" +
         "</div>" +
         "</div>";
-    quesNum++;
+    hintIndex++;
 }
 
 function showMessageReceiver(message) {
@@ -256,18 +257,11 @@ function showMessageReceiver(message) {
         "</div>"
 }
 
-function showQuestionLog(message) {
-    logs.innerHTML +=
+function showMessageSenderWithoutHints(message) {
+    messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender'>" +
         `<p>${message}</p>` +
-        `<button 
-         type="button" class="btn btn-light"
-         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(quesNum-1);'>Hints
-         </button>`+
-        "<div style='display: inline-block;'>" +
-        `<p id='hintTxt${quesNum}'style='margin-left: 1em;'>hinttxt</p>` +
-        "</div>" +
         "</div>" +
         "</div>";
 }
@@ -294,15 +288,16 @@ function showShortQuestionMessage(questionString) {
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
         `<button 
+         id =${hintIndex}
          type="button" class="btn btn-light"
-         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(quesNum-1);'>Hints
+         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
          </button>`+
         "<div style='display: inline-block;'>" +
-        `<p id='hintTxt${quesNum}'style='margin-left: 1em;'>hinttxt</p>` +
+        `<p id='hintTxt${hintIndex}'style='margin-left: 1em;'></p>` +
         "</div>" +
         "</div>" +
         "</div>";
-    quesNum++;
+    hintIndex++;
 }
 
 function scrollToBottom() {
@@ -520,13 +515,13 @@ function showlog(){
                 longQueId = doc.data().longQuestionId;
                 firebase.firestore().collection('chatbot').doc('survey_questions').collection('questions').doc(longQueId).get().then((doc) => {
                   console.log("long question:", doc.data().question);
-                  showQuestionLog(doc.data().question);
+                  showMessageReceiver(doc.data().question);
                 }).catch((error) => {
                 console.log("Error getting document:", error);
                 });
               }
               console.log(doc.id, " => ", doc.data().question);
-              showQuestionLog(doc.data().question);
+              showMessageReceiver(doc.data().question);
               showAnswerLog(doc.data().answer);
           });
       })
@@ -548,7 +543,7 @@ function showMultipleChoice(questionObject) {
             skipChoice: ["Male"],
             skipTarget: "end_survey"
         },
-        hint: "placeholder"
+        hint: "select an option"
     };
 
     let question = questionObject.question;
@@ -653,9 +648,9 @@ function showOptions(choices) {
     disableTextInput();
 }
 
-function showHints(quesNumber) {
-    document.getElementById('hintTxt' + quesNumber).innerHTML = "hints";
-    console.log('hintTxt' + quesNumber);
+function showHints(hintId) {
+    document.getElementById('hintTxt' + hintId).innerHTML = currentQuestionObject.hint;
+    console.log('hintTxt' + hintId);
 }
 
 /**
