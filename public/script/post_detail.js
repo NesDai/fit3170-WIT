@@ -2,19 +2,8 @@ let current_user = JSON.parse(localStorage.getItem("USER"));
 
 const params = new URLSearchParams(window.location.search)
 
-firebase.database().ref(`posts/${params.get('post_id')}`).once("value").then(snapshot => {
-    let post = snapshot.val();
-    field = document.getElementsByClassName("forum-posts");
-    //add the html card here
-});
-
-
-
-  printPostDetails();
-  hideTranslationModal();
-
-
-
+printPostDetails();
+hideTranslationModal();
 
 function showTranslationModal(){
     document.getElementById("myModal").style.display = "block";  
@@ -40,7 +29,7 @@ function checkUserExistence() {
 
 function printPostDetails(){
 
-    let id = localStorage.getItem("POST_ID");
+    let id = params.get('post_id');
 
     let post_details = document.getElementById("post_details");
     // let poster_field = document.getElementById('poster_id');
@@ -154,7 +143,7 @@ function addComment(){
        second: "2-digit"
      };
 
-    let post_id = localStorage.getItem("POST_ID");
+    let post_id = params.get('post_id');
     // error handling if it is empty??
     let comment = document.getElementById("comment_input").value
     let stay_anonymous = document.getElementById("anonymous").checked
@@ -178,7 +167,7 @@ function addComment(){
 
     firebase.database().ref(`comments/${key}`).set(newData).then(()=>{
         alert("Comment made successfully!")
-        window.location = "post.html";
+        window.location = "post.html" + "?post_id=" + post_id;
     });
 
   } else {
@@ -187,7 +176,8 @@ function addComment(){
 }
 
 function removePost() {
-  let post_id = localStorage.getItem("POST_ID");
+  // let post_id = localStorage.getItem("POST_ID");
+  let post_id = params.get('post_id');
   firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
       let post = snapshot.val();
       if (post["userID"] == current_user["phone"]) {
@@ -201,7 +191,7 @@ function removePost() {
 
 
 function printComments(){
-  let id = localStorage.getItem("POST_ID");
+  let id = params.get('post_id');
 
   let comment_section = document.getElementById("comment_section");
 
