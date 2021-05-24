@@ -353,6 +353,12 @@ function printReplies(comment_id,index) {
         })
       }
 
+
+function redirect(url, msg) {
+  window.location = url; 
+  return msg;
+}
+
 /**
  * A function which add the new reply from user and writes into the database
  * @param {integer} btn_num the index of reply button
@@ -367,7 +373,7 @@ function addReply(btn_num,comment_id) {
       hour:  "2-digit",
       minute: "2-digit",
      second: "2-digit"
-    };
+    }
 
     let post_id = params.get('post_id');
     // get reply value
@@ -390,13 +396,16 @@ function addReply(btn_num,comment_id) {
       reply_comment_parent: comment_id,
       username: current_user["username"]
     }
-      
+
+    url = "post.html" + "?post_id=" + post_id;
+
     firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
-        alert("Reply made successfully!")
-        window.location = "post.html" + "?post_id=" + post_id;
+      redirect(url, null)     
     });
-    
+    msg = "Reply Made successfully";
+    alert(redirect(url, msg));
   } else {
     window.location = "forum.html";
   }
 }
+
