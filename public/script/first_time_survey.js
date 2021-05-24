@@ -153,7 +153,6 @@ function select(button) {
             // reset params related to long questions
             currentSubQuestionIds = null;
         }
-
         setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
     }
 
