@@ -173,16 +173,12 @@ function addComment(){
         console.log("inside");
         window.location = "post.html" + "?post_id=" + post_id;
     });
-    console.log("outside");
-    window.location = "post.html" + "?post_id=" + post_id;
-
   } else {
     window.location = "forum.html";
   }
 }
 
 function removePost() {
-  // let post_id = localStorage.getItem("POST_ID");
   let post_id = params.get('post_id');
   firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
       let post = snapshot.val();
@@ -198,7 +194,6 @@ function removePost() {
 
 function printComments(){
   let id = params.get('post_id');
-  //let id = localStorage.getItem('POST_ID');
 
   let comment_section = document.getElementById("comment_section");
   let data_list = [];
