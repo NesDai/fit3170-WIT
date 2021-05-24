@@ -30,6 +30,7 @@ function checkUserExistence() {
 function printPostDetails(){
 
     let id = params.get('post_id');
+    // let id = localStorage.getItem('POST_ID')
 
     let post_details = document.getElementById("post_details");
     // let poster_field = document.getElementById('poster_id');
@@ -134,6 +135,8 @@ function printPostDetails(){
 
 // Creating comment
 function addComment(){
+  let post_id = params.get('post_id');
+
   if (checkUserExistence()) {
     const options = {  // options for Date
         timeZone:"Africa/Accra",
@@ -143,7 +146,7 @@ function addComment(){
        second: "2-digit"
      };
 
-    let post_id = params.get('post_id');
+     console.log(post_id);
     // error handling if it is empty??
     let comment = document.getElementById("comment_input").value
     let stay_anonymous = document.getElementById("anonymous").checked
@@ -166,17 +169,16 @@ function addComment(){
     }
 
     firebase.database().ref(`comments/${key}`).set(newData).then(()=>{
-        alert("Comment made successfully!")
+        alert("Comment made successfully!");
+        console.log("inside");
         window.location = "post.html" + "?post_id=" + post_id;
     });
-
   } else {
-    window.location = "post.html";
+    window.location = "forum.html";
   }
 }
 
 function removePost() {
-  // let post_id = localStorage.getItem("POST_ID");
   let post_id = params.get('post_id');
   firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
       let post = snapshot.val();
@@ -346,54 +348,59 @@ function printReplies(comment_id,index) {
         })
       }
 
+
+function redirect(url, msg) {
+  window.location = url; 
+  return msg;
+}
+
 /**
  * A function which add the new reply from user and writes into the database
  * @param {integer} btn_num the index of reply button
  * @param {string} comment_id the id associated with the comment
  */
 function addReply(btn_num,comment_id) {
-
   if (checkUserExistence()){
+
     const options = {  // options for Date
       timeZone:"Africa/Accra",
       hour12 : true,
       hour:  "2-digit",
       minute: "2-digit",
      second: "2-digit"
-    };
-    
+    }
+
+    let post_id = params.get('post_id');
     // get reply value
     let reply_input = document.getElementById("reply_input"+btn_num.toString()).value;
+    let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
 
-    if (reply_input == "") {
-      alert("Please fill in the required fields.");
-      window.location = "post.html";
-    } else {
-      let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
+    // unique key for reply
+    let myRef = firebase.database().ref(`replies`);
+    let key = myRef.push().key; 
 
-      // unique key for reply
-      let myRef = firebase.database().ref(`replies`);
-      let reply_key = myRef.push().key; 
-
-      // new data to upload in api
-      let newReplyData = {
-        anonymous: stay_anonymous,
-        content: reply_input,
-        created: new Date().toString(),
-        dislike:0,
-        id:reply_key,
-        like:0,
-        replierId: current_user["phone"],
-        reply_comment_parent: comment_id,
-        username: current_user["username"]
-      }
-
-      firebase.database().ref(`replies/${reply_key}`).set(newReplyData).then(() => {
-        alert("Reply made successfully!");
-        window.location = "post.html";
-      });
+    // new data to upload in api
+    let newData = {
+      anonymous: stay_anonymous,
+      content: reply_input,
+      created: new Date().toString(),
+      dislike:0,
+      id:key,
+      like:0,
+      replierId: current_user["phone"],
+      reply_comment_parent: comment_id,
+      username: current_user["username"]
     }
+
+    url = "post.html" + "?post_id=" + post_id;
+
+    firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
+      redirect(url, null)     
+    });
+    msg = "Reply Made successfully";
+    alert(redirect(url, msg));
   } else {
-    window.location = "post.html";
+    window.location = "forum.html";
   }
 }
+
