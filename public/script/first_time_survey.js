@@ -129,32 +129,32 @@ function select(button) {
     // Implement skip here
     let skipTarget = currentQuestionObject.restrictions.skipTarget;
     let skipChoices = currentQuestionObject.restrictions.skipChoices;
-    switch(skipTarget) {
-        case SKIP_NOT_ALLOWED:
-            // Don't skip
-            setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
-            break;
-        case SKIP_END_SURVEY:
+    if (skipTarget == SKIP_NOT_ALLOWED) {
+        // Don't skip
+        setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+    } else if (skipTarget == SKIP_END_SURVEY) {
+        if (skipChoices.includes(choice)) {
             endSurvey();
-            break;
-        default:
-            // Skip to a question ID if the selected answer
-            // is in skipChoices
-            if (choice in skipChoices) {
-                currentQuestionId = skipTarget;
-
-                // Set the current question index to the question before the
-                // skip target since nextQuestion increments
-                // the question index by 1
-                questionIndex = QUESTION_IDS.indexOf(skipTarget) - 1;
-
-                // In case the user was answering a long question,
-                // reset params related to long questions
-                currentSubQuestionIds = null;
-            }
-
+        } else {
             setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
-            break;
+        }
+    } else {
+        // Skip to a question ID if the selected answer
+        // is in skipChoices
+        if (skipChoices.includes(choice)) {
+            currentQuestionId = skipTarget;
+
+            // Set the current question index to the question before the
+            // skip target since nextQuestion increments
+            // the question index by 1
+            questionIndex = QUESTION_IDS.indexOf(skipTarget) - 1;
+
+            // In case the user was answering a long question,
+            // reset params related to long questions
+            currentSubQuestionIds = null;
+        }
+
+        setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
     }
 
     scrollToBottom();
@@ -207,8 +207,8 @@ function nextQuestion() {
             showQuestion(false);
         } else {
             // If there are unanswered sub-questions left
-            subQuestionIndex++;
             showQuestion(true);
+            subQuestionIndex++;
         }
 
     } else if (questionIndex < QUESTION_IDS.length) {
@@ -326,31 +326,24 @@ function showQuestion(isSubQuestion) {
             console.log(questionObject);
             currentQuestionObject = questionObject;
 
-            switch (questionType) {
-                case TYPE_NUMERIC || TYPE_NUMERIC_SUB_QUESTION:
-                    showNumeric(questionObject);
-                    break;
-                case TYPE_MULTIPLE_CHOICE || TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                    showMultipleChoice(questionObject);
-                    break;
-                case TYPE_MULTIPLE_CHOICE_OTHERS:
-                    showMultipleChoiceOthers(questionObject);
-                    break;
-                case TYPE_SHORT_TEXT:
-                    showShortText(questionObject);
-                    break;
-                case TYPE_LONG_TEXT:
-                    showLongText(questionObject);
-                    break;
-                case TYPE_LONG_QUESTION:
-                    showLongQuestion(questionObject);
-                    break;
-                default:
-                    let errorLog = "[ERROR]Invalid question type supplied: " +
-                        questionType +
-                        "\nQuestion object: " +
-                        questionObject;
-                    console.log(errorLog)
+            if (questionType == TYPE_NUMERIC || questionType == TYPE_NUMERIC_SUB_QUESTION) {
+                showNumeric(questionObject);
+            } else if (questionType == TYPE_MULTIPLE_CHOICE || questionType == TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
+                showMultipleChoice(questionObject);
+            } else if (questionType == TYPE_MULTIPLE_CHOICE_OTHERS) {
+                showMultipleChoiceOthers(questionObject);
+            } else if (questionType == TYPE_SHORT_TEXT) {
+                showShortText(questionObject);
+            } else if (questionType == TYPE_LONG_TEXT) {
+                showLongText(questionObject);
+            } else if (questionType == TYPE_LONG_QUESTION) {
+                showLongQuestion(questionObject);
+            } else {
+                let errorLog = "[ERROR]Invalid question type supplied: " +
+                    questionType +
+                    "\nQuestion object: " +
+                    questionObject;
+                console.log(errorLog)
             }
 
             // Scroll the chat box window to the correct position
