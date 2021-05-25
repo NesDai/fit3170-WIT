@@ -265,6 +265,15 @@ function showMessageSenderWithoutHints(message) {
         "</div>";
 }
 
+function showQuestionLog(message) {
+    logs.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
+}
+
 function showAnswerLog(message) {
     logs.innerHTML +=
         "<div class='space'>" +
@@ -507,13 +516,13 @@ function showlog(){
                 longQueId = doc.data().longQuestionId;
                 firebase.firestore().collection('chatbot').doc('survey_questions').collection('questions').doc(longQueId).get().then((doc) => {
                   console.log("long question:", doc.data().question);
-                  showMessageReceiver(doc.data().question);
+                  showQuestionLog(doc.data().question);
                 }).catch((error) => {
                 console.log("Error getting document:", error);
                 });
               }
               console.log(doc.id, " => ", doc.data().question);
-              showMessageReceiver(doc.data().question);
+              showQuestionLog(doc.data().question);
               showAnswerLog(doc.data().answer);
           });
       })
