@@ -198,102 +198,16 @@
 
           <div id="questions-list-div" class="mdl-cell mdl-cell--4-col"> 
             <ul class="mdl-list" id="questions-list">
-              <li class="mdl-list__item mdl-list__item--two-line" onclick="changeQuestion(0)" id="q0" style="cursor: pointer;">
-                <span class="mdl-list__item-primary-content">
-                  <span>Q1</span>
-                  <span class="mdl-list__item-sub-title">
-                    (sample) How old are you?
-                  </span>
-                </span>
-              </li>
-              <div class="line"></div>
-              <li class="mdl-list__item mdl-list__item--two-line" onclick="changeQuestion(1)" id="q1" style="cursor: pointer">
-                <span class="mdl-list__item-primary-content">
-                  <span>Q2</span>
-                  <span class="mdl-list__item-sub-title">
-                    (sample) Where are you from?
-                  </span>
-                </span>
-              </li>
-              <div class="line"></div>
-              <li class="mdl-list__item mdl-list__item--two-line" onclick="changeQuestion(2)" id="q2" style="cursor: pointer">
-                <span class="mdl-list__item-primary-content">
-                  <span>Q3</span>
-                  <span class="mdl-list__item-sub-title">
-                    (sample) What are your interests?
-                  </span>
-                </span>
-              </li>
             </ul>
           </div>
           
-          <div class="mdl-cell mdl-cell--8-col" style="height: 100%;">
-            <h3>Q1 responses</h3>
-            <div id="responses-list-div">
-              <ul class="mdl-list" id="responses-list">
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 1...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 2...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 3...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 4...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 5...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 6...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 7...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 8...</span>
-                  </span>
-                </li>
-                <li class="mdl-list__item mdl-list__item">
-                  <span class="mdl-list__item-primary-content">
-                    <span>Response 9...</span>
-                  </span>
-                </li>
-              </ul>
-            </div>
+          <div class="mdl-cell mdl-cell--8-col" id="responses-list" style="height: 100%;">
+            <h3>Select a question to view responses!</h3>
           </div>
         </div>
       </div>
     </main>
-    
-    <script>
-      var selected = null;
 
-      function changeQuestion(index) {
-        if (selected != null) {
-          selected.style.opacity = 1;
-        }
-        let q = "q" + index;
-        selected = document.getElementById(q)
-        selected.style.opacity = 0.5;
-      }
-    </script>
+    <script src="script/questions_responses.js"></script>
   </body>
 </html>
