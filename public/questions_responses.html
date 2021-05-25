@@ -50,6 +50,10 @@
             top: 8px;
             position: relative;
         }
+        #header-grid {
+          max-width: 1024px;
+          margin: auto;
+        }
         .mdl-layout__header-row span {
             margin-left: 15px;
             margin-top: 17px;
@@ -62,15 +66,6 @@
             top: -1px;
             margin-right: 5px;
         } 
-        @media screen and (max-width: 610px) {
-            header {
-            height: 80px;
-            padding-bottom: 80px !important;
-            }
-            .mdl-card {
-            width: 100%;
-            }
-        }
         
         /* CARD CSS */
         main {
@@ -78,7 +73,8 @@
           padding-bottom: 0;
         }
         #messages-card-container {
-          height: calc(100% - 35px);
+          min-height: 85%;
+          height: 85%;
           padding-bottom: 15px;
         }
         #messages-card {
@@ -101,27 +97,27 @@
           margin-left: auto;
           margin-right: auto;
           margin-top: 2.5%;
-          width: 80%;
+          width: 90%;
           height: auto;
           min-height: 0;
           background: linear-gradient(white, #f9f9f9);
           justify-content: space-between;
         }
         .mdl-list {
-          display: inline-block;
           height: 100%;
-          width: 100%;
+          width: 95%;
           padding: 0px;
         }
-        .mdl-cell {
+        .mdl-list__item:hover {
+          background-color: #d8d8d8;
         }
         #questions-list-div {
           overflow-y: scroll;
           height: 100%;
         }
         #responses-list-div {
-          height: 100%;
           overflow-y: scroll;
+          height: 100%;
         }
         .line {
           padding-top: 5px;
@@ -167,9 +163,10 @@
           .mdl-card {
             width: 100%;
           }
+        }
     </style>
     
-    <title>Chat App</title>
+    <title>Questions</title>
     <!-- TODO: Enable First Input Delay polyfill library. -->
     <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
   </head>
@@ -177,9 +174,9 @@
 
     <!-- Header section containing logo -->
     <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
-        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+        <div id="header-grid" class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-            <h3><i class="material-icons"><!-- MDL Icon code --></i> <!-- Title of page --></h3>
+            <h3><i class="material-icons">question_answer</i> Questions</h3>
           </div>
         </div>
       </header>
@@ -196,18 +193,21 @@
       <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
         <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--10-col mdl-card mdl-grid">
 
-          <div id="questions-list-div" class="mdl-cell mdl-cell--4-col"> 
-            <ul class="mdl-list" id="questions-list">
-            </ul>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet" id="questions-list-div"> 
+            <div> 
+              <ul class="mdl-list"  id="questions-list">;
+              </ul>
+            </div>
           </div>
           
-          <div class="mdl-cell mdl-cell--8-col" id="responses-list" style="height: 100%;">
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet" id="responses-list-div" style="height: 100%;">
             <h3>Select a question to view responses!</h3>
           </div>
         </div>
       </div>
     </main>
-
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script src="script/questions_responses.js"></script>
   </body>
 </html>
