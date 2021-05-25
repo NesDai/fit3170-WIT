@@ -62,3 +62,50 @@ const MESSAGE_OUTPUT_DELAY = 2000;
 // The maximum number of characters for short
 // text question responses
 const SHORT_TEXT_LENGTH = 50;
+
+// A list of IDs of question objects that are stored in
+// the Firestore Database
+const QUESTION_IDS = [
+    "qC30vPwEsHpHnYvD9QXB",
+    "DwWJ09e2O6HoJhG79tVC",
+    "NQapG2Sza1k83AbogmnJ",
+    "manHOQxof67bC8XJmIj7",
+    "jbrg3JcjhHYbpvEHKzfL",
+    "wy5SfvDs5rdUC27xMvOB",
+    "bZdEsihZC2DIrWuAQq5h",
+    "FSVOpGPeTgqtzcDyxdTR",
+    "bYpaM02WbSUmRcxZRsyq",
+    "1jYu9xdifnQ7llB1DHMB",
+    "H71i9RHymtTuzhFZXCIy",
+    "82RGqhLUvMVVNLWy9FW4",
+    "rSlTouzaBKnCyAnIQR6v",
+    "NwbXmR1GXjhLg4YxY92w",
+    "tMpjXNl6AbI9WLaecgkN",
+    "WE7Vi36RErNCOob1UHEl",
+    // Part 1 question IDs above
+
+    "TEOwiUE6GB7Iq1ES2V51",
+    "voPtzLatVbFW0CPW7Nk1",
+    "B8fOWT41S3rSNPW1PMR4",
+    "rn2AyiT4vsTfbVZcunk2",
+    "mougeniM918D5SuQfRch",
+    "ggrHOs3vT3XjOtmgJEiS",
+    "0osl0CmmauF3CrEARsfT",
+    // Part 2 question IDs above
+
+    "zRqZSkzNO47HcN603gf4",
+    "u3IlB0pTPiGSBwUCsqiQ",
+    // Part 3 question IDs above
+
+    "CGTRT6raPn6VXTOIg6AW",
+    "sZ6yqev0JxB3zF9ATqn4",
+    "seaY5cG4KPn8JCFEodgE",
+    "Tf4h3sSJUyUksVgjmk8S",
+    // Part 4 question IDs above
+
+    "lQ2uRyqYM9Q9SLBySwxR",
+    "Za7YzeVKvK6EGAUqKKAb",
+    "Y1K4EBPDvlC1zmDO0oEk",
+    "KHr0k5h5soAEv9JXy8Pk",
+    // Part 5 question IDs above
+];
