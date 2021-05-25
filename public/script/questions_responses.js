@@ -10,14 +10,14 @@ let responses = ["Response 1", "Response 2", "Response 3", "Response 1", "Respon
 let questions = [{question_number: "1.1", question: "What is your name?", type: "none"},
                 {question_number: "1.2", question: "Where are you from?", type: "multiple-choice-sub-question"},
                 {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"},
-                {question_number: "1.3", question: "What is your first name, last name, and middle name?", type: "none"}];
+                {question_number: "1.4", question: "What is your first name, last name, and middle name?", type: "none"},
+                {question_number: "1.5", question: "What is your first name, last name, and middle name?", type: "none"},
+                {question_number: "1.6", question: "What is your first name, last name, and middle name?", type: "none"},
+                {question_number: "1.7", question: "What is your first name, last name, and middle name?", type: "none"},
+                {question_number: "1.8", question: "What is your first name, last name, and middle name?", type: "none"},
+                {question_number: "1.9", question: "What is your first name, last name, and middle name?", type: "none"},
+                {question_number: "1.10", question: "What is your first name, last name, and middle name?", type: "none"},
+                {question_number: "1.11", question: "What is your first name, last name, and middle name?", type: "none"}];
 let subquestions = [{question_number: "1.2.1", question: "What is your name?", type: "none"},
                     {question_number: "1.2.2", question: "Where are you from?", type: "none"}, 
                     {question_number: "1.2.3", question: "What is your first name, last name, and middle name?", type: "none"}];
