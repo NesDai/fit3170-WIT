@@ -457,6 +457,10 @@ function selectdate(){
 function selectattempt(){
     var mylist = document.getElementById('attempt');
     logAttempt = mylist.options[mylist.selectedIndex].text;
+    
+    let log = document.getElementById('logs');
+    log.innerHTML = "";
+
     showlog();
 }
 
