@@ -13,7 +13,6 @@ body {
   top: 8px;
   position: relative;
 }
-
 .tablink{
   background-color: #00695C;
   position:relative;
@@ -26,26 +25,20 @@ body {
   font-size: 18px;
   width: 25%;
 }
-
 .tablink:hover {
   background-color: #777;
 }
-
 .tabcontent{
   display: none;
   height: 100%;
 }
-
 .dropbtn:hover, .dropbtn:focus {
   background-color: #2980B9;
 }
-
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
-
 .dropbtn {
   background-color: #3498DB;
   color: white;
@@ -54,7 +47,6 @@ body {
   border: none;
   cursor: pointer;
 }
-
 #user-container #user-pic {
   top: -3px;
   position: relative;
@@ -107,6 +99,19 @@ main, #messages-card {
   background: linear-gradient(white, #f9f9f9);
   justify-content: space-between;
 }
+#history-messages-card {
+  height: 90%
+}
+#logs {
+  height: 100%;
+  padding: 10px;
+  overflow-y: scroll;
+}
+#confirm1, #confirm2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
 #messages {
   height: 100%;
   padding: 10px;
@@ -142,14 +147,14 @@ main, #messages-card {
   margin-right: 20px;
   float: right;
 }
-.mdl-js-button {
+
+/* SEND MESSAGE FORM */
+#submit {
   border-radius: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 25px;
 }
-
-/* SEND MESSAGE FORM */
 #message-form {
   display: flex;
   flex-direction: row;
