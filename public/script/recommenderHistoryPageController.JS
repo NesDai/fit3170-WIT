@@ -240,6 +240,9 @@ function showHistoryTable(){
   console.log("Show history table ran.");
   let current_user = JSON.parse(localStorage.getItem("USER"));
 
+  table = document.getElementById('historyTableBody');
+  table.innerHTML = "";
+
   // Retrieves the currently stored watch history
   firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function(snapshot){
       let currentHistory = []
@@ -252,10 +255,10 @@ function showHistoryTable(){
 
           table = document.getElementById('historyTableBody');
           var title;
-          var data2;
 
           for (i in currentHistory){
             currentVideo = currentHistory[i].videoUrl;
+            console.log(currentHistory);
             currentVideo = currentVideo.split("watch?v=");
             currentVideo = currentVideo[1];
 
@@ -264,10 +267,22 @@ function showHistoryTable(){
             $.getJSON(snippet, function(data) {
               console.log("second success callback");
 
+              url = "https://www.youtube.com/watch?v=" + getVideoUrl(data);
+
               tr = document.createElement("tr");
+
+              td0 = document.createElement("td");
+              td0.className = "mdl-data-table__cell--non-numeric";
+              img = document.createElement("img");
+              img.src = getVideoThumbnailUrl(data);
+              td0.appendChild(img);
+
               td1 = document.createElement("td");
               td1.className = "mdl-data-table__cell--non-numeric";
+
               td2 = document.createElement("td");
+              td2.innerHTML = url;
+
               td3 = document.createElement("td");
               a = document.createElement("a");
               a.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent";
@@ -275,12 +290,18 @@ function showHistoryTable(){
 
               console.log(data);
 
-              title = getTitle(data,td1);
+              title = getTitle(data);
               td1.innerHTML = title;
-              console.log(td1.innerHTML);
 
               td3.appendChild(a);
 
+              tr.addEventListener('click', function(){
+                var url = this.getElementsByTagName("td")[2].innerHTML;
+                console.log(url);
+                window.open(url, '_blank').focus();
+              }, false);
+
+              tr.appendChild(td0);
               tr.appendChild(td1);
               tr.appendChild(td2);
               tr.appendChild(td3);
@@ -290,16 +311,14 @@ function showHistoryTable(){
               // console.log(data);
               videoNames += title;
 
-              // do something with title here
+
             })
             .fail(function() {
               console.log("error, see network tab for response details");
             });
 
-            console.log(data2);
             //console.log(typeof title);
           }
-          console.log(videoNames);
       }
 
       // If history is empty, add message to show history is empty
@@ -309,11 +328,24 @@ function showHistoryTable(){
   })
 }
 
-function getTitle(json_data, tableEntry){
+function getTitle(json_data){
   var title = json_data.items[0].snippet.title;
-  console.log(title);
+  //console.log(title);
 
   return title;
+}
+
+
+function getVideoUrl(json_data){
+  var url = json_data.items[0].id;
+
+  return url;
+}
+
+function getVideoThumbnailUrl(json_data){
+  var url = json_data.items[0].snippet.thumbnails.default.url;
+
+  return url;
 }
 
 // Runs on page load
