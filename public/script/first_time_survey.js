@@ -36,8 +36,20 @@ let currentSubQuestionIds = null;
 
 // Runs as a first-time greeting from the bot
 window.onload = function () {
+    initialiseCurrentUser();
     greeting();
 };
+
+/**
+ * function to initialise current user from firebase storage. this is mainly to help chat history work.
+ */
+function initialiseCurrentUser() {
+    // Listen to auth state changes.
+    firebase.auth().onAuthStateChanged(() => {
+        // Initialize current user object
+        currentUser = firebase.auth().currentUser;
+    });
+}
 
 function greeting() {
     let quesTemplate =
