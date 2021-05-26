@@ -189,7 +189,7 @@ function showMessageSender(message) {
         `<p>${message}</p>` +
         `<button
          id = ${hintIndex}
-         type="button" class="btn btn-light"
+         type="button"
          style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
          </button>`+
         "<div style='display: inline-block;'>" +
@@ -250,7 +250,7 @@ function showShortQuestionMessage(questionString) {
         "<p>Please type your answer in the box below.</p>" +
         `<button 
          id =${hintIndex}
-         type="button" class="btn btn-light"
+         type="button"
          style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
          </button>`+
         "<div style='display: inline-block;'>" +
