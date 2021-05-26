@@ -372,7 +372,13 @@ function getVideoThumbnailUrl(json_data){
 }
 
 function deleteAllHistory(){
-  console.log("All history deleted.");
+  if(confirm("Are you sure you want to delete your entire watch history?")){
+    console.log("All history deleted.");
+  }
+  let current_user = JSON.parse(localStorage.getItem("USER"));
+  firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).remove();
+
+  location.reload();
 }
 
 // Function to remove a video from history
