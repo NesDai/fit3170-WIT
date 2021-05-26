@@ -146,7 +146,7 @@ function findAllPosts() {
 function printAllPosts(){
     let data_list = [];
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .once('value', x => {
