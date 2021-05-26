@@ -187,11 +187,11 @@ function checkSurveyCompletion(){
         }
     });
 
-    checkForPreference();
+    checkForPreference(stringPath);
 
 }
 
-function checkForPreference(){
+function checkForPreference(stringPath){
     firebase.database().ref(stringPath + "/preferences").once('value').then((snapshot) => {
         if (snapshot.exists()) {
             console.log(snapshot.val());
@@ -323,7 +323,6 @@ function skipToNextVideo(){
                 if (playlist.length == 0){
                     alert("You have gone through all the recommended videos")
                     localStorage.removeItem('playlist');
-                    // location.reload();
                 } else {
                     location.reload();
                 }
