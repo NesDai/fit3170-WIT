@@ -35,7 +35,9 @@ let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
 // Runs as a first-time greeting from the bot
-greeting();
+window.onload = function () {
+    greeting();
+};
 
 function greeting() {
     let quesTemplate =
@@ -43,16 +45,41 @@ function greeting() {
         "<div class='message-container sender'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>To get started, I would like to get to know " +
-        "you better by asking a few questions.</p>" +
+        "you better by asking a few questions. Are you ready?</p>" +
         "</div>" +
         "</div>";
 
     setTimeout(() => {
         messages.innerHTML += quesTemplate;
+        let mcqOptions = "<div class=\"space\">"
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"startSurvey(this)\">Start Survey</button>";
+        mcqOptions += "</div>";
+        messages.innerHTML += mcqOptions;
     }, 750);
 
-    scrollToBottom();
+    disableTextInput();
+}
 
+/**
+ * function that starts the survey.
+ */
+function startSurvey(button) {
+    let choice = button.textContent.trim();
+
+    let ansTemplate = '<div class="space">\
+                            <div class="message-container receiver">\
+                                <p>' + choice + '</p>\
+                            </div>\
+                        </div>';
+
+    let space = button.parentElement;
+    for (let i = 0; i < space.childNodes.length; i++) {
+        space.childNodes[i].disabled = true;
+    }
+    messages.innerHTML += ansTemplate;
+
+    initFirebaseAuth();
+    scrollToBottom();
     setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
 }
 
@@ -148,7 +175,6 @@ function nextQuestion() {
 
     } else if (currentSubQuestionIds !== null) {
         // The user is answering sub-questions
-
         console.log("subquestionIndex is ", subQuestionIndex);
 
         if (subQuestionIndex === currentSubQuestionIds.length) {
@@ -371,13 +397,23 @@ function showNumeric(questionObject) {
 
 function repromptQuestion() {
     // print error message onto chat
-    let errorMessage = errorText.value;
+    /*let errorMessage = errorText.value;
     errorText.style.visibility = "hidden";
-    showMessageSender(errorMessage);
+    showMessageSender(errorMessage);*/
+    errorText.style.visibility = "hidden";
 
     //getting type of question and the question itself
     let type = currentQuestionObject.type;
     let question = currentQuestionObject.question;
+
+    if (type === TYPE_LONG_QUESTION ||
+        type === TYPE_SHORT_TEXT ||
+        type === TYPE_NUMERIC ||
+        type === TYPE_NUMERIC_SUB_QUESTION ||
+        type === TYPE_LONG_TEXT) {
+        let wrongInput = input.value;
+        showMessageReceiver(wrongInput);
+    }
 
     // print out the question again onto chat
     showShortQuestionMessage(question);
@@ -454,6 +490,9 @@ function selectdate(){
     logDate = mylist.options[mylist.selectedIndex].text;
 }
 
+/**
+ * function to select which attempt is going to be displayed in history chatlog
+ */
 function selectattempt(){
     var mylist = document.getElementById('attempt');
     logAttempt = mylist.options[mylist.selectedIndex].text;
@@ -464,6 +503,9 @@ function selectattempt(){
     showlog();
 }
 
+/**
+ * function to display which old survey is going to be displayed in history page
+ */
 function showlog(){
   const collectionRef = firebase.firestore().collection(currentUser.email).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
       collectionRef.get()
@@ -488,6 +530,10 @@ function showlog(){
       });
 }
 
+/**
+ * function to display an MCQ survey question onto chat log to ask user
+ * @param questionObject - an Object from firebase which contain the question, it's multiple choice answers and skip logic
+ */
 function showMultipleChoice(questionObject) {
     // Leaving these here as references to multiple choice
     // question objects.
@@ -511,6 +557,10 @@ function showMultipleChoice(questionObject) {
     showOptions(choices);
 }
 
+/**
+ * function to display multiple choice questions that can be answered by typing something in the textbox or by selecting one of the options available
+ * @param questionObject- an Object from firebase which contain the question, it's multiple choice answers and skip logic.
+ */
 function showMultipleChoiceOthers(questionObject) {
     let message = input.value;
     input.onkeydown = () => {
@@ -530,6 +580,7 @@ function showMultipleChoiceOthers(questionObject) {
 
     }
 
+    // allow users to use textbox
     enableTextInput();
 
     let question = questionObject.question;
@@ -539,6 +590,10 @@ function showMultipleChoiceOthers(questionObject) {
     showOptions(choices);
 }
 
+/**
+ * function to display questions that consist of sub questions
+ * @param questionObject
+ */
 function showLongQuestion(questionObject) {
     // Leaving this here as a reference to long questions
     // (questions with sub-questions)
@@ -567,6 +622,10 @@ function showLongQuestion(questionObject) {
     nextQuestion();
 }
 
+/**
+ * function to display questions that require textbox inputs and have restricted answer character number length.
+ * @param questionObject
+ */
 function showShortText(questionObject) {
     let message = input.value;
     input.onkeydown = () => {
@@ -590,11 +649,19 @@ function showShortText(questionObject) {
     enableTextInput();
 }
 
+/**
+ * function to display questions which require textbox inputs and are expected to have a large character limit for it's answer
+ * @param questionObject
+ */
 function showLongText(questionObject) {
     //TODO Do spellchecks here
     showShortText(questionObject);
 }
 
+/**
+ * function to create MCQ answer buttons on screen for users to select to answer the MCQs
+ * @param choices
+ */
 function showOptions(choices) {
     let mcqOptions = "<div class=\"space\">"
     for (let choice of choices) {
@@ -606,6 +673,10 @@ function showOptions(choices) {
     disableTextInput();
 }
 
+/**
+ * function to display hints for questions when the hint button is clicked
+ * @param hintId
+ */
 function showHints(hintId) {
     document.getElementById('hintTxt' + hintId).innerHTML = currentQuestionObject.hint;
     console.log('hintTxt' + hintId);
@@ -717,6 +788,11 @@ function saveResponse(answer) {
         });
 }
 
+/**
+ * function to access the user's firebase storage and check if there is a collection for storing survey responses for
+ * the current date. if there is not collection under the current date, the function will make a new collection instead
+ * for the current date.
+ */
 function initSetId() {
     // Formulating the branch
     // TODO Change this back to
@@ -755,7 +831,7 @@ function initSetId() {
             console.log("No such document!");
 
             // If the document doesn't exist, it means that this
-            // is the first surevy instance for the day.
+            // is the first survey instance for the day.
 
             // Initialize set_id to 0 and write it to the database
             firebase.firestore().collection(phone).doc(date)
@@ -808,9 +884,3 @@ function endSurveyText() {
     errorText.style.visibility = "hidden";
     nextQuestion();
 }
-
-// Initialize only when firebase has b fully loaded
-// Things get funky if I don't do this
-window.onload = function () {
-    initFirebaseAuth();
-};
