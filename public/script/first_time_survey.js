@@ -51,7 +51,11 @@ function initialiseCurrentUser() {
     });
 }
 
+/**
+ * function to initialise starting messages in chat and create "start survey" button.
+ */
 function greeting() {
+    // format starting message html
     let quesTemplate =
         "<div class='space'>" +
         "<div class='message-container sender'>" +
@@ -61,14 +65,18 @@ function greeting() {
         "</div>" +
         "</div>";
 
+    // format start survey button html
+    let mcqOptions = "<div class=\"space\">"
+    mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"startSurvey(this)\">Start Survey</button>";
+    mcqOptions += "</div>";
+
+    // set time out to display the message and start survey button
     setTimeout(() => {
         messages.innerHTML += quesTemplate;
-        let mcqOptions = "<div class=\"space\">"
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"startSurvey(this)\">Start Survey</button>";
-        mcqOptions += "</div>";
         messages.innerHTML += mcqOptions;
     }, 750);
 
+    // disable textbox
     disableTextInput();
 }
 
@@ -76,6 +84,7 @@ function greeting() {
  * function that starts the survey.
  */
 function startSurvey(button) {
+    // display that the start survey button has been clicked
     let choice = button.textContent.trim();
 
     let ansTemplate = '<div class="space">\
@@ -84,57 +93,68 @@ function startSurvey(button) {
                             </div>\
                         </div>';
 
+    // disable start survey button
     let space = button.parentElement;
     for (let i = 0; i < space.childNodes.length; i++) {
         space.childNodes[i].disabled = true;
     }
     messages.innerHTML += ansTemplate;
 
+    // initialise currentUser and open a new collection for this survey instance
     initFirebaseAuth();
+    // scroll to bottom of chat and start displaying the questions from firebase
     scrollToBottom();
     setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
 }
 
 /**
  * onclick function for option buttons.
+ * This functions displays and records the response of the MCQ answer option clicked from user.
  * @param button The option button
  */
 function select(button) {
+    // get selected button's text
     let choice = button.textContent.trim();
 
+    // format choice html text bubble
     let ansTemplate = '<div class="space">\
                             <div class="message-container receiver">\
                                 <p>' + choice + '</p>\
                             </div>\
                         </div>';
-    //<div class="message-container receiver">
 
+    // disable clicked button and other button options from MCQ question
     let space = button.parentElement;
     for (let i = 0; i < space.childNodes.length; i++) {
         space.childNodes[i].disabled = true;
     }
 
+    // display user's choice on chat
     messages.innerHTML += ansTemplate;
 
+    // save choice onto firebase
     saveResponse(choice);
 
-    // Implement skip here
+    // extract skip target and skip choices from currentQuestionObject
     let skipTarget = currentQuestionObject.restrictions.skipTarget;
     let skipChoices = currentQuestionObject.restrictions.skipChoices;
+
+    // check the type of skip target
     if (skipTarget === SKIP_NOT_ALLOWED) {
-        // Don't skip
+        // Don't skip next question
         setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
     } else if (skipTarget === SKIP_END_SURVEY) {
+        // check if one of the skipChoices were selected. If so, end survey
         if (skipChoices.includes(choice)) {
             endSurvey();
-        } else {
+        } else { // else move onto the next question
             setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
         }
     } else {
-        // Skip to a question ID if the selected answer
-        // is in skipChoices
+        // Skip to a question ID if the selected answer is in skipChoices
         if (skipChoices.includes(choice)) {
-            currentQuestionId = skipTarget;
+            // set currentQuestionObject to skipTarget
+            currentQuestionObject = skipTarget;
 
             // Set the current question index to the question before the
             // skip target since nextQuestion increments
@@ -145,14 +165,16 @@ function select(button) {
             // reset params related to long questions
             currentSubQuestionIds = null;
         }
+        // display the next question after a small delay
         setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
     }
 
+    // scroll to bottom of chat log
     scrollToBottom();
 }
 
 /**
- * Adds the user response as a chat bot message
+ * Function to add the user textbox input as a chat bot message
  */
 function addMessage() {
     let message = input.value;
@@ -160,7 +182,9 @@ function addMessage() {
     // Saving the response before clearing the input box
     saveResponse(input.value);
 
+    // check if the input is valid
     if (message.length > 0) {
+        // display input and clear textbox
         showMessageReceiver(message);
         input.value = "";
     }
@@ -168,27 +192,27 @@ function addMessage() {
     // Prevent users from using text box
     disableTextInput();
 
+    // display next question after time delay and scroll to bottom of screen
     setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
-
     scrollToBottom();
 }
 
 
 /**
- * Increments the question counter by 1 and moves on to the next
- * question.
+ * Function to increment through survey questions one by one and display them.
  */
 function nextQuestion() {
     console.log("nextQuestion() is called.")
 
+    // check if currentQuestionObject is null
     if (currentQuestionObject === null) {
         // The user is answering its first survey question
         showQuestion(false);
-
-    } else if (currentSubQuestionIds !== null) {
+    } else if (currentSubQuestionIds !== null) { // checking if currentSubQuestionIds is not null
         // The user is answering sub-questions
         console.log("subquestionIndex is ", subQuestionIndex);
 
+        // check if the subQuestionIndex is at the end of  currentSubQuestionIds
         if (subQuestionIndex === currentSubQuestionIds.length) {
             // If the user has completed answering sub-questions,
             // increment the questionIndex and move on
@@ -200,13 +224,11 @@ function nextQuestion() {
             showQuestion(true);
             subQuestionIndex++;
         }
-
-    } else if (questionIndex < QUESTION_IDS.length) {
+    } else if (questionIndex < QUESTION_IDS.length) { // check if questionIndex is still not at the end of survey questions
         // The user is answering a normal question
         questionIndex++;
         showQuestion(false);
-
-    } else {
+    } else { //  else end the survey
         let endingMessage = "That's all the questions we have for you " +
             "right now. You can either continue asking questions, or" +
             " browse the rest of the application!"
@@ -216,11 +238,12 @@ function nextQuestion() {
 }
 
 /**
- * Appends a message bubble to the chat bot containing
- * the specified message string.
+ * Appends a message bubble to the chat bot containing the specified message string.
+ * This function is only used by the chatbot.
  * @param message A message string
  */
 function showMessageSender(message) {
+    // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender'>" +
@@ -238,7 +261,12 @@ function showMessageSender(message) {
     hintIndex++;
 }
 
+/**
+ * function to display messages onto the chat log by th user
+ * @param message - user response
+ */
 function showMessageReceiver(message) {
+    //display user message in given html format
     messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container receiver'>" +
@@ -247,6 +275,10 @@ function showMessageReceiver(message) {
         "</div>"
 }
 
+/**
+ * display a question from chatbot without any hint
+ * @param message
+ */
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
@@ -256,6 +288,10 @@ function showMessageSenderWithoutHints(message) {
         "</div>";
 }
 
+/**
+ * function to add a message in history log under chatbot.
+ * @param message
+ */
 function showQuestionLog(message) {
     logs.innerHTML +=
         "<div class='space'>" +
@@ -265,6 +301,10 @@ function showQuestionLog(message) {
         "</div>"
 }
 
+/**
+ * function to add a message in history log under user.
+ * @param message
+ */
 function showAnswerLog(message) {
     logs.innerHTML +=
         "<div class='space'>" +
@@ -299,17 +339,28 @@ function showShortQuestionMessage(questionString) {
     hintIndex++;
 }
 
+/**
+ * function to scroll to bottom of screen
+ */
 function scrollToBottom() {
     $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
 }
 
+/**
+ * function to show the question at questionIndex or subQuestionIndex
+ * @param isSubQuestion
+ */
 function showQuestion(isSubQuestion) {
     // Get the ID of the current question
     let question_id = "";
+
+    // check if the current question is a sub-question
     if (isSubQuestion) {
+        // get the firebase ID of the sub-question
         currentSubQuestionId = currentSubQuestionIds[subQuestionIndex];
         question_id = currentSubQuestionId;
     } else {
+        // get the firebase ID of the question
         currentQuestionId = QUESTION_IDS[questionIndex];
         question_id = currentQuestionId;
     }
@@ -325,6 +376,7 @@ function showQuestion(isSubQuestion) {
             console.log(questionObject);
             currentQuestionObject = questionObject;
 
+            // checking the type of the question to assign the appropriate function to display it
             if (questionType == TYPE_NUMERIC || questionType == TYPE_NUMERIC_SUB_QUESTION) {
                 showNumeric(questionObject);
             } else if (questionType == TYPE_MULTIPLE_CHOICE || questionType == TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
@@ -350,68 +402,74 @@ function showQuestion(isSubQuestion) {
         });
 }
 
+/**
+ * function to set up and display questions that require numeric inputs
+ * @param questionObject
+ */
 function showNumeric(questionObject) {
+    // anonymous function to check user input in textbox is valid or not
     input.onkeyup = () => {
+        // get range of the expected answer
         let lowerRange = questionObject.restrictions.lowerRange;
         let upperRange = questionObject.restrictions.upperRange;
+        // get user's input
         let message = parseInt(input.value);
 
         // If it's a number
         if (!isNaN(message)) {
-            // If there is no upper/lower range specified
+            // If there is no upper/lower range specified set either to infinity and negative infinity respectively
             if (lowerRange != null && upperRange == null){
                 upperRange = Number.POSITIVE_INFINITY;
-            }
-
-            else if (lowerRange == null && upperRange != null){
+            } else if (lowerRange == null && upperRange != null){
                 lowerRange = Number.NEGATIVE_INFINITY;
             }
 
-                // if number is in normal range
-                if ((message >= lowerRange) && (message <= upperRange)) {
-                    // If it's within range
-                    errorText.style.visibility = "hidden";
-                    submit.onclick = addMessage;
+            // if number is in normal range
+            if ((message >= lowerRange) && (message <= upperRange)) {
+                // If it's within range
+                errorText.style.visibility = "hidden";
+                submit.onclick = addMessage;
+            } else {
+                // If it's out of range, display error messages
+                errorText.style.visibility = "visible";
+                if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
+                    errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
+                }
+
+                else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
+                    errorText.innerHTML = "number is not greater than " + lowerRange;
+                }
+
+                else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
+                    errorText.innerHTML = "number is not lesser than " + upperRange;
+                }
+
+                // check if question requires use to end the survey if an invalid response is given
+                if (questionObject.restrictions.skipIfInvalid) {
+                    submit.onclick = endSurveyText;
                 } else {
-                    // If it's out of range
-                    errorText.style.visibility = "visible";
-                    if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
-                        errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
-                    }
-
-                    else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
-                        errorText.innerHTML = "number is not greater than " + lowerRange;
-                    }
-
-                    else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
-                        errorText.innerHTML = "number is not lesser than " + upperRange;
-                    }
-
-                    if (questionObject.restrictions.skipIfInvalid) {
-                        submit.onclick = endSurveyText;
-                    } else {
-                        submit.onclick = repromptQuestion;
-                    }
+                    // re prompt the question
+                    submit.onclick = repromptQuestion;
                 }
             }
-        else
-            {
+        } else {
                 // If it's not a number
                 errorText.style.visibility = "visible";
                 errorText.innerHTML = "the answer needs to be a number.";
                 submit.onclick = repromptQuestion;
-            }
         }
+    }
 
+    // display the question and enable the textbox
     showShortQuestionMessage(questionObject.question);
     enableTextInput();
 }
 
+/**
+ * function to display the last answered item from user and re-display the current question again on the chat log
+ */
 function repromptQuestion() {
     // print error message onto chat
-    /*let errorMessage = errorText.value;
-    errorText.style.visibility = "hidden";
-    showMessageSender(errorMessage);*/
     errorText.style.visibility = "hidden";
 
     //getting type of question and the question itself
@@ -438,6 +496,10 @@ function repromptQuestion() {
     }
 }
 
+/**
+ * function to display buttons for each MCQ question's answer options
+ * only used for MCQ questions
+ */
 function loadOptions(){
     var x = document.getElementById("Dropdown");
     x.options.length = 0;
@@ -454,9 +516,14 @@ function loadOptions(){
             console.log("Error getting documents: ", error);
         });
 }
+
+/**
+ * function to display history log's dropdown date
+ */
 function dates(){
     document.getElementById("Dropdown").classList.toggle("show");
 }
+
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -470,6 +537,9 @@ window.onclick = function(event) {
     }
 }
 
+/**
+ *
+ */
 function selectdate(){
     var mylist = document.getElementById('Dropdown');
     const collectionRef = firebase.firestore().collection(currentUser.email).doc(mylist.options[mylist.selectedIndex].text);
