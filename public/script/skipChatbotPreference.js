@@ -45,8 +45,10 @@ function confirmPreference(){
             storePreferences();
 
             setInterval(function(){ 
-                location.href = "recommenderUi.html";
+                goToRecommender();
             }, 2000); // redirect to recommender page after 2 seconds
+
+            
             alert("Preferences noted");
         }
         else{
@@ -69,6 +71,10 @@ function goToSkipChatbotPref(){
 }
 
 function goToRecommender(){
+    if (localStorage.getItem("playlist") != null){
+        localStorage.removeItem("playlist");
+    }
+
     location.href = "recommenderUi.html"; // redirect to recommender page
 }
 
