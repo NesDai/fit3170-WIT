@@ -34,26 +34,21 @@ function negativeRating(){
 
 // Executes when the user clicks the favourite button (for adding a video to their favourites list)
 function favoriteRating(){
-  counter += 1;
+    let current_color =  document.getElementById("favoriteIcon").style.color;
+    let snackbarContainer = document.querySelector('#messagePopUp');
+    let data = null;
 
-  if(counter % 2 === 0){
-    document.getElementById("favoriteIcon").src = "./css/images/heart_icon_activated.png";
-    var snackbarContainer = document.querySelector('#messagePopUp');
-    var data = {message: 'Added to Favourite Videos'};
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-    addToFavourite(player.currentSrc());
-  }
-  else if(counter === 1){
-    document.getElementById("favoriteIcon").src = "./css/images/heart_icon.png";
-  }
-  else{
-    document.getElementById("favoriteIcon").src = "./css/images/heart_icon.png";
-    var snackbarContainer = document.querySelector('#messagePopUp');
-    var data = {message: 'Removed from Favourite Videos'};
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-    removeFromFavourite(player.currentSrc());
-  }
-
+    if (current_color == "red"){
+        document.getElementById("favoriteIcon").style.color = "black";
+        data = {message: 'Removed from Favourite Videos'};
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        removeFromFavourite(player.currentSrc());
+    } else {
+        document.getElementById("favoriteIcon").style.color = "red";
+        data = {message: 'Added to Favourite Videos'};
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        addToFavourite(player.currentSrc());
+    }
 }
 
 // From the selected preferences, randomly select a video ID for the player
@@ -105,7 +100,15 @@ function updateHistory(currentVideoInfo){
 }
 
 // Function to add video to favourites
-function addToFavourite(currentVideoInfo){
+function addToFavourite(currentVideoUrl){
+    let currentVideoInfo = "";
+    for (i in playlist[0]){
+        if (playlist[0][i][0] == currentVideoUrl){
+            currentVideoInfo = playlist[0][i];
+            break;
+        }
+    }
+
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
         videoUrl: currentVideoInfo[0],
@@ -131,6 +134,24 @@ function addToFavourite(currentVideoInfo){
         if (videoExist != true){
             currentFavourites.push(currentVideo)
             updateFirebase(currentFavourites, current_user, 'videoFavourite');
+        }
+    })
+}
+
+function checkFavoriteStatus(currentVideoUrl){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+
+    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once('value', function(snapshot){
+        if (snapshot.exists()){
+            currentFavourites = snapshot.val();
+            for (i in currentFavourites){
+                if (currentFavourites[i].videoUrl == currentVideoUrl){
+                    document.getElementById("favoriteIcon").style.color = "red";
+                    break;
+                } else {
+                    document.getElementById("favoriteIcon").style.color = "black";
+                }
+            }
         }
     })
 }
@@ -275,6 +296,8 @@ function playVideo(){
     })
 
     updateDescription(playlist[0][0][2]);
+
+    checkFavoriteStatus(playlist[0][0][0]);
     // Fires when the player is ready
     player.ready(function(){
         
@@ -288,7 +311,7 @@ function playVideo(){
         for (i in playlist[0]){
             if (playlist[0][i][0] == currentVideoUrl){
                 console.log("hello")
-                let currentVideoInfo = playlist[i];
+                let currentVideoInfo = playlist[0][i];
                 updateHistory(currentVideoInfo);
                 break;
             }
@@ -334,7 +357,7 @@ function skipToNextVideo(){
 
 // Runs on page load
 var counter = 1
-const API_KEY = "YOUR_API_KEY";
+const API_KEY = "AIzaSyAVC1xcE4jHY7m1lGcgKEcHNwE8MCDVHBs";
 var current_user = JSON.parse(localStorage.getItem("USER"));
 
 var playlist = null;

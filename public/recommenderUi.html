@@ -125,7 +125,7 @@
 
       <div id="recommendation-card" class="mdl-card mdl-shadow--2dp" style="align-items: center;">
         <div class="mdl-card__title" id="upperSectionHeader">Our recommendation for you:</div>
-        <div class="mdl-card__media" id="videoContainer">
+        <div class="mdl-card__media" id="videoContainer" >
             <video
             id="my-video"
             class="video-js vjs-fluid"
@@ -133,13 +133,13 @@
           >
             </video>
         </div>
-        <div class="mdl-card__subtitle-text" id="videoDescription">This is the description for this video.</div>
+        <div class="mdl-card__subtitle-text" id="videoDescription" style="margin-left: 5%; margin-right: 5%">This is the description for this video.</div>
         <div class="mdl-card__actions mdl-card--border">
-            <button id= "negativeRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent;" onclick = "negativeRating()" >
+            <button id= "negativeRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "negativeRating()" >
                 <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_up</i>
             </button>
 
-            <button id= "positiveRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent;" onclick = "positiveRating()" >
+            <button id= "positiveRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "positiveRating()" >
                 <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_down</i>
             </button>
 
@@ -151,11 +151,15 @@
             <img id="negativeImage" src = "./css/images/thumbs_down.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "negativeRating()"></img>
           </a> -->
 
-          <a>
+          <!-- <a>
             <img id = "favoriteIcon"  src = "./css/images/heart_icon.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "favoriteRating()"></img>
-          </a>
+          </a> -->
 
-          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-left: 30%; background-color: transparent;" >
+          <button id="favoriteIcon" onclick= "favoriteRating()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "background-color: transparent; margin-bottom: 5%;" >
+            <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px; ">favorite_border</i>
+          </button>
+
+          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-left: 30%; margin-bottom: 5%; background-color: transparent;" >
               <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px;">skip_next</i>
           </button>
           
