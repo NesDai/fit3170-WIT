@@ -183,9 +183,26 @@ function checkSurveyCompletion(){
             userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
             location.href = "recommenderUi.html"; // redirect to recommender page
         } else {
-            userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
+            userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey 
+        }
+    });
+
+    checkForPreference();
+
+}
+
+function checkForPreference(){
+    firebase.database().ref(stringPath + "/preferences").once('value').then((snapshot) => {
+        if (snapshot.exists()) {
+            console.log(snapshot.val());
+            location.href = "beforeRecommenderUi.html"; // redirect to confirmation page
+        } 
+        else {
+            console.log("No data available");
             location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
         }
+    }).catch((error) => {
+        console.error(error);
     });
 }
 

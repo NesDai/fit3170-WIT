@@ -64,4 +64,12 @@ function storePreferences(){
     userRef.update({ preferences: preferenceList });  // add or modify the preferences property to the user
 }
 
+function goToSkipChatbotPref(){
+    location.href = "skipChatbotPrefUi.html";   // redirect to preferences page
+}
+
+function goToRecommender(){
+    location.href = "recommenderUi.html"; // redirect to recommender page
+}
+
 checkCurrentUser();
