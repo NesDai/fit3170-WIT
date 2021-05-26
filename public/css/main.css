@@ -149,7 +149,7 @@ main, #messages-card {
 }
 
 /* SEND MESSAGE FORM */
-#submit {
+.mdl-button {
   border-radius: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
