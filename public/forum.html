@@ -172,6 +172,9 @@
             width:30%; 
             background-color: #2bbd7e;
          }
+         #lang_text{
+           display: inline;
+         }
          }
          @media all and (max-width: 1000px) {
          .mobile-br {display:inline;}
@@ -206,8 +209,11 @@
          }
          .lang_butt {
             margin: 10%; 
-            width:80%; 
+            width:60%; 
             background-color: #2bbd7e;
+         }
+         #lang_text{
+           display: none;
          }
          }
          #like_post_btn
@@ -569,7 +575,7 @@
       </div>
       </div>
 
-<div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
+  <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
    <div id="google_translate_element" style="display: none;">
    </div>
    <div class="modal-content">
@@ -578,11 +584,12 @@
        </b>
      </p>
      <hr style="margin: 0;">
-     <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="reset();"
+     <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="reset()"
              value="English">
        <label>
          <span class="flag-icon flag-icon-us">
-         </span> English
+         </span>
+         <span id="lang_text">English</span>
        </label>
      </button>
      <br>
@@ -590,7 +597,8 @@
              value="Chinese (Simplified)">
        <label>
          <span class="flag-icon flag-icon-cn">
-         </span> Chinese
+         </span>
+         <span id="lang_text">Chinese</span>
        </label>
      </button>
      <br>
@@ -598,7 +606,8 @@
              value="Thai">
        <label>
          <span class="flag-icon flag-icon-th">
-         </span> Thai
+         </span> 
+         <span id="lang_text">Thai</span>
        </label>
      </button>
      <br>
@@ -606,23 +615,20 @@
              value="Malay">
        <label>
          <span class="flag-icon flag-icon-my">
-         </span> Malay
+         </span> 
+         <span id="lang_text">Malay</span>
        </label>
      </button>
      <br>
      <br>
      <div>
-       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button-close-modal" id="button-close-modal" onclick="hideTranslationModal();">
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
          Back
        </button>
-
-       <butt>
      </div>
    </div>
  </div>
- <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button-close-modal" id="button-close-modal" onclick="reset();">
-   reset test
- </button> -->
+
  
 
 

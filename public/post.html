@@ -244,9 +244,12 @@
          bottom: 10px;
          }
          .lang_butt {
-         margin: 10%; 
-         width:80%; 
-         background-color: #2bbd7e;
+            margin: 10%; 
+            width:60%; 
+            background-color: #2bbd7e;
+         }
+         #lang_text{
+           display: none;
          }
          @media all and (min-width:551px) {
          .mobile-br {display: none;}
@@ -259,6 +262,9 @@
          margin: 2%; 
          width:30%; 
          background-color: #2bbd7e;
+         }
+         #lang_text{
+           display: inline;
          }
          #date_posted{
          position: relative;
@@ -595,55 +601,60 @@
    </script>
    </div>
    <!-- MODAL -->
-   <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
+  <!-- MODAL -->
+  <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
    <div id="google_translate_element" style="display: none;">
    </div>
    <div class="modal-content">
-   <p style="margin-top: 10%;">
-   <b>Choose Language:
-   </b>
-   </p>
-   <hr style="margin: 0;">
-   <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="reset();"
-      value="English">
-   <label>
-   <span class="flag-icon flag-icon-us">
-   </span> English
-   </label>
-   </button>
-   <br>
-   <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-      value="Chinese (Simplified)">
-   <label>
-   <span class="flag-icon flag-icon-cn">
-   </span> Chinese
-   </label>
-   </button>
-   <br>
-   <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-      value="Thai">
-   <label>
-   <span class="flag-icon flag-icon-th">
-   </span> Thai
-   </label>
-   </button>
-   <br>
-   <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-      value="Malay">
-   <label>
-   <span class="flag-icon flag-icon-my">
-   </span> Malay
-   </label>
-   </button>
-   <br>
-   <br>
-   <div>
-   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
-   Back
-   </button>
+     <p style="margin-top: 10%;">
+       <b>Choose Language:
+       </b>
+     </p>
+     <hr style="margin: 0;">
+     <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="reset()"
+             value="English">
+       <label>
+         <span class="flag-icon flag-icon-us">
+         </span>
+         <span id="lang_text">English</span>
+       </label>
+     </button>
+     <br>
+     <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
+             value="Chinese (Simplified)">
+       <label>
+         <span class="flag-icon flag-icon-cn">
+         </span>
+         <span id="lang_text">Chinese</span>
+       </label>
+     </button>
+     <br>
+     <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
+             value="Thai">
+       <label>
+         <span class="flag-icon flag-icon-th">
+         </span> 
+         <span id="lang_text">Thai</span>
+       </label>
+     </button>
+     <br>
+     <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
+             value="Malay">
+       <label>
+         <span class="flag-icon flag-icon-my">
+         </span> 
+         <span id="lang_text">Malay</span>
+       </label>
+     </button>
+     <br>
+     <br>
+     <div>
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
+         Back
+       </button>
+     </div>
    </div>
-   </div>
-   </div>
+ </div>
    <!-- remove google banner -->
    <style>
    .goog-te-banner-frame.skiptranslate {

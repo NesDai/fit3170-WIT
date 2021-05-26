@@ -197,10 +197,13 @@
             border-bottom-left-radius: 10px;
             }
 
-        .lang_butt {
+            .lang_butt {
             margin: 10%; 
             width:80%; 
             background-color: #2bbd7e;
+         }
+         #lang_text{
+           display: none;
          }
             @media all and (min-width:551px) {
                 .desktop-br {display: inline;}
@@ -221,6 +224,9 @@
                           margin: 2%; 
                           width:30%; 
                           background-color: #2bbd7e;
+                      }
+                #lang_text{
+                        display: inline;
                       }
             }
             @media all and (max-width: 1000px) {
@@ -475,7 +481,8 @@
             value="English">
       <label>
         <span class="flag-icon flag-icon-us">
-        </span> English
+        </span>
+        <span id="lang_text">English</span>
       </label>
     </button>
     <br>
@@ -483,7 +490,8 @@
             value="Chinese (Simplified)">
       <label>
         <span class="flag-icon flag-icon-cn">
-        </span> Chinese
+        </span>
+        <span id="lang_text">Chinese</span>
       </label>
     </button>
     <br>
@@ -491,7 +499,8 @@
             value="Thai">
       <label>
         <span class="flag-icon flag-icon-th">
-        </span> Thai
+        </span> 
+        <span id="lang_text">Thai</span>
       </label>
     </button>
     <br>
@@ -499,7 +508,8 @@
             value="Malay">
       <label>
         <span class="flag-icon flag-icon-my">
-        </span> Malay
+        </span> 
+        <span id="lang_text">Malay</span>
       </label>
     </button>
     <br>
