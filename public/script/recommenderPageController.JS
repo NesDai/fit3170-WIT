@@ -73,7 +73,8 @@ function updateHistory(currentVideoInfo){
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
         videoUrl: currentVideoInfo[0],
-        videoThumbnail: currentVideoInfo[1]
+        videoThumbnail: currentVideoInfo[1],
+        videoTitle: currentVideoInfo[2]
     }
 
     // Retrieves the currently stored watch history
@@ -112,7 +113,8 @@ function addToFavourite(currentVideoUrl){
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
         videoUrl: currentVideoInfo[0],
-        videoThumbnail : currentVideoInfo[1]
+        videoThumbnail : currentVideoInfo[1],
+        videoTitle: currentVideoInfo[2]
     }
 
     // Retrieves the currently stored watch history
@@ -241,7 +243,6 @@ function makeRequest(keywordList){
         request.onreadystatechange =  function() {
             if (this.readyState == 4 && request.status == 200) {
                     let videos = JSON.parse(this.response);
-                    console.log(videos)
                     for (j in videos.items){
                         let videoUrl = "https://www.youtube.com/watch?v=" + videos.items[j].id.videoId;
                         let thumbnailUrl = videos.items[j].snippet.thumbnails.high.url;
@@ -265,12 +266,14 @@ function makeRequest(keywordList){
 }
 
 function querySelector(){
-    firebase.database().ref('users').child(`${current_user.phone}/preferences`).once('value', function(snapshot){
-        if (snapshot.exists()){
-            let preferences = snapshot.val();
-            queryVideosOnPreferences(preferences);
-        } else {
+    firebase.database().ref('users').child(`${current_user.phone}/completedSurvey`).once('value', function(snapshot){
+        if (snapshot.exists() && snapshot.val() == "yes"){
             queryVideoOnChatbot();
+        } else {
+            firebase.database().ref('users').child(`${current_user.phone}/preferences`).once('value', function(snapshot){
+                let preferences = snapshot.val();
+                queryVideosOnPreferences(preferences);
+            })
         }
     })
 }
@@ -310,7 +313,6 @@ function playVideo(){
         let currentVideoUrl = player.currentSrc();
         for (i in playlist[0]){
             if (playlist[0][i][0] == currentVideoUrl){
-                console.log("hello")
                 let currentVideoInfo = playlist[0][i];
                 updateHistory(currentVideoInfo);
                 break;
@@ -328,7 +330,11 @@ function playVideo(){
 }
 
 function queryVideoOnChatbot(){
-
+    // firebase.firestore().collection("dyue0003@student.monash.edu").doc("2021-5-23").get().then((querySnapshot)=>{
+    //     querySnapshot.forEach((doc)=>{
+    //         console.log(doc.id);
+    //     })
+    // })
 }
 
 function skipToNextVideo(){
@@ -364,9 +370,9 @@ var playlist = null;
 var player = null;
 
 if (localStorage.getItem('playlist') != null){
-    console.log(localStorage.getItem('playlist'))
     playlist = JSON.parse(localStorage.getItem('playlist'));
     playVideo();
+    queryVideoOnChatbot();
 } else {
     querySelector();
 }
