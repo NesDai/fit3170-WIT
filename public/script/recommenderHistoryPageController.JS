@@ -281,6 +281,7 @@ function showHistoryTable(){
               td1.className = "mdl-data-table__cell--non-numeric";
 
               td2 = document.createElement("td");
+              td2.className = "mdl-data-table__cell--non-numeric";
               td2.innerHTML = url;
 
               td3 = document.createElement("td");
@@ -288,15 +289,36 @@ function showHistoryTable(){
               a.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent";
               a.innerHTML = "DELETE";
 
+              td4 = document.createElement("td");
+              a2 = document.createElement("a");
+              a2.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button";
+              a2.innerHTML = "VIEW";
+
               console.log(data);
 
               title = getTitle(data);
               td1.innerHTML = title;
 
+              a.addEventListener('click', function(){
+                if(confirm("Are you sure you want to delete this entry?")){
+                  console.log("Deleted an entry.");
+                  var row = this.parentElement.parentElement;
+                  console.log("Row index: " + row.rowIndex);
+                  var url = row.getElementsByTagName("td")[2].innerHTML;
+                  console.log(url);
+                  var table = this.parentElement.parentElement.parentElement;
+                  removeFromHistory(url);
+                  table.deleteRow(row.rowIndex-1);
+                };
+              }, false);
+
               td3.appendChild(a);
 
-              tr.addEventListener('click', function(){
-                var url = this.getElementsByTagName("td")[2].innerHTML;
+              td4.appendChild(a2);
+
+              a2.addEventListener('click', function(){
+                var row = this.parentElement.parentElement;
+                var url = row.getElementsByTagName("td")[2].innerHTML;
                 console.log(url);
                 window.open(url, '_blank').focus();
               }, false);
@@ -304,6 +326,7 @@ function showHistoryTable(){
               tr.appendChild(td0);
               tr.appendChild(td1);
               tr.appendChild(td2);
+              tr.appendChild(td4);
               tr.appendChild(td3);
               table.appendChild(tr);
 
@@ -346,6 +369,27 @@ function getVideoThumbnailUrl(json_data){
   var url = json_data.items[0].snippet.thumbnails.default.url;
 
   return url;
+}
+
+function deleteAllHistory(){
+  console.log("All history deleted.");
+}
+
+// Function to remove a video from history
+function removeFromHistory(currentVideoUrl){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once('value', function(snapshot){
+        if (snapshot.exists()){
+            currentHistory = snapshot.val();;
+            for (i in currentHistory){
+                if (currentHistory[i].videoUrl == currentVideoUrl){
+                    currentHistory.splice(i);
+                    updateFirebase(currentHistory, current_user, 'videoHistory')
+                }
+            }
+        }
+    })
 }
 
 // Runs on page load
