@@ -67,12 +67,12 @@ function printPostDetails(){
                       </div>
                       <br>
                       <div class="post_header" style="margin:0 10px; background-color: white">
-                        <h5 class="post_header mdl-color-text--black;"style="padding-left:18px" id="title">${post.title}</h5>
+                        <h4 class="post_header mdl-color-text--black;"style="padding-left:18px" id="title">${post.title}</h4>
                       </div>
                       <!-- POST FORM -->
                       <form class="post_content" style="margin:0 10px; background-color: white">
-                        <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" id="description">
-                        ${post.description}</h6>
+                        <h5 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" id="description">
+                        ${post.description}</h5>
                         <br>
                         <div id="post_interests" style='inline-block'>
                           ${interest}
