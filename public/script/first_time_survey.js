@@ -503,7 +503,7 @@ function repromptQuestion() {
 function loadOptions(){
     var x = document.getElementById("Dropdown");
     x.options.length = 0;
-    const collectionRef = firebase.firestore().collection(currentUser.email);
+    const collectionRef = firebase.firestore().collection(currentUser.phoneNumber);
     collectionRef.get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -542,7 +542,7 @@ window.onclick = function(event) {
  */
 function selectdate(){
     var mylist = document.getElementById('Dropdown');
-    const collectionRef = firebase.firestore().collection(currentUser.email).doc(mylist.options[mylist.selectedIndex].text);
+    const collectionRef = firebase.firestore().collection(currentUser.phoneNumber).doc(mylist.options[mylist.selectedIndex].text);
     collectionRef.get().then((doc) => {
         if (doc.exists) {
             console.log("Document data:", doc.data().set_id);
@@ -589,7 +589,7 @@ function selectattempt(){
  * function to display which old survey is going to be displayed in history page
  */
 function showlog(){
-  const collectionRef = firebase.firestore().collection(currentUser.email).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
+  const collectionRef = firebase.firestore().collection(currentUser.phoneNumber).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
       collectionRef.get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -802,10 +802,7 @@ function initFirebaseAuth() {
  */
 function saveResponse(answer) {
     // Formulating the branch
-    // TODO Change this back to
-    //  let phone = currentUser.phoneNumber;
-    //  when it's time to ship
-    let phone = currentUser.email;
+    let phone = currentUser.phoneNumber;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
     let branch = `${phone}/${date}/responses`;
@@ -877,10 +874,7 @@ function saveResponse(answer) {
  */
 function initSetId() {
     // Formulating the branch
-    // TODO Change this back to
-    //  let phone = currentUser.phoneNumber;
-    //  when it's time to ship
-    let phone = currentUser.email;
+    let phone = currentUser.phoneNumber;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 

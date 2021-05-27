@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<head xmlns="">
+<head>
   <link rel="stylesheet" type="text/css" href="css/login.css">
   <!--html logo-->
   <link rel="stylesheet" type="text/css" href="css/fonts_login/iconic/css/material-design-iconic-font.min.css">
@@ -8,81 +8,74 @@
 
 <body>
 
-    <div class="limiter">
-      <div class="background">
-        <div class="wrap-login">
-          <div style="width: 100%;">
+<div class="limiter">
+  <div class="background">
+    <div class="wrap-login">
+      <div style="width: 100%;">
             <span class="title">
               Login
             </span>
-            <br>
-            <!-- TODO Uncomment when reverting back to phone login -->
-<!--            <div class = "input_div">-->
-<!--              <span class="label">Phone number</span>-->
-<!--              <br>-->
-<!--              <input class="input" type="text" id="number" placeholder="Enter E.g. +60129356770 or +6622134567" onchange="phoneValidation()">-->
-<!--              <div id="input-error" style="color: red"></div>-->
-<!--              <span class="focus-input_logo" data-symbol="&#xf206;"></span>-->
-<!--            </div>-->
-<!--            <div id ="recaptcha-container"></div>-->
-<!--          <br>-->
-<!--          <div id="error" style="color:red"></div>-->
-<!--          <div class="btn-container">-->
-<!--            <div class="btn-wrap">-->
-<!--              <div class="btn-div"> </div>-->
-<!--              <button class="btn" id="send-button" onclick="phoneAuth();">-->
-<!--                Send Pin-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </div>-->
+        <br>
 
-<!--          <div class = "input_div">-->
-<!--            <span class="label">Pin</span>-->
-<!--            <input class="input" type="password" id="verificationCode"  placeholder="Enter 6-digit pin E.g. 123456">-->
-<!--            <span class="focus-input_logo" data-symbol="&#xf190;"></span>-->
-<!--          </div>-->
-<!--          <br>-->
-          <div class="btn-container">
-            <div class="btn-wrap">
-              <div class="btn-div"> </div>
-              <!-- TODO Change to onclick="codeVerify()" when reverting back
-                    to phone login -->
-              <button class="btn" id="loginButton" onclick="toggleSignIn();">
-                Login with Google
-              </button>
-            </div>
+        <div class = "input_div">
+          <span class="label">Phone number</span>
+          <br>
+          <input class="input" type="text" id="number" placeholder="Enter E.g. +60129356770 or +6622134567" onchange="phoneValidation()">
+          <div id="input-error" style="color: red"></div>
+          <span class="focus-input_logo" data-symbol="&#xf206;"></span>
+        </div>
+        <div id ="recaptcha-container"></div>
+        <br>
+        <div id="error" style="color:red"></div>
+        <div class="btn-container">
+          <div class="btn-wrap">
+            <div class="btn-div"> </div>
+            <button class="btn" id="send-button" onclick="phoneAuth();">
+              Send Pin
+            </button>
           </div>
         </div>
+
+        <div class = "input_div">
+          <span class="label">Pin</span>
+          <input class="input" type="password" id="verificationCode"  placeholder="Enter 6-digit pin E.g. 123456">
+          <span class="focus-input_logo" data-symbol="&#xf190;"></span>
+        </div>
+        <br>
+        <div class="btn-container">
+          <div class="btn-wrap">
+            <div class="btn-div"> </div>
+            <button class="btn" id="loginButton" onclick="codeverify();">
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-  </div>
+</div>
+</div>
 
 
-    <!--FIREBASE-->
+<!--FIREBASE-->
 
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+ https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
 
-    <script src = "script/firebaseConfig.js"></script>
+<script src = "script/firebaseConfig.js"></script>
 
-    <!-- FIREBAS STUFF I GOT FROM YT-->
-    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
-    <script src="/__/firebase/init.js?useEmulator=true"></script>
+<!-- FIREBAS STUFF I GOT FROM YT-->
+<script src="/__/firebase/7.18.0/firebase-app.js"></script>
+<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+<script src="/__/firebase/7.18.0/firebase-database.js"></script>
+<script src="/__/firebase/init.js?useEmulator=true"></script>
 
-
-
-    <script src="script/google-auth.js"></script>
-    <script src="script/firebase-housekeeping.js"></script>
-    <!-- TODO Uncomment when reverting back to phone login -->
-<!--    <script src="script/login.js" type="module"></script>-->
-<!--    <script src="script/login.js"></script>-->
-   
+<script src="script/login.js" type="module"></script>
+<script src="script/login.js"></script>
 
 
-  </div>
+
+</div>
 </body>

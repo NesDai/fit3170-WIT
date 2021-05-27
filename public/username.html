@@ -7,82 +7,80 @@
 </head>
 
 <style>
-p.username {
-  text-align: center;
-}
+  p.username {
+    text-align: center;
+  }
 
-input[type="text"] {
-  width: 100%;
-  border: 2px solid #aaa;
-  border-radius: 4px;
-  margin: 8px 0;
-  outline: none;
-  padding: 8px;
-  box-sizing: border-box;
-  transition: 0.3s;
-}
-#error{
-  color:red;
-}
+  input[type="text"] {
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+  }
+  #error{
+    color:red;
+  }
 
 </style>
 <body>
-    <div class="limiter">
-      <div class="background">
-        <div class="wrap-login">
-          <div style="width: 100%;">
+<div class="limiter">
+  <div class="background">
+    <div class="wrap-login">
+      <div style="width: 100%;">
             <span class="title">
               Welcome
             </span>
-            <span id="registeredMessage" style="color:green;">
+        <span id="registeredMessage" style="color:green;">
       
             </span>
-            <p class="username">Seems that you are new to our community, create your unique user name</p>
-            <br>
-            <div class = "input_div">
-              <input class="input" type="text" id="username" placeholder="Username" onchange="usernameValidation()">
-            </div>
-          <br>
-         </form>
-         <div id="error">
-         </div>
-          <div class="btn-container">
-            <div class="btn-wrap">
-              <div class="btn-div"> </div>
-              <button class="btn" id="confirm-button" onclick="checkUsernameValidity();">
-               Confirm
-              </button>
-            </div>
+        <p class="username">Seems that you are new to our community, create your unique user name</p>
+        <br>
+        <div class = "input_div">
+          <input class="input" type="text" id="username" placeholder="Username" onchange="usernameValidation()">
+        </div>
+        <br>
+        </form>
+        <div id="error">
+        </div>
+        <div class="btn-container">
+          <div class="btn-wrap">
+            <div class="btn-div"> </div>
+            <button class="btn" id="confirm-button" onclick="checkUsernameValidity();">
+              Confirm
+            </button>
           </div>
-        
         </div>
-        </div>
+
+      </div>
     </div>
   </div>
-  </div>
-  </div>
+</div>
+</div>
+</div>
 
 
-    <!--FIREBASE-->
+<!--FIREBASE-->
 
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <!-- TODO: Add SDKs for Firebase products that you want to use -->
-    <!-- https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script> 
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use -->
+<!-- https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
 
-    <script src = "script/firebaseConfig.js"></script>
+<script src = "script/firebaseConfig.js"></script>
 
-    <!-- FIREBAS STUFF I GOT FROM YT-->
-    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
-    <script src="/__/firebase/init.js?useEmulator=true"></script>
-
-
-    <script src="script/username.js"></script>
-
-    <script src="script/firebase-housekeeping.js"></script>
+<!-- FIREBAS STUFF I GOT FROM YT-->
+<script src="/__/firebase/7.18.0/firebase-app.js"></script>
+<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+<script src="/__/firebase/7.18.0/firebase-database.js"></script>
+<script src="/__/firebase/init.js?useEmulator=true"></script>
 
 
-  </div>
+<script src="script/username.js"></script>
+
+
+</div>
 </body>
