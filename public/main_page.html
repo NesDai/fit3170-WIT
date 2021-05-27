@@ -2,11 +2,11 @@
    <head>
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script 
+      <script
          src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-      <link rel = "stylesheet" 
+      <link rel = "stylesheet"
          href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-      <link rel = "stylesheet" 
+      <link rel = "stylesheet"
          href = "https://fonts.googleapis.com/icon?family = Material+Icons">
       <style>
          .chatbot-card > .mdl-card__title {
@@ -25,7 +25,7 @@
          background: url("css/images/forum.jpg") center / cover;
          }
          .forum-card.mdl-card__title,
-         .recommender-card > .mdl-card__title, 
+         .recommender-card > .mdl-card__title,
          .chatbot-card.mdl-card__title
          {
          color: #fff;
@@ -91,7 +91,7 @@
                      </div>
                      <br><br>
                      <div class = "mdl-card__actions mdl-card--border">
-                        <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "./recommenderUi.html"'>
+                        <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="checkSurveyCompletion()">
                         Open the recommender</a>
                      </div>
                   </div>
@@ -124,14 +124,16 @@
       <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
       <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
-  
+
       <script src = "script/firebaseConfig.js"></script>
-  
+      <script src = "script/recommenderPageController.js"></script>
+
       <!-- FIREBAS STUFF I GOT FROM YT-->
       <script src="/__/firebase/7.18.0/firebase-app.js"></script>
       <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
       <script src="/__/firebase/7.18.0/firebase-database.js"></script>
       <script src="/__/firebase/init.js?useEmulator=true"></script>
+      <script src="/__/firebase/8.3.3/firebase-firestore.js"></script>
       <script src="script/main_page.js"></script>
       </div>
    </body>
