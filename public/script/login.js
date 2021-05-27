@@ -13,12 +13,59 @@
 const USER_KEY = "USER";
 
 // To apply the default browser preference instead of explicitly setting it.
-firebase.auth().useDeviceLanguage();
+// firebase.auth().useDeviceLanguage();
+
+
+
+function setAuthLanguage(){
+
+    let language = localStorage.getItem(LANGUAGE_KEY);
+
+    if (language == null){
+        firebase.auth().languageCode = "en";
+        localStorage.setItem(LANGUAGE_KEY,"English")
+        return
+    }
+    else if (language == "Malay")
+        language = "ms";
+    else if (language == "Chinese (Simplified)")
+        language = "zh-CN";
+    else if (language == "Thai")
+        language = "th"
+    else if (language == "English")
+        language = "en"
+
+    firebase.auth().languageCode = language;    
+
+}
+
+
+// Used to change language of the captcha
+function changeLanguage(newLanguage){
+    if (newLanguage == "Malay")
+        language = "ms";
+    else if (newLanguage == "Chinese (Simplified)")
+        language = "zh-CN";
+    else if (newLanguage == "Thai")
+        language = "th"
+    else
+        language = "en"
+
+    // save language for the user upon login
+    localStorage.setItem(LANGUAGE_KEY, language);
+
+    setAuthLanguage();
+
+    recaptchaVerifier.reset()
+    // window.location = window.location  // refresh the page to reinitialize captcha
+}
+
 
 
 
 window.onload = function(){
-
+    
+    setAuthLanguage();
     render();
 
 }
@@ -64,10 +111,14 @@ function phoneAuth() {
         //s is in lowercase
         window.confirmationResult=confirmationResult;
         coderesult=confirmationResult;
+        document.getElementById("input-pin").innerHTML = "A SMS with the PIN has been sent to your phone. Please insert the pin below."
+        document.getElementById("input-pin").style.color = "green";
 
-        alert("Message sent");
+        // alert("Message sent");
     }).catch(function (error) {
         alert(error.message);
+        document.getElementById("input-pin").innerHTML = ""
+
     })
     )
 }
@@ -119,6 +170,8 @@ function codeverify() {
     }).catch(function (error) {
         alert(error.message);
         recaptchaVerifier.reset();
+        document.getElementById("input-pin").innerHTML = "Invalid PIN entered. Please resend a new pin and retry.";
+        document.getElementById("input-pin").style.color = "red";
     });
 }
 
@@ -145,7 +198,6 @@ function checkUserExistence(phone){
         }
         else{
             // !!LOG IN !!!
-            //Figure this out later 
             firebase.database().ref(`users/${phone}`).once('value', data => {
                 let user = {
                     phone: phone,

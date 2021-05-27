@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="remove unnecessary console.log lines and try to fix message being only one 1 side of the chat interface">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/main_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team404/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/script/first_time_survey.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/first_time_survey.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +11,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1qwOgxQ1ea30KQDmd1p1lO8ZSRK" />
@@ -22,7 +25,12 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Year 2 sem 1/FIT2099/Coding" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -32,13 +40,83 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617987300646</updated>
+      <workItem from="1621494094855" duration="82000" />
+      <workItem from="1621494180881" duration="1509000" />
+      <workItem from="1621506200651" duration="308000" />
+      <workItem from="1621508371570" duration="670000" />
+      <workItem from="1621586114777" duration="465000" />
+      <workItem from="1621641200526" duration="13506000" />
+      <workItem from="1621676612310" duration="762000" />
+      <workItem from="1621775516833" duration="4141000" />
+      <workItem from="1621820201923" duration="3495000" />
     </task>
+    <task id="LOCAL-00001" summary="update question IDs and update questions in question-uploader.js">
+      <created>1621666660881</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1621666660882</updated>
+    </task>
+    <task id="LOCAL-00002" summary="start on validation in showNumeric and removed extra question in question-uploader.js">
+      <created>1621668436016</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1621668436016</updated>
+    </task>
+    <task id="LOCAL-00003" summary="create repromptQuestion function.&#10;&#10;changed addMessage to not have validation and used disableTextInput.&#10;&#10;IncrementQuestion is combined into NextQuestion function.">
+      <created>1621673971548</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1621673971548</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Changes by Yong Peng">
+      <created>1621674619333</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1621674619334</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changes made by Kelvin">
+      <created>1621674651980</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1621674651980</updated>
+    </task>
+    <task id="LOCAL-00006" summary="remove unnecessary console.log lines and try to fix message being only one 1 side of the chat interface">
+      <created>1621775954685</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1621775954685</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1618137746831">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1618137746831" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update question IDs and update questions in question-uploader.js" />
+    <MESSAGE value="start on validation in showNumeric and removed extra question in question-uploader.js" />
+    <MESSAGE value="create repromptQuestion function.&#10;&#10;changed addMessage to not have validation and used disableTextInput.&#10;&#10;IncrementQuestion is combined into NextQuestion function." />
+    <MESSAGE value="Changes by Yong Peng" />
+    <MESSAGE value="Changes made by Kelvin" />
+    <MESSAGE value="remove unnecessary console.log lines and try to fix message being only one 1 side of the chat interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove unnecessary console.log lines and try to fix message being only one 1 side of the chat interface" />
   </component>
 </project>

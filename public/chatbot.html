@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Learn how to use the Firebase platform on the Web">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
     <title>Friendly Chat</title>
 
     <!-- Disable tap highlight on IE -->
@@ -15,13 +16,13 @@
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Friendly Chat">
+    <meta name="application-name" content="Chatbot">
     <meta name="theme-color" content="#303F9F">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Friendly Chat">
+    <meta name="apple-mobile-web-app-title" content="Chatbot">
     <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
     <!-- Tile icon for Win8 -->
@@ -30,8 +31,8 @@
 
     <!-- Material Design Lite -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
-    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
@@ -45,47 +46,77 @@
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <!-- Header section containing logo -->
-    <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+    <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
             <h3><i class="material-icons">chat_bubble_outline</i> Chatbot</h3>
-          </div>
-          <div id="user-container">
-            <div hidden id="user-pic"></div>
-            <div hidden id="user-name"></div>
-            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-              Sign-out
-            </button>
-            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-              <i class="material-icons">account_circle</i>Sign-in with Google
-            </button>
+            <button class="tablink" onclick="openPage('Live',this)" id="defaultOpen" >Live Chat</button>
+            <button class="tablink" onclick="openPage('History',this);loadOptions();">History</button>
+
           </div>
         </div>
       </header>
-
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Chatbot</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="main_page.html">Home</a>
+          <a class="mdl-navigation__link" href="">Forum</a>
+          <a class="mdl-navigation__link" href="recommenderUi.html">Recommended Content</a>
+        </nav>
+      </div>
   <body>
-    <main class="mdl-layout__content mdl-color--grey-100">
+    <main id = "Live" class= "tabcontent" class="mdl-layout__content mdl-color--grey-100">
         <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
-
     <div id="messages-card" class="mdl-card mdl-shadow--2dp">
         <div id="messages">
+        </div>
+        <div id="error-bar">
+            <p id="error-text" style="text-align: center; color: red"></p>
         </div>
         <div id="message-form">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
               <label class="mdl-textfield__label" for="message">Message...</label>
             </div>
-
             <!-- <button id="submit" type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="respondToOpen()"> -->
             <button id="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled onclick="addMessage()">
               Send
             </button>
         </div>
     </div>
+    </div>
+    </main>
+    
+    <div id = "History" class = " tabcontent" >
+      <label for="Dropdown">Please choose a date to see your chatlog:</label>
+      <div class="dropdown">
+        <select onclick="dates()" class="dropbtn" id="Dropdown">
+          <div id="myDropdown" class="dropdown-content">
+        </select>
+      </div>
+
+      <button id="confirm1" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="selectdate()">
+        Confirm
+      </button>
+      <div id = "attemptsection" class = "dropdown-content">
+      </div>
+      <button id="confirm2" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="selectattempt()">
+        Confirm
+      </button>
+
+      <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+        <div id="history-messages-card" class="mdl-card mdl-shadow--2dp">
+          <div id="logs"></div>
+        </div>
+      </div>
+    </div>
 
     <!-- USING JQUERY TO ANIMATE SCROLL -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="script/constants.js"></script>
     <script src="script/first_time_survey.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
@@ -100,5 +131,8 @@
 
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
+
+    <script src = "script/tabdisplay.js"></script>
+
   </body>
 </html>
