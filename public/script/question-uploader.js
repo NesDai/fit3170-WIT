@@ -339,6 +339,8 @@ const HINTS_PART5 = [
 // TODO Weird questions: Last survey question & Question 4.5
 // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
+let question_2_1_id = "";
+let question_2_3_id = "";
 
 function pushPart1Questions() {
     // Set part index to 1 and reset
@@ -526,7 +528,6 @@ function pushPart2Questions() {
     pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1,
         skip_choices_2_1,
         "insert question 2.3 id here",
-        // TODO please insert this manually every time after a push
         HINTS_PART2[1]);
 
     // Question 2.2
@@ -1002,6 +1003,12 @@ function recordQuestionPush(questionObject, docRef) {
     // Save the question ID
     questionIds.push(docRef.id);
 
+    if (questionObject.question_number === "2.3") {
+        question_2_3_id = docRef.id;
+    } else if (questionObject.question_number === "2.1") {
+        question_2_1_id = docRef.id;
+    }
+
     // Print some logs, maybe even display the questions via HTML
     console.log(
         `Question ${questionObject.question_number} pushed with ID ${docRef.id}`
@@ -1137,4 +1144,15 @@ function housekeeping() {
         console.log(`Part ${i + 1} IDs:`);
         console.log(result[i]);
     }
+
+    // Update question 2.1 with 2.3's ID
+    firebase.firestore().collection(QUESTIONS_BRANCH).doc(question_2_1_id)
+        .update({
+            "skipTarget": question_2_3_id
+        })
+        .then(() => {
+            let info = "Question 2.1 has been updated with Question 2.3 ID: " +
+                question_2_3_id;
+            console.log(info);
+        });
 }

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', showHistoryTable(), false);
+document.addEventListener('DOMContentLoaded', showFavouriteTable(), false);
 
 
 // From the selected preferences, randomly select a video ID for the player
@@ -21,7 +21,7 @@ function getTopic(){
 
 var videoNames = [];
 // Function to populate history page table
-function showHistoryTable(){
+function showFavouriteTable(){
   console.log("Show history table ran.");
   let current_user = JSON.parse(localStorage.getItem("USER"));
 
@@ -29,20 +29,20 @@ function showHistoryTable(){
   table.innerHTML = "";
 
   // Retrieves the currently stored watch history
-  firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function(snapshot){
-      let currentHistory = []
+  firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function(snapshot){
+      let currentFavourites = [];
 
       // If history is not empty and video already exists in history, set videoExist to true
       if (snapshot.exists()){
-          currentHistory = snapshot.val();
-          console.log(currentHistory);
+          currentFavourites = snapshot.val();
+          console.log(currentFavourites);
 
 
           table = document.getElementById('historyTableBody');
           var title;
 
-          for (i in currentHistory){
-            currentVideo = currentHistory[i];
+          for (i in currentFavourites){
+            currentVideo = currentFavourites[i];
 
             $(document).ready(function() {
                 
@@ -87,7 +87,7 @@ function showHistoryTable(){
                   var url = row.getElementsByTagName("td")[2].innerHTML;
                   console.log(url);
                   var table = this.parentElement.parentElement.parentElement;
-                  removeFromHistory(url);
+                  removeFromFavourite(url);
                   table.deleteRow(row.rowIndex-1);
                 };
               }, false);
@@ -121,34 +121,34 @@ function showHistoryTable(){
 
       // If history is empty, add message to show history is empty
       else{
-        console.log("History is currently empty.")
+        console.log("Favourite is currently empty.")
       }
   })
 }
 
 
-function deleteAllHistory(){
-  if(confirm("Are you sure you want to delete your entire watch history?")){
-    console.log("All history deleted.");
+function deleteAllFavourite(){
+  if(confirm("Are you sure you want to delete all your favourite videos?")){
+    console.log("All favourites deleted.");
 
     let current_user = JSON.parse(localStorage.getItem("USER"));
-    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).remove();
+    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).remove();
 
     location.reload();
   }
 }
 
 // Function to remove a video from history
-function removeFromHistory(currentVideoUrl){
+function removeFromFavourite(currentVideoUrl){
     let current_user = JSON.parse(localStorage.getItem("USER"));
 
-    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once('value', function(snapshot){
+    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once('value', function(snapshot){
         if (snapshot.exists()){
-            currentHistory = snapshot.val();
-            for (i in currentHistory){
-                if (currentHistory[i].videoUrl == currentVideoUrl){
-                    currentHistory.splice(i,1);
-                    updateFirebase(currentHistory, current_user, 'videoHistory');
+            currentFavourites = snapshot.val();
+            for (i in currentFavourites){
+                if (currentFavourites[i].videoUrl == currentVideoUrl){
+                    currentFavourites.splice(i,1);
+                    updateFirebase(currentFavourites, current_user, 'videoFavourite');
                     break;
                 }
             }

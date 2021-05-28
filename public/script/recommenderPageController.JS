@@ -200,17 +200,62 @@ function checkSurveyCompletion(){
     let userRef = firebase.database().ref(stringPath);
     let db = firebase.firestore();
 
+    let date = null;
 
-    db.collection(phoneNum).get().then((querySnapshot) =>{
-        if (db.collection(phoneNum).exists) {
-            userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
-            location.href = "recommenderUi.html"; // redirect to recommender page
+    firebase.firestore().collection(current_user.phone).get().then((querySnapshot)=>{
+        let preference = [];
+        if (querySnapshot.empty){
+            userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
+            userRef.update({ chatbotPreference: preference}) ;
+            checkForPreference(stringPath);
         } else {
-            userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey 
+            querySnapshot.forEach((doc)=>{
+                date = doc.id;
+            })
+    
+            firebase.firestore().collection(current_user.phone).doc(date).collection("responses").get().then((querySnapshot)=>{
+                querySnapshot.forEach((doc)=>{
+                    let id = doc.data().question_id;
+                    let answer = doc.data().answer;
+                    if (id == "A1b1yNKpJuzN1vQrmENv" && answer > 3){
+                        preference.push("ict and technology skills");
+                    }
+                    if (id == "N6B0PAgqgzC8hTbFXEOn" && answer > 3){
+                        preference.push("social communication skills");
+                    }
+                    if (id == "7LzQ2q2KMYQm3cpujO3n" && answer > 3){
+                        preference.push("complementary skills");
+                    }
+                    if ( id == "G1crDAr3nGc55d35e93P" && answer > 3){
+                        preference.push("work-related skills");
+                    }
+                    
+                })
+                if (preference.length == 0){
+                    userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey
+                    userRef.update({ chatbotPreference: preference}) ;
+                    checkForPreference(stringPath);
+                } else {
+                    userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
+                    userRef.update({ chatbotPreference: preference}) ;
+                    localStorage.removeItem('playlist');
+                    location.href = "recommenderUi.html"; // redirect to recommender page
+                }   
+            })
         }
-    });
+        
+    })
+    // db.collection(phoneNum).get().then((querySnapshot) =>{
 
-    checkForPreference(stringPath);
+    //     if (db.collection(phoneNum).exists) {
+    //         userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
+    //         location.href = "recommenderUi.html"; // redirect to recommender page
+    //     } else {
+    //         userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey 
+    //     }
+    // });
+
+    // checkForPreference(stringPath);
 
 }
 
@@ -329,12 +374,15 @@ function playVideo(){
     })
 }
 
+
 function queryVideoOnChatbot(){
-    // firebase.firestore().collection("dyue0003@student.monash.edu").doc("2021-5-23").get().then((querySnapshot)=>{
-    //     querySnapshot.forEach((doc)=>{
-    //         console.log(doc.id);
-    //     })
-    // })
+    firebase.database().ref('users').child(`${current_user.phone}/chatbotPreference`).once('value', function(snapshot){
+        if (snapshot.exists()){
+            makeRequest(snapshot.val())
+        } else {
+            console.log("Something went wrong");
+        }
+    })
 }
 
 function skipToNextVideo(){
@@ -350,8 +398,9 @@ function skipToNextVideo(){
                 playlist.shift();
                 localStorage.setItem("playlist", JSON.stringify(playlist))
                 if (playlist.length == 0){
-                    alert("You have gone through all the recommended videos")
+                    alert("You have gone through all the recommended videos");
                     localStorage.removeItem('playlist');
+                    location.reload();
                 } else {
                     location.reload();
                 }
@@ -369,10 +418,10 @@ var current_user = JSON.parse(localStorage.getItem("USER"));
 var playlist = null;
 var player = null;
 
+
 if (localStorage.getItem('playlist') != null){
     playlist = JSON.parse(localStorage.getItem('playlist'));
     playVideo();
-    queryVideoOnChatbot();
 } else {
     querySelector();
 }

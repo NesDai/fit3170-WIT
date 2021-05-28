@@ -224,7 +224,7 @@ function nextQuestion() {
             showQuestion(true);
             subQuestionIndex++;
         }
-    } else if (questionIndex < QUESTION_IDS.length) { // check if questionIndex is still not at the end of survey questions
+    } else if (questionIndex < QUESTION_IDS.length - 1) { // check if questionIndex is still not at the end of survey questions
         // The user is answering a normal question
         questionIndex++;
         showQuestion(false);
@@ -645,10 +645,10 @@ function showMultipleChoice(questionObject) {
  */
 function showMultipleChoiceOthers(questionObject) {
     let message = input.value;
-    input.onkeydown = () => {
+    input.onkeyup = () => {
         if (message.length <= SHORT_TEXT_LENGTH) {
             // If it's not too long
-
+            errorText.innerHTML = "";
             // TODO Spellcheck here
 
             errorText.style.visibility = "hidden";
@@ -656,7 +656,7 @@ function showMultipleChoiceOthers(questionObject) {
         } else {
             // If it's super long
             errorText.style.visibility = "visible";
-
+            errorText.innerHTML = "character limit exceeded";
             submit.onclick = repromptQuestion;
         }
 
@@ -710,7 +710,7 @@ function showLongQuestion(questionObject) {
  */
 function showShortText(questionObject) {
     let message = input.value;
-    input.onkeydown = () => {
+    input.onkeyup = () => {
         if (message.length <= SHORT_TEXT_LENGTH) {
             // If it's not too long
 
