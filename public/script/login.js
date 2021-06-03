@@ -104,14 +104,14 @@ function phoneAuth() {
         document.getElementById("error").innerHTML = "<p>Phone number obtain contains invalid characters. Please avoid using spaces and try again</p>";
     }
     //it takes two parameter first one is number,,,second one is recaptcha
-    console.log(window.recaptchaVerifier);
+
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
     //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
     firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
         window.confirmationResult=confirmationResult;
         coderesult=confirmationResult;
-        document.getElementById("input-pin").innerHTML = "A SMS with the PIN has been sent to your phone. Please insert the pin below."
+        document.getElementById("input-pin").innerHTML = "It might take a minute to send the SMS to your phone.\n Once the SMS with the PIN has been sent to your phone. Please insert the pin below."
         document.getElementById("input-pin").style.color = "green";
 
         // alert("Message sent");
@@ -132,7 +132,7 @@ function phoneAuth() {
  */
 function phoneValidation() {
 
-    var phone_regex = /^\+[0-9]{11,15}$/;
+    var phone_regex = /^\+[0-9]{8,19}$/; //11-15
     var telephone = document.getElementById("number").value
 
     // test the input number based on the RegEx pattern stated
