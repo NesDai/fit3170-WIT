@@ -16,6 +16,10 @@ function register(username,phone){
 
     localStorage.setItem(USER_KEY,JSON.stringify(user));
 
+    firebase.auth().currentUser.updateProfile({ // set the username in firebase
+        displayName: username
+    });
+
     //let the user know everything went fine
     document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
     //todo Redirect to the main page

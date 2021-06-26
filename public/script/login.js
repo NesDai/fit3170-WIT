@@ -105,7 +105,7 @@ function phoneAuth() {
     }
     //it takes two parameter first one is number,,,second one is recaptcha
 
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>
     //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
     firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
@@ -113,6 +113,9 @@ function phoneAuth() {
         coderesult=confirmationResult;
         document.getElementById("input-pin").innerHTML = "It might take a minute to send the SMS to your phone.\n Once the SMS with the PIN has been sent to your phone. Please insert the pin below."
         document.getElementById("input-pin").style.color = "green";
+
+        // alert(confirmationResult.confirm(document.getElementById("verificationCode").value));
+        // return confirmationResult.confirm(document.getElementById("verificationCode").value);
 
         // alert("Message sent");
     }).catch(function (error) {
@@ -167,6 +170,7 @@ function codeverify() {
 
 
 
+
     }).catch(function (error) {
         alert(error.message);
         recaptchaVerifier.reset();
@@ -175,13 +179,14 @@ function codeverify() {
     });
 }
 
+
+let exists = false;
 /**
  * Function used to check if the user with the given phone number of already present in the database
  * @param {1} phone: the user's phone number 
  * @returns boolean true if exists and false is does not
  */
 function checkUserExistence(phone){
-    let exists = false;
     
     firebase.database().ref(`users/${phone}`).once("value", snapshot => {
         if (snapshot.exists()){
@@ -192,7 +197,7 @@ function checkUserExistence(phone){
         if(!exists){ //Create a new account
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
             localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-            window.location = "username.html"; //TODO make this a proper redirect
+            // window.location = "username.html"; //TODO make this a proper redirect
 
             
         }
@@ -205,15 +210,18 @@ function checkUserExistence(phone){
                 };
                 localStorage.setItem(USER_KEY, JSON.stringify(user));
             });
-            setInterval(function(){ 
-                window.location = "main_page.html"
-            }, 2000); // after 2 seconds
-            alert("successfully logged in")
+
+
+            // window.location = "main_page.html"
+
+
 
         
         }
-
+        alert("here"+exists);
      });
+
+     alert("here"+exists);
         
 }
    
@@ -235,7 +243,14 @@ function makeNewUser(phone,username){
 
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      console.log(user)
+      localStorage.setItem("iusuebrpifn",JSON.stringify(user));
+      alert(user)
+      if(exists){
+        window.location = "main_page.html";
+      }
+      else{
+        window.location = "username.html"
+      }
 
     }
     else {
