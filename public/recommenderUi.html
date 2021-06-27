@@ -39,6 +39,33 @@
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="./css/main.css">
+    <style>
+       .img-centre {
+       margin-left: auto;
+       margin-right: auto;
+       display: block;
+       }
+       #nav-icons{
+       font-size: 30px;
+       padding-bottom: 20px;
+       }
+       i.icon-teal{
+       color:#00796b;
+       }
+       i.icon-teal2{
+       color:#00695c;
+       }
+       .mdl-navigation__link{
+       font-size: 16px;
+       text-align: left;
+       padding-left: 0;
+       padding-right: 3;
+       }
+       .mdl-grid-body{
+       margin: 0;
+       padding: 0;
+       }
+       </style>
 
     <title>Recommender</title>
     <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -98,7 +125,7 @@
             <a class="mdl-navigation__link" href="recommenderHistoryUi.html" style="margin-left: 90%;">
               <button class="mdl-button mdl-js-button mdl-button--raised" style = "background-color: white;">History</button>
             </a>
-            
+
           </div>
           <div id="user-container">
             <div hidden id="user-pic"></div>
@@ -113,11 +140,15 @@
         </div>
       </header>
       <div class="mdl-layout__drawer">
+        <br>
+        <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
+        <br>
         <span class="mdl-layout-title">Recommender</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="main_page.html">Home</a>
-          <a class="mdl-navigation__link" href="">Forum</a>
-          <a class="mdl-navigation__link" href="chatbot.html">Chatbot</a>
+          <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal()"><i class="material-icons icon-teal" id="nav-icons" >g_translate</i> Translate</a>
+          <a class="mdl-navigation__link" href="main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i>  Home</a>
+          <a class="mdl-navigation__link" href="forum.html"><i class="material-icons icon-teal" id="nav-icons" >forum</i>  Forum</a>
+          <a class="mdl-navigation__link" href="chatbot.html"><i class="material-icons icon-teal" id="nav-icons" >chat</i>  Chatbot</a>
         </nav>
       </div>
   <body>
@@ -163,7 +194,7 @@
           <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-left: 30%; margin-bottom: 5%; background-color: transparent;" >
               <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px;">skip_next</i>
           </button>
-          
+
           <div id="messagePopUp" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>
@@ -185,6 +216,7 @@
     <script src="./script/Youtube.min.js"></script>
     <script src="./script/recommenderPageController.js"></script>
     <script src="./script/skipChatbotPreference.js"></script>
+    <script src="./script/forum.js"></script>
 
   </body>
 </html>
