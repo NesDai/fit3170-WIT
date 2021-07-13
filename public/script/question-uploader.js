@@ -184,8 +184,8 @@ const SUB_QUESTIONS_3_2 = [
     "Online ordering for food or groceries",
     "Using social network (such as Facebook, Instagram, Twitter, etc.)",
     "Taking a photo",
-    "Mapping, navigator (such as Google Map, Waze, Tom-Tom, etc.)",
-    "Managing my appointment on my calendar",
+    "Mapping navigator (such as Google Map, Waze, Tom-Tom, etc.)",
+    "Managing my appointment on the calendar on my smartphone or computer",
     "Reading online news or online magazines",
     "Taking notes (such as shopping lists or tasks) that I need to do",
     "Filming a video",
@@ -286,7 +286,7 @@ const PART4 = [
     "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day",
 
     "How many hours per week do you devote to learning something new or useful" +
-    "using a mobile phone? (enter a number)",
+    " using a mobile phone? (enter a number)",
     // The question above this line is question 4.2
 
     "How interested are you to learn the following skills using a mobile phone?" +
@@ -348,7 +348,7 @@ function pushPart1Questions() {
     setPartNumber(1);
 
     // Question 1.1
-    pushNumeric("1.1", PART1[1], 50, 200, true,
+    pushNumeric("1.1", PART1[1], 50, 100, true,
         HINTS_PART1[1]);
 
     // Question 1.2
@@ -670,7 +670,7 @@ function pushNumeric(questionNumber, questionText, lowerRange, upperRange,
         question: "What is your age in years? (enter a number)",
         restrictions: {
             lowerRange: 50,
-            upperRange: 120,
+            upperRange: 100,
             skipIfInvalid: true
         },
         hint: "placeholder"
