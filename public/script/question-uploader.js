@@ -185,7 +185,7 @@ const SUB_QUESTIONS_3_2 = [
     "Using social network (such as Facebook, Instagram, Twitter, etc.)",
     "Taking a photo",
     "Mapping navigator (such as Google Map, Waze, Tom-Tom, etc.)",
-    "Managing my appointment on the calendar on my smartphone or computer",
+    "Managing my appointment on the calendar in my smartphone or computer",
     "Reading online news or online magazines",
     "Taking notes (such as shopping lists or tasks) that I need to do",
     "Filming a video",
@@ -236,8 +236,8 @@ const PART3 = [
     "How do you access the Internet using your mobile phone?",
     // The question above this line is question 3.1
 
-    "How confident are you in using the following platforms? (Rate from 1 to 5)\n" +
-    "[1] Not confident at all, [2] Somewhat not confident, [3] Moderately confident,\n" +
+    "How confident are you in using the following platforms? (Rate from 0 to 5)\n" +
+    "[0] I don’t know or not applicable (N/A), [1] Not confident at all, [2] Somewhat not confident, [3] Moderately confident,\n" +
     "[4] Somewhat confident, [5] Extremely confident."
     // The question above this line is a long question (3.2)
 ];
@@ -571,11 +571,11 @@ function pushPart3Questions() {
 
     // Question 3.1
     let choices_3_1 = [
-        "prepaid mobile data plan",
-        "postpaid mobile data plan",
-        "home WiFi broadband plan",
-        "public WiFi hotspot",
-        "I don't have access to Internet"
+        "Prepaid mobile data plan",
+        "Postpaid mobile data plan",
+        "Home WiFi broadband plan",
+        "Public WiFi hotspot",
+        "I don't know how to access the Internet"
     ];
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
@@ -595,7 +595,7 @@ function pushPart3Questions() {
         // Questions 3.2 a to r (18 questions in total)
         for (let i = 1; i < SUB_QUESTIONS_3_2.length; i++) {
             appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_3_2[i],
-                1, 5, false,
+                0, 5, false,
                 SUB_QUESTIONS_HINTS_3_2[i]);
         }
     });
