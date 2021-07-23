@@ -90,6 +90,8 @@ function render(){
 
 }
 
+let credentials;
+let persisted = false; //true if the logged in user does not need to sign in again. And instead if has persisted from other session
 /**
  * function used to authenticate the user's phone number by sending them an OTP
  */
@@ -105,7 +107,7 @@ function phoneAuth() {
     }
     //it takes two parameter first one is number,,,second one is recaptcha
 
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>
     //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
     firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
@@ -113,6 +115,9 @@ function phoneAuth() {
         coderesult=confirmationResult;
         document.getElementById("input-pin").innerHTML = "It might take a minute to send the SMS to your phone.\n Once the SMS with the PIN has been sent to your phone. Please insert the pin below."
         document.getElementById("input-pin").style.color = "green";
+
+        // alert(confirmationResult.confirm(document.getElementById("verificationCode").value));
+        // return confirmationResult.confirm(document.getElementById("verificationCode").value);
 
         // alert("Message sent");
     }).catch(function (error) {
@@ -163,7 +168,8 @@ function codeverify() {
         const user = result.user
 
         //check if this user is already registered
-        checkUserExistence(document.getElementById("number").value);
+        // checkUserExistence(document.getElementById("number").value);
+
 
 
 
@@ -175,42 +181,37 @@ function codeverify() {
     });
 }
 
+
+let exists = false;
+
 /**
  * Function used to check if the user with the given phone number of already present in the database
  * @param {1} phone: the user's phone number 
  * @returns boolean true if exists and false is does not
  */
 function checkUserExistence(phone){
-    let exists = false;
-    
+    let username;
     firebase.database().ref(`users/${phone}`).once("value", snapshot => {
+        
         if (snapshot.exists()){
            exists = true;
+           username = snapshot.val().username;
         }
      }).then(()=>{
 
         if(!exists){ //Create a new account
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
-            localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
+            // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
             window.location = "username.html"; //TODO make this a proper redirect
-
-            
         }
         else{
             // !!LOG IN !!!
-            firebase.database().ref(`users/${phone}`).once('value', data => {
-                let user = {
-                    phone: phone,
-                    username: data.val().username
-                };
-                localStorage.setItem(USER_KEY, JSON.stringify(user));
-            });
-            setInterval(function(){ 
-                window.location = "main_page.html"
-            }, 2000); // after 2 seconds
-            alert("successfully logged in")
 
-        
+            let user = JSON.parse(localStorage.getItem(USER_KEY));
+
+            user["username"] = username;
+            localStorage.setItem(USER_KEY,JSON.stringify(user));
+            window.location = "main_page.html"
         }
 
      });
@@ -233,9 +234,18 @@ function makeNewUser(phone,username){
 }
 
 
-firebase.auth().onAuthStateChanged(user => {
+firebase.auth().onAuthStateChanged(function(user){
     if (user) {
-      console.log(user)
+        user.phone = user.phoneNumber;
+
+        localStorage.setItem(USER_KEY,JSON.stringify(user));
+        let userjson = JSON.parse(localStorage.getItem(USER_KEY));
+        userjson["phone"] = userjson["phoneNumber"]
+        localStorage.setItem(USER_KEY, JSON.stringify(userjson))
+        checkUserExistence(user.phoneNumber);
+
+
+     
 
     }
     else {
