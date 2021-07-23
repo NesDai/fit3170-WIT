@@ -90,6 +90,8 @@ function render(){
 
 }
 
+let credentials;
+let persisted = false; //true if the logged in user does not need to sign in again. And instead if has persisted from other session
 /**
  * function used to authenticate the user's phone number by sending them an OTP
  */
@@ -166,7 +168,7 @@ function codeverify() {
         const user = result.user
 
         //check if this user is already registered
-        checkUserExistence(document.getElementById("number").value);
+        // checkUserExistence(document.getElementById("number").value);
 
 
 
@@ -181,47 +183,38 @@ function codeverify() {
 
 
 let exists = false;
+
 /**
  * Function used to check if the user with the given phone number of already present in the database
  * @param {1} phone: the user's phone number 
  * @returns boolean true if exists and false is does not
  */
 function checkUserExistence(phone){
-    
+    let username;
     firebase.database().ref(`users/${phone}`).once("value", snapshot => {
+        
         if (snapshot.exists()){
            exists = true;
+           username = snapshot.val().username;
         }
      }).then(()=>{
 
         if(!exists){ //Create a new account
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
-            localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-            // window.location = "username.html"; //TODO make this a proper redirect
-
-            
+            // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
+            window.location = "username.html"; //TODO make this a proper redirect
         }
         else{
             // !!LOG IN !!!
-            firebase.database().ref(`users/${phone}`).once('value', data => {
-                let user = {
-                    phone: phone,
-                    username: data.val().username
-                };
-                localStorage.setItem(USER_KEY, JSON.stringify(user));
-            });
 
+            let user = JSON.parse(localStorage.getItem(USER_KEY));
 
-            // window.location = "main_page.html"
-
-
-
-        
+            user["username"] = username;
+            localStorage.setItem(USER_KEY,JSON.stringify(user));
+            window.location = "main_page.html"
         }
-        alert("here"+exists);
-     });
 
-     alert("here"+exists);
+     });
         
 }
    
@@ -241,16 +234,18 @@ function makeNewUser(phone,username){
 }
 
 
-firebase.auth().onAuthStateChanged(user => {
+firebase.auth().onAuthStateChanged(function(user){
     if (user) {
-      localStorage.setItem("iusuebrpifn",JSON.stringify(user));
-      alert(user)
-      if(exists){
-        window.location = "main_page.html";
-      }
-      else{
-        window.location = "username.html"
-      }
+        user.phone = user.phoneNumber;
+
+        localStorage.setItem(USER_KEY,JSON.stringify(user));
+        let userjson = JSON.parse(localStorage.getItem(USER_KEY));
+        userjson["phone"] = userjson["phoneNumber"]
+        localStorage.setItem(USER_KEY, JSON.stringify(userjson))
+        checkUserExistence(user.phoneNumber);
+
+
+     
 
     }
     else {
