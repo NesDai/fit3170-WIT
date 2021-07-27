@@ -94,13 +94,12 @@
          border-bottom-right-radius: 10px;
          border-bottom-left-radius: 10px;
          }
-
          @media all and (min-width:551px) {
          .desktop-br {display: inline;}
          .mobile-br {display: none;}
          .checkbox-inline { 
-           padding-left:40px; 
-           padding-top:10px;}
+         padding-left:40px; 
+         padding-top:10px;}
          .top_title{
          position: relative;
          right: 100px
@@ -113,14 +112,13 @@
          border-radius: 10px;
          }
          }
-
          @media all and (max-width: 1000px) {
          .desktop-br {display: none;}
          .mobile-br {display: inline;}
          .checkbox-inline { 
-           padding-left:50px; 
-           padding-top:15px;
-          }
+         padding-left:50px; 
+         padding-top:15px;
+         }
          .top_title{
          position: relative;
          right: 40px
@@ -167,7 +165,8 @@
          <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();">  <i class="material-icons icon-teal" id="nav-icons" >g_translate</i> Translate</a>
          <a class="mdl-navigation__link" href="./main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i> Home Page</a>
          <a class="mdl-navigation__link" href="./forum.html"><i class="material-icons icon-teal notranslate" id="nav-icons">forum</i> Forum Page</a>
-         <a class="mdl-navigation__link" href=""><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Recommended</a>
+         <a class="mdl-navigation__link" href="./recommenderUi.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Recommender</a>
+         <a class="mdl-navigation__link" href="./chatbot.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Chat Bot</a>
       </nav>
    </div>
    <body>
@@ -198,7 +197,6 @@
                         <br>
                         <!-- INTEREST BUTTON -->
                         <div id="interests_box">
-                           
                            <label class="checkbox-inline" id="interest1" >
                            <input type="checkbox" name="interests" value="interest1" /> #interest1
                            </label>
@@ -216,7 +214,6 @@
                            <label class="checkbox-inline" >
                            <input type="checkbox" name="interests" value="interest5" /> #interest5
                            </label>
-
                            <br class="desktop-br">
                            <label class="checkbox-inline">
                            <input type="checkbox" name="interests" value="interest6" /> #interest6
@@ -226,7 +223,6 @@
                            <input type="checkbox" name="interests" value="interest7" /> #interest7
                            </label>
                         </div>
-
                         <script type="text/javascript">
                            $(document).ready(function () {
                               $("input[name='interests']").change(function () {

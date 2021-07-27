@@ -181,14 +181,14 @@ html,body {
     }
     #h3
     {
-       position:relative; 
-       left:300px;
+    position:relative; 
+    left:300px;
     }
     @media all and (min-width:800px) {
     /* laptop */
     h3{
-       position: relative;
-       left: 330px;
+    position: relative;
+    left: 330px;
     }
     .container {
     position: relative;
@@ -276,8 +276,8 @@ html,body {
     @media all and (max-width: 1024px) {
     /* mobile */
     h3{
-       position: relative;
-       left: 40px;
+    position: relative;
+    left: 40px;
     }
     .tabs {
     display: flex;
@@ -348,7 +348,6 @@ html,body {
     {
     background-color:#e53935;
     }
-
     .modal {
     display: none;
     /* Hidden by default */
@@ -386,261 +385,259 @@ html,body {
     {
     background-color: #006DAE;
     }
-
-
     /* post */
-        .comment_input, .reply_input{
-        width: 95%;
-        margin: 10px;
-        border-radius: 10px;
-        height: 30px;
-        }
-        #send_comment_btn:hover{
-        border: black;
-        }
-        .mdl-checkbox{
-        position: absolute;
-        display:inline;
-        margin-top:10px;
-        margin-left: 15px;
-        }
-        .comment_section{
-        margin:10px;
-        }
-        .mdl-checkbox__label{
-        font-weight: 400;
-        color: white;
-        }
-        p{
-        margin: 0 0 10px 20px;
-        font-size: medium;
-        font-weight: 400;
-        padding: 10px;
-        max-width: 100%;
-        position: relative;
-        bottom: 20px;
-        right: 5px
-        }
-        #reply_comment_icon{
-        font-size: 20px;
-        }
-        #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
-        font-size: 17px;
-        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-        color: white !important;
-        }
-        #send_reply_icon
-        {
-        font-size: 17px;
-        }
-        button.like,  button.dislike, button.hideReply{
-        border-radius: 15px;
-        margin: 0 0 0 10px;
-        }
-        button.reply{
-        border-radius: 15px;
-        margin: 2px 0 0 8px;
-        }
-        .hideTextInput, .hideButton, .hideReply{
-        display: none;
-        }
-        .showTextInput{
-        display: inline-block;
-        }
-        .showButton{
-        display: inline;
-        }
-        #username
-        {
-        font-weight: bold;
-        position: relative;
-        left: 7px;
-        top: 3px
-        }
-        #comment_date_posted
-        {
-        font-size: 12px;
-        color: #454746;
-        position: relative;
-        bottom: 9px;
-        left: 7px;
-        }
-        #user_comment
-        {
-           position: relative;
-           right: 18px;
-           top: 5px
-        }
-        #entire-comment
-        {
-        background-color:white;
-        }
-        /* To change the like button back and forth */
-        .like_button_comment_not_liked {
-        border: 2px solid #04AA6D;
-        }
-        .like_button_comment_liked {
-        background-color:#2bbd7e;
-        color: white !important;
-        }
-        .like_button_comment_liked:hover
-        {
-        background-color:#2bbd7e;
-        }
-        .dislike_button_comment_not_clicked {
-        border: 2px solid #e53935;
-        color: white !important;
-        }
-        .dislike_button_comment_clicked {
-        color: white !important;
-        background-color:#e53935;
-        }
-        .dislike_button_comment_clicked:hover
-        {
-        color: white !important;
-        background-color:#e53935;
-        }
-        .reply{
-        position: relative;
-        }
-        .hideButton
-        {
-        position: relative;
-        }
-        .verticalLine {
-        border-left: thick solid #006DAE;
-        position: relative;
-        left: 12px;
-        height:fit-content;
-        bottom: 10px;
-        }
-        .lang_butt {
-           margin: 10%; 
-           width:60%; 
-           background-color: #006DAE;
-        }
-        #lang_text{
-          display: none;
-        }
-        @media all and (min-width:551px) {
-        /* laptop */
-        .mobile-br {display: none;}
-        .demo-card-wide{
-        width: 110%;
-        border-radius: 20px;
-        background: #E4E4E4;
-        }
-        .lang_butt {
-        margin: 2%; 
-        width:30%; 
-        background-color: #006DAE;
-        }
-        #back_btn
-        {
-            display: none
-        }
-        #lang_text{
-          display: inline;
-        }
-        #send_comment_btn, #send_reply_btn{
-        color: white;
-        border-radius: 13px;
-        height: 35px;
-        width: 156px;
-        cursor: pointer;
-        border: white;
-        border:10px;
-        margin-left: 550px;
-        background: #006DAE;
-        }
-        #reply_box
-        {
-        margin:10px;
-        background-color: white;
-        width:95%
-        }
-        #comment_reply_input{
-        width: 80%;
-        margin: 10px;
-        border-radius: 10px;
-        height: 30px;
-        }
-        }
-        @media all and (max-width: 1000px) {
-        /* phone */
-        .mobile-br {display:inline;}
-        .demo-card-wide{
-        width: 100%;
-        border-radius: 20px;
-        background: #E4E4E4;
-        }
-        #reply_box
-        {
-        margin:0 10px;
-        background-color: white;
-        width:90%
-        }
-        #send_reply_btn, #send_comment_btn{
-        border-radius: 15px;
-        width: 10px;
-        position: relative;
-        left: 267px;
-        background-color:#006DAE;
-        color: white;
-        }
-        #comment_reply_input{
-        width: 70%;
-        margin: 10px;
-        border-radius: 10px;
-        height: 30px;
-        }
-        }
-        .mobileHide { display: inline; }
-        /* Smartphone Portrait and Landscape */
-        @media only screen
-        and (min-device-width : 320px)
-        and (max-device-width : 480px){
-        .mobileHide { display: none;}
-        #back_btn {
-        border-radius: 20px;
-        background-color: #00507e;
-        color: white;    
-        position: relative;
-        left: 25px;
-        top:5px
-        }
-        #back_btn:hover {
-            background-color:#006098;
-            }
-            #back_btn_icon{
-            font-size: 20px;
-            }
-        }
-        #like_post_btn
-        {
-        color: black;
-        border: 2px solid #04AA6D;
-        width: 100px
-        }
-        #dislike_post_btn
-        {
-        color: black;
-        border: 2px solid #e53935;
-        width: 100px
-        }
-        .mdl-checkbox {
-        display: inline;     
-        width: 200px;
-        }
-        #delete_post_btn
-        {
-           display: inline;
-           position: relative;
-           left: 88%;
-           bottom: 70px
-        }
-        #delete_post_icon
-        {
-           font-size:40px;
-           color: black;
-        }
+    .comment_input, .reply_input{
+    width: 95%;
+    margin: 10px;
+    border-radius: 10px;
+    height: 30px;
+    }
+    #send_comment_btn:hover{
+    border: black;
+    }
+    .mdl-checkbox{
+    position: absolute;
+    display:inline;
+    margin-top:10px;
+    margin-left: 15px;
+    }
+    .comment_section{
+    margin:10px;
+    }
+    .mdl-checkbox__label{
+    font-weight: 400;
+    color: white;
+    }
+    p{
+    margin: 0 0 10px 20px;
+    font-size: medium;
+    font-weight: 400;
+    padding: 10px;
+    max-width: 100%;
+    position: relative;
+    bottom: 20px;
+    right: 5px
+    }
+    #reply_comment_icon{
+    font-size: 20px;
+    }
+    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
+    font-size: 17px;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    color: white !important;
+    }
+    #send_reply_icon
+    {
+    font-size: 17px;
+    }
+    button.like,  button.dislike, button.hideReply{
+    border-radius: 15px;
+    margin: 0 0 0 10px;
+    }
+    button.reply{
+    border-radius: 15px;
+    margin: 2px 0 0 8px;
+    }
+    .hideTextInput, .hideButton, .hideReply{
+    display: none;
+    }
+    .showTextInput{
+    display: inline-block;
+    }
+    .showButton{
+    display: inline;
+    }
+    #username
+    {
+    font-weight: bold;
+    position: relative;
+    left: 7px;
+    top: 3px
+    }
+    #comment_date_posted
+    {
+    font-size: 12px;
+    color: #454746;
+    position: relative;
+    bottom: 9px;
+    left: 7px;
+    }
+    #user_comment
+    {
+    position: relative;
+    right: 18px;
+    top: 5px
+    }
+    #entire-comment
+    {
+    background-color:white;
+    }
+    /* To change the like button back and forth */
+    .like_button_comment_not_liked {
+    border: 2px solid #04AA6D;
+    }
+    .like_button_comment_liked {
+    background-color:#2bbd7e;
+    color: white !important;
+    }
+    .like_button_comment_liked:hover
+    {
+    background-color:#2bbd7e;
+    }
+    .dislike_button_comment_not_clicked {
+    border: 2px solid #e53935;
+    color: white !important;
+    }
+    .dislike_button_comment_clicked {
+    color: white !important;
+    background-color:#e53935;
+    }
+    .dislike_button_comment_clicked:hover
+    {
+    color: white !important;
+    background-color:#e53935;
+    }
+    .reply{
+    position: relative;
+    }
+    .hideButton
+    {
+    position: relative;
+    }
+    .verticalLine {
+    border-left: thick solid #006DAE;
+    position: relative;
+    left: 12px;
+    height:fit-content;
+    bottom: 10px;
+    }
+    .lang_butt {
+    margin: 10%; 
+    width:60%; 
+    background-color: #006DAE;
+    }
+    #lang_text{
+    display: none;
+    }
+    @media all and (min-width:551px) {
+    /* laptop */
+    .mobile-br {display: none;}
+    .demo-card-wide{
+    width: 110%;
+    border-radius: 20px;
+    background: #E4E4E4;
+    }
+    .lang_butt {
+    margin: 2%; 
+    width:30%; 
+    background-color: #006DAE;
+    }
+    #back_btn
+    {
+    display: none
+    }
+    #lang_text{
+    display: inline;
+    }
+    #send_comment_btn, #send_reply_btn{
+    color: white;
+    border-radius: 13px;
+    height: 35px;
+    width: 156px;
+    cursor: pointer;
+    border: white;
+    border:10px;
+    margin-left: 550px;
+    background: #006DAE;
+    }
+    #reply_box
+    {
+    margin:10px;
+    background-color: white;
+    width:95%
+    }
+    #comment_reply_input{
+    width: 80%;
+    margin: 10px;
+    border-radius: 10px;
+    height: 30px;
+    }
+    }
+    @media all and (max-width: 1000px) {
+    /* phone */
+    .mobile-br {display:inline;}
+    .demo-card-wide{
+    width: 100%;
+    border-radius: 20px;
+    background: #E4E4E4;
+    }
+    #reply_box
+    {
+    margin:0 10px;
+    background-color: white;
+    width:90%
+    }
+    #send_reply_btn, #send_comment_btn{
+    border-radius: 15px;
+    width: 10px;
+    position: relative;
+    left: 267px;
+    background-color:#006DAE;
+    color: white;
+    }
+    #comment_reply_input{
+    width: 70%;
+    margin: 10px;
+    border-radius: 10px;
+    height: 30px;
+    }
+    }
+    .mobileHide { display: inline; }
+    /* Smartphone Portrait and Landscape */
+    @media only screen
+    and (min-device-width : 320px)
+    and (max-device-width : 480px){
+    .mobileHide { display: none;}
+    #back_btn {
+    border-radius: 20px;
+    background-color: #00507e;
+    color: white;    
+    position: relative;
+    left: 25px;
+    top:5px
+    }
+    #back_btn:hover {
+    background-color:#006098;
+    }
+    #back_btn_icon{
+    font-size: 20px;
+    }
+    }
+    #like_post_btn
+    {
+    color: black;
+    border: 2px solid #04AA6D;
+    width: 100px
+    }
+    #dislike_post_btn
+    {
+    color: black;
+    border: 2px solid #e53935;
+    width: 100px
+    }
+    .mdl-checkbox {
+    display: inline;     
+    width: 200px;
+    }
+    #delete_post_btn
+    {
+    display: inline;
+    position: relative;
+    left: 88%;
+    bottom: 70px
+    }
+    #delete_post_icon
+    {
+    font-size:40px;
+    color: black;
+    }
