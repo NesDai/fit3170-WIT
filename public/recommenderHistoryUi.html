@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Learn how to use the Firebase platform on the Web">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommender</title>
+    <title>Recommender - History</title>
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -18,13 +15,13 @@
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Recommender">
+    <meta name="application-name" content="Recommender-History">
     <meta name="theme-color" content="#303F9F">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Recommender">
+    <meta name="apple-mobile-web-app-title" content="Recommender-History">
     <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
     <!-- Tile icon for Win8 -->
@@ -91,17 +88,13 @@
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <!-- Header section -->
-    <header class="mdl-layout__header">
+    <header class="mdl-layout__header mdl-color-text--white">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-          <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop ">
-            <h3 style= "margin-left: -55%; margin-right: 55% ; margin-bottom: 3%;">Recommender</h3>
-            <a class="mdl-navigation__link" href="recommenderHistoryUi.html" style="margin-left: 100%;">
-              <button class="mdl-button mdl-js-button mdl-button--raised" style = "background-color: white;">History</button>
+          <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+            <h3 style= "margin-left: -55%; margin-right: 55% ; margin-bottom: 3%;">Recommender - History</h3>
+            <a class="mdl-navigation__link" href="recommenderUi.html" style = "margin-left: 100%;">
+              <button class="mdl-button mdl-js-button mdl-button--raised" style = "background-color: white;">Return</button>
             </a>
-            <a class="mdl-navigation__link" href="recommenderFavouriteUi.html" >
-                <button class="mdl-button mdl-js-button mdl-button--raised" style = "background-color: white;">Favourites</button>
-              </a>
-            
           </div>
           <div id="user-container">
             <div hidden id="user-pic"></div>
@@ -124,70 +117,38 @@
         </nav>
       </div>
   <body>
-    <main class="mdl-layout__content mdl-color--grey-100">
-    <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
 
-      <div id="recommendation-card" class="mdl-card mdl-shadow--2dp" style="align-items: center;">
-        <div class="mdl-card__title" id="upperSectionHeader">Our recommendation for you:</div>
-        <div class="mdl-card__media" id="videoContainer" >
-            <video
-            id="my-video"
-            class="video-js vjs-fluid"
-            preload="true"
-          >
-            </video>
-        </div>
-        <div class="mdl-card__subtitle-text" id="videoDescription" style="margin-left: 5%; margin-right: 5%">This is the description for this video.</div>
-        <div class="mdl-card__actions mdl-card--border">
-            <button id= "negativeRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "negativeRating()" >
-                <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_up</i>
-            </button>
 
-            <button id= "positiveRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "positiveRating()" >
-                <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_down</i>
-            </button>
+    <!-- Table style -->
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" id ="historyTable">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric"></th>
+          <th class="mdl-data-table__cell--non-numeric">Video name</th>
+          <th>URL</th>
+          <th class="mdl-data-table__cell--non-numeric"></th>
+          <th>
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="deleteAllHistory()">
+              Delete All
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody id = "historyTableBody">
 
-          <!-- <a>
-            <img id="positiveImage" src = "./css/images/thumbs_up.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "positiveRating()"></img>
-          </a> -->
+      </tbody>
+    </table>
 
-          <!-- <a>
-            <img id="negativeImage" src = "./css/images/thumbs_down.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "negativeRating()"></img>
-          </a> -->
-
-          <!-- <a>
-            <img id = "favoriteIcon"  src = "./css/images/heart_icon.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "favoriteRating()"></img>
-          </a> -->
-
-          <button id="favoriteIcon" onclick= "favoriteRating()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "background-color: transparent; margin-bottom: 5%;" >
-            <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px; ">favorite_border</i>
-          </button>
-
-          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-left: 30%; margin-bottom: 5%; background-color: transparent;" >
-              <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px;">skip_next</i>
-          </button>
-          
-          <div id="messagePopUp" class="mdl-js-snackbar mdl-snackbar">
-            <div class="mdl-snackbar__text"></div>
-            <button class="mdl-snackbar__action" type="button"></button>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-    </main>
-
-    <!-- FIREBAS STUFF I GOT FROM YT-->
     <script src="/__/firebase/7.18.0/firebase-app.js"></script>
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js?useEmulator=true"></script>
-    <script src="/__/firebase/8.3.3/firebase-firestore.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
     <script src="./script/Youtube.min.js"></script>
-    <script src="./script/recommenderPageController.js"></script>
-    <script src="./script/skipChatbotPreference.js"></script>
+    <script src="./script/recommenderHistoryPageController.js"></script>
 
   </body>
 </html>
