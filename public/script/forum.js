@@ -162,7 +162,7 @@ function printAllPosts(){
 
                 field.innerHTML +=
                 `   <div style="padding-top: 20px;">
-                <span class="post_card">
+                        <span class="post_card">
                            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                               <!-- POST HEADER -->
                               <br>
@@ -201,7 +201,7 @@ function printAllPosts(){
                                 </button>
                               </div>
                               <br>
-                </span>
+                        </span>
                  </div>`;
             }
         });
