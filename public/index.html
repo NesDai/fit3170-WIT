@@ -31,6 +31,8 @@
     }
     .trans-section {
         margin: 100px;
+        padding: 20px;
+        padding-bottom: 25px;
     }
 
     .lang_butt {
@@ -45,41 +47,6 @@
     <div class="limiter">
 
       <div class="background">
-        <div class="trans-section">
-          <h3 style="color: white;">Select Language</h3>
-          <div id="google_translate_element" style="display: none;"></div>
-                  <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="reset();"
-                        value="English">
-                  <label>
-                    <span class="flag-icon flag-icon-us">
-                    </span> English
-                  </label>
-                </button>
-                <br>
-                <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-                        value="Chinese (Simplified)">
-                  <label>
-                    <span class="flag-icon flag-icon-cn">
-                    </span> Chinese
-                  </label>
-                </button>
-                <br>
-                <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-                        value="Thai">
-                  <label>
-                    <span class="flag-icon flag-icon-th">
-                    </span> Thai
-                  </label>
-                </button>
-                <br>
-                <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-                        value="Malay">
-                  <label>
-                    <span class="flag-icon flag-icon-my">
-                    </span> Malay
-                  </label>
-                </button>
-          </div>
         <div class="wrap-login">
           <div style="width: 100%;">
 
@@ -137,6 +104,46 @@
           </div>
         </div>
       </div>
+
+      <div class="trans-section" style="background-color: white; border-radius: 10px; width: 15%">
+        <h3 style="color: black; text-align: center;">Select Language</h3>
+        <div id="google_translate_element" style="display: none;"></div>
+                <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="reset();"
+                      value="English" style="width: 200px;">
+                <label>
+                   English
+                   <span class="flag-icon flag-icon-us">
+                  </span>
+                </label>
+              </button>
+              <br>
+              <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
+                      value="Chinese (Simplified)" style="width: 200px;">
+                <label>
+                  Chinese
+                  <span class="flag-icon flag-icon-cn">
+                  </span> 
+                </label>
+              </button>
+              <br>
+              <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
+                      value="Thai" style="width: 200px;">
+                <label>
+                  Thai
+                  <span class="flag-icon flag-icon-th">
+                  </span> 
+                </label>
+              </button>
+              <br>
+              <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
+                      value="Malay" style="width: 200px;">
+                <label>
+                  Malay
+                  <span class="flag-icon flag-icon-my">
+                  </span> 
+                </label>
+              </button>
+        </div>
     </div>
   </div>
 </div>
