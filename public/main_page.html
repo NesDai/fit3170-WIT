@@ -1,40 +1,40 @@
 <html>
-   <head>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script 
-         src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-      <link rel = "stylesheet" 
+<head>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script
+           src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+   <link rel = "stylesheet"
          href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-      <link rel = "stylesheet" 
+   <link rel = "stylesheet"
          href = "https://fonts.googleapis.com/icon?family = Material+Icons">
-      <style>
-         .chatbot-card > .mdl-card__title {
+   <style>
+      .chatbot-card > .mdl-card__title {
          color: #fff;
          height: 176px;
-         background: url("css/images/chatbot.jpg") center / cover;
-         }
-         .recommender-card > .mdl-card__title {
+         background: #00695c;
+      }
+      .recommender-card > .mdl-card__title {
          color: #fff;
          height: 176px;
-         background: url("css/images/recommender.jpg") center / cover;
-         }
-         .forum-card > .mdl-card__title {
+         background: #00695c;
+      }
+      .forum-card > .mdl-card__title {
          color: #fff;
          height: 176px;
-         background: url("css/images/forum.jpg") center / cover;
-         }
-         .forum-card.mdl-card__title,
-         .recommender-card > .mdl-card__title, 
-         .chatbot-card.mdl-card__title
-         {
+         background: #00695c;
+      }
+      .forum-card.mdl-card__title,
+      .recommender-card > .mdl-card__title,
+      .chatbot-card.mdl-card__title
+      {
          color: #fff;
          height: 176px;
-         }
-         .recommender-card,
-         .chatbot-card,
-         .forum-card
-         {
+      }
+      .recommender-card,
+      .chatbot-card,
+      .forum-card
+      {
          height: 350px;
          width: 350px;
          }
@@ -45,7 +45,7 @@
       <div id="google_translate_element" style="display: none;"></div> 
       <!--  -->
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header">
+      <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
          <a class="btn btn-primary" href="#navigation-main" aria-label="Skip to main navigation">
          <i class="fa fa-bars notranslate" aria-hidden="true"></i>
          </a>
@@ -63,42 +63,53 @@
             <a class="mdl-navigation__link" href="">Settings</a>
          </nav>
       </div>
-      <main class="mdl-layout__content">
-         <div class="page-content">
-            <h3 style="font-family: albertus extra bold; text-align: center" id="username"></h3>
-            <h5 style="font-family:charter bt; text-align: center  " >  Welcome to women empowerment website! Our main goal is to give you some entertainment and to help you find the content according to your interests. <br>Choose one of the following:</h5>
-            <div class = "mdl-grid">
-               <div class = "mdl-cell mdl-cell--4-col" style="left: 100000px">
-                  <!-- This is a chatbot card-->
-                  <div class = "chatbot-card mdl-card mdl-shadow--4dp">
-                     <div class = "mdl-card__title">
-                        <h2 class = "mdl-card__title-text">ChatBot</h2>
-                     </div>
-                     <div class = "mdl-card__supporting-text">
-                        Answer simple questions and get the recommndations accoring to your interests(change if you want)
-                     </div>
-                     <br><br>
-                     <div class = "mdl-card__actions mdl-card--border">
-                        <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "./chatbot.html"'> Open Chat bot</a>
-                     </div>
+   </header>
+   <div class="mdl-layout__drawer">
+      <i class="fa fa-fw fa-home"></i>
+      <span class="mdl-layout-title">Main menu</span>
+      <nav class="mdl-navigation">
+         <a class="mdl-navigation__link" href="">Chat Bot</a>
+         <a class="mdl-navigation__link" href="">Recommender</a>
+         <a class="mdl-navigation__link" href="">Forum</a>
+         <a class="mdl-navigation__link" href="">Settings</a>
+      </nav>
+   </div>
+   <main class="mdl-layout__content">
+      <div class="page-content">
+         <h3 style="font-family: albertus extra bold; text-align: center" id="username"></h3>
+         <h5 style="font-family:charter bt; text-align: center  " >  Welcome to women empowerment website! Our main goal is to give you some entertainment and to help you find the content according to your interests. <br>Choose one of the following:</h5>
+         <div class = "mdl-grid">
+            <div class = "mdl-cell mdl-cell--4-col " style="left: 100000px">
+               <!-- This is a chatbot card-->
+               <div class = "chatbot-card mdl-card mdl-shadow--4dp ">
+                  <div class = "mdl-card__title ">
+                     <h2 class = "mdl-card__title-text ">ChatBot</h2>
+                  </div>
+                  <div class = "mdl-card__supporting-text">
+                     Answer simple questions and get the recommndations accoring to your interests(change if you want)
+                  </div>
+                  <br><br>
+                  <div class = "mdl-card__actions mdl-card--border">
+                     <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "./chatbot.html"'> Open Chat bot</a>
                   </div>
                </div>
-               <div class = "mdl-cell mdl-cell--4-col">
-                  <!-- This is a recommender card-->
-                  <div class = "recommender-card mdl-card mdl-shadow--4dp">
-                     <div class = "mdl-card__title">
-                        <h2 class = "mdl-card__title-text">Recommender</h2>
-                     </div>
-                     <div class = "mdl-card__supporting-text">
-                        Get recommendations of the videos and articles that suit your interests
-                     </div>
-                     <br><br>
-                     <div class = "mdl-card__actions mdl-card--border">
-                        <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "./recommenderUi.html"'>
+            </div>
+            <div class = "mdl-cell mdl-cell--4-col">
+               <!-- This is a recommender card-->
+               <div class = "recommender-card mdl-card mdl-shadow--4dp">
+                  <div class = "mdl-card__title">
+                     <h2 class = "mdl-card__title-text">Recommender</h2>
+                  </div>
+                  <div class = "mdl-card__supporting-text">
+                     Get recommendations of the videos and articles that suit your interests
+                  </div>
+                  <br><br>
+                  <div class = "mdl-card__actions mdl-card--border">
+                     <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="checkSurveyCompletion()">
                         Open the recommender</a>
-                     </div>
                   </div>
                </div>
+            </div>
                <!-- This is a forum card-->
                <div class = "mdl-cell mdl-cell--4-col">
                   <div class = "forum-card mdl-card mdl-shadow--4dp">
@@ -112,17 +123,20 @@
                      <div class = "mdl-card__actions mdl-card--border">
                         <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "forum.html"'>
                         Open forum</a>
-                     </div>
-                     <div class = "mdl-card__menu">
-                        <button class = "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                        </button>
-                     </div>
+                  </div>
+                  <div class = "mdl-card__menu">
+                     <button class = "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                     </button>
                   </div>
                </div>
             </div>
          </div>
+      </div>
 
-      </main>
+   </main>
+
+      
+      </div>
       <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
       <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -132,10 +146,12 @@
   
       <!-- FIREBAS STUFF I GOT FROM YT-->
       <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+      <script src="/__/firebase/8.3.3/firebase-firestore.js"></script>
       <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
       <script src="/__/firebase/7.18.0/firebase-database.js"></script>
       <script src="/__/firebase/init.js?useEmulator=true"></script>
-      <script src="script/main_page.js"></script>
+      <script src="script/recommenderPageController.JS"></script>
+      <script type="text/javascript" src="script/main_page.js"></script>
 
          <!-- Used for translation -->
                   <!--Dont display the google banner at the top-->
@@ -159,8 +175,8 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js" type="text/javascript"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+      <script src="script/recommenderPageController.JS"></script>
       <script src="script/translation.js"></script>
-      
-      </div>
+      <script src="script/translatePage.js"></script>
    </body>
 </html>

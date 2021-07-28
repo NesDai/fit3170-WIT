@@ -9,12 +9,10 @@ function register(username,phone){
       });
 
     //set logged in user into local storage
-    let user = {
-        phone: phone,
-        username: username
-    }
-
+    let user = JSON.parse(localStorage.getItem(USER_KEY));
+    user["username"] = username;
     localStorage.setItem(USER_KEY,JSON.stringify(user));
+
 
     //let the user know everything went fine
     document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
@@ -80,7 +78,7 @@ function checkUsernameValidity(){
             document.getElementById("error").innerHTML = "";
             //if valid, register the user
 
-            register(username, JSON.parse(localStorage.getItem(USER_KEY)))
+            register(username, JSON.parse(localStorage.getItem(USER_KEY))["phoneNumber"])
         }
 
 

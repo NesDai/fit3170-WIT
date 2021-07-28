@@ -1,6 +1,12 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
-window.onload = printAllPosts();
+
+window.onload = execute()
+
+function execute(){
+    printAllPosts();
+
+}
 
 //check id the user is signed in
 function checkUserExistence() {
@@ -21,18 +27,6 @@ function hideTranslationModal(){
 }
 
 
-function addReply(){
-
-    // show text input
-    document.getElementById("comment_reply_input").className="showTextInput"
-
-    // show send button
-    document.getElementById("send_reply_btn").className="showButton mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-
-    // hide add reply button
-    document.getElementById("add_reply_btn").className="hideReply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-}
-
 
 //Making a new post
 function makeNewPost() {
@@ -51,6 +45,12 @@ function makeNewPost() {
         $("input:checkbox[name=interests]:checked").each(function(){
             interest_arr.push($(this).val());
         });
+
+        if (!interest_arr.length){
+            alert("The post needs to have at least one interest")
+            return
+        }
+
 
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
@@ -84,19 +84,6 @@ function makeNewPost() {
     // } else {
     //     window.location = "forum.html";
     // }
-}
-
-
-
-function removePost(post_id) {
-    firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
-        let post = snapshot.val();
-        if (post["userID"] == current_user["phone"]) {
-            firebase.database().ref(`posts/${post_id}`).remove();
-        } else {
-            console.log("invalid");
-        }
-    });
 }
 
 
@@ -159,8 +146,7 @@ function findAllPosts() {
 function printAllPosts(){
     let data_list = [];
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
-    console.log("fuclk")
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .once('value', x => {
@@ -186,11 +172,11 @@ function printAllPosts(){
                        </div>
                        <br>
                        <div class="post_header" style="margin:0 10px; background-color: white">
-                          <h5 class="post_header mdl-color-text--black;"style="padding-left:18px">${post.title}</h5>
+                          <h4 class="post_header mdl-color-text--black;"style="padding-left:18px">${post.title}</h4>
                        </div>
                        <!-- POST FORM -->
                        <form class="post_content" style="margin:0 10px; background-color: white">
-                          <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
+                          <h5 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h5>
                           <br>
                           <div style='inline-block'>
                              <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
@@ -208,7 +194,6 @@ function printAllPosts(){
                             <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                             </button>
                             <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-                            <input type="hidden" id="hidden1" value=${post.id}>
                             <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                             </button>
                        </div>
@@ -216,20 +201,15 @@ function printAllPosts(){
                  </span></div>`;
             }
         });
+
+
 }
 
-const POST_ID = "POST_ID";
-function postDetail(id) {
-        console.log(id);
-        localStorage.setItem(POST_ID,id);
-        // post_id = document.getElementById("hidden1").value;
-        window.location = "post.html";// + "?post_id=" + post_id;
-}
 
 function printUserPosts(){
 
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
+    field.innerHTML = ""; // emtpy the field of any previous posts
     let data_list = []
 
     firebase.database().ref('posts')
@@ -243,7 +223,7 @@ function printUserPosts(){
                 }).then(()=> {
                     for(let i=data_list.length-1; i>=0 ; i--){
                         let post = data_list[i]
-                        console.log(data_list[i].id);
+
                         field.innerHTML +=
                         `   <div style="padding-top: 20px;"><span class="post_card">
                             <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -278,8 +258,8 @@ function printUserPosts(){
                                   <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                   </button>
 
-                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail(${data_list[i].id});">
-                                  <input type="hidden" id="hidden1" value=3>
+                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp" id="more_btn" onclick="postDetail('${post.id}');">
+                                    <input type="hidden" id="hidden1" value=3>
 
                                     <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes" >More</span>
                                   </button>
@@ -288,4 +268,9 @@ function printUserPosts(){
                          </span></div>`;
                     }
                 });
+
+}
+
+function postDetail(id) {
+        window.location = "post.html" + "?post_id=" + id;
 }
