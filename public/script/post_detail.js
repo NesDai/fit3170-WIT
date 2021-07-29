@@ -6,11 +6,11 @@ printPostDetails();
 hideTranslationModal();
 
 function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";  
+    document.getElementById("myModal").style.display = "block";
 }
 
 function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";  
+    document.getElementById("myModal").style.display = "none";
 }
 
 function showReplyInput(button_num){
@@ -53,7 +53,7 @@ function printPostDetails(){
               }
                     // print the post details in here
                   post_details.innerHTML +=
-                  
+
                     `
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                               <!-- POST HEADER -->
@@ -152,28 +152,34 @@ function addComment(){
     let comment = document.getElementById("comment_input").value
     let stay_anonymous = document.getElementById("anonymous").checked
 
-    //generating a key for the comment
-    let myRef = firebase.database().ref(`comments`);
-    let key = myRef.push().key;
+
 
     // new data to upload in api
-    let newData = {
-        anonymous: stay_anonymous,
-        commenterID: current_user["phone"],
-        content: comment,
-        dislike:0,
-        id:key,
-        like:0,
-        postID: post_id,
-        username: current_user["username"],
-        created: new Date().toString()
-    }
+    if (comment){ // only addin comment if it's not empty
+      //generating a key for the comment
+      let myRef = firebase.database().ref(`comments`);
+      let key = myRef.push().key;
+      let newData = {
+          anonymous: stay_anonymous,
+          commenterID: current_user["phone"],
+          content: comment,
+          dislike:0,
+          id:key,
+          like:0,
+          postID: post_id,
+          username: current_user["username"],
+          created: new Date().toString()
+      }
 
-    firebase.database().ref(`comments/${key}`).set(newData).then(()=>{
-        alert("Comment made successfully!");
-        console.log("inside");
-        window.location = "post.html" + "?post_id=" + post_id;
-    });
+      firebase.database().ref(`comments/${key}`).set(newData).then(()=>{
+          alert("Comment made successfully!");
+          console.log("inside");
+          window.location = "post.html" + "?post_id=" + post_id;
+      });
+    } else {
+      console.log("works!")
+    };
+
   } else {
     window.location = "forum.html";
   }
@@ -250,25 +256,25 @@ function printComments(){
                  <div id = "add_reply_section${i}" style="display:none">
                     <br>
                      <form class="post_reply">
-        
+
                         <!-- REPLY INPUT -->
                         <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
                         <br>
 
-                        <!-- ANONYMOUS CHECKBOX BUTTON --> 
+                        <!-- ANONYMOUS CHECKBOX BUTTON -->
                         <div>
                           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
                             <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                           </label>
-                      
+
                         <!-- SEND BUTTON -->
                           <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" type="submit" onclick="addReply(${i}, '${comment.id}')">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
                         </div>
-                       
+
                      </form>
                     </div>
                     <br>
@@ -277,7 +283,7 @@ function printComments(){
               </div>
 
               <hr style="margin: 0;">`;
-            } 
+            }
       }).then(() => {
         for(let i=data_list.length-1; i>=0 ; i--){
           printReplies(data_list[i].id,i)
@@ -301,7 +307,7 @@ function printReplies(comment_id,index) {
       .equalTo(comment_id)
         .once('value', x => {
           x.forEach(data => {
-            reply_list.push(data.val()) 
+            reply_list.push(data.val())
           })
         }).then(() => {
           if (reply_list.length != 0){
@@ -348,7 +354,7 @@ function printReplies(comment_id,index) {
 
 
 function redirect(url, msg) {
-  window.location = url; 
+  window.location = url;
   return msg;
 }
 
@@ -375,7 +381,7 @@ function addReply(btn_num,comment_id) {
 
     // unique key for reply
     let myRef = firebase.database().ref(`replies`);
-    let key = myRef.push().key; 
+    let key = myRef.push().key;
 
     // new data to upload in api
     let newData = {
@@ -393,7 +399,7 @@ function addReply(btn_num,comment_id) {
     url = "post.html" + "?post_id=" + post_id;
 
     firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
-      redirect(url, null)     
+      redirect(url, null)
     });
     msg = "Reply Made successfully";
     alert(redirect(url, msg));
@@ -401,4 +407,3 @@ function addReply(btn_num,comment_id) {
     window.location = "forum.html";
   }
 }
-
