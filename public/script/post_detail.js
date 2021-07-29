@@ -245,7 +245,7 @@ function printComments(){
 
                  <!-- ADD REPLY BUTTON FOR COMMENT -->
                  <span>
-                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="add_reply_btn${i}" style="background-color: #006DAE; color: white;" type="submit" onclick="showReplyInput(${i})">
+                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
                  <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                  </span>
                  <br>
@@ -253,7 +253,7 @@ function printComments(){
                  <!-- REPLY SECTION -->
                  <div id = "add_reply_section${i}" style="display:none">
                     <br>
-                     <form class="post_reply">
+                     <div class="post_reply">
 
                         <!-- REPLY INPUT -->
                         <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
@@ -267,13 +267,13 @@ function printComments(){
                           </label>
 
                         <!-- SEND BUTTON -->
-                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" type="submit" onclick="addReply(${i}, '${comment.id}')">
+                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
                         </div>
 
-                     </form>
+                     </div>
                     </div>
                     <br>
                     <div id= "reply_section${i}" style="margin-bottom:10px">
