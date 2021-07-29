@@ -6,11 +6,11 @@ printPostDetails();
 hideTranslationModal();
 
 function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";  
+    document.getElementById("myModal").style.display = "block";
 }
 
 function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";  
+    document.getElementById("myModal").style.display = "none";
 }
 
 function showReplyInput(button_num){
@@ -53,44 +53,46 @@ function printPostDetails(){
               }
                     // print the post details in here
                   post_details.innerHTML +=
-                  
-                    `<div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                      <br>
-                      <div class="f">
-                          <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'><b>${post.username}</b></h2>
-                          <br>
-                          <br>
-                          <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+
+                    `
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                              <!-- POST HEADER -->
+                              <br>
+                              <div class="f">
+                                 <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                              </div>
                           <button class=" mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
                           <i class="material-icons-outlined notranslate" id="delete_post_icon">delete</i>
                           </button>
-                      </div>
-                      <br>
-                      <div class="post_header" style="margin:0 10px; background-color: white">
-                        <h4 class="post_header mdl-color-text--black;"style="padding-left:18px" id="title">${post.title}</h4>
-                      </div>
-                      <!-- POST FORM -->
-                      <form class="post_content" style="margin:0 10px; background-color: white">
-                        <h5 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" id="description">
-                        ${post.description}</h5>
-                        <br>
-                        <div id="post_interests" style='inline-block'>
-                          ${interest}
-                        </div>
-                        <br>
-                      </form>
-
-                      <!--  LIKE DISLIKE FOR POST -->
-                      <div>
-                        <br>
-                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
-                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
-                        </button>
-                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
-                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
-                        </button>
-                      </div>
-                      <br>
+                              <br>
+                              <div class="post_header" style="margin:0 10px; background-color: white">
+                                 <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+                              </div>
+                              <!-- POST FORM -->
+                              <form class="post_content" style="margin:0 10px; background-color: white">
+                                 <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
+                                 <br>
+                                 <div style='display: inline-block'>
+                                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
+                                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                                 </div>
+                                 <br><br>
+                              </form>
+                              <div class="f">
+                              <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                              <div>
+                              <br>
+                              <div>
+                                 <!--  LIKE DISLIKE FOR POST -->
+                                 <br>
+                                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                                 </button>
+                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                                 <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                 </button>
+                              </div>
+                              <br>
                         <hr style="margin: 0">
                         <div class="post_comments_header" style="margin:0 10px; ">
                            <h5 class="comment_header mdl-color-text--black">WRITE A COMMENT</h5>
@@ -111,8 +113,7 @@ function printPostDetails(){
                            </form>
                            <!-- SEND BUTTON -->
                            <div>
-                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                                 style="background-color: #00b686;" id="send_comment_btn" type="submit" onclick="addComment()">
+                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="send_comment_btn" type="submit" onclick="addComment()">
                               <i class="material-icons notranslate" id="send_reply_icon">send</i>
                               SEND
                               </button>
@@ -151,28 +152,32 @@ function addComment(){
     let comment = document.getElementById("comment_input").value
     let stay_anonymous = document.getElementById("anonymous").checked
 
-    //generating a key for the comment
-    let myRef = firebase.database().ref(`comments`);
-    let key = myRef.push().key;
+
 
     // new data to upload in api
-    let newData = {
-        anonymous: stay_anonymous,
-        commenterID: current_user["phone"],
-        content: comment,
-        dislike:0,
-        id:key,
-        like:0,
-        postID: post_id,
-        username: current_user["username"],
-        created: new Date().toString()
-    }
+    if (comment){ // only adding comment if it's not empty
+      //generating a key for the comment
+      let myRef = firebase.database().ref(`comments`);
+      let key = myRef.push().key;
+      let newData = {
+          anonymous: stay_anonymous,
+          commenterID: current_user["phone"],
+          content: comment,
+          dislike:0,
+          id:key,
+          like:0,
+          postID: post_id,
+          username: current_user["username"],
+          created: new Date().toString()
+      }
 
-    firebase.database().ref(`comments/${key}`).set(newData).then(()=>{
-        alert("Comment made successfully!");
-        console.log("inside");
-        window.location = "post.html" + "?post_id=" + post_id;
-    });
+      firebase.database().ref(`comments/${key}`).set(newData).then(()=>{
+          alert("Comment made successfully!");
+          console.log("inside");
+          window.location = "post.html" + "?post_id=" + post_id;
+      });
+    };
+
   } else {
     window.location = "forum.html";
   }
@@ -240,8 +245,7 @@ function printComments(){
 
                  <!-- ADD REPLY BUTTON FOR COMMENT -->
                  <span>
-                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                    style="background-color:#00b686;" id="add_reply_btn${i}" type="submit" onclick="showReplyInput(${i})">
+                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="add_reply_btn${i}" style="background-color: #006DAE; color: white;" type="submit" onclick="showReplyInput(${i})">
                  <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                  </span>
                  <br>
@@ -250,27 +254,25 @@ function printComments(){
                  <div id = "add_reply_section${i}" style="display:none">
                     <br>
                      <form class="post_reply">
-        
+
                         <!-- REPLY INPUT -->
                         <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
                         <br>
+
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
-                        
                         <div>
                           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
                             <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                           </label>
-                      
+
                         <!-- SEND BUTTON -->
-                        
-                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                            style="background-color: #00b686;" id="send_reply_btn" type="submit" onclick="addReply(${i}, '${comment.id}')">
+                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" type="submit" onclick="addReply(${i}, '${comment.id}')">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
                         </div>
-                       
+
                      </form>
                     </div>
                     <br>
@@ -279,7 +281,7 @@ function printComments(){
               </div>
 
               <hr style="margin: 0;">`;
-            } 
+            }
       }).then(() => {
         for(let i=data_list.length-1; i>=0 ; i--){
           printReplies(data_list[i].id,i)
@@ -303,7 +305,7 @@ function printReplies(comment_id,index) {
       .equalTo(comment_id)
         .once('value', x => {
           x.forEach(data => {
-            reply_list.push(data.val()) 
+            reply_list.push(data.val())
           })
         }).then(() => {
           if (reply_list.length != 0){
@@ -350,7 +352,7 @@ function printReplies(comment_id,index) {
 
 
 function redirect(url, msg) {
-  window.location = url; 
+  window.location = url;
   return msg;
 }
 
@@ -374,33 +376,34 @@ function addReply(btn_num,comment_id) {
     // get reply value
     let reply_input = document.getElementById("reply_input"+btn_num.toString()).value;
     let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
-
-    // unique key for reply
-    let myRef = firebase.database().ref(`replies`);
-    let key = myRef.push().key; 
-
     // new data to upload in api
-    let newData = {
-      anonymous: stay_anonymous,
-      content: reply_input,
-      created: new Date().toString(),
-      dislike:0,
-      id:key,
-      like:0,
-      replierId: current_user["phone"],
-      reply_comment_parent: comment_id,
-      username: current_user["username"]
-    }
+    if (reply_input){ // only adding reply if it's not empty
+      // unique key for reply
+      let myRef = firebase.database().ref(`replies`);
+      let key = myRef.push().key;
 
-    url = "post.html" + "?post_id=" + post_id;
+      // new data to upload in api
+      let newData = {
+        anonymous: stay_anonymous,
+        content: reply_input,
+        created: new Date().toString(),
+        dislike:0,
+        id:key,
+        like:0,
+        replierId: current_user["phone"],
+        reply_comment_parent: comment_id,
+        username: current_user["username"]
+      };
 
-    firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
-      redirect(url, null)     
-    });
-    msg = "Reply Made successfully";
-    alert(redirect(url, msg));
+      url = "post.html" + "?post_id=" + post_id;
+
+      firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
+        redirect(url, null)
+      });
+      msg = "Reply Made successfully";
+      alert(redirect(url, msg));
+    };
   } else {
     window.location = "forum.html";
   }
 }
-

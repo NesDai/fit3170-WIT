@@ -1,149 +1,184 @@
 <html>
-<head>
-   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script
-           src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-   <link rel = "stylesheet"
+   <head>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script
+         src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+      <link rel = "stylesheet"
          href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-   <link rel = "stylesheet"
-         href = "https://fonts.googleapis.com/icon?family = Material+Icons">
-   <style>
-      .chatbot-card > .mdl-card__title {
+      <link rel="stylesheet"  href="css/forum.css">
+      <style>
+         body { font-family: Arial
+          }
+          body {
+    background-color: #eee;
+    }
+         .chatbot-card > .mdl-card__title {
          color: #fff;
          height: 176px;
-         background: #00695c;
-      }
-      .recommender-card > .mdl-card__title {
+         background: #006DAE;
+         }
+         .recommender-card > .mdl-card__title {
          color: #fff;
          height: 176px;
-         background: #00695c;
-      }
-      .forum-card > .mdl-card__title {
+         background: #006DAE;
+         }
+         .forum-card > .mdl-card__title {
          color: #fff;
          height: 176px;
-         background: #00695c;
-      }
-      .forum-card.mdl-card__title,
-      .recommender-card > .mdl-card__title,
-      .chatbot-card.mdl-card__title
-      {
+         background: #006DAE;
+         }
+         .forum-card.mdl-card__title,
+         .recommender-card > .mdl-card__title,
+         .chatbot-card.mdl-card__title
+         {
          color: #fff;
          height: 176px;
-      }
-      .recommender-card,
-      .chatbot-card,
-      .forum-card
-      {
+         }
+         .recommender-card,
+         .chatbot-card,
+         .forum-card
+         {
          height: 350px;
          width: 350px;
+         }
+         @media all and (min-width:551px) {
+            #chatbotcard
+            {
+               position: relative; 
+               right: 100px;
+            }
+            #forumcard
+            {
+               position: relative; 
+               left: 100px;
+            }
+         }
+         @media all and (max-width: 1024px) {
+         .desktop-br {display: none;}
+         /* mobile */
+         .recommender-card,
+         .chatbot-card,
+         .forum-card
+         {
+         height: 160px;
+         }
+         .chatbot-card > .mdl-card__title {
+         color: #fff;
+         height: 70px;
+         background: #006DAE;
+         }
+         .recommender-card > .mdl-card__title {
+         color: #fff;
+         height: 70px;
+         background: #006DAE;
+         }
+         .forum-card > .mdl-card__title {
+         color: #fff;
+         height: 70px;
+         background: #006DAE;
+         }
+         }
+         .mdl-card__supporting-text
+         {
+            font-size: 16px;
+         }
+         @media all and (min-width:551px) {
+         .desktop-br {display: inline;}
          }
       </style>
    </head>
    <body>
       <!-- Translation div -->
-      <div id="google_translate_element" style="display: none;"></div> 
-      <!--  -->
+      <div id="google_translate_element" style="display: none;"></div>
+      
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header mdl-color-text--white mdl-color--teal-800">
-         <a class="btn btn-primary" href="#navigation-main" aria-label="Skip to main navigation">
-         <i class="fa fa-bars notranslate" aria-hidden="true"></i>
-         </a>
-         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Main menu</span>
+         <!-- Header section containing logo -->
+      <header class="mdl-layout__header mdl-color-text--white" id='topheader'>
+         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+            <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+               <h3> Home Page</h3>
+               <div class="mdl-layout-spacer"></div>
+            </div>
          </div>
       </header>
       <div class="mdl-layout__drawer">
-         <i class="fa fa-fw fa-home notranslate"></i>
-         <span class="mdl-layout-title">Main menu</span>
+         <br>
+         <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
+         <br>
          <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Chat Bot</a>
-            <a class="mdl-navigation__link" href="">Recommender</a>
-            <a class="mdl-navigation__link" href="./forum.html">Forum</a>
-            <a class="mdl-navigation__link" href="">Settings</a>
+            <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();">  <i class="material-icons icon-teal" id="nav-icons" >g_translate</i> Translate</a>
+            <a class="mdl-navigation__link" href="./forum.html"><i class="material-icons icon-teal notranslate" id="nav-icons">forum</i> Forum Page</a>
+            <a class="mdl-navigation__link" href="./recommenderUi.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Recommender</a>
+            <a class="mdl-navigation__link" href="./chatbot.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Chat Bot</a>
          </nav>
       </div>
-   </header>
-   <div class="mdl-layout__drawer">
-      <i class="fa fa-fw fa-home"></i>
-      <span class="mdl-layout-title">Main menu</span>
-      <nav class="mdl-navigation">
-         <a class="mdl-navigation__link" href="">Chat Bot</a>
-         <a class="mdl-navigation__link" href="">Recommender</a>
-         <a class="mdl-navigation__link" href="">Forum</a>
-         <a class="mdl-navigation__link" href="">Settings</a>
-      </nav>
-   </div>
-   <main class="mdl-layout__content">
-      <div class="page-content">
-         <h3 style="font-family: albertus extra bold; text-align: center" id="username"></h3>
-         <h5 style="font-family:charter bt; text-align: center  " >  Welcome to women empowerment website! Our main goal is to give you some entertainment and to help you find the content according to your interests. <br>Choose one of the following:</h5>
-         <div class = "mdl-grid">
-            <div class = "mdl-cell mdl-cell--4-col " style="left: 100000px">
-               <!-- This is a chatbot card-->
-               <div class = "chatbot-card mdl-card mdl-shadow--4dp ">
-                  <div class = "mdl-card__title ">
-                     <h2 class = "mdl-card__title-text ">ChatBot</h2>
-                  </div>
-                  <div class = "mdl-card__supporting-text">
-                     Answer simple questions and get the recommndations accoring to your interests(change if you want)
-                  </div>
-                  <br><br>
-                  <div class = "mdl-card__actions mdl-card--border">
-                     <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "./chatbot.html"'> Open Chat bot</a>
-                  </div>
-               </div>
-            </div>
-            <div class = "mdl-cell mdl-cell--4-col">
-               <!-- This is a recommender card-->
-               <div class = "recommender-card mdl-card mdl-shadow--4dp">
-                  <div class = "mdl-card__title">
-                     <h2 class = "mdl-card__title-text">Recommender</h2>
-                  </div>
-                  <div class = "mdl-card__supporting-text">
-                     Get recommendations of the videos and articles that suit your interests
-                  </div>
-                  <br><br>
-                  <div class = "mdl-card__actions mdl-card--border">
-                     <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="checkSurveyCompletion()">
-                        Open the recommender</a>
-                  </div>
-               </div>
-            </div>
-               <!-- This is a forum card-->
-               <div class = "mdl-cell mdl-cell--4-col">
-                  <div class = "forum-card mdl-card mdl-shadow--4dp">
-                     <div class = "mdl-card__title">
-                        <h2 class = "mdl-card__title-text">Forum</h2>
+         <main class="mdl-layout__content">
+            <div class="page-content">
+               <h3 style="text-align: center; color: #006DAE" id="username"></h3>
+               <h5 style="text-align: center  " > Choose one of the following:</h5>
+               
+               <div class = "mdl-grid">
+                  <div class = "mdl-cell mdl-cell--4-col" id="chatbotcard"> 
+                     <!-- This is a chatbot card-->
+                     <div class = "chatbot-card mdl-card mdl-shadow--4dp ">
+                        <div class = "mdl-card__title ">
+                           <h2 class = "mdl-card__title-text ">ChatBot</h2>
+                        </div>
+                        <div class = "mdl-card__supporting-text">
+                           Answer simple questions and get the recommndations accoring to your interests
+                        </div>
+                        <br class="desktop-br"> <br class="desktop-br">
+                        <div class = "mdl-card__actions mdl-card--border">
+                           <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "./chatbot.html"'> Open Chat bot</a>
+                        </div>
                      </div>
-                     <div class = "mdl-card__supporting-text">
-                        Interact with other users by liking and commenting their posts and post your own thoughts and questions
-                     </div>
-                     <br><br>
-                     <div class = "mdl-card__actions mdl-card--border">
-                        <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "forum.html"'>
-                        Open forum</a>
                   </div>
-                  <div class = "mdl-card__menu">
-                     <button class = "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                     </button>
+                  <div class = "mdl-cell mdl-cell--4-col" id="recommendercard">
+                     <!-- This is a recommender card-->
+                     <div class = "recommender-card mdl-card mdl-shadow--4dp">
+                        <div class = "mdl-card__title">
+                           <h2 class = "mdl-card__title-text">Recommender</h2>
+                        </div>
+                        <div class = "mdl-card__supporting-text">
+                           Get recommendations of the videos and articles that suit your interests
+                        </div>
+                        <br class="desktop-br"><br><br class="desktop-br">
+                        <div class = "mdl-card__actions mdl-card--border">
+                           <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="checkSurveyCompletion()">
+                           Open the recommender</a>
+                        </div>
+                     </div>
+                  </div><br class="desktop-br"><br class="desktop-br"><br class="desktop-br">
+                  <!-- This is a forum card-->
+                  <div class = "mdl-cell mdl-cell--4-col" id="forumcard">
+                     <div class = "forum-card mdl-card mdl-shadow--4dp">
+                        <div class = "mdl-card__title">
+                           <h2 class = "mdl-card__title-text">Forum</h2>
+                        </div>
+                        <div class = "mdl-card__supporting-text">
+                           Interact with other users by liking and commenting their posts and post your own thoughts and questions
+                        </div>
+                        <br class="desktop-br"><br class="desktop-br">
+                        <div class = "mdl-card__actions mdl-card--border">
+                           <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "forum.html"'>
+                           Open forum</a>
+                        </div>
+                        <div class = "mdl-card__menu">
+                           <button class = "mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                           </button>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
-         </div>
-      </div>
-
-   </main>
-
-      
+         </main>
       </div>
       <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
       <!-- TODO: Add SDKs for Firebase products that you want to use
-       https://firebase.google.com/docs/web/setup#available-libraries -->
+         https://firebase.google.com/docs/web/setup#available-libraries -->
       <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
-  
       <script src = "script/firebaseConfig.js"></script>
-  
       <!-- FIREBAS STUFF I GOT FROM YT-->
       <script src="/__/firebase/7.18.0/firebase-app.js"></script>
       <script src="/__/firebase/8.3.3/firebase-firestore.js"></script>
@@ -152,24 +187,22 @@
       <script src="/__/firebase/init.js?useEmulator=true"></script>
       <script src="script/recommenderPageController.JS"></script>
       <script type="text/javascript" src="script/main_page.js"></script>
-
-         <!-- Used for translation -->
-                  <!--Dont display the google banner at the top-->
-      <style>
-
+      <!-- Used for translation -->
+      <!--Dont display the google banner at the top-->
+      <!-- <style>
          .goog-te-banner-frame.skiptranslate {
-            display: none !important;
+         display: none !important;
          } 
          body {
-            top: 0px !important; 
+         top: 0px !important; 
          }
          .goog-logo-link {
-            display:none !important;
+         display:none !important;
          }
          .trans-section {
-            margin: 100px;
+         margin: 100px;
          }
-      </style>
+      </style> -->
       <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
       <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>
