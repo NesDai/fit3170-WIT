@@ -155,7 +155,7 @@ function addComment(){
 
 
     // new data to upload in api
-    if (comment){ // only addin comment if it's not empty
+    if (comment){ // only adding comment if it's not empty
       //generating a key for the comment
       let myRef = firebase.database().ref(`comments`);
       let key = myRef.push().key;
@@ -176,8 +176,6 @@ function addComment(){
           console.log("inside");
           window.location = "post.html" + "?post_id=" + post_id;
       });
-    } else {
-      console.log("works!")
     };
 
   } else {
@@ -378,31 +376,33 @@ function addReply(btn_num,comment_id) {
     // get reply value
     let reply_input = document.getElementById("reply_input"+btn_num.toString()).value;
     let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
-
-    // unique key for reply
-    let myRef = firebase.database().ref(`replies`);
-    let key = myRef.push().key;
-
     // new data to upload in api
-    let newData = {
-      anonymous: stay_anonymous,
-      content: reply_input,
-      created: new Date().toString(),
-      dislike:0,
-      id:key,
-      like:0,
-      replierId: current_user["phone"],
-      reply_comment_parent: comment_id,
-      username: current_user["username"]
-    }
+    if (reply_input){ // only adding reply if it's not empty
+      // unique key for reply
+      let myRef = firebase.database().ref(`replies`);
+      let key = myRef.push().key;
 
-    url = "post.html" + "?post_id=" + post_id;
+      // new data to upload in api
+      let newData = {
+        anonymous: stay_anonymous,
+        content: reply_input,
+        created: new Date().toString(),
+        dislike:0,
+        id:key,
+        like:0,
+        replierId: current_user["phone"],
+        reply_comment_parent: comment_id,
+        username: current_user["username"]
+      };
 
-    firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
-      redirect(url, null)
-    });
-    msg = "Reply Made successfully";
-    alert(redirect(url, msg));
+      url = "post.html" + "?post_id=" + post_id;
+
+      firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
+        redirect(url, null)
+      });
+      msg = "Reply Made successfully";
+      alert(redirect(url, msg));
+    };
   } else {
     window.location = "forum.html";
   }
