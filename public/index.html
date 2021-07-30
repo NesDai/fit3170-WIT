@@ -13,6 +13,7 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+   <meta name="viewport" content="width=device-width,height=device-height,initial-scale=0.7"/>
    <!--Dont display the google banner at the top-->
    <style>
       .goog-te-banner-frame.skiptranslate {
@@ -25,57 +26,17 @@
       .goog-logo-link {
       display:none !important;
       }
-      .trans-section {
-      margin: 100px;
-      padding: 20px;
-      padding-bottom: 25px;
-      }
       .lang_butt {
       margin-top: 10%; 
       background-color: white;
       }
    </style>
 </head>
+
 <body>
-   <div class="limiter">
-      <div class="background">
-         <!-- <div class="trans-section">
-            <h3 style="color: white;">Select Language</h3>
-            <div id="google_translate_element" style="display: none;"></div>
-                    <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset();"
-                          value="English">
-                    <label>
-                      <span>
-                      </span> English
-                    </label>
-                  </button>
-                  <br>
-                  <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-                          value="Chinese (Simplified)">
-                    <label>
-                      <span>
-                      </span> 中文
-                    </label>
-                  </button>
-                  <br>
-                  <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-                          value="Thai">
-                    <label>
-                      <span>
-                      </span> ภาษาไทย
-                    </label>
-                  </button>
-                  <br>
-                  <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-                          value="Malay">
-                    <label>
-                      <span>
-                      </span> Bahasa Melayu
-                    </label>
-                  </button>
-            </div> -->
+   <div class="container">
+      <div id="login">
          <div class="wrap-login">
-            <div style="width: 100%;">
                <span class="title">
                Login
                </span>
@@ -91,14 +52,7 @@
                <br>
                <br>
                <div id="error" style="color:red"></div>
-               <div class="btn-container">
-                  <div class="btn-wrap">
-                     <div class="btn-div"> </div>
-                     <button class="btn" id="send-button" onclick="phoneAuth();">
-                     Send Pin
-                     </button>
-                  </div>
-               </div>
+               <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="send-button"  onclick="phoneAuth()">Send Pin</button>               
                <br>
                <div id="input-pin" style="color: green"></div>
                <br>
@@ -108,59 +62,45 @@
                   <span class="focus-input_logo" data-symbol="&#xf190;"></span>
                </div>
                <br>
-               <div class="btn-container">
-                  <div class="btn-wrap">
-                     <div class="btn-div"> </div>
-                     <button class="btn" id="loginButton" onclick="codeverify();">
-                     Login
-                     </button>
-                  </div>
-               </div>
-            </div>
+               <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="login-button" onclick="codeverify()">Login</button>               
          </div>
-         <div class="trans-section" style="background-color: white; border-radius: 10px; width: 15%">
-            <h3 style="color: black; text-align: center;">Select Language</h3>
+      </div> 
+
+      <!-- TRANSLATION  -->
+      <div id="content1"> 
+         <div class="trans-section">
+            <h3 style="color: #333333; text-align: center;"><b>Select Language</b></h3>
+
             <div id="google_translate_element" style="display: none;"></div>
             <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset();"
-               value="English" style="width: 200px;">
-            <label>
-            English
-            <span>
-            </span>
-            </label>
+               value="English" style="width: 100%">
+               <label>English</label>
             </button>
             <br>
             <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-               value="Chinese (Simplified)" style="width: 200px;">
+               value="Chinese (Simplified)" style="width: 100%">
             <label>
             中文
-            <span>
-            </span> 
             </label>
             </button>
             <br>
             <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-               value="Thai" style="width: 200px;">
+               value="Thai" style="width: 100%">
             <label>
             ภาษาไทย
-            <span>
-            </span> 
             </label>
             </button>
             <br>
             <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-               value="Malay" style="width: 200px;">
+               value="Malay" style="width: 100%">
             <label>
             Bahasa Melayu
-            <span>
-            </span> 
             </label>
             </button>
          </div>
       </div>
    </div>
-   </div>
-   </div>
+
    <!--FIREBASE-->
    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
    <!-- TODO: Add SDKs for Firebase products that you want to use
@@ -185,8 +125,7 @@
       $(function(){
           $('.selectpicker').selectpicker();  // used to display flags 
       });
-      
-      
    </script>
    </div>
 </body>
+</html>
