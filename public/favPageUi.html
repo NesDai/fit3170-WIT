@@ -42,28 +42,73 @@
     <title>Recommender</title>
     
     <style>
+    /* TODO move to css */
+      .sortInterestBox{
+        width: fit-content;
+        height: auto;
+        margin: 5px;
+        display:inline-block;
+        border: solid black 3px;
+        border-radius: 25px;
+        
+        /* position: relative; */
+      }
+      .labelSort{
+        border: 0px;
+        width: fit-content;
+        height: auto;
+        /* color: aquamarine; */
+        margin: 2px;
+        display:inline-block;
+        /* position: relative; */
+      }
+      .h_iframe iframe {
+        width:90%;
+        height:100%;
+        margin: auto;
+      }
+      .h_iframe {
+        height: 100%;
+        width:100%;
+      }
 
+      .favVideoPg{
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        background: gray;
+        /* opacity: 0.3; */
+        z-index: 7;
+        overflow: scroll;
+        display: none;
+      }
+
+      .hideStuff{
+        font-size:0px; 
+        height:0px; 
+        margin:0px;
+      }
       .workspace {
         height: 99%;
         width: 98%;
-        border: 5px solid black;
-        margin: 10px auto;
+        /* border: 5px solid black; */
         position: relative;
         overflow: auto
       }
 
       .workspaceheader {
-        border: 5px solid black;
-        margin: 10px auto;
+        /* border: 5px solid black; */
+        margin-top: 10px;
         position: relative;
-        height: 10%;
+        /* height: 100%; */
         width: 98%;
+        display: none;
       }
 
       .table {
-        height: 99%;
+        height: fit-content;
         width: 98%;
-        border: 5px solid black;
+        /* border: 5px solid yellow; */
         margin: 10px auto;
         position: relative;
         text-align: center;
@@ -71,7 +116,184 @@
 
       .tabletext{
         display: inline;
+        font-family: Arial;
+        font-size: 14pt;
       }
+
+      .favCard{
+        margin-top: 20px;
+        width: 100%;
+        height: 380px;
+        color: #000;
+        background-color: #fff;
+        position: relative;
+      
+        /* border: 5px solid red; */
+      }
+
+      .favCardThumbnail{
+        /* margin-top: 5px; */
+        margin: auto;
+        width: 22%;
+        height: 100%;
+        position: absolute;
+        /* background-color: #0f0f0f; */
+      }
+
+      .favCardTitle{
+        margin-right: 5px;
+        width: 60%;
+        height: 45%;
+        float: right;
+        position: relative;
+        /* background-color: brown; */
+        overflow-y: scroll;
+      }
+
+      .favCardInterest{
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: royalblue; */
+        font-weight: bold;
+      }
+
+      .favCardTopBtn{
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: mediumspringgreen; */
+      }
+
+      .favDeleteBtn{
+        margin: 15px;
+        border-radius: 50%;
+        float:right; 
+        width: auto; 
+        height:60px;
+      }
+            
+      @media only screen and (max-width: 1350px) {
+        .favCard{
+
+        width: 100%;
+        height: 200px;
+        color: #000;
+        background-color: #fff;
+        position: relative;
+        /* border: 1px solid red; */
+        }
+
+        .favCardThumbnail{
+
+        width: 40%;
+        height: 100%;
+        position: absolute;
+        /* background-color: #fff; */
+        }
+
+        .favCardInterest{
+
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: #fff; */
+        font-weight: bold;
+      }
+
+        .favCardTitle{
+        margin-right: 5px;
+        width: 60%;
+        height: 65%;
+        float: right;
+        position: relative;
+        /* background-color: blue; */
+        overflow-y: scroll;
+        }
+
+        .favCardTopBtn{
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: blue; */
+        }
+        .favDeleteBtn{
+        margin: 10px;
+        border-radius: 50%;
+        float:right; 
+        width: auto; 
+        height:50px;
+      }
+      }
+
+      @media only screen and (max-width: 600px) {
+        .favCard{
+        width: 100%;
+        height: 120px;
+        color: #000;
+        background-color: #fff;
+        position: relative;
+        /* border: 1px solid red; */
+        }
+
+        .favCardThumbnail{
+        width: 35%;
+        height: 100%;
+        position: absolute;
+        /* background-color: #fff; */
+        }
+        
+        .favCardInterest{
+        margin-right: 5px;
+        width: 50%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: pink; */
+        font-weight: bold;
+        font-family: Arial;
+        font-size: 14pt;
+      }
+
+        .favCardTitle{
+
+        margin-right: 5px;
+        width: 50%;
+        height: 50%;
+        float: right;
+        position: relative;
+        /* background-color: green; */
+        overflow-y: scroll;
+        font-family: Arial;
+        font-size: 14pt;
+        
+        }
+
+        .favCardTopBtn{
+        margin-right: 5px;
+        width: 50%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: red; */
+        }
+        .favDeleteBtn{
+        margin: 0px;
+        border-radius: 50%;
+        float:right; 
+        width: auto; 
+        height: 30px;
+        }
+      }
+
     </style>
     
     <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -83,6 +305,9 @@
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
             <h3>Favourite</h3>
+              <a class="mdl-navigation__link" href="recommenderUi.html">
+              <button class="mdl-button mdl-js-button mdl-button--raised">Return</button>
+            </a>
           </div>
           <div id="user-container">
             <div hidden id="user-pic"></div>
@@ -108,13 +333,29 @@
 
   <body>
     <div class = workspace >
-      <div class="workspaceheader">
+      <div class = favVideoPg id="favVideo">
+        <div id="favVideoPlayer"></div>
       </div>
-      <table class="table" id="favtable" style='border: 1px solid black;''>
+      <!-- Sort -->
+      <button id="favSortBtn" onclick="show_sort()">Sort by interest</button>
+      <div id="sortingArea" class="workspaceheader" style="overflow: scroll; display: none;">
+        <button onclick="filter()">Filter</button><br><br>
+      </div>
 
+      <table class="table" id="favtable">
+        <p id="favEmptyText" style="text-align: center;"></p>
       </table>
     </div>
+    <p class="hideStuff" id="favIdCount"></p>
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    <script src="./script/Youtube.min.js"></script>
+    <script src="./script/favpage.js"></script>
   </body>
-  <script src="./script/favpage.js"></script>
-  <script src = "script/firebaseConfig.js"></script>
 </html>
