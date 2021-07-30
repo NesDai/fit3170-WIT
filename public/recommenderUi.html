@@ -122,10 +122,12 @@
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop ">
             <h3>Recommender</h3>
-            <a class="mdl-navigation__link" href="recommenderHistoryUi.html" style="margin-left: 90%;">
-              <button class="mdl-button mdl-js-button mdl-button--raised" style = "background-color: white;">History</button>
-            </a>
-
+              <a class="mdl-navigation__link" href="favPageUi.html">
+                <button class="mdl-button mdl-js-button mdl-button--raised">Favourite</button>
+              </a>
+              <a class="mdl-navigation__link" href="recommenderHistoryUi.html" style="margin-left: 90%;">
+                <button class="mdl-button mdl-js-button mdl-button--raised" style = "background-color: white;">History</button>
+              </a>
           </div>
           <div id="user-container">
             <div hidden id="user-pic"></div>
@@ -167,12 +169,13 @@
         </div>
         <div class="mdl-card__subtitle-text" id="videoDescription" style="margin-left: 5%; margin-right: 5%">This is the description for this video.</div>
         <div class="mdl-card__actions mdl-card--border">
-            <button id= "negativeRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "negativeRating()" >
-                <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_up</i>
-            </button>
-
             <button id= "positiveRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "positiveRating()" >
-                <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_down</i>
+                <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_down</i> -->
+                <img src="./css/images/button-designs_23.png" style="height:80%">
+            </button>
+            <button id= "negativeRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "negativeRating()" >
+                <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_up</i> -->
+                <img src="./css/images/button-designs_24.png" style="height:80%">
             </button>
 
           <!-- <a>
@@ -188,7 +191,8 @@
           </a> -->
 
           <button id="favoriteIcon" onclick= "favoriteRating()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "background-color: transparent; margin-bottom: 5%;" >
-            <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px; ">favorite_border</i>
+            <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px; ">favorite_border</i> -->
+            <img src="./css/images/button-designs_25.png" style="height:80%">
           </button>
 
           <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-left: 30%; margin-bottom: 5%; background-color: transparent;" >
