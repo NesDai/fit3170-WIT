@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="./css/main.css">
 
     <title>Recommender</title>
-    
+
     <style>
     /* TODO move to css */
       .sortInterestBox{
@@ -50,7 +50,7 @@
         display:inline-block;
         border: solid black 3px;
         border-radius: 25px;
-        
+
         /* position: relative; */
       }
       .labelSort{
@@ -84,8 +84,8 @@
       }
 
       .hideStuff{
-        font-size:0px; 
-        height:0px; 
+        font-size:0px;
+        height:0px;
         margin:0px;
       }
       .workspace {
@@ -127,7 +127,7 @@
         color: #000;
         background-color: #fff;
         position: relative;
-      
+
         /* border: 5px solid red; */
       }
 
@@ -172,11 +172,11 @@
       .favDeleteBtn{
         margin: 15px;
         border-radius: 50%;
-        float:right; 
-        width: auto; 
+        float:right;
+        width: auto;
         height:60px;
       }
-            
+
       @media only screen and (max-width: 1350px) {
         .favCard{
 
@@ -228,8 +228,8 @@
         .favDeleteBtn{
         margin: 10px;
         border-radius: 50%;
-        float:right; 
-        width: auto; 
+        float:right;
+        width: auto;
         height:50px;
       }
       }
@@ -250,7 +250,7 @@
         position: absolute;
         /* background-color: #fff; */
         }
-        
+
         .favCardInterest{
         margin-right: 5px;
         width: 50%;
@@ -274,7 +274,7 @@
         overflow-y: scroll;
         font-family: Arial;
         font-size: 14pt;
-        
+
         }
 
         .favCardTopBtn{
@@ -288,14 +288,39 @@
         .favDeleteBtn{
         margin: 0px;
         border-radius: 50%;
-        float:right; 
-        width: auto; 
+        float:right;
+        width: auto;
         height: 30px;
         }
       }
+      .img-centre {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      }
+      #nav-icons{
+      font-size: 30px;
+      padding-bottom: 20px;
+      }
+      i.icon-teal{
+      color:#006DAE;
+      }
+      i.icon-teal2{
+      color:#00695c;
+      }
+      .mdl-navigation__link{
+      font-size: 16px;
+      text-align: left;
+      padding-left: 0;
+      padding-right: 3;
+      }
+      .mdl-grid-body{
+      margin: 0;
+      padding: 0;
+      }
 
     </style>
-    
+
     <!-- TODO: Enable First Input Delay polyfill library. -->
   </head>
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -323,11 +348,14 @@
       </header>
 
       <div class="mdl-layout__drawer">
+        <br>
+        <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
+        <br>
         <span class="mdl-layout-title">Favourite</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="main_page.html">Home</a>
-          <a class="mdl-navigation__link" href="">Forum</a>
-          <a class="mdl-navigation__link" href="chatbot.html">Chatbot</a>
+          <a class="mdl-navigation__link" href="main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i>Home</a>
+          <a class="mdl-navigation__link" href="forum.html"><i class="material-icons icon-teal" id="nav-icons" >forum</i>Forum</a>
+          <a class="mdl-navigation__link" href="chatbot.html"><i class="material-icons icon-teal" id="nav-icons" >chat</i>Chatbot</a>
         </nav>
       </div>
 
