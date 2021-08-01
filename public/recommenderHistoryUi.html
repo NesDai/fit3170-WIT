@@ -36,6 +36,33 @@
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="./css/main.css">
+    <style>
+       .img-centre {
+       margin-left: auto;
+       margin-right: auto;
+       display: block;
+       }
+       #nav-icons{
+       font-size: 30px;
+       padding-bottom: 20px;
+       }
+       i.icon-teal{
+       color:#006DAE;
+       }
+       i.icon-teal2{
+       color:#00695c;
+       }
+       .mdl-navigation__link{
+       font-size: 16px;
+       text-align: left;
+       padding-left: 0;
+       padding-right: 3;
+       }
+       .mdl-grid-body{
+       margin: 0;
+       padding: 0;
+       }
+       </style>
 
     <title>Recommender</title>
     <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -88,10 +115,10 @@
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <!-- Header section -->
-    <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+    <header class="mdl-layout__header">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-            <h3>Recommender - History</h3>
+            <h3>History</h3>
             <a class="mdl-navigation__link" href="recommenderUi.html">
               <button class="mdl-button mdl-js-button mdl-button--raised">Return</button>
             </a>
@@ -109,11 +136,14 @@
         </div>
       </header>
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Recommender</span>
+        <br>
+        <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
+        <br>
+        <span class="mdl-layout-title">Video History</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="main_page.html">Home</a>
-          <a class="mdl-navigation__link" href="">Forum</a>
-          <a class="mdl-navigation__link" href="chatbot.html">Chatbot</a>
+          <a class="mdl-navigation__link" href="main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i>Home</a>
+          <a class="mdl-navigation__link" href="forum.html"><i class="material-icons icon-teal" id="nav-icons" >forum</i>Forum</a>
+          <a class="mdl-navigation__link" href="chatbot.html"><i class="material-icons icon-teal" id="nav-icons" >chat</i>Chatbot</a>
         </nav>
       </div>
   <body>
@@ -128,7 +158,7 @@
           <th>URL</th>
           <th class="mdl-data-table__cell--non-numeric"></th>
           <th>
-            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="deleteAllHistory()">
+            <a class="mdl-button mdl-js-button mdl-button--raised" onclick="deleteAllHistory()">
               Delete All
             </a>
           </th>
