@@ -41,6 +41,11 @@ let currentSubQuestionIds = null;
 window.onload = function () {
     initialiseCurrentUser();
     greeting();
+    
+    // Initialises progress bar
+    document.querySelector('#progress-bar').addEventListener('mdl-componentupgraded', function() {
+        this.MaterialProgress.setProgress(0);
+    });
 };
 
 /**
@@ -238,6 +243,7 @@ function nextQuestion() {
         showMessageSenderWithoutHints(endingMessage);
         scrollToBottom();
     }
+    // updateProgress();
 }
 
 /**
@@ -405,7 +411,8 @@ function showQuestion(isSubQuestion) {
             }
 
             // Scroll the chat box window to the correct position
-            scrollToBottom()
+            scrollToBottom();
+            updateProgress();
         });
 }
 
@@ -996,4 +1003,10 @@ function changeMessageColour() {
     else {
         messageHistoryColour = 'white';
     }
+}
+
+function updateProgress() {
+    var progress = (questionIndex/QUESTION_IDS.length) * 100;
+    console.log('updateProgress() is called. Current percentage is ' + progress + '%.');
+    document.querySelector('#progress-bar').MaterialProgress.setProgress(progress);
 }

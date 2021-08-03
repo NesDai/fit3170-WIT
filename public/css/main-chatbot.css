@@ -69,6 +69,12 @@ body {
 }
 
 /* CARD CSS */
+#progress-bar {
+  width:60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2.5%;
+}
 main {
   height: 100%;
   padding-bottom: 0;
