@@ -6,6 +6,8 @@ let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let hintIndex = 0;
 
+let messageColour = 'white';
+
 /*
 The user object of the currently logged in user
 <br>
@@ -58,7 +60,7 @@ function greeting() {
     // format starting message html
     let quesTemplate =
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender blue'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>To get started, I would like to get to know " +
         "you better by asking a few questions. Are you ready?</p>" +
@@ -246,7 +248,7 @@ function showMessageSender(message) {
     // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageColour + "'>" +
         `<p>${message}</p>` +
         `<button
          id = ${hintIndex}
@@ -259,6 +261,7 @@ function showMessageSender(message) {
         "</div>" +
         "</div>";
     hintIndex++;
+    changeMessageColour();
 }
 
 /**
@@ -282,10 +285,11 @@ function showMessageReceiver(message) {
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageColour + "'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
+    changeMessageColour();
 }
 
 /**
@@ -959,4 +963,19 @@ function endSurveyText() {
     questionIndex = QUESTION_IDS.length;
     errorText.style.visibility = "hidden";
     nextQuestion();
+}
+
+/**
+ * Changes the colour of the next message based on
+ * the colour of the current message.
+ * 
+ * Used in SENDER messages only (bot side)
+ */
+function changeMessageColour() {
+    if (messageColour == 'white') {
+        messageColour = 'blue';
+    }
+    else {
+        messageColour = 'white';
+    }
 }
