@@ -327,7 +327,7 @@ function showAnswerLog(message) {
 function showShortQuestionMessage(questionString) {
     document.getElementById("messages").innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageColour + "'>" +
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
         `<button 
@@ -341,6 +341,7 @@ function showShortQuestionMessage(questionString) {
         "</div>" +
         "</div>";
     hintIndex++;
+    changeMessageColour();
 }
 
 /**
