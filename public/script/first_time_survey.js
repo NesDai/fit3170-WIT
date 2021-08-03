@@ -41,7 +41,7 @@ let currentSubQuestionIds = null;
 window.onload = function () {
     initialiseCurrentUser();
     greeting();
-    
+
     // Initialises progress bar
     document.querySelector('#progress-bar').addEventListener('mdl-componentupgraded', function() {
         this.MaterialProgress.setProgress(0);
@@ -515,9 +515,12 @@ function repromptQuestion() {
  * only used for MCQ questions
  */
 function loadOptions(){
+    let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
+
     var x = document.getElementById("Dropdown");
     x.options.length = 0;
-    const collectionRef = firebase.firestore().collection(currentUser.phoneNumber);
+    const collectionRef = firebase.firestore().collection(userID);
     collectionRef.get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -555,8 +558,11 @@ window.onclick = function(event) {
  *
  */
 function selectdate(){
+    let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
+
     var mylist = document.getElementById('Dropdown');
-    const collectionRef = firebase.firestore().collection(currentUser.phoneNumber).doc(mylist.options[mylist.selectedIndex].text);
+    const collectionRef = firebase.firestore().collection(userID).doc(mylist.options[mylist.selectedIndex].text);
     collectionRef.get().then((doc) => {
         if (doc.exists) {
             console.log("Document data:", doc.data().set_id);
@@ -592,7 +598,7 @@ function selectdate(){
 function selectattempt(){
     var mylist = document.getElementById('attempt');
     logAttempt = mylist.options[mylist.selectedIndex].text;
-    
+
     let log = document.getElementById('logs');
     log.innerHTML = "";
 
@@ -603,7 +609,10 @@ function selectattempt(){
  * function to display which old survey is going to be displayed in history page
  */
 function showlog(){
-  const collectionRef = firebase.firestore().collection(currentUser.phoneNumber).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
+    let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
+
+  const collectionRef = firebase.firestore().collection(userID).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
       collectionRef.get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -817,9 +826,10 @@ function initFirebaseAuth() {
 function saveResponse(answer) {
     // Formulating the branch
     let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let branch = `${phone}/${date}/responses`;
+    let branch = `${userID}/${date}/responses`;
 
     // Formulating the response object
 
@@ -855,7 +865,7 @@ function saveResponse(answer) {
             // After writing the response to survey_responses, also
             // write it to survey_questions/question_id
             let reducedResponseObject = {
-                phone: phone,
+                phone: userID,
                 data: date,
                 answer: answer,
                 timestamp: timestamp
@@ -876,7 +886,7 @@ function saveResponse(answer) {
                 });
         })
         .catch((error) => {
-            console.error("Error writing response at " + phone +
+            console.error("Error writing response at " + userID +
                 " branch: ", error);
         });
 }
@@ -889,13 +899,14 @@ function saveResponse(answer) {
 function initSetId() {
     // Formulating the branch
     let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
     // Formulating the response object
 
     // Retrieve the set id
-    let reference = firebase.firestore().collection(phone).doc(date);
+    let reference = firebase.firestore().collection(userID).doc(date);
 
     reference.get().then((document) => {
         if (document.exists) {
@@ -905,7 +916,7 @@ function initSetId() {
 
             // Increment the set_id at the Firestore Database by 1
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(phone).doc(date)
+            firebase.firestore().collection(userID).doc(date)
                 .set({set_id: currentSetId})
                 .then(() => {
                     console.log("Document written with ID: ", date);
@@ -924,7 +935,7 @@ function initSetId() {
             // is the first survey instance for the day.
 
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(phone).doc(date)
+            firebase.firestore().collection(userID).doc(date)
                 .set({set_id: 0})
                 .then(() => {
                     console.log("Document written with ID: ", date);
@@ -978,7 +989,7 @@ function endSurveyText() {
 /**
  * Changes the colour of the next message based on
  * the colour of the current message.
- * 
+ *
  * Used in SENDER messages only (bot side)
  */
 function changeMessageColour() {
@@ -993,7 +1004,7 @@ function changeMessageColour() {
 /**
  * Changes the colour of the next message based on
  * the colour of the current message in the history tab.
- * 
+ *
  * Used in HISTORY SENDER messages only (bot side)
  */
  function changeMessageHistoryColour() {
