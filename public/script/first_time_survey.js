@@ -7,6 +7,7 @@ let errorText = document.getElementById("error-text");
 let hintIndex = 0;
 
 let messageColour = 'white';
+let messageHistoryColour = 'white';
 
 /*
 The user object of the currently logged in user
@@ -299,10 +300,11 @@ function showMessageSenderWithoutHints(message) {
 function showQuestionLog(message) {
     logs.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageHistoryColour + "'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>"
+    changeMessageHistoryColour();
 }
 
 /**
@@ -978,5 +980,20 @@ function changeMessageColour() {
     }
     else {
         messageColour = 'white';
+    }
+}
+
+/**
+ * Changes the colour of the next message based on
+ * the colour of the current message in the history tab.
+ * 
+ * Used in HISTORY SENDER messages only (bot side)
+ */
+ function changeMessageHistoryColour() {
+    if (messageHistoryColour == 'white') {
+        messageHistoryColour = 'blue';
+    }
+    else {
+        messageHistoryColour = 'white';
     }
 }

@@ -116,15 +116,14 @@ main {
   overflow-y: scroll;
   height: calc(100% - 80px);
   width: 100%;
-  background-color: #f7f7f7; 
 }
 .space {
   display: inline-block;
   width: 100%;
 }
-.message-container:first-of-type {
+/* .message-container:first-of-type {
   border-top-width: 0;
-}
+} */
 .message-container {
   margin-left: 50px;
   margin-top: 3px;
@@ -134,14 +133,16 @@ main {
   word-wrap: break-word;
 }
 .sender {
-  background-color: #ffffff;
-  border-radius: 25px 25px 25px 3px;
+  border-radius: 25px 25px 25px 25px;
+  border-color: #006DAE;
+  border-width: 0.1rem;
+  border-style: solid;
   margin-left: 20px;
   float: left;
 }
 .receiver {
   background-color:#00ac3e;
-  border-radius: 25px 25px 3px 25px;
+  border-radius: 25px 25px 25px 25px;
   margin-right: 20px;
   float: right;
   color: #000000;
