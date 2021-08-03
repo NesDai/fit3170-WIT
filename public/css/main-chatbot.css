@@ -13,8 +13,11 @@ body {
   top: 8px;
   position: relative;
 }
+.topheader {
+  background-color: #006DAE;
+}
 .tablink{
-  background-color: #00695C;
+  background-color: #006DAE;
   position:relative;
   color: white;
   border: none;
@@ -26,7 +29,7 @@ body {
   width: 25%;
 }
 .tablink:hover {
-  background-color: #777;
+  background-color: #367da7;
 }
 .tabcontent{
   display: none;
