@@ -525,7 +525,10 @@ function loadOptions(){
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 var option = document.createElement("option");
-                option.text = doc.id;
+                // Splitting the year month and day from date
+                var ymd = doc.id.split("-");
+                var dateString = ymd[0] + "-" + ("0" + ymd[1]).slice(-2) + "-" + ("0" + ymd[2]).slice(-2);
+                option.text = dateString;
                 x.add(option);
             });
         })
