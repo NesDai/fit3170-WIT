@@ -238,7 +238,7 @@ function nextQuestion() {
         showQuestion(false);
     } else { //  else end the survey
         let endingMessage = "That's all the questions we have for you " +
-            "right now. You can either continue asking questions, or" +
+            "right now. You can either continue answerng questions, or" +
             " browse the rest of the application!"
         showMessageSenderWithoutHints(endingMessage);
         scrollToBottom();
