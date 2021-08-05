@@ -745,13 +745,12 @@ html,body {
 #search-icon:hover{
     cursor: pointer;
     color: #00ac3e;
+
 }
 
 .search:hover #icon-background{
-    height:50px;
-    width: 70px;
-    border-radius: 15px;
     transform: scale(1.5);
+    transition: 0.25s;
 }
 .search:hover #search-icon{
     color: #00ac3e;
