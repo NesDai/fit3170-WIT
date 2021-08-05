@@ -737,12 +737,18 @@ html,body {
     a:link {
         text-decoration: none
     }
-    
-#search-icon:hover{
-    cursor: pointer;
-}
+
 #search-icon{
     color:#006DAE;
     margin-bottom: 200px;
 }
+#search-icon:hover{
+    cursor: pointer;
+    color: #00ac3e;
+}
+
+.search:hover{
+    background-color: #D2D2D2;
+}
+
 
