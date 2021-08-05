@@ -666,7 +666,7 @@ html,body {
             width: 100%;
             margin-bottom: auto;
             margin-top: 20px;
-            height: 50px;
+            height: 70px;
             background-color: #fff;
             padding: 10px;
             border-radius: 5px;
@@ -674,7 +674,6 @@ html,body {
             box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
             padding: 0.75rem;
             border-radius: 15px;
-            height: 50px;
             width: 325px;
         }
 
@@ -682,21 +681,15 @@ html,body {
 
 
 
-
-    .search * {
-    z-index: 2;
-    justify-content: center;
-    }
-
     @media all and (min-width:800px) {
     .search {
+        height: 70px;
         position: relative;
         display: flex;
         justify-content: center;
         width: 100%;
         margin-bottom: auto;
         margin-top: 20px;
-        height: 50px;
         background-color: #fff;
         padding: 10px;
         border-radius: 5px;
@@ -705,14 +698,20 @@ html,body {
         right:29px;
         padding: 0.75rem;
         border-radius: 15px;
-        height: 50px;
         width: 654px;
+    }
+}
+
+@media only screen and (max-device-width: 600px){
+    .search{
+        height: 70px;
     }
 }
 
 
     
     .search-input {
+
         color: white;
         border: 0;
         outline: 0;
@@ -725,7 +724,8 @@ html,body {
     }
     
     .search .search-input {
-        padding: 0 10px;
+  
+
         width: 200%;
         caret-color: #006DAE;
         font-size: 19px;
@@ -734,53 +734,15 @@ html,body {
         transition: width 0.4s linear
     }
     
-    .search-icon {
-        height: 34px;
-        width: 74px;
-        float: right;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        background-color: #006DAE;
-        font-size: 10px;
-
-        position: relative;
-        border-radius: 5px
-    }
-    
-    .search-icon:hover {
-        color: #fff !important
-    }
-    
     a:link {
         text-decoration: none
     }
     
-    .card-inner {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 1px solid rgba(0, 0, 0, .125);
-        border-radius: .25rem;
-        border: none;
-        cursor: pointer;
-        transition: all 2s
-    }
-    
-    .card-inner:hover {
-        transform: scale(1.1)
-    }
-    
-    .mg-text span {
-        font-size: 12px
-    }
-    
-    .mg-text {
-        line-height: 14px
-    }
+#search-icon:hover{
+    cursor: pointer;
+}
+#search-icon{
+    color:#006DAE;
+    margin-bottom: 200px;
+}
 

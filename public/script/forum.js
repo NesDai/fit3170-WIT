@@ -278,3 +278,5 @@ function printUserPosts(){
 function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
 }
+
+
