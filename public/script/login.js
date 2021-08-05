@@ -15,8 +15,6 @@ const USER_KEY = "USER";
 // To apply the default browser preference instead of explicitly setting it.
 // firebase.auth().useDeviceLanguage();
 
-
-
 function setAuthLanguage(){
 
     let language = localStorage.getItem(LANGUAGE_KEY);

@@ -55,7 +55,7 @@ function makeNewPost() {
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
-
+        let video_url = document.getElementById("video_url").value
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
         // let key = myRef.key; // generate a key for post id
@@ -67,6 +67,7 @@ function makeNewPost() {
             title: title,
             userID: current_user["phone"],
             username: current_user["username"],
+            videoURL: video_url,
             created: new Date().toString()
         }
 
