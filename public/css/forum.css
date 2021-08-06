@@ -67,12 +67,12 @@ html,body {
     color: white;
     padding: 5px 16px;
     }
-    #like_post_icon, #dislike_post_icon{
+    #like_post_icon, #dislike_post_icon, #favourite_post_icon{
     font-size: 17px;
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     color: white
     }
-    button.like, button.dislike{
+    button.like, button.dislike, button.favourite{
     border-radius: 15px;
     margin: 0 0 0 20px;
     }
@@ -139,6 +139,12 @@ html,body {
     color: black;
     border: 2px solid #e53935;
     width: 100px 
+    }
+    #favourite_post_btn
+    {
+    color: black;
+    border: 2px solid blue;
+    width: 230px;
     }
     /* All below is for the tab navigation */
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
@@ -218,7 +224,13 @@ html,body {
     {
     position: relative; 
     bottom: 10px; 
-    left: 190px
+    left: 40px
+    }
+    #tab3
+    {
+    position: relative; 
+    bottom: 10px; 
+    left: 40px
     }
     input[type="radio"]:checked + label {
     color: var(--primary-color);
@@ -245,7 +257,10 @@ html,body {
     transform: translateX(25%);
     }
     input[id="radio-2"]:checked ~ .glider {
-    transform: translateX(220%);
+    transform: translateX(136%);
+    }
+    input[id="radio-3"]:checked ~ .glider {
+    transform: translateX(250%);
     }
     #more_btn
     {
@@ -287,7 +302,7 @@ html,body {
     padding: 0.75rem;
     border-radius: 15px;
     height: 70px;
-    width: 355px;
+    width: 358px;
     }
     input[type="radio"]:checked + label {
     color: var(--primary-color);
@@ -310,6 +325,9 @@ html,body {
     transform: translateX(15%);
     }
     input[id="radio-2"]:checked ~ .glider {
+    transform: translateX(100%);
+    }
+    input[id="radio-3"]:checked ~ .glider {
     transform: translateX(140%);
     }
     #more_btn
@@ -421,7 +439,7 @@ html,body {
     #reply_comment_icon{
     font-size: 20px;
     }
-    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
+    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon, #favourite_post_icon{
     font-size: 17px;
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     color: white !important;
@@ -430,7 +448,7 @@ html,body {
     {
     font-size: 17px;
     }
-    button.like,  button.dislike, button.hideReply{
+    button.like,  button.dislike, button.hideReply, button.u{
     border-radius: 15px;
     margin: 0 0 0 10px;
     }
@@ -624,6 +642,12 @@ html,body {
     color: black;
     border: 2px solid #e53935;
     width: 100px
+    }
+    #favourite_post_btn
+    {
+    color: black;
+    border: 2px solid blue;
+    width: 230px;
     }
     .mdl-checkbox {
     display: inline;     
