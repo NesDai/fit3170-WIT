@@ -26,6 +26,16 @@ function hideTranslationModal(){
     document.getElementById("myModal").style.display = "none";  
 }
 
+function checkEmbeddingVideo(url) {
+    let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let match = url.match(regExp);
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        alert("Error!")
+    }
+}
+
 
 
 //Making a new post
@@ -55,10 +65,12 @@ function makeNewPost() {
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
-
+        let video_url = document.getElementById("video_url").value
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
         // let key = myRef.key; // generate a key for post id
+
+        alert(video_url); 
 
         let newData = {
             id: key,
@@ -67,6 +79,7 @@ function makeNewPost() {
             title: title,
             userID: current_user["phone"],
             username: current_user["username"],
+            videoURL: video_url,
             created: new Date().toString()
         }
 
@@ -177,6 +190,7 @@ function printAllPosts(){
                               <form class="post_content" style="margin:0 10px; background-color: white">
                                  <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                                  <br>
+                                 <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
                                  <div style='display: inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
                                     <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
