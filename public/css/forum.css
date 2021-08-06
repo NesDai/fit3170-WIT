@@ -4,8 +4,9 @@ html,body {
     font-size: 100%;
     }
     body {
-    background-color: #eee;
-    }
+        background-color: #d2d2d2;
+        height: 50px;
+        }
     /* HEADER CSS */
     .material-icons {
     font-size: 36px;
@@ -28,6 +29,7 @@ html,body {
     top: -1px;
     margin-right: 5px;
     } 
+
     @media screen and (max-width: 610px) {
     header {
     height: 80px;
@@ -88,12 +90,15 @@ html,body {
     position: relative;
     border-radius: 12px;
     }    
+
     @media all and (min-width:551px) {
+    /* laptop */
     .mobile-br {display: none;}
     .demo-card-wide{
-    width: 110%;
+    width: 764px;
     border-radius: 20px;
     background: #E4E4E4;
+    
     }
     .lang_butt {
     margin: 2%; 
@@ -104,7 +109,10 @@ html,body {
     display: inline;
     }
     }
+
+
     @media all and (max-width: 1000px) {
+    /* phone */
     .mobile-br {display:inline;}
     .demo-card-wide{
     width: 100%;
@@ -127,7 +135,25 @@ html,body {
     {
     left:10px;
     }
+
+    .seacrh-container
+    {
+        justify-content: center;  
+        width:95% ;
+        margin-left:8px;
     }
+    .forum-container
+    {
+        justify-content: center;  
+        width:95% ;
+        margin-left:8px;
+    }
+    .container {
+        margin-top: 12px;
+        justify-content: center;
+        }
+    }
+
     #like_post_btn
     {
     color: black;
@@ -149,16 +175,8 @@ html,body {
     *, *:after, *:before {
     box-sizing: border-box;
     }
-    body {
-    font-family: "Arial";
-    background-color: #d2d2d2;
-    height: 50px;
-    }
-    .container {
-    position: relative;
-    top: 12px;
-    justify-content: center;
-    }
+
+
     .tabs * {
     z-index: 2;
     }
@@ -184,18 +202,34 @@ html,body {
     position:relative; 
     left:300px;
     }
+   
     @media all and (min-width:800px) {
     /* laptop */
     h3{
     position: relative;
     left: 330px;
     }
+    
     .container {
     position: relative;
     top: 12px;
-    left: 52px;
+    left: 25px;
     display: flex;
     justify-content: center;
+    }
+    .search-container
+    {
+    position: relative;
+    top: 12px;
+    left: 25px;
+    display: flex;
+    justify-content: center;
+    }
+    .forum-container
+    {
+        position: relative;
+        display: flex;
+        justify-content: center;   
     }
     .tabs {
     display: flex;
@@ -319,7 +353,7 @@ html,body {
     color: white;
     background-color: #006DAE;
     position: relative;
-    width: 60px;
+    width: 25%;
     left: 10px
     }
     #date_posted{
@@ -519,14 +553,9 @@ html,body {
     #lang_text{
     display: none;
     }
+
     @media all and (min-width:551px) {
     /* laptop */
-    .mobile-br {display: none;}
-    .demo-card-wide{
-    width: 110%;
-    border-radius: 20px;
-    background: #E4E4E4;
-    }
     .lang_butt {
     margin: 2%; 
     width:30%; 
@@ -565,12 +594,6 @@ html,body {
     }
     @media all and (max-width: 1000px) {
     /* phone */
-    .mobile-br {display:inline;}
-    .demo-card-wide{
-    width: 100%;
-    border-radius: 20px;
-    background: #E4E4E4;
-    }
     #reply_box
     {
     margin:0 10px;
@@ -644,61 +667,39 @@ html,body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     @media all and (max-width: 1024px) {
         /* mobile */
-        
         .search {
             position: relative;
+            left:30px;
             display: flex;
             justify-content: center;
-            width: 100%;
-            margin-bottom: auto;
             margin-top: 20px;
-            height: 70px;
+            height: 65px;
             background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-    
             box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
             padding: 0.75rem;
             border-radius: 15px;
             width: 325px;
         }
-
     }
 
 
 
     @media all and (min-width:800px) {
     .search {
-        height: 70px;
+        height: 65px;
         position: relative;
         display: flex;
         justify-content: center;
-        width: 100%;
         margin-bottom: auto;
         margin-top: 20px;
         background-color: #fff;
-        padding: 10px;
-        border-radius: 5px;
-
         box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
         right:29px;
         padding: 0.75rem;
         border-radius: 15px;
-        width: 654px;
+        width: 600px;
     }
 }
 
@@ -707,11 +708,7 @@ html,body {
         height: 70px;
     }
 }
-
-
-    
     .search-input {
-
         color: white;
         border: 0;
         outline: 0;
@@ -724,8 +721,6 @@ html,body {
     }
     
     .search .search-input {
-  
-
         width: 200%;
         caret-color: #006DAE;
         font-size: 19px;
@@ -740,7 +735,7 @@ html,body {
 
 #search-icon{
     color:#006DAE;
-    margin-bottom: 200px;
+    margin-bottom: 250px;
 }
 #search-icon:hover{
     cursor: pointer;
