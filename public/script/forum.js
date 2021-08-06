@@ -209,7 +209,6 @@ function printAllPosts(){
 
 }
 
-
 function printUserPosts(){
 
     let field = document.getElementById("postField");
