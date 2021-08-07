@@ -48,9 +48,13 @@
         .mdl-card__supporting-text
         {
             font-size: 20px;
+            line-height: 1.6;
         }
         @media all and (min-width:551px) {
             .desktop-br {display: inline;}
+        }
+        h4{
+            font-weight: bold;
         }
     </style>
 </head>
@@ -71,9 +75,7 @@
     <main class="mdl-layout__content">
         <div class="page-content">
             <div class = "chatbot-card mdl-card mdl-shadow--4dp">
-                <div class = "mdl-card__supporting-text textArea">
-                    Terms and Conditions
-                </div>
+                <div class = "mdl-card__supporting-text textArea" id="content-box"></div>
                 <br class="desktop-br"> <br class="desktop-br">
                 <div class="checkbox-div">
                     <input type="checkbox" id="checkbox">
@@ -129,7 +131,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
-<script src ="script/termsAndConditionsPage.js"></script>
+<script src ="script/Kelvin_login.js"></script>
+<script src ="script/termsAndConditions_en_Uploader.js" type="module"></script>
+<script src ="script/termsAndConditionsPage.js" type="module"></script>
 <script src="script/translation.js"></script>
 <script src="script/translatePage.js"></script>
 </body>
