@@ -151,7 +151,7 @@ function printAllPosts(){
     firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-                console.log(data.val());
+                // console.log(data.val());
                 data_list.push(data.val())
                 // let post = data.val()
             });
@@ -209,6 +209,84 @@ function printAllPosts(){
 
 }
 
+function printUserFavouritePosts() {
+    let field = document.getElementById("postField");
+    field.innerHTML = ""; // emtpy the field of any previous posts
+    let data_list = [];
+
+    firebase.database().ref(`posts`)
+        .orderByChild(`users_favourite`)
+            .once('value', x => {
+                x.forEach(data => {
+                    //data.val() here is detail of a post
+                    let hasFav = data.hasChild("users_favourite");
+                    
+                    if (hasFav) {
+                        let users_arr = data.val()["users_favourite"];
+                        let exist = false;
+                        users_arr.forEach(user => {
+                            if (user == current_user["phone"]){
+                                exist = true;
+                            }
+                        })
+
+                        // if user is found in the fav arr, add post to data list arr to be printed
+                        if(exist) {
+                            data_list.push(data.val());
+                        }
+                    }
+                });
+            }).then(() => {
+                for (let i = data_list.length -1; i>=0; i--){
+                    let post = data_list[i];
+
+                    field.innerHTML +=
+                    `   <div style="padding-top: 20px;">
+                    <span class="post_card">
+                       <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                          <!-- POST HEADER -->
+                          <br>
+                          <div class="f">
+                             <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                          </div>
+                          <br>
+                          <div class="post_header" style="margin:0 10px; background-color: white">
+                             <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+                          </div>
+                          <!-- POST FORM -->
+                          <form class="post_content" style="margin:0 10px; background-color: white">
+                             <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
+                             <br>
+                             <div style='display: inline-block'>
+                                <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
+                                <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                             </div>
+                             <br><br>
+                          </form>
+                          <div class="f">
+                          <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                          <div>
+                          <br>
+                          <div>
+                             <!--  LIKE DISLIKE FOR POST -->
+                             <br>
+                             <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                             <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                             </button>
+                             <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                             <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                             </button>
+                             <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                            <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                            </button>
+                          </div>
+                          <br>
+                    </span>
+             </div>`;
+
+                }
+            })
+}
 
 function printUserPosts(){
 
