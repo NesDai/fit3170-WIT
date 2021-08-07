@@ -4,6 +4,39 @@ const params = new URLSearchParams(window.location.search)
 
 printPostDetails();
 hideTranslationModal();
+checkAddedFavourite();
+
+// change innertext of button if already add to favourite
+function checkAddedFavourite(){
+  let post_id = params.get('post_id'); 
+
+  if (checkUserExistence()){
+    let myRef = firebase.database().ref(`posts/${post_id}`);
+    myRef.once("value")
+      .then(function(snapshot) {
+
+        let hasFavouriteData = snapshot.hasChild("users_favourite"); 
+
+        if (hasFavouriteData){
+          let users_arr = snapshot.val()["users_favourite"];
+          let user_exist = false;
+
+          for(let i = 0; i < users_arr.length; i++) {
+            if (current_user["phone"] == users_arr[i]){
+              user_exist = true;
+            }
+          }
+
+          if (user_exist){
+            let fav = document.getElementById("favourite_btn");
+            fav.innerText = "Remove Favourite";
+             let btn = document.getElementById("favourite_post_btn");
+            btn.style.backgroundColor = "#03a9f4yas61` Q`W@";
+          } 
+        }
+      })
+  }
+}
 
 function showTranslationModal(){
     document.getElementById("myModal").style.display = "block";
@@ -92,8 +125,8 @@ function printPostDetails(){
                                  <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                  </button>
                                  </button>
-                                 <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="addPostToFavourite()">
-                                 <i class="material-icons notranslate" id="favourite_post_icon">favorite</i><span> Add Post to Favourite</span>
+                                 <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
+                                 <i class="material-icons notranslate" id="favourite_post_icon">favorite</i><span id="favourite_btn"> Add Post to Favourite</span>
                                  </button>
                               </div>
                               <br>
@@ -138,9 +171,45 @@ function printPostDetails(){
             })
 }
 
-// a function to add post to user's favourites
+function checkButtonStatus() {
+  let fav_button = document.getElementById("favourite_btn");
+  console.log(fav_button.innerText);
+  if (fav_button.innerText == "REMOVE FAVOURITE"){
+    removePostFromFavourite();
+  } else {
+    addPostToFavourite();
+  }
+}
 
-//snapshot.val() give infor about the post
+// remove user favourite
+function removePostFromFavourite(){
+  let post_id = params.get('post_id'); 
+
+  if(checkUserExistence()){
+    let myRef = firebase.database().ref(`posts/${post_id}`);
+    myRef.once("value")
+      .then(function(snapshot) {
+        let newData = "";
+        let new_users_arr = [];
+        let users_arr = snapshot.val()["users_favourite"];
+        for(let i = 0; i < users_arr.length; i++) {
+            if (current_user["phone"] != users_arr[i]){
+              new_users_arr.push(users_arr[i]);
+            }
+        }
+        newData = {
+          users_favourite:new_users_arr
+        }
+
+        firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+          alert("Successfully remove the post from your favourite");
+          window.location = "post.html" + "?post_id=" + post_id;
+        })
+      })
+  }
+}
+
+// a function to add post to user's favourites
 function addPostToFavourite(){
   let post_id = params.get('post_id'); 
 
@@ -163,23 +232,10 @@ function addPostToFavourite(){
           }
         } else {
           let users_arr = snapshot.val()["users_favourite"];
-          let user_exist = false;
-
-          for(let i = 0; i < users_arr.length; i++) {
-            if (current_user["phone"] == users_arr[i]){
-              user_exist = true;
-            }
-          }
-
-          if (user_exist){
-            alert("You have already favourite this post");
-            window.location = "post.html" + "?post_id=" + post_id;
-          } else {
-            // add user to the arr and update current data in firebase
-            users_arr.push(current_user["phone"]);
-            newData = {
-              users_favourite: users_arr
-            }
+          
+          users_arr.push(current_user["phone"]);
+          newData = {
+            users_favourite: users_arr
           }
         }
 
