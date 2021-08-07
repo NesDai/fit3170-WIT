@@ -91,6 +91,10 @@ function printPostDetails(){
                                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
                                  <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                  </button>
+                                 </button>
+                                 <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="addPostToFavourite()">
+                                 <i class="material-icons notranslate" id="favourite_post_icon">favorite</i><span> Add Post to Favourite</span>
+                                 </button>
                               </div>
                               <br>
                         <hr style="margin: 0">
@@ -132,6 +136,60 @@ function printPostDetails(){
                 document.getElementById("delete_post_btn").remove()
               printComments();
             })
+}
+
+// a function to add post to user's favourites
+
+//snapshot.val() give infor about the post
+function addPostToFavourite(){
+  let post_id = params.get('post_id'); 
+
+  if (checkUserExistence()){
+
+    let myRef = firebase.database().ref(`posts/${post_id}`);
+    myRef.once("value")
+      .then(function(snapshot) {
+
+        let hasFavouriteData = snapshot.hasChild("users_favourite"); 
+        let newData = "";
+
+        if (hasFavouriteData == false){
+          //if the data has not been written before
+          users_favourite_arr = [];
+          users_favourite_arr.push(current_user["phone"]); //push current user id to post dets to indicate they have favourite this post
+          
+          newData = {
+            users_favourite: users_favourite_arr
+          }
+        } else {
+          let users_arr = snapshot.val()["users_favourite"];
+          let user_exist = false;
+
+          for(let i = 0; i < users_arr.length; i++) {
+            if (current_user["phone"] == users_arr[i]){
+              user_exist = true;
+            }
+          }
+
+          if (user_exist){
+            alert("You have already favourite this post");
+            window.location = "post.html" + "?post_id=" + post_id;
+          } else {
+            // add user to the arr and update current data in firebase
+            users_arr.push(current_user["phone"]);
+            newData = {
+              users_favourite: users_arr
+            }
+          }
+        }
+
+        firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+          alert("Successfully added the post to your favourite");
+          window.location = "post.html" + "?post_id=" + post_id;
+        })
+      })
+  }
+
 }
 
 // Creating comment
