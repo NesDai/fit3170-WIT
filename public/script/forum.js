@@ -151,7 +151,6 @@ function printAllPosts(){
     firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-                console.log(data.val());
                 data_list.push(data.val())
                 // let post = data.val()
             });
@@ -283,66 +282,60 @@ function postDetail(id) {
 
 
 /**
- * Function used to search forum posts. A parameter is typed (interest or a name of the post)
+ * Function used to search forum posts in feed. A parameter is typed (interest or a name of the post)
  * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post. 
  * @returns Nothing. The function automatically updates the screen with relevant posts.
  */
 function searchForumByTitle(param){
 
-    let field = document.getElementById("postField");
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    let tab = document.getElementsByName("tabs");
 
-    //look through posts. find name or interest
-    // print out the post.
+    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
+        searchYourPosts(param);
+        return
+    }
+
+    let field = document.getElementById("postField");
+    console.log(` in func ${param} FORUM FEED`);
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printAllPosts();
         return // exit function
     }
 
-    let data_list = []
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref(`posts`).orderByChild('title')
                  .startAt(param)
                  .endAt(param+"\uf8ff").once("value", x=> {
                     x.forEach(data => {
-                        data_list.push(data.val())
 
-                    });
-                }).then(()=> {
-
-                    if(data_list.length == 0){ // No results found
-                        field.innerHTML += `<h3 style="color:#006DAE; margin:100px;"><b>The search came up empty...  </b></h3>`;
-                    }
-
-                    for(let i=data_list.length-1; i>=0 ; i--){
-                        let post = data_list[i]
-
-                        field.innerHTML +=
+                        field.innerHTML +=  // add the post card
                         `   <div style="padding-top: 20px;">
                                 <span class="post_card">
                                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                                       <!-- POST HEADER -->
                                       <br>
                                       <div class="f">
-                                         <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                                         <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${data.val().username}</h2>
                                       </div>
                                       <br>
                                       <div class="post_header" style="margin:0 10px; background-color: white">
-                                         <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+                                         <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${data.val().title}</h5>
                                       </div>
                                       <!-- POST FORM -->
                                       <form class="post_content" style="margin:0 10px; background-color: white">
-                                         <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
+                                         <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${data.val().description} </h6>
                                          <br>
                                          <div style='display: inline-block'>
-                                            <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
-                                            <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                                            <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${data.val().interest[0]} </button>
+                                            <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${data.val().interest[1]}</button>
                                          </div>
                                          <br><br>
                                       </form>
                                       <div class="f">
-                                      <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                                      <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${data.val().created}</h2>
                                       <div>
                                       <br>
                                       <div>
@@ -354,15 +347,95 @@ function searchForumByTitle(param){
                                          <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
                                          <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
                                          </button>
-                                         <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                                         <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${data.val().id}');">
                                         <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                                         </button>
                                       </div>
                                       <br>
                                 </span>
                          </div>`;
-                    }
+                    })
                 })   
 
 
 }
+
+
+/**
+ * Function used to search forum posts in "Your posts". A parameter is typed (interest or a name of the post)
+ * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post. 
+ * @returns Nothing. The function automatically updates the screen with relevant posts.
+ */
+function searchYourPosts(param){
+
+    let field = document.getElementById("postField");
+    console.log(` in func ${param} YOUR POSTS`);
+    field.innerHTML = ""; // emtpy the field of any previous posts
+
+    if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
+        printUserPosts();
+        return // exit function
+    }
+
+    field.innerHTML = ""; // emtpy the field of any previous posts
+
+    firebase.database().ref(`posts`).orderByChild('title')
+                 .startAt(param)
+                 .endAt(param+"\uf8ff").once("value", x=> {
+                    x.forEach(data => {
+
+                       
+                        if(data.val().username == current_user["username"]){
+                            
+
+                            field.innerHTML +=  // add the post card
+                            `   <div style="padding-top: 20px;">
+                                    <span class="post_card">
+                                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                                        <!-- POST HEADER -->
+                                        <br>
+                                        <div class="f">
+                                            <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${data.val().username}</h2>
+                                        </div>
+                                        <br>
+                                        <div class="post_header" style="margin:0 10px; background-color: white">
+                                            <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${data.val().title}</h5>
+                                        </div>
+                                        <!-- POST FORM -->
+                                        <form class="post_content" style="margin:0 10px; background-color: white">
+                                            <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${data.val().description} </h6>
+                                            <br>
+                                            <div style='display: inline-block'>
+                                                <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${data.val().interest[0]} </button>
+                                                <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${data.val().interest[1]}</button>
+                                            </div>
+                                            <br><br>
+                                        </form>
+                                        <div class="f">
+                                        <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${data.val().created}</h2>
+                                        <div>
+                                        <br>
+                                        <div>
+                                            <!--  LIKE DISLIKE FOR POST -->
+                                            <br>
+                                            <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                                            <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                                            </button>
+                                            <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                                            <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                            </button>
+                                            <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${data.val().id}');">
+                                            <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                                            </button>
+                                        </div>
+                                        <br>
+                                    </span>
+                            </div>`;
+                        }
+                    })
+                    })   
+            
+
+}
+
+
