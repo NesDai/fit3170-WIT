@@ -67,7 +67,9 @@ function makeNewPost() {
             title: title,
             userID: current_user["phone"],
             username: current_user["username"],
-            created: new Date().toString()
+            created: new Date().toString(), 
+            likes:0, 
+            dislikes:0
         }
 
         firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
@@ -84,6 +86,7 @@ function makeNewPost() {
     // } else {
     //     window.location = "forum.html";
     // }
+
 }
 
 
@@ -255,7 +258,7 @@ function printUserPosts(){
                                <div>
                                   <!--  LIKE DISLIKE FOR POST -->
                                   <br>
-                                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn">
+                                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}' >
                                   <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
                                   </button>
                                   <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="dislike_post_btn">
@@ -277,4 +280,21 @@ function printUserPosts(){
 
 function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
+}
+
+
+
+// Likes for posts
+function likePost(post_id)
+{
+    let myRef = firebase.database().ref(`likes`);
+    let key = myRef.push().key;
+    let newData = {
+        post_id: post_id,
+        user_id: current_user["phone"]
+    }
+
+    firebase.database().ref(`likes/${key}`).set(newData).then(()=>{
+          alert("Liked!");
+    });
 }
