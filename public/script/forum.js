@@ -284,23 +284,35 @@ function postDetail(id) {
 
 
 // Likes for posts
+
 function likePost(post_id)
 {
-    if(!checkIfLiked(post_id)){
-        let myRef = firebase.database().ref(`likes`);
-        let key = myRef.push().key;
-        let newData = {
-            post_id: post_id,
-            user_id: current_user["phone"]
-        }
+    console.log(checkForLikeDislike(post_id))
+    // if(!checkIfLiked(post_id)){
+    //     let myRef = firebase.database().ref(`likes`);
+    //     let key = myRef.push().key;
+    //     let newData = {
+    //         post_id: post_id,
+    //         user_id: current_user["phone"]
+    //     }
 
-        firebase.database().ref(`likes/${key}`).set(newData).then(()=>{
-            alert("Liked!");
-        });
-    }
-    else{
-       console.log("sorry the post is liked")     
-    }
+    //     firebase.database().ref(`likes/${key}`).set(newData).then(()=>{
+    //         alert("Liked!");
+    //     });
+    // }
+    // else{
+    //    console.log("sorry the post is liked")     
+    // }
+}
+
+function checkForLikeDislike(post_id)
+{
+    let output=false
+    let ref = firebase.database().ref(`likesDislikes/${post_id}`);
+    ref.once("value").then(function(snapshot) {
+        console.log(snapshot.child(current_user["phone"]).exists())
+        return snapshot.child(current_user["phone"]).exists(); 
+  });
 }
 
 
