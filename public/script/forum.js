@@ -162,7 +162,6 @@ function printAllPosts(){
         }).then(()=>{
             for(let i=data_list.length-1; i>=0 ; i--){
                 let post = data_list[i]
-
                 field.innerHTML +=
                 `   <div style="padding-top: 20px;">
                         <span class="post_card">
@@ -193,8 +192,8 @@ function printAllPosts(){
                               <div>
                                  <!--  LIKE DISLIKE FOR POST -->
                                  <br>
-                                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
-                                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn" onclick="likePost('${post.id}');">
+                                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
                                  </button>
                                  <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
                                  <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
@@ -258,7 +257,7 @@ function printUserPosts(){
                                <div>
                                   <!--  LIKE DISLIKE FOR POST -->
                                   <br>
-                                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}' >
+                                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}');" >
                                   <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
                                   </button>
                                   <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="dislike_post_btn">
@@ -287,14 +286,53 @@ function postDetail(id) {
 // Likes for posts
 function likePost(post_id)
 {
-    let myRef = firebase.database().ref(`likes`);
-    let key = myRef.push().key;
-    let newData = {
-        post_id: post_id,
-        user_id: current_user["phone"]
-    }
+    if(!checkIfLiked(post_id)){
+        let myRef = firebase.database().ref(`likes`);
+        let key = myRef.push().key;
+        let newData = {
+            post_id: post_id,
+            user_id: current_user["phone"]
+        }
 
-    firebase.database().ref(`likes/${key}`).set(newData).then(()=>{
-          alert("Liked!");
-    });
+        firebase.database().ref(`likes/${key}`).set(newData).then(()=>{
+            alert("Liked!");
+        });
+    }
+    else{
+       console.log("sorry the post is liked")     
+    }
 }
+
+
+function checkIfLiked(post_id)
+{
+let data_list = [];
+
+    firebase.database().ref('likes').once('value', x => { x.forEach(data => {
+                data_list.push(data.val());
+            });
+            console.log(data_list)
+
+        })
+    
+        
+        .then(()=>{
+        for (let i = 0; i < data_list.length; i++) {
+            if (data_list[i].user_id==current_user["phone"] && post_id==data_list[i].post_id) {
+                    console.log('found');
+                    return true
+                }
+            }
+        print('hi')
+        return false;  
+        }
+    )
+}
+
+
+
+// function removeLike()
+// {
+
+// }
+
