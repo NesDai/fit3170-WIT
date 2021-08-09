@@ -289,6 +289,22 @@ async function likePost(post_id)
 {
     let res = await checkForLikeDislike(post_id);
     console.log(res);
+    let output=false
+    let user=current_user["phone"]
+    let ref = firebase.database().ref(`likesDislikes/${post_id}`);
+    ref.once("value").then(function(snapshot) {
+        if (!snapshot.child(current_user["phone"]).exists()){
+            let newData = {};
+            newData[current_user["phone"]] = 1;
+            ref.set(newData).then(()=>{alert("Liked")});
+        }
+        else
+        {
+            alert('post was already liked');
+        }
+    });
+}
+
     // if(!checkIfLiked(post_id)){
     //     let myRef = firebase.database().ref(`likes`);
     //     let key = myRef.push().key;
@@ -304,7 +320,7 @@ async function likePost(post_id)
     // else{
     //    console.log("sorry the post is liked")     
     // }
-}
+
 
 function checkForLikeDislike(post_id)
 {
