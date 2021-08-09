@@ -195,8 +195,8 @@ function printAllPosts(){
                                  <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn" onclick="likePost('${post.id}');">
                                  <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
                                  </button>
-                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
-                                 <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${post.id}');" >
+                                 <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
                                  </button>
                                  <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
                                 <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
@@ -284,65 +284,108 @@ function postDetail(id) {
 
 
 // Likes for posts
+async function likePost(post_id) {
+    let res = await checkForLikeDislike(post_id);
 
-async function likePost(post_id)
+    if (!res) {
+        // if there is no action at all, lilke
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
+            action: 1
+        }).then(() => {
+            alert("Liked");
+            updateLikes(post_id, 1) // add 1 like 
+        });
+
+    } else {
+        // if there is action 
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state = snapshot.val();
+            if (current_state == -1) {
+                // if action is dislike
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
+                    action: 1
+                }).then(() => {
+                    alert("Liked");
+                    updateLikes(post_id, 1) // add 1 like 
+                    updateDislikes(post_id, -1)
+                });
+            } else {
+
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
+                alert('post was already liked');
+                updateLikes(post_id, -1)  // remove 1 like 
+            }
+        })
+    }
+}
+
+async function dislikePost(post_id)
 {
     let res = await checkForLikeDislike(post_id);
 
-
     if (!res){
-
-        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
-
-                action: 1
-            
-        }).then(()=>{
-            alert("Liked");
-        });
-                    
-                    
-        }
-        else
-            {
-                alert('post was already liked');
+        // if there is no action at all
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
+                alert("Disliked");
+                // add 1 dislike 
+                updateDislikes(post_id, 1)
+            });      
+    }
+    else{
+        // if there is action 
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state=snapshot.val();
+            if (current_state==1){
+                // if action is like
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{alert("Disiked");});  
+                // add 1 dislike and remove 1 like
+                updateDislikes(post_id, 1)
+                updateLikes(post_id,-1)
             }
-    
+            else{
+                // remove 1 dislike
+                updateDislikes(post_id, -1)
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
+                alert('post was already disliked');
+            }
+        }
+        )
+    }
 }
-
-    // if(!checkIfLiked(post_id)){
-    //     let myRef = firebase.database().ref(`likes`);
-    //     let key = myRef.push().key;
-    //     let newData = {
-    //         post_id: post_id,
-    //         user_id: current_user["phone"]
-    //     }
-
-    //     firebase.database().ref(`likes/${key}`).set(newData).then(()=>{
-    //         alert("Liked!");
-    //     });
-    // }
-    // else{
-    //    console.log("sorry the post is liked")     
-    // }
-
 
 function checkForLikeDislike(post_id)
 {
     return new Promise(resolve => {
-
-
             firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).once("value", snapshot => {
                 if (snapshot.exists()){
                 resolve(true);
                 }
                 else{
-                    console.log("fa")
                     resolve(false);
                 }
             });
     });
 }
 
+function updateDislikes(post_id, number)
+{
+    firebase.database().ref(`posts/${post_id}/dislikes`).once('value', (snapshot) => {
+        let current_dislikes = snapshot.val();
+        var updates = {};
+        updates[`posts/${post_id}/dislikes`] = current_dislikes + number
+        firebase.database().ref().update(updates);
+    })
+}
+
+function updateLikes(post_id, number)
+{
+    firebase.database().ref(`posts/${post_id}/likes`).once('value', (snapshot) => {
+        let current_likes = snapshot.val();
+        var updates = {};
+        updates[`posts/${post_id}/likes`] = current_likes + number
+        firebase.database().ref().update(updates);
+    })
+}
 
 function checkIfLiked(post_id)
 {
@@ -369,10 +412,4 @@ let data_list = [];
     )
 }
 
-
-
-// function removeLike()
-// {
-
-// }
 
