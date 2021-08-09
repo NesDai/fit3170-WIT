@@ -107,7 +107,7 @@ function phoneAuth() {
     }
     //it takes two parameter first one is number,,,second one is recaptcha
 
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
     //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
     firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase

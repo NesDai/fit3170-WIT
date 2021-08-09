@@ -285,9 +285,10 @@ function postDetail(id) {
 
 // Likes for posts
 
-function likePost(post_id)
+async function likePost(post_id)
 {
-    console.log(checkForLikeDislike(post_id))
+    let res = await checkForLikeDislike(post_id);
+    console.log(res);
     // if(!checkIfLiked(post_id)){
     //     let myRef = firebase.database().ref(`likes`);
     //     let key = myRef.push().key;
@@ -307,12 +308,19 @@ function likePost(post_id)
 
 function checkForLikeDislike(post_id)
 {
-    let output=false
-    let ref = firebase.database().ref(`likesDislikes/${post_id}`);
-    ref.once("value").then(function(snapshot) {
-        console.log(snapshot.child(current_user["phone"]).exists())
-        return snapshot.child(current_user["phone"]).exists(); 
-  });
+    return new Promise(resolve => {
+
+
+            firebase.database().ref(`likesDislikes/${post_id}/${current_user["phone"]}`).once("value", snapshot => {
+                if (snapshot.exists()){
+                resolve(true);
+                }
+                else{
+                    console.log("fa")
+                    resolve(false);
+                }
+            });
+    });
 }
 
 
