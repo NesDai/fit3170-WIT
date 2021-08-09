@@ -288,21 +288,25 @@ function postDetail(id) {
 async function likePost(post_id)
 {
     let res = await checkForLikeDislike(post_id);
-    console.log(res);
-    let output=false
-    let user=current_user["phone"]
-    let ref = firebase.database().ref(`likesDislikes/${post_id}`);
-    ref.once("value").then(function(snapshot) {
-        if (!snapshot.child(current_user["phone"]).exists()){
-            let newData = {};
-            newData[current_user["phone"]] = 1;
-            ref.set(newData).then(()=>{alert("Liked")});
+
+
+    if (!res){
+
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
+
+                action: 1
+            
+        }).then(()=>{
+            alert("Liked");
+        });
+                    
+                    
         }
         else
-        {
-            alert('post was already liked');
-        }
-    });
+            {
+                alert('post was already liked');
+            }
+    
 }
 
     // if(!checkIfLiked(post_id)){
@@ -327,7 +331,7 @@ function checkForLikeDislike(post_id)
     return new Promise(resolve => {
 
 
-            firebase.database().ref(`likesDislikes/${post_id}/${current_user["phone"]}`).once("value", snapshot => {
+            firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).once("value", snapshot => {
                 if (snapshot.exists()){
                 resolve(true);
                 }
