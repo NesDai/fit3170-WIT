@@ -26,6 +26,13 @@ function hideTranslationModal(){
     document.getElementById("myModal").style.display = "none";  
 }
 
+
+/**
+ * Function used to check if a video link is from youtube.
+ * If it is, then it manipulates the url to be able to display a video on the app.
+ * @param {1} url: input url of a video from create_post.html
+ * @returns youtube_url: the url with embed param added if the condition is satisfied. Or else, it returns 0
+ */
 function checkEmbeddingVideo(url) {
     let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     let match = url.match(regExp);
