@@ -179,7 +179,7 @@ function printAllPosts(){
             for(let i=data_list.length-1; i>=0 ; i--){
                 let post = data_list[i]
 
-                if (post.videoURL == 0) {
+                if (post.videoURL == 0 || post.videoURL == undefined) {
                     field.innerHTML +=
                     `   <div style="padding-top: 20px;">
                             <span class="post_card">
