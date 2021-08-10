@@ -27,6 +27,25 @@ function hideTranslationModal(){
 }
 
 
+/**
+ * Function used to check if a video link is from youtube.
+ * If it is, then it manipulates the url to be able to display a video on the app.
+ * @param {1} url: input url of a video from create_post.html
+ * @returns youtube_url: the url with embed param added if the condition is satisfied. Or else, it returns 0
+ */
+function checkEmbeddingVideo(url) {
+    let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let match = url.match(regExp);
+    let youtube_url = 'https://www.youtube.com/embed/';
+
+    if (match && match[2].length == 11) {
+        return youtube_url + match[2];
+    } else {
+        return 0;
+    }
+}
+
+
 
 //Making a new post
 function makeNewPost() {
@@ -40,7 +59,7 @@ function makeNewPost() {
      };
 
 
-    if (checkUserExistence()) {
+    if (checkUserExistence()) { 
         interest_arr = [];
         $("input:checkbox[name=interests]:checked").each(function(){
             interest_arr.push($(this).val());
@@ -60,6 +79,13 @@ function makeNewPost() {
         let key = myRef.push().key;
         // let key = myRef.key; // generate a key for post id
 
+        let embedding_video_url = checkEmbeddingVideo(video_url);
+
+        if (embedding_video_url == 0) {
+            alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+            return;
+        }
+
         let newData = {
             id: key,
             description: description,
@@ -67,7 +93,7 @@ function makeNewPost() {
             title: title,
             userID: current_user["phone"],
             username: current_user["username"],
-            videoURL: video_url,
+            videoURL: embedding_video_url,
             created: new Date().toString()
         }
 
@@ -77,7 +103,7 @@ function makeNewPost() {
         });
      } else{
             window.location = "forum.html";
-        }
+     }
     //     myRef.push(newData).then(() => {
     //         alert("Posted successfully. Redirecting back to forum")
     //         window.location = "forum.html";
@@ -161,57 +187,57 @@ function printAllPosts(){
             for(let i=data_list.length-1; i>=0 ; i--){
                 let post = data_list[i]
 
-                field.innerHTML +=
+                field.innerHTML += 
                 `   <div style="padding-top: 20px;">
                         <span class="post_card">
-                           <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                              <!-- POST HEADER -->
-                              <br>
-                              <div class="f">
-                                 <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
-                              </div>
-                              <br>
-                              <div class="post_header" style="margin:0 10px; background-color: white">
-                                 <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
-                              </div>
-                              <!-- POST FORM -->
-                              <form class="post_content" style="margin:0 10px; background-color: white">
-                                 <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
-                                 <br>
-                                 <iframe width="350" height="300" src="${post.videoURL}"></iframe>   
-                                 <br>
-                                 <div style='display: inline-block'>
+                            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                                <!-- POST HEADER -->
+                                <br>
+                                <div class="f">
+                                    <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                                </div>
+                                <br>
+                                <div class="post_header" style="margin:0 10px; background-color: white">
+                                    <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+                                </div>
+                                <!-- POST FORM -->
+                                <form class="post_content" style="margin:0 10px; background-color: white">
+                                    <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
+                                    <br>
+                                    ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                    <br>
+                                    <br>
+                                    <div style='display: inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
                                     <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
-                                 </div>
-                                 <br><br>
-                              </form>
-                              <div class="f">
-                              <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-                              <div>
-                              <br>
-                              <div>
-                                 <!--  LIKE DISLIKE FOR POST -->
-                                 <br>
-                                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
-                                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
-                                 </button>
-                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
-                                 <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
-                                 </button>
-                                 <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                                    </div>
+                                    <br><br>
+                                </form>
+                                <div class="f">
+                                <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                                <div>
+                                <br>
+                                <div>
+                                    <!--  LIKE DISLIKE FOR POST -->
+                                    <br>
+                                    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                                    <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                                    </button>
+                                    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                                    <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                    </button>
+                                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
                                 <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                                 </button>
-                              </div>
-                              <br>
+                                </div>
+                                <br>
                         </span>
-                 </div>`;
+                    </div>`;
             }
         });
 
 
 }
-
 
 function printUserPosts(){
 
@@ -248,6 +274,9 @@ function printUserPosts(){
                                <!-- POST FORM -->
                                <form class="post_content" style="margin:0 10px; background-color: white">
                                   <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
+                                  <br>
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  <br>
                                   <br>
                                   <div style='inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
