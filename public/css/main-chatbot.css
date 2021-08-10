@@ -13,8 +13,11 @@ body {
   top: 8px;
   position: relative;
 }
+.topheader {
+  background-color: #006DAE;
+}
 .tablink{
-  background-color: #00695C;
+  background-color: #006DAE;
   position:relative;
   color: white;
   border: none;
@@ -26,7 +29,7 @@ body {
   width: 25%;
 }
 .tablink:hover {
-  background-color: #777;
+  background-color: #367da7;
 }
 .tabcontent{
   display: none;
@@ -66,7 +69,13 @@ body {
 }
 
 /* CARD CSS */
-main, #messages-card {
+#progress-bar {
+  width:60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2.5%;
+}
+main {
   height: 100%;
   padding-bottom: 0;
 }
@@ -76,6 +85,7 @@ main, #messages-card {
 }
 #messages-card {
   margin-top: 15px;
+  max-height: calc(100% - 80px);
 }
 .mdl-layout__header-row span {
   margin-left: 15px;
@@ -108,39 +118,48 @@ main, #messages-card {
   overflow-y: scroll;
 }
 #messages {
-  height: 100%;
   padding: 10px;
   overflow-y: scroll;
   height: calc(100% - 80px);
+  width: 100%;
 }
 .space {
   display: inline-block;
   width: 100%;
 }
-.message-container:first-of-type {
+/* .message-container:first-of-type {
   border-top-width: 0;
-}
+} */
 .message-container {
   margin-left: 50px;
-  background-image: linear-gradient(#00796b, #00897b);
   margin-top: 3px;
   margin-bottom: 3px;
   padding: 15px 20px 0px 20px;
   max-width: 60%;
   word-wrap: break-word;
 }
-.message-container p {
-  color: white;
-}
 .sender {
-  border-radius: 25px 25px 25px 3px;
+  border-radius: 25px 25px 25px 25px;
+  border-color: #006DAE;
+  border-width: 0.1rem;
+  border-style: solid;
   margin-left: 20px;
   float: left;
 }
 .receiver {
-  border-radius: 25px 25px 3px 25px;
+  background-color:#00ac3e;
+  border-radius: 25px 25px 25px 25px;
   margin-right: 20px;
   float: right;
+  color: #000000;
+}
+.blue {
+  background-color: #006DAE;
+  color: #ffffff;
+}
+.white {
+  background-color: #ffffff;
+  color: #006DAE;
 }
 
 /* SEND MESSAGE FORM */
