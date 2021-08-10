@@ -148,13 +148,12 @@ function findAllPosts() {
 
 function printAllPosts(){
     let data_list = [];
-    let field = document.getElementById("postField");
+    // let field = document.getElementById("postField");
     // field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-                console.log(data.val());
                 data_list.push(data.val())
                 // let post = data.val()
             });
@@ -162,52 +161,102 @@ function printAllPosts(){
         }).then(()=>{
             for(let i=data_list.length-1; i>=0 ; i--){
                 let post = data_list[i]
-                field.innerHTML +=
-                `   <div style="padding-top: 20px;">
-                        <span class="post_card">
-                           <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                              <!-- POST HEADER -->
-                              <br>
-                              <div class="f">
-                                 <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
-                              </div>
-                              <br>
-                              <div class="post_header" style="margin:0 10px; background-color: white">
-                                 <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
-                              </div>
-                              <!-- POST FORM -->
-                              <form class="post_content" style="margin:0 10px; background-color: white">
-                                 <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
-                                 <br>
-                                 <div style='display: inline-block'>
-                                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
-                                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
-                                 </div>
-                                 <br><br>
-                              </form>
-                              <div class="f">
-                              <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-                              <div>
-                              <br>
-                              <div>
-                                 <!--  LIKE DISLIKE FOR POST -->
-                                 <br>
-                                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn" onclick="likePost('${post.id}');">
-                                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
-                                 </button>
-                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${post.id}');" >
-                                 <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
-                                 </button>
-                                 <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-                                <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
-                                </button>
-                              </div>
-                              <br>
-                        </span>
-                 </div>`;
+                let buttons=likeBtnColor(post)
+                printPost(post, buttons)
             }
         });
 
+
+}
+
+function likeBtnColor(post)
+{
+    let action = checkForLikeDislike(post.id);
+    let buttons=""
+                if (!!action)
+                {
+                    firebase.database().ref(`likesDislikes/${post.id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+                    let current_state=snapshot.val();
+                    if (current_state==1){
+                        console.log('hi')
+                        buttons=`
+                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}');">
+                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
+                        </button>
+                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${post.id}');" >
+                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
+                        </button>
+                        `
+                    }
+                    else{
+                        console.log('yyy')
+                        buttons=`
+                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}');">
+                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
+                        </button>
+                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}');" >
+                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
+                        </button>
+                        `
+                    }
+                    })
+                }
+                else
+                {
+                    console.log('kkkakda')
+                    buttons=`
+                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}');">
+                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
+                        </button>
+                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${post.id}');" >
+                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
+                        </button>
+                        `
+                }
+    return buttons
+}
+
+function printPost(post, buttons)
+{
+    let field = document.getElementById("postField");
+    field.innerHTML +=
+    `   <div style="padding-top: 20px;">
+            <span class="post_card">
+               <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                  <!-- POST HEADER -->
+                  <br>
+                  <div class="f">
+                     <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                  </div>
+                  <br>
+                  <div class="post_header" style="margin:0 10px; background-color: white">
+                     <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+                  </div>
+                  <!-- POST FORM -->
+                  <form class="post_content" style="margin:0 10px; background-color: white">
+                     <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
+                     <br>
+                     <div style='display: inline-block'>
+                        <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
+                        <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                     </div>
+                     <br><br>
+                  </form>
+                  <div class="f">
+                  <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                  <div>
+                  <br>
+                  <div>
+                     <!--  LIKE DISLIKE FOR POST -->
+                     <br>
+                     ${buttons}
+                     <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                    <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                    </button>
+                  </div>
+                  <br>
+            </span>
+     </div>`;
 
 }
 
@@ -286,6 +335,7 @@ function postDetail(id) {
 // Likes for posts
 async function likePost(post_id) {
     let res = await checkForLikeDislike(post_id);
+    console.log(res)
 
     if (!res) {
         // if there is no action at all, lilke
