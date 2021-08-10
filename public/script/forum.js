@@ -209,6 +209,9 @@ function printAllPosts(){
 
 }
 
+/**
+ * Function which prints all user's favourited post under Favourite Posts tab
+ */
 function printUserFavouritePosts() {
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts

@@ -173,9 +173,12 @@ function printPostDetails(){
             })
 }
 
+/**
+ * Function which checks the button's nature before
+ * performing the wanted functionality
+ */
 function checkButtonStatus() {
   let fav_button = document.getElementById("favourite_btn");
-  console.log(fav_button.innerText);
   if (fav_button.innerText == "REMOVE FAVOURITE"){
     removePostFromFavourite();
   } else {
@@ -183,7 +186,9 @@ function checkButtonStatus() {
   }
 }
 
-// remove user favourite
+/**
+ * Function which removes the current post from user's favourite
+ */
 function removePostFromFavourite(){
   let post_id = params.get('post_id'); 
 
@@ -211,7 +216,9 @@ function removePostFromFavourite(){
   }
 }
 
-// a function to add post to user's favourites
+/**
+ * Function which adds the current post into user's favourite
+ */
 function addPostToFavourite(){
   let post_id = params.get('post_id'); 
 
@@ -224,6 +231,7 @@ function addPostToFavourite(){
         let hasFavouriteData = snapshot.hasChild("users_favourite"); 
         let newData = "";
 
+        // checking the favourite data has been written ebfore
         if (hasFavouriteData == false){
           //if the data has not been written before
           users_favourite_arr = [];
