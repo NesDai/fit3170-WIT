@@ -52,7 +52,7 @@ function makeNewPost() {
      };
 
 
-    if (checkUserExistence()) { // added ! for now 
+    if (checkUserExistence()) { 
         interest_arr = [];
         $("input:checkbox[name=interests]:checked").each(function(){
             interest_arr.push($(this).val());
@@ -75,7 +75,8 @@ function makeNewPost() {
         let embedding_video_url = checkEmbeddingVideo(video_url);
 
         if (embedding_video_url == 0) {
-            alert("Error in embedding video. Please try again with correct url from Youtube.")
+            alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+            return;
         }
 
         let newData = {
