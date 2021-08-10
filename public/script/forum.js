@@ -215,7 +215,7 @@ function searchForumByTitle(param){
 
     let field = document.getElementById("postField");
     console.log(` in func ${param} FORUM FEED`);
-    field.innerHTML = ""; // emtpy the field of any previous posts
+
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printAllPosts();
@@ -232,6 +232,29 @@ function searchForumByTitle(param){
                     })
                 })   
 
+        //find interests in posts
+
+        //! tech debt? idk any better way of doing this atm
+    firebase.database().ref(`posts`).orderByChild('interest/0')
+        .startAt(param)
+        .endAt(param+"\uf8ff").once("value", x=> {
+           x.forEach(data => {
+
+                printPostCard(data.val(),field);
+               
+           })
+           })  
+
+    firebase.database().ref(`posts`).orderByChild('interest/1')
+           .startAt(param)
+           .endAt(param+"\uf8ff").once("value", x=> {
+              x.forEach(data => {
+   
+                   printPostCard(data.val(),field);
+                  
+              })
+              })  
+
 
          
 }
@@ -247,7 +270,7 @@ function searchYourPosts(param){
 
 
     let field = document.getElementById("postField");
-    field.innerHTML = ""; // emtpy the field of any previous posts
+
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printUserPosts();
@@ -268,9 +291,34 @@ function searchYourPosts(param){
                         }
                     })
                     })   
+
+        //find interests in posts
+
+        //! tech debt? idk any better way of doing this atm
+        firebase.database().ref(`posts`).orderByChild('interest/0')
+        .startAt(param)
+        .endAt(param+"\uf8ff").once("value", x=> {
+           x.forEach(data => {
+                if(data.val().username == current_user["username"]){
+                    printPostCard(data.val(),field);
+                }
+           })
+           })  
+
+    firebase.database().ref(`posts`).orderByChild('interest/1')
+           .startAt(param)
+           .endAt(param+"\uf8ff").once("value", x=> {
+              x.forEach(data => {
+                    if(data.val().username == current_user["username"]){
+                        printPostCard(data.val(),field);
+                    }
+                  
+              })
+              })  
             
 
 }
+
 
 
 /**
