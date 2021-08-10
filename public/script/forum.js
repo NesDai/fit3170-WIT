@@ -197,6 +197,8 @@ function printAllPosts(){
                                     <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                                     <br>
                                     ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                    <br>
+                                    <br>
                                     <div style='display: inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
                                     <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
@@ -264,6 +266,9 @@ function printUserPosts(){
                                <!-- POST FORM -->
                                <form class="post_content" style="margin:0 10px; background-color: white">
                                   <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
+                                  <br>
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  <br>
                                   <br>
                                   <div style='inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
