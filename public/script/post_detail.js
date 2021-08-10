@@ -4,10 +4,13 @@ const params = new URLSearchParams(window.location.search)
 
 printPostDetails();
 hideTranslationModal();
-checkAddedFavourite();
+checkUserFavouritedPost();
 
-// change innertext of button if already add to favourite
-function checkAddedFavourite(){
+/* 
+A function that checks if the user has favourited the selected post and 
+will output the correct text on button
+*/
+function checkFavouritedPost(){
   let post_id = params.get('post_id'); 
 
   if (checkUserExistence()){
@@ -21,6 +24,7 @@ function checkAddedFavourite(){
           let users_arr = snapshot.val()["users_favourite"];
           let user_exist = false;
 
+          // looping through users list in database
           for(let i = 0; i < users_arr.length; i++) {
             if (current_user["phone"] == users_arr[i]){
               user_exist = true;
@@ -29,9 +33,7 @@ function checkAddedFavourite(){
 
           if (user_exist){
             let fav = document.getElementById("favourite_btn");
-            fav.innerText = "Remove Favourite";
-             let btn = document.getElementById("favourite_post_btn");
-            btn.style.backgroundColor = "#03a9f4yas61` Q`W@";
+            fav.innerText = "REMOVE FAVOURITE";
           } 
         }
       })
