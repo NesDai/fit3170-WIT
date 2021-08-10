@@ -10,7 +10,7 @@ checkUserFavouritedPost();
 A function that checks if the user has favourited the selected post and 
 will output the correct text on button
 */
-function checkFavouritedPost(){
+function checkUserFavouritedPost(){
   let post_id = params.get('post_id'); 
 
   if (checkUserExistence()){
