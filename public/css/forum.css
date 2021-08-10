@@ -682,6 +682,13 @@ html,body {
             border-radius: 15px;
             width: 325px;
         }
+
+        #searchButton{
+            background-color:#006DAE;
+            padding-right: 50px;
+            margin-top: 5px;
+            border-radius: 15px;
+        }
     }
 
 
@@ -701,14 +708,29 @@ html,body {
         border-radius: 15px;
         width: 600px;
     }
+
+    #searchButton{
+        background-color:#006DAE;
+        padding-right: 50px;
+        margin-top: 3px;
+        border-radius: 15px;
+    }
 }
 
 @media only screen and (max-device-width: 600px){
     .search{
         height: 70px;
     }
+
+    #searchButton{
+        background-color:#006DAE;
+        padding-right: 50px;
+        margin-top: 5px;
+        border-radius: 15px;
+    }
 }
     .search-input {
+        padding-left: 2px;
         color: white;
         border: 0;
         outline: 0;
@@ -737,18 +759,17 @@ html,body {
     color:#006DAE;
     margin-bottom: 250px;
 }
-#search-icon:hover{
-    cursor: pointer;
-    color: #00ac3e;
 
-}
 
 .search:hover #icon-background{
-    transform: scale(1.5);
+    margin-right: 15px;
+    transform: scale(1.3);
     transition: 0.25s;
 }
 .search:hover #search-icon{
     color: #00ac3e;
 }
+
+
 
 

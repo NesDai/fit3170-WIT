@@ -103,10 +103,14 @@
                   <!--SEARCH-->
                   <div class="search-container" >
                      <div class="search">
-                        <input type="text" class="search-input" placeholder="Search..." name="" onchange="searchForumByTitle(this.value)">
                         <div id="icon-background">
                            <a id="search-icon"> <span class="material-icons">search</span></a> 
                         </div>
+
+                        <input type="text" class="search-input" placeholder="Search..." name="" id="searchBox">
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="searchButton" 
+                        onclick="searchForumByTitle(document.getElementById('searchBox').value)">Search</button>
                      </div>
                   </div>
                      <!--SEARCH ENDS-->
