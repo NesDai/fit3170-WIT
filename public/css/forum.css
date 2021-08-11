@@ -121,7 +121,6 @@ html,body {
     }
     }
 
-   
 
     /* All below is for the tab navigation */
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
@@ -567,25 +566,25 @@ html,body {
     }
 
     /* all likes related */
-    #like_post_btn
+    .like
     {
     color: black;
     border: 2px solid #2bbd7e;
     width: 100px
     }
-    #dislike_post_btn
+    .dislike
     {
     color: black;
     border: 2px solid #e53935;
     width: 100px 
     }
         
-    #like_post_btn:hover
+    .like:hover
     {
     color: white;
     background-color:#2bbd7e;
     }
-    #dislike_post_btn:hover
+    .dislike:hover
     {
     background-color:#e53935;
     color: white;
@@ -599,3 +598,4 @@ html,body {
         border-radius: 15px;
         margin: 0 0 0 10px;
         }
+ 
