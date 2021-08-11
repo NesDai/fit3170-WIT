@@ -148,23 +148,83 @@ function findAllPosts() {
 
 function printAllPosts(){
     let data_list = [];
+    let buttons = []
+    let posts = [];
     // let field = document.getElementById("postField");
     // field.innerHTML = ""; // emtpy the field of any previous posts
 
-    firebase.database().ref('posts')
+
+    firebase.database().ref('likesDislikes')
+    .once('value', x => {
+        x.forEach(data => {
+
+            if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
+                console.log("pushing",data.key)
+                data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
+                console.log(data_list)
+            }
+
+        })
+    }).then(()=>{
+
+        // need to display
+
+        firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-                data_list.push(data.val())
+
+                let button = `
+                <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${data.val().id}');">
+                <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
+                </button>
+                <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${data.val().id}');" >
+                <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${data.val().dislikes}</span>
+                </button>
+                `
+                for (let i =0; i<data_list.length; i++) {
+
+                    if(data_list[i][0] == data.key){  // if an action was performed on this post
+                        let index = data_list.indexOf(data.key);
+
+                        if(data_list[i][1] == 1) { // liked
+                            console.log("liked");
+                            button = `<button 
+                            class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${data.val().id}');">
+                            <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
+                            </button>
+                            <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${data.val().id}');" >
+                            <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${data.val().dislikes}</span>
+                            </button>
+                            `
+                        }
+                        else{
+                            button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${data.val().id}');">
+                            <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
+                            </button>
+                            <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" style="background-color:#e53935; color: white;" onclick="dislikePost('${data.val().id}');" >
+                            <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${data.val().dislikes}</span>
+                            </button>`
+                        }
+
+                    }
+            }
+
+                buttons.push(button);
+                posts.push(data.val());
                 // let post = data.val()
             });
 
         }).then(()=>{
-            for(let i=data_list.length-1; i>=0 ; i--){
-                let post = data_list[i]
-                let buttons=likeBtnColor(post)
-                printPost(post, buttons)
+            for(let i=posts.length-1; i>=0 ; i--){
+
+                printPost(posts[i], buttons[i])
             }
         });
+
+
+    });
+
+    
 
 
 }
@@ -219,6 +279,13 @@ function likeBtnColor(post)
 function printPost(post, buttons)
 {
     let field = document.getElementById("postField");
+
+    if(post.id == `-MgdHVs3duf6_C6AkCki`){
+
+        console.log(buttons)
+        
+    }
+
     field.innerHTML +=
     `   <div style="padding-top: 20px;">
             <span class="post_card">
@@ -257,6 +324,11 @@ function printPost(post, buttons)
                   <br>
             </span>
      </div>`;
+
+     if(post.id == `-MgdHVs3duf6_C6AkCki`){
+        console.log(field.innerHTML)
+
+    }
 
 }
 
