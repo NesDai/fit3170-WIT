@@ -173,8 +173,9 @@ function addComment(){
 
       firebase.database().ref(`comments/${key}`).set(newData).then(()=>{
           alert("Comment made successfully!");
-          console.log("inside");
-          window.location = "post.html" + "?post_id=" + post_id;
+          // console.log("inside");
+          printComments();
+          // window.location = "post.html" + "?post_id=" + post_id;
       });
     };
 
@@ -201,6 +202,7 @@ function printComments(){
   let id = params.get('post_id');
 
   let comment_section = document.getElementById("comment_section");
+  comment_section.innerHTML ="";
   let data_list = [];
   firebase.database().ref('comments')
     .orderByChild('postID')
@@ -297,6 +299,7 @@ function printComments(){
 function printReplies(comment_id,index) {
 
   let reply_section = document.getElementById("reply_section"+index.toString());
+  reply_section.innerHTML = "";
   let reply_list = [];
 
   // print replies of a comment
@@ -398,10 +401,12 @@ function addReply(btn_num,comment_id) {
       url = "post.html" + "?post_id=" + post_id;
 
       firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
-        redirect(url, null)
+        // redirect(url, null)
+        msg = "Reply Made successfully";
+        alert(msg);
+        printReplies(comment_id, btn_num);
       });
-      msg = "Reply Made successfully";
-      alert(redirect(url, msg));
+
     };
   } else {
     window.location = "forum.html";
