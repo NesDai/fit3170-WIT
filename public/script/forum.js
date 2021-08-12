@@ -79,14 +79,6 @@ function makeNewPost() {
      } else{
             window.location = "forum.html";
         }
-    //     myRef.push(newData).then(() => {
-    //         alert("Posted successfully. Redirecting back to forum")
-    //         window.location = "forum.html";
-    //     });
-    // } else {
-    //     window.location = "forum.html";
-    // }
-
 }
 
 
@@ -143,13 +135,12 @@ function findAllPosts() {
 
 function printAllPosts(){
     let data_list = [];
-    let buttons = []
+    let button_nums = []
     let posts = [];
     
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
-
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
@@ -159,97 +150,78 @@ function printAllPosts(){
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-                let button = `
-                <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${data.val().id}');">
-                <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
-                </button>
-                <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${data.val().id}');" >
-                <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${data.val().dislikes}</span>
-                </button>
-                `
+                let button_num=0
                 for (let i =0; i<data_list.length; i++) {
                     if(data_list[i][0] == data.key){  // if an action was performed on this post
                         let index = data_list.indexOf(data.key);
 
                         if(data_list[i][1] == 1) { // liked
-                            button = `<button 
-                            class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${data.val().id}');">
-                            <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
-                            </button>
-                            <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${data.val().id}');" >
-                            <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${data.val().dislikes}</span>
-                            </button>
-                            `
+                            button_num=1
                         }
                         else{
-                            button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${data.val().id}');">
-                            <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
-                            </button>
-                            <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" style="background-color:#e53935; color: white;" onclick="dislikePost('${data.val().id}');" >
-                            <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${data.val().dislikes}</span>
-                            </button>`
+                            button_num=-1
                         }
                     }
             }
-                buttons.push(button);
+                button_nums.push(button_num);
                 posts.push(data.val());
             });
 
         }).then(()=>{
             for(let i=posts.length-1; i>=0 ; i--){
 
-                printPost(posts[i], buttons[i])
+                printPost(posts[i], button_nums[i], i )
             }
         });
     });
 }
 
-function likeBtnColor(post)
+function printPost(post, button_num, i )
 {
-    let action = checkForLikeDislike(post.id);
-    let buttons=""
-                if (!!action)
-                {
-                    firebase.database().ref(`likesDislikes/${post.id}/${current_user["username"]}/action`).once('value', (snapshot) => {
-                    let current_state=snapshot.val();
-                    if (current_state==1){
-                        buttons=`
-                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}');">
-                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
-                        </button>
-                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${post.id}');" >
-                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
-                        </button>
-                        `
-                    }
-                    else{
-                        buttons=`
-                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}');">
-                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
-                        </button>
-                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}');" >
-                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
-                        </button>
-                        `
-                    }
-                    })
-                }
-                else
-                {
-                    buttons=`
-                        <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}');">
-                        <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
-                        </button>
-                        <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn" onclick="dislikePost('${post.id}');" >
-                        <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${post.dislikes}</span>
-                        </button>
-                        `
-                }
-    return buttons
-}
+    let button = `
+    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePost('${post.id}', ${i});" value="${post.likes}" >
+    <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+    </button>
+    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+    <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+    </button>
+    `
+    if (button_num==0)     // nothing
+    {
+        button = `
+                <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+                <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+                </button>
+                <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});" value="${post.dislikes}" >
+                <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+                </button>
+                `
+    }
+    else if (button_num==1)
+    {
+         // liked
+         button = `<button 
+         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+         </button>
+         `
+    }
+    else if(button_num==-1)
+    {
+         // disliked
+         button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}">
+         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+         </button>`
+    }
 
-function printPost(post, buttons)
-{
+    
+
     let field = document.getElementById("postField");
     field.innerHTML +=
     `   <div style="padding-top: 20px;">
@@ -276,16 +248,24 @@ function printPost(post, buttons)
                   </form>
                   <div class="f">
                   <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-                  <div>
+                  </div>
                   <br>
-                  <div>
                      <!--  LIKE DISLIKE FOR POST -->
                      <br>
-                     ${buttons}
+                    <div id="button_div${i}">
+                     ${button}
                      <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
                     <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
                     </button>
-                  </div>
+                    </div>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                    <script type="text/javascript">
+                    $(document).ready(function() {
+                        $( "#button_div${i} .like" ).on( "click", function() {
+                            alert( 'hi' );
+                          });
+                      });
+                    </script>
                   <br>
             </span>
      </div>`;
@@ -363,9 +343,13 @@ function postDetail(id) {
 }
 
 
-
 // Likes for posts
-async function likePost(post_id) {
+async function likePost(post_id, i) {
+
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
+
+    let res = await checkForLikeDislike(post_id);
     if (!res) {
         // if there is no action at all, lilke
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
@@ -374,6 +358,18 @@ async function likePost(post_id) {
             alert("Liked");
             updateLikes(post_id, 1) // add 1 like 
         });
+
+        // UI   
+        like_btn_addr.style.background='#2bbd7e';
+        like_btn_addr.style.color='white';
+
+        //increase like count
+        current_value=like_btn_addr.value
+        new_value=parseInt(current_value)+1
+        like_btn_addr.value=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+
+
 
     } else {
         // if there is action 
@@ -388,18 +384,47 @@ async function likePost(post_id) {
                     updateLikes(post_id, 1) // add 1 like 
                     updateDislikes(post_id, -1)
                 });
-            } else {
 
+                // UI   
+                like_btn_addr.style.background='#2bbd7e';
+                like_btn_addr.style.color='white';
+                dislike_btn_addr.style.background='#dadada';
+                dislike_btn_addr.style.color='black';
+
+                // increase like count
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)+1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                //decrease dislike count
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)-1
+                dislike_btn_addr.value=new_value
+                console.log(dislike_btn_addr.value)
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+         
+            } else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
                 alert('post was already liked');
                 updateLikes(post_id, -1)  // remove 1 like 
+                //UI 
+                like_btn_addr.style.background='#dadada';
+                like_btn_addr.style.color='black';
+                // change like number 
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)-1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
             }
         })
     }
 }
 
-async function dislikePost(post_id)
+async function dislikePost(post_id, i)
 {
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
+
     let res = await checkForLikeDislike(post_id);
 
     if (!res){
@@ -408,7 +433,17 @@ async function dislikePost(post_id)
                 alert("Disliked");
                 // add 1 dislike 
                 updateDislikes(post_id, 1)
-            });      
+            });   
+            
+        // UI   
+        dislike_btn_addr.style.background='#e53935';
+        dislike_btn_addr.style.color='white';
+
+        //increase dislike count
+        current_value=dislike_btn_addr.value
+        new_value=parseInt(current_value)+1
+        dislike_btn_addr.value=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
     }
     else{
         // if there is action 
@@ -420,12 +455,41 @@ async function dislikePost(post_id)
                 // add 1 dislike and remove 1 like
                 updateDislikes(post_id, 1)
                 updateLikes(post_id,-1)
+                // UI   
+                like_btn_addr.style.background='#dadada';
+                like_btn_addr.style.color='black';
+                dislike_btn_addr.style.background='#e53935';
+                dislike_btn_addr.style.color='white';
+
+                // increase dislike count
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)+1
+                dislike_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                //decrease like count
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)-1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+
+               
             }
             else{
                 // remove 1 dislike
                 updateDislikes(post_id, -1)
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
                 alert('post was already disliked');
+
+                // UI 
+                // change color
+                dislike_btn_addr.style.background='#dadada';
+                dislike_btn_addr.style.color='black';
+                // change dislike number 
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)-1
+                dislike_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                
             }
         }
         )
