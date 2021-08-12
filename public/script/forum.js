@@ -135,11 +135,6 @@ function findAllPosts() {
         for (let post_id in postsObj) {
             firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
                 let post = snapshot.val();
-                console.log(post["title"]);
-                console.log(post["description"]);
-                console.log(post["interest"]);
-                console.log(post["like"]);
-                console.log(post["dislike"]);
             });
         }
     });
@@ -150,29 +145,20 @@ function printAllPosts(){
     let data_list = [];
     let buttons = []
     let posts = [];
-    // let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
-
-
+    
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
 
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
-                console.log("pushing",data.key)
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
-                console.log(data_list)
             }
 
         })
     }).then(()=>{
-
-        // need to display
-
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-
                 let button = `
                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${data.val().id}');">
                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
@@ -182,12 +168,10 @@ function printAllPosts(){
                 </button>
                 `
                 for (let i =0; i<data_list.length; i++) {
-
                     if(data_list[i][0] == data.key){  // if an action was performed on this post
                         let index = data_list.indexOf(data.key);
 
                         if(data_list[i][1] == 1) { // liked
-                            console.log("liked");
                             button = `<button 
                             class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${data.val().id}');">
                             <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${data.val().likes}</span>
@@ -205,13 +189,10 @@ function printAllPosts(){
                             <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> ${data.val().dislikes}</span>
                             </button>`
                         }
-
                     }
             }
-
                 buttons.push(button);
                 posts.push(data.val());
-                // let post = data.val()
             });
 
         }).then(()=>{
@@ -220,13 +201,7 @@ function printAllPosts(){
                 printPost(posts[i], buttons[i])
             }
         });
-
-
     });
-
-    
-
-
 }
 
 function likeBtnColor(post)
@@ -238,7 +213,6 @@ function likeBtnColor(post)
                     firebase.database().ref(`likesDislikes/${post.id}/${current_user["username"]}/action`).once('value', (snapshot) => {
                     let current_state=snapshot.val();
                     if (current_state==1){
-                        console.log('hi')
                         buttons=`
                         <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}');">
                         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
@@ -249,7 +223,6 @@ function likeBtnColor(post)
                         `
                     }
                     else{
-                        console.log('yyy')
                         buttons=`
                         <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}');">
                         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
@@ -263,7 +236,6 @@ function likeBtnColor(post)
                 }
                 else
                 {
-                    console.log('kkkakda')
                     buttons=`
                         <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="like_post_btn" onclick="likePost('${post.id}');">
                         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> ${post.likes}</span>
@@ -279,13 +251,6 @@ function likeBtnColor(post)
 function printPost(post, buttons)
 {
     let field = document.getElementById("postField");
-
-    if(post.id == `-MgdHVs3duf6_C6AkCki`){
-
-        console.log(buttons)
-        
-    }
-
     field.innerHTML +=
     `   <div style="padding-top: 20px;">
             <span class="post_card">
@@ -324,11 +289,6 @@ function printPost(post, buttons)
                   <br>
             </span>
      </div>`;
-
-     if(post.id == `-MgdHVs3duf6_C6AkCki`){
-        console.log(field.innerHTML)
-
-    }
 
 }
 
@@ -406,9 +366,6 @@ function postDetail(id) {
 
 // Likes for posts
 async function likePost(post_id) {
-    let res = await checkForLikeDislike(post_id);
-    console.log(res)
-
     if (!res) {
         // if there is no action at all, lilke
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
@@ -516,19 +473,13 @@ let data_list = [];
     firebase.database().ref('likes').once('value', x => { x.forEach(data => {
                 data_list.push(data.val());
             });
-            console.log(data_list)
-
         })
-    
-        
         .then(()=>{
         for (let i = 0; i < data_list.length; i++) {
             if (data_list[i].user_id==current_user["phone"] && post_id==data_list[i].post_id) {
-                    console.log('found');
                     return true
                 }
             }
-        print('hi')
         return false;  
         }
     )
