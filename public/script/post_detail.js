@@ -19,6 +19,7 @@ function checkUserFavouritedPost(){
       .then(function(snapshot) {
 
         let hasFavouriteData = snapshot.hasChild("users_favourite"); 
+        let fav = document.getElementById("favourite_btn");
 
         if (hasFavouriteData){
           let users_arr = snapshot.val()["users_favourite"];
@@ -32,9 +33,12 @@ function checkUserFavouritedPost(){
           }
 
           if (user_exist){
-            let fav = document.getElementById("favourite_btn");
             fav.innerText = "REMOVE FAVOURITE";
-          } 
+          } else {
+            fav.innerText = "ADD POST TO FAVOURITE";
+          }
+        } else {
+          fav.innerText = "ADD POST TO FAVOURITE";
         }
       })
   }
@@ -210,7 +214,7 @@ function removePostFromFavourite(){
 
         firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
           alert("Successfully remove the post from your favourite");
-          window.location = "post.html" + "?post_id=" + post_id;
+          checkUserFavouritedPost();
         })
       })
   }
@@ -251,7 +255,7 @@ function addPostToFavourite(){
 
         firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
           alert("Successfully added the post to your favourite");
-          window.location = "post.html" + "?post_id=" + post_id;
+          checkUserFavouritedPost();
         })
       })
   }
