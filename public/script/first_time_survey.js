@@ -242,6 +242,7 @@ function nextQuestion() {
             " browse the rest of the application!"
         showMessageSenderWithoutHints(endingMessage);
         scrollToBottom();
+
     }
     // updateProgress();
 }
@@ -353,6 +354,44 @@ function showShortQuestionMessage(questionString) {
 }
 
 /**
+ * Generates likert scale buttons to the div likert_scale in chatbot.html
+ */
+function makeAgreeLikertScale() {
+    document.getElementById('likert_scale').innerHTML =
+        `<button 
+         id = 1
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 29px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick=''><span class = 'linkertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Very  <br> Dissatisfied </span>
+         </button>`+
+
+        `<button 
+         id = 2
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick=''><span class = 'linkertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br><br> Dissatisfied </span>
+         </button>`+
+
+        `<button 
+         id = 3
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;;" onclick=''><span class = 'linkertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> Moderately <br>Satisfied </span>
+         </button>` +
+
+        `<button 
+         id = 4
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick=''><span class = 'linkertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br><br>Satisfied </span>
+         </button>` +
+
+        `<button 
+         id = 5
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick=''><span class = 'linkertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> Very<br> Satisfied </span>
+         </button>`;
+
+    componentHandler.upgradeDom();
+}
+
+/**
  * function to scroll to bottom of screen
  */
 function scrollToBottom() {
@@ -392,6 +431,7 @@ function showQuestion(isSubQuestion) {
             // checking the type of the question to assign the appropriate function to display it
             if (questionType == TYPE_NUMERIC || questionType == TYPE_NUMERIC_SUB_QUESTION) {
                 showNumeric(questionObject);
+                if (questionIndex == 15){makeAgreeLikertScale();}
             } else if (questionType == TYPE_MULTIPLE_CHOICE || questionType == TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
                 showMultipleChoice(questionObject);
             } else if (questionType == TYPE_MULTIPLE_CHOICE_OTHERS) {
