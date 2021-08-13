@@ -88,7 +88,7 @@ div.tabcontent{
     overflow: scroll;
 }
 
-input[type="checkbox"][id^="Checkbox"] {
+input[type="radio"][id^="Radio"] {
     display: none;
 }
 

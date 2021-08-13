@@ -149,11 +149,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxEmail"><img src="./css/images/email_management_and_setup.jpg" class="interests"/></label>
+                        <label for="RadioEmail"><img src="./css/images/email_management_and_setup.jpg" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxEmail" onclick="addOrDeleteSkills(this.id);" value="Email Management and Setup"/>
-                        <label for="CheckboxEmail" style="display:inline-block;">E-mail (e.g. Management and Setup)</label>
+                        <input type="radio" id="RadioEmail" name="selection" onclick="goToRecommender(this.id)" value="Email Management and Setup"/>
+                        <label for="RadioEmail" style="display:inline-block;">E-mail (e.g. Management and Setup)</label>
                       </td>
                     </tr>
                   </table>
@@ -164,11 +164,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxSearch"><img src="./css/images/search_engine_use.png" class="interests"/></label>
+                        <label for="RadioSearch"><img src="./css/images/search_engine_use.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxSearch" onclick="addOrDeleteSkills(this.id);" value="Search Engine Use"/>
-                        <label for="CheckboxSearch" style="display:inline-block;">Search for information (e.g., browser, bookmarks)</label>
+                        <input type="radio" id="RadioSearch" name="selection" onclick="goToRecommender(this.id)" value="Search Engine Use"/>
+                        <label for="RadioSearch" style="display:inline-block;">Search for information (e.g., browser, bookmarks)</label>
                       </td>
                     </tr>
                   </table>
@@ -179,11 +179,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxDevice"><img src="./css/images/smartphone_tablet_us.jpg" class="interests"/></label>
+                        <label for="RadioDevice"><img src="./css/images/smartphone_tablet_us.jpg" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxDevice" onclick="addOrDeleteSkills(this.id);" value="Smartphone/Tablet Use"/>
-                        <label for="CheckboxDevice" style="display:inline-block;">Smartphone/Tablet/Computer Use</label>
+                        <input type="radio" id="RadioDevice" name="selection" onclick="goToRecommender(this.id)" value="Smartphone/Tablet Use"/>
+                        <label for="RadioDevice" style="display:inline-block;">Smartphone/Tablet/Computer Use</label>
                       </td>
                     </tr>
                   </table>
@@ -193,11 +193,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxSocialMedia"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioSocialMedia"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxSocialMedia" onclick="addOrDeleteSkills(this.id);" value="Social Media Use"/>
-                        <label for="CheckboxSocialMedia" style="display:inline-block;">Social Media Use</label>
+                        <input type="radio" id="RadioSocialMedia" name="selection" onclick="goToRecommender(this.id)" value="Social Media Use"/>
+                        <label for="RadioSocialMedia" style="display:inline-block;">Social Media Use</label>
                       </td>
                     </tr>
                   </table>
@@ -207,11 +207,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxOnlineCollaboration"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioOnlineCollaboration"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxOnlineCollaboration" onclick="addOrDeleteSkills(this.id);" value="Online Collaboration"/>
-                        <label for="CheckboxOnlineCollaboration" style="display:inline-block;">Online Collaboration</label>
+                        <input type="radio" id="RadioOnlineCollaboration" name="selection" onclick="goToRecommender(this.id)" value="Online Collaboration"/>
+                        <label for="RadioOnlineCollaboration" style="display:inline-block;">Online Collaboration</label>
                       </td>
                     </tr>
                   </table>
@@ -225,11 +225,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxEffective"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioEffective"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxEffective" onclick="addOrDeleteSkills(this.id);" value="Effective Communication"/>
-                        <label for="CheckboxEffective" style="display:inline-block;">Effective Communication</label>
+                        <input type="radio" id="RadioEffective" name="selection" onclick="goToRecommender(this.id)" value="Effective Communication"/>
+                        <label for="RadioEffective" style="display:inline-block;">Effective Communication</label>
                       </td>
                     </tr>
                   </table>
@@ -240,11 +240,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxNegotiation"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioNegotiation"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxNegotiation" onclick="addOrDeleteSkills(this.id);" value="Negotiation"/>
-                        <label for="CheckboxNegotiation" style="display:inline-block;">Negotiation Skill</label>
+                        <input type="radio" id="RadioNegotiation" name="selection" onclick="goToRecommender(this.id)" value="Negotiation"/>
+                        <label for="RadioNegotiation" style="display:inline-block;">Negotiation Skill</label>
                       </td>
                     </tr>
                   </table>
@@ -254,11 +254,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxListening"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioListening"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxListening" onclick="addOrDeleteSkills(this.id);" value="Listening"/>
-                        <label for="CheckboxListening" style="display:inline-block;">Active Listening</label>
+                        <input type="radio" id="RadioListening" name="selection" onclick="goToRecommender(this.id)" value="Listening"/>
+                        <label for="RadioListening" style="display:inline-block;">Active Listening</label>
                       </td>
                     </tr>
                   </table>
@@ -268,11 +268,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxRelationshipManagement"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioRelationshipManagement"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxRelationshipManagement" onclick="addOrDeleteSkills(this.id);" value="Relationship Management"/>
-                        <label for="CheckboxRelationshipManagement" style="display:inline-block;">Relationship Management</label>
+                        <input type="radio" id="RadioRelationshipManagement" name="selection" onclick="goToRecommender(this.id)" value="Relationship Management"/>
+                        <label for="RadioRelationshipManagement" style="display:inline-block;">Relationship Management</label>
                       </td>
                     </tr>
                   </table>
@@ -282,11 +282,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxPersuasion"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioPersuasion"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxPersuasion" onclick="addOrDeleteSkills(this.id);" value="Persuasion"/>
-                        <label for="CheckboxPersuasion" style="display:inline-block;">Persuasion</label>
+                        <input type="radio" id="RadioPersuasion" name="selection" onclick="goToRecommender(this.id)" value="Persuasion"/>
+                        <label for="RadioPersuasion" style="display:inline-block;">Persuasion</label>
                       </td>
                     </tr>
                   </table>
@@ -300,11 +300,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxCooking"><img src="./css/images/cooking.png" class="interests"/></label>
+                        <label for="RadioCooking"><img src="./css/images/cooking.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxCooking" onclick="addOrDeleteSkills(this.id);" value="Cooking"/>
-                        <label for="CheckboxCooking" style="display:inline-block;">Cooking</label>
+                        <input type="radio" id="RadioCooking" name="selection" onclick="goToRecommender(this.id)" value="Cooking"/>
+                        <label for="RadioCooking" style="display:inline-block;">Cooking</label>
                       </td>
                     </tr>
                   </table>
@@ -315,11 +315,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxArt"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioArt"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxArt" onclick="addOrDeleteSkills(this.id);" value="Art"/>
-                        <label for="CheckboxArt" style="display:inline-block;">Art (e.g. Photography/Video recording/editing)</label>
+                        <input type="radio" id="RadioArt" name="selection" onclick="goToRecommender(this.id)" value="Art"/>
+                        <label for="RadioArt" style="display:inline-block;">Art (e.g. Photography/Video recording/editing)</label>
                       </td>
                     </tr>
                   </table>
@@ -329,11 +329,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxCaregiving"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioCaregiving"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxCaregiving" onclick="addOrDeleteSkills(this.id);" value="Caregiving"/>
-                        <label for="CheckboxCaregiving" style="display:inline-block;">Caregiving</label>
+                        <input type="radio" id="RadioCaregiving" name="selection" onclick="goToRecommender(this.id)" value="Caregiving"/>
+                        <label for="RadioCaregiving" style="display:inline-block;">Caregiving</label>
                       </td>
                     </tr>
                   </table>
@@ -343,11 +343,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxExercise"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioExercise"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxExercise" onclick="addOrDeleteSkills(this.id);" value="Exercise"/>
-                        <label for="CheckboxExercise" style="display:inline-block;">Exercise</label>
+                        <input type="radio" id="RadioExercise" name="selection" onclick="goToRecommender(this.id)" value="Exercise"/>
+                        <label for="RadioExercise" style="display:inline-block;">Exercise</label>
                       </td>
                     </tr>
                   </table>
@@ -357,11 +357,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxProfessionalWriting"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioProfessionalWriting"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxProfessionalWriting" onclick="addOrDeleteSkills(this.id);" value="Professional Writing"/>
-                        <label for="CheckboxProfessionalWriting" style="display:inline-block;">Professional Writing</label>
+                        <input type="radio" id="RadioProfessionalWriting" name="selection" onclick="goToRecommender(this.id)" value="Professional Writing"/>
+                        <label for="RadioProfessionalWriting" style="display:inline-block;">Professional Writing</label>
                       </td>
                     </tr>
                   </table>
@@ -376,11 +376,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxCollabTeamwork"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioCollabTeamwork"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxCollabTeamwork" onclick="addOrDeleteSkills(this.id);" value="Collaboration and Teamwork"/>
-                        <label for="CheckboxCollabTeamwork" style="display:inline-block;">Collaboration and Teamwork</label>
+                        <input type="radio" id="RadioCollabTeamwork" name="selection" onclick="goToRecommender(this.id)" value="Collaboration and Teamwork"/>
+                        <label for="RadioCollabTeamwork" style="display:inline-block;">Collaboration and Teamwork</label>
                       </td>
                     </tr>
                   </table>
@@ -390,11 +390,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxLeadership"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioLeadership"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxLeadership" onclick="addOrDeleteSkills(this.id);" value="Leadership"/>
-                        <label for="CheckboxLeadership" style="display:inline-block;">People and Leadership</label>
+                        <input type="radio" id="RadioLeadership" name="selection" onclick="goToRecommender(this.id)" value="Leadership"/>
+                        <label for="RadioLeadership" style="display:inline-block;">People and Leadership</label>
                       </td>
                     </tr>
                   </table>
@@ -404,11 +404,11 @@
                 <table>
                     <tr>
                       <td>
-                        <label for="CheckboxEntrepreneurship"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioEntrepreneurship"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxEntrepreneurship" onclick="addOrDeleteSkills(this.id);" value="Entrepreneurship"/>
-                        <label for="CheckboxEntrepreneurship" style="display:inline-block;">Entrepreneurship</label>
+                        <input type="radio" id="RadioEntrepreneurship" name="selection" onclick="goToRecommender(this.id)" value="Entrepreneurship"/>
+                        <label for="RadioEntrepreneurship" style="display:inline-block;">Entrepreneurship</label>
                       </td>
                     </tr>
                   </table>
@@ -418,11 +418,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxPersonalSelling"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioPersonalSelling"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxPersonalSelling" onclick="addOrDeleteSkills(this.id);" value="Personal Selling"/>
-                        <label for="CheckboxPersonalSelling" style="display:inline-block;">Personal Selling</label>
+                        <input type="radio" id="RadioPersonalSelling" name="selection" onclick="goToRecommender(this.id)" value="Personal Selling"/>
+                        <label for="RadioPersonalSelling" style="display:inline-block;">Personal Selling</label>
                       </td>
                     </tr>
                   </table>
@@ -432,11 +432,11 @@
                   <table>
                     <tr>
                       <td>
-                        <label for="CheckboxCriticalThinking"><img src="./css/images/logo.png" class="interests"/></label>
+                        <label for="RadioCriticalThinking"><img src="./css/images/logo.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="checkbox" id="CheckboxCriticalThinking" onclick="addOrDeleteSkills(this.id);" value="Critical Thinking"/>
-                        <label for="CheckboxCriticalThinking" style="display:inline-block;">Critical Thinking</label>
+                        <input type="radio" id="RadioCriticalThinking" name="selection" onclick="goToRecommender(this.id)" value="Critical Thinking"/>
+                        <label for="RadioCriticalThinking" style="display:inline-block;">Critical Thinking</label>
                       </td>
                     </tr>
                   </table>
@@ -444,23 +444,6 @@
               </ol>
             </div>
         </div>
-        <div class="row" id=buttons>
-          <div class="col-1">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color--grey mdl-color-text--black" id="toggleBtn" onclick="toggleImageVisibility();">
-              Show/Hide image
-            </button>
-          </div>
-          <div class="col-1">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color--grey mdl-color-text--black" id="confirmBtn" onclick="confirmSkills();">
-              Confirm
-            </button>
-          </div>
-
-          <div class="col-1">
-            <a href="recommenderUi.html" style="color:black; display:none;" id="returnBtn"><i class="material-icons icon-teal notranslate">undo</i>Return</a>
-          </div>
-
-          </div>
         </body>
 
         <!-- Script -->
