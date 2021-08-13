@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="fix chatbot bugs">
+    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/chatbot.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/chatbot.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/script/first_time_survey.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/first_time_survey.js" afterDir="false" />
@@ -85,6 +85,8 @@
       <workItem from="1628150256119" duration="378000" />
       <workItem from="1628150640729" duration="139000" />
       <workItem from="1628150835995" duration="7678000" />
+      <workItem from="1628824039044" duration="397000" />
+      <workItem from="1628837730887" duration="7850000" />
     </task>
     <task id="LOCAL-00001" summary="update question IDs and update questions in question-uploader.js">
       <created>1621666660881</created>
@@ -163,7 +165,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628160482442</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add linkert scale design">
+      <created>1628797741482</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1628797741482</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +231,7 @@
     <MESSAGE value="fix chatbot bugs" />
     <MESSAGE value="temporarily added a new file for Kelvin to easily host the website locally. will be removed at end of PI.&#10;&#10;fixed spelling mistake on main page and first time survey js.&#10;&#10;added a terms and conditions html page." />
     <MESSAGE value="incorparated terms and conditions page with main page.&#10;&#10;Terms and Conditions page now requires user to tick checkbox to proceed to chatbot. (updating user's data on firebase whether they have accepted it or not is still NOT DONE)" />
-    <option name="LAST_COMMIT_MESSAGE" value="incorparated terms and conditions page with main page.&#10;&#10;Terms and Conditions page now requires user to tick checkbox to proceed to chatbot. (updating user's data on firebase whether they have accepted it or not is still NOT DONE)" />
+    <MESSAGE value="add linkert scale design" />
+    <option name="LAST_COMMIT_MESSAGE" value="add linkert scale design" />
   </component>
 </project>
