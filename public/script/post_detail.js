@@ -330,20 +330,66 @@ function printReplies(comment_id,index) {
                     <span id="user_comment">${reply.content}</span>
                   </p>
                 </div>
+                <!-- ADD REPLY BUTTON FOR COMMENT -->
+                 <span>
+                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;">
+                 <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                 </span>
+                 <br>
+                 <br>
+                
+                  <div class = 'verticalLine' style="position: relative; right:5px">
+                    <div id = "reply_box"  style="width:93%">
+                      <span class="mdi mdi-cow"></span>
+                      <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
+                      <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
+                      <p>
+                        <span id="user_comment">${reply.content}</span>
+                      </p>
+                    </div>
+                    <span>
+                      <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;">
+                      <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                    </span>
+                      <br>
+                      <br>
 
-                <!--  LIKE FOR COMMENT -->
-                <span id='like_button_comment' href="#">
-                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                    <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
-                  </button>
-                </span>
+                  </div>
+                  
 
-                <!--  DISLIKE FOR COMMENT -->
-                <span id='dislike_button_comment' href="#">
-                  <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                    <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
-                  </button>
-                </span>
+                  <div class = 'verticalLine'>
+                    <div id = "reply_box" style="width:93%">
+                      <span class="mdi mdi-cow"></span>
+                      <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
+                      <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
+                      <p>
+                        <span id="user_comment">${reply.content}</span>
+                      </p>
+                    </div>
+                    <span>
+                    <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;">
+                    <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                    </span>
+                    <br>
+                    <br>
+
+                    
+                      <div class = 'verticalLine' style="position: relative; right:5px" >
+                        <div id = "reply_box" style="width:91%">
+                          <span class="mdi mdi-cow"></span>
+                          <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
+                          <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
+                          <p>
+                            <span id="user_comment">${reply.content}</span>
+                          </p>
+                        </div>
+                        <span>
+                        <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color: #006DAE; color: white;">
+                        <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                        </span>
+                        <br>       
+                      </div>
+                  </div>
               </div>
               `
             }
