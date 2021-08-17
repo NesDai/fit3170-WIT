@@ -2,7 +2,7 @@ let current_user = JSON.parse(localStorage.getItem("USER"));
 
 const params = new URLSearchParams(window.location.search)
 
-getPostDetails();
+printPostDetails();
 hideTranslationModal();
 
 function showTranslationModal(){
@@ -27,84 +27,33 @@ function checkUserExistence() {
     }
 }
 
-function getPostDetails(){
-  let posts = [];
-  let id = params.get('post_id');
+function printPostDetails(){
 
-  firebase.database().ref(`likesDislikes/${id}/${current_user["username"]}`)
-  .once('value', x => {
-      x.forEach(data => {
-        action=data.val()
-          })
-  }).then(()=>{
+    let id = params.get('post_id');
+    // let id = localStorage.getItem('POST_ID')
+
+    let post_details = document.getElementById("post_details");
+    // let poster_field = document.getElementById('poster_id');
+    // let time_field = document.getElementById('date_posted');
+    // let title_field = document.getElementById('title');
+    // let description_field = document.getElementById('description');
+    // let interest_field = document.getElementById('post_interests');
+
+
     firebase.database().ref('posts')
     .orderByChild('id')
         .equalTo(id)
             .once('value', x => {
                 x.forEach(data => {
-                let post = data.val();
-                posts.push(post)
-                });
-            }).then(()=>{
-                printPostDetails(posts[0], action)
-            })
-          })
-}
+                  post_details.innerHTML = "";
+                  let interest = "";
+                  let post = data.val();
+                  for(let i =0; i<post.interest.length; i++){
+                    interest +=`<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
+              }
+                    // print the post details in here
+                  post_details.innerHTML +=
 
-
-function printPostDetails(post, button_num)
-{
-  let post_details = document.getElementById("post_details");
-  let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
-    <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
-    </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
-    <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
-    </button>
-    `
-    if (button_num==0)     // nothing
-    {
-        button = `
-                <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
-                <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
-                </button>
-                <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');" value="${post.dislikes}" >
-                <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
-                </button>
-                `
-    }
-    else if (button_num==1)
-    {
-         // liked
-         button = `<button 
-         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
-         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
-         </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
-         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
-         </button>
-         `
-    }
-    else if(button_num==-1)
-    {
-         // disliked
-         button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
-         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
-         </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
-         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
-         </button>`
-    }
-
-    post_details.innerHTML = "";
-    let interest = "";
-    for(let i =0; i<post.interest.length; i++){
-      interest +=`<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
-    }
-
-
-    post_details.innerHTML +=
                     `
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                               <!-- POST HEADER -->
@@ -136,7 +85,12 @@ function printPostDetails(post, button_num)
                               <div>
                                  <!--  LIKE DISLIKE FOR POST -->
                                  <br>
-                                 ${button}
+                                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                                 </button>
+                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                                 <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                 </button>
                               </div>
                               <br>
                         <hr style="margin: 0">
@@ -171,14 +125,14 @@ function printPostDetails(post, button_num)
                            <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
                         </div>
                     </div>`
-
-                    printComments();
-                    if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
+                });
+            }).then(()=>{
+              //check if the user is the poster of the post
+              if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
                 document.getElementById("delete_post_btn").remove()
+              printComments();
+            })
 }
-
-
-
 
 // Creating comment
 function addComment(){

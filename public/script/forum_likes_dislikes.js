@@ -1,8 +1,8 @@
 // Likes for posts
-async function likePostDetailed(post_id) {
+async function likePost(post_id, i) {
 
-    like_btn_addr=document.getElementsByClassName("like")[0]
-    dislike_btn_addr=document.getElementsByClassName("dislike")[0]
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
     let res = await checkForLikeDislike(post_id);
     if (!res) {
@@ -22,7 +22,7 @@ async function likePostDetailed(post_id) {
         current_value=like_btn_addr.value
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
-        document.getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
 
 
 
@@ -50,12 +50,13 @@ async function likePostDetailed(post_id) {
                 current_value=like_btn_addr.value
                 new_value=parseInt(current_value)+1
                 like_btn_addr.value=new_value
-                document.getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
                 //decrease dislike count
                 current_value=dislike_btn_addr.value
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
-                document.getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                console.log(dislike_btn_addr.value)
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
          
             } else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
@@ -68,16 +69,16 @@ async function likePostDetailed(post_id) {
                 current_value=like_btn_addr.value
                 new_value=parseInt(current_value)-1
                 like_btn_addr.value=new_value
-                document.getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
             }
         })
     }
 }
 
-async function dislikePostDetailed(post_id)
+async function dislikePost(post_id, i)
 {
-    like_btn_addr=document.getElementsByClassName("like")[0]
-    dislike_btn_addr=document.getElementsByClassName("dislike")[0]
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
     let res = await checkForLikeDislike(post_id);
 
@@ -97,7 +98,7 @@ async function dislikePostDetailed(post_id)
         current_value=dislike_btn_addr.value
         new_value=parseInt(current_value)+1
         dislike_btn_addr.value=new_value
-        document.getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
     }
     else{
         // if there is action 
@@ -119,12 +120,12 @@ async function dislikePostDetailed(post_id)
                 current_value=dislike_btn_addr.value
                 new_value=parseInt(current_value)+1
                 dislike_btn_addr.value=new_value
-                document.getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
                 //decrease like count
                 current_value=like_btn_addr.value
                 new_value=parseInt(current_value)-1
                 like_btn_addr.value=new_value
-                document.getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
 
                
             }
@@ -142,7 +143,7 @@ async function dislikePostDetailed(post_id)
                 current_value=dislike_btn_addr.value
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
-                document.getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
                 
             }
         }
