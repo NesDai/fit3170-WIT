@@ -483,3 +483,335 @@ async function dislikePost(post_id, i)
         )
     }
 }
+/**
+ * Function used to search forum posts in feed. A parameter is typed (interest or a name of the post)
+ * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post. 
+ * @returns Nothing. The function automatically updates the screen with relevant posts.
+ */
+ function searchForumByTitle(param){
+
+   
+
+    let tab = document.getElementsByName("tabs");
+
+    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
+        searchYourPosts(param);
+        return
+    }
+
+    let field = document.getElementById("postField");
+
+
+
+    if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
+        printAllPosts();
+        return // exit function
+    }
+
+    field.innerHTML = ""; // emtpy the field of any previous posts
+
+    firebase.database().ref(`posts`).orderByChild('title')
+                 .startAt(param)
+                 .endAt(param+"\uf8ff").once("value", x=> {
+                    x.forEach(data => {
+                        printPostCard(data.val(),field);
+                    })
+                })   
+
+        //find interests in posts
+
+        //! tech debt? idk any better way of doing this atm
+    firebase.database().ref(`posts`).orderByChild('interest/0')
+        .startAt(param)
+        .endAt(param+"\uf8ff").once("value", x=> {
+           x.forEach(data => {
+
+                printPostCard(data.val(),field);
+               
+           })
+           })  
+
+    firebase.database().ref(`posts`).orderByChild('interest/1')
+           .startAt(param)
+           .endAt(param+"\uf8ff").once("value", x=> {
+              x.forEach(data => {
+   
+                   printPostCard(data.val(),field);
+                  
+              })
+              })  
+
+
+         
+}
+
+
+/**
+ * Function used to search forum posts in "Your posts". A parameter is typed (interest or a name of the post)
+ * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post. 
+ * @returns Nothing. The function automatically updates the screen with relevant posts.
+ */
+function searchYourPosts(param){
+
+
+
+    let field = document.getElementById("postField");
+
+
+    if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
+        printUserPosts();
+        return // exit function
+    }
+
+    field.innerHTML = ""; // emtpy the field of any previous posts
+
+    firebase.database().ref(`posts`).orderByChild('title')
+                 .startAt(param)
+                 .endAt(param+"\uf8ff").once("value", x=> {
+                    x.forEach(data => {
+
+                       
+                        if(data.val().username == current_user["username"]){
+
+                                printPostCard(data.val(),field);
+                        }
+                    })
+                    })   
+
+        //find interests in posts
+
+        //! tech debt? idk any better way of doing this atm
+        firebase.database().ref(`posts`).orderByChild('interest/0')
+        .startAt(param)
+        .endAt(param+"\uf8ff").once("value", x=> {
+           x.forEach(data => {
+                if(data.val().username == current_user["username"]){
+                    printPostCard(data.val(),field);
+                }
+           })
+           })  
+
+    firebase.database().ref(`posts`).orderByChild('interest/1')
+           .startAt(param)
+           .endAt(param+"\uf8ff").once("value", x=> {
+              x.forEach(data => {
+                    if(data.val().username == current_user["username"]){
+                        printPostCard(data.val(),field);
+                    }
+                  
+              })
+              })  
+            
+
+}
+
+
+
+/**
+ * Function prints postCard with data onto field
+ * @param {1} data specifies a JSON object that is to be used to get data for the post card (provide with .val())
+ * @param {2} field specifies the html field where the card is to be printer (provide without .HTML)
+ */
+function printPostCard(data,field){
+
+    field.innerHTML +=  // add the post card
+    `   <div style="padding-top: 20px;">
+            <span class="post_card">
+            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                <!-- POST HEADER -->
+                <br>
+                <div class="f">
+                    <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${data.username}</h2>
+                </div>
+                <br>
+                <div class="post_header" style="margin:0 10px; background-color: white">
+                    <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${data.title}</h5>
+                </div>
+                <!-- POST FORM -->
+                <form class="post_content" style="margin:0 10px; background-color: white">
+                    <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${data.description} </h6>
+                    <br>
+                    <div style='display: inline-block'>
+                        <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${data.interest[0]} </button>
+                        <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${data.interest[1]}</button>
+                    </div>
+                    <br><br>
+                </form>
+                <div class="f">
+                <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${data.created}</h2>
+                <div>
+                <br>
+                <div>
+                    <!--  LIKE DISLIKE FOR POST -->
+                    <br>
+                    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
+                    <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
+                    </button>
+                    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
+                    <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                    </button>
+                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${data.id}');">
+                    <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                    </button>
+                </div>
+                <br>
+            </span>
+    </div>`;
+
+}
+
+
+
+
+// Likes for posts
+async function likePost(post_id, i) {
+
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
+
+    let res = await checkForLikeDislike(post_id);
+    if (!res) {
+        // if there is no action at all, lilke
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
+            action: 1
+        }).then(() => {
+            alert("Liked");
+            updateLikes(post_id, 1) // add 1 like 
+        });
+
+        // UI   
+        like_btn_addr.style.background='#2bbd7e';
+        like_btn_addr.style.color='white';
+
+        //increase like count
+        current_value=like_btn_addr.value
+        new_value=parseInt(current_value)+1
+        like_btn_addr.value=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+
+
+
+    } else {
+        // if there is action 
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state = snapshot.val();
+            if (current_state == -1) {
+                // if action is dislike
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
+                    action: 1
+                }).then(() => {
+                    alert("Liked");
+                    updateLikes(post_id, 1) // add 1 like 
+                    updateDislikes(post_id, -1)
+                });
+
+                // UI   
+                like_btn_addr.style.background='#2bbd7e';
+                like_btn_addr.style.color='white';
+                dislike_btn_addr.style.background='#dadada';
+                dislike_btn_addr.style.color='black';
+
+                // increase like count
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)+1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                //decrease dislike count
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)-1
+                dislike_btn_addr.value=new_value
+                console.log(dislike_btn_addr.value)
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+         
+            } else {
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
+                alert('post was already liked');
+                updateLikes(post_id, -1)  // remove 1 like 
+                //UI 
+                like_btn_addr.style.background='#dadada';
+                like_btn_addr.style.color='black';
+                // change like number 
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)-1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+            }
+        })
+    }
+}
+
+async function dislikePost(post_id, i)
+{
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
+
+    let res = await checkForLikeDislike(post_id);
+
+    if (!res){
+        // if there is no action at all
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
+                alert("Disliked");
+                // add 1 dislike 
+                updateDislikes(post_id, 1)
+            });   
+            
+        // UI   
+        dislike_btn_addr.style.background='#e53935';
+        dislike_btn_addr.style.color='white';
+
+        //increase dislike count
+        current_value=dislike_btn_addr.value
+        new_value=parseInt(current_value)+1
+        dislike_btn_addr.value=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+    }
+    else{
+        // if there is action 
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state=snapshot.val();
+            if (current_state==1){
+                // if action is like
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{alert("Disiked");});  
+                // add 1 dislike and remove 1 like
+                updateDislikes(post_id, 1)
+                updateLikes(post_id,-1)
+                // UI   
+                like_btn_addr.style.background='#dadada';
+                like_btn_addr.style.color='black';
+                dislike_btn_addr.style.background='#e53935';
+                dislike_btn_addr.style.color='white';
+
+                // increase dislike count
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)+1
+                dislike_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                //decrease like count
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)-1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+
+               
+            }
+            else{
+                // remove 1 dislike
+                updateDislikes(post_id, -1)
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
+                alert('post was already disliked');
+
+                // UI 
+                // change color
+                dislike_btn_addr.style.background='#dadada';
+                dislike_btn_addr.style.color='black';
+                // change dislike number 
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)-1
+                dislike_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                
+            }
+        }
+        )
+    }
+}
