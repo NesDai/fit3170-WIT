@@ -592,11 +592,54 @@ html,body {
     left: 88%;
     bottom: 70px
     }
+    #delete_post_btn
+    {
+    display: inline;
+    position: relative;
+    left: 88%;
+    bottom: 70px
+    }
     #delete_post_icon
     {
     font-size:40px;
     color: black;
     }
+
+    /* all likes related */
+    .like
+    {
+    color: black;
+    border: 2px solid #2bbd7e;
+    width: 100px
+    }
+    .dislike
+    {
+    color: black;
+    border: 2px solid #e53935;
+    width: 100px 
+    }
+        
+    .like:hover
+    {
+    color: white;
+    background-color:#2bbd7e;
+    }
+    .dislike:hover
+    {
+    background-color:#e53935;
+    color: white;
+    }
+    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
+        font-size: 17px;
+        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+        color: white !important;
+    }
+    button.like,  button.dislike, button.hideReply{
+        border-radius: 15px;
+        margin: 0 0 0 10px;
+        }
+ 
+
 
 
 
