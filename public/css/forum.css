@@ -610,13 +610,17 @@ html,body {
     {
     color: black;
     border: 2px solid #2bbd7e;
-    width: 100px
+    width: 100px;
+    border-radius: 15px;
+    margin: 0 0 0 10px;
     }
     .dislike
     {
     color: black;
     border: 2px solid #e53935;
-    width: 100px 
+    width: 100px;
+    border-radius: 15px;
+    margin: 0 0 0 10px;
     }
         
     .like:hover
@@ -629,15 +633,12 @@ html,body {
     background-color:#e53935;
     color: white;
     }
-    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
-        font-size: 17px;
-        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-        color: white !important;
+    #like_post_icon, #dislike_post_icon{
+    height: 22px;
+    margin-bottom: 5px;
+        
     }
-    button.like,  button.dislike, button.hideReply{
-        border-radius: 15px;
-        margin: 0 0 0 10px;
-        }
+   
  
 
 
@@ -746,6 +747,16 @@ html,body {
     color: #00ac3e;
 }
 
+.nav_icon, #translate_icon
+{
+    height: 50px;
+    position: relative;
+    right: 10px;
+    width: 49px; 
+}
 
-
+#recommender_icon
+{
+   width: 49px; 
+}
 

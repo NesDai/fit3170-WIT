@@ -57,20 +57,20 @@ function printPostDetails(post, button_num)
   let post_details = document.getElementById("post_details");
   let button = `
     <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
-    <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
     <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
-    <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
     if (button_num==0)     // nothing
     {
         button = `
                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
-                <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+                <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
                 </button>
                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');" value="${post.dislikes}" >
-                <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+                <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
                 </button>
                 `
     }
@@ -79,10 +79,10 @@ function printPostDetails(post, button_num)
          // liked
          button = `<button 
          class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
-         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
          <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
-         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
     }
@@ -90,10 +90,10 @@ function printPostDetails(post, button_num)
     {
          // disliked
          button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
-         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
          <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
-         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
 

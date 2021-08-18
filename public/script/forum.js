@@ -180,10 +180,10 @@ function printPost(post, button_num, i )
 {
     let button = `
     <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePost('${post.id}', ${i});" value="${post.likes}" >
-    <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
     <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
-    <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
     if (button_num==0)     // nothing
@@ -193,7 +193,7 @@ function printPost(post, button_num, i )
                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
                 </button>
                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});" value="${post.dislikes}" >
-                <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+                <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
                 </button>
                 `
     }
@@ -202,10 +202,10 @@ function printPost(post, button_num, i )
          // liked
          button = `<button 
          class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
-         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
          <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
-         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
     }
@@ -213,14 +213,14 @@ function printPost(post, button_num, i )
     {
          // disliked
          button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
-         <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
          <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}">
-         <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span class="number_of_dislikes"> ${post.dislikes}</span>
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
 
-    
+    // <img src="./css/images/button-designs_23.png" style="height:80%"></img>
 
     let field = document.getElementById("postField");
     field.innerHTML +=
