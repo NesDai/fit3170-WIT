@@ -19,11 +19,11 @@ function checkUserExistence() {
 }
 
 function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";  
+    document.getElementById("myModal").style.display = "block";
 }
 
 function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";  
+    document.getElementById("myModal").style.display = "none";
 }
 
 
@@ -50,7 +50,7 @@ function makeNewPost() {
             alert("The post needs to have at least one interest")
             return
         }
-
+        console.log(interest_arr);
 
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
@@ -178,7 +178,7 @@ function printAllPosts(){
                               <form class="post_content" style="margin:0 10px; background-color: white">
                                  <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                                  <br>
-                                 <iframe width="350" height="300" src="${post.videoURL}"></iframe>   
+                                 <iframe width="350" height="300" src="${post.videoURL}"></iframe>
                                  <br>
                                  <div style='display: inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
