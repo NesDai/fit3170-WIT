@@ -17,6 +17,10 @@ function showReplyInput(button_num){
   document.getElementById("add_reply_section"+button_num.toString()).style.display = "block";
 }
 
+function showReplyToReplyInput(button_num, reply_index){
+  document.getElementById("add_reply_reply_section"+button_num.toString()+reply_index.toString()).style.display = "block";
+}
+
 //check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then
@@ -72,7 +76,7 @@ function printPostDetails(){
                               <form class="post_content" style="margin:0 10px; background-color: white">
                                  <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                                  <br>
-                  
+
                                  <div style='display: inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
                                     <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
@@ -285,7 +289,7 @@ function printComments(){
             }
       }).then(() => {
         for(let i=data_list.length-1; i>=0 ; i--){
-          printReplies(data_list[i].id,i)
+          printReplies(data_list[i].id,i, 0)
         }
       });
 }
@@ -295,7 +299,7 @@ function printComments(){
  * @param {string} comment_id the id associated with comment
  * @param {integer} index an integer to indicate the section
  */
-function printReplies(comment_id,index) {
+function printReplies(comment_id,index, reply_index) {
 
   let reply_section = document.getElementById("reply_section"+index.toString());
   let reply_list = [];
@@ -320,9 +324,14 @@ function printReplies(comment_id,index) {
               }
 
               if (reply.reply_comment_parent == comment_id){
+              console.log("index")
+              console.log(index)
+              console.log("reply_index")
+              console.log(reply_index)
+              console.log(reply.content)
               reply_section.innerHTML += `
-              <div class = 'verticalLine'>
-                <div id = "reply_box">
+              <div class = 'verticalLine' style="position: relative; right:5px">
+                <div id = "reply_box"  style="width:93%">
                   <span class="mdi mdi-cow"></span>
                   <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
                   <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
@@ -330,71 +339,52 @@ function printReplies(comment_id,index) {
                     <span id="user_comment">${reply.content}</span>
                   </p>
                 </div>
+
                 <!-- ADD REPLY BUTTON FOR COMMENT -->
-                 <span>
-                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;">
-                 <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                 </span>
-                 <br>
-                 <br>
-                
-                  <div class = 'verticalLine' style="position: relative; right:5px">
-                    <div id = "reply_box"  style="width:93%">
-                      <span class="mdi mdi-cow"></span>
-                      <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
-                      <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
-                      <p>
-                        <span id="user_comment">${reply.content}</span>
-                      </p>
-                    </div>
-                    <span>
-                      <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;">
-                      <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                    </span>
-                      <br>
-                      <br>
+                <span>
+                <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${i},${reply_index})">
+                <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                </span>
 
-                  </div>
-                  
-
-                  <div class = 'verticalLine'>
-                    <div id = "reply_box" style="width:93%">
-                      <span class="mdi mdi-cow"></span>
-                      <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
-                      <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
-                      <p>
-                        <span id="user_comment">${reply.content}</span>
-                      </p>
-                    </div>
-                    <span>
-                    <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;">
-                    <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                    </span>
+                 <!-- REPLY SECTION -->
+                 <div id = "add_reply_reply_section${i}${reply_index}" style="display:none">
                     <br>
-                    <br>
+                     <div class="post_reply">
 
-                    
-                      <div class = 'verticalLine' style="position: relative; right:5px" >
-                        <div id = "reply_box" style="width:91%">
-                          <span class="mdi mdi-cow"></span>
-                          <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
-                          <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
-                          <p>
-                            <span id="user_comment">${reply.content}</span>
-                          </p>
+                        <!-- REPLY INPUT -->
+                        <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
+                        <br>
+
+                        <!-- ANONYMOUS CHECKBOX BUTTON -->
+                        <div>
+                          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                            <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
+                            <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                          </label>
+
+                          <!-- SEND BUTTON -->
+                            <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${reply.id}')">
+                            <i class="material-icons notranslate" id="send_reply_icon">send</i>
+                            SEND
+                            </button>
                         </div>
-                        <span>
-                        <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color: #006DAE; color: white;">
-                        <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                        </span>
-                        <br>       
-                      </div>
-                  </div>
+
+                     </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div id= "reply_section${i}${reply_index}" style="margin-bottom:10px">
+                    </div>
               </div>
               `
             }
           }}
-        })
+        }).then(() => {
+          for(let i=reply_list.length-1; i>=0 ; i--){
+            reply_index += 1;
+            printReplies(reply_list[i].id,i, reply_index)
+          }
+        });
       }
 
 
