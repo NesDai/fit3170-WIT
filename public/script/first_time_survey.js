@@ -6,7 +6,6 @@ let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let hintIndex = 0;
 
-let messageColour = 'white';
 let messageHistoryColour = 'white';
 
 /*
@@ -74,7 +73,7 @@ function greeting() {
     // format starting message html
     let quesTemplate =
         "<div class='space'>" +
-        "<div class='message-container sender blue'>" +
+        "<div id='-1' class='message-container sender blue'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>To get started, I would like to get to know " +
         "you better by asking a few questions. Are you ready?</p>" +
@@ -250,7 +249,7 @@ function nextQuestion() {
             " browse the rest of the application!"
         showMessageSenderWithoutHints(endingMessage);
         scrollToBottom();
-
+        updateProgress();
     }
     // updateProgress();
 }
@@ -264,7 +263,7 @@ function showMessageSender(message) {
     // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender " + messageColour + "'>" +
+        "<div id='" + questionIndex + "' class='message-container sender blue current'>" +
         `<p>${message}</p>` +
         `<button
          id = ${hintIndex}
@@ -277,7 +276,6 @@ function showMessageSender(message) {
         "</div>" +
         "</div>";
     hintIndex++;
-    changeMessageColour();
 }
 
 /**
@@ -301,11 +299,10 @@ function showMessageReceiver(message) {
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender " + messageColour + "'>" +
+        "<div id='" + questionIndex + "' class='message-container sender blue current'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
-    changeMessageColour();
 }
 
 /**
@@ -344,7 +341,7 @@ function showAnswerLog(message) {
 function showShortQuestionMessage(questionString) {
     document.getElementById("messages").innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender " + messageColour + "'>" +
+        "<div id='" + questionIndex + "' class='message-container sender blue current'>" +
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
         `<button 
@@ -358,7 +355,6 @@ function showShortQuestionMessage(questionString) {
         "</div>" +
         "</div>";
     hintIndex++;
-    changeMessageColour();
 }
 
 /**
@@ -1166,21 +1162,6 @@ function endSurveyText() {
 
 /**
  * Changes the colour of the next message based on
- * the colour of the current message.
- *
- * Used in SENDER messages only (bot side)
- */
-function changeMessageColour() {
-    if (messageColour == 'white') {
-        messageColour = 'blue';
-    }
-    else {
-        messageColour = 'white';
-    }
-}
-
-/**
- * Changes the colour of the next message based on
  * the colour of the current message in the history tab.
  *
  * Used in HISTORY SENDER messages only (bot side)
@@ -1194,10 +1175,33 @@ function changeMessageColour() {
     }
 }
 
+/**
+ * Updates the progress bar. Also changes previous sender question to
+ * white.
+ */
 function updateProgress() {
     var progress = (questionIndex/QUESTION_IDS.length) * 100;
     console.log('updateProgress() is called. Current percentage is ' + progress + '%.');
     document.querySelector('#progress-bar').MaterialProgress.setProgress(progress);
+
+    changeColour();
+}
+
+/**
+ * Changes all blue colour messages to white unless they have a current tag.
+ * Current class tag will be removed.
+ */
+function changeColour() {
+    var prev = $('.blue');
+    $.each(prev, function() {
+        if (!$(this).hasClass('current')) {
+            $(this).animate({
+                backgroundColor: "#FFFFF",
+                color: "#006DAE",
+            }, 500 );
+        }
+        $(this).removeClass('current')
+    })
 }
 
 /** Function of selecting likert options **/
