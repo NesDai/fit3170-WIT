@@ -109,9 +109,3 @@ const QUESTION_IDS = [
     "KHr0k5h5soAEv9JXy8Pk",
     // Part 5 question IDs above
 ];
-
-// The value of questionIndex when answering the first question
-const NO_QUESTIONS_DONE = 0;
-
-// Tha value of questionIndex when the survey has been completed
-const LAST_QUESTION_DONE = QUESTION_IDS.length;
