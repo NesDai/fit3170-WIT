@@ -1,3 +1,6 @@
+// Caches the title question of the current sub-question
+let titleQuestionString = null;
+
 // Initializing variables
 let messages = document.getElementById("messages");
 let textBoxInput = document.getElementById("message");
@@ -17,10 +20,7 @@ and user ID.
 let currentUser = null;
 let currentQuestionId = null;
 let currentQuestionObject = null;
-let currentSetId = 0;
-let logDate = null;
-let logAttempt = null;
-let longQueId = null;
+
 /*
 Stores the index of the current question object
 <br>
@@ -38,89 +38,12 @@ let currentSubQuestionIds = null;
 
 /*
 Used for likert scale idexes of questions stored in firebase
+"very nice" - Yong Peng
  */
 let agreeLikertQues = [15]; //[1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree
 let satisfyLikertQues = [18]; //[1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
 let confidentLikertQues = [21,22,24]; //[1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident [6] Not Applicable
 let interestedLikertQues = [27] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
-
-// Runs as a first-time greeting from the bot
-window.onload = function () {
-    initialiseCurrentUser();
-    greeting();
-
-    // Initialises progress bar
-    document.querySelector('#progress-bar').addEventListener('mdl-componentupgraded', function() {
-        this.MaterialProgress.setProgress(0);
-    });
-};
-
-/**
- * function to initialise current user from firebase storage. this is mainly to help chat history work.
- */
-function initialiseCurrentUser() {
-    // Listen to auth state changes.
-    firebase.auth().onAuthStateChanged(() => {
-        // Initialize current user object
-        currentUser = firebase.auth().currentUser;
-    });
-}
-
-/**
- * function to initialise starting messages in chat and create "start survey" button.
- */
-function greeting() {
-    // format starting message html
-    let quesTemplate =
-        "<div class='space'>" +
-        "<div id='-1' class='message-container sender blue'>" +
-        "<p>Hi! I am the chatbot for this App.</p>" +
-        "<p>To get started, I would like to get to know " +
-        "you better by asking a few questions. Are you ready?</p>" +
-        "</div>" +
-        "</div>";
-
-    // format start survey button html
-    let mcqOptions = "<div class=\"space\">"
-    mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"startSurvey(this)\">Start Survey</button>";
-    mcqOptions += "</div>";
-
-    // set time out to display the message and start survey button
-    setTimeout(() => {
-        messages.innerHTML += quesTemplate;
-        messages.innerHTML += mcqOptions;
-    }, 750);
-
-    // disable textbox
-    disableTextInput();
-}
-
-/**
- * function that starts the survey.
- */
-function startSurvey(button) {
-    // display that the start survey button has been clicked
-    let choice = button.textContent.trim();
-
-    let ansTemplate = '<div class="space">\
-                            <div class="message-container receiver">\
-                                <p>' + choice + '</p>\
-                            </div>\
-                        </div>';
-
-    // disable start survey button
-    let space = button.parentElement;
-    for (let i = 0; i < space.childNodes.length; i++) {
-        space.childNodes[i].disabled = true;
-    }
-    messages.innerHTML += ansTemplate;
-
-    // initialise currentUser and open a new collection for this survey instance
-    initFirebaseAuth();
-    // scroll to bottom of chat and start displaying the questions from firebase
-    scrollToBottom();
-    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
-}
 
 /**
  * onclick function for option buttons.
@@ -181,7 +104,8 @@ function select(button) {
             currentSubQuestionIds = null;
         }
         // display the next question after a small delay
-        setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+        let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+        setTimeout(() => nextQuestion(), delay);
     }
 
     // scroll to bottom of chat log
@@ -208,7 +132,8 @@ function addMessage() {
     disableTextInput();
 
     // display next question after time delay and scroll to bottom of screen
-    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+    setTimeout(() => nextQuestion(), delay);
     scrollToBottom();
 }
 
@@ -244,14 +169,21 @@ function nextQuestion() {
         questionIndex++;
         showQuestion(false);
     } else { //  else end the survey
-        let endingMessage = "That's all the questions we have for you " +
-            "right now. You can either continue answerng questions, or" +
-            " browse the rest of the application!"
-        showMessageSenderWithoutHints(endingMessage);
-        scrollToBottom();
-        updateProgress();
+        showEndingMessage();
     }
     // updateProgress();
+}
+
+/**
+ * Shows the ending message when the survey has been completed.
+ */
+function showEndingMessage() {
+    let endingMessage = "That's all the questions we have for you " +
+        "right now. You can either continue answerng questions, or" +
+        " browse the rest of the application!"
+    showMessageSenderWithoutHints(endingMessage);
+    scrollToBottom();
+    updateProgress();
 }
 
 /**
@@ -279,20 +211,6 @@ function showMessageSender(message) {
 }
 
 /**
- * function to display messages onto the chat log by th user
- * @param message - user response
- */
-function showMessageReceiver(message) {
-    //display user message in given html format
-    messages.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container receiver'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
-}
-
-/**
  * display a question from chatbot without any hint
  * @param message
  */
@@ -303,33 +221,6 @@ function showMessageSenderWithoutHints(message) {
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
-}
-
-/**
- * function to add a message in history log under chatbot.
- * @param message
- */
-function showQuestionLog(message) {
-    logs.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container sender " + messageHistoryColour + "'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
-    changeMessageHistoryColour();
-}
-
-/**
- * function to add a message in history log under user.
- * @param message
- */
-function showAnswerLog(message) {
-    logs.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container receiver'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
 }
 
 /**
@@ -355,164 +246,6 @@ function showShortQuestionMessage(questionString) {
         "</div>" +
         "</div>";
     hintIndex++;
-}
-
-/**
- * Generates agree likert scale buttons to the div likert_scale in chatbot.html
- */
-function makeAgreeLikertScale() {
-    document.getElementById('likert_scale').innerHTML =
-        `<button 
-         id = 1
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Strongly <br> Disagree </span>
-         </button>`+
-
-        `<button 
-         id = 2
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br><br> Disagree </span>
-         </button>`+
-
-        `<button 
-         id = 3
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br><br> Neutral </span>
-         </button>` +
-
-        `<button 
-         id = 4
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br><br>Agree </span>
-         </button>` +
-
-        `<button 
-         id = 5
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> Strongly<br> Agree </span>
-         </button>`;
-
-    componentHandler.upgradeDom();
-}
-
-/**
- * Generates satisfy likert scale buttons to the div likert_scale in chatbot.html
- */
-function makeSatisfyLikertScale() {
-    document.getElementById('likert_scale').innerHTML =
-        `<button 
-         id = 1
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Very <br> Dissatisfied </span>
-         </button>`+
-
-        `<button 
-         id = 2
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br><br> Dissatisfied </span>
-         </button>`+
-
-        `<button 
-         id = 3
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br><br> Neutral </span>
-         </button>` +
-
-        `<button 
-         id = 4
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br><br>Satisfied </span>
-         </button>` +
-
-        `<button 
-         id = 5
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> Very<br> Satisfied </span>
-         </button>`;
-
-    componentHandler.upgradeDom();
-}
-
-/**
- * Generates confident likert scale buttons to the div likert_scale in chatbot.html
- */
-function makeConfidentLikertScale() {
-    document.getElementById('likert_scale').innerHTML =
-        `<button 
-         id = 1
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 0; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Not Confident <br> At All </span>
-         </button>`+
-
-        `<button 
-         id = 2
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br> Somewhat <br> Not Confident </span>
-         </button>`+
-
-        `<button 
-         id = 3
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br> <br> Moderately <br>Confident </span>
-         </button>` +
-
-        `<button 
-         id = 4
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br> <br> Somewhat <br>Confident </span>
-         </button>` +
-
-        `<button 
-         id = 5
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br> <br> Extremely <br>Confident </span>
-         </button>` +
-
-        `<button 
-         id = 5
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>6<br> <br> Not <br>Applicable </span>
-         </button>`;
-
-    componentHandler.upgradeDom();
-}
-
-/**
- * Generates interested likert scale buttons to the div likert_scale in chatbot.html
- */
-function makeInterestedLikertScale() {
-    document.getElementById('likert_scale').innerHTML =
-        `<button 
-         id = 1
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Extremely <br>Not<br> Interested </span>
-         </button>`+
-
-        `<button 
-         id = 2
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br>Not<br>Interested </span>
-         </button>`+
-
-        `<button 
-         id = 3
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br><br> Neutral </span>
-         </button>` +
-
-        `<button 
-         id = 4
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br><br>Interested </span>
-         </button>` +
-
-        `<button 
-         id = 5
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> Extremely<br> Interested </span>
-         </button>`;
-
-    componentHandler.upgradeDom();
 }
 
 /**
@@ -557,28 +290,48 @@ function showQuestion(isSubQuestion) {
             currentQuestionObject = questionObject;
 
             // checking the type of the question to assign the appropriate function to display it
-            if (questionType == TYPE_NUMERIC || questionType == TYPE_NUMERIC_SUB_QUESTION) {
-                showNumeric(questionObject);
-                if (agreeLikertQues.includes(questionIndex)){makeAgreeLikertScale();}
-                else if (satisfyLikertQues.includes(questionIndex)){makeSatisfyLikertScale();}
-                else if (confidentLikertQues.includes(questionIndex)){makeConfidentLikertScale();}
-                else if (interestedLikertQues.includes(questionIndex)){makeInterestedLikertScale();}
-            } else if (questionType == TYPE_MULTIPLE_CHOICE || questionType == TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
-                showMultipleChoice(questionObject);
-            } else if (questionType == TYPE_MULTIPLE_CHOICE_OTHERS) {
-                showMultipleChoiceOthers(questionObject);
-            } else if (questionType == TYPE_SHORT_TEXT) {
-                showShortText(questionObject);
-            } else if (questionType == TYPE_LONG_TEXT) {
-                showLongText(questionObject);
-            } else if (questionType == TYPE_LONG_QUESTION) {
-                showLongQuestion(questionObject);
-            } else {
-                let errorLog = "[ERROR]Invalid question type supplied: " +
-                    questionType +
-                    "\nQuestion object: " +
-                    questionObject;
-                console.log(errorLog)
+            switch (questionType) {
+                case TYPE_NUMERIC:
+                case TYPE_NUMERIC_SUB_QUESTION:
+                    showNumeric(questionObject);
+                    if (agreeLikertQues.includes(questionIndex)) {
+                        makeAgreeLikertScale();
+                    } else if (satisfyLikertQues.includes(questionIndex)){
+                        makeSatisfyLikertScale();
+                    } else if (confidentLikertQues.includes(questionIndex)){
+                        makeConfidentLikertScale();
+                    } else if (interestedLikertQues.includes(questionIndex)){
+                        makeInterestedLikertScale();
+                    }
+                    break;
+
+                case TYPE_MULTIPLE_CHOICE:
+                case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                    showMultipleChoice(questionObject);
+                    break;
+
+                case TYPE_MULTIPLE_CHOICE_OTHERS:
+                    showMultipleChoiceOthers(questionObject);
+                    break;
+
+                case TYPE_SHORT_TEXT:
+                    showShortText(questionObject);
+                    break;
+
+                case TYPE_LONG_TEXT:
+                    showLongText(questionObject);
+                    break;
+
+                case TYPE_LONG_QUESTION:
+                    showLongQuestion(questionObject);
+                    break;
+
+                default:
+                    let errorLog = "[ERROR]Invalid question type supplied: " +
+                        questionType +
+                        "\nQuestion object: " +
+                        questionObject;
+                    console.log(errorLog);
             }
 
             // Scroll the chat box window to the correct position
@@ -679,134 +432,6 @@ function repromptQuestion() {
         type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
         showOptions(currentQuestionObject.choices);
     }
-}
-
-/**
- * function to display buttons for each MCQ question's answer options
- * only used for MCQ questions
- */
-function loadOptions(){
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-
-    var x = document.getElementById("Dropdown");
-    x.options.length = 0;
-    const collectionRef = firebase.firestore().collection(userID);
-    collectionRef.get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var option = document.createElement("option");
-                // Splitting the year month and day from date
-                var ymd = doc.id.split("-");
-                var dateString = ymd[0] + "-" + ("0" + ymd[1]).slice(-2) + "-" + ("0" + ymd[2]).slice(-2);
-                option.text = dateString;
-                x.add(option);
-            });
-        })
-        .catch((error) => {
-            console.log("Error getting documents: ", error);
-        });
-}
-
-/**
- * function to display history log's dropdown date
- */
-function dates(){
-    document.getElementById("Dropdown").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
-/**
- *
- */
-function selectdate(){
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-
-    var mylist = document.getElementById('Dropdown');
-    const collectionRef = firebase.firestore().collection(userID).doc(mylist.options[mylist.selectedIndex].text);
-    collectionRef.get().then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data().set_id);
-            if (document.contains(document.getElementById("attempt"))) {
-                document.getElementById("attempt").remove();
-                document.getElementById("label_id").remove();
-            }
-            var select = document.createElement("select");
-            select.id = "attempt";
-            select.class = "dropbtn";
-            var label = document.createElement("label");
-            label.id = "label_id";
-            for (var i = 0;i<=doc.data().set_id;i++){
-                var option = document.createElement("option");
-                option.value = i+1;
-                option.text = i+1;
-                select.appendChild(option);
-            }
-            label.innerHTML = "Choose which attempt you'd like to view: "
-            label.htmlFor = "attemptsection";
-
-            document.getElementById("attemptsection").appendChild(label).appendChild(select);
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    logDate = mylist.options[mylist.selectedIndex].text;
-}
-
-/**
- * function to select which attempt is going to be displayed in history chatlog
- */
-function selectattempt(){
-    var mylist = document.getElementById('attempt');
-    logAttempt = mylist.options[mylist.selectedIndex].text;
-
-    let log = document.getElementById('logs');
-    log.innerHTML = "";
-
-    showlog();
-}
-
-/**
- * function to display which old survey is going to be displayed in history page
- */
-function showlog(){
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-
-  const collectionRef = firebase.firestore().collection(userID).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
-      collectionRef.get()
-      .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              if(doc.data().longQuestionId!=null && doc.data().longQuestionId!=longQueId){
-                longQueId = doc.data().longQuestionId;
-                firebase.firestore().collection('chatbot').doc('survey_questions').collection('questions').doc(longQueId).get().then((doc) => {
-                  console.log("long question:", doc.data().question);
-                  showQuestionLog(doc.data().question);
-                }).catch((error) => {
-                console.log("Error getting document:", error);
-                });
-              }
-              console.log(doc.id, " => ", doc.data().question);
-              showQuestionLog(doc.data().question);
-              showAnswerLog(doc.data().answer);
-          });
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-      });
 }
 
 /**
@@ -975,150 +600,6 @@ function disableTextInput() {
 function enableTextInput() {
     submit.disabled = false;
     input.disabled = false;
-}
-
-/**
- * Listen for changes in the firebase auth system
- * and initializes the user object.
- */
-function initFirebaseAuth() {
-    // Listen to auth state changes.
-    firebase.auth().onAuthStateChanged(() => {
-        // Initialize current user object
-        currentUser = firebase.auth().currentUser;
-        initSetId();
-    });
-}
-
-/**
- * Saves a user response to a survey question into the
- * Firestore Database.
- *
- * @param answer A string indicating the user's selected or typed answer.
- *               Objects are also accepted in more complex scenarios.
- */
-function saveResponse(answer) {
-    // Formulating the branch
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-    let today = new Date();
-    let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let branch = `${userID}/${date}/responses`;
-
-    // Formulating the response object
-
-    let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-    // Writing a response object to survey_responses
-    let responseObject = {
-        question_id: currentQuestionId,
-        type: currentQuestionObject.type,
-        question: currentQuestionObject.question,
-        restrictions: currentQuestionObject.restrictions,
-        set_id: currentSetId,
-        answer: answer,
-        timestamp: timestamp
-    };
-
-    if (isAnsweringSubQuestions()) {
-        // For sub-questions
-        // 1. Append the longQuestionId attribute
-        // to the response object
-        responseObject.longQuestionId = currentQuestionId;
-
-        // 2. Change the question_id to the sub question's ID
-        // (instead of the "title" question's
-        responseObject.question_id = currentSubQuestionId;
-    }
-
-    // Add an auto-ID response entry to the data branch
-    firebase.firestore().collection(branch).add(responseObject)
-        .then((docRef) => {
-            console.log("Response object written with ID: ", docRef.id);
-
-            // After writing the response to survey_responses, also
-            // write it to survey_questions/question_id
-            let reducedResponseObject = {
-                phone: userID,
-                data: date,
-                answer: answer,
-                timestamp: timestamp
-            };
-            let responseBranch = `chatbot/survey_responses/${currentQuestionId}`;
-
-            firebase.firestore().collection(responseBranch)
-                .doc(docRef.id)
-                // The response ID we got in the first store
-                .set(reducedResponseObject)
-                .then(() => {
-                    console.log("Response written with ID: ", docRef.id,
-                        " at survey_responses branch");
-                })
-                .catch((error) => {
-                    console.error("Error writing response copy at" +
-                        " survey_responses branch: ", error);
-                });
-        })
-        .catch((error) => {
-            console.error("Error writing response at " + userID +
-                " branch: ", error);
-        });
-}
-
-/**
- * function to access the user's firebase storage and check if there is a collection for storing survey responses for
- * the current date. if there is not collection under the current date, the function will make a new collection instead
- * for the current date.
- */
-function initSetId() {
-    // Formulating the branch
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-    let today = new Date();
-    let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-
-    // Formulating the response object
-
-    // Retrieve the set id
-    let reference = firebase.firestore().collection(userID).doc(date);
-
-    reference.get().then((document) => {
-        if (document.exists) {
-            // If the data branch exists, that means this isn't the first
-            // survey instance for the day.
-            currentSetId = document.data().set_id + 1;
-
-            // Increment the set_id at the Firestore Database by 1
-            // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userID).doc(date)
-                .set({set_id: currentSetId})
-                .then(() => {
-                    console.log("Document written with ID: ", date);
-                })
-                .catch((error) => {
-                    console.error("Error writing content: ", error);
-                });
-        } else {
-            // The user is taking the survey for the first time
-            // at this moment.
-
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-
-            // If the document doesn't exist, it means that this
-            // is the first survey instance for the day.
-
-            // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userID).doc(date)
-                .set({set_id: 0})
-                .then(() => {
-                    console.log("Document written with ID: ", date);
-                })
-                .catch((error) => {
-                    console.error("Error writing content: ", error);
-                });
-        }
-    });
 }
 
 /**
