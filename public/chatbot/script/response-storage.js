@@ -4,6 +4,25 @@
  */
 
 /**
+ * Stores the local question index to the cloud
+ */
+function updateQuestionIndex() {
+    // Store the current questionIndex value to the database
+    firebase.firestore().collection(USERS_BRANCH).doc(getUserID())
+        .set({questionIndex: questionIndex + 1})
+        .then(() => {
+            console.log(
+                `questionIndex set to ${questionIndex} ` +
+                `at 'users/${getUserID()}'`
+            );
+        })
+        .catch((error) => {
+            console.error("Error while storing question index: " +
+                `'users/${getUserID()}'`);
+        });
+}
+
+/**
  * Saves a user response to a survey question into the
  * Firestore Database.
  *
@@ -11,22 +30,14 @@
  *               Objects are also accepted in more complex scenarios.
  */
 function saveResponse(answer) {
-    // User responses are stored in
-    // users/ [phone number/email] /responses
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-    let userBranch = `users/${userID}/responses`;
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp()
 
-    // Formulating the response object
-    let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-    // Writing a response object to the user branch
+    // Formulating the response object for the user responses branch
     let responseObject = {
         question_id: currentQuestionId,
         type: currentQuestionObject.type,
         question: currentQuestionObject.question,
         restrictions: currentQuestionObject.restrictions,
-        set_id: currentSetId,
         answer: answer,
         timestamp: timestamp
     };
@@ -42,8 +53,12 @@ function saveResponse(answer) {
         responseObject.question_id = currentSubQuestionId;
     }
 
+    // Update the questionIndex on the cloud with the local one
+    updateQuestionIndex();
+
     // Add an auto-ID response entry to the user branch
-    firebase.firestore().collection(userBranch).add(responseObject)
+    firebase.firestore().collection(getUserResponsesBranch())
+        .add(responseObject)
         .then((docRef) => {
             console.log("Response object written with ID: ", docRef.id);
 
@@ -52,7 +67,7 @@ function saveResponse(answer) {
             // (chatbot/survey_responses/question_id)
 
             let reducedResponseObject = {
-                phone: userID,
+                phone: getUserID(),
                 answer: answer,
                 timestamp: timestamp
             };
@@ -72,7 +87,37 @@ function saveResponse(answer) {
                 });
         })
         .catch((error) => {
-            console.error("Error writing response at " + userID +
+            console.error("Error writing response at " + getUserID() +
                 " branch: ", error);
         });
+}
+
+function getUserID() {
+    let phone = currentUser.phoneNumber;
+    return phone === undefined ? currentUser.email : phone;
+}
+
+function getUserResponsesBranch() {
+    // User responses are stored in
+    // users/ [phone number/email] /responses
+    return `users/${getUserID()}/responses`;
+}
+
+/**
+ * Deletes all survey responses of the current user
+ */
+function purgeUserResponses() {
+    let db = firebase.firestore();
+
+    db.collection(getUserResponsesBranch()).get().then(responses => {
+        responses.forEach(response => {
+            // Get the ID of each response and delete it manually
+            db.collection(getUserResponsesBranch()).doc(response.id)
+                .delete()
+                .catch((error) => {
+                    console.error("Error removing response: ", error);
+                });
+        });
+
+    });
 }
