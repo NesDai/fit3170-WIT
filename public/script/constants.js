@@ -116,4 +116,6 @@ const NO_QUESTIONS_DONE = 0;
 // Tha value of questionIndex when the survey has been completed
 const LAST_QUESTION_DONE = QUESTION_IDS.length;
 
-const USER_BRANCH = "users";
+// The users branch in the Firestore Database, currently stores
+// user responses
+const USERS_BRANCH = "users";
