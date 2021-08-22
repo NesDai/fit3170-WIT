@@ -222,6 +222,7 @@ function resumeSurvey(button) {
     showMessageReceiver(choice);
 
     // Populate the chatbot window with previous conversations
+    noDelayMode = true;
     let lastTitleQuestion = "";
     firebase.firestore().collection(getUserResponsesBranch())
         .orderBy('timestamp')
@@ -246,6 +247,11 @@ function resumeSurvey(button) {
                 showMessageReceiver(answer);
             });
 
+        })
+        .then(() => {
+            // After previous conversations are loaded, re-enable
+            // message delay
+            noDelayMode = true;
         });
 
     // Disable options

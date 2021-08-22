@@ -254,7 +254,8 @@ function showShortQuestionMessage(questionString) {
  * function to scroll to bottom of screen
  */
 function scrollToBottom() {
-    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, delay);
 }
 
 /**
