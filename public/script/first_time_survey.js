@@ -1,8 +1,5 @@
-// Caches the title question of the current sub-question
-let titleQuestionString = null;
-
 // Bazingas!
-let noDelayMode = true;
+let noDelayMode = false;
 
 // Initializing variables
 let messages = document.getElementById("messages");
@@ -24,6 +21,7 @@ and user ID.
 let currentUser = null;
 let currentQuestionId = null;
 let currentQuestionObject = null;
+let currentSetId = 0;
 
 /*
 Stores the index of the current question object
@@ -40,6 +38,42 @@ let currentSubQuestionId = null;
 let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
+// Runs as a first-time greeting from the bot
+window.onload = function () {
+    initChatbot();
+
+    // Initialises progress bar
+    document.querySelector('#progress-bar').addEventListener('mdl-componentupgraded', function() {
+        this.MaterialProgress.setProgress(0);
+    });
+};
+
+/**
+ * function that starts the survey.
+ */
+function startSurvey(button) {
+    // display that the start survey button has been clicked
+    let choice = button.textContent.trim();
+
+    let ansTemplate = '<div class="space">\
+                            <div class="message-container receiver">\
+                                <p>' + choice + '</p>\
+                            </div>\
+                        </div>';
+
+    // disable start survey button
+    let space = button.parentElement;
+    for (let i = 0; i < space.childNodes.length; i++) {
+        space.childNodes[i].disabled = true;
+    }
+    messages.innerHTML += ansTemplate;
+
+    // scroll to bottom of chat and start displaying the questions from firebase
+    scrollToBottom();
+
+    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+    setTimeout(() => nextQuestion(), delay);
+}
 
 /**
  * onclick function for option buttons.
@@ -211,6 +245,20 @@ function showMessageSender(message) {
 }
 
 /**
+ * function to display messages onto the chat log by th user
+ * @param message - user response
+ */
+function showMessageReceiver(message) {
+    //display user message in given html format
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container receiver'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
+}
+
+/**
  * display a question from chatbot without any hint
  * @param message
  */
@@ -222,6 +270,33 @@ function showMessageSenderWithoutHints(message) {
         "</div>" +
         "</div>";
     changeMessageColour();
+}
+
+/**
+ * function to add a message in history log under chatbot.
+ * @param message
+ */
+function showQuestionLog(message) {
+    logs.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender " + messageHistoryColour + "'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
+    changeMessageHistoryColour();
+}
+
+/**
+ * function to add a message in history log under user.
+ * @param message
+ */
+function showAnswerLog(message) {
+    logs.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container receiver'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>"
 }
 
 /**
@@ -507,9 +582,6 @@ function showLongQuestion(questionObject) {
         hint: "placeholder",
         arrangement: []
     };
-
-    // Cache the long question string
-    titleQuestionString = questionObject.question;
 
     showMessageSender(questionObject.question);
 

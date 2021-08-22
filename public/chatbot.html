@@ -49,6 +49,9 @@
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
                 <h3><i class="material-icons">chat_bubble_outline</i> Chatbot</h3>
+                <button class="tablink" onclick="openPage('Live',this)" id="defaultOpen" >Live Chat</button>
+                <button class="tablink" onclick="openPage('History',this);loadOptions();">History</button>
+
             </div>
         </div>
     </header>
@@ -84,8 +87,35 @@
         </div>
     </main>
 
+    <div id = "History" class = " tabcontent" >
+        <label for="Dropdown">Please choose a date to see your chatlog:</label>
+        <div class="dropdown">
+            <select onclick="dates()" class="dropbtn" id="Dropdown">
+                <div id="myDropdown" class="dropdown-content">
+            </select>
+        </div>
+
+        <button id="confirm1" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="selectdate()">
+            Confirm
+        </button>
+        <div id = "attemptsection" class = "dropdown-content">
+        </div>
+        <button id="confirm2" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="selectattempt()">
+            Confirm
+        </button>
+
+        <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+            <div id="history-messages-card" class="mdl-card mdl-shadow--2dp">
+                <div id="logs"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- USING JQUERY TO ANIMATE SCROLL -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="script/constants.js"></script>
+    <script src="script/first_time_survey.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -103,18 +133,6 @@
     <script src="/__/firebase/init.js"></script>
 
     <script src = "script/tabdisplay.js"></script>
-
-    <!-- These scripts don't run on themselves when initialized,
-    so they can be placed in front -->
-    <script src="script/constants.js"></script>
-    <script src="chatbot/script/chatbot-ui.js"></script>
-    <script src="chatbot/script/history-tab.js"></script>
-    <script src="chatbot/script/response-storage.js"></script>
-    <script src="script/first_time_survey.js"></script>
-
-    <!-- These scripts run their own thing on startup, so they should
-    be placed at the back -->
-    <script src="chatbot/script/chatbot-init.js"></script>
 
     </body>
 </html>

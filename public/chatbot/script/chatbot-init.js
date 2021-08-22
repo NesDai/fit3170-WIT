@@ -3,20 +3,12 @@
  * when the page is loaded.
  *
  * Current order of execution
- * 1. initFirebaseAuth & the progress bar thing
+ * 1. initFirebaseAuth
  * 2. initQuestionIndex
  * 3. initChatbot
  */
 
 initFirebaseAuth();
-
-window.onload = function () {
-    // Initialises progress bar
-    document.querySelector('#progress-bar')
-        .addEventListener('mdl-componentupgraded', function() {
-            this.MaterialProgress.setProgress(0);
-        });
-};
 
 /**
  * Listen for changes in the firebase auth system
@@ -28,7 +20,6 @@ function initFirebaseAuth() {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
         initQuestionIndex().then(() => {
-            console.log("Question Index GET!")
             initChatbot();
         })
     });
@@ -95,6 +86,8 @@ function initChatbot() {
         // Survey has been left off halfway
         resumeGreeting();
 
+        // TODO Load the previous questions/responses
+
         if (questionIndex === LAST_QUESTION_DONE) {
             // Survey has been completed
             showEndingMessage();
@@ -123,15 +116,13 @@ function resumeGreeting() {
     // Buttons (options)
     contents +=
         "<div class=\"space\">" +
-            "<button id='resume-survey-button' " +
-            "class=\"mdl-button mdl-js-button " +
+            "<button class=\"mdl-button mdl-js-button " +
             "mdl-button--raised mdl-js-ripple-effect\" " +
-            "onclick=\"resumeSurvey(this)\">" +
+            "onclick=\"startSurvey(this)\">" +
             "Resume" +
             "</button>" +
 
-            "<button id='restart-survey-button' " +
-            "class=\"mdl-button mdl-js-button " +
+            "<button class=\"mdl-button mdl-js-button " +
             "mdl-button--raised mdl-js-ripple-effect\" " +
             "onclick=\"startSurvey(this)\">" +
             "Restart" +
@@ -164,89 +155,41 @@ function greeting() {
     mcqOptions += "</div>";
 
     // set time out to display the message and start survey button
-    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
     setTimeout(() => {
         messages.innerHTML += quesTemplate;
         messages.innerHTML += mcqOptions;
-    }, delay);
+    }, 750);
 
     // disable textbox
     disableTextInput();
 }
 
 /**
- * Starts the survey fresh
+ * 1. Displays the user's choice as a message bubble
+ * 2. Disables the option buttons
+ * 3. Starts the survey
  */
 function startSurvey(button) {
-    button.disabled = true;
     // Display the choice as a message bubble
     let choice = button.textContent.trim();
-    showMessageReceiver(choice);
+    messages.innerHTML += '<div class="space">\
+                            <div class="message-container receiver">\
+                                <p>' + choice + '</p>\
+                            </div>\
+                        </div>';
 
     if (choice === "Restart") {
         // Reset the local question index and update the
         // question index stored in the cloud
         questionIndex = 0;
         updateQuestionIndex();
-
-        // Clear responses stored in the cloud
-        purgeUserResponses();
-
-        // Disable options
-        document.getElementById("restart-survey-button")
-            .disabled = true;
-        document.getElementById("resume-survey-button")
-            .disabled = true;
     }
 
-    // Disable options
+    // Disable all option buttons of the parent div
     let space = button.parentElement;
     for (let i = 0; i < space.childNodes.length; i++) {
         space.childNodes[i].disabled = true;
     }
-    scrollToBottom();
-
-    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-    setTimeout(() => nextQuestion(), delay);
-}
-
-/**
- * Shows all previous conversations and resumes the survey
- */
-function resumeSurvey(button) {
-    // Display the choice as a message bubble
-    let choice = button.textContent.trim();
-    showMessageReceiver(choice);
-
-    // Populate the chatbot window with previous conversations
-    let lastTitleQuestion = "";
-    firebase.firestore().collection(getUserResponsesBranch())
-        .orderBy('timestamp')
-        .get()
-        .then(responses => {
-            responses.forEach(response => {
-                // For each response, output the question and the response
-                let responseObject = response.data();
-                let titleQuestion = responseObject.titleQuestion;
-                let question = responseObject.question;
-                let answer = responseObject.answer;
-
-                if (lastTitleQuestion !== titleQuestion) {
-                    lastTitleQuestion = titleQuestion;
-                    showShortQuestionMessage(titleQuestion);
-                }
-
-                showShortQuestionMessage(question);
-                showMessageReceiver(answer);
-            });
-
-        });
-
-    // Disable options
-    document.getElementById("restart-survey-button")
-        .disabled = true;
-    document.getElementById("resume-survey-button")
-        .disabled = true;
 
     scrollToBottom();
 

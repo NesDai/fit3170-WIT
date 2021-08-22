@@ -134,30 +134,3 @@ function showlog(){
             console.log("Error getting documents: ", error);
         });
 }
-
-/**
- * function to add a message in history log under chatbot.
- * @param message
- */
-function showQuestionLog(message) {
-    logs.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container sender " + messageHistoryColour + "'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
-    changeMessageHistoryColour();
-}
-
-/**
- * function to add a message in history log under user.
- * @param message
- */
-function showAnswerLog(message) {
-    logs.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container receiver'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
-}
