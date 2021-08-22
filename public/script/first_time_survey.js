@@ -1,6 +1,9 @@
 // Caches the title question of the current sub-question
 let titleQuestionString = null;
 
+// Bazingas!
+let noDelayMode = true;
+
 // Initializing variables
 let messages = document.getElementById("messages");
 let textBoxInput = document.getElementById("message");
