@@ -80,13 +80,15 @@ function select(button) {
     // check the type of skip target
     if (skipTarget === SKIP_NOT_ALLOWED) {
         // Don't skip next question
-        setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+        let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+        setTimeout(() => nextQuestion(), delay);
     } else if (skipTarget === SKIP_END_SURVEY) {
         // check if one of the skipChoices were selected. If so, end survey
         if (skipChoices.includes(choice)) {
             endSurvey();
         } else { // else move onto the next question
-            setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => nextQuestion(), delay);
         }
     } else {
         // Skip to a question ID if the selected answer is in skipChoices
@@ -705,6 +707,7 @@ function likertSelect(number)
     disableTextInput();
 
     // display next question after time delay and scroll to bottom of screen
-    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+    setTimeout(() => nextQuestion(), delay);
     scrollToBottom();
 }
