@@ -8,6 +8,9 @@
  * 3. initChatbot
  */
 
+// Bazingas!
+let noDelayMode = false;
+
 initFirebaseAuth();
 
 window.onload = function () {
