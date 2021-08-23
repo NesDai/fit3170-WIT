@@ -520,6 +520,9 @@ function showLongQuestion(questionObject) {
         arrangement: []
     };
 
+    // Cache title question for easier outputting (when resuming)
+    titleQuestionString = questionObject.question;
+
     showMessageSender(questionObject.question);
 
     // Initialize fields for looping over the sub-question IDs
