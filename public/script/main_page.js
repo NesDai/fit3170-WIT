@@ -27,11 +27,11 @@ function checkUserTAndC() {
     // check if user's phone number is in database
     firebase.database().ref(`users/${phone}`).once("value", snapshot => {
         if (snapshot.exists()){
-            firebase.database().ref(`users/${phone}/termsAndConditionsAccepted`).once("value", snapshot => {
+            firebase.database().ref(`users/${phone}/termsAndConditionsAccepted`).once("value", snapshot2 => {
                 // check if termsAndConditionsAccepted field exists
-                if (snapshot.exists()) {
+                if (snapshot2.exists()) {
                     // check if termsAndConditionsAccepted is true
-                    if (snapshot.val()) {
+                    if (snapshot2.val()) {
                         window.location.href = "chatbot.html";
                     } else {
                         // if it is not true, move to terms and conditions page

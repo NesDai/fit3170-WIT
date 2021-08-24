@@ -27,23 +27,12 @@ function checkAccepted(){
 
                 //update user's data in database with termsAndConditionsAccepted as true
                 let updates = {};
-                updates['/termsAndConditionsAccepted'] = true;
+                updates['/termsAndConditionsAccepted'] = true
 
-                firebase.database().ref(`users/${phone}`).update(updates);
+                firebase.database().ref(`users/${phone}`).update(updates)
+                window.location.href = "./chatbot.html"
             }
         })
-
-        //check if termsAndConditionsAccepted is there before sending them to chatbot page
-        firebase.database().ref(`users/${phone}`).once("value", snapshot => {
-            if (snapshot.exists()){
-                if (snapshot.val().termsAndConditionsAccepted) {
-                    window.location.href = "./chatbot.html"
-                }
-            } else {
-                console.log("Terms and Condition Accepted field not updated on user's info in database")
-            }
-        })
-
     } else {
         // if the tickbox is not ticked, display error message
         tick_warning.hidden = false
