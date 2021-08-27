@@ -5,18 +5,18 @@
  * @author Yong Peng (ychi0014@student.monash.edu)
  */
 
-const SUB_QUESTIONS_1_14 = [
+const SUB_QUESTIONS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "living with someone at home?",
-    "living alone at home?",
-    "living with someone at aged care setting?",
-    "living alone at aged care setting?"
+    "living with someone at home?", // Qs 1.12.1
+    "living alone at home?", // Qs 1.12.2
+    "living with someone at aged care setting?", // Qs 1.12.3
+    "living alone at aged care setting?" // Qs 1.12.4
 ];
 
 // TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_14 = [
+const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
@@ -26,14 +26,14 @@ const SUB_QUESTIONS_HINTS_1_14 = [
     "placeholder"
 ];
 
-const SUB_QUESTIONS_1_15 = [ //TODO this will be the new 1.13
+const SUB_QUESTIONS_1_13 = [ //TODO this will be the new 1.13
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Depending on others to meet <b>my needs</b>.",
-    "Not being able to get <b>medical</b> treatment.",
-    "Had no money to buy <b>groceries</b>b>.",
-    "Not being able to pay <b>at least one</b> bill.",
+    "Depending on others to meet <b>my needs</b>.", // Qs 1.13.a
+    "Not being able to get <b>medical</b> treatment.", // Qs 1.13.b
+    "Had no money to buy <b>groceries</b>b>.", // Qs 1.13.c
+    "Not being able to pay <b>at least one</b> bill." // Qs l.13.d
 ];
 
 // TODO Fill in tooltips
@@ -47,17 +47,17 @@ const SUB_QUESTIONS_HINTS_1_15 = [
     "placeholder"
 ];
 
-const SUB_QUESTIONS_1_16 = [
+const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "In most ways my life is closed to my ideal.",
-    "The conditions of my life are excellent.",
-    "I am satisfied with my life."
+    "In most ways my life is closed to my ideal.", // Qs 1.14.a
+    "The conditions of my life are excellent.", // Qs 1.14.b
+    "I am satisfied with my life." // Qs 1.14.c
 ];
 
 // TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_16 = [
+const SUB_QUESTIONS_HINTS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
@@ -71,35 +71,35 @@ const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What is your <b>age</b> in years? (enter a number)",
-    "What is your <b>gender</b>?",
-    "What is your <b>ethnic</b> group?",
-    "Where do you <b>currently</b> live?",
-    "What is your average <b>net household income</b> per month?",
-    "What is your completed highest <b>education</b> level?",
-    "What is your <b>marital status</b>?",
-    "How many <b>children</b> have you <b>raised</b>? (enter a number)",
-    "How many <b>children</b> do you <b>talk or correspond</b> with weekly? (enter a number)",
-    "How many do you talk or correspond with monthly? (enter a number)", // TODO remove this question. Qs 1.10
+    "What is your <b>age</b> in years? (enter a number)", // Qs 1.1
+    "What is your <b>gender</b>?", // Qs 1.2
+    "What is your <b>ethnic</b> group?", // Qs 1.3
+    "Where do you <b>currently</b> live?", // Qs 1.4
+    "What is your average <b>net household income</b> per month?", // Qs 1.5
+    "What is your completed highest <b>education</b> level?", // Qs 1.6
+    "What is your <b>marital status</b>?", // Qs 1.7
+    "How many <b>children</b> have you <b>raised</b>? (enter a number)", // Qs 1.8
+    "How many <b>children</b> do you <b>talk or correspond</b> with weekly? (enter a number)", // Qs 1.9
 
-    // The question above this line is question 1.10
 
-    "How many do you correspond with several times a year? (enter a number)", // TODO remove this question. Qs. 1.11
-    "How many other <b>relatives</b> do you feel close to? (enter a number)", // TODO this is the new Qs 1.10
-    "How many close <b>friends do</b>b> you have? (enter a number)", //new 1.11
-    "What is your independent living status?",
+    // The question above this line is question 1.9
 
-    // The question above this line is a long question (1.14) new 1.12
 
-    "In the past 6 months, have you experienced the following situations?",
+    "How many other <b>relatives</b> do you feel close to? (enter a number)", // Qs 1.10
+    "How many <b>close friends</b> do you have? (enter a number)", // Qs 1.11
+    "What is your independent living status?", // Qs 1.12
 
-    // The question above this line is a long question (1.15)
+    // The question above this line is a long question 1.12
+
+    "In the past 6 months, have you experienced the following situations?", // Qs 13
+
+    // The question above this line is a long question (1.13)
 
     "How <b>satisfied</b> are you with your current life now? (Rate from 1 to 5)\n" +
     "[1] Strongly disagree, [2] Disagree, [3] Neutral,\n" +
-    "[4] Agree, [5] Strongly Agree"
+    "[4] Agree, [5] Strongly Agree" // Qs 1.14
 
-    // The question above this line is a long question (1.16) new 1.14
+    // The question above this line is a long question 1.14
 ];
 
 // TODO Fill in tooltips
@@ -116,11 +116,11 @@ const HINTS_PART1 = [
     "placeholder",
     "placeholder",
     "placeholder",
-    "placeholder",
+
 
     // The question above this line is question 1.10
 
-    "placeholder",
+
     "placeholder",
     "placeholder",
 
@@ -138,16 +138,16 @@ const PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What is your <b>current</b> employment status?",
-    "What is your <b>current</b> job/ occupation/ profession?",
+    "What is your <b>current</b> employment status?", // Qs 2.1
+    "What is your <b>current</b> job/ occupation/ profession?", // Qs 2.2
     "How <b>satisfied</b> are you in your current employment status? (Rate from 1 to 7)\n" +
     "[1] completely dissatisfied, [2] very dissatisfied, [3] dissatisfied,\n" +
     "[4] moderately satisfied, [5] satisfied, [6] very satisfied," +
-    " [7] extremely satisfied.",
-    "Did you lose your <b>job</b> due to the COVID-19 pandemic?",
-    "Did you lose your <b>earning income</b> due to the COVID-19 pandemic?",
-    "How confident are you in finding a <b>new job</b> in the near future?",
-    "How confident are you in being able to keep your <b>current job</b> in the near future?",
+    " [7] extremely satisfied.", // Qs 2.3
+    "Did you lose your <b>job</b> due to the COVID-19 pandemic?", // Qs 2.3
+    "Did you lose your <b>earning income</b> due to the COVID-19 pandemic?", // Qs 2.3
+    "How confident are you in finding a <b>new job</b> in the near future?", // Qs 2.4
+    "How confident are you in being able to keep your <b>current job</b> in the near future?" // Qs 2.5
 ];
 
 const HINTS_PART2 = [
@@ -160,39 +160,39 @@ const HINTS_PART2 = [
     "placeholder",
     "placeholder",
     "placeholder",
-    "placeholder",
+    "placeholder"
 ];
 
 const SUB_QUESTIONS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "SMS, text messaging (such as Whatsapp, WeChat, etc.)",
-    "Browsing/ surfing websites",
-    "Watching videos",
-    "Using Zoom, Facetime, Skype, Google Talk, etc.",
-    "Using COVID-19 contact tracing app (such as MySejahtera)",
+    "SMS, text messaging (such as Whatsapp, WeChat, etc.)", // Qs 3.2.a
+    "Browsing/ surfing websites", // Qs 3.2.b
+    "Watching videos", // Qs 3.2.c
+    "Using Zoom, Facetime, Skype, Google Talk, etc.", // Qs 3.2.d
+    "Using COVID-19 contact tracing app (such as MySejahtera)", // Qs 3.2.e
     // TODO Thailand will update the app name for the above question
-    "Online shopping or e-commerce (such as Lazada, Shopee, etc.)",
+    "Online shopping or e-commerce (such as Lazada, Shopee, etc.)", // Qs 3.2.f
     // TODO Thailand will update the relevant app name for the above question
     "Using mobile banking/ e-wallet (such as GrabPay, BoostPay, FavePay, Touch N" +
-    "Go Pay, etc.)",
+    "Go Pay, etc.)", // Qs 3.2.g
     // TODO Thailand will update the relevant app name for the above question
     // The question above this line is question 3.2g
 
-    "Online ordering for food or groceries",
-    "Using social network (such as Facebook, Instagram, Twitter, etc.)",
-    "Taking a photo",
-    "Mapping navigator (such as Google Map, Waze, Tom-Tom, etc.)",
-    "Managing my appointment on the calendar in my smartphone or computer",
-    "Reading online news or online magazines",
-    "Taking notes (such as shopping lists or tasks) that I need to do",
-    "Filming a video",
+    "Online ordering for food or groceries", // Qs 3.2.h
+    "Using social network (such as Facebook, Instagram, Twitter, etc.)", // Qs 3.2.i
+    "Taking a photo", // Qs 3.2.j
+    "Mapping navigator (such as Google Map, Waze, Tom-Tom, etc.)", // Qs 3.2.k
+    "Managing my appointment on the calendar in my smartphone or computer", // Qs 3.2.l
+    "Reading online news or online magazines", // Qs 3.2.m
+    "Taking notes (such as shopping lists or tasks) that I need to do", // Qs 3.2.n
+    "Filming a video", // Qs 3.2.o
     // The question above this line is question 3.2o
 
-    "Listening to music",
-    "Playing games",
-    "Using to contact government authorities",
+    "Listening to music", // Qs 3.2.p
+    "Playing games", // Qs 3.2.q
+    "Using to contact government authorities" // Qs 3.2.r
 ];
 
 const SUB_QUESTIONS_HINTS_3_2 = [
@@ -231,12 +231,12 @@ const PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "How do you access the Internet using your mobile phone?",
+    "How do you access the Internet using your mobile phone?", // Qs 3.1
     // The question above this line is question 3.1
 
     "How <b>confident</b> are you in <b>using your mobile phone</b> the following activites? (Rate from 0 to 5)\n" +
     "[0] I don’t know or not applicable (N/A), [1] Not confident at all, [2] Somewhat not confident, [3] Moderately confident,\n" +
-    "[4] Somewhat confident, [5] Extremely confident."
+    "[4] Somewhat confident, [5] Extremely confident." // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
@@ -247,7 +247,7 @@ const HINTS_PART3 = [
     "placeholder",
     // The question above this line is question 3.1
 
-    "",
+    ""
     // The question above this line is a long question (3.2)
 
 ];
@@ -256,11 +256,11 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "ICT/ technology skills (such as how to use mobile phone or computer software",
+    "ICT/ technology skills (such as how to use mobile phone or computer software", // Qs 4.3.a
     "Social communication skills (such as how to improve relationships or interact" +
-    "with others)",
-    "Complementary skills (such as learning non-work-related skills or hobbies)",
-    "Work-related skills (such as how to increase job/ business productivity)"
+    "with others)", // Qs 4.3.b
+    "Complementary skills (such as learning non-work-related skills or hobbies)", // Qs 4.3.c
+    "Work-related skills (such as how to increase job/ business productivity)" // Qs 4.3.d
 ];
 
 const SUB_QUESTIONS_HINTS_4_3 = [
@@ -279,22 +279,22 @@ const PART4 = [
     "How <b>often</b> do you try to learn something new or useful using a mobile\n" +
     "phone? (Rate from 1 to 7)\n" +
     "[1] Never, [2] Once a month, [3] Few times a month,\n" +
-    "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day",
+    "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day", // Qs 4.1
 
     "How many <b>hours per week</b> do you devote to learning something new or useful" +
-    " using a mobile phone? (enter a number)",
+    " using a mobile phone? (enter a number)", // Qs 4.2
     // The question above this line is question 4.2
 
     "How <b>interested</b> are you to <b>learn</b> the following skills using a mobile phone?" +
     "(Rate from 1 to 7)\n" +
     "[1] Extremely not interested, [2] Not interested, [3] Neutral," +
-    "[4] Interested, [5] Extremely interested",
+    "[4] Interested, [5] Extremely interested", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "What <b>work-related skills</b> do you wish to learn using a mobile phone? ",
+    "What <b>work-related skills</b> do you wish to learn using a mobile phone? ", // Qs 4.3
     // The question above this line is question 4.4
 
-    "How much do you agree or disagree that the following statement <b>describes you</b>? <i>(Rate from 1 to 5)</i>",
+    "How much do you agree or disagree that the following statement <b>describes you</b>? <i>(Rate from 1 to 5)</i>" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -316,11 +316,11 @@ const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What are you interested in learning using a mobile phone?",
-    "What resources do you wish to have for learning using a mobile phone?",
+    "What are you interested in learning using a mobile phone?", // Qs 5.1
+    "What resources do you wish to have for learning using a mobile phone?", // Qs 5.2
     "What has been the most frustrating things so far about learning using a " +
-    "mobile phone?",
-    "Tell us about your problems or challenges faced at work."
+    "mobile phone?", // Qs 5.3
+    "Tell us about your problems or challenges faced at work." // Qs 5.4
 ]
 
 const HINTS_PART5 = [
@@ -380,106 +380,100 @@ function pushPart1Questions() {
     // Question 1.9
     pushNumeric("1.9", PART1[9], 0, 999, false, HINTS_PART1[9]);
 
-    // Question 1.10 //TODO remove
+    // Question 1.10
     pushNumeric("1.10", PART1[10], 0, 999, false, HINTS_PART1[10]);
 
-    // Question 1.11 // TODO remove
+    // Question 1.11
     pushNumeric("1.11", PART1[11], 0, 999, false, HINTS_PART1[11]);
 
-    // Question 1.12 //TODO new Qs 1.10
-    pushNumeric("1.12", PART1[12], 0, 999, false, HINTS_PART1[12]);
+    // Question 1.13
+    pushLongQuestion("1.13", PART1[13]).then((q13docRef) => {
+        // [START]                  Question 1.12                   [START]
+        // Inserted after Question 1.13
 
-    // Question 1.13 // TODO new Qs. 1.11
-    pushNumeric("1.13", PART1[13], 0, 999, false, HINTS_PART1[13]);
-
-    // Question 1.15 // TODO new Qs. 1.13
-    pushLongQuestion("1.15", PART1[15]).then((q15docRef) => {
-        // [START]                  Question 1.14                   [START]
-        // Inserted after Question 1.15
-
-        pushLongQuestion("1.14", PART1[14]).then((q14docRef) => { //TODO new Qs. 1.12 and look into q14Ref.id
+        pushLongQuestion("1.12", PART1[12]).then((q12docRef) => {
             // Record the id of the question itself
-            longQuestionIds.push(q14docRef.id);
+            longQuestionIds.push(q12docRef.id);
 
             // Log it in the console
-            let questionNumber = "1.14";
-            recordLongQuestionPush(questionNumber, q14docRef);
+            let questionNumber = "1.12";
+            recordLongQuestionPush(questionNumber, q12docRef);
 
             // Start preparing for the pushes of its sub-questions
             initLongQuestionParams();
 
-            // Question 1.14a
-            let choices_1_14 = ["Yes", "No"];
-            let skip_choices_1_14 = ["Yes"];
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[1], choices_1_14, skip_choices_1_14, q15docRef.id, SUB_QUESTIONS_HINTS_1_14[1]);
+            // Question 1.12a
+            let choices_1_12 = ["Yes", "No"];
+            let skip_choices_1_12 = ["Yes"];
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[1], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[1]);
 
-            // Question 1.14b
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[2], choices_1_14, skip_choices_1_14, q15docRef.id, SUB_QUESTIONS_HINTS_1_14[2]);
+            // Question 1.12b
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[2], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[2]);
 
-            // Question 1.14c
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[3], choices_1_14, skip_choices_1_14, q15docRef.id, SUB_QUESTIONS_HINTS_1_14[3]);
+            // Question 1.12c
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[3], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[3]);
 
-            // Question 1.14d
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[4], choices_1_14, skip_choices_1_14, q15docRef.id, SUB_QUESTIONS_HINTS_1_14[4]);
+            // Question 1.12d
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[4], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[4]);
         });
 
-        // [END]                       Question 1.14                    [END]
+        // [END]                       Question 1.12                    [END]
 
         // Record the id of the question itself
-        longQuestionIds.push(q15docRef.id);
+        longQuestionIds.push(q13docRef.id);
 
-        // Log it in the console TODO new qs 1.13
-        let questionNumber = "1.15";
-        recordLongQuestionPush(questionNumber, q15docRef)
+        // Log it in the console
+        let questionNumber = "1.13";
+        recordLongQuestionPush(questionNumber, q13docRef)
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
-        // Question 1.15a
-        let choices_1_15 = ["Yes", "No"];
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[1],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
+        // Question 1.13a
+        let choices_1_13 = ["Yes", "No"];
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[1]);
 
-        // Question 1.15b
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[2],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
+        // Question 1.13b
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[2],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[2]);
 
-        // Question 1.15c
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[3],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
+        // Question 1.13c
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[3],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[3]);
 
-        // Question 1.15d
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[4],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
+        // Question 1.13d
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[4],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_15[4]);
     });
 
-    // Question 1.16 TODO new qs 1.14
-    pushLongQuestion("1.16", PART1[16]).then((docRef) => {
+    // Question 1.14
+    pushLongQuestion("1.14", PART1[14]).then((docRef) => {
         // Record the id of the question itself
         longQuestionIds.push(docRef.id);
 
         // Log it in the console
-        let questionNumber = "1.16";
+        let questionNumber = "1.14";
         recordLongQuestionPush(questionNumber, docRef)
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
         // Question 1.16a
-        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[1],
-            1, 5, false, SUB_QUESTIONS_HINTS_1_16[1]);
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_14[1],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_14[1]);
 
         // Question 1.16b
-        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[2],
-            1, 5, false, SUB_QUESTIONS_HINTS_1_16[2]);
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_14[2],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_14[2]);
 
         // Question 1.16c
-        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[3],
-            1, 5, false, SUB_QUESTIONS_HINTS_1_16[3]);
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_14[3],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_14[3]);
     });
 }
 
