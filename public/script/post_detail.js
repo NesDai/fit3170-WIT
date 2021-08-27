@@ -30,6 +30,7 @@ function checkUserExistence() {
 function getPostDetails(){
   let posts = [];
   let id = params.get('post_id');
+  let action=0;
 
   firebase.database().ref(`likesDislikes/${id}/${current_user["username"]}`)
   .once('value', x => {
@@ -278,16 +279,10 @@ function printComments(){
                  <!--  LIKE FOR COMMENT -->
                  <span id='like_button_comment' href="#">
                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                 <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
+                 <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img>
                  </button>
                  </span>
 
-                 <!--  DISLIKE FOR COMMENT -->
-                 <span id='dislike_button_comment' href="#">
-                 <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                 <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
-                 </button>
-                 </span>
 
                  <!-- ADD REPLY BUTTON FOR COMMENT -->
                  <span>
@@ -375,20 +370,6 @@ function printReplies(comment_id,index) {
                     <span id="user_comment">${reply.content}</span>
                   </p>
                 </div>
-
-                <!--  LIKE FOR COMMENT -->
-                <span id='like_button_comment' href="#">
-                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                    <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
-                  </button>
-                </span>
-
-                <!--  DISLIKE FOR COMMENT -->
-                <span id='dislike_button_comment' href="#">
-                  <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                    <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
-                  </button>
-                </span>
               </div>
               `
             }
