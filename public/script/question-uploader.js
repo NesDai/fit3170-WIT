@@ -272,6 +272,42 @@ const SUB_QUESTIONS_HINTS_4_3 = [
     "placeholder"
 ];
 
+const SUB_QUESTIONS_4_5 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+    "I understand the meaning of life.", // Qs 4.5.a
+    "I understand the meaning of daily life activities.", // Qs 4.5.b
+    "I find attractiveness in daily life activities.",
+    "I have confidence in daily life activities.",
+    "I have self-assurance in the performance of daily life activities.",
+    "I have confidence in newly formed daily life activities.",
+    "I have capabilities of expressing the self.",
+    "I have capabilities of selecting better alternatives.",
+    "I have capabilities of making decisions on particular problems.",
+    "I have capabilities of working together with others.",
+    "I have capabilities of building teams with others.",
+    "I have capabilities of building coalitions.",
+    "I have capabilities of solving problems with others."
+];
+
+const SUB_QUESTIONS_HINTS_4_5 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder"
+];
+
 const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
@@ -294,7 +330,8 @@ const PART4 = [
     "What <b>work-related skills</b> do you wish to learn using a mobile phone? ", // Qs 4.3
     // The question above this line is question 4.4
 
-    "How much do you agree or disagree that the following statement <b>describes you</b>? <i>(Rate from 1 to 5)</i>" // Qs 4.5
+    "How much do you agree or disagree that the following statement <b>describes you</b>? <i>(Rate from 1 to 5)</i>\n" +
+    "" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -333,7 +370,6 @@ const HINTS_PART5 = [
     "placeholder"
 ]
 
-// TODO Weird questions: Last survey question & Question 4.5
 // TODO 2.6 and 2.7 - Likert Scale
 
 let question_2_1_id = "";
@@ -591,7 +627,7 @@ function pushPart4Questions() {
         // Questions 4.3 a to d (4 questions in total)
         for (let i = 1; i < 5; i++) {
             appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_4_3[i],
-                1, 7, false,
+                1, 5, false,
                 SUB_QUESTIONS_HINTS_4_3[i]);
         }
     });
@@ -600,7 +636,24 @@ function pushPart4Questions() {
     pushShortText("4.4", PART4[4], HINTS_PART4[4]);
 
     // Question 4.5
-    // TODO: Question 4.5
+    pushLongQuestion("4.5", PART4[5]).then((docRef) => {
+        // Record the id of the question itself
+        longQuestionIds.push(docRef.id);
+
+        // Log it in the console
+        let questionNumber = "4.5";
+        recordLongQuestionPush(questionNumber, docRef);
+
+        // Start preparing for the pushes of its sub-questions
+        initLongQuestionParams();
+
+        // Questions 4.5 a to m (13 questions in total)
+        for (let i = 1; i < 14; i++) {
+            appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_4_5[i],
+                1, 5, false,
+                SUB_QUESTIONS_HINTS_4_5[i]);
+        }
+    });
 }
 
 function pushPart5Questions() {
@@ -1079,10 +1132,10 @@ function housekeeping() {
 
     let result = [];
     // Try to output the list of question Ids for each part
-    // 16 questions for part 1
+    // 14 questions for part 1
     // 7 questions for part 2
     // 2 questions for part 3
-    // 5 questions for part 4, 4 implemented
+    // 5 questions for part 4
     // 4 questions for part 5
 
     // These are the indices where the survey part gets changed
