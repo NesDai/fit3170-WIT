@@ -4,8 +4,9 @@ html,body {
     font-size: 100%;
     }
     body {
-    background-color: #eee;
-    }
+        background-color: #d2d2d2;
+        height: 50px;
+        }
     /* HEADER CSS */
     .material-icons {
     font-size: 36px;
@@ -28,6 +29,7 @@ html,body {
     top: -1px;
     margin-right: 5px;
     } 
+
     @media screen and (max-width: 610px) {
     header {
     height: 80px;
@@ -88,12 +90,15 @@ html,body {
     position: relative;
     border-radius: 12px;
     }    
+
     @media all and (min-width:551px) {
+    /* laptop */
     .mobile-br {display: none;}
     .demo-card-wide{
-    width: 110%;
+    width: 764px;
     border-radius: 20px;
     background: #E4E4E4;
+    
     }
     .lang_butt {
     margin: 2%; 
@@ -104,7 +109,10 @@ html,body {
     display: inline;
     }
     }
+
+
     @media all and (max-width: 1000px) {
+    /* phone */
     .mobile-br {display:inline;}
     .demo-card-wide{
     width: 100%;
@@ -127,7 +135,25 @@ html,body {
     {
     left:10px;
     }
+
+    .seacrh-container
+    {
+        justify-content: center;  
+        width:95% ;
+        margin-left:8px;
     }
+    .forum-container
+    {
+        justify-content: center;  
+        width:95% ;
+        margin-left:8px;
+    }
+    .container {
+        margin-top: 12px;
+        justify-content: center;
+        }
+    }
+
     #like_post_btn
     {
     color: black;
@@ -155,16 +181,8 @@ html,body {
     *, *:after, *:before {
     box-sizing: border-box;
     }
-    body {
-    font-family: "Arial";
-    background-color: #d2d2d2;
-    height: 50px;
-    }
-    .container {
-    position: relative;
-    top: 12px;
-    justify-content: center;
-    }
+
+
     .tabs * {
     z-index: 2;
     }
@@ -190,18 +208,34 @@ html,body {
     position:relative; 
     left:300px;
     }
+   
     @media all and (min-width:800px) {
     /* laptop */
     h3{
     position: relative;
     left: 330px;
     }
+    
     .container {
     position: relative;
     top: 12px;
-    left: 52px;
+    left: 25px;
     display: flex;
     justify-content: center;
+    }
+    .search-container
+    {
+    position: relative;
+    top: 12px;
+    left: 25px;
+    display: flex;
+    justify-content: center;
+    }
+    .forum-container
+    {
+        position: relative;
+        display: flex;
+        justify-content: center;   
     }
     .tabs {
     display: flex;
@@ -337,7 +371,7 @@ html,body {
     color: white;
     background-color: #006DAE;
     position: relative;
-    width: 60px;
+    width: 25%;
     left: 10px
     }
     #date_posted{
@@ -348,24 +382,8 @@ html,body {
     top: 5px; 
     }
     }
-    /* To change the like button back and forth */
-    .like_button_comment_liked {
-    color: white !important ;
-    background-color:#2bbd7e; 
-    } 
-    .like_button_comment_liked:hover
-    {
-    color: white;
-    background-color:#2bbd7e;
-    }
-    .dislike_button_comment_clicked {
-    color: white !important ;
-    background-color:#e53935; 
-    } 
-    .dislike_button_comment_clicked:hover
-    {
-    background-color:#e53935;
-    }
+
+
     .modal {
     display: none;
     /* Hidden by default */
@@ -448,10 +466,6 @@ html,body {
     {
     font-size: 17px;
     }
-    button.like,  button.dislike, button.hideReply, button.u{
-    border-radius: 15px;
-    margin: 0 0 0 10px;
-    }
     button.reply{
     border-radius: 15px;
     margin: 2px 0 0 8px;
@@ -490,31 +504,7 @@ html,body {
     {
     background-color:white;
     }
-    /* To change the like button back and forth */
-    .like_button_comment_not_liked {
-    border: 2px solid #04AA6D;
-    }
-    .like_button_comment_liked {
-    background-color:#2bbd7e;
-    color: white !important;
-    }
-    .like_button_comment_liked:hover
-    {
-    background-color:#2bbd7e;
-    }
-    .dislike_button_comment_not_clicked {
-    border: 2px solid #e53935;
-    color: white !important;
-    }
-    .dislike_button_comment_clicked {
-    color: white !important;
-    background-color:#e53935;
-    }
-    .dislike_button_comment_clicked:hover
-    {
-    color: white !important;
-    background-color:#e53935;
-    }
+  
     .reply{
     position: relative;
     }
@@ -537,14 +527,9 @@ html,body {
     #lang_text{
     display: none;
     }
+
     @media all and (min-width:551px) {
     /* laptop */
-    .mobile-br {display: none;}
-    .demo-card-wide{
-    width: 110%;
-    border-radius: 20px;
-    background: #E4E4E4;
-    }
     .lang_butt {
     margin: 2%; 
     width:30%; 
@@ -583,12 +568,6 @@ html,body {
     }
     @media all and (max-width: 1000px) {
     /* phone */
-    .mobile-br {display:inline;}
-    .demo-card-wide{
-    width: 100%;
-    border-radius: 20px;
-    background: #E4E4E4;
-    }
     #reply_box
     {
     margin:0 10px;
@@ -631,27 +610,23 @@ html,body {
     font-size: 20px;
     }
     }
-    #like_post_btn
-    {
-    color: black;
-    border: 2px solid #04AA6D;
-    width: 100px
-    }
-    #dislike_post_btn
-    {
-    color: black;
-    border: 2px solid #e53935;
-    width: 100px
-    }
     #favourite_post_btn
     {
     color: black;
     border: 2px solid blue;
     width: 230px;
     }
+
     .mdl-checkbox {
     display: inline;     
     width: 200px;
+    }
+    #delete_post_btn
+    {
+    display: inline;
+    position: relative;
+    left: 88%;
+    bottom: 70px
     }
     #delete_post_btn
     {
@@ -665,3 +640,159 @@ html,body {
     font-size:40px;
     color: black;
     }
+
+    /* all likes related */
+    .like
+    {
+    color: black;
+    border: 2px solid #2bbd7e;
+    width: 100px;
+    border-radius: 15px;
+    margin: 0 0 0 10px;
+    }
+    .dislike
+    {
+    color: black;
+    border: 2px solid #e53935;
+    width: 100px;
+    border-radius: 15px;
+    margin: 0 0 0 10px;
+    }
+        
+    .like:hover
+    {
+    color: white;
+    background-color:#2bbd7e;
+    }
+    .dislike:hover
+    {
+    background-color:#e53935;
+    color: white;
+    }
+    #like_post_icon, #dislike_post_icon{
+    height: 22px;
+    margin-bottom: 5px;
+        
+    }
+   
+ 
+
+
+
+
+    @media all and (max-width: 1024px) {
+        /* mobile */
+        .search {
+            position: relative;
+            left:30px;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            height: 65px;
+            background-color: #fff;
+            box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+            padding: 0.75rem;
+            border-radius: 15px;
+            width: 325px;
+        }
+
+        #searchButton{
+            background-color:#006DAE;
+            padding-right: 50px;
+            margin-top: 5px;
+            border-radius: 15px;
+        }
+    }
+
+
+
+    @media all and (min-width:800px) {
+    .search {
+        height: 65px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin-bottom: auto;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+        right:29px;
+        padding: 0.75rem;
+        border-radius: 15px;
+        width: 600px;
+    }
+
+    #searchButton{
+        background-color:#006DAE;
+        padding-right: 50px;
+        margin-top: 3px;
+        border-radius: 15px;
+    }
+}
+
+@media only screen and (max-device-width: 600px){
+    .search{
+        height: 70px;
+    }
+
+    #searchButton{
+        background-color:#006DAE;
+        padding-right: 50px;
+        margin-top: 5px;
+        border-radius: 15px;
+    }
+}
+    .search-input {
+        padding-left: 2px;
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 200%;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear
+    }
+    
+    .search .search-input {
+        width: 200%;
+        caret-color: #006DAE;
+        font-size: 19px;
+        font-weight: 300;
+        color: black;
+        transition: width 0.4s linear
+    }
+    
+    a:link {
+        text-decoration: none
+    }
+
+#search-icon{
+    color:#006DAE;
+    margin-bottom: 250px;
+}
+
+
+.search:hover #icon-background{
+    margin-right: 15px;
+    transform: scale(1.3);
+    transition: 0.25s;
+}
+.search:hover #search-icon{
+    color: #00ac3e;
+}
+
+.nav_icon, #translate_icon
+{
+    height: 50px;
+    position: relative;
+    right: 10px;
+    width: 49px; 
+}
+
+#recommender_icon
+{
+   width: 49px; 
+}
+

@@ -87,6 +87,29 @@
          .desktop-br {display: inline;}
          }
       </style>
+      <!--Dont display the google banner at the top-->
+  <style>
+
+   .goog-te-banner-frame.skiptranslate {
+       display: none !important;
+   } 
+   body {
+       top: 0px !important; 
+   }
+   .goog-logo-link {
+       display:none !important;
+   }
+   .trans-section {
+       margin: 100px;
+       padding: 20px;
+       padding-bottom: 25px;
+   }
+
+   .lang_butt {
+           margin-top: 10%; 
+           background-color: white;
+        }
+</style>
    </head>
    <body>
       <!-- Translation div -->
@@ -107,10 +130,10 @@
          <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
          <br>
          <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();">  <i class="material-icons icon-teal" id="nav-icons" >g_translate</i> Translate</a>
-            <a class="mdl-navigation__link" href="./forum.html"><i class="material-icons icon-teal notranslate" id="nav-icons">forum</i> Forum Page</a>
-            <a class="mdl-navigation__link" href="./recommenderUi.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Recommender</a>
-            <a class="mdl-navigation__link" href="./chatbot.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Chat Bot</a>
+            <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();"> <img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img> Translate</a>
+            <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
+            <a class="mdl-navigation__link" href="./recommenderUi.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
+            <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
          </nav>
       </div>
          <main class="mdl-layout__content">
