@@ -190,7 +190,7 @@ function printPost(post, button_num, i )
     {
         button = `
                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
-                <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span class="number_of_likes"> ${post.likes}</span>
+                <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
                 </button>
                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});" value="${post.dislikes}" >
                 <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
