@@ -69,12 +69,12 @@ html,body {
     color: white;
     padding: 5px 16px;
     }
-    #like_post_icon, #dislike_post_icon, #favourite_post_icon{
+    #favourite_post_icon{
     font-size: 17px;
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     color: white
     }
-    button.like, button.dislike, button.favourite{
+    button.favourite{
     border-radius: 15px;
     margin: 0 0 0 20px;
     }
@@ -457,7 +457,7 @@ html,body {
     #reply_comment_icon{
     font-size: 20px;
     }
-    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon, #favourite_post_icon{
+    #favourite_post_icon{
     font-size: 17px;
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     color: white !important;
