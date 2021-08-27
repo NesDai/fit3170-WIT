@@ -378,7 +378,7 @@ function addReply(btn_num,comment_id) {
     let reply_input = document.getElementById("reply_input"+btn_num.toString()).value;
     let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
     // new data to upload in api
-    if (reply_input){ // only adding reply if it's not empty
+    if (reply_input){ // only adding reply if it's not empty 
       // unique key for reply
       let myRef = firebase.database().ref(`replies`);
       let key = myRef.push().key;
