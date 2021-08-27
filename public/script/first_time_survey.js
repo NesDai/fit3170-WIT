@@ -128,15 +128,20 @@ function addMessage() {
         // display input and clear textbox
         showMessageReceiver(message);
         input.value = "";
+
+            // Prevent users from using text box
+            disableTextInput();
+
+            // display next question after time delay and scroll to bottom of screen
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => nextQuestion(), delay);
+            scrollToBottom();
+    }
+    else{
+      errorText.style.visibility = "visible";
+      errorText.innerHTML = "Please type your answer in the text box.";
     }
 
-    // Prevent users from using text box
-    disableTextInput();
-
-    // display next question after time delay and scroll to bottom of screen
-    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-    setTimeout(() => nextQuestion(), delay);
-    scrollToBottom();
 }
 
 
@@ -237,7 +242,7 @@ function showShortQuestionMessage(questionString) {
         "<div id='" + questionIndex + "' class='message-container sender blue current'>" +
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
-        `<button 
+        `<button
          id =${hintIndex}
          type="button"
          style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
