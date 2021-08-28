@@ -363,7 +363,7 @@ function printReplies(comment_id,index, reply_index) {
                           </label>
 
                           <!-- SEND BUTTON -->
-                            <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i},${reply.id}, ${reply_index})')">
+                            <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply('${i}',' ${reply.id}', '${reply_index}')">
                             <i class="material-icons notranslate" id="send_reply_icon">send</i>
                             SEND
                             </button>
@@ -380,6 +380,7 @@ function printReplies(comment_id,index, reply_index) {
             }
           }}
         }).then(() => {
+          console.log("hi");
           for(let i=reply_list.length-1; i>=0 ; i--){
             reply_index += 1;
             printReplies(reply_list[i].id, i, reply_index)
@@ -399,8 +400,9 @@ function redirect(url, msg) {
  * @param {string} comment_id the id associated with the comment
  */
 function addReply(btn_num,comment_id, reply_index) {
-  if (checkUserExistence()){
 
+  if (checkUserExistence()){
+    console.log(comment_id);
     const options = {  // options for Date
       timeZone:"Africa/Accra",
       hour12 : true,
@@ -411,8 +413,10 @@ function addReply(btn_num,comment_id, reply_index) {
 
 
     let post_id = params.get('post_id');
+
     // get reply value
     let reply_input = document.getElementById("reply_input"+btn_num.toString()+","+reply_index.toString()).value;
+    console.log(reply_input);
     let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()+","+reply_index.toString()).checked;
     // new data to upload in api
     if (reply_input){ // only adding reply if it's not empty
