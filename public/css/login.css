@@ -105,6 +105,11 @@ textarea:-ms-input-placeholder { color: #adadad;}
     "login content1 "
     "login content1 ";
   grid-gap: 0.5rem;
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-45%, -25%);
 }
 #login {
   margin-top: 15px;
@@ -298,7 +303,13 @@ textarea:-ms-input-placeholder { color: #adadad;}
   grid-template-rows: 0.1fr 0.9fr;
   grid-template-areas:
     "login"
-    "content1"
+    "content1";
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+
 }
 #content1 {
   display: grid;

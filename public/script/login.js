@@ -177,7 +177,6 @@ function codeverify() {
 }
 
 
-let exists = false;
 
 /**
  * Function used to check if the user with the given phone number of already present in the database
@@ -186,30 +185,25 @@ let exists = false;
  */
 function checkUserExistence(phone){
     let username;
+    let exists = false;
+
     firebase.database().ref(`users/${phone}`).once("value", snapshot => {
-        
+
         if (snapshot.exists()){
-           exists = true;
-           username = snapshot.val().username;
-        }
-     }).then(()=>{
+            
+            let user = snapshot.val(); // get the user
 
-        if(!exists){ //Create a new account
-            //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
-            // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-            window.location = "username.html"; //TODO make this a proper redirect
-        }
-        else{
-            // !!LOG IN !!!
-
-            let user = JSON.parse(localStorage.getItem(USER_KEY));
-
-            user["username"] = username;
             localStorage.setItem(USER_KEY,JSON.stringify(user));
             window.location = "main_page.html"
         }
+        else{
+            //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
+            // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
+            window.location = "username.html"; //TODO make this a proper redirect
 
-     });
+        }
+
+     })
         
 }
    
