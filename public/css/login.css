@@ -81,7 +81,21 @@ textarea:-ms-input-placeholder { color: #adadad;}
 } */
 
 @media all and (min-width:551px) {
+
+
   /* laptop */
+
+  .trans-section
+{
+  margin: 100px;
+  padding: 20px;
+  padding-bottom: 25px;
+  background-color: white; 
+  border-radius: 10px; 
+  width: 100%;
+
+}
+
 .container {
   display: grid;
   height: 100%;
@@ -99,11 +113,25 @@ textarea:-ms-input-placeholder { color: #adadad;}
 }
 
 #content1 {
-  margin-top: 10%;
-  margin-right: 250px;
-  grid-area: content1;
-  width:80%;
+  display: grid;
+  height: 700px;
+
+  grid-template-columns: 0.1fr 0.1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "login content1 "
+    "login content1 ";
+  grid-gap: 0.5rem;
+
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-75%, -55%);
+
 }
+
+
 }
 
 .wrap-login{
@@ -240,6 +268,19 @@ textarea:-ms-input-placeholder { color: #adadad;}
 
 
 @media only screen and (max-width: 1000px) {
+
+  .trans-section
+{
+  margin: 100px;
+  padding: 20px;
+  padding-bottom: 25px;
+  background-color: white; 
+  border-radius: 10px; 
+  width: 100%;
+
+}
+
+
   .wrap-login {
     margin: auto;
     margin-top: 20px;
@@ -260,22 +301,27 @@ textarea:-ms-input-placeholder { color: #adadad;}
     "content1"
 }
 #content1 {
-  margin:  auto ;
-  grid-area: content1;
-  width:100%;
+  display: grid;
+  height: 700px;
+
+  grid-template-columns: 0.1fr 0.1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "login content1 "
+    "login content1 ";
+  grid-gap: 0.5rem;
+
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-75%, -55%);
 }
+
+
 
 }
 
-.trans-section
-{
-  margin: 100px;
-  padding: 20px;
-  padding-bottom: 25px;
-  background-color: white; 
-  border-radius: 10px; 
-  width: 50%
-}
 
 
 
