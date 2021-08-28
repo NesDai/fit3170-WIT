@@ -14,11 +14,11 @@ function hideTranslationModal(){
 }
 
 function showReplyInput(button_num){
-  document.getElementById("add_reply_section"+button_num.toString()).style.display = "block";
+  document.getElementById("add_reply_section"+button_num.toString()+",0").style.display = "block";
 }
 
 function showReplyToReplyInput(button_num, reply_index){
-  document.getElementById("add_reply_reply_section"+button_num.toString()+reply_index.toString()).style.display = "block";
+  document.getElementById("add_reply_reply_section"+button_num.toString()+","+ reply_index.toString()).style.display = "block";
 }
 
 //check id the user is signed in
@@ -256,23 +256,23 @@ function printComments(){
                  <br>
 
                  <!-- REPLY SECTION -->
-                 <div id = "add_reply_section${i}" style="display:none">
+                 <div id = "add_reply_section${i},${0}" style="display:none">
                     <br>
                      <div class="post_reply">
 
                         <!-- REPLY INPUT -->
-                        <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
+                        <input class="reply_input" type="text" id="reply_input${i},${0}" placeholder="Write a reply...">
                         <br>
 
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
                         <div>
                           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-                            <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
+                            <input type="checkbox" id="anonymous${i},${0}" class="mdl-checkbox__input" >
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                           </label>
 
                         <!-- SEND BUTTON -->
-                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
+                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}', ${0})">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
@@ -281,7 +281,7 @@ function printComments(){
                      </div>
                     </div>
                     <br>
-                    <div id= "reply_section${i}" style="margin-bottom:10px">
+                    <div id= "reply_section${i},${0}" style="margin-bottom:10px">
                     </div>
               </div>
 
@@ -301,7 +301,7 @@ function printComments(){
  */
 function printReplies(comment_id,index, reply_index) {
 
-  let reply_section = document.getElementById("reply_section"+index.toString());
+  let reply_section = document.getElementById("reply_section"+index.toString()+","+reply_index.toString());
   let reply_list = [];
 
   // print replies of a comment
@@ -347,23 +347,23 @@ function printReplies(comment_id,index, reply_index) {
                 </span>
 
                  <!-- REPLY SECTION -->
-                 <div id = "add_reply_reply_section${i}${reply_index}" style="display:none">
+                 <div id = "add_reply_reply_section${i},${reply_index}"" style="display:none">
                     <br>
                      <div class="post_reply">
 
                         <!-- REPLY INPUT -->
-                        <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
+                        <input class="reply_input" type="text" id="reply_input${i},${reply_index}"" placeholder="Write a reply..." value="@${reply_username}">
                         <br>
 
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
                         <div>
                           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-                            <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
+                            <input type="checkbox" id="anonymous${i},${reply_index}"" class="mdl-checkbox__input" >
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                           </label>
 
                           <!-- SEND BUTTON -->
-                            <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${reply.id}')">
+                            <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i},${reply.id}, ${reply_index})')">
                             <i class="material-icons notranslate" id="send_reply_icon">send</i>
                             SEND
                             </button>
@@ -373,7 +373,7 @@ function printReplies(comment_id,index, reply_index) {
                     </div>
                     <br>
                     <br>
-                    <div id= "reply_section${i}${reply_index}" style="margin-bottom:10px">
+                    <div id= "reply_section${i},${reply_index}" style="margin-bottom:10px">
                     </div>
               </div>
               `
@@ -382,7 +382,7 @@ function printReplies(comment_id,index, reply_index) {
         }).then(() => {
           for(let i=reply_list.length-1; i>=0 ; i--){
             reply_index += 1;
-            printReplies(reply_list[i].id,i, reply_index)
+            printReplies(reply_list[i].id, i, reply_index)
           }
         });
       }
@@ -398,7 +398,7 @@ function redirect(url, msg) {
  * @param {integer} btn_num the index of reply button
  * @param {string} comment_id the id associated with the comment
  */
-function addReply(btn_num,comment_id) {
+function addReply(btn_num,comment_id, reply_index) {
   if (checkUserExistence()){
 
     const options = {  // options for Date
@@ -409,16 +409,17 @@ function addReply(btn_num,comment_id) {
      second: "2-digit"
     }
 
+
     let post_id = params.get('post_id');
     // get reply value
-    let reply_input = document.getElementById("reply_input"+btn_num.toString()).value;
-    let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
+    let reply_input = document.getElementById("reply_input"+btn_num.toString()+","+reply_index.toString()).value;
+    let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()+","+reply_index.toString()).checked;
     // new data to upload in api
     if (reply_input){ // only adding reply if it's not empty
       // unique key for reply
       let myRef = firebase.database().ref(`replies`);
       let key = myRef.push().key;
-
+      console.log("hi");
       // new data to upload in api
       let newData = {
         anonymous: stay_anonymous,
@@ -429,16 +430,15 @@ function addReply(btn_num,comment_id) {
         like:0,
         replierId: current_user["phone"],
         reply_comment_parent: comment_id,
-        username: current_user["username"]
+        username: current_user["username"],
       };
 
-      url = "post.html" + "?post_id=" + post_id;
-
+      console.log(post_id);
       firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
-        redirect(url, null)
+          alert("Reply made successfully!");
+          window.location = "post.html" + "?post_id=" + post_id;
       });
-      msg = "Reply Made successfully";
-      alert(redirect(url, msg));
+
     };
   } else {
     window.location = "forum.html";
