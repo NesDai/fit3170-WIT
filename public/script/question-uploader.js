@@ -32,7 +32,7 @@ const SUB_QUESTIONS_1_13 = [ //TODO this will be the new 1.13
 
     "Depending on others to meet <b>my needs</b>.", // Qs 1.13.a
     "Not being able to get <b>medical</b> treatment.", // Qs 1.13.b
-    "Had no money to buy <b>groceries</b>b>.", // Qs 1.13.c
+    "Had no money to buy <b>groceries</b>.", // Qs 1.13.c
     "Not being able to pay <b>at least one</b> bill." // Qs l.13.d
 ];
 
@@ -51,8 +51,8 @@ const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "In most ways my life is closed to my ideal.", // Qs 1.14.a
-    "The conditions of my life are excellent.", // Qs 1.14.b
+    "Overall, my life is close to my ideal.", // Qs 1.14.a
+    "My current life state is excellent.", // Qs 1.14.b
     "I am satisfied with my life." // Qs 1.14.c
 ];
 
@@ -322,7 +322,7 @@ const PART4 = [
     // The question above this line is question 4.2
 
     "How <b>interested</b> are you to <b>learn</b> the following skills using a mobile phone?" +
-    "(Rate from 1 to 7)\n" +
+    "(Rate from 1 to 5)\n" +
     "[1] Extremely not interested, [2] Not interested, [3] Neutral," +
     "[4] Interested, [5] Extremely interested", // Qs 4.3
     // The question above this line is a long question (4.3)
@@ -548,16 +548,14 @@ function pushPart2Questions() {
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
     // Question 2.6
-    let choices_2_6 = ["Not confident at all", "Somewhat not confident",
-        "Moderately confident", "Somewhat confident", "Extremely confident",
-        "Not applicable"];
+    let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident",
+        "Moderately confident", "Somewhat confident", "Extremely confident"];
     pushMultipleChoice("2.6", PART2[6], choices_2_6, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[6]);
 
     // Question 2.7
-    let choices_2_7 = ["Not confident at all", "Somewhat not confident",
-        "Moderately confident", "Somewhat confident", "Extremely confident",
-        "Not applicable"];
+    let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident",
+        "Moderately confident", "Somewhat confident", "Extremely confident"];
     pushMultipleChoice("2.7", PART2[7], choices_2_7, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[7]);
 }
@@ -1140,12 +1138,12 @@ function housekeeping() {
 
     // These are the indices where the survey part gets changed
     let startingIndex = 0;
-    let indices = [16, 23, 25, 29, 33];
+    let indices = [14, 21, 23, 28, 32];
 
-    // Before we start slicing, insert the last item (Q1.14)
-    // to the correct spot (before Q1.15, or before index 13)
+    // Before we start slicing, insert the last item (Q1.14) 1.12
+    // to the correct spot (before Q1.15, or before index 13) 1.13
     let lastItem = questionIds[questionIds.length - 1];
-    questionIds.splice(12, 0, lastItem);
+    questionIds.splice(11, 0, lastItem);
 
     for (let endingIndex of indices) {
         result.push(questionIds.slice(startingIndex, endingIndex));
@@ -1161,7 +1159,7 @@ function housekeeping() {
     // Update question 2.1 with 2.3's ID
     firebase.firestore().collection(QUESTIONS_BRANCH).doc(question_2_1_id)
         .update({
-            "skipTarget": question_2_3_id
+            "restrictions.skipTarget": question_2_3_id
         })
         .then(() => {
             let info = "Question 2.1 has been updated with Question 2.3 ID: " +

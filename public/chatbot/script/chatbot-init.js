@@ -94,16 +94,13 @@ function initChatbot() {
     if (questionIndex === NO_QUESTIONS_DONE) {
         // Survey has not been started yet
         greeting();
+    } else if (questionIndex === LAST_QUESTION_DONE) {
+        // Survey has been completed
+        showEndingMessage();
     } else {
         // Survey has been left off halfway
         resumeGreeting();
-
-        if (questionIndex === LAST_QUESTION_DONE) {
-            // Survey has been completed
-            showEndingMessage();
-        }
     }
-
 }
 
 /**
