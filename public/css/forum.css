@@ -76,7 +76,7 @@ html,body {
     }
     button.favourite{
     border-radius: 15px;
-    margin: 0 0 0 20px;
+    margin: 0 0 0 10px;
     }
     #interest1_id
     {
@@ -170,7 +170,7 @@ html,body {
     {
     color: black;
     border: 2px solid blue;
-    width: 230px;
+    width: max-content;
     }
     /* All below is for the tab navigation */
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
@@ -457,11 +457,6 @@ html,body {
     #reply_comment_icon{
     font-size: 20px;
     }
-    #favourite_post_icon{
-    font-size: 17px;
-    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-    color: white !important;
-    }
     #send_reply_icon
     {
     font-size: 17px;
@@ -610,12 +605,12 @@ html,body {
     font-size: 20px;
     }
     }
-    #favourite_post_btn
+    /* #favourite_post_btn
     {
     color: black;
     border: 2px solid blue;
     width: 230px;
-    }
+    } */
 
     .mdl-checkbox {
     display: inline;     
@@ -674,10 +669,27 @@ html,body {
     margin-bottom: 5px;
         
     }
-   
- 
 
+   /* favourite */
+   .favourite
+   {
+   color: black;
+   border: 2px solid blue;
+   width: 100px;
+   border-radius: 15px;
+   margin: 0 0 0 10px;
+   }
 
+   #favourite_post_icon{
+    height: 22px;
+    margin-bottom: 5px;
+    }
+
+    .favourite:hover
+    {
+    background-color:blue;
+    color: white;
+    }
 
 
     @media all and (max-width: 1024px) {

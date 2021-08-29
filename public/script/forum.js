@@ -279,12 +279,11 @@ function printUserFavouritePosts() {
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
     let data_list = [];
-
     firebase.database().ref(`posts`)
         .orderByChild(`users_favourite`)
             .once('value', x => {
                 x.forEach(data => {
-                    //data.val() here is detail of a post
+
                     let hasFav = data.hasChild("users_favourite");
                     
                     if (hasFav) {
@@ -302,12 +301,36 @@ function printUserFavouritePosts() {
                         }
                     }
                 });
-            }).then(() => {
+            })
+            .then (() => {
+            let duplicate = false;
+            firebase.database().ref('posts')
+            .orderByChild('username')
+                .equalTo(current_user['username'])
+                    .once('value', x => {
+                        x.forEach(data => {
+                            for (let i = 0; i < data_list.length; i++){
+                                if(data.val().id == post.id) {
+                                    duplicate = true;
+                                }
+                            }
+
+                            if (!duplicate){
+                                data_list.push(data.val());
+                            }
+                        }
+                           
+                    )})
+
+                  
+            })
+            .then(() => {
                 for (let i = data_list.length -1; i>=0; i--){
+
                     let post = data_list[i];
 
                     field.innerHTML +=
-                    `   <div style="padding-top: 20px;">
+                    `  <div style="padding-top: 20px;">
                     <span class="post_card">
                        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                           <!-- POST HEADER -->
@@ -349,9 +372,8 @@ function printUserFavouritePosts() {
                           <br>
                     </span>
              </div>`;
-
                 }
-            })
+                })
 }
 
 function printUserPosts(){

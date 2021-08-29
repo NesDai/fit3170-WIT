@@ -4,45 +4,6 @@ const params = new URLSearchParams(window.location.search)
 
 getPostDetails();
 hideTranslationModal();
-checkUserFavouritedPost();
-
-/* 
-A function that checks if the user has favourited the selected post and 
-will output the correct text on button
-*/
-function checkUserFavouritedPost(){
-  let post_id = params.get('post_id'); 
-
-  if (checkUserExistence()){
-    let myRef = firebase.database().ref(`posts/${post_id}`);
-    myRef.once("value")
-      .then(function(snapshot) {
-
-        let hasFavouriteData = snapshot.hasChild("users_favourite"); 
-        let fav = document.getElementById("favourite_btn");
-
-        if (hasFavouriteData){
-          let users_arr = snapshot.val()["users_favourite"];
-          let user_exist = false;
-
-          // looping through users list in database
-          for(let i = 0; i < users_arr.length; i++) {
-            if (current_user["phone"] == users_arr[i]){
-              user_exist = true;
-            }
-          }
-
-          if (user_exist){
-            fav.innerText = "REMOVE FAVOURITE";
-          } else {
-            fav.innerText = "ADD POST TO FAVOURITE";
-          }
-        } else {
-          fav.innerText = "ADD POST TO FAVOURITE";
-        }
-      })
-  }
-}
 
 function showTranslationModal(){
     document.getElementById("myModal").style.display = "block";
@@ -176,10 +137,10 @@ function printPostDetails(post, button_num)
                               <div>
                                  <!--  LIKE DISLIKE FOR POST -->
                                  <br>
-                                 <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
-                                 <i class="material-icons notranslate" id="favourite_post_icon">favorite</i><span id="favourite_btn"> Add Post to Favourite</span>
-                                 </button>
                                  ${button}
+                                 <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
+                                 <i class="material-icons notranslate" id="favourite_post_icon">favorite</i><span id="favourite_btn"> Add Favourite</span>
+                                 </button>
                               </div>
                               <br>
                         <hr style="margin: 0">
@@ -214,7 +175,7 @@ function printPostDetails(post, button_num)
                            <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
                         </div>
                     </div>`
-
+                    checkUserFavouritedPost();
                     printComments();
                     if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
                 document.getElementById("delete_post_btn").remove()
@@ -225,14 +186,35 @@ function printPostDetails(post, button_num)
  * performing the wanted functionality
  */
 function checkButtonStatus() {
-  let fav_button = document.getElementById("favourite_btn");
-  if (fav_button.innerText == "REMOVE FAVOURITE"){
-    removePostFromFavourite();
-  } else {
-    addPostToFavourite();
-  }
-}
 
+  let post_id = params.get('post_id'); 
+
+  let myRef = firebase.database().ref(`posts/${post_id}`);
+    myRef.once("value")
+      .then(function(snapshot) {
+
+        let hasFavouriteData = snapshot.hasChild("users_favourite"); 
+        let user_found = false;
+        // checking the favourite data has been written ebfore
+        if (hasFavouriteData == false){
+          addPostToFavourite();
+        } else {
+          let users_arr = snapshot.val()["users_favourite"];
+          
+          for (let i = 0; i < users_arr.length; i++){
+            if (current_user["phone"] == users_arr[i]){
+              user_found = true;
+            } 
+          }
+
+          if (user_found){
+            removePostFromFavourite();
+          } else {
+            addPostToFavourite();
+          }
+        }
+    })
+  }
 /**
  * Function which removes the current post from user's favourite
  */
@@ -257,8 +239,9 @@ function removePostFromFavourite(){
 
         firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
           alert("Successfully remove the post from your favourite");
-          checkUserFavouritedPost();
         })
+        let fav_button = document.getElementsByClassName("favourite")[0];
+        fav_button.innerHTML = "\n  <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Add Favourite</span>\n  ";
       })
   }
 }
@@ -298,9 +281,12 @@ function addPostToFavourite(){
 
         firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
           alert("Successfully added the post to your favourite");
-          checkUserFavouritedPost();
         })
+
+        let fav_button = document.getElementsByClassName("favourite")[0];
+        fav_button.innerHTML = "\n  <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
       })
+
   }
 
 }
@@ -557,4 +543,40 @@ function addReply(btn_num,comment_id) {
   } else {
     window.location = "forum.html";
   }
+}
+
+/* 
+A function that checks if the user has favourited the selected post and 
+will output the correct text on button
+*/
+function checkUserFavouritedPost(){
+  let post_id = params.get('post_id'); 
+  let user_exist = false;
+  let button = document.getElementById("favourite_post_btn");
+
+  firebase.database().ref(`posts/${post_id}`).once("value", (snapshot) => {
+    let hasFavouriteData = snapshot.hasChild("users_favourite");
+    if (hasFavouriteData){
+      let users_arr = snapshot.val()["users_favourite"];
+      
+      // looping through users list in database
+      for(let i = 0; i < users_arr.length; i++) {
+        if (current_user["phone"] == users_arr[i]){
+          user_exist = true;
+        }
+      }
+
+      if (user_exist){
+        button.innerHTML = `                                 
+        <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
+        <span id=\"favourite_btn\"> Remove Favourite</span>
+        `
+      } else {
+        button = `                                 
+        <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
+        <span id=\"favourite_btn\"> Add Favourite</span>
+        `
+      }
+    }
+  })
 }
