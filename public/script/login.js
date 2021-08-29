@@ -184,6 +184,7 @@ function codeverify() {
  * @returns boolean true if exists and false is does not
  */
 function checkUserExistence(phone){
+
     let username;
     let exists = false;
 
@@ -193,13 +194,15 @@ function checkUserExistence(phone){
             
             let user = snapshot.val(); // get the user
 
+
             localStorage.setItem(USER_KEY,JSON.stringify(user));
             window.location = "main_page.html"
         }
         else{
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
             // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-            window.location = "username.html"; //TODO make this a proper redirect
+            localStorage.setItem(USER_KEY,JSON.stringify(phone));
+            window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
 
         }
 

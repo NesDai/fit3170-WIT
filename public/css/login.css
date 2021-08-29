@@ -333,6 +333,18 @@ textarea:-ms-input-placeholder { color: #adadad;}
 
 }
 
+#back_btn{
+  margin-top: 50px;
+  width: 100%;
+  height: 100%;
+  background: #D2D2D2;
+  top: 0;
+  color:Black;
+  border-radius: 10px;
+  height: 50px;
+
+}
+
 
 
 
