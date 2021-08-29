@@ -435,20 +435,26 @@ function repromptQuestion() {
         type === TYPE_SHORT_TEXT ||
         type === TYPE_NUMERIC ||
         type === TYPE_NUMERIC_SUB_QUESTION ||
-        type === TYPE_LONG_TEXT) {
+        type === TYPE_LONG_TEXT||
+        type ===TYPE_MULTIPLE_CHOICE ||
+        type === TYPE_MULTIPLE_CHOICE_OTHERS ||
+        type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
         let wrongInput = input.value;
         showMessageReceiver(wrongInput);
     }
-
-    // print out the question again onto chat
-    showShortQuestionMessage(question);
 
     // print out multiple choice options if question reprompted is a MCQ
     if (type ===TYPE_MULTIPLE_CHOICE ||
         type === TYPE_MULTIPLE_CHOICE_OTHERS ||
         type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
-        showOptions(currentQuestionObject.choices);
+        showMultipleChoice(currentQuestionObject);
+    }else{
+      // print out the question again onto chat
+      showShortQuestionMessage(question);
+
     }
+
+
 }
 
 /**
@@ -609,7 +615,7 @@ function showOptions(choices) {
     mcqOptions += "</div>";
     messages.innerHTML += mcqOptions;
 
-    disableTextInput();
+
 }
 
 /**
