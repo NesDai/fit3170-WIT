@@ -462,6 +462,21 @@ function showMultipleChoice(questionObject) {
         hint: "select an option"
     };
 
+
+    input.onkeyup = () => {
+        let message = parseInt(input.value);
+        if (message > 0 && message < (questionObject.restrictions.choices.length + 1)) {
+            errorText.innerHTML = "";
+            errorText.style.visibility = "hidden";
+            submit.onclick = addMessage;
+        } else {
+            errorText.style.visibility = "visible";
+            errorText.innerHTML = "Please enter a valid choice index.";
+            submit.onclick = repromptQuestion;
+        }
+
+    }
+    enableTextInput();
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
