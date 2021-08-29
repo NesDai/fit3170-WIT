@@ -26,7 +26,7 @@ const SUB_QUESTIONS_HINTS_1_12 = [
     "placeholder"
 ];
 
-const SUB_QUESTIONS_1_13 = [ //TODO this will be the new 1.13
+const SUB_QUESTIONS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
@@ -172,12 +172,9 @@ const SUB_QUESTIONS_3_2 = [
     "Watching videos", // Qs 3.2.c
     "Using Zoom, Facetime, Skype, Google Talk, etc.", // Qs 3.2.d
     "Using COVID-19 contact tracing app (such as MySejahtera)", // Qs 3.2.e
-    // TODO Thailand will update the app name for the above question
     "Online shopping or e-commerce (such as Lazada, Shopee, etc.)", // Qs 3.2.f
-    // TODO Thailand will update the relevant app name for the above question
     "Using mobile banking/ e-wallet (such as GrabPay, BoostPay, FavePay, Touch N" +
     "Go Pay, etc.)", // Qs 3.2.g
-    // TODO Thailand will update the relevant app name for the above question
     // The question above this line is question 3.2g
 
     "Online ordering for food or groceries", // Qs 3.2.h
@@ -204,11 +201,8 @@ const SUB_QUESTIONS_HINTS_3_2 = [
     "placeholder",
     "placeholder",
     "placeholder",
-    // TODO Thailand will update the app name for the above question
     "placeholder",
-    // TODO Thailand will update the relevant app name for the above question
     "placeholder",
-    // TODO Thailand will update the relevant app name for the above question
     // The question above this line is question 3.2g
 
     "placeholder",
@@ -277,17 +271,17 @@ const SUB_QUESTIONS_4_5 = [
     // The above question is a placeholder to allow 1-indexing
     "I understand the meaning of life.", // Qs 4.5.a
     "I understand the meaning of daily life activities.", // Qs 4.5.b
-    "I find attractiveness in daily life activities.",
-    "I have confidence in daily life activities.",
-    "I have self-assurance in the performance of daily life activities.",
-    "I have confidence in newly formed daily life activities.",
-    "I have capabilities of expressing the self.",
-    "I have capabilities of selecting better alternatives.",
-    "I have capabilities of making decisions on particular problems.",
-    "I have capabilities of working together with others.",
-    "I have capabilities of building teams with others.",
-    "I have capabilities of building coalitions.",
-    "I have capabilities of solving problems with others."
+    "I find attractiveness in daily life activities.", // Qs 4.5.c
+    "I have confidence in daily life activities.", // Qs 4.5.d
+    "I have self-assurance in the performance of daily life activities.", // Qs 4.5.e
+    "I have confidence in newly formed daily life activities.", // Qs 4.5.f
+    "I have capabilities of expressing the self.", // Qs 4.5.g
+    "I have capabilities of selecting better alternatives.", // Qs 4.5.h
+    "I have capabilities of making decisions on particular problems.", // Qs 4.5.i
+    "I have capabilities of working together with others.", // Qs 4.5.j
+    "I have capabilities of building teams with others.", // Qs 4.5.k
+    "I have capabilities of building coalitions.", // Qs 4.5.l
+    "I have capabilities of solving problems with others." // Qs 4.5.m
 ];
 
 const SUB_QUESTIONS_HINTS_4_5 = [
@@ -331,7 +325,7 @@ const PART4 = [
     // The question above this line is question 4.4
 
     "How much do you agree or disagree that the following statement <b>describes you</b>? <i>(Rate from 1 to 5)</i>\n" +
-    "" // Qs 4.5
+    "[1] Strongly disagree, [2] Disagree, [3] Neutral, [4] Agree, [5] Strongly agree" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -399,12 +393,10 @@ function pushPart1Questions() {
     // Question 1.5
     let choices_1_5 = ["No income", "Less than MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
     pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED, HINTS_PART1[5]);
-    // TODO Thailand will update the THB equivalent currency
 
     // Question 1.6
     let choices_1_6 = ["No formal education", "Primary school", "Secondary/ high school", "Vocational/ technical certification", "University"];
     pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED, HINTS_PART1[6]);
-    // TODO Thailand will update the secondary/high classification
 
     // Question 1.7
     let choices_1_7 = ["Single", "Married", "Divorced", "Widowed", "Other relationship"];
