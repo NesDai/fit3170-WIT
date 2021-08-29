@@ -1136,12 +1136,13 @@ function housekeeping() {
     // 5 questions for part 4
     // 4 questions for part 5
 
-    // These are the indices where the survey part gets changed
+    // These are the indices where each survey part changes to the next one
     let startingIndex = 0;
     let indices = [14, 21, 23, 28, 32];
 
-    // Before we start slicing, insert the last item (Q1.14) 1.12
-    // to the correct spot (before Q1.15, or before index 13) 1.13
+    // Before we start slicing, insert the last item (Q1.12)
+    // to the correct spot (before Q1.13, or before index 11)
+    // This is because Q1.12 is pushed last to firebase and we need to move it's ID from last to its corresponding place
     let lastItem = questionIds[questionIds.length - 1];
     questionIds.splice(11, 0, lastItem);
 
@@ -1150,13 +1151,13 @@ function housekeeping() {
         startingIndex = endingIndex;
     }
 
-    // Print em' to the console!
+    // Print the parts and their question IDs onto the console (Copy and paste these IDs into constants.js)
     for (let i = 0; i < result.length; i++) {
         console.log(`Part ${i + 1} IDs:`);
         console.log(result[i]);
     }
 
-    // Update question 2.1 with 2.3's ID
+    // Update question 2.1's skipTarget with 2.3's ID
     firebase.firestore().collection(QUESTIONS_BRANCH).doc(question_2_1_id)
         .update({
             "restrictions.skipTarget": question_2_3_id

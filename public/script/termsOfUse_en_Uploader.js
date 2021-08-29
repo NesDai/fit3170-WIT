@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the english version of the terms of use onto the firestore
 * */
 
-export function uploadTermsOfUse_en(){
+function uploadTermsOfUse_en(){
     let contents = "<h4>AGREEMENT TO TERMS</h4>" +
         "These Terms and Conditions of Use (\"Terms of Use\") constitute a legally binding agreement made " +
         "between you, whether in your personal capacity or on behalf of an entity (\"you\") and Women-in-tech " +
@@ -12,7 +12,7 @@ export function uploadTermsOfUse_en(){
         "the Women-in-tech, you have read, understood, and agreed to be bound by all of these Terms of Use. " +
         "IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF USE, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING " +
         "WOMEN-IN-TECH AND YOU MUST DISCONTINUE USE IMMEDIATELY." +
-        "<h4></h4>" +
+        "<br><br>" +
         "Supplemental terms and conditions or documents that may be posted on the Women-in-tech platform from time " +
         "to time are hereby expressly incorporated herein by reference. We reserve the right, in our sole " +
         "discretion, to make changes or modifications to these Terms of use at any time and for any reason. " +
@@ -21,14 +21,14 @@ export function uploadTermsOfUse_en(){
         "periodically review these Terms of Use to stay informed of updates. You will be subject to, and will be " +
         "deemed to have been made aware of and to have accepted, the changes in any revised Terms of Use by your " +
         "continued use of the Women-in-tech after the date such revised Terms of use are Posted." +
-        "<h4></h4>" +
+        "<br><br>" +
         "The information provided on the Women-in-tech is not intended for distribution to or use by any person or " +
         "entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation" +
         " or which would subject us to any registration requirement within such jurisdiction or country. " +
         "Accordingly, those persons who choose to access the Women-in-tech from other locations do so on their own " +
         "initiative and are solely responsible for compliance with local laws, if and to the extent local laws are " +
         "applicable."+
-        "<h4></h4>" +
+        "<br><br>" +
         "The Women-in-tech is intended for users who are at least 18 years old. Persons below the age of 18 are not " +
         "permitted to use or register for the Women-in-tech." +
         "<h4>INTELLECTUAL PROPERTY RIGHTS</h4>" +
@@ -40,7 +40,7 @@ export function uploadTermsOfUse_en(){
         ". The Content and the Marks are provided in these Terms of Use, no part of the Women-in-tech and no Content" +
         " or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, " +
         "encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial " +
-        "purpose whatsoever, without our express prior written permission." +
+        "purpose whatsoever, without our express prior written permission.<br><br>" +
         "Provided that you are eligible to use the Women-in-tech, you are granted a limited license to access and use " +
         "the Women-in-tech and to download or print a copy of any portion of the Content to which you have properly " +
         "gained access solely for your personal, non-commercial use. We reserve all rights not expressly granted to you " +
