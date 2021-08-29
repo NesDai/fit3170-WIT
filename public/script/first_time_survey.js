@@ -118,10 +118,19 @@ function select(button) {
  * Function to add the user textbox input as a chat bot message
  */
 function addMessage() {
-    let message = input.value;
 
-    // Saving the response before clearing the input box
-    saveResponse(input.value);
+    let message = input.value;
+    let type = currentQuestionObject.type;
+    if (type ===TYPE_MULTIPLE_CHOICE ||
+        type === TYPE_MULTIPLE_CHOICE_OTHERS ||
+        type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
+        saveResponse(currentQuestionObject.restrictions.choices[message-1]);
+        }
+        else{
+          // Saving the response before clearing the input box
+          saveResponse(input.value);
+        }
+
 
     // check if the input is valid
     if (message.length > 0) {
