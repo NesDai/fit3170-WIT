@@ -95,9 +95,7 @@ const PART1 = [
 
     // The question above this line is a long question (1.13)
 
-    "How <b>satisfied</b> are you with your current life now? (Rate from 1 to 5)\n" +
-    "[1] Strongly disagree, [2] Disagree, [3] Neutral,\n" +
-    "[4] Agree, [5] Strongly Agree" // Qs 1.14
+    "How <b>satisfied</b> are you with your current life now? (Rate from 1 to 5)"// Qs 1.14
 
     // The question above this line is a long question 1.14
 ];
@@ -140,14 +138,11 @@ const PART2 = [
 
     "What is your <b>current</b> employment status?", // Qs 2.1
     "What is your <b>current</b> job/ occupation/ profession?", // Qs 2.2
-    "How <b>satisfied</b> are you in your current employment status? (Rate from 1 to 7)\n" +
-    "[1] completely dissatisfied, [2] very dissatisfied, [3] dissatisfied,\n" +
-    "[4] moderately satisfied, [5] satisfied, [6] very satisfied," +
-    " [7] extremely satisfied.", // Qs 2.3
-    "Did you lose your <b>job</b> due to the COVID-19 pandemic?", // Qs 2.3
-    "Did you lose your <b>earning income</b> due to the COVID-19 pandemic?", // Qs 2.3
-    "How confident are you in finding a <b>new job</b> in the near future?", // Qs 2.4
-    "How confident are you in being able to keep your <b>current job</b> in the near future?" // Qs 2.5
+    "How <b>satisfied</b> are you in your current employment status?", // Qs 2.3
+    "Did you lose your <b>job</b> due to the COVID-19 pandemic?", // Qs 2.4
+    "Did you lose your <b>earning income</b> due to the COVID-19 pandemic?", // Qs 2.5
+    "How confident are you in finding a <b>new job</b> in the near future?", // Qs 2.6
+    "How confident are you in being able to keep your <b>current job</b> in the near future?" // Qs 2.7
 ];
 
 const HINTS_PART2 = [
@@ -228,9 +223,7 @@ const PART3 = [
     "How do you access the Internet using your mobile phone?", // Qs 3.1
     // The question above this line is question 3.1
 
-    "How <b>confident</b> are you in <b>using your mobile phone</b> the following activites? (Rate from 0 to 5)\n" +
-    "[0] I don’t know or not applicable (N/A), [1] Not confident at all, [2] Somewhat not confident, [3] Moderately confident,\n" +
-    "[4] Somewhat confident, [5] Extremely confident." // Qs 3.2
+    "How <b>confident</b> are you in <b>using your mobile phone</b> the following activities? (Rate from 0 to 5)" // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
@@ -316,9 +309,7 @@ const PART4 = [
     // The question above this line is question 4.2
 
     "How <b>interested</b> are you to <b>learn</b> the following skills using a mobile phone?" +
-    "(Rate from 1 to 5)\n" +
-    "[1] Extremely not interested, [2] Not interested, [3] Neutral," +
-    "[4] Interested, [5] Extremely interested", // Qs 4.3
+    "(Rate from 1 to 5)", // Qs 4.3
     // The question above this line is a long question (4.3)
 
     "What <b>work-related skills</b> do you wish to learn using a mobile phone? ", // Qs 4.3
@@ -524,7 +515,7 @@ function pushPart2Questions() {
     pushShortText("2.2", PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    pushNumeric("2.3", PART2[3], 1, 7, false,
+    pushNumeric("2.3", PART2[3], 0, 5, false,
         HINTS_PART2[3]);
 
     // Question 2.4
@@ -542,14 +533,14 @@ function pushPart2Questions() {
     // Question 2.6
     let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushMultipleChoice("2.6", PART2[6], choices_2_6, [],
-        SKIP_NOT_ALLOWED, HINTS_PART2[6]);
+    pushNumeric("2.6", PART2[6], 0, 5, false,
+        HINTS_PART2[6]);
 
     // Question 2.7
     let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushMultipleChoice("2.7", PART2[7], choices_2_7, [],
-        SKIP_NOT_ALLOWED, HINTS_PART2[7]);
+    pushNumeric("2.7", PART2[7], 0, 5, false,
+        HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
@@ -873,12 +864,7 @@ function pushLongQuestion(questionNumber, questionText) {
         category: "Part IV: About your learning interest",
         type: "long-question",
         question: "How interested are you to learn the following skills" +
-            "using a mobile phone ? (Rate from 1 to 7)" +
-            "[1] extremely not interested, [2] very not interested, " +
-            "[3] not interested," +
-            "[4] moderately interested, [5] highly interested, " +
-            "[6] very interested," +
-            "[7] extremely interested",
+            "using a mobile phone ? (Rate from 1 to 7)",
         restrictions: {},
         hint: "placeholder",
         arrangement: []

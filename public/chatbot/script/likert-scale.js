@@ -46,34 +46,41 @@ function makeAgreeLikertScale() {
  */
 function makeSatisfyLikertScale() {
     document.getElementById('likert_scale').innerHTML =
+
+        `<button 
+         id = 0
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px; margin-left: 0; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(0)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>0<br> <br> Not <br> Applicable </span>
+         </button>`+
+
         `<button 
          id = 1
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Very <br> Dissatisfied </span>
+         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px; margin-left: 5px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Very <br> Dissatisfied </span>
          </button>`+
 
         `<button 
          id = 2
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br><br> Dissatisfied </span>
+         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br><br> Dissatisfied </span>
          </button>`+
 
         `<button 
          id = 3
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br><br> Neutral </span>
+         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br><br> Neutral </span>
          </button>` +
 
         `<button 
          id = 4
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br><br>Satisfied </span>
+         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br><br>Satisfied </span>
          </button>` +
 
         `<button 
          id = 5
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> Very<br> Satisfied </span>
+         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> Very<br> Satisfied </span>
          </button>`;
 
     componentHandler.upgradeDom();
@@ -84,10 +91,17 @@ function makeSatisfyLikertScale() {
  */
 function makeConfidentLikertScale() {
     document.getElementById('likert_scale').innerHTML =
+
+        `<button 
+         id = 0
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 0; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(0)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>0<br> <br> Not <br> Applicable </span>
+         </button>`+
+
         `<button 
          id = 1
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 0; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Not Confident <br> At All </span>
+         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> Not Confident <br> At All </span>
          </button>`+
 
         `<button 
@@ -112,13 +126,7 @@ function makeConfidentLikertScale() {
          id = 5
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
          style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br> <br> Extremely <br>Confident </span>
-         </button>` +
-
-        `<button 
-         id = 5
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>6<br> <br> Not <br>Applicable </span>
-         </button>`;
+         </button>`
 
     componentHandler.upgradeDom();
 }

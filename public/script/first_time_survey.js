@@ -54,8 +54,8 @@ Used for likert scale idexes of questions stored in firebase
 "very nice" - Yong Peng
  */
 let agreeLikertQues = [13, 27]; //[1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree
-let satisfyLikertQues = [16]; //[1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
-let confidentLikertQues = [19,20,22]; //[1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident [6] Not Applicable
+let satisfyLikertQues = [16]; //[0] Not Applicable [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
+let confidentLikertQues = [19,20,22]; //[0] Not Applicable [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident
 let interestedLikertQues = [25] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
 
 /**
