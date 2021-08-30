@@ -197,7 +197,6 @@ function nextQuestion() {
     } else { //  else end the survey
         showEndingMessage();
     }
-    // updateProgress();
 }
 
 /**
@@ -208,8 +207,9 @@ function showEndingMessage() {
         "right now. You can either continue answerng questions, or" +
         " browse the rest of the application!"
     showMessageSenderWithoutHints(endingMessage);
-    scrollToBottom();
+    questionIndex = QUESTION_IDS[branch_id].length;
     updateProgress();
+    scrollToBottom();
 }
 
 /**
@@ -221,7 +221,7 @@ function showMessageSender(message) {
     // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div id='" + questionIndex + "' class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current'>" +
         `<p>${message}</p>` +
         `<button
          id = ${hintIndex}
@@ -243,7 +243,7 @@ function showMessageSender(message) {
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div id='" + questionIndex + "' class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
@@ -258,7 +258,7 @@ function showMessageSenderWithoutHints(message) {
 function showShortQuestionMessage(questionString) {
     document.getElementById("messages").innerHTML +=
         "<div class='space'>" +
-        "<div id='" + questionIndex + "' class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current'>" +
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
         `<button
@@ -293,7 +293,7 @@ function showQuestion(isSubQuestion) {
 
     // Get the ID of the current question
     let question_id = "";
-
+    
     // check if the current question is a sub-question
     if (isSubQuestion) {
         // get the firebase ID of the sub-question
@@ -313,7 +313,6 @@ function showQuestion(isSubQuestion) {
             let questionObject = docRef.data();
             let questionType = questionObject.type;
 
-            console.log(questionObject);
             currentQuestionObject = questionObject;
 
             // checking the type of the question to assign the appropriate function to display it
@@ -361,9 +360,9 @@ function showQuestion(isSubQuestion) {
                     console.log(errorLog);
             }
 
+            updateProgress();
             // Scroll the chat box window to the correct position
             scrollToBottom();
-            updateProgress();
         });
 }
 
@@ -461,10 +460,9 @@ function repromptQuestion() {
     }else{
       // print out the question again onto chat
       showShortQuestionMessage(question);
-
     }
-
-
+    updateProgress();
+    scrollToBottom();
 }
 
 /**
@@ -685,7 +683,7 @@ function endSurvey() {
  * To be used by text-based survey questions ONLY
  */
 function endSurveyText() {
-    showMessageSender(input.value);
+    showMessageReceiver(input.value);
     questionIndex = QUESTION_IDS[branch_id].length;
     errorText.style.visibility = "hidden";
     nextQuestion();

@@ -240,6 +240,7 @@ function resumeSurvey(button) {
 
                 showShortQuestionMessage(question);
                 showMessageReceiver(answer);
+                updateProgress();
             });
 
         })
