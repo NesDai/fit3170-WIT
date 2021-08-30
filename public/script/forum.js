@@ -76,11 +76,15 @@ function makeNewPost() {
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
         // let key = myRef.key; // generate a key for post id
-        let embedding_video_url = checkEmbeddingVideo(video_url);
 
-        if (embedding_video_url == 0) {
-            alert("Error in embedding the video. Please try again with a correct url from Youtube.");
-            return;
+        let embedding_video_url = 0 
+        if (video_url !== "") {
+            embedding_video_url = checkEmbeddingVideo(video_url);
+            if (embedding_video_url == 0) {
+                alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+                return;
+            }
+
         }
 
         let newData = {
