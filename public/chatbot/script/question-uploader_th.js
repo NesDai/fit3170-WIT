@@ -98,33 +98,33 @@ const PART1 = [
     // The question above this line is a long question 1.14
 ];
 
-// TODO Fill in tooltips
 const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "Enter a Number",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Enter a Number",
+    "Enter a Number",
 
     // The question above this line is question 1.10
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
+
+    "Enter a Number",
+    "Select an Option",
+    "Select an Option",
     // The question above this line is a long question (1.14)
 
-    "placeholder",
-    // The question above this line is a long question (1.15)
+    "Select an Option",
+    // The question above this line is a long question (1.14)
 
-    "placeholder"
-    // The question above this line is a long question (1.16)
+    "Select an Option"
+    // The question above this line is a long question (1.14)
 ];
 
 const PART2 = [
@@ -134,10 +134,10 @@ const PART2 = [
     "", // Qs 2.1
     "", // Qs 2.2
     "", // Qs 2.3
-    "", // Qs 2.3
-    "", // Qs 2.3
     "", // Qs 2.4
-    "" // Qs 2.5
+    "", // Qs 2.5
+    "", // Qs 2.6
+    "" // Qs 2.7
 ];
 
 const HINTS_PART2 = [
@@ -496,8 +496,7 @@ function pushPart2Questions() {
     pushShortText("2.2", PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    pushNumeric("2.3", PART2[3], 1, 7, false,
-        HINTS_PART2[3]);
+    pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
     let choices_2_4 = ["Yes", "No", "Not applicable"];
@@ -513,11 +512,11 @@ function pushPart2Questions() {
 
     // Question 2.6
     let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushMultipleChoice("2.6", PART2[6], choices_2_6, [], SKIP_NOT_ALLOWED, HINTS_PART2[6]);
+    pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
     let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushMultipleChoice("2.7", PART2[7], choices_2_7, [], SKIP_NOT_ALLOWED, HINTS_PART2[7]);
+    pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
@@ -591,7 +590,7 @@ function pushPart4Questions() {
     });
 
     // Question 4.4
-    pushShortText("4.4", PART4[4], HINTS_PART4[4]);
+    pushLongText("4.4", PART4[4], HINTS_PART4[4]);
 
     // Question 4.5
     pushLongQuestion("4.5", PART4[5]).then((docRef) => {

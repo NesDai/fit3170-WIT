@@ -81,11 +81,9 @@ const PART1 = [
     "How many <b>children</b> have you <b>raised</b>?", // Qs 1.8
     "How many <b>children</b> do you <b>talk or correspond</b> with weekly?", // Qs 1.9
 
-
     // The question above this line is question 1.9
 
-
-    "How many other <b>relatives</b> do you feel close to? (enter a number)", // Qs 1.10
+    "How many other <b>relatives</b> do you feel close to?", // Qs 1.10
     "How many <b>close friends</b> do you have?", // Qs 1.11
     "What is your independent living status?", // Qs 1.12
 
@@ -100,7 +98,6 @@ const PART1 = [
     // The question above this line is a long question 1.14
 ];
 
-// TODO Fill in tooltips
 const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
@@ -115,13 +112,11 @@ const HINTS_PART1 = [
     "Enter a Number",
     "Enter a Number",
 
-
     // The question above this line is question 1.10
 
 
     "Enter a Number",
     "Select an Option",
-
     "Select an Option",
     // The question above this line is a long question (1.14)
 
@@ -515,8 +510,7 @@ function pushPart2Questions() {
     pushShortText("2.2", PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    pushNumeric("2.3", PART2[3], 0, 5, false,
-        HINTS_PART2[3]);
+    pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
     let choices_2_4 = ["Yes", "No", "Not applicable"];
@@ -533,14 +527,12 @@ function pushPart2Questions() {
     // Question 2.6
     let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushNumeric("2.6", PART2[6], 0, 5, false,
-        HINTS_PART2[6]);
+    pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
     let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident",
         "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushNumeric("2.7", PART2[7], 0, 5, false,
-        HINTS_PART2[7]);
+    pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
@@ -614,7 +606,7 @@ function pushPart4Questions() {
     });
 
     // Question 4.4
-    pushShortText("4.4", PART4[4], HINTS_PART4[4]);
+    pushLongText("4.4", PART4[4], HINTS_PART4[4]);
 
     // Question 4.5
     pushLongQuestion("4.5", PART4[5]).then((docRef) => {

@@ -9,10 +9,10 @@ const SUB_QUESTIONS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.12.1
-    "", // Qs 1.12.2
-    "", // Qs 1.12.3
-    "" // Qs 1.12.4
+    "和其他人同居", // Qs 1.12.1
+    "独居", // Qs 1.12.2
+    "在老年护理机构和其他人同居", // Qs 1.12.3
+    "在老年护理机构独居" // Qs 1.12.4
 ];
 
 // TODO Fill in tooltips
@@ -30,14 +30,14 @@ const SUB_QUESTIONS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.13.a
-    "", // Qs 1.13.b
-    "", // Qs 1.13.c
-    "" // Qs l.13.d
+    "依赖他人来满足<b>我的需要。</b>", // Qs 1.13.a
+    "无法得到<b>医疗。</b>", // Qs 1.13.b
+    "没钱买<b>生活用品</b>。", // Qs 1.13.c
+    "无法支付<b>至少一张</b>账单。" // Qs l.13.d
 ];
 
 // TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_15 = [
+const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
@@ -51,9 +51,9 @@ const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.14.a
-    "", // Qs 1.14.b
-    "" // Qs 1.14.c
+    "总的来说，我的生活很理想。", // Qs 1.14.a
+    "我现在的生活状态很好。", // Qs 1.14.b
+    "我对我的生活感到满意。" // Qs 1.14.c
 ];
 
 // TODO Fill in tooltips
@@ -71,73 +71,73 @@ const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.1
-    "", // Qs 1.2
-    "", // Qs 1.3
-    "", // Qs 1.4
-    "", // Qs 1.5
-    "", // Qs 1.6
-    "", // Qs 1.7
-    "", // Qs 1.8
-    "", // Qs 1.9
+    "您的<b>年龄</b>是几岁？", // Qs 1.1
+    "您的<b>性别</b>是?", // Qs 1.2
+    "您的<b>种族</b>是？", // Qs 1.3
+    "您<b>现在</b>住在哪里？", // Qs 1.4
+    "您每月的平均家庭<b>净收入</b>是多少？", // Qs 1.5
+    "您完成的最高<b>教育程度</b>是？", // Qs 1.6
+    "您的<b>婚姻状况</b>为？", // Qs 1.7
+    "您<b>养育</b>了几名孩子？", // Qs 1.8
+    "您每周与几个<b>孩子交谈或通信</b>？", // Qs 1.9
 
     // The question above this line is question 1.9
 
-    "", // Qs 1.10
-    "", // Qs 1.11
-    "", // Qs 1.12
+    "您与几个<b>亲戚</b>比较亲近？", // Qs 1.10
+    "您有多少个<b>关系好的朋友</b>？", // Qs 1.11
+    "您的生活状态是？", // Qs 1.12
 
     // The question above this line is a long question 1.12
 
-    "", // Qs 13
+    "在过去的 6 个月中，您是否经历过以下情况？", // Qs 13
 
     // The question above this line is a long question (1.13)
 
-    "" // Qs 1.14
+    "您对现在的生活<b>满意</b>吗？ （等级从 1 到 5）"// Qs 1.14
 
     // The question above this line is a long question 1.14
 ];
 
-// TODO Fill in tooltips
 const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "请输入数字",
+    "选择一个选项", // Select an Option (needs translation confirmation)
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项", // Select an Option (needs translation confirmation)
+    "请输入数字",
+    "请输入数字",
 
     // The question above this line is question 1.10
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
+
+    "请输入数字",
+    "选择一个选项",// Select an Option (needs translation confirmation)
+    "选择一个选项",
     // The question above this line is a long question (1.14)
 
-    "placeholder",
-    // The question above this line is a long question (1.15)
+    "选择一个选项",
+    // The question above this line is a long question (1.14)
 
-    "placeholder"
-    // The question above this line is a long question (1.16)
+    "选择一个选项"// Select an Option (needs translation confirmation)
+    // The question above this line is a long question (1.14)
 ];
 
 const PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 2.1
-    "", // Qs 2.2
-    "", // Qs 2.3
-    "", // Qs 2.3
-    "", // Qs 2.3
-    "", // Qs 2.4
-    "" // Qs 2.5
+    "您<b>目前</b>的就业状况如何？", // Qs 2.1
+    "您<b>目前</b>的工作/职业/专业是什么？", // Qs 2.2
+    "您对目前的就业状况<b>满意</b>吗？ （等级从 1 到 5）", // Qs 2.3
+    "由于COVID-19大流行您失去了<b>工作</b>？", // Qs 2.4
+    "您是否因 COVID-19 大流行而失去了<b>收入</b>？", // Qs 2.5
+    "您对在不久的将来找到<b>新工作</b>的信心如何？", // Qs 2.6
+    "您对能够在不久的将来保住<b>目前的工作</b>有多大信心？" // Qs 2.7
 ];
 
 const HINTS_PART2 = [
@@ -157,28 +157,28 @@ const SUB_QUESTIONS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 3.2.a
-    "", // Qs 3.2.b
-    "", // Qs 3.2.c
-    "", // Qs 3.2.d
-    "", // Qs 3.2.e
-    "", // Qs 3.2.f
-    "", // Qs 3.2.g
+    "短信、短信（如 Whatsapp、微信等)", // Qs 3.2.a
+    "浏览/浏览网站", // Qs 3.2.b
+    "观看影片", // Qs 3.2.c
+    "使用 Zoom、Facetime、Skype、Google Talk 等。", // Qs 3.2.d
+    "使用 COVID-19 联系人追踪应用程序（例如 MySejahtera）", // Qs 3.2.e
+    "网上购物或电子商务（如 Lazada、Shopee 等）", // Qs 3.2.f
+    "使用手机银行/电子钱包（例如 GrabPay、BoostPay、FavePay、Touch N Go Pay 等）", // Qs 3.2.g
     // The question above this line is question 3.2g
 
-    "", // Qs 3.2.h
-    "", // Qs 3.2.i
-    "", // Qs 3.2.j
-    "", // Qs 3.2.k
-    "", // Qs 3.2.l
-    "", // Qs 3.2.m
-    "", // Qs 3.2.n
-    "", // Qs 3.2.o
+    "在线订购食品或杂货", // Qs 3.2.h
+    "使用社交网络（如 Facebook、Instagram、Twitter 等）", // Qs 3.2.i
+    "拍照 ", // Qs 3.2.j
+    "地图导航器（如 Google Map、Waze、Tom-Tom 等）", // Qs 3.2.k
+    "在我的日历上管理我的约会", // Qs 3.2.l
+    "阅读在线新闻或在线杂志", // Qs 3.2.m
+    "记下我需要做的笔记（例如购物清单或任务)", // Qs 3.2.n
+    "拍摄影片", // Qs 3.2.o
     // The question above this line is question 3.2o
 
-    "", // Qs 3.2.p
-    "", // Qs 3.2.q
-    "" // Qs 3.2.r
+    "听音乐", // Qs 3.2.p
+    "玩游戏", // Qs 3.2.q
+    "用于联系政府当局" // Qs 3.2.r
 ];
 
 const SUB_QUESTIONS_HINTS_3_2 = [
@@ -214,10 +214,10 @@ const PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 3.1
+    "您如何使用手机使用互联网？", // Qs 3.1
     // The question above this line is question 3.1
 
-    "" // Qs 3.2
+    "您的<b>手机使用状况</b>是？(等级从 1 到 5)" // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
@@ -237,10 +237,10 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 4.3.a
-    "", // Qs 4.3.b
-    "", // Qs 4.3.c
-    "" // Qs 4.3.d
+    "ICT/技术技能（例如如何使用手机或电脑软件）", // Qs 4.3.a
+    "社交沟通技巧（例如如何改善人际关系或与他人互动）", // Qs 4.3.b
+    "辅助技能（例如学习与工作无关的技能或爱好） ", // Qs 4.3.c
+    "与工作相关的技能（例如如何提高工作/企业生产力）" // Qs 4.3.d
 ];
 
 const SUB_QUESTIONS_HINTS_4_3 = [
@@ -255,19 +255,19 @@ const SUB_QUESTIONS_HINTS_4_3 = [
 const SUB_QUESTIONS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "", // Qs 4.5.a
-    "", // Qs 4.5.b
-    "", // Qs 4.5.c
-    "", // Qs 4.5.d
-    "", // Qs 4.5.e
-    "", // Qs 4.5.f
-    "", // Qs 4.5.g
-    "", // Qs 4.5.h
-    "", // Qs 4.5.i
-    "", // Qs 4.5.j
-    "", // Qs 4.5.k
-    "", // Qs 4.5.l
-    "" // Qs 4.5.m
+    "我明白生命的意义。", // Qs 4.5.a
+    "我了解日常生活活动的意义。", // Qs 4.5.b
+    "我觉得生活很精彩。", // Qs 4.5.c
+    "我对日常生活活动有信心。", // Qs 4.5.d
+    "我心态很好。", // Qs 4.5.e
+    "我对新的日常活动有信心。", // Qs 4.5.f
+    "我有表达自我的能力", // Qs 4.5.g
+    "我有能力选择更好的替代品。", // Qs 4.5.h
+    "我有能力对特定问题做出决定。", // Qs 4.5.i
+    "我有与他人合作的能力。", // Qs 4.5.j
+    "我有能力与他人建立团队。", // Qs 4.5.k
+    "我有建立朋友交往的能力。", // Qs 4.5.l
+    "我有与他人一起解决问题的能力。" // Qs 4.5.m
 ];
 
 const SUB_QUESTIONS_HINTS_4_5 = [
@@ -292,18 +292,18 @@ const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 4.1
+    "您尝试使用手机学习新的或有用的东西的<b>频率</b>如何？(等级从 1 到 7)", // Qs 4.1
 
-    "", // Qs 4.2
+    "您<b>每周花多少小时</b>用手机学习新的或有用的东西？（请输入数字）", // Qs 4.2
     // The question above this line is question 4.2
 
-    "", // Qs 4.3
+    "您对<b>使用手机学习</b>以下技能的<b>兴趣</b>如何？(等级从 1 到 5)", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "", // Qs 4.4
+    "您希望通过手机学习哪些<b>与工作相关的技能</b>？", // Qs 4.4
     // The question above this line is question 4.4
 
-    "" // Qs 4.5
+    "您在多大程度上同意或不同意以下陈述<b>对您的描述</b>？(等级从 1 到 5)" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -325,10 +325,10 @@ const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 5.1
-    "", // Qs 5.2
-    "", // Qs 5.3
-    "" // Qs 5.4
+    "您为什么对使用手机学习感兴趣？", // Qs 5.1
+    "您希望拥有哪些使用手机学习的资源？", // Qs 5.2
+    "到目前为止，使用手机学习最令人沮丧的事情是什么？", // Qs 5.3
+    "告诉我们您在工作中遇到的问题或挑战。" // Qs 5.4
 ]
 
 const HINTS_PART5 = [
@@ -355,8 +355,8 @@ function pushPart1Questions() {
     pushNumeric("1.1", PART1[1], 50, 100, true, HINTS_PART1[1]);
 
     // Question 1.2
-    let choices_1_2 = ["Male", "Female"]
-    let skip_choices_1_2 = ["Male"];
+    let choices_1_2 = ["男性", "女性"]
+    let skip_choices_1_2 = ["男性"];
     pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2, SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
@@ -438,22 +438,22 @@ function pushPart1Questions() {
         let choices_1_13 = ["Yes", "No"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[1]);
+            SUB_QUESTIONS_HINTS_1_13[1]);
 
         // Question 1.13b
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[2],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[2]);
+            SUB_QUESTIONS_HINTS_1_13[2]);
 
         // Question 1.13c
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[3],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[3]);
+            SUB_QUESTIONS_HINTS_1_13[3]);
 
         // Question 1.13d
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[4],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[4]);
+            SUB_QUESTIONS_HINTS_1_13[4]);
     });
 
     // Question 1.14
@@ -496,8 +496,7 @@ function pushPart2Questions() {
     pushShortText("2.2", PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    pushNumeric("2.3", PART2[3], 1, 7, false,
-        HINTS_PART2[3]);
+    pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
     let choices_2_4 = ["Yes", "No", "Not applicable"];
@@ -513,11 +512,11 @@ function pushPart2Questions() {
 
     // Question 2.6
     let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushMultipleChoice("2.6", PART2[6], choices_2_6, [], SKIP_NOT_ALLOWED, HINTS_PART2[6]);
+    pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
     let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
-    pushMultipleChoice("2.7", PART2[7], choices_2_7, [], SKIP_NOT_ALLOWED, HINTS_PART2[7]);
+    pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
@@ -591,7 +590,7 @@ function pushPart4Questions() {
     });
 
     // Question 4.4
-    pushShortText("4.4", PART4[4], HINTS_PART4[4]);
+    pushLongText("4.4", PART4[4], HINTS_PART4[4]);
 
     // Question 4.5
     pushLongQuestion("4.5", PART4[5]).then((docRef) => {
