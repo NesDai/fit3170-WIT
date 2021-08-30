@@ -71,22 +71,22 @@ const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What is your <b>age</b> in years? (enter a number)", // Qs 1.1
+    "What is your <b>age</b> in years?", // Qs 1.1
     "What is your <b>gender</b>?", // Qs 1.2
     "What is your <b>ethnic</b> group?", // Qs 1.3
     "Where do you <b>currently</b> live?", // Qs 1.4
     "What is your average <b>net household income</b> per month?", // Qs 1.5
     "What is your completed highest <b>education</b> level?", // Qs 1.6
     "What is your <b>marital status</b>?", // Qs 1.7
-    "How many <b>children</b> have you <b>raised</b>? (enter a number)", // Qs 1.8
-    "How many <b>children</b> do you <b>talk or correspond</b> with weekly? (enter a number)", // Qs 1.9
+    "How many <b>children</b> have you <b>raised</b>?", // Qs 1.8
+    "How many <b>children</b> do you <b>talk or correspond</b> with weekly?", // Qs 1.9
 
 
     // The question above this line is question 1.9
 
 
     "How many other <b>relatives</b> do you feel close to? (enter a number)", // Qs 1.10
-    "How many <b>close friends</b> do you have? (enter a number)", // Qs 1.11
+    "How many <b>close friends</b> do you have?", // Qs 1.11
     "What is your independent living status?", // Qs 1.12
 
     // The question above this line is a long question 1.12
@@ -105,31 +105,31 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "Enter a Number",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Enter a Number",
+    "Enter a Number",
 
 
     // The question above this line is question 1.10
 
 
-    "placeholder",
-    "placeholder",
+    "Enter a Number",
+    "Select an Option",
 
-    "placeholder",
+    "Select an Option",
     // The question above this line is a long question (1.14)
 
-    "placeholder",
-    // The question above this line is a long question (1.15)
+    "Select an Option",
+    // The question above this line is a long question (1.14)
 
-    "placeholder"
-    // The question above this line is a long question (1.16)
+    "Select an Option"
+    // The question above this line is a long question (1.14)
 ];
 
 const PART2 = [
@@ -662,13 +662,13 @@ function pushNumeric(questionNumber, questionText, lowerRange, upperRange, skipI
         question_number: "1.1",
         category: "Part I: About yourself",
         type: "numeric",
-        question: "What is your age in years? (enter a number)",
+        question: "What is your age in years?",
         restrictions: {
             lowerRange: 50,
             upperRange: 100,
             skipIfInvalid: true
         },
-        hint: "placeholder"
+        hint: "Enter a Number"
     };
 
     let questionObject = {

@@ -113,7 +113,7 @@ function makeConfidentLikertScale() {
         `<button 
          id = 3
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br> <br> Moderately <br>Confident </span>
+         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br> <br> Moderately <br>Confident </span>
          </button>` +
 
         `<button 

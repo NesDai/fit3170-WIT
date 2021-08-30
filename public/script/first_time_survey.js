@@ -7,7 +7,6 @@ let textBoxInput = document.getElementById("message");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
-let hintIndex = 0;
 let messageHistoryColour = 'white';
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
@@ -169,7 +168,6 @@ function addMessage() {
  */
 function nextQuestion() {
     console.log("nextQuestion() is called.")
-
     // check if currentQuestionObject is null
     if (currentQuestionObject === null) {
         // The user is answering its first survey question
@@ -206,7 +204,6 @@ function showEndingMessage() {
     let endingMessage = "That's all the questions we have for you " +
         "right now. You can either continue answerng questions, or" +
         " browse the rest of the application!"
-    showMessageSenderWithoutHints(endingMessage);
     questionIndex = QUESTION_IDS[branch_id].length;
     updateProgress();
     scrollToBottom();
@@ -223,30 +220,9 @@ function showMessageSender(message) {
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>${message}</p>` +
-        `<button
-         id = ${hintIndex}
-         type="button"
-         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
-         </button>`+
-        "<div style='display: inline-block;'>" +
-        `<p id='hintTxt${hintIndex}'style='margin-left: 1em;'></p>` +
-        "</div>" +
         "</div>" +
         "</div>";
-    hintIndex++;
-}
-
-/**
- * display a question from chatbot without any hint
- * @param message
- */
-function showMessageSenderWithoutHints(message) {
-    messages.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>";
+    showHints();
 }
 
 /**
@@ -261,17 +237,9 @@ function showShortQuestionMessage(questionString) {
         "<div class='message-container sender blue current'>" +
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
-        `<button
-         id =${hintIndex}
-         type="button"
-         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
-         </button>`+
-        "<div style='display: inline-block;'>" +
-        `<p id='hintTxt${hintIndex}'style='margin-left: 1em;'></p>` +
-        "</div>" +
         "</div>" +
         "</div>";
-    hintIndex++;
+    showHints();
 }
 
 /**
@@ -630,8 +598,7 @@ function showOptions(choices) {
  * @param hintId
  */
 function showHints(hintId) {
-    document.getElementById('hintTxt' + hintId).innerHTML = currentQuestionObject.hint;
-    console.log('hintTxt' + hintId);
+    document.getElementById('hint_area').innerHTML = currentQuestionObject.hint;
 }
 
 /**
