@@ -183,7 +183,6 @@ function printAllPosts(){
         }).then(()=>{
             for(let i=data_list.length-1; i>=0 ; i--){
                 let post = data_list[i]
-
                 field.innerHTML = field.innerHTML + 
                 `   <div style="padding-top: 20px;">
                         <span class="post_card">
@@ -259,7 +258,7 @@ function printUserPosts(){
                     for(let i=data_list.length-1; i>=0 ; i--){
                         let post = data_list[i]
 
-                        field.innerHTML +=
+                        field.innerHTML = field.innerHTML + 
                         `   <div style="padding-top: 20px;"><span class="post_card">
                             <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                                <!-- POST HEADER -->
@@ -277,7 +276,13 @@ function printUserPosts(){
                                <form class="post_content" style="margin:0 10px; background-color: white">
                                   <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
                                   <br>
+                                  `
+                                  + 
+                                  `
                                   ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  `
+                                  +
+                                  `
                                   <br>
                                   <div style='inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
