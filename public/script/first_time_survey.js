@@ -204,6 +204,7 @@ function showEndingMessage() {
     let endingMessage = "That's all the questions we have for you " +
         "right now. You can either continue answerng questions, or" +
         " browse the rest of the application!"
+    showMessageSenderWithoutHints(endingMessage);
     questionIndex = QUESTION_IDS[branch_id].length;
     updateProgress();
     scrollToBottom();
@@ -223,6 +224,20 @@ function showMessageSender(message) {
         "</div>" +
         "</div>";
     showHints();
+}
+
+/**
+ * display a question from chatbot without any hint
+ * @param message
+ */
+function showMessageSenderWithoutHints(message) {
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>${message}</p>` +
+        "</div>" +
+        "</div>";
+    document.getElementById('hint_area').innerHTML = "";
 }
 
 /**

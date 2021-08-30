@@ -20,10 +20,10 @@ const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option"
 ];
 
 const SUB_QUESTIONS_1_13 = [
@@ -41,10 +41,10 @@ const SUB_QUESTIONS_HINTS_1_15 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option"
 ];
 
 const SUB_QUESTIONS_1_14 = [
@@ -61,10 +61,10 @@ const SUB_QUESTIONS_HINTS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option"
 ];
 
 const PART1 = [
@@ -144,13 +144,13 @@ const HINTS_PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Select an Option",
+    "Type in a Resonse",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option"
 ];
 
 const SUB_QUESTIONS_3_2 = [
@@ -186,29 +186,29 @@ const SUB_QUESTIONS_HINTS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
     // The question above this line is question 3.2g
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
     // The question above this line is question 3.2p
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
 ];
 
 const PART3 = [
@@ -226,7 +226,7 @@ const HINTS_PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
+    "Select an Option",
     // The question above this line is question 3.1
 
     ""
@@ -248,10 +248,10 @@ const SUB_QUESTIONS_4_3 = [
 const SUB_QUESTIONS_HINTS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option"
 ];
 
 const SUB_QUESTIONS_4_5 = [
@@ -275,19 +275,19 @@ const SUB_QUESTIONS_4_5 = [
 const SUB_QUESTIONS_HINTS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option"
 ];
 
 const PART4 = [
@@ -300,7 +300,7 @@ const PART4 = [
     "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day", // Qs 4.1
 
     "How many <b>hours per week</b> do you devote to learning something new or useful" +
-    " using a mobile phone? (enter a number)", // Qs 4.2
+    " using a mobile phone?", // Qs 4.2
     // The question above this line is question 4.2
 
     "How <b>interested</b> are you to <b>learn</b> the following skills using a mobile phone?" +
@@ -319,14 +319,14 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
+    "Enter a Number",
+    "Enter a Number",
     // The question above this line is question 4.2
 
     "",
     // The question above this line is a long question (4.3)
 
-    "placeholder",
+    "Select an Option",
 ]
 
 const PART5 = [
@@ -344,10 +344,10 @@ const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Type in a Response",
+    "Type in a Response",
+    "Type in a Response",
+    "Type in a Response"
 ]
 
 // TODO 2.6 and 2.7 - Likert Scale
