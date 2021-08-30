@@ -161,6 +161,8 @@ function codeverify() {
 
     coderesult.confirm(code).then((result)=> {
         const user = result.user
+        document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
+
 
         //check if this user is already registered
         // checkUserExistence(document.getElementById("number").value);
@@ -173,6 +175,9 @@ function codeverify() {
         recaptchaVerifier.reset();
         document.getElementById("input-pin").innerHTML = "Invalid PIN entered. Please resend a new pin and retry.";
         document.getElementById("input-pin").style.color = "red";
+        //delete created user
+
+        firebase.database().ref(`users/${document.getElementById("number").value}`).remove();
     });
 }
 
@@ -201,7 +206,12 @@ function checkUserExistence(phone){
         else{
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
             // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-            localStorage.setItem(USER_KEY,JSON.stringify(phone));
+            let user = {
+                username: "notset",
+                phone: phone
+
+            }
+            localStorage.setItem(USER_KEY,JSON.stringify(user));
             window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
 
         }
@@ -249,40 +259,34 @@ firebase.auth().onAuthStateChanged(function(user){
 
   // CODE RELATED TO REGISTRATION
 
-  function register(username,phone){
+    function register(username,phone){
     //retrieve phone from local storage
 
-    
-    firebase.database().ref(`users/${phone}`).once("value", snapshot => {
-
-        if (snapshot.exists()){
-            document.getElementById("error_username").innerHTML = "This phone number already exists. Please try to login"
-            return;
-        }
-
-     }).then(()=>{
-
-        firebase.database().ref(`users/${phone}`).set({
-            username: username,
-            phone: phone
-          });
+        makeNewUser(phone, username);
     
         //set logged in user into local storage
-        let user = JSON.parse(localStorage.getItem(USER_KEY));
-        user["username"] = username;
-        localStorage.setItem(USER_KEY,JSON.stringify(user));
+        let user = {
+            username: username,
+            phone: phone
+        };
+
+        firebase.database().ref('users').orderByChild('phone')
+        .equalTo(phone).once('value', data => {
+
+            // If username exists, output an error
+            user = data.val();
     
-    
-        // //let the user know everything went fine
-        document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
-        //todo Redirect to the main page
-        setInterval(function(){ 
-            window.location = "main_page.html"
-        }, 2000); //2 seconds
 
-     })
+            localStorage.setItem(USER_KEY,JSON.stringify(user));
 
+        
 
+            
+  
+
+        })
+ 
+        codeverify();
 
 }
 
@@ -341,7 +345,7 @@ function checkUsernameValidity(){
             document.getElementById("error_username").innerHTML = "";
             //if valid, register the user
 
-            register(username, JSON.parse(localStorage.getItem(USER_KEY))["phoneNumber"])
+            register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
         }
 
 
