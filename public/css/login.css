@@ -111,10 +111,21 @@ textarea:-ms-input-placeholder { color: #adadad;}
   /* bring your own prefixes */
   transform: translate(-45%, -25%);
 }
+
 #login {
   margin-top: 15px;
   margin-left: 250px;
   grid-area: login;
+}
+#signup {
+  margin-top: 0px;
+  margin-left: 250px;
+  position: relative; 
+
+  /* bring your own prefixes */
+  transform: translate(-10%, -10%);
+
+  
 }
 
 #content1 {
@@ -311,6 +322,7 @@ textarea:-ms-input-placeholder { color: #adadad;}
     transform: translate(-50%, -50%);
 
 }
+
 #content1 {
   display: grid;
   height: 700px;
@@ -329,8 +341,19 @@ textarea:-ms-input-placeholder { color: #adadad;}
   transform: translate(-75%, -55%);
 }
 
+#signup{
+  position: relative;
+  transform: translate(0%, -20%);
+}
 
 
+
+
+
+}
+
+#recaptcha-container{
+  line-height: -100px;
 }
 
 #back_btn{
@@ -344,8 +367,6 @@ textarea:-ms-input-placeholder { color: #adadad;}
   height: 50px;
 
 }
-
-
 
 
 
