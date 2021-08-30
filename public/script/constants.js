@@ -51,9 +51,19 @@ const PART_TITLE = [
     "Part 4: About your learning engagement"
 ]
 
-// The path for storing/retrieving questions from
+// The paths for storing/retrieving questions from
 // the Firebase Firestore Database
 const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
+const QUESTIONS_BRANCHES = ["chatbot/survey_questions/questions_en/",
+    "chatbot/survey_questions/questions_zh_CN/",
+    "chatbot/survey_questions/questions_ms/",
+    "chatbot/survey_questions/questions_th/"]; // english, chinese, malay, thai
+
+// Index for access of each language branches
+const EN_INDEX = 0;
+const ZH_CN_INDEX = 1;
+const MS_INDEX = 2;
+const TH_INDEX = 3;
 
 // The time it takes for the chat bot to output
 // a chat bubble (in milliseconds)
@@ -63,9 +73,60 @@ const MESSAGE_OUTPUT_DELAY = 2000;
 // text question responses
 const SHORT_TEXT_LENGTH = 50;
 
+// list of Questions IDs for each language translation
+const QUESTION_IDS_EN = [
+    // Part 1
+    "1dt5vNIdDV6WS8Wd5hhU",
+    "UKHjnLKi0AiAr4i2NIZR",
+    "QdzETx8jbANwzQH6ExQK",
+    "bCMihmGQFaAx2f1u3zEn",
+    "cfwjGGK1wa3pWH6CoBMT",
+    "9ObGoD0GjCX6H8RDaAHT",
+    "ryss7rTzC5j6fAIu1fHY",
+    "uFeFhRkAhsdrM0Nj0Slu",
+    "w0vLfxyLcX962XjKmNdo",
+    "lEIy3QHqgVbZ11fWdCfB",
+    "6JxKtrk2CxS3HEL876E7",
+    "JMYoU0jNB4MbgJh7pyfS",
+    "NBgKgFhzdRhAGq0NAx4K",
+    "IM4AOPEqIddvVnz4DQ0v",
+
+    // Part 2
+    "KJqSmJiCjKGm8mJvfTps",
+    "OA10XHh5OxrkoF4rU6Og",
+    "uj1UkXuvAUl00BpwrcY2",
+    "apHxMXpW2pZiTkQQ2tqP",
+    "9StOFk9lSyj3yljXUH64",
+    "9nF2zFTJCvmKcwPff1uA",
+    "gzCE6IxYVo8MnaOEdFTB",
+
+    // Part 3
+    "tAWQp2892S3HvWj02eLP",
+    "srGfnhTKEE5psygufCoR",
+
+    // Part 4
+    "EWzn63MaKmMz0huFZu5G",
+    "IxQqTRGyF0dZInHza1y3",
+    "Xc45gvWhFMEchFU4ojbh",
+    "Y78FcQh9pa9K8vdDSx24",
+    "X6CBzwXnK2cmXMPKtRZ0",
+
+    // Part 5
+    "KCRkRMiBwblPymEIVbvB",
+    "SMzF3MTuTqvfIdyBqXuo",
+    "VOulp3vklhIz75p0EIHw",
+    "B50PZVaOysWklquuF7w3"
+];
+
+const QUESTION_IDS_ZH_CN = [];
+
+const QUESTION_IDS_MS = [];
+
+const QUESTION_IDS_TH = [];
+
 // A list of IDs of question objects that are stored in
 // the Firestore Database
-const QUESTION_IDS = [
+/*const QUESTION_IDS = [
     "9XWi28mXWRKj2Ep1eorE",
     "qJK6vwfA3VBsCP3SxiZ2",
     "VZNbbdQulmXV6eMp8LbI",
@@ -107,7 +168,14 @@ const QUESTION_IDS = [
     "6nNTBhgUmSisSVDH9dEa",
     "FYlnoJEFCdrRmlz49HRg"
     // Part 5 question IDs above
-];
+];*/
+
+QUESTION_IDS = [
+    QUESTION_IDS_EN,
+    QUESTION_IDS_ZH_CN,
+    QUESTION_IDS_MS,
+    QUESTION_IDS_TH
+]
 
 // The value of questionIndex when answering the first question
 const NO_QUESTIONS_DONE = 0;

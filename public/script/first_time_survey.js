@@ -8,8 +8,21 @@ let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let hintIndex = 0;
-
 let messageHistoryColour = 'white';
+
+// get user's selected language and set the questions branches id to the corresponding index for that language
+let select_language = localStorage.getItem("LANGUAGE");
+
+let branch_id;
+if (select_language == "en") {
+    branch_id = EN_INDEX;
+} else if (select_language == "zh-CN") {
+    branch_id = ZH_CN_INDEX;
+} else if (select_language == "ms") {
+    branch_id = MS_INDEX;
+} else if (select_language == "th") {
+    branch_id = TH_INDEX;
+}
 
 /*
 The user object of the currently logged in user
@@ -40,10 +53,10 @@ let currentSubQuestionIds = null;
 Used for likert scale idexes of questions stored in firebase
 "very nice" - Yong Peng
  */
-let agreeLikertQues = [15]; //[1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree
-let satisfyLikertQues = [18]; //[1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
-let confidentLikertQues = [21,22,24]; //[1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident [6] Not Applicable
-let interestedLikertQues = [27] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
+let agreeLikertQues = [13, 27]; //[1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree
+let satisfyLikertQues = [16]; //[1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
+let confidentLikertQues = [19,20,22]; //[1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident [6] Not Applicable
+let interestedLikertQues = [25] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
 
 /**
  * onclick function for option buttons.
@@ -99,7 +112,7 @@ function select(button) {
             // Set the current question index to the question before the
             // skip target since nextQuestion increments
             // the question index by 1
-            questionIndex = QUESTION_IDS.indexOf(skipTarget) - 1;
+            questionIndex = QUESTION_IDS[branch_id].indexOf(skipTarget) - 1;
 
             // In case the user was answering a long question,
             // reset params related to long questions
@@ -118,7 +131,6 @@ function select(button) {
  * Function to add the user textbox input as a chat bot message
  */
 function addMessage() {
-
     let message = input.value;
     let type = currentQuestionObject.type;
     if (type ===TYPE_MULTIPLE_CHOICE ||
@@ -130,7 +142,6 @@ function addMessage() {
           // Saving the response before clearing the input box
           saveResponse(input.value);
         }
-
 
     // check if the input is valid
     if (message.length > 0) {
@@ -150,7 +161,6 @@ function addMessage() {
       errorText.style.visibility = "visible";
       errorText.innerHTML = "Please type your answer in the text box.";
     }
-
 }
 
 
@@ -180,7 +190,7 @@ function nextQuestion() {
             showQuestion(true);
             subQuestionIndex++;
         }
-    } else if (questionIndex < QUESTION_IDS.length - 1) { // check if questionIndex is still not at the end of survey questions
+    } else if (questionIndex < QUESTION_IDS[branch_id].length - 1) { // check if questionIndex is still not at the end of survey questions
         // The user is answering a normal question
         questionIndex++;
         showQuestion(false);
@@ -291,12 +301,12 @@ function showQuestion(isSubQuestion) {
         question_id = currentSubQuestionId;
     } else {
         // get the firebase ID of the question
-        currentQuestionId = QUESTION_IDS[questionIndex];
+        currentQuestionId = QUESTION_IDS[branch_id][questionIndex];
         question_id = currentQuestionId;
     }
     console.log("Reading ", question_id);
 
-    firebase.firestore().collection(QUESTIONS_BRANCH)
+    firebase.firestore().collection(QUESTIONS_BRANCHES[branch_id])
         .doc(question_id)
         .get()
         .then((docRef) => {
@@ -560,8 +570,7 @@ function showLongQuestion(questionObject) {
 
     showMessageSender(questionObject.question);
 
-    // Initialize fields for looping over the sub-question IDs
-    // array
+    // Initialize fields for looping over the sub-question IDs array
     subQuestionIndex = 0;
     currentSubQuestionIds = questionObject.arrangement;
     nextQuestion();
@@ -665,7 +674,7 @@ function isAnsweringSubQuestions() {
  * Ends the survey
  */
 function endSurvey() {
-    questionIndex = QUESTION_IDS.length;
+    questionIndex = QUESTION_IDS[branch_id].length;
     nextQuestion();
 }
 
@@ -677,7 +686,7 @@ function endSurvey() {
  */
 function endSurveyText() {
     showMessageSender(input.value);
-    questionIndex = QUESTION_IDS.length;
+    questionIndex = QUESTION_IDS[branch_id].length;
     errorText.style.visibility = "hidden";
     nextQuestion();
 }
@@ -702,7 +711,7 @@ function endSurveyText() {
  * white.
  */
 function updateProgress() {
-    var progress = (questionIndex/QUESTION_IDS.length) * 100;
+    var progress = (questionIndex/QUESTION_IDS[branch_id].length) * 100;
     console.log('updateProgress() is called. Current percentage is ' + progress + '%.');
     document.querySelector('#progress-bar').MaterialProgress.setProgress(progress);
 

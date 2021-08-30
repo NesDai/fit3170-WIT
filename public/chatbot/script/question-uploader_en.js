@@ -347,7 +347,7 @@ const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What are you interested in learning using a mobile phone?", // Qs 5.1
+    "Why are you interested in learning using a mobile phone?", // Qs 5.1
     "What resources do you wish to have for learning using a mobile phone?", // Qs 5.2
     "What has been the most frustrating things so far about learning using a " +
     "mobile phone?", // Qs 5.3
@@ -984,7 +984,7 @@ function appendMultipleChoice(questionNumber, longQuestionId,
 }
 
 function pushQuestionObject(questionObject) {
-    return firebase.firestore().collection(QUESTIONS_BRANCH).add(questionObject);
+    return firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX]).add(questionObject);
 }
 
 let partNumber = 0;
@@ -1088,7 +1088,7 @@ function updateLongQuestionsWithSubQuestionIds() {
 
         let arrangement = subQuestionIds[longQuestionId];
 
-        firebase.firestore().collection(QUESTIONS_BRANCH).doc(longQuestionId)
+        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX]).doc(longQuestionId)
             .update({
                 "arrangement": arrangement
             })
@@ -1102,7 +1102,7 @@ function updateLongQuestionsWithSubQuestionIds() {
     }
 }
 
-function uploadQuestions() {
+function uploadQuestions_en() {
     pushPart1Questions();
     pushPart2Questions();
     pushPart3Questions();
@@ -1117,7 +1117,7 @@ function uploadQuestions() {
  * <br>
  * 2. To update the long question objects with IDs of their sub-questions.
  */
-function housekeeping() {
+function housekeeping_en() {
     updateLongQuestionsWithSubQuestionIds();
 
     let result = [];
@@ -1150,7 +1150,7 @@ function housekeeping() {
     }
 
     // Update question 2.1's skipTarget with 2.3's ID
-    firebase.firestore().collection(QUESTIONS_BRANCH).doc(question_2_1_id)
+    firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX]).doc(question_2_1_id)
         .update({
             "restrictions.skipTarget": question_2_3_id
         })

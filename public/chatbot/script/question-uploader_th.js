@@ -952,7 +952,7 @@ function appendMultipleChoice(questionNumber, longQuestionId,
 }
 
 function pushQuestionObject(questionObject) {
-    return firebase.firestore().collection(QUESTIONS_BRANCH).add(questionObject);
+    return firebase.firestore().collection(QUESTIONS_BRANCHES[TH_INDEX]).add(questionObject);
 }
 
 let partNumber = 0;
@@ -1056,7 +1056,7 @@ function updateLongQuestionsWithSubQuestionIds() {
 
         let arrangement = subQuestionIds[longQuestionId];
 
-        firebase.firestore().collection(QUESTIONS_BRANCH).doc(longQuestionId)
+        firebase.firestore().collection(QUESTIONS_BRANCHES[TH_INDEX]).doc(longQuestionId)
             .update({
                 "arrangement": arrangement
             })
@@ -1070,7 +1070,7 @@ function updateLongQuestionsWithSubQuestionIds() {
     }
 }
 
-function uploadQuestions_th() {
+function uploadQuestions_thx() {
     pushPart1Questions();
     pushPart2Questions();
     pushPart3Questions();
@@ -1118,7 +1118,7 @@ function housekeeping_th() {
     }
 
     // Update question 2.1's skipTarget with 2.3's ID
-    firebase.firestore().collection(QUESTIONS_BRANCH).doc(question_2_1_id)
+    firebase.firestore().collection(QUESTIONS_BRANCHES[TH_INDEX]).doc(question_2_1_id)
         .update({
             "restrictions.skipTarget": question_2_3_id
         })

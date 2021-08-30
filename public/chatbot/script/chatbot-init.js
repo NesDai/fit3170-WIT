@@ -7,8 +7,6 @@
  * 2. initQuestionIndex
  * 3. initChatbot
  */
-
-// Bazingas!
 let noDelayMode = false;
 
 initFirebaseAuth();
