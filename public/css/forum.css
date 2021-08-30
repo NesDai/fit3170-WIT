@@ -258,14 +258,14 @@ html,body {
     {
     position: relative; 
     bottom: 10px; 
-    left: 40px
+    left: 190px
     }
-    #tab3
+    /* #tab3
     {
     position: relative; 
     bottom: 10px; 
     left: 40px
-    }
+    } */
     input[type="radio"]:checked + label {
     color: var(--primary-color);
     position: relative;
@@ -291,11 +291,11 @@ html,body {
     transform: translateX(25%);
     }
     input[id="radio-2"]:checked ~ .glider {
-    transform: translateX(136%);
+    transform: translateX(220%);
     }
-    input[id="radio-3"]:checked ~ .glider {
+    /* input[id="radio-3"]:checked ~ .glider {
     transform: translateX(250%);
-    }
+    } */
     #more_btn
     {
     border-radius: 10px;
@@ -336,7 +336,7 @@ html,body {
     padding: 0.75rem;
     border-radius: 15px;
     height: 70px;
-    width: 358px;
+    width: 355px;
     }
     input[type="radio"]:checked + label {
     color: var(--primary-color);
@@ -359,9 +359,9 @@ html,body {
     transform: translateX(15%);
     }
     input[id="radio-2"]:checked ~ .glider {
-    transform: translateX(100%);
+    /* transform: translateX(100%);
     }
-    input[id="radio-3"]:checked ~ .glider {
+    input[id="radio-3"]:checked ~ .glider { */
     transform: translateX(140%);
     }
     #more_btn
