@@ -15,15 +15,14 @@ const SUB_QUESTIONS_1_12 = [
     "" // Qs 1.12.4
 ];
 
-// TODO Fill in tooltips
 const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Select an Option",
+    "Select an Option",
+    "Select an Option",
+    "Select an Option"
 ];
 
 const SUB_QUESTIONS_1_13 = [

@@ -15,15 +15,14 @@ const SUB_QUESTIONS_1_12 = [
     "在老年护理机构独居" // Qs 1.12.4
 ];
 
-// TODO Fill in tooltips
 const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "选择一个选项", // Select an Option (needs translation confirmation)
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项" // Select an Option (needs translation confirmation)
 ];
 
 const SUB_QUESTIONS_1_13 = [
