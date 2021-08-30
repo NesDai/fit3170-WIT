@@ -48,7 +48,7 @@ function checkAccepted(){
     // if it is checked, update user's realtime database data that they accept the terms of use
     if (checkbox.checked){
 
-        window.location.href = "./indexold.html";
+        window.location.href = "./signup.html";
  
 
     } else {
