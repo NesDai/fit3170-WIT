@@ -286,9 +286,7 @@ function addPostToFavourite(){
         let fav_button = document.getElementsByClassName("favourite")[0];
         fav_button.innerHTML = "\n  <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
       })
-
   }
-
 }
 
 // Creating comment
@@ -572,7 +570,7 @@ function checkUserFavouritedPost(){
         <span id=\"favourite_btn\"> Remove Favourite</span>
         `
       } else {
-        button = `                                 
+        button.innerHTML = `                                 
         <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
         <span id=\"favourite_btn\"> Add Favourite</span>
         `

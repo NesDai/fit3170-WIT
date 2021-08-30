@@ -273,12 +273,29 @@ function printPost(post, button_num, i )
 }
 
 /**
- * Function which prints all user's favourited post under Favourite Posts tab
+ * Function which prints all user's favourited post and personal post under new Feed tab
  */
 function printUserFavouritePosts() {
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
     let data_list = [];
+    let duplicate = false;
+
+    firebase.database().ref('posts')
+        .orderByChild('username')
+            .equalTo(current_user['username'])
+                .once('value', x => {
+                    x.forEach(data => {
+                        for (let i = 0; i < data_list.length; i++){
+                            if(data.val()['id'] == data_list[i].id) {
+                                duplicate = true;
+                            }
+                        }
+                        if (!duplicate){
+                            data_list.push(data.val());
+                        }
+                    })       
+                })
     firebase.database().ref(`posts`)
         .orderByChild(`users_favourite`)
             .once('value', x => {
@@ -300,29 +317,7 @@ function printUserFavouritePosts() {
                             data_list.push(data.val());
                         }
                     }
-                });
-            })
-            .then (() => {
-            let duplicate = false;
-            firebase.database().ref('posts')
-            .orderByChild('username')
-                .equalTo(current_user['username'])
-                    .once('value', x => {
-                        x.forEach(data => {
-                            for (let i = 0; i < data_list.length; i++){
-                                if(data.val().id == post.id) {
-                                    duplicate = true;
-                                }
-                            }
-
-                            if (!duplicate){
-                                data_list.push(data.val());
-                            }
-                        }
-                           
-                    )})
-
-                  
+                })
             })
             .then(() => {
                 for (let i = data_list.length -1; i>=0; i--){
@@ -373,7 +368,13 @@ function printUserFavouritePosts() {
                     </span>
              </div>`;
                 }
-                })
+            })
+            // . then (() => {
+            //     for (let post_index in data_list){
+            //         checkUserFavouritedPost(data_list[post_index]);
+            //         console.log(data_list[post_index])
+            //     }
+            // })
 }
 
 function printUserPosts(){
@@ -805,3 +806,40 @@ async function dislikePost(post_id, i)
         )
     }
 }
+
+// /* 
+// A function that checks if the user has favourited the selected post and 
+// will output the correct text on button
+// */
+// function checkUserFavouritedPost(post){
+//     let post_id = post.id; 
+//     let user_exist = false;
+//     let button = document.getElementById("favourite_post_btn");
+  
+//     firebase.database().ref(`posts/${post_id}`).once("value", (snapshot) => {
+//       let hasFavouriteData = snapshot.hasChild("users_favourite");
+//       if (hasFavouriteData){
+//         let users_arr = snapshot.val()["users_favourite"];
+        
+//         // looping through users list in database
+//         for(let i = 0; i < users_arr.length; i++) {
+//           if (current_user["phone"] == users_arr[i]){
+//             user_exist = true;
+//           }
+//         }
+  
+//         if (user_exist){
+//           button.innerHTML = `                                 
+//           <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
+//           <span id=\"favourite_btn\"> Remove</span>
+//           `
+//         } else {
+//           button.innerHTML = `                                 
+//           <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
+//           <span id=\"favourite_btn\"> Add</span>
+//           `
+//         }
+//       }
+//     })
+//   }
+
