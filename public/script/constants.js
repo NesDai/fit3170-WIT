@@ -76,49 +76,91 @@ const SHORT_TEXT_LENGTH = 50;
 // list of Questions IDs for each language translation
 const QUESTION_IDS_EN = [
     // Part 1
-    "1dt5vNIdDV6WS8Wd5hhU",
-    "UKHjnLKi0AiAr4i2NIZR",
-    "QdzETx8jbANwzQH6ExQK",
-    "bCMihmGQFaAx2f1u3zEn",
-    "cfwjGGK1wa3pWH6CoBMT",
-    "9ObGoD0GjCX6H8RDaAHT",
-    "ryss7rTzC5j6fAIu1fHY",
-    "uFeFhRkAhsdrM0Nj0Slu",
-    "w0vLfxyLcX962XjKmNdo",
-    "lEIy3QHqgVbZ11fWdCfB",
-    "6JxKtrk2CxS3HEL876E7",
-    "JMYoU0jNB4MbgJh7pyfS",
-    "NBgKgFhzdRhAGq0NAx4K",
-    "IM4AOPEqIddvVnz4DQ0v",
+    "tUaig3CbVaCakauGrdUj",
+    "AdfIXBJFv0fZ54Yk9Wx8",
+    "v6DlVSeURkBqibRxVJrS",
+    "72NIR1vu7VSPAxUMXjx6",
+    "nsV6JwzUk2Kydiw0xXo5",
+    "yDlntSyy7WlDCV6RhDTZ",
+    "xIR76SqHtOoVXGsO4RvN",
+    "OXkgfKwFBInq1kXPcboN",
+    "GX8kVYIbwb4rMlEeFjl7",
+    "bZgu9SjgpydubXh3e2Li",
+    "YKGtzAdLBC1XAWUCKyUu",
+    "fQSHltRUKBg8oCno8SKj",
+    "5UEMyCniKMesgnmMJpIY",
+    "L8fbSqH7Lelz3iDAYPTy",
 
     // Part 2
-    "KJqSmJiCjKGm8mJvfTps",
-    "OA10XHh5OxrkoF4rU6Og",
-    "uj1UkXuvAUl00BpwrcY2",
-    "apHxMXpW2pZiTkQQ2tqP",
-    "9StOFk9lSyj3yljXUH64",
-    "9nF2zFTJCvmKcwPff1uA",
-    "gzCE6IxYVo8MnaOEdFTB",
+    "1dcWTPjVNgOCXrKNzGg2",
+    "U0QeHHheWFycZBYyRP2Z",
+    "QJm8oZekTbvMm3y0vCFV",
+    "P7h4nmb4WaWC5PEHQiLS",
+    "6xkj0mEb74D9fWUEeSV9",
+    "qigQgGIH4vy2COeVYwHX",
+    "MO0DZYZb22I7HtH8mVYC",
 
     // Part 3
-    "tAWQp2892S3HvWj02eLP",
-    "srGfnhTKEE5psygufCoR",
+    "pzkgvkCia9TbCMIM2WaO",
+    "cCkbv1TTXOqEbC27J80R",
 
     // Part 4
-    "EWzn63MaKmMz0huFZu5G",
-    "IxQqTRGyF0dZInHza1y3",
-    "Xc45gvWhFMEchFU4ojbh",
-    "Y78FcQh9pa9K8vdDSx24",
-    "X6CBzwXnK2cmXMPKtRZ0",
+    "XIz4TpHDHTwDd2nUXnXL",
+    "Yp60l9Qtc2GtItenDYmZ",
+    "e3jprSwPBvHQVpjiDk38",
+    "XnDOVHsyRcvex8rPBT9d",
+    "xF3SPapO2iNKW8tf81jm",
 
     // Part 5
-    "KCRkRMiBwblPymEIVbvB",
-    "SMzF3MTuTqvfIdyBqXuo",
-    "VOulp3vklhIz75p0EIHw",
-    "B50PZVaOysWklquuF7w3"
+    "U9mnvQeCjmCA8UgpH47l",
+    "5oMLb3TUHFNqL4z1GQdq",
+    "oIx4075RidhSX1pNO2TV",
+    "SsV2bqTQJ9jWStjc0AfX"
 ];
 
-const QUESTION_IDS_ZH_CN = [];
+const QUESTION_IDS_ZH_CN = [
+    // Part 1
+    "JNTxse2RmQ8BNBAKwzJG",
+    "01pjqlTJEangiTmJSMJK",
+    "d0j8hQ7otfpOp2pIxb09",
+    "SRqJmpTI1MqHqeEyYD6p",
+    "tpVeaGqtL0J5dnfwKNBc",
+    "QVXDRmlwWtGw4fyC7pkK",
+    "isefIirfcqJYPqv42uxZ",
+    "VoNfTpQN9aVQTngtW1ak",
+    "BTsI8zuUOPLJpa3e7bQi",
+    "A4203n7bXFSl2abcC4fC",
+    "L09bpkwqA4LScMBafH7b",
+    "onP6wUD4bTzna7MTFkbK",
+    "6eTzZU6tE3mMNvut2pd3",
+    "8hBWdvPSVzkKYIWSbqoH",
+
+    // Part 2
+    "LyUiZad2pd0EySQxRHBv",
+    "oEdiqtGOb1aOmJYN2GQs",
+    "dM0juejakqrMpw1Z1SI2",
+    "E1nWa1nd1PJT76yQ7ntr",
+    "cN1fXRxX3d3UND6RY3dm",
+    "XcJ1yy5j6t0PXZ7t0kK2",
+    "6ucsie5r6IM2vZXXdhWd",
+
+    // Part 3
+    "VPIgZjhrnome72d4JYnR",
+    "bCd368961SOCrcJpA4KK",
+
+    // Part 4
+    "JB3MVy2QVj7QinBSW16d",
+    "FNqN2PiM0ORQWzGEgo67",
+    "9IZNCYKxa6dnXrrAXrAG",
+    "RluLoBdUmWLAIRCLRZ12",
+    "zIohoZ408MhajTIW6rhe",
+
+    // Part 5
+    "y4wu56dfHC5v2HMVADAv",
+    "ALMPP5cc97zmXW3u6WK1",
+    "TcMSJ3tRkm4NQ5OUT9cK",
+    "oCXa8CasJU7JdGcT59zf"
+];
 
 const QUESTION_IDS_MS = [];
 
@@ -175,7 +217,7 @@ QUESTION_IDS = [
     QUESTION_IDS_ZH_CN,
     QUESTION_IDS_MS,
     QUESTION_IDS_TH
-]
+];
 
 // The value of questionIndex when answering the first question
 const NO_QUESTIONS_DONE = 0;

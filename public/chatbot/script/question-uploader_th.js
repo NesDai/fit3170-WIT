@@ -360,7 +360,8 @@ function pushPart1Questions() {
 
     // Question 1.3
     let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
-    pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
+    //pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
+    pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
     let choices_1_4 = ["Urban area", "Rural area"];

@@ -359,23 +359,24 @@ function pushPart1Questions() {
     pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2, SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
-    let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
-    pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
+    let choices_1_3 = ["巫裔", "华裔", "印裔", "泰裔", "其他"];
+    //pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
+    pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
-    let choices_1_4 = ["Urban area", "Rural area"];
+    let choices_1_4 = ["市区", "农村"];
     pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED, HINTS_PART1[4]);
 
     // Question 1.5
-    let choices_1_5 = ["No income", "Less than MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
+    let choices_1_5 = ["没有收入", "低于 MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 或以上"];
     pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED, HINTS_PART1[5]);
 
     // Question 1.6
-    let choices_1_6 = ["No formal education", "Primary school", "Secondary/ high school", "Vocational/ technical certification", "University"];
+    let choices_1_6 = ["没有受过正规教育", "小学", "中学/高中", "职业/技术认证", "大学"];
     pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED, HINTS_PART1[6]);
 
     // Question 1.7
-    let choices_1_7 = ["Single", "Married", "Divorced", "Widowed", "Other relationship"];
+    let choices_1_7 = ["单身", "已婚", "离婚", "丧偶", "其他关系"];
     pushMultipleChoice("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
@@ -407,8 +408,8 @@ function pushPart1Questions() {
             initLongQuestionParams();
 
             // Question 1.12a
-            let choices_1_12 = ["Yes", "No"];
-            let skip_choices_1_12 = ["Yes"];
+            let choices_1_12 = ["是", "否"];
+            let skip_choices_1_12 = ["是"];
             appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[1], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[1]);
 
             // Question 1.12b
@@ -434,7 +435,7 @@ function pushPart1Questions() {
         initLongQuestionParams();
 
         // Question 1.13a
-        let choices_1_13 = ["Yes", "No"];
+        let choices_1_13 = ["是", "否"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_13[1]);
@@ -487,8 +488,8 @@ function pushPart2Questions() {
     setPartNumber(2);
 
     // Question 2.1
-    let choices_2_1 = ["Working", "Retired", "Semi-retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
-    let skip_choices_2_1 = ["Retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
+    let choices_2_1 = ["工作", "退休", "半退休", "不工作", "不工作但做义工", "不工作但在找工作"];
+    let skip_choices_2_1 = ["退休", "不工作", "不工作但做义工", "不工作但在找工作"];
     pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1, skip_choices_2_1, "insert question 2.3 id here", HINTS_PART2[1]);
 
     // Question 2.2
@@ -498,23 +499,23 @@ function pushPart2Questions() {
     pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
-    let choices_2_4 = ["Yes", "No", "Not applicable"];
+    let choices_2_4 = ["是", "否", "不适用"];
     pushMultipleChoice("2.4", PART2[4], choices_2_4, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
-    let choices_2_5 = ["Yes", "No", "Not applicable"];
+    let choices_2_5 = ["是", "否", "不适用"];
     pushMultipleChoice("2.5", PART2[5], choices_2_5, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
     // Question 2.6
-    let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_6 = ["不适用", "极度不自信", "有点不自信", "适度自信", "有点自信", "极度自信"];
     pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
-    let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_7 = ["不适用", "极度不自信", "有点不自信", "适度自信", "有点自信", "极度自信"];
     pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
@@ -525,11 +526,11 @@ function pushPart3Questions() {
 
     // Question 3.1
     let choices_3_1 = [
-        "Prepaid mobile data plan",
-        "Postpaid mobile data plan",
-        "Home WiFi broadband plan",
-        "Public WiFi hotspot",
-        "I don't know how to access the Internet"
+        "预付费移动数据计划",
+        "后付费移动数据计划",
+        "家庭无线宽带计划",
+        "公共无线热点",
+        "我不清楚如何上网"
     ];
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
@@ -940,7 +941,7 @@ function appendMultipleChoice(questionNumber, longQuestionId,
         longQuestionId: longQuestionId
     };
 
-    // Increment the alphabetIndex (the alphabetic numericals of sub-questions)
+    // Increment the alphabetIndex (the alphabetic numerics of sub-questions)
     alphabetIndex++;
 
     pushQuestionObject(questionObject)
