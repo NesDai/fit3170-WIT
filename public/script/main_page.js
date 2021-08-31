@@ -19,6 +19,7 @@ let current_us = JSON.parse(localStorage.getItem("USER"));
 // User: {"phone":"","username":""}
 document.getElementById("username").innerHTML = "Welcome @" + current_us["displayName"];
 
+// This function will not be in use but keep it here just in case. (For more detail: ask Kelvin from Team 404)
 // Checks if user has accepted the terms and conditions already
 function checkUserTAndC() {
     // initialise phone

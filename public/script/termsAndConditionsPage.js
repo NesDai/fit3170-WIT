@@ -1,6 +1,3 @@
-// import uploadTermsAndConditions_en() function from termsAndConditions_en_Uploader.js
-import { uploadTermsAndConditions_en } from "./termsAndConditions_en_Uploader.js";
-
 //References
 let checkbox = document.getElementById("checkbox")
 let tick_warning = document.getElementById("tick-warning")
@@ -15,7 +12,7 @@ confirmButtonRef.addEventListener("click", checkAccepted);
 function checkAccepted(){
     // if it is checked, update user's realtime database data that they accept the terms and condition
     if (checkbox.checked){
-        // initialise username and phone
+        /*// initialise username and phone
         let username
         let phone = current_us.phone
 
@@ -32,7 +29,8 @@ function checkAccepted(){
                 firebase.database().ref(`users/${phone}`).update(updates)
                 window.location.href = "./chatbot.html"
             }
-        })
+        })*/
+        window.location.href = "./chatbot.html"
     } else {
         // if the tickbox is not ticked, display error message
         tick_warning.hidden = false
@@ -41,7 +39,7 @@ function checkAccepted(){
 }
 
 // initialise firestore reference to terms and conditions and content
-let TermsAndConditionRef = firebase.firestore().collection("Terms&Conditions").doc("T&C_en");
+let TermsAndConditionRef = firebase.firestore().collection("Terms&Conditions").doc("T&C_en_short");
 let content;
 
 // checks if the collection exists then displays T&C else upload the T&C and then display it.
@@ -51,7 +49,7 @@ TermsAndConditionRef.get().then((doc) => {
         content_box.innerHTML = content.contents;
     } else {
         // doc.data() will be undefined in this case
-        uploadTermsAndConditions_en();
+        uploadTermsAndConditions_en_short();
         TermsAndConditionRef.get().then((doc) => {
             content =  doc.data();
             content_box.innerHTML = content.contents;

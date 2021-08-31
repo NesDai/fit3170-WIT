@@ -1,8 +1,8 @@
 /*
-* This file is dedicated to uploading the english version of the terms and conditions onto the firestore
+* This file is dedicated to uploading the long english version of the terms and conditions onto the firestore
 * */
 
-export function uploadTermsAndConditions_en(){
+function uploadTermsAndConditions_en_long(){
     let contents = "<center><h3>EXPLANATORY STATEMENT</h3></center><br>" +
         "<center><b>(Survey Participant Group)</b></center><br>" +
         "<b>Project ID: 29459</b><br>" +
@@ -112,7 +112,7 @@ export function uploadTermsAndConditions_en(){
         "School of Business, Monash University Malaysia.<br>" +
         "Tel: +603-55144971; Email: teh.pei.lee@monash.edu"
 
-    firebase.firestore().collection("Terms&Conditions").doc("T&C_en").set({
+    firebase.firestore().collection("Terms&Conditions").doc("T&C_en_long").set({
         contents: contents
     })
         .then(() => {
