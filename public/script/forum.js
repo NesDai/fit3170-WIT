@@ -202,6 +202,7 @@ function printAllPosts(){
                 printPost(posts[i], button_nums[i], i );
             }
         });
+}
 
 function printPost(post, button_num, i )
 {
@@ -601,7 +602,7 @@ function searchYourPosts(param){
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
-                data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
+                data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  ) ; // push the post key into list
             }
         })
     }).then(()=>{
@@ -693,7 +694,7 @@ function searchYourPosts(param){
                         field.innerHTML += `<h2>No results found<h2>`
                     }
                 });
-    
+            })
 }
 
 
@@ -703,8 +704,8 @@ function searchYourPosts(param){
 // Likes for posts
 async function likePost(post_id, i) {
 
-    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0];
-    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0];
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
     let res = await checkForLikeDislike(post_id);
     if (!res) {
@@ -713,7 +714,7 @@ async function likePost(post_id, i) {
             action: 1
         }).then(() => {
             alert("Liked");
-            updateLikes(post_id, 1); // add 1 like 
+            updateLikes(post_id, 1) // add 1 like 
         });
 
         // UI   
@@ -721,28 +722,136 @@ async function likePost(post_id, i) {
         like_btn_addr.style.color='white';
 
         //increase like count
-        current_value=like_btn_addr.value;
-        new_value=parseInt(current_value)+1;
-        like_btn_addr.value=new_value;
-        document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value;
+        current_value=like_btn_addr.value
+        new_value=parseInt(current_value)+1
+        like_btn_addr.value=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+
+
 
     } else {
         // if there is action 
-        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`)
-            .once('value', (snapshot) => {
-                let current_state = snapshot.val();
-                    if (current_state == -1) {
-                        // if action is dislike
-                        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
-                            action: 1
-                        }).then(() => {
-                            alert("Liked");
-                            updateLikes(post_id, 1); // add 1 like 
-                            updateDislikes(post_id, -1);
-                        });
-                    }
-            })
-    }     
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state = snapshot.val();
+            if (current_state == -1) {
+                // if action is dislike
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
+                    action: 1
+                }).then(() => {
+                    alert("Liked");
+                    updateLikes(post_id, 1) // add 1 like 
+                    updateDislikes(post_id, -1)
+                });
+
+                // UI   
+                like_btn_addr.style.background='#2bbd7e';
+                like_btn_addr.style.color='white';
+                dislike_btn_addr.style.background='#dadada';
+                dislike_btn_addr.style.color='black';
+
+                // increase like count
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)+1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                //decrease dislike count
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)-1
+                dislike_btn_addr.value=new_value
+                console.log(dislike_btn_addr.value)
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+         
+            } else {
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
+                alert('post was already liked');
+                updateLikes(post_id, -1)  // remove 1 like 
+                //UI 
+                like_btn_addr.style.background='#dadada';
+                like_btn_addr.style.color='black';
+                // change like number 
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)-1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+            }
+        })
+    }
+}
+
+async function dislikePost(post_id, i)
+{
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+    dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
+
+    let res = await checkForLikeDislike(post_id);
+
+    if (!res){
+        // if there is no action at all
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
+                alert("Disliked");
+                // add 1 dislike 
+                updateDislikes(post_id, 1)
+            });   
+            
+        // UI   
+        dislike_btn_addr.style.background='#e53935';
+        dislike_btn_addr.style.color='white';
+
+        //increase dislike count
+        current_value=dislike_btn_addr.value
+        new_value=parseInt(current_value)+1
+        dislike_btn_addr.value=new_value
+        document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+    }
+    else{
+        // if there is action 
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state=snapshot.val();
+            if (current_state==1){
+                // if action is like
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{alert("Disiked");});  
+                // add 1 dislike and remove 1 like
+                updateDislikes(post_id, 1)
+                updateLikes(post_id,-1)
+                // UI   
+                like_btn_addr.style.background='#dadada';
+                like_btn_addr.style.color='black';
+                dislike_btn_addr.style.background='#e53935';
+                dislike_btn_addr.style.color='white';
+
+                // increase dislike count
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)+1
+                dislike_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                //decrease like count
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)-1
+                like_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+
+               
+            }
+            else{
+                // remove 1 dislike
+                updateDislikes(post_id, -1)
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
+                alert('post was already disliked');
+
+                // UI 
+                // change color
+                dislike_btn_addr.style.background='#dadada';
+                dislike_btn_addr.style.color='black';
+                // change dislike number 
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)-1
+                dislike_btn_addr.value=new_value
+                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                
+            }
+        }
+        )
+    }
 }
 
 function postDetail(id) {

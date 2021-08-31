@@ -39,7 +39,7 @@ function getPostDetails(){
   let id = params.get('post_id');
   let action=0;
 
-    let id = params.get('post_id');
+    // let id = params.get('post_id');
     // let id = localStorage.getItem('POST_ID')
 
     let post_details = document.getElementById("post_details");
