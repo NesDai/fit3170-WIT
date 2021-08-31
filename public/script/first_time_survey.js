@@ -304,13 +304,13 @@ function showQuestion(isSubQuestion) {
                 case TYPE_NUMERIC_SUB_QUESTION:
                     showNumeric(questionObject);
                     if (agreeLikertQues.includes(questionIndex)) {
-                        makeAgreeLikertScale();
+                        makeAgreeLikertScale(select_language);
                     } else if (satisfyLikertQues.includes(questionIndex)){
-                        makeSatisfyLikertScale();
+                        makeSatisfyLikertScale(select_language);
                     } else if (confidentLikertQues.includes(questionIndex)){
-                        makeConfidentLikertScale();
+                        makeConfidentLikertScale(select_language);
                     } else if (interestedLikertQues.includes(questionIndex)){
-                        makeInterestedLikertScale();
+                        makeInterestedLikertScale(select_language);
                     }
                     break;
 
