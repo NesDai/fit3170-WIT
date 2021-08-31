@@ -121,11 +121,11 @@ html,body {
     }
     .lang_butt {
     margin: 10%; 
-    width:60%; 
+    width:80%; 
     background-color: #006DAE;
     }
     #lang_text{
-    display: none;
+    display: inline;
     }
     #interest1_id
     {
@@ -521,11 +521,11 @@ html,body {
     }
     .lang_butt {
     margin: 10%; 
-    width:60%; 
+    width:80%; 
     background-color: #006DAE;
     }
     #lang_text{
-    display: none;
+    display: inline;
     }
 
     @media all and (min-width:551px) {
