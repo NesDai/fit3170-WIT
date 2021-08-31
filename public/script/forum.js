@@ -105,13 +105,6 @@ function makeNewPost() {
      } else{
             window.location = "forum.html";
         }
-    //     myRef.push(newData).then(() => {
-    //         alert("Posted successfully. Redirecting back to forum")
-    //         window.location = "forum.html";
-    //     });
-    // } else {
-    //     window.location = "forum.html";
-    // }
 }
 
 
