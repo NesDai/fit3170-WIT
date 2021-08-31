@@ -57,10 +57,9 @@ function printPostDetails(){
                   let post = data.val();
                   for(let i =0; i<post.interest.length; i++){
                     interest +=`<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
-              }
+                  }
                     // print the post details in here
-                  post_details.innerHTML +=
-
+                  post_details.innerHTML = post_details.innerHTML + 
                     `
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                               <!-- POST HEADER -->
@@ -79,9 +78,16 @@ function printPostDetails(){
                               <form class="post_content" style="margin:0 10px; background-color: white">
                                  <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                                  <br>
-
+                                 `
+                                  + 
+                                  `
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  `
+                                  +
+                                  `
+                                 <br>
                                  <div style='display: inline-block'>
-                                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
+                                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
                                     <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
                                  </div>
                                  <br><br>
@@ -510,7 +516,7 @@ function addReply(btn_num,comment_id) {
     console.log(reply_input);
     let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
     // new data to upload in api
-    if (reply_input){ // only adding reply if it's not empty
+    if (reply_input){ // only adding reply if it's not empty 
       // unique key for reply
       let myRef = firebase.database().ref(`replies`);
       let key = myRef.push().key;
