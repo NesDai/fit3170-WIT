@@ -67,7 +67,15 @@ html,body {
     color: white;
     padding: 5px 16px;
     }
-  
+    #like_post_icon, #dislike_post_icon{
+    font-size: 17px;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    color: white
+    }
+    button.like, button.dislike{
+    border-radius: 15px;
+    margin: 0 0 0 20px;
+    }
     #interest1_id
     {
     background-color: #00ac3e; 
@@ -120,8 +128,18 @@ html,body {
     left:10px;
     }
     }
-
-
+    #like_post_btn
+    {
+    color: black;
+    border: 2px solid #2bbd7e;
+    width: 100px
+    }
+    #dislike_post_btn
+    {
+    color: black;
+    border: 2px solid #e53935;
+    width: 100px 
+    }
     /* All below is for the tab navigation */
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
     :root {
@@ -312,8 +330,24 @@ html,body {
     top: 5px; 
     }
     }
-
-
+    /* To change the like button back and forth */
+    .like_button_comment_liked {
+    color: white !important ;
+    background-color:#2bbd7e; 
+    } 
+    .like_button_comment_liked:hover
+    {
+    color: white;
+    background-color:#2bbd7e;
+    }
+    .dislike_button_comment_clicked {
+    color: white !important ;
+    background-color:#e53935; 
+    } 
+    .dislike_button_comment_clicked:hover
+    {
+    background-color:#e53935;
+    }
     .modal {
     display: none;
     /* Hidden by default */
@@ -387,10 +421,18 @@ html,body {
     #reply_comment_icon{
     font-size: 20px;
     }
-   
+    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
+    font-size: 17px;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    color: white !important;
+    }
     #send_reply_icon
     {
     font-size: 17px;
+    }
+    button.like,  button.dislike, button.hideReply{
+    border-radius: 15px;
+    margin: 0 0 0 10px;
     }
     button.reply{
     border-radius: 15px;
@@ -430,7 +472,31 @@ html,body {
     {
     background-color:white;
     }
-  
+    /* To change the like button back and forth */
+    .like_button_comment_not_liked {
+    border: 2px solid #04AA6D;
+    }
+    .like_button_comment_liked {
+    background-color:#2bbd7e;
+    color: white !important;
+    }
+    .like_button_comment_liked:hover
+    {
+    background-color:#2bbd7e;
+    }
+    .dislike_button_comment_not_clicked {
+    border: 2px solid #e53935;
+    color: white !important;
+    }
+    .dislike_button_comment_clicked {
+    color: white !important;
+    background-color:#e53935;
+    }
+    .dislike_button_comment_clicked:hover
+    {
+    color: white !important;
+    background-color:#e53935;
+    }
     .reply{
     position: relative;
     }
@@ -547,7 +613,18 @@ html,body {
     font-size: 20px;
     }
     }
-
+    #like_post_btn
+    {
+    color: black;
+    border: 2px solid #04AA6D;
+    width: 100px
+    }
+    #dislike_post_btn
+    {
+    color: black;
+    border: 2px solid #e53935;
+    width: 100px
+    }
     .mdl-checkbox {
     display: inline;     
     width: 200px;
@@ -564,38 +641,3 @@ html,body {
     font-size:40px;
     color: black;
     }
-
-    /* all likes related */
-    .like
-    {
-    color: black;
-    border: 2px solid #2bbd7e;
-    width: 100px
-    }
-    .dislike
-    {
-    color: black;
-    border: 2px solid #e53935;
-    width: 100px 
-    }
-        
-    .like:hover
-    {
-    color: white;
-    background-color:#2bbd7e;
-    }
-    .dislike:hover
-    {
-    background-color:#e53935;
-    color: white;
-    }
-    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
-        font-size: 17px;
-        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-        color: white !important;
-    }
-    button.like,  button.dislike, button.hideReply{
-        border-radius: 15px;
-        margin: 0 0 0 10px;
-        }
- 

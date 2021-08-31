@@ -33,7 +33,6 @@
       <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
       <link rel="stylesheet"  href="css/forum.css">
-      <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
       <style>
          .goog-te-banner-frame.skiptranslate {
          display: none !important;
@@ -168,6 +167,17 @@
             </div>
          </div>
          <br>
+         <!-- LIKES CHANGE COLOR -->
+         <script>
+            jQuery('button.like').click(function() {
+            jQuery(this).toggleClass("like_button_comment_liked");
+            });           
+         </script>
+         <script>
+            jQuery('button.dislike').click(function() {
+            jQuery(this).toggleClass("dislike_button_comment_clicked");
+            });           
+         </script> 
    </div>
    <br>
    </div>
@@ -192,7 +202,6 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js" type="text/javascript"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="script/forum.js"></script> 
-   <script src="script/forum_likes_dislikes.js"></script> 
    <script src="script/translation.js"></script> 
    <script type="text/javascript">
       $(function(){
