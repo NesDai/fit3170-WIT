@@ -17,6 +17,13 @@ function showReplyInput(button_num){
   document.getElementById("add_reply_section"+button_num.toString()).style.display = "block";
 }
 
+function showReplyToReplyInput(button_num, comment_index){
+  document.getElementById("add_reply_reply_section"+button_num.toString()+","+ comment_index.toString()).style.display = "block";
+}
+
+function showReplyToReplyToReplyInput(comment_index, reply_index, reply_to_reply_index){
+  document.getElementById("add_reply_2_reply_section"+comment_index.toString()+","+ reply_index.toString()+ ","+ reply_to_reply_index.toString()).style.display = "block";
+}
 //check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then
@@ -50,10 +57,9 @@ function printPostDetails(){
                   let post = data.val();
                   for(let i =0; i<post.interest.length; i++){
                     interest +=`<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
-              }
+                  }
                     // print the post details in here
-                  post_details.innerHTML +=
-
+                  post_details.innerHTML = post_details.innerHTML + 
                     `
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                               <!-- POST HEADER -->
@@ -72,8 +78,16 @@ function printPostDetails(){
                               <form class="post_content" style="margin:0 10px; background-color: white">
                                  <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                                  <br>
+                                 `
+                                  + 
+                                  `
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  `
+                                  +
+                                  `
+                                 <br>
                                  <div style='display: inline-block'>
-                                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
+                                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
                                     <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
                                  </div>
                                  <br><br>
@@ -283,8 +297,8 @@ function printComments(){
               <hr style="margin: 0;">`;
             }
       }).then(() => {
-        for(let i=data_list.length-1; i>=0 ; i--){
-          printReplies(data_list[i].id,i)
+        for(let comment_index=data_list.length-1; comment_index>=0 ; comment_index--){
+          printReplies(data_list[comment_index].id,comment_index)
         }
       });
 }
@@ -294,9 +308,9 @@ function printComments(){
  * @param {string} comment_id the id associated with comment
  * @param {integer} index an integer to indicate the section
  */
-function printReplies(comment_id,index) {
+function printReplies(comment_id,comment_index) {
 
-  let reply_section = document.getElementById("reply_section"+index.toString());
+  let reply_section = document.getElementById("reply_section"+comment_index.toString());
   let reply_list = [];
 
   // print replies of a comment
@@ -319,9 +333,14 @@ function printReplies(comment_id,index) {
               }
 
               if (reply.reply_comment_parent == comment_id){
+              console.log("index")
+              console.log(comment_index)
+              console.log("reply_index")
+              console.log(i)
+              console.log(reply.content)
               reply_section.innerHTML += `
-              <div class = 'verticalLine'>
-                <div id = "reply_box">
+              <div class = 'verticalLine' style="position: relative; right:5px">
+                <div id = "reply_box"  style="width:93%">
                   <span class="mdi mdi-cow"></span>
                   <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
                   <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
@@ -330,26 +349,142 @@ function printReplies(comment_id,index) {
                   </p>
                 </div>
 
-                <!--  LIKE FOR COMMENT -->
-                <span id='like_button_comment' href="#">
-                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                    <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
-                  </button>
+                <!-- ADD REPLY BUTTON FOR COMMENT -->
+                <span>
+                <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${comment_index},${i})">
+                <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                 </span>
 
-                <!--  DISLIKE FOR COMMENT -->
-                <span id='dislike_button_comment' href="#">
-                  <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                    <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
-                  </button>
-                </span>
+                 <!-- REPLY SECTION -->
+                 <div id = "add_reply_reply_section${comment_index},${i}"" style="display:none">
+                    <br>
+                     <div class="post_reply">
+
+                        <!-- REPLY INPUT -->
+                        <input class="reply_input" type="text" id="reply_input${comment_index},${i}"" placeholder="Write a reply..." value="@${reply_username}">
+                        <br>
+
+                        <!-- ANONYMOUS CHECKBOX BUTTON -->
+                        <div>
+                          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                            <input type="checkbox" id="anonymous${comment_index},${i}"" class="mdl-checkbox__input" >
+                            <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                          </label>
+
+                          <!-- SEND BUTTON -->
+                            <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReplyToReply('${comment_index}', '${i}', '${reply.id}')">
+                            <i class="material-icons notranslate" id="send_reply_icon">send</i>
+                            SEND
+                            </button>
+                        </div>
+
+                     </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div id= "reply_reply_section${comment_index},${i}" style="margin-bottom:10px">
+                    </div>
               </div>
               `
             }
           }}
-        })
+        }).then(() => {
+          for(let reply_index=reply_list.length-1; reply_index>=0 ; reply_index--){
+            printRepliesToReplies(reply_list[reply_index].id,comment_index, reply_index, 0)
+          }
+        });
       }
 
+function printRepliesToReplies(reply_id,comment_index, reply_index, start){
+  console.log(comment_index)
+  console.log(reply_index)
+  let reply_section = document.getElementById("reply_reply_section"+comment_index.toString()+","+reply_index.toString());
+  let reply_list = [];
+
+  firebase.database().ref('replies')
+    .orderByChild('reply_comment_parent')
+      .equalTo(reply_id)
+        .once('value', x => {
+          x.forEach(data => {
+            reply_list.push(data.val())
+          })
+        }).then(() => {
+          if (reply_list.length != 0){
+            for (let i = reply_list.length - 1; i >= 0; i--){
+              let reply = reply_list[i];
+              let reply_username;
+              if (reply.anonymous){
+                reply_username = "Anonymous";
+              } else {
+                reply_username = reply.username;
+              }
+
+              if (reply.reply_comment_parent == reply_id){
+              console.log("index")
+              console.log(comment_index)
+              console.log("reply_index")
+              console.log(reply_index)
+              console.log("start")
+              console.log(start)
+              console.log(reply.content)
+              reply_section.innerHTML += `
+              <div class = 'verticalLine' style="position: relative; right:5px">
+                <div id = "reply_box"  style="width:93%">
+                  <span class="mdi mdi-cow"></span>
+                  <h6 name="username" id="username" class="notranslate">@${reply_username}</h6>
+                  <h8 name="comment_date_posted" id="comment_date_posted">${reply.created}</h8>
+                  <p>
+                    <span id="user_comment">${reply.content}</span>
+                  </p>
+                </div>
+
+                <!-- ADD REPLY BUTTON FOR COMMENT -->
+                <span>
+                <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;"onclick="showReplyToReplyToReplyInput(${comment_index},${reply_index},${start})">
+                <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                </span>
+
+                 <!-- REPLY SECTION -->
+                 <div id = "add_reply_2_reply_section${comment_index},${reply_index},${start}" style="display:none">
+                    <br>
+                     <div class="post_reply">
+
+                        <!-- REPLY INPUT -->
+                        <input class="reply_input" type="text" id="reply_input${comment_index},${reply_index},${start}" placeholder="Write a reply..." value="@${reply_username}">
+                        <br>
+
+                        <!-- ANONYMOUS CHECKBOX BUTTON -->
+                        <div>
+                          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                            <input type="checkbox" id="anonymous${comment_index},${reply_index},${start}" class="mdl-checkbox__input" >
+                            <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                          </label>
+
+                          <!-- SEND BUTTON -->
+                            <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick=" addReplyToReplyToReply('${comment_index}', '${reply_index}','${start}', '${reply.id}')">
+                            <i class="material-icons notranslate" id="send_reply_icon">send</i>
+                            SEND
+                            </button>
+                        </div>
+
+                     </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div id= ""reply_2_reply_section"${comment_index},${reply_index},${start}" style="margin-bottom:10px">
+                    </div>
+              </div>
+              `
+              start += 1;
+            }
+          }}
+        }).then(() => {
+          for(let i=reply_list.length-1; i>=0 ; i--){
+            printRepliesToReplies(reply_list[i].id,comment_index, reply_index, start)
+          }
+        });;
+
+}
 
 function redirect(url, msg) {
   window.location = url;
@@ -362,8 +497,9 @@ function redirect(url, msg) {
  * @param {string} comment_id the id associated with the comment
  */
 function addReply(btn_num,comment_id) {
-  if (checkUserExistence()){
 
+  if (checkUserExistence()){
+    console.log(comment_id);
     const options = {  // options for Date
       timeZone:"Africa/Accra",
       hour12 : true,
@@ -372,16 +508,19 @@ function addReply(btn_num,comment_id) {
      second: "2-digit"
     }
 
+
     let post_id = params.get('post_id');
+
     // get reply value
     let reply_input = document.getElementById("reply_input"+btn_num.toString()).value;
+    console.log(reply_input);
     let stay_anonymous = document.getElementById("anonymous"+btn_num.toString()).checked;
     // new data to upload in api
-    if (reply_input){ // only adding reply if it's not empty
+    if (reply_input){ // only adding reply if it's not empty 
       // unique key for reply
       let myRef = firebase.database().ref(`replies`);
       let key = myRef.push().key;
-
+      console.log("hi");
       // new data to upload in api
       let newData = {
         anonymous: stay_anonymous,
@@ -392,16 +531,113 @@ function addReply(btn_num,comment_id) {
         like:0,
         replierId: current_user["phone"],
         reply_comment_parent: comment_id,
-        username: current_user["username"]
+        username: current_user["username"],
       };
 
-      url = "post.html" + "?post_id=" + post_id;
-
+      console.log(post_id);
       firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
-        redirect(url, null)
+          alert("Reply made successfully!");
+          window.location = "post.html" + "?post_id=" + post_id;
       });
-      msg = "Reply Made successfully";
-      alert(redirect(url, msg));
+
+    };
+  } else {
+    window.location = "forum.html";
+  }
+}
+
+function addReplyToReply(comment_index, reply_index, reply_id) {
+
+  if (checkUserExistence()){
+    const options = {  // options for Date
+      timeZone:"Africa/Accra",
+      hour12 : true,
+      hour:  "2-digit",
+      minute: "2-digit",
+     second: "2-digit"
+    }
+
+
+    let post_id = params.get('post_id');
+
+    // get reply value
+    let reply_input = document.getElementById("reply_input"+comment_index.toString()+","+reply_index.toString()).value;
+    console.log(reply_input);
+    let stay_anonymous = document.getElementById("anonymous"+comment_index.toString()+","+reply_index.toString()).checked;
+    // new data to upload in api
+    if (reply_input){ // only adding reply if it's not empty
+      // unique key for reply
+      let myRef = firebase.database().ref(`replies`);
+      let key = myRef.push().key;
+      console.log("hi");
+      // new data to upload in api
+      let newData = {
+        anonymous: stay_anonymous,
+        content: reply_input,
+        created: new Date().toString(),
+        dislike:0,
+        id:key,
+        like:0,
+        replierId: current_user["phone"],
+        reply_comment_parent: reply_id,
+        username: current_user["username"],
+      };
+
+      console.log(post_id);
+      firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
+          alert("Reply made successfully!");
+          window.location = "post.html" + "?post_id=" + post_id;
+      });
+
+    };
+  } else {
+    window.location = "forum.html";
+  }
+}
+
+function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index, reply_id) {
+
+  if (checkUserExistence()){
+    const options = {  // options for Date
+      timeZone:"Africa/Accra",
+      hour12 : true,
+      hour:  "2-digit",
+      minute: "2-digit",
+     second: "2-digit"
+    }
+
+
+    let post_id = params.get('post_id');
+
+    // get reply value
+    let reply_input = document.getElementById("reply_input"+comment_index.toString()+","+reply_index.toString()+","+reply_to_reply_index.toString()).value;
+    console.log(reply_input);
+    let stay_anonymous = document.getElementById("anonymous"+comment_index.toString()+","+reply_index.toString()+","+reply_to_reply_index.toString()).checked;
+    // new data to upload in api
+    if (reply_input){ // only adding reply if it's not empty
+      // unique key for reply
+      let myRef = firebase.database().ref(`replies`);
+      let key = myRef.push().key;
+      console.log("hi");
+      // new data to upload in api
+      let newData = {
+        anonymous: stay_anonymous,
+        content: reply_input,
+        created: new Date().toString(),
+        dislike:0,
+        id:key,
+        like:0,
+        replierId: current_user["phone"],
+        reply_comment_parent: reply_id,
+        username: current_user["username"],
+      };
+
+      console.log(post_id);
+      firebase.database().ref(`replies/${key}`).set(newData).then(()=>{
+          alert("Reply made successfully!");
+          window.location = "post.html" + "?post_id=" + post_id;
+      });
+
     };
   } else {
     window.location = "forum.html";
