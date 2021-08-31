@@ -39,17 +39,12 @@ function getPostDetails(){
   let id = params.get('post_id');
   let action=0;
 
-    // let id = params.get('post_id');
-    // let id = localStorage.getItem('POST_ID')
-
-    let post_details = document.getElementById("post_details");
-    // let poster_field = document.getElementById('poster_id');
-    // let time_field = document.getElementById('date_posted');
-    // let title_field = document.getElementById('title');
-    // let description_field = document.getElementById('description');
-    // let interest_field = document.getElementById('post_interests');
-
-    console.log(posts);
+  firebase.database().ref(`likesDislikes/${id}/${current_user["username"]}`)
+  .once('value', x => {
+      x.forEach(data => {
+        action=data.val()
+          })
+  }).then(()=>{
     firebase.database().ref('posts')
     .orderByChild('id')
         .equalTo(id)
@@ -59,10 +54,11 @@ function getPostDetails(){
                 posts.push(post)
                 });
             }).then(()=>{
-                printPostDetails(posts[0], action);
+                printPostDetails(posts[0], action)
             })
-          //})
+          })
 }
+
 
 
 function printPostDetails(post, button_num)
@@ -633,9 +629,11 @@ function printRepliesToReplies(reply_id,comment_index, reply_index, start){
                     </div>
               </div>
               `
-              start += 1;
+
             }
-          }}
+            start = start + 1;
+          }
+        }
         }).then(() => {
           for(let i=reply_list.length-1; i>=0 ; i--){
             printRepliesToReplies(reply_list[i].id,comment_index, reply_index, start)
