@@ -288,7 +288,6 @@ function printUserFavouritePosts(current_user_posts, button_nums){
                 x.forEach(data => {
                     // console.log("data: " + data.key) // data.key = post id
                     let hasFavouriteAttribute = data.hasChild("users_favourite");
-                    // console.log(hasFavouriteAttribute)
 
                     if (hasFavouriteAttribute){
                         // if attribute is in db
@@ -308,7 +307,6 @@ function printUserFavouritePosts(current_user_posts, button_nums){
                     }
                 })
 
-                //console.log(fav_post_arr);
                 fav_post_arr.forEach(fav_post => {
                     let duplicate = false;
 

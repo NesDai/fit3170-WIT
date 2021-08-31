@@ -166,7 +166,7 @@ html,body {
     border: 2px solid #e53935;
     width: 100px 
     }
-    #favourite_post_btn
+    .favourite
     {
     color: black;
     border: 2px solid blue;
@@ -680,7 +680,7 @@ html,body {
    {
    color: black;
    border: 2px solid blue;
-   width: 100px;
+   width: max-content;
    border-radius: 15px;
    margin: 0 0 0 10px;
    }

@@ -139,7 +139,7 @@ function printPostDetails(post, button_num)
                                  <br>
                                  ${button}
                                  <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
-                                 <i class="material-icons notranslate" id="favourite_post_icon">favorite</i><span id="favourite_btn"> Add Favourite</span>
+                                 <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
                                  </button>
                               </div>
                               <br>
@@ -566,13 +566,11 @@ function checkUserFavouritedPost(){
 
       if (user_exist){
         button.innerHTML = `                                 
-        <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
-        <span id=\"favourite_btn\"> Remove Favourite</span>
+        <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>
         `
       } else {
         button.innerHTML = `                                 
-        <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
-        <span id=\"favourite_btn\"> Add Favourite</span>
+        <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Add Favourite</span>
         `
       }
     }
