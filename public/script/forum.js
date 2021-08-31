@@ -169,6 +169,7 @@ function printAllPosts(){
             });
 
         }).then(()=>{
+
             for(let i=posts.length-1; i>=0 ; i--){
                 printPost(posts[i], button_nums[i], i )
             }
@@ -322,9 +323,11 @@ function printUserFavouritePosts(current_user_posts, button_nums){
                 })
             })
             .then(() => {
+
                 for(let i=post_arr.length-1; i>=0 ; i--){
                     printPost(post_arr[i], button_nums[i], i )
                 }
+
             })
 }
 
@@ -487,8 +490,13 @@ function postDetail(id) {
                         posts.push(data.val());
                     })
                 }).then(()=>{
-                    for(let i=posts.length-1; i>=0 ; i--){
+                    let i = 0;
+                    for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
+                    }
+                    if(i == posts.length-1){
+                        let field = document.getElementById("postField");
+                        field.innerHTML += `<h2>No results found<h2>`
                     }
                 });
     })
@@ -529,7 +537,13 @@ function searchYourPosts(param){
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
 
-                    if(data.val().username == current_user["username"]){
+                    let userFav = [];
+
+                    if(data.val().users_favourite != undefined){ // no favs on the post
+                        userFav= data.val().users_favourite; //get all users favs
+                    }
+
+                    if(data.val().username == current_user["username"] || userFav.includes(current_user["phone"])){
                         for (let i =0; i<data_list.length; i++) {
                             if (data.val()['id']==data_list[i][0])
                             {
@@ -596,8 +610,13 @@ function searchYourPosts(param){
                         }
                     })
                 }).then(()=>{
-                    for(let i=posts.length-1; i>=0 ; i--){
+                    let i =0;
+                    for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
+                    }
+                    if(i == posts.length-1){
+                        let field = document.getElementById("postField");
+                        field.innerHTML += `<h2>No results found<h2>`
                     }
                 });
     })
