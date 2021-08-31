@@ -72,11 +72,11 @@ function changeLang(lang){
     eraseCookiesGoogle();
     translateLanguage(lang);
 
-    if (window.location.pathname =="/"){  //reset the captcha
-        setTimeout(function(){ 
-            window.location.reload(false); 
-        }, 1000);
-        }
+    // if (window.location.pathname =="/"){  //reset the captcha
+    //     setTimeout(function(){ 
+    //         window.location.reload(false); 
+    //     }, 1000);
+    //     }
 
 }  
 

@@ -161,6 +161,8 @@ function codeverify() {
 
     coderesult.confirm(code).then((result)=> {
         const user = result.user
+        document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
+
 
         //check if this user is already registered
         // checkUserExistence(document.getElementById("number").value);
@@ -173,11 +175,13 @@ function codeverify() {
         recaptchaVerifier.reset();
         document.getElementById("input-pin").innerHTML = "Invalid PIN entered. Please resend a new pin and retry.";
         document.getElementById("input-pin").style.color = "red";
+        //delete created user
+
+        firebase.database().ref(`users/${document.getElementById("number").value}`).remove();
     });
 }
 
 
-let exists = false;
 
 /**
  * Function used to check if the user with the given phone number of already present in the database
@@ -185,31 +189,34 @@ let exists = false;
  * @returns boolean true if exists and false is does not
  */
 function checkUserExistence(phone){
+
     let username;
+    let exists = false;
+
     firebase.database().ref(`users/${phone}`).once("value", snapshot => {
-        
+
         if (snapshot.exists()){
-           exists = true;
-           username = snapshot.val().username;
-        }
-     }).then(()=>{
+            
+            let user = snapshot.val(); // get the user
 
-        if(!exists){ //Create a new account
-            //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
-            // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-            window.location = "username.html"; //TODO make this a proper redirect
-        }
-        else{
-            // !!LOG IN !!!
 
-            let user = JSON.parse(localStorage.getItem(USER_KEY));
-
-            user["username"] = username;
             localStorage.setItem(USER_KEY,JSON.stringify(user));
             window.location = "main_page.html"
         }
+        else{
+            //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
+            // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
+            let user = {
+                username: "notset",
+                phone: phone
 
-     });
+            }
+            localStorage.setItem(USER_KEY,JSON.stringify(user));
+            window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
+
+        }
+
+     })
         
 }
    
@@ -247,3 +254,102 @@ firebase.auth().onAuthStateChanged(function(user){
       // User is signed out.
     }
   })
+
+
+
+  // CODE RELATED TO REGISTRATION
+
+    function register(username,phone){
+    //retrieve phone from local storage
+
+        makeNewUser(phone, username);
+    
+        //set logged in user into local storage
+        let user = {
+            username: username,
+            phone: phone
+        };
+
+        firebase.database().ref('users').orderByChild('phone')
+        .equalTo(phone).once('value', data => {
+
+            // If username exists, output an error
+            user = data.val();
+    
+
+            localStorage.setItem(USER_KEY,JSON.stringify(user));
+
+        
+
+            
+  
+
+        })
+ 
+        codeverify();
+
+}
+
+/**
+ * Function that checks the validity of the input username written by user based on the
+ * RegEx pattern given in the function.
+ * @returns a boolean indicating whether the input username follows the criteria of
+ *          only having alphanumeric usernames; no special characters are allowed with 
+ *          length between 5 to 15 characters
+ */
+function usernameValidation() {
+
+    //var username_regex = /^\+[0-9]{11,15}$/;
+    // var username_regex =/^[a-zA-Z0-9_ ]*$/  ///^(?=.*[a-zA-Z"_\d].*)[a-zA-Z_\d]{5,15}$/
+    var username_regex =/^(?=.*[a-zA-Z\d ].*)[a-zA-Z\d ]{5,15}$/
+    var username = document.getElementById("username").value
+
+    // test the input number based on the RegEx pattern stated
+    if (username_regex.test(username))
+    {
+        document.getElementById("error_username").innerHTML = "";
+        document.getElementById("username").style.visibility="visible";
+        document.getElementById("username").style.color="green";
+    }
+    else {
+        document.getElementById("error_username").innerHTML = "<p>Username should be 5 to 15 characters long and not have any special characters like !@#$%^&*. Please try again.<p>";
+        document.getElementById("username").style.visibility="visible";
+        document.getElementById("username").style.color="red";
+    }
+
+    return username_regex.test(username)
+}
+
+
+ /**
+  *  Function checks the validity of the chosen username based on the existing users in the database
+  * @param {*} username the chosen username of the user to be registered 
+  * @returns true if the username is available and false if there is another username who possesses the chosen username
+  */
+function checkUsernameValidity(){
+    let username = document.getElementById("username").value;
+    let valid = usernameValidation();
+
+
+    //search the username in db. similar to phone number search
+    firebase.database().ref('users').orderByChild('username')
+    .equalTo(username).once('value', data => {
+        data.forEach(() => {
+            // If username exists, output an error
+            document.getElementById("error_username").innerHTML = "<p>Username exists. Please choose another username</p>";
+            valid = false;
+
+        });
+    }).then(() => {
+        if (valid) {
+            document.getElementById("error_username").innerHTML = "";
+            //if valid, register the user
+
+            register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
+        }
+
+
+    });
+
+
+}
