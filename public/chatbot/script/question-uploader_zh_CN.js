@@ -35,7 +35,6 @@ const SUB_QUESTIONS_1_13 = [
     "无法支付<b>至少一张</b>账单。" // Qs l.13.d
 ];
 
-// TODO Fill in tooltips
 const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
@@ -92,7 +91,7 @@ const PART1 = [
 
     // The question above this line is a long question (1.13)
 
-    "您对现在的生活<b>满意</b>吗？ （等级从 1 到 5）"// Qs 1.14
+    "您对现在的生活<b>满意</b>吗？（等级从 1 到 5）"// Qs 1.14
 
     // The question above this line is a long question 1.14
 ];
@@ -310,14 +309,15 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
+    "选择一个选项",
+    "请输入数字",
     // The question above this line is question 4.2
 
-    "",
+    "选择一个选项",
     // The question above this line is a long question (4.3)
 
-    "placeholder",
+    "",
+    "选择一个选项"
 ]
 
 const PART5 = [
@@ -334,10 +334,10 @@ const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "输入回复",
+    "输入回复",
+    "输入回复",
+    "输入回复"
 ]
 
 // TODO 2.6 and 2.7 - Likert Scale
@@ -377,7 +377,7 @@ function pushPart1Questions() {
 
     // Question 1.7
     let choices_1_7 = ["单身", "已婚", "离婚", "丧偶", "其他关系"];
-    pushMultipleChoice("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
+    pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
     pushNumeric("1.8", PART1[8], 0, 999, false, HINTS_PART1[8]);
@@ -488,7 +488,7 @@ function pushPart2Questions() {
     setPartNumber(2);
 
     // Question 2.1
-    let choices_2_1 = ["工作", "退休", "半退休", "不工作", "不工作但做义工", "不工作但在找工作"];
+    let choices_2_1 = ["工作", "退休", "半退休", "不工作", "不工作但做义工", "不工作但在找工作", "其他"];
     let skip_choices_2_1 = ["退休", "不工作", "不工作但做义工", "不工作但在找工作"];
     pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1, skip_choices_2_1, "insert question 2.3 id here", HINTS_PART2[1]);
 

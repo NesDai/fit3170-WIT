@@ -35,8 +35,7 @@ const SUB_QUESTIONS_1_13 = [
     "" // Qs l.13.d
 ];
 
-// TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_15 = [
+const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
@@ -310,14 +309,15 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
+    "Select an Option",
+    "Enter a Number",
     // The question above this line is question 4.2
 
-    "",
+    "Select an Option",
     // The question above this line is a long question (4.3)
 
-    "placeholder",
+    "",
+    "Select an Option"
 ]
 
 const PART5 = [
@@ -334,10 +334,10 @@ const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Type in a Response",
+    "Type in a Response",
+    "Type in a Response",
+    "Type in a Response"
 ]
 
 // TODO 2.6 and 2.7 - Likert Scale
@@ -377,7 +377,7 @@ function pushPart1Questions() {
 
     // Question 1.7
     let choices_1_7 = ["Single", "Married", "Divorced", "Widowed", "Other relationship"];
-    pushMultipleChoice("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
+    pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
     pushNumeric("1.8", PART1[8], 0, 999, false, HINTS_PART1[8]);
@@ -438,22 +438,22 @@ function pushPart1Questions() {
         let choices_1_13 = ["Yes", "No"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[1]);
+            SUB_QUESTIONS_HINTS_1_13[1]);
 
         // Question 1.13b
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[2],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[2]);
+            SUB_QUESTIONS_HINTS_1_13[2]);
 
         // Question 1.13c
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[3],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[3]);
+            SUB_QUESTIONS_HINTS_1_13[3]);
 
         // Question 1.13d
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[4],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[4]);
+            SUB_QUESTIONS_HINTS_1_13[4]);
     });
 
     // Question 1.14

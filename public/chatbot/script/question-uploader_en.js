@@ -35,8 +35,7 @@ const SUB_QUESTIONS_1_13 = [
     "Not being able to pay <b>at least one</b> bill." // Qs l.13.d
 ];
 
-// TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_15 = [
+const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
@@ -132,7 +131,7 @@ const PART2 = [
 
     "What is your <b>current</b> employment status?", // Qs 2.1
     "What is your <b>current</b> job/ occupation/ profession?", // Qs 2.2
-    "How <b>satisfied</b> are you in your current employment status?", // Qs 2.3
+    "How <b>satisfied</b> are you in your current employment status? (Rate from 1 to 5)", // Qs 2.3
     "Did you lose your <b>job</b> due to the COVID-19 pandemic?", // Qs 2.4
     "Did you lose your <b>earning income</b> due to the COVID-19 pandemic?", // Qs 2.5
     "How confident are you in finding a <b>new job</b> in the near future?", // Qs 2.6
@@ -237,8 +236,8 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "ICT/ technology skills (such as how to use mobile phone or computer software", // Qs 4.3.a
-    "Social communication skills (such as how to improve relationships or interact" +
+    "ICT/ technology skills (such as how to use mobile phone or computer software)", // Qs 4.3.a
+    "Social communication skills (such as how to improve relationships or interact " +
     "with others)", // Qs 4.3.b
     "Complementary skills (such as learning non-work-related skills or hobbies)", // Qs 4.3.c
     "Work-related skills (such as how to increase job/ business productivity)" // Qs 4.3.d
@@ -293,10 +292,8 @@ const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "How <b>often</b> do you try to learn something new or useful using a mobile\n" +
-    "phone? (Rate from 1 to 7)\n" +
-    "[1] Never, [2] Once a month, [3] Few times a month,\n" +
-    "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day", // Qs 4.1
+    "How <b>often</b> do you try to learn something new or useful using a mobile \n" +
+    "phone? (Rate from 1 to 7)", // Qs 4.1
 
     "How many <b>hours per week</b> do you devote to learning something new or useful" +
     " using a mobile phone?", // Qs 4.2
@@ -306,11 +303,10 @@ const PART4 = [
     "(Rate from 1 to 5)", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "What <b>work-related skills</b> do you wish to learn using a mobile phone? ", // Qs 4.3
+    "What <b>work-related skills</b> do you wish to learn using a mobile phone? ", // Qs 4.4
     // The question above this line is question 4.4
 
-    "How much do you agree or disagree that the following statement <b>describes you</b>? <i>(Rate from 1 to 5)</i>\n" +
-    "[1] Strongly disagree, [2] Disagree, [3] Neutral, [4] Agree, [5] Strongly agree" // Qs 4.5
+    "How much do you agree or disagree that the following statement <b>describes you</b>? (Rate from 1 to 5)" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -318,14 +314,15 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Enter a Number",
+    "Select an Option",
     "Enter a Number",
     // The question above this line is question 4.2
 
-    "",
+    "Select an Option",
     // The question above this line is a long question (4.3)
 
-    "Select an Option",
+    "",
+    "Select an Option"
 ]
 
 const PART5 = [
@@ -386,7 +383,7 @@ function pushPart1Questions() {
 
     // Question 1.7
     let choices_1_7 = ["Single", "Married", "Divorced", "Widowed", "Other relationship"];
-    pushMultipleChoice("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
+    pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
     pushNumeric("1.8", PART1[8], 0, 999, false, HINTS_PART1[8]);
@@ -447,22 +444,22 @@ function pushPart1Questions() {
         let choices_1_13 = ["Yes", "No"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[1]);
+            SUB_QUESTIONS_HINTS_1_13[1]);
 
         // Question 1.13b
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[2],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[2]);
+            SUB_QUESTIONS_HINTS_1_13[2]);
 
         // Question 1.13c
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[3],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[3]);
+            SUB_QUESTIONS_HINTS_1_13[3]);
 
         // Question 1.13d
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[4],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[4]);
+            SUB_QUESTIONS_HINTS_1_13[4]);
     });
 
     // Question 1.14
@@ -498,8 +495,7 @@ function pushPart2Questions() {
 
     // Question 2.1
     let choices_2_1 = ["Working", "Retired", "Semi-retired", "Not working",
-        "Not working but doing voluntary work", "Not working but looking for a" +
-        "job"];
+        "Not working but doing voluntary work", "Not working but looking for a job", "others"];
     let skip_choices_2_1 = ["Retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
     pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1,
         skip_choices_2_1,

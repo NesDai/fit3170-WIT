@@ -9,34 +9,33 @@ const SUB_QUESTIONS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.12.1
-    "", // Qs 1.12.2
-    "", // Qs 1.12.3
-    "" // Qs 1.12.4
+    "Tinggal bersama seseorang di rumah", // Qs 1.12.1
+    "Tinggal bersendirian di rumah", // Qs 1.12.2
+    "Tinggal bersama seseorang di tempat penjagaan orang tua", // Qs 1.12.3
+    "Tinggal bersendirian di tempat penjagaan orang tua" // Qs 1.12.4
 ];
 
 const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan"
 ];
 
 const SUB_QUESTIONS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.13.a
-    "", // Qs 1.13.b
-    "", // Qs 1.13.c
-    "" // Qs l.13.d
+    "Bergantung pada orang lain untuk memenuhi <b>keperluan saya</b>.", // Qs 1.13.a
+    "Tidak mendapat rawatan <b>perubatan</b> yang diperlukan? ", // Qs 1.13.b
+    "Tidak mempunyai wang untuk membeli <b>bahan makanan</b>. ", // Qs 1.13.c
+    "Tidak dapat membayar <b>sekurang-kurangnya satu</b> bil." // Qs l.13.d
 ];
 
-// TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_15 = [
+const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
@@ -50,9 +49,9 @@ const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.14.a
-    "", // Qs 1.14.b
-    "" // Qs 1.14.c
+    "Secara keseluruhan, kehidupan saya hampir ideal.", // Qs 1.14.a
+    "Keadaan hidup saya sekarang sangat baik.", // Qs 1.14.b
+    "Saya berpuas hati dengan hidup saya." // Qs 1.14.c
 ];
 
 // TODO Fill in tooltips
@@ -70,29 +69,29 @@ const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.1
-    "", // Qs 1.2
-    "", // Qs 1.3
-    "", // Qs 1.4
-    "", // Qs 1.5
-    "", // Qs 1.6
-    "", // Qs 1.7
-    "", // Qs 1.8
-    "", // Qs 1.9
+    "Berapakah <b>umur</b> anda dalam tahun?", // Qs 1.1
+    "Apakah <b>jantina</b> anda?", // Qs 1.2
+    "Apakah kumpulan <b>etnik</b> anda?", // Qs 1.3
+    "Di mana anda tinggal sekarang?", // Qs 1.4
+    "Berapakah <b>purata pendapatan isi rumah</b> anda sebulan?", // Qs 1.5
+    "Apakah tahap <b>pendidikan</b> tertinggi anda yang telah habis diselesaikan?", // Qs 1.6
+    "Apakah <b>status perkahwinan</b> anda?", // Qs 1.7
+    "Berapa banyak <b>anak</b> yang dalam <b>tanggungan</b> anda?", // Qs 1.8
+    "Berapa orang <b>anak</b> yang anda <b>berkomunikasi atau hubungi</b> setiap minggu? ", // Qs 1.9
 
     // The question above this line is question 1.9
 
-    "", // Qs 1.10
-    "", // Qs 1.11
-    "", // Qs 1.12
+    "Berapa banyak <b>saudara mara</b> yang rapat dengan anda?", // Qs 1.10 TODO get confirmation on translation "saudara" -> "saudara mara"
+    "Berapa ramai <b>rakan karib</b> anda? ", // Qs 1.11
+    "Apakah status kehidupan berdikari anda?", // Qs 1.12
 
     // The question above this line is a long question 1.12
 
-    "", // Qs 13
+    "Dalam 6 bulan terakhir, adakah anda mengalami situasi berikut?", // Qs 13
 
     // The question above this line is a long question (1.13)
 
-    "" // Qs 1.14
+    "Sejauh mana anda <b>berpuas hati</b> dengan kehidupan anda sekarang? (Nilai dari 1 hingga 5)" // Qs 1.14
 
     // The question above this line is a long question 1.14
 ];
@@ -101,28 +100,28 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Enter a Number",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Enter a Number",
-    "Enter a Number",
+    "masukkan nombor",
+    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan",
+    "masukkan nombor",
+    "masukkan nombor",
 
     // The question above this line is question 1.10
 
 
-    "Enter a Number",
-    "Select an Option",
-    "Select an Option",
+    "masukkan nombor",
+    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "pilih pilihan",
     // The question above this line is a long question (1.14)
 
-    "Select an Option",
+    "pilih pilihan",
     // The question above this line is a long question (1.14)
 
-    "Select an Option"
+    "pilih pilihan"
     // The question above this line is a long question (1.14)
 ];
 
@@ -130,13 +129,13 @@ const PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 2.1
-    "", // Qs 2.2
-    "", // Qs 2.3
-    "", // Qs 2.4
-    "", // Qs 2.5
-    "", // Qs 2.6
-    "" // Qs 2.7
+    "Apakah status <b>pekerjaan anda sekarang?</b>", // Qs 2.1
+    "Apa yang anda lakukan/ pekerjaan / profesion anda <b>sekarang?</b>", // Qs 2.2
+    "Sejauh mana anda <b>berpuas hati</b> dengan status pekerjaan anda sekarang? (Nilai dari 1 hingga 5)", // Qs 2.3
+    "Adakah anda kehilangan <b>pekerjaan</b> kerana wabak COVID-19?", // Qs 2.4
+    "Adakah anda kehilangan <b>pendapatan</b> anda kerana wabak COVID-19?", // Qs 2.5
+    "Seberapa yakin anda dalam mencari <b>pekerjaan baru</b> dalam masa terdekat?", // Qs 2.6
+    "Sejauh mana anda yakin dapat mengekalkan <b>pekerjaan semasa</b> anda dalam masa terdekat?" // Qs 2.7
 ];
 
 const HINTS_PART2 = [
@@ -156,28 +155,28 @@ const SUB_QUESTIONS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 3.2.a
-    "", // Qs 3.2.b
-    "", // Qs 3.2.c
-    "", // Qs 3.2.d
-    "", // Qs 3.2.e
-    "", // Qs 3.2.f
-    "", // Qs 3.2.g
+    "SMS, pesanan teks (seperti Whatsapp, WeChat, dll.)", // Qs 3.2.a
+    "Melayari laman web", // Qs 3.2.b
+    "Menonton video", // Qs 3.2.c
+    "Menggunakan Zoom, Facetime, Skype, Google Talk, dll.", // Qs 3.2.d
+    "Menggunakan aplikasi pengesanan kontak COVID-19 (seperti MySejahtera)", // Qs 3.2.e
+    "Membeli-belah atas talian atau e-dagang (seperti Lazada, Shopee, dll.)", // Qs 3.2.f
+    "Menggunakan perbankan mudah alih / e-wallet (seperti GrabPay, BoostPay, FavePay, Touch N Go Pay, dll.)", // Qs 3.2.g
     // The question above this line is question 3.2g
 
-    "", // Qs 3.2.h
-    "", // Qs 3.2.i
-    "", // Qs 3.2.j
-    "", // Qs 3.2.k
-    "", // Qs 3.2.l
-    "", // Qs 3.2.m
-    "", // Qs 3.2.n
-    "", // Qs 3.2.o
+    "Pemesanan atas talian untuk makanan atau bahan makanan mentah", // Qs 3.2.h
+    "Menggunakan rangkaian sosial (seperti Facebook, Instagram, Twitter, dll.)", // Qs 3.2.i
+    "Mengambil gambar", // Qs 3.2.j
+    "Pemetaan (seperti Peta Google, Waze, Tom-Tom, dll.)", // Qs 3.2.k
+    "Menguruskan janji temu di kalendar saya", // Qs 3.2.l
+    "Membaca berita atas talian atau majalah atas talian", // Qs 3.2.m
+    "Mencatat (seperti senarai belanja atau tugas) yang perlu saya lakukan", // Qs 3.2.n
+    "Penggambaran video", // Qs 3.2.o
     // The question above this line is question 3.2o
 
-    "", // Qs 3.2.p
-    "", // Qs 3.2.q
-    "" // Qs 3.2.r
+    "Mendengarkan muzik", // Qs 3.2.p
+    "Bermain permainan", // Qs 3.2.q
+    "Menggunakan untuk menghubungi pihak berkuasa kerajaan" // Qs 3.2.r
 ];
 
 const SUB_QUESTIONS_HINTS_3_2 = [
@@ -213,10 +212,10 @@ const PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 3.1
+    "Bagaimana anda mengakses Internet menggunakan telefon bimbit anda?", // Qs 3.1
     // The question above this line is question 3.1
 
-    "" // Qs 3.2
+    "Sejauh mana anda <b>yakin menggunakan telefon bimbit anda</b> untuk aktiviti berikut? (Nilai dari 1 hingga 5)" // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
@@ -236,10 +235,10 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 4.3.a
-    "", // Qs 4.3.b
-    "", // Qs 4.3.c
-    "" // Qs 4.3.d
+    "Kemahiran ICT / teknologi (seperti cara menggunakan perisian telefon bimbit atau komputer)", // Qs 4.3.a
+    "Kemahiran komunikasi sosial (seperti bagaimana memperbaiki hubungan atau berinteraksi dengan orang lain)", // Qs 4.3.b
+    "Kemahiran pelengkap (seperti belajar kemahiran atau hobi yang tidak berkaitan dengan pekerjaan)", // Qs 4.3.c
+    "Kemahiran yang berkaitan dengan pekerjaan (seperti cara meningkatkan produktiviti pekerjaan / perniagaan)" // Qs 4.3.d
 ];
 
 const SUB_QUESTIONS_HINTS_4_3 = [
@@ -254,19 +253,19 @@ const SUB_QUESTIONS_HINTS_4_3 = [
 const SUB_QUESTIONS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "", // Qs 4.5.a
-    "", // Qs 4.5.b
-    "", // Qs 4.5.c
-    "", // Qs 4.5.d
-    "", // Qs 4.5.e
-    "", // Qs 4.5.f
-    "", // Qs 4.5.g
-    "", // Qs 4.5.h
-    "", // Qs 4.5.i
-    "", // Qs 4.5.j
-    "", // Qs 4.5.k
-    "", // Qs 4.5.l
-    "" // Qs 4.5.m
+    "Saya memahami erti kehidupan.", // Qs 4.5.a
+    "Saya memahami maksud aktiviti kehidupan seharian.", // Qs 4.5.b
+    "Saya tertarik dalam aktiviti kehidupan seharian.", // Qs 4.5.c
+    "Saya mempunyai keyakinan dalam aktiviti kehidupan seharian.", // Qs 4.5.d
+    "Saya mempunyai keyakinan diri dalam pelaksanaan aktiviti kehidupan seharian.", // Qs 4.5.e
+    "Saya mempunyai keyakinan terhadap aktiviti kehidupan seharian yang baru dibentuk.", // Qs 4.5.f
+    "Saya mempunyai keupayaan untuk menunjukkan diri sendiri.", // Qs 4.5.g
+    "Saya mempunyai keupayaan untuk memilih alternatif yang lebih baik.", // Qs 4.5.h
+    "Saya mempunyai keupayaan untuk membuat keputusan mengenai masalah tertentu.", // Qs 4.5.i
+    "Saya mempunyai keupayaan untuk bekerjasama dengan orang lain.", // Qs 4.5.j
+    "Saya mempunyai keupayaan membina pasukan dengan yang lain.", // Qs 4.5.k
+    "Saya mempunyai keupayaan untuk membina gabungan.", // Qs 4.5.l
+    "Saya mempunyai keupayaan menyelesaikan masalah dengan orang lain." // Qs 4.5.m
 ];
 
 const SUB_QUESTIONS_HINTS_4_5 = [
@@ -291,18 +290,19 @@ const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 4.1
+    "Berapa <b>kerap</b> anda cuba mempelajari sesuatu yang baru atau berguna menggunakan \n" +
+    "telefon bimbit? (Nilai dari 1 hingga 7)", // Qs 4.1
 
-    "", // Qs 4.2
+    "Berapa <b>jam seminggu</b> yang anda curahkan untuk mempelajari sesuatu yang baru atau berguna, menggunakan telefon bimbit?", // Qs 4.2
     // The question above this line is question 4.2
 
-    "", // Qs 4.3
+    "Seberapa <b>minat</b> anda <b>mempelajari</b> kemahiran berikut menggunakan telefon bimbit? (Nilai dari 1 hingga 5)", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "", // Qs 4.4
+    "Apakah <b>kemahiran yang berkaitan dengan pekerjaan</b> yang ingin anda pelajari menggunakan telefon bimbit?", // Qs 4.4
     // The question above this line is question 4.4
 
-    "" // Qs 4.5
+    "Sejauh mana anda bersetuju atau tidak setuju bahawa pernyataan berikut <b>menerangkan tentang anda</b>? (Nilai dari 1 hingga 5)" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -310,34 +310,35 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
+    "pilih pilihan",
+    "masukkan nombor",
     // The question above this line is question 4.2
 
-    "",
+    "pilih pilihan",
     // The question above this line is a long question (4.3)
 
-    "placeholder",
+    "",
+    "pilih pilihan"
 ]
 
 const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 5.1
-    "", // Qs 5.2
-    "", // Qs 5.3
-    "" // Qs 5.4
+    "Mengapa anda berminat belajar menggunakan telefon bimbit?", // Qs 5.1
+    "Sumber apa yang anda mahukan untuk belajar menggunakan telefon bimbit?", // Qs 5.2
+    "Apakah perkara yang paling mengecewakan sejauh ini semasa belajar menggunakan telefon bimbit?", // Qs 5.3
+    "Beritahu kami mengenai masalah atau cabaran anda di tempat kerja. " // Qs 5.4
 ]
 
 const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Taipkan tindak balas",
+    "Taipkan tindak balas",
+    "Taipkan tindak balas",
+    "Taipkan tindak balas"
 ]
 
 // TODO 2.6 and 2.7 - Likert Scale
@@ -354,30 +355,30 @@ function pushPart1Questions() {
     pushNumeric("1.1", PART1[1], 50, 100, true, HINTS_PART1[1]);
 
     // Question 1.2
-    let choices_1_2 = ["Male", "Female"]
-    let skip_choices_1_2 = ["Male"];
+    let choices_1_2 = ["Lelaki", "Perempuan"]
+    let skip_choices_1_2 = ["Lelaki"];
     pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2, SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
-    let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
+    let choices_1_3 = ["Malayu", "Cina", "India", "Thai", "Lain-lain"];
     //pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
     pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
-    let choices_1_4 = ["Urban area", "Rural area"];
+    let choices_1_4 = ["Kawasan bandar", "Kawasan luar bandar"];
     pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED, HINTS_PART1[4]);
 
     // Question 1.5
-    let choices_1_5 = ["No income", "Less than MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
+    let choices_1_5 = ["Tiada pendapatan", "Kurang dari MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 atau lebih"];
     pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED, HINTS_PART1[5]);
 
     // Question 1.6
-    let choices_1_6 = ["No formal education", "Primary school", "Secondary/ high school", "Vocational/ technical certification", "University"];
+    let choices_1_6 = ["Tiada pendidkan formal", "Sekolah rendah", "Sekolah menengah / tinggi", "Sijil vokasional / teknikal", "Universiti"];
     pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED, HINTS_PART1[6]);
 
     // Question 1.7
-    let choices_1_7 = ["Single", "Married", "Divorced", "Widowed", "Other relationship"];
-    pushMultipleChoice("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
+    let choices_1_7 = ["Bujang", "Berkahwin", "Bercerai", "Kematian pasangan", "Hubungan lain"];
+    pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
     pushNumeric("1.8", PART1[8], 0, 999, false, HINTS_PART1[8]);
@@ -408,8 +409,8 @@ function pushPart1Questions() {
             initLongQuestionParams();
 
             // Question 1.12a
-            let choices_1_12 = ["Yes", "No"];
-            let skip_choices_1_12 = ["Yes"];
+            let choices_1_12 = ["Ya", "Tidak"];
+            let skip_choices_1_12 = ["Ya"];
             appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[1], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[1]);
 
             // Question 1.12b
@@ -435,25 +436,25 @@ function pushPart1Questions() {
         initLongQuestionParams();
 
         // Question 1.13a
-        let choices_1_13 = ["Yes", "No"];
+        let choices_1_13 = ["Ya", "Tidak"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[1]);
+            SUB_QUESTIONS_HINTS_1_13[1]);
 
         // Question 1.13b
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[2],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[2]);
+            SUB_QUESTIONS_HINTS_1_13[2]);
 
         // Question 1.13c
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[3],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[3]);
+            SUB_QUESTIONS_HINTS_1_13[3]);
 
         // Question 1.13d
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[4],
             choices_1_13, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[4]);
+            SUB_QUESTIONS_HINTS_1_13[4]);
     });
 
     // Question 1.14
@@ -488,8 +489,8 @@ function pushPart2Questions() {
     setPartNumber(2);
 
     // Question 2.1
-    let choices_2_1 = ["Working", "Retired", "Semi-retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
-    let skip_choices_2_1 = ["Retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
+    let choices_2_1 = ["Bekerja", "Bersara", "Separa pesara", "Tidak berkerja", "Tidak bekerja tetapi melakukan kerja sukarela", "Tidak bekerja tetapi mencari pekerjaan", "Lain-Lain"];
+    let skip_choices_2_1 = ["Bersara", "Tidak berkerja", "Tidak bekerja tetapi melakukan kerja sukarela", "Tidak bekerja tetapi mencari pekerjaan"];
     pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1, skip_choices_2_1, "insert question 2.3 id here", HINTS_PART2[1]);
 
     // Question 2.2
@@ -499,23 +500,23 @@ function pushPart2Questions() {
     pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
-    let choices_2_4 = ["Yes", "No", "Not applicable"];
+    let choices_2_4 = ["Ya", "Tidak", "Tidak berkenaan"];
     pushMultipleChoice("2.4", PART2[4], choices_2_4, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
-    let choices_2_5 = ["Yes", "No", "Not applicable"];
+    let choices_2_5 = ["Ya", "Tidak", "Tidak berkenaan"];
     pushMultipleChoice("2.5", PART2[5], choices_2_5, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
     // Question 2.6
-    let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_6 = ["Tidak berkenaan", "Tidak yakin sama sekali", "Agak tidak yakin", "Cukup yakin", "Agak yakin", "Sangat yakin"];
     pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
-    let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_7 = ["Tidak berkenaan", "Tidak yakin sama sekali", "Agak tidak yakin", "Cukup yakin", "Agak yakin", "Sangat yakin"];
     pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
@@ -526,11 +527,11 @@ function pushPart3Questions() {
 
     // Question 3.1
     let choices_3_1 = [
-        "Prepaid mobile data plan",
-        "Postpaid mobile data plan",
-        "Home WiFi broadband plan",
-        "Public WiFi hotspot",
-        "I don't know how to access the Internet"
+        "Pelan data mudah alih prabayar",
+        "Pelan data mudah alih pascabayar",
+        "Pelan jalur lebar WiFi rumah",
+        "Hotspot WiFi awam",
+        "Saya tidak tahu cara mengakses Internet"
     ];
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
