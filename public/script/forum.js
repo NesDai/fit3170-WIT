@@ -19,11 +19,11 @@ function checkUserExistence() {
 }
 
 function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";  
+    document.getElementById("myModal").style.display = "block";
 }
 
 function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";  
+    document.getElementById("myModal").style.display = "none";
 }
 
 /**
