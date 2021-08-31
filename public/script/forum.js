@@ -19,13 +19,30 @@ function checkUserExistence() {
 }
 
 function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";  
+    document.getElementById("myModal").style.display = "block";
 }
 
 function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";  
+    document.getElementById("myModal").style.display = "none";
 }
 
+/**
+ * Function used to check if a video link is from youtube.
+ * If it is, then it manipulates the url to be able to display a video on the app.
+ * @param {1} url: input url of a video from create_post.html
+ * @returns youtube_url: the url with embed param added if the condition is satisfied. Or else, it returns 0
+ */
+function checkEmbeddingVideo(url) {
+    let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let match = url.match(regExp);
+    let youtube_url = 'https://www.youtube.com/embed/';
+
+    if (match && match[2].length == 11) {
+        return youtube_url + match[2];
+    } else {
+        return 0;
+    }
+}
 
 
 //Making a new post
@@ -60,6 +77,16 @@ function makeNewPost() {
         let key = myRef.push().key;
         // let key = myRef.key; // generate a key for post id
 
+        let embedding_video_url = 0 
+        if (video_url !== "") {
+            embedding_video_url = checkEmbeddingVideo(video_url);
+            if (embedding_video_url == 0) {
+                alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+                return;
+            }
+
+        }
+
         let newData = {
             id: key,
             description: description,
@@ -67,7 +94,7 @@ function makeNewPost() {
             title: title,
             userID: current_user["phone"],
             username: current_user["username"],
-            videoURL: video_url,
+            videoURL: embedding_video_url,
             created: new Date().toString()
         }
 
@@ -147,7 +174,7 @@ function findAllPosts() {
 function printAllPosts(){
     let data_list = [];
     let field = document.getElementById("postField");
-    // field.innerHTML = ""; // emtpy the field of any previous posts
+    field.innerHTML = ""; // emtpy the field of any previous posts
 
     firebase.database().ref('posts')
         .once('value', x => {
@@ -160,8 +187,7 @@ function printAllPosts(){
         }).then(()=>{
             for(let i=data_list.length-1; i>=0 ; i--){
                 let post = data_list[i]
-
-                field.innerHTML +=
+                field.innerHTML = field.innerHTML + 
                 `   <div style="padding-top: 20px;">
                         <span class="post_card">
                            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -178,7 +204,12 @@ function printAllPosts(){
                               <form class="post_content" style="margin:0 10px; background-color: white">
                                  <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                                  <br>
-                                 <iframe width="350" height="300" src="${post.videoURL}"></iframe>   
+                                 `
+                                 +   
+                                 `${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}`
+                                 +
+                                 `
+                                 <br>
                                  <br>
                                  <div style='display: inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
@@ -231,7 +262,7 @@ function printUserPosts(){
                     for(let i=data_list.length-1; i>=0 ; i--){
                         let post = data_list[i]
 
-                        field.innerHTML +=
+                        field.innerHTML = field.innerHTML + 
                         `   <div style="padding-top: 20px;"><span class="post_card">
                             <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                                <!-- POST HEADER -->
@@ -248,6 +279,14 @@ function printUserPosts(){
                                <!-- POST FORM -->
                                <form class="post_content" style="margin:0 10px; background-color: white">
                                   <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
+                                  <br>
+                                  `
+                                  + 
+                                  `
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  `
+                                  +
+                                  `
                                   <br>
                                   <div style='inline-block'>
                                     <button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest1_id">${post.interest[0]}</button>
