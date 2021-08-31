@@ -529,8 +529,11 @@ function searchYourPosts(param){
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
 
-                    let userFav= data.val().users_favourite; //get all users favs
-                    console.log("arr"+userFav);
+                    let userFav = [];
+
+                    if(data.val().users_favourite != undefined){ // no favs on the post
+                        userFav= data.val().users_favourite; //get all users favs
+                    }
 
                     if(data.val().username == current_user["username"] || userFav.includes(current_user["phone"])){
                         for (let i =0; i<data_list.length; i++) {
