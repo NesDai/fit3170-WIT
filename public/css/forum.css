@@ -104,12 +104,6 @@ i.icon-teal2 {
 
 
 
-/* to be deleted */
-#favourite_post_icon {
-	font-size: 17px;
-	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-	color: white
-}
 
 #interest1_id {
 	background-color: #00ac3e;
@@ -208,6 +202,28 @@ transition: color 0.15s ease-in;
 
 
 
+/* favourite */
+.favourite {
+	color: black;
+	border: 2px solid #006DAE;
+	width: max-content;
+	border-radius: 15px;
+	margin: 0 0 0 10px;
+}
+
+
+#favourite_post_icon {
+	height: 22px;
+	margin-bottom: 5px;
+}
+
+.favourite:hover {
+	background-color: #006DAE;
+	color: white;
+}
+
+
+
 @media all and (min-width:551px) {
 	/* laptop */
 	.mobile-br {
@@ -245,13 +261,13 @@ transition: color 0.15s ease-in;
 		cursor: pointer;
 		border: white;
 		border: 10px;
-		margin-left: 550px;
+		margin-left: 75%;
 		background: #006DAE;
 	}
 	#reply_box {
-		margin: 10px;
+        margin:0 10px;
 		background-color: white;
-		width: 95%
+	
 	}
 	.checkbox-inline {
 		padding-left: 40px;
@@ -353,7 +369,7 @@ transition: color 0.15s ease-in;
 		background-color: #006DAE;
 		position: relative;
 		width: 160px;
-		left: 290px
+		left: 290px;
 	}
 	#date_posted {
 		position: relative;
@@ -370,6 +386,9 @@ transition: color 0.15s ease-in;
         height: 50%;
     }
 
+    #send_reply_btn {
+        right: 3%;
+	}
 }
 
 @media all and (max-width: 1023px) {
@@ -469,12 +488,12 @@ transition: color 0.15s ease-in;
 	#send_comment_btn {
 		border-radius: 15px;
 		position: relative;
-		left: 60%;
 		background-color: #006DAE;
 		color: white;
+        width: 32%;
 	}
 	#send_comment_btn {
-		left: 70%;
+		left: 61%;
 	}
 	#send_reply_btn {
 		left: 60%;
@@ -553,10 +572,18 @@ transition: color 0.15s ease-in;
         left: 78%;
         bottom: 35px;
     }
+
+    .favourite{
+		border-radius: 10px;
+		margin: 0 0 0 20px;
+		color: white;
+		position: relative;
+		width: 25%;
+		left: 3px;
+        font-size: 0px;
+	}
     
 }
-
-
 
 /* post detailed*/
 .comment_input,
@@ -567,8 +594,7 @@ transition: color 0.15s ease-in;
 	height: 30px;
 }
 
-#comment_input,
-.reply_input {
+#comment_input {
 	width: 95%;
 }
 
@@ -712,25 +738,6 @@ button.reply {
 }
 
 
-/* favourite */
-.favourite {
-	color: black;
-	border: 2px solid blue;
-	width: max-content;
-	border-radius: 15px;
-	margin: 0 0 0 10px;
-}
-
-
-#favourite_post_icon {
-	height: 22px;
-	margin-bottom: 5px;
-}
-
-.favourite:hover {
-	background-color: blue;
-	color: white;
-}
 
 
 /* search */
@@ -815,8 +822,6 @@ a:link {
 	transform: scale(1.1);
 	transition: 0.25s;
 }
-
-
 
 
 /* Create post css */

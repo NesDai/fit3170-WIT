@@ -407,18 +407,7 @@ function printPost(post, button_num, i )
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
-    if (button_num==0)     // nothing
-    {
-        button = `
-                <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
-                <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
-                </button>
-                <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});" value="${post.dislikes}" >
-                <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
-                </button>
-                `
-    }
-    else if (button_num==1)
+    if (button_num==1)
     {
          // liked
          button = `<button
@@ -440,8 +429,6 @@ function printPost(post, button_num, i )
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
-
-    // <img src="./css/images/button-designs_23.png" style="height:80%"></img>
 
     let field = document.getElementById("postField");
     field.innerHTML +=
@@ -483,8 +470,8 @@ function printPost(post, button_num, i )
                      <br>
                     <div id="button_div${i}">
                      ${button}
-                     <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-                    <i class="material-icons notranslate" id="more_icon">read_more</i><span id="number_of_dislikes"> More</span>
+                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                    <i class="material-icons notranslate" id="more_icon">read_more</i><span> More</span>
                     </button>
                     </div>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
