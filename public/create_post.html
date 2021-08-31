@@ -162,11 +162,11 @@
       <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
       <br>
       <nav class="mdl-navigation">
-         <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();">  <i class="material-icons icon-teal" id="nav-icons" >g_translate</i> Translate</a>
-         <a class="mdl-navigation__link" href="./main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i> Home Page</a>
-         <a class="mdl-navigation__link" href="./forum.html"><i class="material-icons icon-teal notranslate" id="nav-icons">forum</i> Forum Page</a>
-         <a class="mdl-navigation__link" href="./recommenderUi.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Recommender</a>
-         <a class="mdl-navigation__link" href="./chatbot.html"><i class="material-icons icon-teal notranslate" id="nav-icons">question_answer</i> Chat Bot</a>
+         <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();"> <img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img> Translate</a>
+         <a class="mdl-navigation__link" href="./main_page.html"> <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon"> Home Page</a>
+         <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
+         <a class="mdl-navigation__link" href="./recommenderUi.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
+         <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
       </nav>
    </div>
    <body>
@@ -264,41 +264,37 @@
                </b>
             </p>
             <hr style="margin: 0;">
-            <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="reset()"
-               value="English">
-            <label>
-            <span class="flag-icon flag-icon-us">
-            </span>
-            <span id="lang_text">English</span>
-            </label>
-            </button>
-            <br>
-            <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-               value="Chinese (Simplified)">
-            <label>
-            <span class="flag-icon flag-icon-cn">
-            </span>
-            <span id="lang_text">Chinese</span>
-            </label>
-            </button>
-            <br>
-            <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-               value="Thai">
-            <label>
-            <span class="flag-icon flag-icon-th">
-            </span> 
-            <span id="lang_text">Thai</span>
-            </label>
-            </button>
-            <br>
-            <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt" onclick="changeLang(this.value)"
-               value="Malay">
-            <label>
-            <span class="flag-icon flag-icon-my">
-            </span> 
-            <span id="lang_text">Malay</span>
-            </label>
-            </button>
+
+            <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset()"
+            value="English">
+         <label>
+         <span id="lang_text" style="color:white;">English</span>
+         </label>
+         </button>
+
+         <br>
+         <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+            value="Chinese (Simplified)">
+         <label>
+         <span id="lang_text" style="color:white;">中文</span>
+         </label>
+         </button>
+
+         <br>
+         <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+            value="Thai" >
+         <label>
+         <span id="lang_text" style="color:white;">ภาษาไทย</span>
+         </label>
+         </button>
+
+         <br>
+         <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+            value="Malay">
+         <label>
+         <span id="lang_text" style="color:white;">Bahasa Melayu</span>
+         </label>
+         </button>
             <br>
             <br>
             <div>

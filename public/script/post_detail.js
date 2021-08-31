@@ -2,7 +2,7 @@ let current_user = JSON.parse(localStorage.getItem("USER"));
 
 const params = new URLSearchParams(window.location.search)
 
-printPostDetails();
+getPostDetails();
 hideTranslationModal();
 
 function showTranslationModal(){
@@ -27,33 +27,85 @@ function checkUserExistence() {
     }
 }
 
-function printPostDetails(){
+function getPostDetails(){
+  let posts = [];
+  let id = params.get('post_id');
+  let action=0;
 
-    let id = params.get('post_id');
-    // let id = localStorage.getItem('POST_ID')
-
-    let post_details = document.getElementById("post_details");
-    // let poster_field = document.getElementById('poster_id');
-    // let time_field = document.getElementById('date_posted');
-    // let title_field = document.getElementById('title');
-    // let description_field = document.getElementById('description');
-    // let interest_field = document.getElementById('post_interests');
-
-
+  firebase.database().ref(`likesDislikes/${id}/${current_user["username"]}`)
+  .once('value', x => {
+      x.forEach(data => {
+        action=data.val()
+          })
+  }).then(()=>{
     firebase.database().ref('posts')
     .orderByChild('id')
         .equalTo(id)
             .once('value', x => {
                 x.forEach(data => {
-                  post_details.innerHTML = "";
-                  let interest = "";
-                  let post = data.val();
-                  for(let i =0; i<post.interest.length; i++){
-                    interest +=`<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
-              }
-                    // print the post details in here
-                  post_details.innerHTML +=
+                let post = data.val();
+                posts.push(post)
+                });
+            }).then(()=>{
+                printPostDetails(posts[0], action)
+            })
+          })
+}
 
+
+function printPostDetails(post, button_num)
+{
+  let post_details = document.getElementById("post_details");
+  let button = `
+    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
+    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+    </button>
+    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+    </button>
+    `
+    if (button_num==0)     // nothing
+    {
+        button = `
+                <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+                <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+                </button>
+                <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');" value="${post.dislikes}" >
+                <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+                </button>
+                `
+    }
+    else if (button_num==1)
+    {
+         // liked
+         button = `<button 
+         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+         </button>
+         `
+    }
+    else if(button_num==-1)
+    {
+         // disliked
+         button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+         </button>`
+    }
+
+    post_details.innerHTML = "";
+    let interest = "";
+    for(let i =0; i<post.interest.length; i++){
+      interest +=`<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
+    }
+
+
+    post_details.innerHTML +=
                     `
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                               <!-- POST HEADER -->
@@ -85,11 +137,9 @@ function printPostDetails(){
                               <div>
                                  <!--  LIKE DISLIKE FOR POST -->
                                  <br>
-                                 <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  id="like_post_btn">
-                                 <i class="material-icons notranslate" id="like_post_icon">thumb_up</i><span id="number_of_likes"> 400</span>
-                                 </button>
-                                 <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="dislike_post_btn">
-                                 <i class="material-icons notranslate" id="dislike_post_icon">thumb_down</i><span id="number_of_dislikes"> 20</span>
+                                 ${button}
+                                 <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
+                                 <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
                                  </button>
                               </div>
                               <br>
@@ -125,13 +175,118 @@ function printPostDetails(){
                            <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
                         </div>
                     </div>`
-                });
-            }).then(()=>{
-              //check if the user is the poster of the post
-              if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
+                    checkUserFavouritedPost();
+                    printComments();
+                    if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
                 document.getElementById("delete_post_btn").remove()
-              printComments();
-            })
+}
+
+/**
+ * Function which checks the button's nature before
+ * performing the wanted functionality
+ */
+function checkButtonStatus() {
+
+  let post_id = params.get('post_id'); 
+
+  let myRef = firebase.database().ref(`posts/${post_id}`);
+    myRef.once("value")
+      .then(function(snapshot) {
+
+        let hasFavouriteData = snapshot.hasChild("users_favourite"); 
+        let user_found = false;
+        // checking the favourite data has been written ebfore
+        if (hasFavouriteData == false){
+          addPostToFavourite();
+        } else {
+          let users_arr = snapshot.val()["users_favourite"];
+          
+          for (let i = 0; i < users_arr.length; i++){
+            if (current_user["phone"] == users_arr[i]){
+              user_found = true;
+            } 
+          }
+
+          if (user_found){
+            removePostFromFavourite();
+          } else {
+            addPostToFavourite();
+          }
+        }
+    })
+  }
+/**
+ * Function which removes the current post from user's favourite
+ */
+function removePostFromFavourite(){
+  let post_id = params.get('post_id'); 
+
+  if(checkUserExistence()){
+    let myRef = firebase.database().ref(`posts/${post_id}`);
+    myRef.once("value")
+      .then(function(snapshot) {
+        let newData = "";
+        let new_users_arr = [];
+        let users_arr = snapshot.val()["users_favourite"];
+        for(let i = 0; i < users_arr.length; i++) {
+            if (current_user["phone"] != users_arr[i]){
+              new_users_arr.push(users_arr[i]);
+            }
+        }
+        newData = {
+          users_favourite:new_users_arr
+        }
+
+        firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+          alert("Successfully remove the post from your favourite");
+        })
+        let fav_button = document.getElementsByClassName("favourite")[0];
+        fav_button.innerHTML = "\n  <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Add Favourite</span>\n  ";
+      })
+  }
+}
+
+/**
+ * Function which adds the current post into user's favourite
+ */
+function addPostToFavourite(){
+  let post_id = params.get('post_id'); 
+
+  if (checkUserExistence()){
+
+    let myRef = firebase.database().ref(`posts/${post_id}`);
+    myRef.once("value")
+      .then(function(snapshot) {
+
+        let hasFavouriteData = snapshot.hasChild("users_favourite"); 
+        let newData = "";
+
+        // checking the favourite data has been written ebfore
+        if (hasFavouriteData == false){
+          //if the data has not been written before
+          users_favourite_arr = [];
+          users_favourite_arr.push(current_user["phone"]); //push current user id to post dets to indicate they have favourite this post
+          
+          newData = {
+            users_favourite: users_favourite_arr
+          }
+        } else {
+          let users_arr = snapshot.val()["users_favourite"];
+          
+          users_arr.push(current_user["phone"]);
+          newData = {
+            users_favourite: users_arr
+          }
+        }
+
+        firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+          alert("Successfully added the post to your favourite");
+        })
+
+        let fav_button = document.getElementsByClassName("favourite")[0];
+        fav_button.innerHTML = "\n  <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
+      })
+  }
 }
 
 // Creating comment
@@ -234,16 +389,10 @@ function printComments(){
                  <!--  LIKE FOR COMMENT -->
                  <span id='like_button_comment' href="#">
                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                 <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
+                 <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img>
                  </button>
                  </span>
 
-                 <!--  DISLIKE FOR COMMENT -->
-                 <span id='dislike_button_comment' href="#">
-                 <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                 <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
-                 </button>
-                 </span>
 
                  <!-- ADD REPLY BUTTON FOR COMMENT -->
                  <span>
@@ -332,20 +481,6 @@ function printReplies(comment_id,index) {
                     <span id="user_comment">${reply.content}</span>
                   </p>
                 </div>
-
-                <!--  LIKE FOR COMMENT -->
-                <span id='like_button_comment' href="#">
-                  <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                    <i class="material-icons notranslate" id="like_comment_icon">thumb_up</i>
-                  </button>
-                </span>
-
-                <!--  DISLIKE FOR COMMENT -->
-                <span id='dislike_button_comment' href="#">
-                  <button class="dislike_button_comment_not_clicked dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dislike_comment_btn">
-                    <i class="material-icons notranslate" id="dislike_comment_icon">thumb_down</i>
-                  </button>
-                </span>
               </div>
               `
             }
@@ -411,4 +546,38 @@ function addReply(btn_num,comment_id) {
   } else {
     window.location = "forum.html";
   }
+}
+
+/* 
+A function that checks if the user has favourited the selected post and 
+will output the correct text on button
+*/
+function checkUserFavouritedPost(){
+  let post_id = params.get('post_id'); 
+  let user_exist = false;
+  let button = document.getElementById("favourite_post_btn");
+
+  firebase.database().ref(`posts/${post_id}`).once("value", (snapshot) => {
+    let hasFavouriteData = snapshot.hasChild("users_favourite");
+    if (hasFavouriteData){
+      let users_arr = snapshot.val()["users_favourite"];
+      
+      // looping through users list in database
+      for(let i = 0; i < users_arr.length; i++) {
+        if (current_user["phone"] == users_arr[i]){
+          user_exist = true;
+        }
+      }
+
+      if (user_exist){
+        button.innerHTML = `                                 
+        <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>
+        `
+      } else {
+        button.innerHTML = `                                 
+        <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Add Favourite</span>
+        `
+      }
+    }
+  })
 }
