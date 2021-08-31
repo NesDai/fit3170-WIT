@@ -335,6 +335,7 @@ i.icon-teal2 {
 		position: relative;
 		left: 40px;
 	}
+    /* for glider */
 	.tabs {
 		display: flex;
 		position: relative;
@@ -393,6 +394,7 @@ i.icon-teal2 {
 		background-color: white;
 		width: 90%
 	}
+
 	#send_reply_btn,
 	#send_comment_btn {
 		border-radius: 15px;
@@ -549,7 +551,7 @@ input[type="radio"] {
 /* ends */
 
 
-/* post */
+/* post detailed*/
 .comment_input,
 .reply_input {
 	position: relative;
