@@ -77,7 +77,7 @@ function makeNewPost() {
         let key = myRef.push().key;
         // let key = myRef.key; // generate a key for post id
 
-        let embedding_video_url = 0 
+        let embedding_video_url = 0
         if (video_url !== "") {
             embedding_video_url = checkEmbeddingVideo(video_url);
             if (embedding_video_url == 0) {
@@ -172,13 +172,24 @@ function findAllPosts() {
 
 
 function printAllPosts(){
-    let data_list = [];
-    let button_nums = [];
-    let posts = [];
+
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
 
-    firebase.database().ref('posts')
+    let data_list = [];
+    let button_nums = []
+    let posts = [];
+
+    firebase.database().ref('likesDislikes')
+    .once('value', x => {
+        x.forEach(data => {
+            if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
+                data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
+            }
+
+        })
+    }).then(()=>{
+        firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
                 let button_num=0
@@ -199,9 +210,10 @@ function printAllPosts(){
         }).then(()=>{
 
             for(let i=posts.length-1; i>=0 ; i--){
-                printPost(posts[i], button_nums[i], i );
+                printPost(posts[i], button_nums[i], i )
             }
         });
+    });
 }
 
 function printPost(post, button_num, i )
@@ -228,7 +240,7 @@ function printPost(post, button_num, i )
     else if (button_num==1)
     {
          // liked
-         button = `<button 
+         button = `<button
          class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
@@ -269,7 +281,7 @@ function printPost(post, button_num, i )
                      <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
                      <br>
                      `
-                                  + 
+                                  +
                                   `
                                   ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
                                   `
@@ -371,11 +383,11 @@ function printUserPosts(){
 
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
-    
+
     let data_list = [];
     let button_nums = []
     let posts = [];
-    
+
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
@@ -415,7 +427,7 @@ function printUserPosts(){
                 });
 }
 
-                        // field.innerHTML = field.innerHTML + 
+                        // field.innerHTML = field.innerHTML +
                         // `   <div style="padding-top: 20px;"><span class="post_card">
                         //     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                         //        <!-- POST HEADER -->
@@ -434,7 +446,7 @@ function printUserPosts(){
                         //           <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px" >${post.description}</h6>
                         //           <br>
                         //           `
-                        //           + 
+                        //           +
                         //           `
                         //           ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
                         //           `
@@ -464,14 +476,14 @@ function printUserPosts(){
 
 /**
  * Function used to search forum posts in feed. A parameter is typed (interest or a name of the post)
- * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post. 
+ * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post.
  * @returns Nothing. The function automatically updates the screen with relevant posts.
  */
  function searchAllPosts(param){
-    
+
     let data_list = [];
     let button_nums = []
-    let posts = []; 
+    let posts = [];
 
     let tab = document.getElementsByName("tabs");
 
@@ -520,7 +532,7 @@ function printUserPosts(){
                     button_nums.push(button_num);
                     posts.push(data.val());
                 })
-            }) 
+            })
         //find interests in posts
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
@@ -543,7 +555,7 @@ function printUserPosts(){
                     posts.push(data.val());
                 })
             })
- 
+
         firebase.database().ref(`posts`).orderByChild('interest/1')
             .startAt(param)
                 .endAt(param+"\uf8ff").once("value", x=> {
@@ -580,13 +592,13 @@ function printUserPosts(){
 
 /**
  * Function used to search forum posts in "Your posts". A parameter is typed (interest or a name of the post)
- * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post. 
+ * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post.
  * @returns Nothing. The function automatically updates the screen with relevant posts.
  */
 function searchYourPosts(param){
     let data_list = [];
     let button_nums = []
-    let posts = []; 
+    let posts = [];
     let field = document.getElementById("postField");
 
 
@@ -636,7 +648,7 @@ function searchYourPosts(param){
                         posts.push(data.val());
                     }
                 })
-            }) 
+            })
         //find interests in posts
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
@@ -661,7 +673,7 @@ function searchYourPosts(param){
                     }
                 })
             })
- 
+
         firebase.database().ref(`posts`).orderByChild('interest/1')
             .startAt(param)
                 .endAt(param+"\uf8ff").once("value", x=> {
@@ -714,10 +726,10 @@ async function likePost(post_id, i) {
             action: 1
         }).then(() => {
             alert("Liked");
-            updateLikes(post_id, 1) // add 1 like 
+            updateLikes(post_id, 1) // add 1 like
         });
 
-        // UI   
+        // UI
         like_btn_addr.style.background='#2bbd7e';
         like_btn_addr.style.color='white';
 
@@ -730,7 +742,7 @@ async function likePost(post_id, i) {
 
 
     } else {
-        // if there is action 
+        // if there is action
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
             let current_state = snapshot.val();
             if (current_state == -1) {
@@ -739,11 +751,11 @@ async function likePost(post_id, i) {
                     action: 1
                 }).then(() => {
                     alert("Liked");
-                    updateLikes(post_id, 1) // add 1 like 
+                    updateLikes(post_id, 1) // add 1 like
                     updateDislikes(post_id, -1)
                 });
 
-                // UI   
+                // UI
                 like_btn_addr.style.background='#2bbd7e';
                 like_btn_addr.style.color='white';
                 dislike_btn_addr.style.background='#dadada';
@@ -760,15 +772,15 @@ async function likePost(post_id, i) {
                 dislike_btn_addr.value=new_value
                 console.log(dislike_btn_addr.value)
                 document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
-         
+
             } else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
                 alert('post was already liked');
-                updateLikes(post_id, -1)  // remove 1 like 
-                //UI 
+                updateLikes(post_id, -1)  // remove 1 like
+                //UI
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';
-                // change like number 
+                // change like number
                 current_value=like_btn_addr.value
                 new_value=parseInt(current_value)-1
                 like_btn_addr.value=new_value
@@ -789,11 +801,11 @@ async function dislikePost(post_id, i)
         // if there is no action at all
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
                 alert("Disliked");
-                // add 1 dislike 
+                // add 1 dislike
                 updateDislikes(post_id, 1)
-            });   
-            
-        // UI   
+            });
+
+        // UI
         dislike_btn_addr.style.background='#e53935';
         dislike_btn_addr.style.color='white';
 
@@ -804,16 +816,16 @@ async function dislikePost(post_id, i)
         document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
     }
     else{
-        // if there is action 
+        // if there is action
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
             let current_state=snapshot.val();
             if (current_state==1){
                 // if action is like
-                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{alert("Disiked");});  
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{alert("Disiked");});
                 // add 1 dislike and remove 1 like
                 updateDislikes(post_id, 1)
                 updateLikes(post_id,-1)
-                // UI   
+                // UI
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';
                 dislike_btn_addr.style.background='#e53935';
@@ -830,7 +842,7 @@ async function dislikePost(post_id, i)
                 like_btn_addr.value=new_value
                 document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
 
-               
+
             }
             else{
                 // remove 1 dislike
@@ -838,16 +850,16 @@ async function dislikePost(post_id, i)
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
                 alert('post was already disliked');
 
-                // UI 
+                // UI
                 // change color
                 dislike_btn_addr.style.background='#dadada';
                 dislike_btn_addr.style.color='black';
-                // change dislike number 
+                // change dislike number
                 current_value=dislike_btn_addr.value
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
                 document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
-                
+
             }
         }
         )
@@ -858,34 +870,34 @@ function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
 }
 
-// /* 
-// A function that checks if the user has favourited the selected post and 
+// /*
+// A function that checks if the user has favourited the selected post and
 // will output the correct text on button
 // */
 // function checkUserFavouritedPost(post){
-//     let post_id = post.id; 
+//     let post_id = post.id;
 //     let user_exist = false;
 //     let button = document.getElementById("favourite_post_btn");
-  
+
 //     firebase.database().ref(`posts/${post_id}`).once("value", (snapshot) => {
 //       let hasFavouriteData = snapshot.hasChild("users_favourite");
 //       if (hasFavouriteData){
 //         let users_arr = snapshot.val()["users_favourite"];
-        
+
 //         // looping through users list in database
 //         for(let i = 0; i < users_arr.length; i++) {
 //           if (current_user["phone"] == users_arr[i]){
 //             user_exist = true;
 //           }
 //         }
-  
+
 //         if (user_exist){
-//           button.innerHTML = `                                 
+//           button.innerHTML = `
 //           <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
 //           <span id=\"favourite_btn\"> Remove</span>
 //           `
 //         } else {
-//           button.innerHTML = `                                 
+//           button.innerHTML = `
 //           <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
 //           <span id=\"favourite_btn\"> Add</span>
 //           `
@@ -893,4 +905,3 @@ function postDetail(id) {
 //       }
 //     })
 //   }
-
