@@ -295,7 +295,7 @@ function addPostToFavourite() {
                 })
 
                 let fav_button = document.getElementsByClassName("favourite")[0];
-                fav_button.innerHTML = "\n  <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
+                fav_button.innerHTML = "\n  <img src=\"./css/images/fav_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
                 fav_button.style.background='#006dae';
                 fav_button.style.color='white';
             })
@@ -817,11 +817,11 @@ function checkUserFavouritedPost() {
 
             let fav_button = document.getElementsByClassName("favourite")[0];
             if (user_exist) {
-                button.innerHTML = `<img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>`;
+                button.innerHTML = `<img src=\"./css/images/fav_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>`;
                 fav_button.style.background='#006dae';
                 fav_button.style.color='white';
             } else {
-                button.innerHTML = `<img src=\"./css/images/fav_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Add Favourite</span>`;
+                button.innerHTML = `<img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Add Favourite</span>`;
                 fav_button.style.background='#dadada';
                 fav_button.style.color='black';
             }
