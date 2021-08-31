@@ -23,11 +23,11 @@ html,body {
     .mdl-layout__header-row {
     padding: auto;
     margin: 0 auto;
-    } 
+    }
     .mdl-button .material-icons {
     top: -1px;
     margin-right: 5px;
-    } 
+    }
     @media screen and (max-width: 610px) {
     header {
     height: 80px;
@@ -78,16 +78,16 @@ html,body {
     }
     #interest1_id
     {
-    background-color: #00ac3e; 
+    background-color: #00ac3e;
     position: relative;
-    border-radius: 12px; 
+    border-radius: 12px;
     }
     #interest2_id
     {
     background-color: #c00095 ;
     position: relative;
     border-radius: 12px;
-    }    
+    }
     @media all and (min-width:551px) {
     .mobile-br {display: none;}
     .demo-card-wide{
@@ -96,8 +96,8 @@ html,body {
     background: #E4E4E4;
     }
     .lang_butt {
-    margin: 2%; 
-    width:30%; 
+    margin: 2%;
+    width:30%;
     background-color: #006DAE;
     }
     #lang_text{
@@ -112,8 +112,8 @@ html,body {
     background: #E4E4E4;
     }
     .lang_butt {
-    margin: 10%; 
-    width:60%; 
+    margin: 10%;
+    width:60%;
     background-color: #006DAE;
     }
     #lang_text{
@@ -121,7 +121,7 @@ html,body {
     }
     #interest1_id
     {
-    left: 10px; 
+    left: 10px;
     }
     #interest2_id
     {
@@ -138,7 +138,7 @@ html,body {
     {
     color: black;
     border: 2px solid #e53935;
-    width: 100px 
+    width: 100px
     }
     /* All below is for the tab navigation */
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
@@ -181,7 +181,7 @@ html,body {
     }
     #h3
     {
-    position:relative; 
+    position:relative;
     left:300px;
     }
     @media all and (min-width:800px) {
@@ -210,14 +210,14 @@ html,body {
     }
     #tab1
     {
-    position: relative; 
-    bottom: 10px; 
+    position: relative;
+    bottom: 10px;
     left: 40px
     }
     #tab2
     {
-    position: relative; 
-    bottom: 10px; 
+    position: relative;
+    bottom: 10px;
     left: 190px
     }
     input[type="radio"]:checked + label {
@@ -261,16 +261,16 @@ html,body {
     position: relative;
     font-size: 20px;
     color:#383838;
-    top: 5px; 
+    top: 5px;
     text-align: left; float: left; left: 10px;
     }
     #interest1_id
     {
-    left: 450px; 
+    left: 10px;
     }
     #interest2_id
     {
-    left:460px;
+    left: 10px;
     }
     }
     @media all and (max-width: 1024px) {
@@ -327,14 +327,14 @@ html,body {
     left: 10px;
     font-size: 20px;
     color:#33322f;
-    top: 5px; 
+    top: 5px;
     }
     }
     /* To change the like button back and forth */
     .like_button_comment_liked {
     color: white !important ;
-    background-color:#2bbd7e; 
-    } 
+    background-color:#2bbd7e;
+    }
     .like_button_comment_liked:hover
     {
     color: white;
@@ -342,8 +342,8 @@ html,body {
     }
     .dislike_button_comment_clicked {
     color: white !important ;
-    background-color:#e53935; 
-    } 
+    background-color:#e53935;
+    }
     .dislike_button_comment_clicked:hover
     {
     background-color:#e53935;
@@ -512,8 +512,8 @@ html,body {
     bottom: 10px;
     }
     .lang_butt {
-    margin: 10%; 
-    width:60%; 
+    margin: 10%;
+    width:60%;
     background-color: #006DAE;
     }
     #lang_text{
@@ -528,8 +528,8 @@ html,body {
     background: #E4E4E4;
     }
     .lang_butt {
-    margin: 2%; 
-    width:30%; 
+    margin: 2%;
+    width:30%;
     background-color: #006DAE;
     }
     #back_btn
@@ -601,7 +601,7 @@ html,body {
     #back_btn {
     border-radius: 20px;
     background-color: #00507e;
-    color: white;    
+    color: white;
     position: relative;
     left: 25px;
     top:5px
@@ -626,7 +626,7 @@ html,body {
     width: 100px
     }
     .mdl-checkbox {
-    display: inline;     
+    display: inline;
     width: 200px;
     }
     #delete_post_btn

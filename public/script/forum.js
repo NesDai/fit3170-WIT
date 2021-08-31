@@ -67,7 +67,7 @@ function makeNewPost() {
             alert("The post needs to have at least one interest")
             return
         }
-
+        console.log(interest_arr);
 
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
