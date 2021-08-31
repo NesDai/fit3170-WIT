@@ -165,7 +165,7 @@ function findAllPosts() {
 
 
 function printAllPosts(){
-
+    print_create_post();
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
 
@@ -208,6 +208,192 @@ function printAllPosts(){
         });
     });
 }
+
+function print_create_post()
+{
+    document.getElementById("create_post").innerHTML = 
+    `<div id="create_post">
+    <br>
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="create_post">
+    <div class="mdl-card__title">
+       <h2 class="mdl-card__title-text mdl-color-text--black" style="font-weight: bold;">New Forum Post</h2>
+    </div>
+    <hr style="margin: 0;">
+    <div class="new_post_form">
+       <!-- POST TITLE -->
+       <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
+       <input class="input" type="text" id="post_title" name="post_title" placeholder=" Share your thoughts with the community!" required></input><br>
+       <!-- POST DESCRIPTION -->
+       <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
+       <br>
+       <br>
+
+       <!-- VIDEO URL  -->
+       <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
+       <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
+       <br>
+       <br>
+       <!-- INTEREST  -->
+       <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Choose 2 interests for your post</b></label> </span>
+       <br>
+       <!-- INTEREST BUTTON -->
+       <div id="interests_box">
+          <label class="checkbox-inline" id="interest1" >
+          <input type="checkbox" name="interests" value="Technology_Skills" /> #Technology_Skills
+          </label>
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Email_Management" /> #Email_Management
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Email_Setup" /> #Email_Setup
+          </label>
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Online_collaboration" /> #Online_collaboration
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Video_Conference" /> #Video_Conference
+          </label>
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Zoom" /> #Zoom
+          </label>
+          <br class="desktop-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Google_doc" /> #Google_doc
+          </label>
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Microsoft_Teams" /> #Microsoft_Teams
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Microsoft_Office" /> #Microsoft_Office
+          </label>
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Browser" /> #Browser
+          </label>
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Bookmarks" /> #Bookmarks
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Smartphone" /> #Smartphone
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Tablet" /> #Tablet
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Computer" /> #Computer
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Active_Listening" /> #Active_Listening
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Effective_Communication" /> #Effective_Communication
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Negotiation_Skill" /> #Negotiation_Skill
+          </label>
+          <br class="desktop-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Persuasion" /> #Persuasion
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Relationship_Management" /> #Relationship_Management
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Art" /> #Art
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Photography" /> #Photography
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Video_Recording" /> #Video_Recording
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Video_Editing" /> #Video_Editing
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Photo_Editing" /> #Photo_Editing
+          </label>
+         <br class="desktop-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Caregiving" /> #Caregiving
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Cooking_Recipe" /> #Cooking_Recipe
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Nutrition" /> #Nutrition
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Healthy_diets" /> #Healthy_diets
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Exercises" /> #Exercises
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Professional_Writing" /> #Professional_Writing
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Collaboration_and_Teamwork" /> #Collaboration_and_Teamwork
+          </label>
+          <br class="desktop-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Critical_thinking" /> #Critical_thinking
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Entrepreneurship" /> #Entrepreneurship
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="People_and_leadership" /> #People_and_leadership
+          </label>
+
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Personal_selling" /> #Personal_selling
+          </label>
+       </div>
+       <script type="text/javascript">
+          $(document).ready(function () {
+             $("input[name='interests']").change(function () {
+                 var maxAllowed = 2;
+                 var cnt = $("input[name='interests']:checked").length;
+                 if (cnt > maxAllowed) {
+                     $(this).prop("checked", "");
+                     alert('You can select maximum ' + maxAllowed + ' interests!!');
+                 }
+             });
+          });
+       </script>
+       <br>
+       <!-- POST BUTTON -->
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="post_btn"
+          style="background-color:#006DAE; border: white;" onclick="makeNewPost()">
+       POST
+       </button>
+    </div>
+ </div>`;
+}
+
 
 function printPost(post, button_num, i )
 {
@@ -373,7 +559,8 @@ function printUserFavouritePosts(current_user_posts, button_nums){
 function printUserPosts(){
 
     document.getElementById("searchBox").value = "";
-
+    document.getElementById("create_post").innerHTML = "";
+ 
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
 
