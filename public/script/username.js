@@ -14,7 +14,7 @@ function register(username,phone){
     localStorage.setItem(USER_KEY,JSON.stringify(user));
 
 
-    //let the user know everything went fine
+    // //let the user know everything went fine
     document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
     //todo Redirect to the main page
     setInterval(function(){ 
@@ -40,12 +40,12 @@ function usernameValidation() {
     // test the input number based on the RegEx pattern stated
     if (username_regex.test(username))
     {
-        document.getElementById("error").innerHTML = "";
+        document.getElementById("error_username").innerHTML = "";
         document.getElementById("username").style.visibility="visible";
         document.getElementById("username").style.color="green";
     }
     else {
-        document.getElementById("error").innerHTML = "<p>Username should be 5 to 15 characters long and not have any special characters like !@#$%^&*. Please try again.<p>";
+        document.getElementById("error_username").innerHTML = "<p>Username should be 5 to 15 characters long and not have any special characters like !@#$%^&*. Please try again.<p>";
         document.getElementById("username").style.visibility="visible";
         document.getElementById("username").style.color="red";
     }
@@ -69,13 +69,13 @@ function checkUsernameValidity(){
     .equalTo(username).once('value', data => {
         data.forEach(() => {
             // If username exists, output an error
-            document.getElementById("error").innerHTML = "<p>Username exists. Please choose another username</p>";
+            document.getElementById("error_username").innerHTML = "<p>Username exists. Please choose another username</p>";
             valid = false;
 
         });
     }).then(() => {
         if (valid) {
-            document.getElementById("error").innerHTML = "";
+            document.getElementById("error_username").innerHTML = "";
             //if valid, register the user
 
             register(username, JSON.parse(localStorage.getItem(USER_KEY))["phoneNumber"])

@@ -81,7 +81,21 @@ textarea:-ms-input-placeholder { color: #adadad;}
 } */
 
 @media all and (min-width:551px) {
+
+
   /* laptop */
+
+  .trans-section
+{
+  margin: 100px;
+  padding: 20px;
+  padding-bottom: 25px;
+  background-color: white; 
+  border-radius: 10px; 
+  width: 100%;
+
+}
+
 .container {
   display: grid;
   height: 100%;
@@ -91,19 +105,49 @@ textarea:-ms-input-placeholder { color: #adadad;}
     "login content1 "
     "login content1 ";
   grid-gap: 0.5rem;
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-45%, -25%);
 }
+
 #login {
   margin-top: 15px;
   margin-left: 250px;
   grid-area: login;
 }
+#signup {
+  margin-top: 0px;
+  margin-left: 250px;
+  position: relative; 
+
+  /* bring your own prefixes */
+  transform: translate(-10%, -10%);
+
+  
+}
 
 #content1 {
-  margin-top: 10%;
-  margin-right: 250px;
-  grid-area: content1;
-  width:80%;
+  display: grid;
+  height: 700px;
+
+  grid-template-columns: 0.1fr 0.1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "login content1 "
+    "login content1 ";
+  grid-gap: 0.5rem;
+
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-75%, -55%);
+
 }
+
+
 }
 
 .wrap-login{
@@ -240,6 +284,19 @@ textarea:-ms-input-placeholder { color: #adadad;}
 
 
 @media only screen and (max-width: 1000px) {
+
+  .trans-section
+{
+  margin: 100px;
+  padding: 20px;
+  padding-bottom: 25px;
+  background-color: white; 
+  border-radius: 10px; 
+  width: 100%;
+
+}
+
+
   .wrap-login {
     margin: auto;
     margin-top: 20px;
@@ -257,26 +314,59 @@ textarea:-ms-input-placeholder { color: #adadad;}
   grid-template-rows: 0.1fr 0.9fr;
   grid-template-areas:
     "login"
-    "content1"
+    "content1";
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+
 }
+
 #content1 {
-  margin:  auto ;
-  grid-area: content1;
-  width:100%;
+  display: grid;
+  height: 700px;
+
+  grid-template-columns: 0.1fr 0.1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "login content1 "
+    "login content1 ";
+  grid-gap: 0.5rem;
+
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-75%, -55%);
 }
+
+#signup{
+  position: relative;
+  transform: translate(0%, -20%);
+}
+
+
+
+
 
 }
 
-.trans-section
-{
-  margin: 100px;
-  padding: 20px;
-  padding-bottom: 25px;
-  background-color: white; 
-  border-radius: 10px; 
-  width: 50%
+#recaptcha-container{
+  line-height: -100px;
 }
 
+#back_btn{
+  margin-top: 50px;
+  width: 100%;
+  height: 100%;
+  background: #D2D2D2;
+  top: 0;
+  color:Black;
+  border-radius: 10px;
+  height: 50px;
+
+}
 
 
 
