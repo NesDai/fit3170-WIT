@@ -19,13 +19,30 @@ function checkUserExistence() {
 }
 
 function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";  
+    document.getElementById("myModal").style.display = "block";
 }
 
 function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";  
+    document.getElementById("myModal").style.display = "none";
 }
 
+/**
+ * Function used to check if a video link is from youtube.
+ * If it is, then it manipulates the url to be able to display a video on the app.
+ * @param {1} url: input url of a video from create_post.html
+ * @returns youtube_url: the url with embed param added if the condition is satisfied. Or else, it returns 0
+ */
+function checkEmbeddingVideo(url) {
+    let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let match = url.match(regExp);
+    let youtube_url = 'https://www.youtube.com/embed/';
+
+    if (match && match[2].length == 11) {
+        return youtube_url + match[2];
+    } else {
+        return 0;
+    }
+}
 
 
 //Making a new post
@@ -55,10 +72,20 @@ function makeNewPost() {
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
-
+        let video_url = document.getElementById("video_url").value
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
         // let key = myRef.key; // generate a key for post id
+
+        let embedding_video_url = 0 
+        if (video_url !== "") {
+            embedding_video_url = checkEmbeddingVideo(video_url);
+            if (embedding_video_url == 0) {
+                alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+                return;
+            }
+
+        }
 
         let newData = {
             id: key,

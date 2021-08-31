@@ -87,6 +87,29 @@
          .desktop-br {display: inline;}
          }
       </style>
+      <!--Dont display the google banner at the top-->
+  <style>
+
+   .goog-te-banner-frame.skiptranslate {
+       display: none !important;
+   } 
+   body {
+       top: 0px !important; 
+   }
+   .goog-logo-link {
+       display:none !important;
+   }
+   .trans-section {
+       margin: 100px;
+       padding: 20px;
+       padding-bottom: 25px;
+   }
+
+   .lang_butt {
+           margin-top: 10%; 
+           background-color: white;
+        }
+</style>
    </head>
    <body>
       <!-- Translation div -->
@@ -126,7 +149,7 @@
                            <h2 class = "mdl-card__title-text ">ChatBot</h2>
                         </div>
                         <div class = "mdl-card__supporting-text">
-                           Answer simple questions and get the recommndations accoring to your interests
+                           Answer simple questions and get the recommendations according to your interests
                         </div>
                         <br class="desktop-br"> <br class="desktop-br">
                         <div class = "mdl-card__actions mdl-card--border">

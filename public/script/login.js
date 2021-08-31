@@ -15,8 +15,6 @@ const USER_KEY = "USER";
 // To apply the default browser preference instead of explicitly setting it.
 // firebase.auth().useDeviceLanguage();
 
-
-
 function setAuthLanguage(){
 
     let language = localStorage.getItem(LANGUAGE_KEY);
@@ -95,7 +93,7 @@ let persisted = false; //true if the logged in user does not need to sign in aga
 /**
  * function used to authenticate the user's phone number by sending them an OTP
  */
-function phoneAuth() {
+ function phoneAuth() {
     //get the number
     var number=document.getElementById('number').value;
     //phone number authentication function of firebase
@@ -115,9 +113,6 @@ function phoneAuth() {
         coderesult=confirmationResult;
         document.getElementById("input-pin").innerHTML = "It might take a minute to send the SMS to your phone.\n Once the SMS with the PIN has been sent to your phone. Please insert the pin below."
         document.getElementById("input-pin").style.color = "green";
-
-        // alert(confirmationResult.confirm(document.getElementById("verificationCode").value));
-        // return confirmationResult.confirm(document.getElementById("verificationCode").value);
 
         // alert("Message sent");
     }).catch(function (error) {

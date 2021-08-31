@@ -6,6 +6,9 @@ let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let hintIndex = 0;
 
+let messageColour = 'white';
+let messageHistoryColour = 'white';
+
 /*
 The user object of the currently logged in user
 <br>
@@ -38,6 +41,11 @@ let currentSubQuestionIds = null;
 window.onload = function () {
     initialiseCurrentUser();
     greeting();
+
+    // Initialises progress bar
+    document.querySelector('#progress-bar').addEventListener('mdl-componentupgraded', function() {
+        this.MaterialProgress.setProgress(0);
+    });
 };
 
 /**
@@ -58,7 +66,7 @@ function greeting() {
     // format starting message html
     let quesTemplate =
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender blue'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>To get started, I would like to get to know " +
         "you better by asking a few questions. Are you ready?</p>" +
@@ -230,11 +238,12 @@ function nextQuestion() {
         showQuestion(false);
     } else { //  else end the survey
         let endingMessage = "That's all the questions we have for you " +
-            "right now. You can either continue asking questions, or" +
+            "right now. You can either continue answerng questions, or" +
             " browse the rest of the application!"
         showMessageSenderWithoutHints(endingMessage);
         scrollToBottom();
     }
+    // updateProgress();
 }
 
 /**
@@ -246,7 +255,7 @@ function showMessageSender(message) {
     // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageColour + "'>" +
         `<p>${message}</p>` +
         `<button
          id = ${hintIndex}
@@ -259,6 +268,7 @@ function showMessageSender(message) {
         "</div>" +
         "</div>";
     hintIndex++;
+    changeMessageColour();
 }
 
 /**
@@ -282,10 +292,11 @@ function showMessageReceiver(message) {
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageColour + "'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
+    changeMessageColour();
 }
 
 /**
@@ -295,10 +306,11 @@ function showMessageSenderWithoutHints(message) {
 function showQuestionLog(message) {
     logs.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageHistoryColour + "'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>"
+    changeMessageHistoryColour();
 }
 
 /**
@@ -323,7 +335,7 @@ function showAnswerLog(message) {
 function showShortQuestionMessage(questionString) {
     document.getElementById("messages").innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender'>" +
+        "<div class='message-container sender " + messageColour + "'>" +
         `<p>${questionString}</p>` +
         "<p>Please type your answer in the box below.</p>" +
         `<button 
@@ -337,6 +349,7 @@ function showShortQuestionMessage(questionString) {
         "</div>" +
         "</div>";
     hintIndex++;
+    changeMessageColour();
 }
 
 /**
@@ -398,7 +411,8 @@ function showQuestion(isSubQuestion) {
             }
 
             // Scroll the chat box window to the correct position
-            scrollToBottom()
+            scrollToBottom();
+            updateProgress();
         });
 }
 
@@ -501,14 +515,20 @@ function repromptQuestion() {
  * only used for MCQ questions
  */
 function loadOptions(){
+    let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
+
     var x = document.getElementById("Dropdown");
     x.options.length = 0;
-    const collectionRef = firebase.firestore().collection(currentUser.phoneNumber);
+    const collectionRef = firebase.firestore().collection(userID);
     collectionRef.get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 var option = document.createElement("option");
-                option.text = doc.id;
+                // Splitting the year month and day from date
+                var ymd = doc.id.split("-");
+                var dateString = ymd[0] + "-" + ("0" + ymd[1]).slice(-2) + "-" + ("0" + ymd[2]).slice(-2);
+                option.text = dateString;
                 x.add(option);
             });
         })
@@ -541,8 +561,11 @@ window.onclick = function(event) {
  *
  */
 function selectdate(){
+    let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
+
     var mylist = document.getElementById('Dropdown');
-    const collectionRef = firebase.firestore().collection(currentUser.phoneNumber).doc(mylist.options[mylist.selectedIndex].text);
+    const collectionRef = firebase.firestore().collection(userID).doc(mylist.options[mylist.selectedIndex].text);
     collectionRef.get().then((doc) => {
         if (doc.exists) {
             console.log("Document data:", doc.data().set_id);
@@ -578,7 +601,7 @@ function selectdate(){
 function selectattempt(){
     var mylist = document.getElementById('attempt');
     logAttempt = mylist.options[mylist.selectedIndex].text;
-    
+
     let log = document.getElementById('logs');
     log.innerHTML = "";
 
@@ -589,7 +612,10 @@ function selectattempt(){
  * function to display which old survey is going to be displayed in history page
  */
 function showlog(){
-  const collectionRef = firebase.firestore().collection(currentUser.phoneNumber).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
+    let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
+
+  const collectionRef = firebase.firestore().collection(userID).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
       collectionRef.get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -803,9 +829,10 @@ function initFirebaseAuth() {
 function saveResponse(answer) {
     // Formulating the branch
     let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let branch = `${phone}/${date}/responses`;
+    let branch = `${userID}/${date}/responses`;
 
     // Formulating the response object
 
@@ -841,7 +868,7 @@ function saveResponse(answer) {
             // After writing the response to survey_responses, also
             // write it to survey_questions/question_id
             let reducedResponseObject = {
-                phone: phone,
+                phone: userID,
                 data: date,
                 answer: answer,
                 timestamp: timestamp
@@ -862,7 +889,7 @@ function saveResponse(answer) {
                 });
         })
         .catch((error) => {
-            console.error("Error writing response at " + phone +
+            console.error("Error writing response at " + userID +
                 " branch: ", error);
         });
 }
@@ -875,13 +902,14 @@ function saveResponse(answer) {
 function initSetId() {
     // Formulating the branch
     let phone = currentUser.phoneNumber;
+    let userID = phone === undefined ? currentUser.email : phone;
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
     // Formulating the response object
 
     // Retrieve the set id
-    let reference = firebase.firestore().collection(phone).doc(date);
+    let reference = firebase.firestore().collection(userID).doc(date);
 
     reference.get().then((document) => {
         if (document.exists) {
@@ -891,7 +919,7 @@ function initSetId() {
 
             // Increment the set_id at the Firestore Database by 1
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(phone).doc(date)
+            firebase.firestore().collection(userID).doc(date)
                 .set({set_id: currentSetId})
                 .then(() => {
                     console.log("Document written with ID: ", date);
@@ -910,7 +938,7 @@ function initSetId() {
             // is the first survey instance for the day.
 
             // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(phone).doc(date)
+            firebase.firestore().collection(userID).doc(date)
                 .set({set_id: 0})
                 .then(() => {
                     console.log("Document written with ID: ", date);
@@ -959,4 +987,40 @@ function endSurveyText() {
     questionIndex = QUESTION_IDS.length;
     errorText.style.visibility = "hidden";
     nextQuestion();
+}
+
+/**
+ * Changes the colour of the next message based on
+ * the colour of the current message.
+ *
+ * Used in SENDER messages only (bot side)
+ */
+function changeMessageColour() {
+    if (messageColour == 'white') {
+        messageColour = 'blue';
+    }
+    else {
+        messageColour = 'white';
+    }
+}
+
+/**
+ * Changes the colour of the next message based on
+ * the colour of the current message in the history tab.
+ *
+ * Used in HISTORY SENDER messages only (bot side)
+ */
+ function changeMessageHistoryColour() {
+    if (messageHistoryColour == 'white') {
+        messageHistoryColour = 'blue';
+    }
+    else {
+        messageHistoryColour = 'white';
+    }
+}
+
+function updateProgress() {
+    var progress = (questionIndex/QUESTION_IDS.length) * 100;
+    console.log('updateProgress() is called. Current percentage is ' + progress + '%.');
+    document.querySelector('#progress-bar').MaterialProgress.setProgress(progress);
 }
