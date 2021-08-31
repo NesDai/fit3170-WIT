@@ -61,7 +61,7 @@ function getPostDetails(){
             }).then(()=>{
                 printPostDetails(posts[0], action)
             })
-          })
+          //})
 }
 
 
@@ -200,7 +200,7 @@ function printPostDetails(post, button_num)
                     if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
                 document.getElementById("delete_post_btn").remove()
               printComments();
-            })
+            
 }
 
 /**
