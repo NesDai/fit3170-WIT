@@ -786,11 +786,12 @@ html,body {
 }
 
 
-.search:hover #icon-background{
+/* .search:hover #icon-background{
     margin-right: 15px;
+    transform: translate(25%, -0%);
     transform: scale(1.3);
     transition: 0.25s;
-}
+} */
 .search:hover #search-icon{
     color: #00ac3e;
 }
