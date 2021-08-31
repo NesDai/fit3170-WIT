@@ -95,11 +95,13 @@ function makeNewPost() {
             userID: current_user["phone"],
             username: current_user["username"],
             videoURL: embedding_video_url,
-            created: new Date().toString()
+            created: new Date().toString(), 
+            likes:0,
+            dislikes:0
         }
 
         firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
-            alert("Posted successfully. Redirecting back to forum")
+            //alert("Posted successfully. Redirecting back to forum")
             window.location = "forum.html";
         });
      } else{
@@ -466,6 +468,7 @@ function printPost(post, button_num, i )
                                   `
                                   +
                                   `
+                                  <br>
                      <div style='display: inline-block'>
                         <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
                         <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
@@ -486,11 +489,6 @@ function printPost(post, button_num, i )
                     </div>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
                     <script type="text/javascript">
-                    $(document).ready(function() {
-                        $( "#button_div${i} .like" ).on( "click", function() {
-                            alert( 'hi' );
-                          });
-                      });
                     </script>
                   <br>
             </span>
@@ -905,7 +903,7 @@ async function likePost(post_id, i) {
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
             action: 1
         }).then(() => {
-            alert("Liked");
+            //alert("Liked");
             updateLikes(post_id, 1) // add 1 like
         });
 
@@ -930,7 +928,7 @@ async function likePost(post_id, i) {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
                     action: 1
                 }).then(() => {
-                    alert("Liked");
+                    //alert("Liked");
                     updateLikes(post_id, 1) // add 1 like
                     updateDislikes(post_id, -1)
                 });
@@ -955,7 +953,7 @@ async function likePost(post_id, i) {
 
             } else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
-                alert('post was already liked');
+                //alert('post was already liked');
                 updateLikes(post_id, -1)  // remove 1 like
                 //UI
                 like_btn_addr.style.background='#dadada';
@@ -980,7 +978,7 @@ async function dislikePost(post_id, i)
     if (!res){
         // if there is no action at all
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
-                alert("Disliked");
+                //alert("Disliked");
                 // add 1 dislike
                 updateDislikes(post_id, 1)
             });
@@ -1001,10 +999,12 @@ async function dislikePost(post_id, i)
             let current_state=snapshot.val();
             if (current_state==1){
                 // if action is like
-                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{alert("Disiked");});
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{
+                //alert("Disiked");
                 // add 1 dislike and remove 1 like
                 updateDislikes(post_id, 1)
                 updateLikes(post_id,-1)
+                 });
                 // UI
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';
@@ -1028,7 +1028,7 @@ async function dislikePost(post_id, i)
                 // remove 1 dislike
                 updateDislikes(post_id, -1)
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
-                alert('post was already disliked');
+               // alert('post was already disliked');
 
                 // UI
                 // change color

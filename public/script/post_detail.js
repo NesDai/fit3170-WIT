@@ -60,7 +60,6 @@ function getPostDetails(){
 }
 
 
-
 function printPostDetails(post, button_num)
 {
   let post_details = document.getElementById("post_details");
@@ -116,85 +115,86 @@ function printPostDetails(post, button_num)
     post_details.innerHTML +=
                     `
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                              <!-- POST HEADER -->
-                              <br>
-                              <div class="f">
-                                 <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
-                              </div>
-                          <button class=" mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
-                          <i class="material-icons-outlined notranslate" id="delete_post_icon">delete</i>
+                    <!-- POST HEADER -->
+                    <br>
+                    <div class="f">
+                       <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                    </div>
+                    <div>
+                      <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
+                        <img src="./css/images/delete_icon.png"  id="delete_post_icon"></img>
+                      </button>
+                    </div>
+                    <div class="post_header" style="margin:0 10px; background-color: white">
+                       <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+                    </div>
+                    <!-- POST FORM -->
+                    <form class="post_content" style="margin:0 10px; background-color: white">
+                       <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
+                       <br>
+                       `
+                       +
+                       `
+                       ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                       `
+                       +
+                       `
+                       <br>
+                       <div style='display: inline-block'>
+                          <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
+                          <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                       </div>
+                       <br><br>
+                    </form>
+                    <div class="f">
+                    <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                    <div>
+                       <br>
+                       <div>
+                          <!--  LIKE DISLIKE FOR POST -->
+                          <br>
+                          ${button}
+                          <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
+                          <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
                           </button>
-                              <br>
-                              <div class="post_header" style="margin:0 10px; background-color: white">
-                                 <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
-                              </div>
-                              <!-- POST FORM -->
-                              <form class="post_content" style="margin:0 10px; background-color: white">
-                                 <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
-                                 <br>
-                                 `
-                                  +
-                                  `
-                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
-                                  `
-                                  +
-                                  `
-                                 <br>
-                                 <div style='display: inline-block'>
-                                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
-                                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
-                                 </div>
-                                 <br><br>
-                              </form>
-                              <div class="f">
-                              <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-                              <div>
-                              <br>
-                              <div>
-                                 <!--  LIKE DISLIKE FOR POST -->
-                                 <br>
-                                 ${button}
-                                 <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
-                                 <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
-                                 </button>
-                              </div>
-                              <br>
-                        <hr style="margin: 0">
-                        <div class="post_comments_header" style="margin:0 10px; ">
-                           <h5 class="comment_header mdl-color-text--black">WRITE A COMMENT</h5>
-                        </div>
-                        <!-- COMMENT FORM -->
-                        <form class="post_comment">
-                           <!-- COMMENT INPUT -->
-                           <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
-                           <br>
-                           <!-- ANONYMOUS CHECKBOX BUTTON -->
-                           <form>
-                              <div>
-                                 <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-                                 <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
-                                 <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
-                                 </label>
-                              </div>
-                           </form>
-                           <!-- SEND BUTTON -->
-                           <div>
-                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="send_comment_btn" type="submit" onclick="addComment()">
-                              <i class="material-icons notranslate" id="send_reply_icon">send</i>
-                              SEND
-                              </button>
-                           </div>
-                        </form>
-                        <br>
-                        <hr style="margin: 0;">
-                        <div id="comment_section">
-                           <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
-                        </div>
+                       </div>
+                       <br>
+                       <hr style="margin: 0">
+                       <div class="post_comments_header" style="margin:0 10px; ">
+                          <h5 class="comment_header mdl-color-text--black">WRITE A COMMENT</h5>
+                       </div>
+                       <!-- COMMENT FORM -->
+                       <form class="post_comment">
+                          <!-- COMMENT INPUT -->
+                          <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
+                          <br>
+                          <!-- ANONYMOUS CHECKBOX BUTTON -->
+                       <form>
+                          <div>
+                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                             <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
+                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                             </label>
+                          </div>
+                       </form>
+                       <!-- SEND BUTTON -->
+                       <div>
+                          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="send_comment_btn" type="submit" onclick="addComment()">
+                          <i class="material-icons notranslate" id="send_reply_icon">send</i>
+                          SEND
+                          </button>
+                       </div>
+                       </form>
+                       <br>
+                       <hr style="margin: 0;">
+                       <div id="comment_section">
+                          <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
+                       </div>
                     </div>`
-                    checkUserFavouritedPost();
-                    printComments();
-                    if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
-                document.getElementById("delete_post_btn").remove();
+    checkUserFavouritedPost();
+    printComments();
+    //if(current_user.username != document.getElementById("poster_id").textContent)  // remove the delete button if not the poster of the post
+      //document.getElementById("delete_post_btn").remove();
 
 }
 
@@ -319,7 +319,6 @@ function addComment(){
        second: "2-digit"
      };
 
-     console.log(post_id);
     // error handling if it is empty??
     let comment = document.getElementById("comment_input").value
     let stay_anonymous = document.getElementById("anonymous").checked
@@ -487,11 +486,6 @@ function printReplies(comment_id,comment_index) {
               }
 
               if (reply.reply_comment_parent == comment_id){
-              console.log("index")
-              console.log(comment_index)
-              console.log("reply_index")
-              console.log(i)
-              console.log(reply.content)
               reply_section.innerHTML += `
               <div class = 'verticalLine' style="position: relative; right:5px">
                 <div id = "reply_box"  style="width:93%">
@@ -540,6 +534,7 @@ function printReplies(comment_id,comment_index) {
                     </div>
               </div>
               `
+              document.getElementById(`reply_input${comment_index},${i}`).setAttribute("style","width:93%");
             }
           }}
         }).then(() => {
@@ -550,8 +545,6 @@ function printReplies(comment_id,comment_index) {
       }
 
 function printRepliesToReplies(reply_id,comment_index, reply_index, start){
-  console.log(comment_index)
-  console.log(reply_index)
   let reply_section = document.getElementById("reply_reply_section"+comment_index.toString()+","+reply_index.toString());
   let reply_list = [];
 
@@ -574,13 +567,6 @@ function printRepliesToReplies(reply_id,comment_index, reply_index, start){
               }
 
               if (reply.reply_comment_parent == reply_id){
-              console.log("index")
-              console.log(comment_index)
-              console.log("reply_index")
-              console.log(reply_index)
-              console.log("start")
-              console.log(start)
-              console.log(reply.content)
               reply_section.innerHTML += `
               <div class = 'verticalLine' style="position: relative; right:5px">
                 <div id = "reply_box"  style="width:93%">
@@ -630,6 +616,9 @@ function printRepliesToReplies(reply_id,comment_index, reply_index, start){
               </div>
               `
 
+              document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style","width:93%");
+              document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style","@media all and (max-width: 1000px) {width:95%}");
+              
             }
             start = start + 1;
           }
@@ -784,6 +773,7 @@ function checkUserFavouritedPost(){
     }
   })
 }
+
 function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index, reply_id) {
 
   if (checkUserExistence()){
