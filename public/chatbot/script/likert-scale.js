@@ -93,19 +93,19 @@ function makeAgreeLikertScale(language) {
         `<button 
          id = 3
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> +language[0][2]+ </span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> `+hash[language][0][2]+` </span>
          </button>` +
 
         `<button 
          id = 4
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>+language[0][3]+ </span>
+         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>`+hash[language][0][3]+` </span>
          </button>` +
 
         `<button 
          id = 5
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> +language[0][4]+ </span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> `+hash[language][0][4]+` </span>
          </button>`;
 
     componentHandler.upgradeDom();
