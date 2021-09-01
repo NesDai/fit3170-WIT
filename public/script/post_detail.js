@@ -3,15 +3,7 @@ let current_user = JSON.parse(localStorage.getItem("USER"));
 const params = new URLSearchParams(window.location.search)
 
 getPostDetails();
-hideTranslationModal();
 
-function showTranslationModal() {
-    document.getElementById("myModal").style.display = "block";
-}
-
-function hideTranslationModal() {
-    document.getElementById("myModal").style.display = "none";
-}
 
 function showReplyInput(button_num) {
     document.getElementById("add_reply_section" + button_num.toString()).style.display = "block";
