@@ -283,7 +283,6 @@ function addPostToFavourite() {
                 }
 
                 firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
-                    //alert("Successfully added the post to your favourite");
                 })
 
                 let fav_button = document.getElementsByClassName("favourite")[0];
@@ -331,8 +330,6 @@ function addComment() {
             }
 
             firebase.database().ref(`comments/${key}`).set(newData).then(() => {
-                //alert("Comment made successfully!");
-                // console.log("inside");
                 printComments();
                 // window.location = "post.html" + "?post_id=" + post_id;
             });
@@ -672,7 +669,6 @@ function addReply(btn_num, comment_id) {
 
             console.log(post_id);
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                //alert("Reply made successfully!");
                 window.location = "post.html" + "?post_id=" + post_id;
             });
 
@@ -721,7 +717,6 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
 
             console.log(post_id);
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                //alert("Reply made successfully!");
                 window.location = "post.html" + "?post_id=" + post_id;
             });
 
@@ -768,7 +763,6 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
                 username: current_user["username"],
             };
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                //alert("Reply made successfully!");
                 window.location = "post.html" + "?post_id=" + post_id;
             });
 

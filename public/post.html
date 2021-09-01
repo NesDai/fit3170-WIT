@@ -32,7 +32,7 @@
       <script src="js/scripts.js"></script>
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
+      <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css" /> -->
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
       <!-- App Styling -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
@@ -68,31 +68,16 @@
       <body>
          <main class="mdl-layout__content mdl-color--grey-100">
          <!-- Insert Page Content Here -->
-         <div class="mdl-grid mdl-grid-body">
-            <div class="mdl-cell mdl-cell--4-col">
-            </div>
-            <div class="mdl-cell mdl-cell--8-col">
-               <div class="forum-posts">
-                  <br>
+         <div class = "forum-container">
+            <div class="forum-posts">
+               <!-- DISPLAY ALL POST BY OTHER USERS -->
+               <br>
                   <div id = "post_details">
                   </div>
-               </div>
             </div>
          </div>
-         <div class="mdl-cell mdl-cell--2-col">
-         </div>
-         <!-- LIKES CHANGE COLOR -->
-         <script>
-            jQuery('button.like').click(function() {
-            jQuery(this).toggleClass("like_button_comment_liked");
-            });
-         </script>
-         <script>
-            jQuery('button.dislike').click(function() {
-            jQuery(this).toggleClass("dislike_button_comment_clicked");
-            });
-         </script>
    </div>
+
    <!-- MODAL -->
    <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
    <div id="google_translate_element" style="display: none;">
@@ -174,11 +159,5 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="script/translation.js"></script>
    <script src="script/forum_likes_dislikes.js"></script>
-   <script type="text/javascript">
-      $(function(){
-          $('.selectpicker').selectpicker();  // used to display flags 
-      });
-      
-   </script>
    </body>
 </html>
