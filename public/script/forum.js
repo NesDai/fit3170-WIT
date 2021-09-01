@@ -1035,7 +1035,7 @@ async function dislikePost(post_id, i)
 
 function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
-}
+} 
 
 // /*
 // A function that checks if the user has favourited the selected post and
