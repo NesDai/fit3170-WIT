@@ -445,7 +445,7 @@ transition: color 0.15s ease-in;
 		padding: 0.75rem;
 		border-radius: 15px;
 		height: 70px;
-		width: 355px;
+		width: 370x;
 	}
 	input[type="radio"]:checked+label {
 		color: var(--primary-color);
@@ -458,21 +458,26 @@ transition: color 0.15s ease-in;
 		position: absolute;
 		bottom: 7px;
 		height: 55px;
-		width: 130px;
+		width: 125px;
 		background-color: var(--secondary-color);
 		z-index: 1;
 		border-radius: 25px;
 		transition: 0.25s ease-out;
 	}
+	input[id="radio-0"]:checked~.glider {
+		transform: translateX(-5%);
+        color: black;
+	}
+
 	input[id="radio-1"]:checked~.glider {
-		transform: translateX(15%);
+		transform: translateX(95%);
         color: black;
 	}
 	input[id="radio-2"]:checked~.glider {
 		/* transform: translateX(100%);
         }
         input[id="radio-3"]:checked ~ .glider { */
-		transform: translateX(140%);
+		transform: translateX(190%);
 	}
 	#more_btn {
 		border-radius: 10px;
