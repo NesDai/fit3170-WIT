@@ -321,9 +321,16 @@ transition: color 0.15s ease-in;
 		padding: 0.75rem;
 		border-radius: 15px;
 		height: 50px;
-		width: 734px;
+		width: 724px;
         color:rgb(0, 0, 0);
 	}
+
+	#tab0 {
+		position: relative;
+		bottom: 10px;
+		left: 0px;
+	}
+
 	#tab1 {
 		position: relative;
 		bottom: 10px;
@@ -332,7 +339,7 @@ transition: color 0.15s ease-in;
 	#tab2 {
 		position: relative;
 		bottom: 10px;
-		left: 190px
+		left: 100px
 	}
 	input[type="radio"]:checked+label {
 		color: var(--primary-color);
@@ -355,11 +362,16 @@ transition: color 0.15s ease-in;
 		border-radius: 25px;
 		transition: 0.25s ease-out;
 	}
+
+	input[id="radio-0"]:checked~.glider {
+		transform: translateX(5%);
+	}
+
 	input[id="radio-1"]:checked~.glider {
-		transform: translateX(25%);
+		transform: translateX(140%);
 	}
 	input[id="radio-2"]:checked~.glider {
-		transform: translateX(220%);
+		transform: translateX(280%);
 	}
     
 	#more_btn {
