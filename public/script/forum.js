@@ -204,6 +204,98 @@ function printAllPosts(){
     });
 }
 
+function printThread(){
+    document.getElementById("searchBox").value = "";
+    document.getElementById("create_post").innerHTML = "";
+
+    let field = document.getElementById("postField");
+    field.innerHTML = ""; // emtpy the field of any previous posts
+
+    let button_nums = [1, -1, 0, 1, -1, 1, 0, 0, 1, -1]
+
+    for(let i=9; i>=0 ; i--){
+        printRecommendedVideo(button_nums[i], i)
+    }
+}
+
+function printRecommendedVideo(button_num, i) {
+    let button = `
+    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="" value="1" >
+    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> 1</span>
+    </button>
+    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick=""  value="2" >
+    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> 2</span>
+    </button>
+    `;
+
+    if (button_num==1)
+    {
+         // liked
+         button = `<button
+         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick=""  value="2">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> 2</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick=""  value="1" >
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> 1</span>
+         </button>
+         `
+    }
+    else if(button_num==-1)
+    {
+         // disliked
+         button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick=""  value="2">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> 2</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick=""  value="1">
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> 2</span>
+         </button>`
+    }
+
+    let field = document.getElementById("postField");
+    field.innerHTML +=
+    `   <div style="padding-top: 20px;">
+            <span class="post_card">
+               <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                  <!-- POST HEADER -->
+                  <br>
+                  <div class="f">
+                  </div>
+                  <br>
+                  <!-- POST FORM -->
+                  <form class="post_content" style="margin:0 10px; background-color: white">
+                     <br>
+                     `
+                                  +
+                                  `
+                                  <iframe width="420" height="315" src=""></iframe>
+                                  `
+                                  +
+                                  `
+                                  <br>
+                     <div style='display: inline-block'>
+                     </div>
+                     <br><br>
+                  </form>
+                  <div class="f">
+                  </div>
+                  <br>
+                     <!--  LIKE DISLIKE FOR POST -->
+                     <br>
+                    <div id="button_div${i}">
+                     ${button}
+                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="">
+                    <i class="material-icons notranslate" id="more_icon">read_more</i><span> More</span>
+                    </button>
+                    </div>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                    <script type="text/javascript">
+                    </script>
+                  <br>
+            </span>
+     </div>`;
+
+}
+
 function print_create_post()
 {
     document.getElementById("create_post").innerHTML = 
