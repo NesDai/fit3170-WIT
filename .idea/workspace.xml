@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="completed  question-uploader_th.js and completed question ids in constants.js.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/chatbot.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/chatbot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/script/main_page.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/main_page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/script/termsAndConditionsPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/termsAndConditionsPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/termsAndConditionsPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/termsAndConditionsPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/chatbot/script/question-uploader_th.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/chatbot/script/question-uploader_th.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/script/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/script/first_time_survey.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/first_time_survey.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,14 +52,20 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/script" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/script" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/public/chatbot/script" />
       <recent name="C:\Users\tjyaooo\Desktop\womenintech\public\css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/chatbot/script" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -90,6 +94,27 @@
       <workItem from="1628150835995" duration="7678000" />
       <workItem from="1628824039044" duration="397000" />
       <workItem from="1628837730887" duration="7850000" />
+      <workItem from="1629078652821" duration="1751000" />
+      <workItem from="1629286709146" duration="108000" />
+      <workItem from="1629299473393" duration="344000" />
+      <workItem from="1629640907129" duration="573000" />
+      <workItem from="1629768040525" duration="7442000" />
+      <workItem from="1629889695195" duration="5088000" />
+      <workItem from="1629901946166" duration="112000" />
+      <workItem from="1630055568771" duration="9391000" />
+      <workItem from="1630155119087" duration="6916000" />
+      <workItem from="1630204305412" duration="13534000" />
+      <workItem from="1630233726202" duration="1813000" />
+      <workItem from="1630245588700" duration="583000" />
+      <workItem from="1630290638871" duration="78000" />
+      <workItem from="1630302515537" duration="4990000" />
+      <workItem from="1630317442142" duration="1000" />
+      <workItem from="1630320115113" duration="6533000" />
+      <workItem from="1630375771032" duration="3976000" />
+      <workItem from="1630380657515" duration="6571000" />
+      <workItem from="1630423805626" duration="3089000" />
+      <workItem from="1630468869720" duration="2330000" />
+      <workItem from="1630502387640" duration="8165000" />
     </task>
     <task id="LOCAL-00001" summary="update question IDs and update questions in question-uploader.js">
       <created>1621666660881</created>
@@ -175,7 +200,147 @@
       <option name="project" value="LOCAL" />
       <updated>1628797741482</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Completed Terms and Conditions Page. Now main page can check if the user already accepted the terms and conditions. Terms and Conditions page now update user's data in realtime database with their acceptance of the terms and conditions.">
+      <created>1628853021523</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1628853021523</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Created Terms of Use page for user registration step and empty contents of Terms and conditions page in preparation of terms and conditions from the clients.&#10;&#10;TODO: Get info of which pages the terms of use page will go to if back button is clicked. Also, work with Vlad to put in the Terms of Use page for user registration.&#10;&#10;The terms of Use files will be deleted because i will pass them to Vlad and his team to plug it in to make the merge easier.">
+      <created>1629079937228</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1629079937229</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Completed terms and conditions page (last &quot;terms and conditions&quot; page was the terms of use page)">
+      <created>1629801346647</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1629801346647</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Update question uploader questions and place some TODO to mark questions that needs to be deleted and have their numbers updated&#10;(section 1 is done by Kelvin while section 2,3,4 and 5 is done by Daniel)">
+      <created>1629900908252</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1629900908253</updated>
+    </task>
+    <task id="LOCAL-00017" summary="updated the questions for part 1. (this includes the removal of the old qs 1.10 and 1.11 from V3 of the questionnaire and updating the number of the questions after the removal)">
+      <created>1630074361225</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1630074361225</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added question 4.5 into the question uploader and corrected qs 4.3's rating number range.">
+      <created>1630084917630</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1630084917630</updated>
+    </task>
+    <task id="LOCAL-00019" summary="merge with last commit">
+      <created>1630085220837</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1630085220837</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fixed chatbot questions uploader and finalised the updated questions.&#10;fixed if statement in chatbot-init.js.&#10;updated constants.js with current questions' ids">
+      <created>1630163508497</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1630163508497</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Update the terms of use page with the feature to update it's elements according to the selected language. (need to get proper translation of the elements from the clients)&#10;&#10;Created uploaders for the terms of use chinese and malay translation. (still awaiting the thai translation - if thai is selected, the terms of use defaults to english)&#10;&#10;implemented language switch for the page based on the selected language">
+      <created>1630231863356</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1630231863356</updated>
+    </task>
+    <task id="LOCAL-00022" summary="commented Kelvin-login script from termsOfUsePage.html">
+      <created>1630231969157</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1630231969157</updated>
+    </task>
+    <task id="LOCAL-00023" summary="remove translation based TODOs and fixed the wording of Qs 4.5.&#10;Created empty templates for the question uploaders for the other supported languages.">
+      <created>1630241476078</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1630241476078</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Implemented a language switching system based on LANGUAGE variable stored in local storage.&#10;uploaded english version translation onto firebase english question branch&#10;added new constants to help in the language switching system.&#10;Renamed question-uploader.js to question-uploader_en.js.&#10;change name of the uploadQuestion() and housekeeping() functions in the question uploader files to specify the language of the questions they are uploading.">
+      <created>1630316902965</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1630316902965</updated>
+    </task>
+    <task id="LOCAL-00025" summary="updated the language uploader templates&#10;changed question 4.4 to a long text question&#10;And the chinese uploader questions are in place. (left to add in the chinese translation of the answer options)">
+      <created>1630345259928</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1630345259929</updated>
+    </task>
+    <task id="LOCAL-00026" summary="update Question 1_12 hints for all question uploaders">
+      <created>1630345634845</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1630345634845</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Changed Qs1.3 to a multipleChoiceOthers type question&#10;added the chinese translation for the chinese questions' answer options.&#10;Updated constants.js with new English questions IDs and chinese question IDs">
+      <created>1630380162477</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1630380162477</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Corrected the question type for Qs 1.3, 1.7 and 2.1 for all question uploader.&#10;ensured the hint format, wording and answers are consistent accross the malay, english and chinese uploaders.&#10;Completed malay language question uploader.&#10;Updated the question ids for english, malay and chinese questions.">
+      <created>1630393954136</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1630393954136</updated>
+    </task>
+    <task id="LOCAL-00029" summary="implemented short explanatory statement in the terms and conditions page which contains a link to the long version of the explanatory statement.&#10;Created a page for the long version of the explanatory statement and refactored the old termsAndCondtions_en_Uploader to termsAndConditions_en_long_Uploader.js&#10;Created termsAndConditions_en_short_Uploader.js&#10;Now users will always see the terms and conditions page.">
+      <created>1630433238157</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1630433238157</updated>
+    </task>
+    <task id="LOCAL-00030" summary="integrate the lastest version of the translation.js and main_page.html into our branch to test translation functions.&#10;&#10;added some &quot;notranslate&quot; into some of the html element's classes to get it ready for auto translate function.&#10;&#10;changed first_time_survey.js's language strings to accomodate the new language string chosen by team redcow">
+      <created>1630506102848</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1630506102849</updated>
+    </task>
+    <task id="LOCAL-00031" summary="merge">
+      <created>1630506279512</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1630506279512</updated>
+    </task>
+    <task id="LOCAL-00032" summary="removed kelvin-login.js script tag from our html files">
+      <created>1630506367484</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1630506367484</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +348,7 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -222,19 +388,31 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update question IDs and update questions in question-uploader.js" />
-    <MESSAGE value="start on validation in showNumeric and removed extra question in question-uploader.js" />
-    <MESSAGE value="create repromptQuestion function.&#10;&#10;changed addMessage to not have validation and used disableTextInput.&#10;&#10;IncrementQuestion is combined into NextQuestion function." />
-    <MESSAGE value="Changes by Yong Peng" />
-    <MESSAGE value="Changes made by Kelvin" />
-    <MESSAGE value="remove unnecessary console.log lines and try to fix message being only one 1 side of the chat interface" />
-    <MESSAGE value="merge chatbot into master" />
-    <MESSAGE value="fix chatbot UI" />
     <MESSAGE value="fix mainpage's colour inconsistencies" />
     <MESSAGE value="fix chatbot bugs" />
     <MESSAGE value="temporarily added a new file for Kelvin to easily host the website locally. will be removed at end of PI.&#10;&#10;fixed spelling mistake on main page and first time survey js.&#10;&#10;added a terms and conditions html page." />
     <MESSAGE value="incorparated terms and conditions page with main page.&#10;&#10;Terms and Conditions page now requires user to tick checkbox to proceed to chatbot. (updating user's data on firebase whether they have accepted it or not is still NOT DONE)" />
     <MESSAGE value="add linkert scale design" />
-    <option name="LAST_COMMIT_MESSAGE" value="add linkert scale design" />
+    <MESSAGE value="Completed Terms and Conditions Page. Now main page can check if the user already accepted the terms and conditions. Terms and Conditions page now update user's data in realtime database with their acceptance of the terms and conditions." />
+    <MESSAGE value="Created Terms of Use page for user registration step and empty contents of Terms and conditions page in preparation of terms and conditions from the clients.&#10;&#10;TODO: Get info of which pages the terms of use page will go to if back button is clicked. Also, work with Vlad to put in the Terms of Use page for user registration.&#10;&#10;The terms of Use files will be deleted because i will pass them to Vlad and his team to plug it in to make the merge easier." />
+    <MESSAGE value="Completed terms and conditions page (last &quot;terms and conditions&quot; page was the terms of use page)" />
+    <MESSAGE value="Update question uploader questions and place some TODO to mark questions that needs to be deleted and have their numbers updated&#10;(section 1 is done by Kelvin while section 2,3,4 and 5 is done by Daniel)" />
+    <MESSAGE value="updated the questions for part 1. (this includes the removal of the old qs 1.10 and 1.11 from V3 of the questionnaire and updating the number of the questions after the removal)" />
+    <MESSAGE value="added question 4.5 into the question uploader and corrected qs 4.3's rating number range." />
+    <MESSAGE value="merge with last commit" />
+    <MESSAGE value="Fixed chatbot questions uploader and finalised the updated questions.&#10;fixed if statement in chatbot-init.js.&#10;updated constants.js with current questions' ids" />
+    <MESSAGE value="Update the terms of use page with the feature to update it's elements according to the selected language. (need to get proper translation of the elements from the clients)&#10;&#10;Created uploaders for the terms of use chinese and malay translation. (still awaiting the thai translation - if thai is selected, the terms of use defaults to english)&#10;&#10;implemented language switch for the page based on the selected language" />
+    <MESSAGE value="commented Kelvin-login script from termsOfUsePage.html" />
+    <MESSAGE value="remove translation based TODOs and fixed the wording of Qs 4.5.&#10;Created empty templates for the question uploaders for the other supported languages." />
+    <MESSAGE value="Implemented a language switching system based on LANGUAGE variable stored in local storage.&#10;uploaded english version translation onto firebase english question branch&#10;added new constants to help in the language switching system.&#10;Renamed question-uploader.js to question-uploader_en.js.&#10;change name of the uploadQuestion() and housekeeping() functions in the question uploader files to specify the language of the questions they are uploading." />
+    <MESSAGE value="updated the language uploader templates&#10;changed question 4.4 to a long text question&#10;And the chinese uploader questions are in place. (left to add in the chinese translation of the answer options)" />
+    <MESSAGE value="update Question 1_12 hints for all question uploaders" />
+    <MESSAGE value="Changed Qs1.3 to a multipleChoiceOthers type question&#10;added the chinese translation for the chinese questions' answer options.&#10;Updated constants.js with new English questions IDs and chinese question IDs" />
+    <MESSAGE value="Corrected the question type for Qs 1.3, 1.7 and 2.1 for all question uploader.&#10;ensured the hint format, wording and answers are consistent accross the malay, english and chinese uploaders.&#10;Completed malay language question uploader.&#10;Updated the question ids for english, malay and chinese questions." />
+    <MESSAGE value="implemented short explanatory statement in the terms and conditions page which contains a link to the long version of the explanatory statement.&#10;Created a page for the long version of the explanatory statement and refactored the old termsAndCondtions_en_Uploader to termsAndConditions_en_long_Uploader.js&#10;Created termsAndConditions_en_short_Uploader.js&#10;Now users will always see the terms and conditions page." />
+    <MESSAGE value="integrate the lastest version of the translation.js and main_page.html into our branch to test translation functions.&#10;&#10;added some &quot;notranslate&quot; into some of the html element's classes to get it ready for auto translate function.&#10;&#10;changed first_time_survey.js's language strings to accomodate the new language string chosen by team redcow" />
+    <MESSAGE value="merge" />
+    <MESSAGE value="removed kelvin-login.js script tag from our html files" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed kelvin-login.js script tag from our html files" />
   </component>
 </project>

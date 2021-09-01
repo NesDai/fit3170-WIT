@@ -242,8 +242,7 @@ function showMessageSenderWithoutHints(message) {
 
 /**
  * Appends a message bubble to the chat bot containing
- * the specified question string with the prompt
- * "Please type your answer in the box below."
+ * the specified question string
  * @param questionString The question string
  */
 function showShortQuestionMessage(questionString) {
@@ -251,7 +250,6 @@ function showShortQuestionMessage(questionString) {
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>${questionString}</p>` +
-        "<p>Please type your answer in the box below.</p>" +
         "</div>" +
         "</div>";
     showHints();
@@ -604,8 +602,6 @@ function showOptions(choices) {
     }
     mcqOptions += "</div>";
     messages.innerHTML += mcqOptions;
-
-
 }
 
 /**
@@ -654,7 +650,11 @@ function isAnsweringSubQuestions() {
  * Ends the survey
  */
 function endSurvey() {
-    questionIndex = QUESTION_IDS[branch_id].length;
+    questionIndex = QUESTION_IDS[branch_id].length-1;
+
+    // Update the questionIndex on the cloud with the local one
+    updateQuestionIndex();
+
     nextQuestion();
 }
 
@@ -666,7 +666,11 @@ function endSurvey() {
  */
 function endSurveyText() {
     showMessageReceiver(input.value);
-    questionIndex = QUESTION_IDS[branch_id].length;
+    questionIndex = QUESTION_IDS[branch_id].length-1;
+
+    // Update the questionIndex on the cloud with the local one
+    updateQuestionIndex();
+
     errorText.style.visibility = "hidden";
     nextQuestion();
 }

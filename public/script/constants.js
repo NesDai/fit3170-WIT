@@ -54,10 +54,12 @@ const PART_TITLE = [
 // The paths for storing/retrieving questions from
 // the Firebase Firestore Database
 const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
-const QUESTIONS_BRANCHES = ["chatbot/survey_questions/questions_en/",
+const QUESTIONS_BRANCHES = [
+    "chatbot/survey_questions/questions_en/",
     "chatbot/survey_questions/questions_zh_CN/",
     "chatbot/survey_questions/questions_ms/",
-    "chatbot/survey_questions/questions_th/"]; // english, chinese, malay, thai
+    "chatbot/survey_questions/questions_th/"
+]; // english, chinese, malay, thai
 
 // Index for access of each language branches
 const EN_INDEX = 0;
@@ -206,54 +208,51 @@ const QUESTION_IDS_MS = [
     "7SCHD0LQIraM0JcXwzcq"
 ];
 
-const QUESTION_IDS_TH = [];
+const QUESTION_IDS_TH = [
+    // Part 1
+    "heHMtIxx6v52gG51K4d1",
+    "ctP7c3mpNIXLf0udZpOH",
+    "PgrlUqn5BzZStH5Y2MnL",
+    "vW5ExsxDmcLJm5fZZ0Xu",
+    "2nqaY1DULl43VSu2casQ",
+    "nfIVgMP7QohnZCz0N5pP",
+    "gcs23btsSwcwTw3MXt5F",
+    "RylePWKrAfKB6ziF4Zcv",
+    "62H6KRs8R0CDP3lIgOZT",
+    "3mbLa6jUJ9g6aF17TXeM",
+    "brs52coBbUKxUJ2fgV3K",
+    "EVRTS3sAoWGvYgf5YqQW",
+    "BEioOJriXg6bBq9mM4dg",
+    "YP1So4hh6vnfVB6oKh9h",
 
-// A list of IDs of question objects that are stored in
-// the Firestore Database
-/*const QUESTION_IDS = [
-    "9XWi28mXWRKj2Ep1eorE",
-    "qJK6vwfA3VBsCP3SxiZ2",
-    "VZNbbdQulmXV6eMp8LbI",
-    "EGunY6hZQaQwAvSzc1dZ",
-    "IUBo2wTNn6vT7I6WgF6X",
-    "lzjuCieujl7KbfyOprD0",
-    "klG5WuK8lsYVivfTIj40",
-    "PTpy6N0RiQfGUQUVWxsG",
-    "iHXOSFyBoZrrT58r2tto",
-    "YQ0gwtZukwnWbCwUIrRW",
-    "huRG5TXmipfNV7PVPfrb",
-    "XA7INiQKyEvkjz6oxAmT",
-    "vTCjQkdvbIyjZRrXVyHJ",
-    "9sjOmnvxINNT3ObwHOra",
-    // Part 1 question IDs above
+    // Part 2
+    "qE9shInVE7zqeRkUxf46",
+    "uk3jGjmSEnj6mNq2ZhXw",
+    "Xlu6MN6yzqbrvX26GbsS",
+    "6pieWZe20yaE0857avWs",
+    "spCIerE3LvIGZvU68IYZ",
+    "6i06pRSdc0lvOhez2dcC",
+    "VkKTUROec5oQ2hrpj02X",
 
-    "1bQl9X6vGkBC47wmSchS",
-    "bmjmPJuQlXDp4ReMnEc0",
-    "EmTZPbos4mbbpdjMT8Qb",
-    "BT0FPFqlqgsug4gFmjqB",
-    "wEbBE6x3j0Nc76qxnAlB",
-    "70j9g3TBMluafFGa0y0v",
-    "DM8jaip2d8xmNREaWdRj",
-    // Part 2 question IDs above
+    // Part 3
+    "Pd0lZM8dXQ5jAnJozGos",
+    "rYfGSLyWAxTNYIhJR1ps",
 
-    "VTgVVDExbu84CBqvLMo0",
-    "NoBBJVvUPl4NdtC164Qy",
-    // Part 3 question IDs above
+    // Part 4
+    "akt7zDyx7cAsgcvZ1QFA",
+    "c8eclgAj39JmDlEOT5BY",
+    "w3Mm6WoxWmkIkLdLMcrC",
+    "z7mGUwSiCVyx29yhkraU",
+    "8lPoBoAc17rC7LqV2UoG",
 
-    "Z2oN64I8dHWsLJ4r1qZq",
-    "fhi8d6a2s0CiCBPjkbPF",
-    "gSvZjaBmBIbrLrCCuwK3",
-    "E8jb3LKomsH3nVjw13N4",
-    "dpO89uFkNXJTPuxwt9VS",
-    // Part 4 question IDs above
+    // Part 5
+    "EJkPZ9CvTIYgmVpHa98D",
+    "Mzsh0toTvY1xqVv2yNbX",
+    "nlMvXKQab1XMqmDafK2O",
+    "T8DRIcsFQbbVx5mKZZce"
+];
 
-    "h9ocDajgErspM12E0eA4",
-    "xjt2xaEN7X0zlhxWoBTd",
-    "6nNTBhgUmSisSVDH9dEa",
-    "FYlnoJEFCdrRmlz49HRg"
-    // Part 5 question IDs above
-];*/
-
+// A list of arrays of IDs of question objects of each supported language that are stored in the Firestore Database
 QUESTION_IDS = [
     QUESTION_IDS_EN,
     QUESTION_IDS_ZH_CN,

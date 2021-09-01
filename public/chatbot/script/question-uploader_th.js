@@ -235,10 +235,10 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 4.3.a
-    "", // Qs 4.3.b
-    "", // Qs 4.3.c
-    "" // Qs 4.3.d
+    "ทักษะเกี่ยวกับเทคโนโลยี เช่น การใช้โทรศัพท์มือถือ หรือ การใช้ซอฟต์แวร์คอมพิวเตอร์", // Qs 4.3.a
+    "ทักษะเกี่ยวกับการสื่อสารหรือทักษะทางสังคม (เช่น การพัฒนาความสัมพันธ์ที่ดีกับผู้อื่น เป็นต้น)", // Qs 4.3.b
+    "ทักษะเกี่ยวกับงานอดิเรกที่สนใจ (เช่น การปลูกดอกไม้ การถักไหมพรม เป็นต้น)", // Qs 4.3.c
+    "ทักษะเกี่ยวกับงานหรืออาชีพ (เช่น การเพิ่มประสิทธิภาพในการทำงาน เป็นต้น)" // Qs 4.3.d
 ];
 
 const SUB_QUESTIONS_HINTS_4_3 = [
@@ -253,19 +253,19 @@ const SUB_QUESTIONS_HINTS_4_3 = [
 const SUB_QUESTIONS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "", // Qs 4.5.a
-    "", // Qs 4.5.b
-    "", // Qs 4.5.c
-    "", // Qs 4.5.d
-    "", // Qs 4.5.e
-    "", // Qs 4.5.f
-    "", // Qs 4.5.g
-    "", // Qs 4.5.h
-    "", // Qs 4.5.i
-    "", // Qs 4.5.j
-    "", // Qs 4.5.k
-    "", // Qs 4.5.l
-    "" // Qs 4.5.m
+    "ฉันเข้าใจความหมายของชีวิต", // Qs 4.5.a
+    "ฉันเข้าใจความหมายของกิจกรรมประจำวันต่างๆ", // Qs 4.5.b
+    "ฉันพบความน่าสนใจในกิจกรรมประจำวันต่างๆ", // Qs 4.5.c
+    "ฉันมีความมั่นใจในกิจกรรมประจำวันต่างๆ", // Qs 4.5.d
+    "ฉันมีความมั่นใจในประสิทธิภาพของการทำกิจกรรมประจำวันต่างๆ", // Qs 4.5.e
+    "ฉันมีความมั่นใจในกิจกรรมประจำวันรูปแบบใหม่ๆ", // Qs 4.5.f
+    "ฉันมีความสามารถในการแสดงออกเกี่ยวกับตัวฉันหรือความรู้สึกของฉัน", // Qs 4.5.g
+    "ฉันมีความสามารถในการเลือกทางเลือกที่ดีกว่า", // Qs 4.5.h
+    "ฉันมีความสามารถในการตัดสินใจเมื่อประสบปัญหาใดๆ", // Qs 4.5.i
+    "ฉันมีความสามารถในการทำงานร่วมกับผู้อื่น", // Qs 4.5.j
+    "ฉันมีความสามารถในการสร้างทีมร่วมกับผู้อื่น", // Qs 4.5.k
+    "ฉันมีความสามารถในการสร้างพันธมิตร", // Qs 4.5.l
+    "ฉันมีความสามารถในการแก้ปัญหาร่วมกับผู้อื่น" // Qs 4.5.m
 ];
 
 const SUB_QUESTIONS_HINTS_4_5 = [
@@ -290,18 +290,18 @@ const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 4.1
+    "คุณพยายามเรียนรู้สิ่งใหม่ๆ หรือสิ่งที่เป็นประโยชน์ผ่านโทรศัพท์มือถือของคุณบ่อยแค่ไหน? (ระบุเป็นตัวเลขระดับ 1 ถึง 7)", // Qs 4.1
 
-    "", // Qs 4.2
+    "คุณแบ่งเวลาประมาณกี่ชั่วโมงต่อ 1 สัปดาห์ไว้สำหรับการเรียนรู้สิ่งใหม่ๆ หรือสิ่งที่เป็นประโยชน์ผ่านโทรศัพท์มือถือของคุณ?", // Qs 4.2
     // The question above this line is question 4.2
 
-    "", // Qs 4.3
+    "คุณสนใจที่จะใช้โทรศัพท์มือถือในการเรียนรู้ทักษะต่างๆต่อไปนี้มากน้อยแค่ไหน?", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "", // Qs 4.4
+    "คุณต้องการใช้โทรศัพท์มือถือของคุณเรียนรู้ทักษะใดเกี่ยวกับงานหรืออาชีพ?", // Qs 4.4
     // The question above this line is question 4.4
 
-    "" // Qs 4.5
+    "คุณเห็นด้วยหรือไม่เห็นด้วยมากน้อยเพียงใดว่าประโยคต่อไปนี้อธิบายความเป็นตัวคุณ?" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -309,35 +309,35 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Enter a Number",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "ใส่จำนวนชั่วโมงเป็นตัวเลข",
     // The question above this line is question 4.2
 
-    "Select an Option",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
     // The question above this line is a long question (4.3)
 
     "",
-    "Select an Option"
+    "เลือกตัวเลือก" // TODO get confirmation from clients on translation of "Select an option"
 ]
 
 const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 5.1
-    "", // Qs 5.2
-    "", // Qs 5.3
-    "" // Qs 5.4
+    "ทำไมคุณจึงสนใจที่จะเรียนรู้เกี่ยวกบการใช้โทรศัพท์มือถือ?", // Qs 5.1
+    "คุณต้องการทรัพยากรอะไรเพื่อที่จะเรียนรู้เกี่ยวกับการใช้โทรศัพท์มือถือ?", // Qs 5.2
+    "อะไรเป็นสิ่งที่น่าหงุดหงิดใจที่สุดที่คุณเคยเจอหรือรู้สึกเมื่อพยายามเรียนรู้เกี่ยวกับการใช้โทรศัพท์มือถือ?", // Qs 5.3
+    "ช่วยเล่าเกี่ยวกับปัญหาหรือความท้าทายในเรื่องงาน หรือที่ทำงานให้ฟังหน่อย?" // Qs 5.4
 ]
 
 const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Type in a Response",
-    "Type in a Response",
-    "Type in a Response",
-    "Type in a Response"
+    "พิมพ์ตอบกลับ", // TODO get confirmation on translation of "Type in a Response"
+    "พิมพ์ตอบกลับ",
+    "พิมพ์ตอบกลับ",
+    "พิมพ์ตอบกลับ"
 ]
 
 // TODO 2.6 and 2.7 - Likert Scale
@@ -354,29 +354,29 @@ function pushPart1Questions() {
     pushNumeric("1.1", PART1[1], 50, 100, true, HINTS_PART1[1]);
 
     // Question 1.2
-    let choices_1_2 = ["Male", "Female"]
-    let skip_choices_1_2 = ["Male"];
+    let choices_1_2 = ["ผู้ชาย", "ผู้หญิง"]
+    let skip_choices_1_2 = ["ผู้ชาย"];
     pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2, SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
-    let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
+    let choices_1_3 = ["เชื้อสายมาเลย์", "เชื้อสายจีน", "เชื้อสายอินเดีย", "เชื้อสายไทย", "อื่นๆ"];
     //pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
     pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
-    let choices_1_4 = ["Urban area", "Rural area"];
+    let choices_1_4 = ["เขตตัวเมือง", "เขตชนบท"];
     pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED, HINTS_PART1[4]);
 
     // Question 1.5
-    let choices_1_5 = ["No income", "Less than MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
+    let choices_1_5 = ["ไม่มีรายได้", "น้อยกว่า 25,000 บาท", "ระหว่าง 25,001 – 31,690 บาท", "ระหว่าง 31,700 – 39,690 บาท", "ระหว่าง 39,700 - 48,490 บาท", "มากกว่า 48,500 บาท"];
     pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED, HINTS_PART1[5]);
 
     // Question 1.6
-    let choices_1_6 = ["No formal education", "Primary school", "Secondary/ high school", "Vocational/ technical certification", "University"];
+    let choices_1_6 = ["ไม่ได้ผ่านระบบการศึกษาอย่างเป็นทางการ", "ประถมศึกษา", "มัธยมศึกษา", "อาชีวศึกษา หรือ อนุปริญญา", "อุดมศึกษา (ปริญญาตรี หรือ สูงกว่า)"];
     pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED, HINTS_PART1[6]);
 
     // Question 1.7
-    let choices_1_7 = ["Single", "Married", "Divorced", "Widowed", "Other relationship"];
+    let choices_1_7 = ["โสด", "สมรส", "หย่า", "หม้าย", "ความสัมพันธ์แบบอื่น"];
     pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
@@ -408,8 +408,8 @@ function pushPart1Questions() {
             initLongQuestionParams();
 
             // Question 1.12a
-            let choices_1_12 = ["Yes", "No"];
-            let skip_choices_1_12 = ["Yes"];
+            let choices_1_12 = ["เคย", "ไม่เคย"];
+            let skip_choices_1_12 = ["เคย"];
             appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[1], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[1]);
 
             // Question 1.12b
@@ -435,7 +435,7 @@ function pushPart1Questions() {
         initLongQuestionParams();
 
         // Question 1.13a
-        let choices_1_13 = ["Yes", "No"];
+        let choices_1_13 = ["เคย", "ไม่เคย"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_13[1]);
@@ -488,8 +488,8 @@ function pushPart2Questions() {
     setPartNumber(2);
 
     // Question 2.1
-    let choices_2_1 = ["Working", "Retired", "Semi-retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
-    let skip_choices_2_1 = ["Retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
+    let choices_2_1 = ["ทำงาน", "เกษียณอายุ", "กึ่งเกษียณ (ทำงานบ้างเป็นครั้งคราว)", "ไม่ได้ทำงาน ", "ไม่ได้ทำงานประจำแต่ทำงานอาสาสมัครเพื่อสังคมบางอย่าง", "ไม่ได้ทำงานแต่กำลังมองหางานอยู่", "อื่นๆ โปรดระบุ"];
+    let skip_choices_2_1 = ["เกษียณอายุ", "ไม่ได้ทำงาน ", "ไม่ได้ทำงานประจำแต่ทำงานอาสาสมัครเพื่อสังคมบางอย่าง", "ไม่ได้ทำงานแต่กำลังมองหางานอยู่"];
     pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1, skip_choices_2_1, "insert question 2.3 id here", HINTS_PART2[1]);
 
     // Question 2.2
@@ -499,23 +499,23 @@ function pushPart2Questions() {
     pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
-    let choices_2_4 = ["Yes", "No", "Not applicable"];
+    let choices_2_4 = ["ใช่", "ไม่ใช่", "ไม่เกี่ยวข้อง"];
     pushMultipleChoice("2.4", PART2[4], choices_2_4, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
-    let choices_2_5 = ["Yes", "No", "Not applicable"];
+    let choices_2_5 = ["ใช่", "ไม่ใช่", "ไม่เกี่ยวข้อง"];
     pushMultipleChoice("2.5", PART2[5], choices_2_5, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
     // Question 2.6
-    let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_6 = ["ไม่เกี่ยวข้อง", "ไม่มีความมั่นใจเลยl", "ไม่ค่อยมั่นใจ", "มั่นใจเล็กน้อย", "ค่อนข้างมั่นใจ", "มั่นใจมาก"];
     pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
-    let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident", "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_7 = ["ไม่เกี่ยวข้อง", "ไม่มีความมั่นใจเลย", "ไม่ค่อยมั่นใจ", "มั่นใจเล็กน้อย", "ค่อนข้างมั่นใจ", "มั่นใจมาก"];
     pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
@@ -526,11 +526,11 @@ function pushPart3Questions() {
 
     // Question 3.1
     let choices_3_1 = [
-        "Prepaid mobile data plan",
-        "Postpaid mobile data plan",
-        "Home WiFi broadband plan",
-        "Public WiFi hotspot",
-        "I don't know how to access the Internet"
+        "แพคเกจอินเตอ์เน็ตแบบเติมเงิน",
+        "แพคเกจอินเตอร์เน็ตแบบจ่ายรายเดือน",
+        "เชื่อมต่อกับ WiFi ของที่บ้าน",
+        "เชื่อมต่อกับ WiFi ตามที่สาธารณะ",
+        "ฉันไม่รู้วิธีเชื่อมต่ออินเตอร์เน็ต"
     ];
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
@@ -1069,7 +1069,7 @@ function updateLongQuestionsWithSubQuestionIds() {
     }
 }
 
-function uploadQuestions_thx() {
+function uploadQuestions_th() {
     pushPart1Questions();
     pushPart2Questions();
     pushPart3Questions();
