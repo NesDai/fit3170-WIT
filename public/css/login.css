@@ -14,7 +14,6 @@ a:focus {
 	outline: none !important;
 }
 
-
 a:hover {
 	text-decoration: none;
 	color: #006dae;
@@ -27,30 +26,32 @@ input {
 
 
 /* languages page */
+
 .trans-section {
-  margin: 100px;
-  padding: 20px;
-  padding-bottom: 25px;
-  background-color: white;
-  border-radius: 10px;
-  width: 100%;
-  padding: auto;
-  height: 80%;
+	margin: 100px;
+	padding: 20px;
+	padding-bottom: 25px;
+	background-color: white;
+	border-radius: 10px;
+	width: 100%;
+	padding: auto;
+	height: 80%;
 }
 
 #content1 {
-  height: 700px;
-  width: 40%;
-  position: fixed; 
-  top: 50%;
-  left: 58%;
-  display: flex;
-  /* bring your own prefixes */
-  transform: translate(-75%, -55%);
+	height: 700px;
+	width: 40%;
+	position: fixed;
+	top: 50%;
+	left: 58%;
+	display: flex;
+	/* bring your own prefixes */
+	transform: translate(-75%, -55%);
 }
 
 
 /* log in page */
+
 .wrap-login {
 	width: 100%;
 	border-radius: 10px;
@@ -61,107 +62,119 @@ input {
 }
 
 .container {
-  margin: 100px;
-  padding: 20px;
-  padding-bottom: 25px;
-  background-color: white;
-  border-radius: 10px;
-  width: 95%;
-  padding: auto;
-  height: 50%; 
+	margin: 100px;
+	padding: 20px;
+	padding-bottom: 25px;
+	background-color: white;
+	border-radius: 10px;
+	width: 95%;
+	padding: auto;
+	height: 50%;
 }
+
+
+/* signup */
+
+#container-s {
+	margin-top: 10px;
+}
+
+.wrap-s {
+	width: 100%;
+	border-radius: 10px;
+	padding-left: 55px;
+	padding-right: 55px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
 
 /* terms and conditions */
+
 body {
-  background-color: #006dae;
+	background-color: #006dae;
 }
-.terms_card
-{
-  margin-top: 30px;
-  padding: 20px;
-  padding-bottom: 25px;
-  background-color: white;
-  border-radius: 10px;
-  width: 95%;
-  padding: auto;
-  height: 90%; 
+
+.terms_card {
+	margin-top: 30px;
+	padding: 20px;
+	padding-bottom: 25px;
+	background-color: white;
+	border-radius: 10px;
+	width: 95%;
+	padding: auto;
+	height: 90%;
 }
-.textArea{
-  margin-inline: auto;
-  margin-top: 2%;
-  height: 90%;
-  width: 95%;
-  border: thick solid;
-  border-color: #D2D2D2;
-  overflow-y: scroll;
+
+.textArea {
+	margin-inline: auto;
+	margin-top: 2%;
+	height: 90%;
+	width: 95%;
+	border: thick solid;
+	border-color: #D2D2D2;
+	overflow-y: scroll;
 }
-.tick-warning{
-  color: red;
+
+.tick-warning {
+	color: red;
 }
-.mdl-button{
-  text-align: center;
+
+.mdl-button {
+	text-align: center;
 }
-.checkbox-div{
-  margin-inline: auto;
+
+.checkbox-div {
+	margin-inline: auto;
 }
-.mdl-card__supporting-text
-{
-  font-size: 20px;
-  line-height: 1.6;
+
+.mdl-card__supporting-text {
+	font-size: 20px;
+	line-height: 1.6;
 }
+
 @media all and (min-width:551px) {
-  .desktop-br {display: inline;}
-}
-h4{
-  font-weight: bold;
-}
-h3{
-  left: auto;
+	.desktop-br {
+		display: inline;
+	}
 }
 
+h4 {
+	font-weight: bold;
+}
 
-
-
+h3 {
+	left: auto;
+}
 
 
 /* styling the background and the container of the login form */
-@media all and (min-width:540px) {
-	/* laptop */
-  #content1, #container, .terms_card {
-    width: 40%;
-  }
-  .terms_card{
-    margin-left: 28%;
-  }
 
-	#signup {
-		margin-top: 0px;
-		margin-left: 250px;
-		position: relative;
-		/* bring your own prefixes */
-		transform: translate(-10%, -10%);
+@media all and (min-width:600px) {
+	/* laptop */
+	#content1,
+	#container,
+	.terms_card,
+	#container-s {
+		width: 40%;
+	}
+	.terms_card {
+		margin-left: 28%;
 	}
 }
 
-
 @media only screen and (max-width: 1024px) {
-  /* phone */
-  #content1 {
-    width: 120%;
-    left: 80%;
-  }
-	#signup {
-		position: relative;
-		transform: translate(0%, -20%);
+	/* phone */
+	#content1 {
+		width: 120%;
+		left: 80%;
 	}
-
-  .terms_card{
-    margin-left: 2%;
-  }
-  #content-box
-  {
-    width: 88%;
-  }
+	.terms_card {
+		margin-left: 2%;
+	}
+	#content-box {
+		width: 88%;
+	}
 }
 
 .title {
@@ -280,7 +293,8 @@ h3{
 	height: 50px;
 }
 
-#back_btn, #back_btn_tc {
+#back_btn,
+#back_btn_tc {
 	margin-top: 50px;
 	width: 100%;
 	background: #D2D2D2;
@@ -302,15 +316,13 @@ h3{
 	height: 70px;
 }
 
-
 #send-button :hover,
-#login-button :hover, 
-#back_btn :hover, 
+#login-button :hover,
+#back_btn :hover,
 #back_btn_tc :hover,
-#confirmButton :hover{
+#confirmButton :hover {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.265) 0 0);
 }
-
 
 #recaptcha-container {
 	line-height: -100px;
