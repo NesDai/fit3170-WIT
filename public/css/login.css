@@ -35,7 +35,7 @@ input {
 	border-radius: 10px;
 	width: 100%;
 	padding: auto;
-	height: 80%;
+	height: 85%;
 }
 
 #content1 {
@@ -160,6 +160,9 @@ h3 {
 	}
 	.terms_card {
 		margin-left: 28%;
+	}
+	.trans-section {
+		height: 75%;
 	}
 }
 
