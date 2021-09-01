@@ -291,7 +291,9 @@ const PART4 = [
     // The above question is a placeholder to allow 1-indexing
 
     "Berapa <b>kerap</b> anda cuba mempelajari sesuatu yang baru atau berguna menggunakan \n" +
-    "telefon bimbit? (Nilai dari 1 hingga 7)", // Qs 4.1
+    "telefon bimbit? (Nilai dari 1 hingga 7)\n" +
+    "[1] Tidak pernah, [2] Sebulan sekali, [3] Beberapa kali dalam sebulan, [4] Seminggu sekali, " +
+    "[5] Beberapa kali seminggu, [6] Sekali sehari, [7] Berkali-kali sehari", // Qs 4.1
 
     "Berapa <b>jam seminggu</b> yang anda curahkan untuk mempelajari sesuatu yang baru atau berguna, menggunakan telefon bimbit?", // Qs 4.2
     // The question above this line is question 4.2

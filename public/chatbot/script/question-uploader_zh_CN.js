@@ -290,7 +290,8 @@ const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "您尝试使用手机学习新的或有用的东西的<b>频率</b>如何？(等级从 1 到 7)", // Qs 4.1
+    "您尝试使用手机学习新的或有用的东西的<b>频率</b>如何？(等级从 1 到 7)\n" +
+    "[1] 从不, [2] 一个月一次, [3] 一个月几次, [4] 每周一次, [5] 一周几次, [6] 一天一次, [7] 一天多次", // Qs 4.1
 
     "您<b>每周花多少小时</b>用手机学习新的或有用的东西？（请输入数字）", // Qs 4.2
     // The question above this line is question 4.2
