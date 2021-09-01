@@ -43,7 +43,7 @@
             <form class = "input_div">
                <span class="label">Phone number</span>
                <br>
-               <input class="input" type="text" id="number" placeholder="Enter e.g., +60129356770 or +668190677822" onchange="phoneValidation()">
+               <input class="input" type="text" id="number" placeholder="Enter e.g., +60129356770 or +668190677822" onkeyup="phoneValidation()">
                <span class="focus-input_logo" data-symbol="&#xf2be;"></span>
             </form>
             <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="login-button" onclick="checkUserExistence(document.getElementById('number').value)">Login</button>           
