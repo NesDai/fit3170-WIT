@@ -13,13 +13,13 @@ let messageHistoryColour = 'white';
 let select_language = localStorage.getItem("LANGUAGE");
 
 let branch_id;
-if (select_language == "en") {
+if (select_language == "English") {
     branch_id = EN_INDEX;
-} else if (select_language == "zh-CN") {
+} else if (select_language == "Chinese (Simplified)") {
     branch_id = ZH_CN_INDEX;
-} else if (select_language == "ms") {
+} else if (select_language == "Malay") {
     branch_id = MS_INDEX;
-} else if (select_language == "th") {
+} else if (select_language == "Thai") {
     branch_id = TH_INDEX;
 }
 

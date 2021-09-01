@@ -9,30 +9,30 @@ const SUB_QUESTIONS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.12.1
-    "", // Qs 1.12.2
-    "", // Qs 1.12.3
-    "" // Qs 1.12.4
+    "อยู่อาศัยกับบุคคลอื่นในบ้าน", // Qs 1.12.1
+    "อยู่อาศัยคนเดียวในบ้าน", // Qs 1.12.2
+    "อยู่อาศัยกับบุคคลอื่นที่สถานดูแลผู้สูงอายุ", // Qs 1.12.3
+    "อยู่อาศัยลำพังที่สถานดูแลผู้สูงอายุ" // Qs 1.12.4
 ];
 
 const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก"
 ];
 
 const SUB_QUESTIONS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.13.a
-    "", // Qs 1.13.b
-    "", // Qs 1.13.c
-    "" // Qs l.13.d
+    "พึ่งพาผู้อื่นในการทำเรื่องสำคัญต่างๆ", // Qs 1.13.a
+    "ไม่สามารถที่จะเข้าถึงและได้รับการรักษาทางการแพทย์ได้", // Qs 1.13.b
+    "ไม่มีเงินที่จะซื้ออาหารสดหรือข้าวของเครื่องใช้", // Qs 1.13.c
+    "ไม่สามารถที่จะจ่ายค่าบริการบางอย่างได้อย่างน้อย 1 รายการ (เช่น ค่าน้ำ ค่าไฟ ค่าโทรศัพท์)" // Qs l.13.d
 ];
 
 const SUB_QUESTIONS_HINTS_1_13 = [
@@ -49,9 +49,9 @@ const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.14.a
-    "", // Qs 1.14.b
-    "" // Qs 1.14.c
+    "โดยรวมแล้ว ชีวิตของฉันใกล้เคียงกับที่ฉันวาดฝันไว้", // Qs 1.14.a
+    "ชีวิตตอนนี้ของฉันดีมากๆ", // Qs 1.14.b
+    "ฉันพึงพอใจกับชีวิตของฉัน" // Qs 1.14.c
 ];
 
 // TODO Fill in tooltips
@@ -69,29 +69,29 @@ const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 1.1
-    "", // Qs 1.2
-    "", // Qs 1.3
-    "", // Qs 1.4
-    "", // Qs 1.5
-    "", // Qs 1.6
-    "", // Qs 1.7
-    "", // Qs 1.8
-    "", // Qs 1.9
+    "คุณมีอายุกี่ปี?", // Qs 1.1
+    "โปรดระบุเพศของคุณ?", // Qs 1.2
+    "โปรดระบุเชื้อชาติของคุณ?", // Qs 1.3
+    "ณ ปัจจุบันคุณอาศัยอยู่ในเขตใด?", // Qs 1.4
+    "รายได้เฉลี่ยต่อครัวเรือนของครอบครัวคุณ ต่อเดือน เป็นเท่าไหร่?", // Qs 1.5
+    "โปรดระบุระดับการศึกษาสูงสุดของคุณ?", // Qs 1.6
+    "โปรดระบุสถานภาพสมรสของคุณ?", // Qs 1.7
+    "คุณมีลูกกี่คน?", // Qs 1.8
+    "คุณคุยหรือติดต่อกับลูกกี่คนในสัปดาห์หนึ่งๆ?", // Qs 1.9
 
     // The question above this line is question 1.9
 
-    "", // Qs 1.10
-    "", // Qs 1.11
-    "", // Qs 1.12
+    "คุณมีญาติสนิทกี่คน?", // Qs 1.10
+    "คุณมีเพื่อนสนิทกี่คน?", // Qs 1.11
+    "โปรดระบุลักษณะการอยู่อาศัยของคุณ?", // Qs 1.12
 
     // The question above this line is a long question 1.12
 
-    "", // Qs 13
+    "ใน 6 เดือนที่ผ่านมา คุณเคยมีประสบการณ์ดังต่อไปนี้หรือไม่?", // Qs 13
 
     // The question above this line is a long question (1.13)
 
-    "" // Qs 1.14
+    "คุณมีความพึงพอใจมากน้อยแค่ไหนกับความเป็นอยู่ในปัจจุบัน?" // Qs 1.14
 
     // The question above this line is a long question 1.14
 ];
@@ -100,28 +100,28 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Enter a Number",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Enter a Number",
-    "Enter a Number",
+    "โปรดระบุเป็นตัวเลข",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือกn",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือกn",
+    "เลือกตัวเลือกn",
+    "โปรดระบุเป็นตัวเลข",
+    "โปรดระบุเป็นตัวเลข",
 
     // The question above this line is question 1.10
 
 
-    "Enter a Number",
-    "Select an Option",
-    "Select an Option",
+    "โปรดระบุเป็นตัวเลข",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "เลือกตัวเลือก",
     // The question above this line is a long question (1.14)
 
-    "Select an Option",
+    "เลือกตัวเลือก",
     // The question above this line is a long question (1.14)
 
-    "Select an Option"
+    "เลือกตัวเลือก"
     // The question above this line is a long question (1.14)
 ];
 
@@ -129,13 +129,13 @@ const PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 2.1
-    "", // Qs 2.2
-    "", // Qs 2.3
-    "", // Qs 2.4
-    "", // Qs 2.5
-    "", // Qs 2.6
-    "" // Qs 2.7
+    "โปรดระบุสถานะการทำงานของคุณในปัจจุบัน?", // Qs 2.1
+    "โปรดระบุงานหรืออาชีพที่คุณทำอยู่ในตอนนี้?", // Qs 2.2
+    "คุณมีความพึงพอใจในระดับใดกับสถานการณ์ทำงานในปัจจุบันของคุณมากน้อยเพียงใด? (โปรดระบุเป็นคะแนนตั้งแต่ 1 ถึง 5)", // Qs 2.3
+    "คุณตกงานหรือถูกเลิกจ้างในช่วงที่มีการแพร่ระบาดของเชื้อโควิด 19 หรือไม่?", // Qs 2.4
+    "คุณสูญเสียรายได้โดยมีสาเหตุมาจากการแพร่ระบาดของเชื้อโควิด 19 หรือไม่?", // Qs 2.5
+    "คุณมีความมั่นใจแค่ไหนในการหางานใหม่ในอนาคตอันใกล้นี้?", // Qs 2.6
+    "คุณมั่นใจแค่ไหนว่าคุณจะสามารถรักษาตำแหน่งงานปัจจุบันของคุณไว้ได้ในอนาคตอันใกล้นี้?" // Qs 2.7
 ];
 
 const HINTS_PART2 = [
@@ -155,28 +155,28 @@ const SUB_QUESTIONS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 3.2.a
-    "", // Qs 3.2.b
-    "", // Qs 3.2.c
-    "", // Qs 3.2.d
-    "", // Qs 3.2.e
-    "", // Qs 3.2.f
-    "", // Qs 3.2.g
+    "ส่งรับ SMS หรือข้อความในแอปพลิเคชั่นเช่น LINE (ไลน์) หรือ Facebook messenger (เฟซบุ๊ค)", // Qs 3.2.a
+    "เล่นอินเตอร์เน็ต", // Qs 3.2.b
+    "ดูคลิปวีดีโอ", // Qs 3.2.c
+    "โทรศัพท์แบบเห็นหน้าผ่าน Zoom (โปรแกรมซูม) LINE call (ไลน์), Facetime (เฟสไทม์), หรือ เฟซบุ๊ค", // Qs 3.2.d
+    "ใช้แอปพลิเคชั่นในการติดตามสถานการณ์โควิด เช่น หมอชนะ เราชนะ", // Qs 3.2.e
+    "ซื้อของออนไลน์ผ่านร้านค้าบนลาซาด้า ซ็อปปี หรือร้านค้าออนไลน์อื่นๆ", // Qs 3.2.f
+    "ทำธุรกรรมทางการเงินผ่านโทรศัพท์มือถือ (เช่น ใช้โมบายแบงค์กิ้งของธนาคารต่างๆ หรือใช้ Rabbit LINE Pay, ทรูมันนี่วอลเล็ต)", // Qs 3.2.g
     // The question above this line is question 3.2g
 
-    "", // Qs 3.2.h
-    "", // Qs 3.2.i
-    "", // Qs 3.2.j
-    "", // Qs 3.2.k
-    "", // Qs 3.2.l
-    "", // Qs 3.2.m
-    "", // Qs 3.2.n
-    "", // Qs 3.2.o
+    "สั่งอาหารหรือของสดออนไลน์", // Qs 3.2.h
+    "เล่นโซเชียลมีเดีย เช่น เฟซบุ๊ค อินสตาแกรม ทวิตเตอร์", // Qs 3.2.i
+    "ถ่ายรูป", // Qs 3.2.j
+    "ใช้แอปพลิเคชันนำทางหรือบอกทาง เช่น กูเกิลแม็ป", // Qs 3.2.k
+    "จัดการนัดหมายต่างๆ ในปฏิทิน", // Qs 3.2.l
+    "อ่านข่าวหรือนิตยสารออนไลน์", // Qs 3.2.m
+    "จดบันทึก รายการซื้อของ หรือ งานต่างๆที่ต้องทำ", // Qs 3.2.n
+    "ถ่ายวีดีโอ", // Qs 3.2.o
     // The question above this line is question 3.2o
 
-    "", // Qs 3.2.p
-    "", // Qs 3.2.q
-    "" // Qs 3.2.r
+    "ฟังเพลง", // Qs 3.2.p
+    "เล่นเกมส์", // Qs 3.2.q
+    "ติดต่อหน่วยงานราชากรต่างๆ" // Qs 3.2.r
 ];
 
 const SUB_QUESTIONS_HINTS_3_2 = [
@@ -212,10 +212,10 @@ const PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "", // Qs 3.1
+    "คุณใช้อินเตอร์เน็ตแบบไหนในโทรศัพท์มือถือของคุณ?", // Qs 3.1
     // The question above this line is question 3.1
 
-    "" // Qs 3.2
+    "คุณมีความมั่นใจในระดับใดในการใช้โทรศัพท์มือถือเพื่อทำกิจกรรมต่างๆ ต่อไปนี้? (โปรดระบุเป็นตัวเลขระดับจาก 1 ถึง 5)" // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
