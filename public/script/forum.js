@@ -815,11 +815,15 @@ function searchYourPosts(param){
                 })
             })
         //find interests in posts
+        
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
-                    if(data.val().username == current_user["username"]){
+
+                    let users_fav = data.val().users_favourite // all the users who favourited the post
+
+                    if(data.val().username == current_user["username"] || users_fav.includes(current_user["phone"])){
                         for (let i =0; i<data_list.length; i++) {
                             if (data.val()['id']==data_list[i][0])
                             {
@@ -843,7 +847,10 @@ function searchYourPosts(param){
             .startAt(param)
                 .endAt(param+"\uf8ff").once("value", x=> {
                     x.forEach(data => {
-                        if(data.val().username == current_user["username"]){
+
+                        let users_fav = data.val().users_favourite // all the users who favourited the post
+
+                        if(data.val().username == current_user["username"] || users_fav.includes(current_user["phone"])){
                             for (let i =0; i<data_list.length; i++) {
                                 if (data.val()['id']==data_list[i][0])
                                 {
