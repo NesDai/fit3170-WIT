@@ -18,13 +18,6 @@ function checkUserExistence() {
     }
 }
 
-function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";
-}
-
-function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";
-}
 
 /**
  * Function used to check if a video link is from youtube.

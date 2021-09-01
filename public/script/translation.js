@@ -28,6 +28,14 @@ function eraseCookiesGoogle() {
 
 }
 
+function showTranslationModal(){
+    document.getElementById("myModal").style.display = "block";
+}
+
+function hideTranslationModal(){
+    document.getElementById("myModal").style.display = "none";
+}
+
 function disableTranslateButton(){
 
     let lang = localStorage.getItem(LANGUAGE_KEY);
