@@ -302,13 +302,13 @@ function showQuestion(isSubQuestion) {
                 case TYPE_NUMERIC_SUB_QUESTION:
                     showNumeric(questionObject);
                     if (agreeLikertQues.includes(questionIndex)) {
-                        makeAgreeLikertScale(select_language);
+                        makeAgreeLikertScale(branch_id);
                     } else if (satisfyLikertQues.includes(questionIndex)){
-                        makeSatisfyLikertScale(select_language);
+                        makeSatisfyLikertScale(branch_id);
                     } else if (confidentLikertQues.includes(questionIndex)){
-                        makeConfidentLikertScale(select_language);
+                        makeConfidentLikertScale(branch_id);
                     } else if (interestedLikertQues.includes(questionIndex)){
-                        makeInterestedLikertScale(select_language);
+                        makeInterestedLikertScale(branch_id);
                     }
                     break;
 
