@@ -293,7 +293,9 @@ const PART4 = [
     // The above question is a placeholder to allow 1-indexing
 
     "How <b>often</b> do you try to learn something new or useful using a mobile \n" +
-    "phone? (Rate from 1 to 7)", // Qs 4.1
+    "phone? (Rate from 1 to 7)\n" +
+    "[1] Never, [2] Once a month, [3] Few times a month,\n" +
+    "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day", // Qs 4.1
 
     "How many <b>hours per week</b> do you devote to learning something new or useful" +
     " using a mobile phone?", // Qs 4.2
