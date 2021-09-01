@@ -204,21 +204,48 @@ function printAllPosts(){
     });
 }
 
+/**
+ * Function used to print thread videos from the recommended data 
+ * it calls the function that holds html component in a loop and add it to the post field under thread tab. 
+ * @returns null
+ */
 function printThread(){
     document.getElementById("searchBox").value = "";
     document.getElementById("create_post").innerHTML = "";
 
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
-
+    let video_arr = [
+        "https://www.youtube.com/embed/nsO-TbTqRK4", 
+        "https://www.youtube.com/embed/3H6_bcfts8g",
+        "https://www.youtube.com/embed/wN0x9eZLix4",
+        "https://www.youtube.com/embed/tWVWeAqZ0WU", 
+        "https://www.youtube.com/embed/UflHuQj6MVA",
+        "https://www.youtube.com/embed/7KSNmziMqog",
+        "https://www.youtube.com/embed/nsO-TbTqRK4", 
+        "https://www.youtube.com/embed/VuBHV3ZiOJQ",
+        "https://www.youtube.com/embed/oQm8Df4UYNw",
+        "https://www.youtube.com/embed/nsO-TbTqRK4", 
+        "https://www.youtube.com/embed/3H6_bcfts8g"
+    ]
     let button_nums = [1, -1, 0, 1, -1, 1, 0, 0, 1, -1]
 
     for(let i=9; i>=0 ; i--){
-        printRecommendedVideo(button_nums[i], i)
+        printRecommendedVideo(video_arr, button_nums[i], i)
     }
 }
 
-function printRecommendedVideo(button_num, i) {
+
+/**
+ * Function that contains the component of html code for thread video posts and it is used
+ * to embed inside the postField defined in the printThread function.
+ * @param {1} video_arr: an array of recommended videos 
+ * @param {2} button_num: an array of button numbers used for determining the html for likes and dislikes
+ * @param {3} i: the index from the loop called in the printThread function. 
+ * @returns null 
+ */
+
+function printRecommendedVideo(video_arr, button_num, i) {
     let button = `
     <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="" value="1" >
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> 1</span>
@@ -267,7 +294,7 @@ function printRecommendedVideo(button_num, i) {
                      `
                                   +
                                   `
-                                  <iframe width="420" height="315" src=""></iframe>
+                                  <iframe width="420" height="315" src="${video_arr[i]}"></iframe>
                                   `
                                   +
                                   `
@@ -293,7 +320,6 @@ function printRecommendedVideo(button_num, i) {
                   <br>
             </span>
      </div>`;
-
 }
 
 function print_create_post()
