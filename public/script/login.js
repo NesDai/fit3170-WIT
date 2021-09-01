@@ -132,21 +132,25 @@ let persisted = false; //true if the logged in user does not need to sign in aga
  */
 function phoneValidation() {
 
+    let result = false;
     var phone_regex = /^\+[0-9]{8,19}$/; //11-15
     var telephone = document.getElementById("number").value
 
     // test the input number based on the RegEx pattern stated
-    if (phone_regex.test(telephone))
+    if (phone_regex.test(telephone) && telephone!="")
     {
         document.getElementById("input-error").innerHTML = "";
         document.getElementById("number").style.visibility="visible";
         document.getElementById("number").style.color="green";
+        result = true;
     }
     else {
         document.getElementById("input-error").innerHTML = "Invalid phone number. Do avoid any letters, special characters and spaces. Please try again.";
         document.getElementById("number").style.visibility="visible";
         document.getElementById("number").style.color="red";
+        result = false;
     }
+    return result;
 }
 
 
@@ -190,12 +194,11 @@ function codeverify() {
  */
 function checkUserExistence(phone){
 
-    let username;
-    let exists = false;
+    let proceed = phoneValidation();
 
     firebase.database().ref(`users/${phone}`).once("value", snapshot => {
 
-        if (snapshot.exists()){
+        if (snapshot.exists() && proceed){
             
             let user = snapshot.val(); // get the user
 
@@ -203,7 +206,10 @@ function checkUserExistence(phone){
             localStorage.setItem(USER_KEY,JSON.stringify(user));
             window.location = "main_page.html"
         }
-        else{
+        else if(!proceed){
+            return; // do not proceed
+        }
+        else{  // keep as else if so as to not redirect if not proceed
             //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
             // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
             let user = {
