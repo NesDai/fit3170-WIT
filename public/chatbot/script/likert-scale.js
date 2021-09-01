@@ -10,7 +10,7 @@
  */
 
 let hash = new Object();
-hash["en"] =
+hash[EN_INDEX] =
     [
         // Agree
         ["Strongly <br> Disagree", "Disagree", "Neutral", "Agree", "Strongly<br> Agree"],
@@ -26,7 +26,7 @@ hash["en"] =
 
     ];
 
-hash["zh-CN"] =
+hash[ZH_CN_INDEX] =
     [
         // Agree
         ["非常不同意", "不同意", "中立", "同意", "非常同意"],
@@ -42,7 +42,7 @@ hash["zh-CN"] =
 
     ];
 
-hash["ms"] =
+hash[MS_INDEX] =
     [
         // Agree
         ["Sangat <br> tidak <br>  setuju", "Tidak <br> setuju", "Neutral", "Setuju", "Sangat <br> setuju"],
@@ -58,7 +58,7 @@ hash["ms"] =
 
     ];
 
-hash["th"] =
+hash[TH_INDEX] =
     [
         // Agree
         ["ไม่เห็นด้วยอย่างมาก", "ไม่เห็นด้วย ", "กลางๆ", "เห็นด้วย ", "เห็นด้วยอย่างมาก"],
