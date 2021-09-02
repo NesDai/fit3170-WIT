@@ -53,8 +53,12 @@ function getPostDetails() {
 
 
 function printPostDetails(post, button_num) {
+    let atchar = "@";
     if(post.username == undefined)
         post.username = "";
+    else
+        post.username = atchar + post.username;
+
     if(post.created == undefined)
         post.created = "";
         
@@ -103,7 +107,7 @@ function printPostDetails(post, button_num) {
                     <!-- POST HEADER -->
                     <br>
                     <div class="f">
-                       <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                       <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>${post.username}</h2>
                     </div>
                     <div>
                       <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
