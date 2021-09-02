@@ -611,13 +611,10 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
                                     post_arr.push(fav_post);
                                 }
                             })
-                            console.log(post_arr)
                     }).then(()=>{
-                        console.log(post_arr)
-                        console.log(post_arr[0])
-                        let button_num=0
-                        for (let i =0; i<data_list.length; i++) {
-                            for (let k =0; k<post_arr.length; k++){
+                        for (let k =0; k<post_arr.length; k++){
+                            let button_num=0
+                            for (let i =0; i<data_list.length; i++) {
                                 if(data_list[i][0] == post_arr[k]["id"]){  // if an action was performed on this post
                                     if(data_list[i][1] == 1) { // liked
                                         button_num=1
@@ -627,10 +624,12 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
                                     }
                                 }
                             }
+                            button_nums.push(button_num);
                         }
-                        button_nums.push(button_num);
                         }).then(() => {
                                 for(let i=post_arr.length-1; i>=0 ; i--){
+                                    console.log(button_nums[i]);
+                                    console.log(post_arr[i].title)
                                     printPost(post_arr[i], button_nums[i], buttons_index)
                                     buttons_index++;
                                 }
