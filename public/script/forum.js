@@ -215,6 +215,7 @@ function printAllPosts(){
  * @returns null
  */
 function printThread(){
+    document.getElementById("create_post").innerHTML = "";
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
 
@@ -574,7 +575,7 @@ function printPost(post, button_num, i )
         post.username = "";
     if(post.created == undefined)
         post.created = "";
-         
+
     field.innerHTML +=
     `   <div style="padding-top: 20px;">
             <span class="post_card">
