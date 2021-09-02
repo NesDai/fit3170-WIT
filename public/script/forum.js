@@ -161,6 +161,7 @@ function findAllPosts() {
 
 
 function printAllPosts(){
+    document.getElementById("searchBox").value = ""; // clear search box
     print_create_post();
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
@@ -215,6 +216,7 @@ function printAllPosts(){
  * @returns null
  */
 function printThread(){
+    document.getElementById("searchBox").value = ""; // clear search box
     document.getElementById("create_post").innerHTML = "";
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
@@ -263,93 +265,6 @@ function printThread(){
     });
 }
 
-
-
-/**
- * Function that contains the component of html code for thread video posts and it is used
- * to embed inside the postField defined in the printThread function.
- * @param {1} video_arr: an array of recommended videos 
- * @param {2} button_num: an array of button numbers used for determining the html for likes and dislikes
- * @param {3} i: the index from the loop called in the printThread function. 
- * @returns null 
- */
-
-function printRecommendedVideo(video_arr, button_num, i) {
-    let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="" value="1" >
-    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> 1</span>
-    </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick=""  value="2" >
-    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> 2</span>
-    </button>
-    `;
-
-    if (button_num==1)
-    {
-         // liked
-         button = `<button
-         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick=""  value="2">
-         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> 2</span>
-         </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick=""  value="1" >
-         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> 1</span>
-         </button>
-         `
-    }
-    else if(button_num==-1)
-    {
-         // disliked
-         button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick=""  value="2">
-         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> 2</span>
-         </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick=""  value="1">
-         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> 2</span>
-         </button>`
-    }
-
-    let field = document.getElementById("postField");
-    field.innerHTML +=
-    `   <div style="padding-top: 20px;">
-            <span class="post_card">
-               <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                  <!-- POST HEADER -->
-                  <br>
-                  <div class="f">
-                  </div>
-                  <br>
-                  <!-- POST FORM -->
-                  <form class="post_content" style="margin:0 10px; background-color: white">
-                     <br>
-                     `
-                                  +
-                                  `
-                                  <iframe width="420" height="315" src="${video_arr[i]}"></iframe>
-                                  `
-                                  +
-                                  `
-                                  <br>
-                     <div style='display: inline-block'>
-                     </div>
-                     <br><br>
-                  </form>
-                  <div class="f">
-                  </div>
-                  <br>
-                     <!--  LIKE DISLIKE FOR POST -->
-                     <br>
-                    <div id="button_div${i}">
-                     ${button}
-                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="">
-                    <i class="material-icons notranslate" id="more_icon">read_more</i><span> More</span>
-                    </button>
-                    </div>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-                    <script type="text/javascript">
-                    </script>
-                  <br>
-            </span>
-     </div>`;
-}
 
 function print_create_post()
 {
@@ -688,7 +603,7 @@ function printUserFavouritePosts(current_user_posts, button_nums){
 
 function printUserPosts(){
 
-    document.getElementById("searchBox").value = "";
+    document.getElementById("searchBox").value = ""; // clear search box
     document.getElementById("create_post").innerHTML = "";
  
     let field = document.getElementById("postField");
@@ -797,9 +712,14 @@ function printUserPosts(){
 
     let tab = document.getElementsByName("tabs");
 
-    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
+
+    if(tab[2].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
         searchYourPosts(param);
         return
+    }
+    else if(tab[0].checked){ // if the navigation tab is tending video
+        searchTrendingPosts(param);
+        return;
     }
 
     let field = document.getElementById("postField");
@@ -996,6 +916,130 @@ function searchYourPosts(param){
                         let users_fav = data.val().users_favourite // all the users who favourited the post
 
                         if(data.val().username == current_user["username"] || users_fav.includes(current_user["phone"])){
+                            for (let i =0; i<data_list.length; i++) {
+                                if (data.val()['id']==data_list[i][0])
+                                {
+                                    if(data_list[i][0] == data.key){  // if an action was performed on this post
+                                        if(data_list[i][1] == 1) { // liked
+                                            button_num=1
+                                        }
+                                        else{
+                                            button_num=-1
+                                        }
+                                    }
+                                }
+                            }
+                            button_nums.push(button_num);
+                            posts.push(data.val());
+                        }
+                    })
+                }).then(()=>{
+                    let i =0;
+                    for(i=posts.length-1; i>=0 ; i--){
+                        printPost(posts[i], button_nums[i], i )
+                    }
+                    if(i == posts.length-1){
+                        let field = document.getElementById("postField");
+                        field.innerHTML += `<h2>No results found<h2>`
+                    }
+                });
+            })
+}
+
+/**
+ * Function used to search forum posts in "Your posts". A parameter is typed (interest or a name of the post)
+ * @param {param} a search parameter. Could be one of the two. Post title, or interest linked to a post.
+ * @returns Nothing. The function automatically updates the screen with relevant posts.
+ */
+ function searchTrendingPosts(param){
+    let data_list = [];
+    let button_nums = []
+    let posts = [];
+    let field = document.getElementById("postField");
+
+
+    if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
+        printThread();
+        return // exit function
+    }
+
+    field.innerHTML = ""; // emtpy the field of any previous posts
+
+
+    firebase.database().ref('likesDislikes')
+    .once('value', x => {
+        x.forEach(data => {
+            if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
+                data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  ) ; // push the post key into list
+            }
+        })
+    }).then(()=>{
+        let button_num=0
+        firebase.database().ref(`posts`).orderByChild('title')
+        .startAt(param)
+            .endAt(param+"\uf8ff").once("value", x=> {
+                x.forEach(data => {
+
+                    if(data.val().users_favourite != undefined){ // no favs on the post
+                        userFav= data.val().users_favourite; //get all users favs
+                    }
+
+                    if(data.val().recommender == true){
+                        for (let i =0; i<data_list.length; i++) {
+                            if (data.val()['id']==data_list[i][0])
+                            {
+                                if(data_list[i][0] == data.key){  // if an action was performed on this post
+                                    if(data_list[i][1] == 1) { // liked
+                                        button_num=1
+                                    }
+                                    else{
+                                        button_num=-1
+                                    }
+                                }
+                            }
+                        }
+                        button_nums.push(button_num);
+                        posts.push(data.val());
+                    }
+                })
+            })
+        //find interests in posts
+        
+        firebase.database().ref(`posts`).orderByChild('interest/0')
+        .startAt(param)
+            .endAt(param+"\uf8ff").once("value", x=> {
+                x.forEach(data => {
+
+                    let users_fav = data.val().users_favourite // all the users who favourited the post
+
+                    if(data.val().recommender == true){
+                        for (let i =0; i<data_list.length; i++) {
+                            if (data.val()['id']==data_list[i][0])
+                            {
+                                if(data_list[i][0] == data.key){  // if an action was performed on this post
+                                    if(data_list[i][1] == 1) { // liked
+                                        button_num=1
+                                    }
+                                    else{
+                                        button_num=-1
+                                    }
+                                }
+                            }
+                        }
+                        button_nums.push(button_num);
+                        posts.push(data.val());
+                    }
+                })
+            })
+
+        firebase.database().ref(`posts`).orderByChild('interest/1')
+            .startAt(param)
+                .endAt(param+"\uf8ff").once("value", x=> {
+                    x.forEach(data => {
+
+                        let users_fav = data.val().users_favourite // all the users who favourited the post
+
+                        if(data.val().recommender == true){
                             for (let i =0; i<data_list.length; i++) {
                                 if (data.val()['id']==data_list[i][0])
                                 {
