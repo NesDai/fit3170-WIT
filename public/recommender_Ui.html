@@ -110,15 +110,18 @@
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop ">
             <h3>Recommender</h3>
-              <a class="mdl-navigation__link" href="fav_page_Ui.html">
-                <button class="mdl-button mdl-js-button mdl-button--raised">Favourite</button>
-              </a>
-              <a class="mdl-navigation__link" href="recommender_history_Ui.html">
-                <button class="mdl-button mdl-js-button mdl-button--raised">History</button>
-              </a>
-              <a class="mdl-navigation__link" href="recommender_select_skills.html">
-                <button class="mdl-button mdl-js-button mdl-button--raised">Go Back</button>
-              </a>
+            <a class="mdl-navigation__link" href="fav_page_Ui.html">
+              <button class="mdl-button mdl-js-button mdl-button--raised" id="fav_button"><i class="material-icons icon-gray">favorite</i>Favourite</button>
+            </a>
+            <a class="mdl-navigation__link" href="recommender_history_Ui.html">
+              <button class="mdl-button mdl-js-button mdl-button--raised" id="history_button"><i class="material-icons icon-gray">history</i>History</button>
+            </a>
+            <a class="mdl-navigation__link" href="recommender_select_skills.html">
+              <button class="mdl-button mdl-js-button mdl-button--raised" id="edit_button"><i class="material-icons icon-gray">mode_edit</i>Edit skill selection</button>
+            </a>
+            <a class="mdl-navigation__link" href="main_page.html">
+              <button class="mdl-button mdl-js-button mdl-button--raised" id="go_back_button">Go back</button>
+            </a>
 
           </div>
           <div id="user-container">
@@ -139,11 +142,12 @@
         <br>
         <span class="mdl-layout-title">Recommender</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal()"><i class="material-icons icon-teal" id="nav-icons" >g_translate</i> Translate</a>
-          <a class="mdl-navigation__link" href="main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i>  Home</a>
-          <a class="mdl-navigation__link" href="forum.html"><i class="material-icons icon-teal" id="nav-icons" >forum</i>  Forum</a>
-          <a class="mdl-navigation__link" href="chatbot.html"><i class="material-icons icon-teal" id="nav-icons" >chat</i>  Chatbot</a>
-        </nav>
+          <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();"> <img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img> Translate</a>
+          <a class="mdl-navigation__link" href="./main_page.html"> <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon"> Home Page</a>
+          <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
+          <a class="mdl-navigation__link" href="./recommenderUi.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
+          <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
+       </nav>
       </div>
   <body>
     <main class="mdl-layout__content mdl-color--grey-100">
