@@ -10,7 +10,6 @@ async function likePostDetailed(post_id) {
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
             action: 1
         }).then(() => {
-            //alert("Liked");
             updateLikes(post_id, 1) // add 1 like 
         });
 
@@ -111,6 +110,7 @@ async function dislikePostDetailed(post_id)
                 // add 1 dislike and remove 1 like
                 updateDislikes(post_id, 1)
                 updateLikes(post_id,-1)
+                });  
                 // UI   
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';

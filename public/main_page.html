@@ -138,7 +138,7 @@
                   </b>
                </p>
                <hr style="margin: 0;">
-               <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset()"
+               <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset();changeLang(this.value)"
                   value="English">
                <label>
                <span id="lang_text" style="color:white;">English</span>
@@ -208,7 +208,7 @@
                         </div>
                         <br class="desktop-br"><br><br class="desktop-br">
                         <div class = "mdl-card__actions mdl-card--border">
-                           <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="checkSurveyCompletion()">
+                           <a class = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='window.location.href = "./recommender_select_skills.html"'>
                            Open the recommender</a>
                         </div>
                      </div>

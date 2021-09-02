@@ -5,14 +5,53 @@
  * @author Yong Peng (ychi0014@student.monash.edu)
  */
 
+const SUB_QUESTIONS_1_12 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "Tinggal bersama seseorang di rumah", // Qs 1.12.1
+    "Tinggal bersendirian di rumah", // Qs 1.12.2
+    "Tinggal bersama seseorang di tempat penjagaan orang tua", // Qs 1.12.3
+    "Tinggal bersendirian di tempat penjagaan orang tua" // Qs 1.12.4
+];
+
+const SUB_QUESTIONS_HINTS_1_12 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan"
+];
+
+const SUB_QUESTIONS_1_13 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "Bergantung pada orang lain untuk memenuhi <b>keperluan saya</b>.", // Qs 1.13.a
+    "Tidak mendapat rawatan <b>perubatan</b> yang diperlukan? ", // Qs 1.13.b
+    "Tidak mempunyai wang untuk membeli <b>bahan makanan</b>. ", // Qs 1.13.c
+    "Tidak dapat membayar <b>sekurang-kurangnya satu</b> bil." // Qs l.13.d
+];
+
+const SUB_QUESTIONS_HINTS_1_13 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder"
+];
+
 const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "living with someone at home?",
-    "living alone at home?",
-    "living with someone at aged care setting?",
-    "living alone at aged care setting?"
+    "Secara keseluruhan, kehidupan saya hampir ideal.", // Qs 1.14.a
+    "Keadaan hidup saya sekarang sangat baik.", // Qs 1.14.b
+    "Saya berpuas hati dengan hidup saya." // Qs 1.14.c
 ];
 
 // TODO Fill in tooltips
@@ -26,131 +65,79 @@ const SUB_QUESTIONS_HINTS_1_14 = [
     "placeholder"
 ];
 
-const SUB_QUESTIONS_1_15 = [
-    "",
-    // The above question is a placeholder to allow 1-indexing
-
-    "Depending on others to meet my needs.",
-    "Not being able to get medical treatment.",
-    "Had no money to buy groceries.",
-    "Not being able to pay at least one bill.",
-];
-
-// TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_15 = [
-    "",
-    // The above question is a placeholder to allow 1-indexing
-
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
-];
-
-const SUB_QUESTIONS_1_16 = [
-    "",
-    // The above question is a placeholder to allow 1-indexing
-
-    "In most ways my life is closed to my ideal.",
-    "The conditions of my life are excellent.",
-    "I am satisfied with my life."
-];
-
-// TODO Fill in tooltips
-const SUB_QUESTIONS_HINTS_1_16 = [
-    "",
-    // The above question is a placeholder to allow 1-indexing
-
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
-];
-
 const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What is your age in years? (enter a number)",
-    "What is your gender?",
-    "What is your ethnic group?",
-    "Where do you currently live?",
-    "What is your average net household income per month?",
-    "What is your completed highest education level?",
-    "What is your marital status?",
-    "How many children have you raised? (enter a number)",
-    "How many do you talk or correspond with weekly? (enter a number)",
-    "How many do you talk or correspond with monthly? (enter a number)",
+    "Berapakah <b>umur</b> anda dalam tahun?", // Qs 1.1
+    "Apakah <b>jantina</b> anda?", // Qs 1.2
+    "Apakah kumpulan <b>etnik</b> anda?", // Qs 1.3
+    "Di mana anda tinggal sekarang?", // Qs 1.4
+    "Berapakah <b>purata pendapatan isi rumah</b> anda sebulan?", // Qs 1.5
+    "Apakah tahap <b>pendidikan</b> tertinggi anda yang telah habis diselesaikan?", // Qs 1.6
+    "Apakah <b>status perkahwinan</b> anda?", // Qs 1.7
+    "Berapa banyak <b>anak</b> yang dalam <b>tanggungan</b> anda?", // Qs 1.8
+    "Berapa orang <b>anak</b> yang anda <b>berkomunikasi atau hubungi</b> setiap minggu? ", // Qs 1.9
 
-    // The question above this line is question 1.10
+    // The question above this line is question 1.9
 
-    "How many do you correspond with several times a year? (enter a number)",
-    "How many other relatives do you feel close to? (enter a number)",
-    "How many close friends do you have? (enter a number)",
-    "Are you currently...",
+    "Berapa banyak <b>saudara mara</b> yang rapat dengan anda?", // Qs 1.10 TODO get confirmation on translation "saudara" -> "saudara mara"
+    "Berapa ramai <b>rakan karib</b> anda? ", // Qs 1.11
+    "Apakah status kehidupan berdikari anda?", // Qs 1.12
 
-    // The question above this line is a long question (1.14)
+    // The question above this line is a long question 1.12
 
-    "In the past 6 months, have you experienced the following situations?",
+    "Dalam 6 bulan terakhir, adakah anda mengalami situasi berikut?", // Qs 13
 
-    // The question above this line is a long question (1.15)
+    // The question above this line is a long question (1.13)
 
-    "How satisfied are you with your current life now? (Rate from 1 to 5)\n" +
-    "[1] Very dissatisfied, [2] dissatisfied, [3] moderately satisfied,\n" +
-    "[4] satisfied, [5] very satisfied"
+    "Sejauh mana anda <b>berpuas hati</b> dengan kehidupan anda sekarang? (Nilai dari 1 hingga 5)" // Qs 1.14
 
-    // The question above this line is a long question (1.16)
+    // The question above this line is a long question 1.14
 ];
 
-// TODO Fill in tooltips
 const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "masukkan nombor",
+    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan",
+    "pilih pilihan",
+    "masukkan nombor",
+    "masukkan nombor",
 
     // The question above this line is question 1.10
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
 
-    "placeholder",
+    "masukkan nombor",
+    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "pilih pilihan",
     // The question above this line is a long question (1.14)
 
-    "placeholder",
-    // The question above this line is a long question (1.15)
+    "pilih pilihan",
+    // The question above this line is a long question (1.14)
 
-    "placeholder"
-    // The question above this line is a long question (1.16)
+    "pilih pilihan"
+    // The question above this line is a long question (1.14)
 ];
 
 const PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What is your current employment status?",
-    "What is your current job/ occupation/ profession?",
-    "How satisfied are you in your current employment status? (Rate from 1 to 7)\n" +
-    "[1] completely dissatisfied, [2] very dissatisfied, [3] dissatisfied,\n" +
-    "[4] moderately satisfied, [5] satisfied, [6] very satisfied," +
-    " [7] extremely satisfied.",
-    "Did you lose your job due to the COVID-19 pandemic?",
-    "Did you lose your earning income due to the COVID-19 pandemic?",
-    "How confident are you in finding a new job in the near future?",
-    "How confident are you in being able to keep your current job in the near future?",
+    "Apakah status <b>pekerjaan anda sekarang?</b>", // Qs 2.1
+    "Apa yang anda lakukan/ pekerjaan / profesion anda <b>sekarang?</b>", // Qs 2.2
+    "Sejauh mana anda <b>berpuas hati</b> dengan status pekerjaan anda sekarang? (Nilai dari 1 hingga 5)", // Qs 2.3
+    "Adakah anda kehilangan <b>pekerjaan</b> kerana wabak COVID-19?", // Qs 2.4
+    "Adakah anda kehilangan <b>pendapatan</b> anda kerana wabak COVID-19?", // Qs 2.5
+    "Seberapa yakin anda dalam mencari <b>pekerjaan baru</b> dalam masa terdekat?", // Qs 2.6
+    "Sejauh mana anda yakin dapat mengekalkan <b>pekerjaan semasa</b> anda dalam masa terdekat?" // Qs 2.7
 ];
 
-// TODO Fill in tooltips
 const HINTS_PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
@@ -161,42 +148,37 @@ const HINTS_PART2 = [
     "placeholder",
     "placeholder",
     "placeholder",
-    "placeholder",
+    "placeholder"
 ];
 
 const SUB_QUESTIONS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "SMS, text messaging (such as Whatsapp, WeChat, etc.)",
-    "Browsing/ surfing websites",
-    "Watching videos",
-    "Using Zoom, Facetime, Skype, Google Talk, etc.",
-    "Using COVID-19 contact tracing app (such as MySejahtera)",
-    // TODO Thailand will update the app name for the above question
-    "Online shopping or e-commerce (such as Lazada, Shopee, etc.)",
-    // TODO Thailand will update the relevant app name for the above question
-    "Using mobile banking/ e-wallet (such as GrabPay, BoostPay, FavePay, Touch N" +
-    "Go Pay, etc.)",
-    // TODO Thailand will update the relevant app name for the above question
+    "SMS, pesanan teks (seperti Whatsapp, WeChat, dll.)", // Qs 3.2.a
+    "Melayari laman web", // Qs 3.2.b
+    "Menonton video", // Qs 3.2.c
+    "Menggunakan Zoom, Facetime, Skype, Google Talk, dll.", // Qs 3.2.d
+    "Menggunakan aplikasi pengesanan kontak COVID-19 (seperti MySejahtera)", // Qs 3.2.e
+    "Membeli-belah atas talian atau e-dagang (seperti Lazada, Shopee, dll.)", // Qs 3.2.f
+    "Menggunakan perbankan mudah alih / e-wallet (seperti GrabPay, BoostPay, FavePay, Touch N Go Pay, dll.)", // Qs 3.2.g
     // The question above this line is question 3.2g
 
-    "Online ordering for food or groceries",
-    "Using social network (such as Facebook, Instagram, Twitter, etc.)",
-    "Taking a photo",
-    "Mapping navigator (such as Google Map, Waze, Tom-Tom, etc.)",
-    "Managing my appointment on the calendar in my smartphone or computer",
-    "Reading online news or online magazines",
-    "Taking notes (such as shopping lists or tasks) that I need to do",
-    "Filming a video",
+    "Pemesanan atas talian untuk makanan atau bahan makanan mentah", // Qs 3.2.h
+    "Menggunakan rangkaian sosial (seperti Facebook, Instagram, Twitter, dll.)", // Qs 3.2.i
+    "Mengambil gambar", // Qs 3.2.j
+    "Pemetaan (seperti Peta Google, Waze, Tom-Tom, dll.)", // Qs 3.2.k
+    "Menguruskan janji temu di kalendar saya", // Qs 3.2.l
+    "Membaca berita atas talian atau majalah atas talian", // Qs 3.2.m
+    "Mencatat (seperti senarai belanja atau tugas) yang perlu saya lakukan", // Qs 3.2.n
+    "Penggambaran video", // Qs 3.2.o
     // The question above this line is question 3.2o
 
-    "Listening to music",
-    "Playing games",
-    "Using to contact government authorities",
+    "Mendengarkan muzik", // Qs 3.2.p
+    "Bermain permainan", // Qs 3.2.q
+    "Menggunakan untuk menghubungi pihak berkuasa kerajaan" // Qs 3.2.r
 ];
 
-// TODO Fill in tooltips
 const SUB_QUESTIONS_HINTS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
@@ -206,11 +188,8 @@ const SUB_QUESTIONS_HINTS_3_2 = [
     "placeholder",
     "placeholder",
     "placeholder",
-    // TODO Thailand will update the app name for the above question
     "placeholder",
-    // TODO Thailand will update the relevant app name for the above question
     "placeholder",
-    // TODO Thailand will update the relevant app name for the above question
     // The question above this line is question 3.2g
 
     "placeholder",
@@ -233,16 +212,13 @@ const PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "How do you access the Internet using your mobile phone?",
+    "Bagaimana anda mengakses Internet menggunakan telefon bimbit anda?", // Qs 3.1
     // The question above this line is question 3.1
 
-    "How confident are you in using the following platforms? (Rate from 0 to 5)\n" +
-    "[0] I don’t know or not applicable (N/A), [1] Not confident at all, [2] Somewhat not confident, [3] Moderately confident,\n" +
-    "[4] Somewhat confident, [5] Extremely confident."
+    "Sejauh mana anda <b>yakin menggunakan telefon bimbit anda</b> untuk aktiviti berikut? (Nilai dari 1 hingga 5)" // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
-// TODO Fill in tooltips
 const HINTS_PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
@@ -250,7 +226,7 @@ const HINTS_PART3 = [
     "placeholder",
     // The question above this line is question 3.1
 
-    "",
+    ""
     // The question above this line is a long question (3.2)
 
 ];
@@ -259,17 +235,51 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "ICT/ technology skills (such as how to use mobile phone or computer software",
-    "Social communication skills (such as how to improve relationships or interact" +
-    "with others)",
-    "Complementary skills (such as learning non-work-related skills or hobbies)",
-    "Work-related skills (such as how to increase job/ business productivity)"
+    "Kemahiran ICT / teknologi (seperti cara menggunakan perisian telefon bimbit atau komputer)", // Qs 4.3.a
+    "Kemahiran komunikasi sosial (seperti bagaimana memperbaiki hubungan atau berinteraksi dengan orang lain)", // Qs 4.3.b
+    "Kemahiran pelengkap (seperti belajar kemahiran atau hobi yang tidak berkaitan dengan pekerjaan)", // Qs 4.3.c
+    "Kemahiran yang berkaitan dengan pekerjaan (seperti cara meningkatkan produktiviti pekerjaan / perniagaan)" // Qs 4.3.d
 ];
 
-// TODO Fill in tooltips
 const SUB_QUESTIONS_HINTS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder"
+];
+
+const SUB_QUESTIONS_4_5 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+    "Saya memahami erti kehidupan.", // Qs 4.5.a
+    "Saya memahami maksud aktiviti kehidupan seharian.", // Qs 4.5.b
+    "Saya tertarik dalam aktiviti kehidupan seharian.", // Qs 4.5.c
+    "Saya mempunyai keyakinan dalam aktiviti kehidupan seharian.", // Qs 4.5.d
+    "Saya mempunyai keyakinan diri dalam pelaksanaan aktiviti kehidupan seharian.", // Qs 4.5.e
+    "Saya mempunyai keyakinan terhadap aktiviti kehidupan seharian yang baru dibentuk.", // Qs 4.5.f
+    "Saya mempunyai keupayaan untuk menunjukkan diri sendiri.", // Qs 4.5.g
+    "Saya mempunyai keupayaan untuk memilih alternatif yang lebih baik.", // Qs 4.5.h
+    "Saya mempunyai keupayaan untuk membuat keputusan mengenai masalah tertentu.", // Qs 4.5.i
+    "Saya mempunyai keupayaan untuk bekerjasama dengan orang lain.", // Qs 4.5.j
+    "Saya mempunyai keupayaan membina pasukan dengan yang lain.", // Qs 4.5.k
+    "Saya mempunyai keupayaan untuk membina gabungan.", // Qs 4.5.l
+    "Saya mempunyai keupayaan menyelesaikan masalah dengan orang lain." // Qs 4.5.m
+];
+
+const SUB_QUESTIONS_HINTS_4_5 = [
+    "",
+    // The above question is a placeholder to allow 1-indexing
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
+    "placeholder",
     "placeholder",
     "placeholder",
     "placeholder",
@@ -280,64 +290,60 @@ const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "How long have you been trying to learn something new or useful using a mobile\n" +
-    "phone? (Rate from 1 to 7)\n" +
-    "[1] Never, [2] Once a month, [3] Few times a month,\n" +
-    "[4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day",
+    "Berapa <b>kerap</b> anda cuba mempelajari sesuatu yang baru atau berguna menggunakan \n" +
+    "telefon bimbit? (Nilai dari 1 hingga 7)\n" +
+    "[1] Tidak pernah, [2] Sebulan sekali, [3] Beberapa kali dalam sebulan, [4] Seminggu sekali, " +
+    "[5] Beberapa kali seminggu, [6] Sekali sehari, [7] Berkali-kali sehari", // Qs 4.1
 
-    "How many hours per week do you devote to learning something new or useful" +
-    " using a mobile phone? (enter a number)",
+    "Berapa <b>jam seminggu</b> yang anda curahkan untuk mempelajari sesuatu yang baru atau berguna, menggunakan telefon bimbit?", // Qs 4.2
     // The question above this line is question 4.2
 
-    "How interested are you to learn the following skills using a mobile phone?" +
-    "(Rate from 1 to 7)\n" +
-    "[1] extremely not interested, [2] very not interested, [3] not interested," +
-    "[4] moderately interested, [5] highly interested, [6] very interested," +
-    "[7] extremely interested",
+    "Seberapa <b>minat</b> anda <b>mempelajari</b> kemahiran berikut menggunakan telefon bimbit? (Nilai dari 1 hingga 5)", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "What do you wish to learn using a mobile phone?",
+    "Apakah <b>kemahiran yang berkaitan dengan pekerjaan</b> yang ingin anda pelajari menggunakan telefon bimbit?", // Qs 4.4
+    // The question above this line is question 4.4
+
+    "Sejauh mana anda bersetuju atau tidak setuju bahawa pernyataan berikut <b>menerangkan tentang anda</b>? (Nilai dari 1 hingga 5)" // Qs 4.5
+    // The question above this line is question 4.5
 ];
 
-// TODO Fill in tooltips
 const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
+    "pilih pilihan",
+    "masukkan nombor",
     // The question above this line is question 4.2
 
-    "",
+    "pilih pilihan",
     // The question above this line is a long question (4.3)
 
-    "placeholder",
+    "",
+    "pilih pilihan"
 ]
 
 const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What are you interested in learning using a mobile phone?",
-    "What resources do you wish to have for learning using a mobile phone?",
-    "What has been the most frustrating things so far about learning using a " +
-    "mobile phone?",
-    "Tell us about your problems or challenges faced at work."
+    "Mengapa anda berminat belajar menggunakan telefon bimbit?", // Qs 5.1
+    "Sumber apa yang anda mahukan untuk belajar menggunakan telefon bimbit?", // Qs 5.2
+    "Apakah perkara yang paling mengecewakan sejauh ini semasa belajar menggunakan telefon bimbit?", // Qs 5.3
+    "Beritahu kami mengenai masalah atau cabaran anda di tempat kerja. " // Qs 5.4
 ]
 
-// TODO Fill in tooltips
 const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "Taipkan tindak balas",
+    "Taipkan tindak balas",
+    "Taipkan tindak balas",
+    "Taipkan tindak balas"
 ]
 
-// TODO Weird questions: Last survey question & Question 4.5
-// TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
+// TODO 2.6 and 2.7 - Likert Scale
 
 let question_2_1_id = "";
 let question_2_3_id = "";
@@ -348,168 +354,134 @@ function pushPart1Questions() {
     setPartNumber(1);
 
     // Question 1.1
-    pushNumeric("1.1", PART1[1], 50, 100, true,
-        HINTS_PART1[1]);
+    pushNumeric("1.1", PART1[1], 50, 100, true, HINTS_PART1[1]);
 
     // Question 1.2
-    let choices_1_2 = ["Male", "Female"]
-    let skip_choices_1_2 = ["Male"];
-    pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2,
-        SKIP_END_SURVEY, HINTS_PART1[2]);
+    let choices_1_2 = ["Lelaki", "Perempuan"]
+    let skip_choices_1_2 = ["Lelaki"];
+    pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2, SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
-    let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
-    pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED,
-        HINTS_PART1[3]);
+    let choices_1_3 = ["Malayu", "Cina", "India", "Thai", "Lain-lain"];
+    //pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
+    pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
-    let choices_1_4 = ["urban area", "rural area"];
-    pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED,
-        HINTS_PART1[4]);
+    let choices_1_4 = ["Kawasan bandar", "Kawasan luar bandar"];
+    pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED, HINTS_PART1[4]);
 
     // Question 1.5
-    let choices_1_5 = ["No income", "less than MYR2500", "MYR2501-3169",
-        "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
-    pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED,
-        HINTS_PART1[5]);
-    // TODO Thailand will update the THB equivalent currency
+    let choices_1_5 = ["Tiada pendapatan", "Kurang dari MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 atau lebih"];
+    pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED, HINTS_PART1[5]);
 
     // Question 1.6
-    let choices_1_6 = ["No formal education", "Primary school",
-        "Secondary/ high school", "Vocational/ technical certification",
-        "University"];
-    pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED,
-        HINTS_PART1[6]);
-    // TODO Thailand will update the secondary/high classification
+    let choices_1_6 = ["Tiada pendidkan formal", "Sekolah rendah", "Sekolah menengah / tinggi", "Sijil vokasional / teknikal", "Universiti"];
+    pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED, HINTS_PART1[6]);
 
     // Question 1.7
-    let choices_1_7 = ["Single", "Married", "Divorced", "Widowed",
-        "Other relationship"];
-    pushMultipleChoice("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED,
-        HINTS_PART1[7]);
+    let choices_1_7 = ["Bujang", "Berkahwin", "Bercerai", "Kematian pasangan", "Hubungan lain"];
+    pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
-    pushNumeric("1.8", PART1[8], 0, 999, false,
-        HINTS_PART1[8]);
+    pushNumeric("1.8", PART1[8], 0, 999, false, HINTS_PART1[8]);
 
     // Question 1.9
-    pushNumeric("1.9", PART1[9], 0, 999, false,
-        HINTS_PART1[9]);
+    pushNumeric("1.9", PART1[9], 0, 999, false, HINTS_PART1[9]);
 
     // Question 1.10
-    pushNumeric("1.10", PART1[10], 0, 999, false,
-        HINTS_PART1[10]);
+    pushNumeric("1.10", PART1[10], 0, 999, false, HINTS_PART1[10]);
 
     // Question 1.11
-    pushNumeric("1.11", PART1[11], 0, 999, false,
-        HINTS_PART1[11]);
-
-    // Question 1.12
-    pushNumeric("1.12", PART1[12], 0, 999, false,
-        HINTS_PART1[12]);
+    pushNumeric("1.11", PART1[11], 0, 999, false, HINTS_PART1[11]);
 
     // Question 1.13
-    pushNumeric("1.13", PART1[13], 0, 999, false,
-        HINTS_PART1[13]);
+    pushLongQuestion("1.13", PART1[13]).then((q13docRef) => {
+        // [START]                  Question 1.12                   [START]
+        // Inserted after Question 1.13
 
-    // Question 1.15
-    pushLongQuestion("1.15", PART1[15]).then((q15docRef) => {
-        // [START]                  Question 1.14                   [START]
-        // Inserted after Question 1.15
-
-        pushLongQuestion("1.14", PART1[14]).then((q14docRef) => {
+        pushLongQuestion("1.12", PART1[12]).then((q12docRef) => {
             // Record the id of the question itself
-            longQuestionIds.push(q14docRef.id);
+            longQuestionIds.push(q12docRef.id);
 
             // Log it in the console
-            let questionNumber = "1.14";
-            recordLongQuestionPush(questionNumber, q14docRef);
+            let questionNumber = "1.12";
+            recordLongQuestionPush(questionNumber, q12docRef);
 
             // Start preparing for the pushes of its sub-questions
             initLongQuestionParams();
 
-            // Question 1.14a
-            let choices_1_14 = ["Yes", "No"];
-            let skip_choices_1_14 = ["Yes"];
+            // Question 1.12a
+            let choices_1_12 = ["Ya", "Tidak"];
+            let skip_choices_1_12 = ["Ya"];
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[1], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[1]);
 
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[1],
-                choices_1_14, skip_choices_1_14, q15docRef.id,
-                SUB_QUESTIONS_HINTS_1_14[1]);
+            // Question 1.12b
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[2], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[2]);
 
-            // Question 1.14b
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[2],
-                choices_1_14, skip_choices_1_14, q15docRef.id,
-                SUB_QUESTIONS_HINTS_1_14[2]);
+            // Question 1.12c
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[3], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[3]);
 
-            // Question 1.14c
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[3],
-                choices_1_14, skip_choices_1_14, q15docRef.id,
-                SUB_QUESTIONS_HINTS_1_14[3]);
-
-            // Question 1.14d
-            appendMultipleChoice(questionNumber, q14docRef.id, SUB_QUESTIONS_1_14[4],
-                choices_1_14, skip_choices_1_14, q15docRef.id,
-                SUB_QUESTIONS_HINTS_1_14[4]);
+            // Question 1.12d
+            appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[4], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[4]);
         });
 
-        // [END]                       Question 1.14                    [END]
-
+        // [END]                       Question 1.12                    [END]
 
         // Record the id of the question itself
-        longQuestionIds.push(q15docRef.id);
+        longQuestionIds.push(q13docRef.id);
 
         // Log it in the console
-        let questionNumber = "1.15";
-        recordLongQuestionPush(questionNumber, q15docRef)
+        let questionNumber = "1.13";
+        recordLongQuestionPush(questionNumber, q13docRef)
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
-        // Question 1.15a
-        let choices_1_15 = ["Yes", "No"];
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[1],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[1]);
+        // Question 1.13a
+        let choices_1_13 = ["Ya", "Tidak"];
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
+            SUB_QUESTIONS_HINTS_1_13[1]);
 
-        // Question 1.15b
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[2],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[2]);
+        // Question 1.13b
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[2],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
+            SUB_QUESTIONS_HINTS_1_13[2]);
 
-        // Question 1.15c
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[3],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[3]);
+        // Question 1.13c
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[3],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
+            SUB_QUESTIONS_HINTS_1_13[3]);
 
-        // Question 1.15d
-        appendMultipleChoice(questionNumber, q15docRef.id, SUB_QUESTIONS_1_15[4],
-            choices_1_15, [], SKIP_NOT_ALLOWED,
-            SUB_QUESTIONS_HINTS_1_15[4]);
+        // Question 1.13d
+        appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[4],
+            choices_1_13, [], SKIP_NOT_ALLOWED,
+            SUB_QUESTIONS_HINTS_1_13[4]);
     });
 
-    // Question 1.16
-    pushLongQuestion("1.16", PART1[16]).then((docRef) => {
+    // Question 1.14
+    pushLongQuestion("1.14", PART1[14]).then((docRef) => {
         // Record the id of the question itself
         longQuestionIds.push(docRef.id);
 
         // Log it in the console
-        let questionNumber = "1.16";
+        let questionNumber = "1.14";
         recordLongQuestionPush(questionNumber, docRef)
 
         // Start preparing for the pushes of its sub-questions
         initLongQuestionParams();
 
         // Question 1.16a
-        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[1],
-            1, 5, false, SUB_QUESTIONS_HINTS_1_16[1]);
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_14[1],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_14[1]);
 
         // Question 1.16b
-        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[2],
-            1, 5, false, SUB_QUESTIONS_HINTS_1_16[2]);
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_14[2],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_14[2]);
 
         // Question 1.16c
-        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_16[3],
-            1, 5, false, SUB_QUESTIONS_HINTS_1_16[3]);
+        appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_1_14[3],
+            1, 5, false, SUB_QUESTIONS_HINTS_1_14[3]);
     });
 }
 
@@ -519,49 +491,35 @@ function pushPart2Questions() {
     setPartNumber(2);
 
     // Question 2.1
-    let choices_2_1 = ["Working", "Retired", "Semi-retired", "Not working",
-        "Not working but doing voluntary work", "Not working but looking for a" +
-        "job"];
-    let skip_choices_2_1 = ["Retired", "Not working",
-        "Not working but doing voluntary work",
-        "Not working but looking for a job"];
-    pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1,
-        skip_choices_2_1,
-        "insert question 2.3 id here",
-        HINTS_PART2[1]);
+    let choices_2_1 = ["Bekerja", "Bersara", "Separa pesara", "Tidak berkerja", "Tidak bekerja tetapi melakukan kerja sukarela", "Tidak bekerja tetapi mencari pekerjaan", "Lain-Lain"];
+    let skip_choices_2_1 = ["Bersara", "Tidak berkerja", "Tidak bekerja tetapi melakukan kerja sukarela", "Tidak bekerja tetapi mencari pekerjaan"];
+    pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1, skip_choices_2_1, "insert question 2.3 id here", HINTS_PART2[1]);
 
     // Question 2.2
     pushShortText("2.2", PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    pushNumeric("2.3", PART2[3], 1, 7, false,
-        HINTS_PART2[3]);
+    pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
-    let choices_2_4 = ["Yes", "No", "Not applicable"];
+    let choices_2_4 = ["Ya", "Tidak", "Tidak berkenaan"];
     pushMultipleChoice("2.4", PART2[4], choices_2_4, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
-    let choices_2_5 = ["Yes", "No", "Not applicable"];
+    let choices_2_5 = ["Ya", "Tidak", "Tidak berkenaan"];
     pushMultipleChoice("2.5", PART2[5], choices_2_5, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
     // Question 2.6
-    let choices_2_6 = ["Not confident at all", "Somewhat not confident",
-        "Moderately confident", "Somewhat confident", "Extremely confident",
-        "Not applicable"];
-    pushMultipleChoice("2.6", PART2[6], choices_2_6, [],
-        SKIP_NOT_ALLOWED, HINTS_PART2[6]);
+    let choices_2_6 = ["Tidak berkenaan", "Tidak yakin sama sekali", "Agak tidak yakin", "Cukup yakin", "Agak yakin", "Sangat yakin"];
+    pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
-    let choices_2_7 = ["Not confident at all", "Somewhat not confident",
-        "Moderately confident", "Somewhat confident", "Extremely confident",
-        "Not applicable"];
-    pushMultipleChoice("2.7", PART2[7], choices_2_7, [],
-        SKIP_NOT_ALLOWED, HINTS_PART2[7]);
+    let choices_2_7 = ["Tidak berkenaan", "Tidak yakin sama sekali", "Agak tidak yakin", "Cukup yakin", "Agak yakin", "Sangat yakin"];
+    pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
@@ -571,11 +529,11 @@ function pushPart3Questions() {
 
     // Question 3.1
     let choices_3_1 = [
-        "Prepaid mobile data plan",
-        "Postpaid mobile data plan",
-        "Home WiFi broadband plan",
-        "Public WiFi hotspot",
-        "I don't know how to access the Internet"
+        "Pelan data mudah alih prabayar",
+        "Pelan data mudah alih pascabayar",
+        "Pelan jalur lebar WiFi rumah",
+        "Hotspot WiFi awam",
+        "Saya tidak tahu cara mengakses Internet"
     ];
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
@@ -629,16 +587,33 @@ function pushPart4Questions() {
         // Questions 4.3 a to d (4 questions in total)
         for (let i = 1; i < 5; i++) {
             appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_4_3[i],
-                1, 7, false,
+                1, 5, false,
                 SUB_QUESTIONS_HINTS_4_3[i]);
         }
     });
 
     // Question 4.4
-    pushShortText("4.4", PART4[4], HINTS_PART4[4]);
+    pushLongText("4.4", PART4[4], HINTS_PART4[4]);
 
     // Question 4.5
-    // TODO Weird questions: Last survey question & Question 4.5
+    pushLongQuestion("4.5", PART4[5]).then((docRef) => {
+        // Record the id of the question itself
+        longQuestionIds.push(docRef.id);
+
+        // Log it in the console
+        let questionNumber = "4.5";
+        recordLongQuestionPush(questionNumber, docRef);
+
+        // Start preparing for the pushes of its sub-questions
+        initLongQuestionParams();
+
+        // Questions 4.5 a to m (13 questions in total)
+        for (let i = 1; i < 14; i++) {
+            appendNumeric(questionNumber, docRef.id, SUB_QUESTIONS_4_5[i],
+                1, 5, false,
+                SUB_QUESTIONS_HINTS_4_5[i]);
+        }
+    });
 }
 
 function pushPart5Questions() {
@@ -659,8 +634,7 @@ function pushPart5Questions() {
     pushLongText("5.4", PART5[4], HINTS_PART5[4]);
 }
 
-function pushNumeric(questionNumber, questionText, lowerRange, upperRange,
-                     skipIfInvalid, hint) {
+function pushNumeric(questionNumber, questionText, lowerRange, upperRange, skipIfInvalid, hint) {
     // Leaving this here as a reference to numeric
     // question objects.
     let reference = {
@@ -697,8 +671,7 @@ function pushNumeric(questionNumber, questionText, lowerRange, upperRange,
         .then((docRef) => recordQuestionPush(questionObject, docRef));
 }
 
-function pushMultipleChoice(questionNumber, questionText, choices, skipChoices,
-                            skipTarget, hint) {
+function pushMultipleChoice(questionNumber, questionText, choices, skipChoices, skipTarget, hint) {
     // Leaving these here as references to multiple choice
     // question objects.
     let reference = {
@@ -981,7 +954,7 @@ function appendMultipleChoice(questionNumber, longQuestionId,
 }
 
 function pushQuestionObject(questionObject) {
-    return firebase.firestore().collection(QUESTIONS_BRANCH).add(questionObject);
+    return firebase.firestore().collection(QUESTIONS_BRANCHES[MS_INDEX]).add(questionObject);
 }
 
 let partNumber = 0;
@@ -1085,7 +1058,7 @@ function updateLongQuestionsWithSubQuestionIds() {
 
         let arrangement = subQuestionIds[longQuestionId];
 
-        firebase.firestore().collection(QUESTIONS_BRANCH).doc(longQuestionId)
+        firebase.firestore().collection(QUESTIONS_BRANCHES[MS_INDEX]).doc(longQuestionId)
             .update({
                 "arrangement": arrangement
             })
@@ -1099,7 +1072,7 @@ function updateLongQuestionsWithSubQuestionIds() {
     }
 }
 
-function uploadQuestions() {
+function uploadQuestions_ms() {
     pushPart1Questions();
     pushPart2Questions();
     pushPart3Questions();
@@ -1114,41 +1087,42 @@ function uploadQuestions() {
  * <br>
  * 2. To update the long question objects with IDs of their sub-questions.
  */
-function housekeeping() {
+function housekeeping_ms() {
     updateLongQuestionsWithSubQuestionIds();
 
     let result = [];
     // Try to output the list of question Ids for each part
-    // 16 questions for part 1
+    // 14 questions for part 1
     // 7 questions for part 2
     // 2 questions for part 3
-    // 5 questions for part 4, 4 implemented
+    // 5 questions for part 4
     // 4 questions for part 5
 
-    // These are the indices where the survey part gets changed
+    // These are the indices where each survey part changes to the next one
     let startingIndex = 0;
-    let indices = [16, 23, 25, 29, 33];
+    let indices = [14, 21, 23, 28, 32];
 
-    // Before we start slicing, insert the last item (Q1.14)
-    // to the correct spot (before Q1.15, or before index 13)
+    // Before we start slicing, insert the last item (Q1.12)
+    // to the correct spot (before Q1.13, or before index 11)
+    // This is because Q1.12 is pushed last to firebase and we need to move it's ID from last to its corresponding place
     let lastItem = questionIds[questionIds.length - 1];
-    questionIds.splice(12, 0, lastItem);
+    questionIds.splice(11, 0, lastItem);
 
     for (let endingIndex of indices) {
         result.push(questionIds.slice(startingIndex, endingIndex));
         startingIndex = endingIndex;
     }
 
-    // Print em' to the console!
+    // Print the parts and their question IDs onto the console (Copy and paste these IDs into constants.js)
     for (let i = 0; i < result.length; i++) {
         console.log(`Part ${i + 1} IDs:`);
         console.log(result[i]);
     }
 
-    // Update question 2.1 with 2.3's ID
-    firebase.firestore().collection(QUESTIONS_BRANCH).doc(question_2_1_id)
+    // Update question 2.1's skipTarget with 2.3's ID
+    firebase.firestore().collection(QUESTIONS_BRANCHES[MS_INDEX]).doc(question_2_1_id)
         .update({
-            "skipTarget": question_2_3_id
+            "restrictions.skipTarget": question_2_3_id
         })
         .then(() => {
             let info = "Question 2.1 has been updated with Question 2.3 ID: " +

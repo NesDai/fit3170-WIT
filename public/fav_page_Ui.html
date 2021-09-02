@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Learn how to use the Firebase platform on the Web">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommender</title>
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Recommender">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Recommender">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!-- App Styling -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="./css/recommender_main.css">
+
+    <title>Recommender</title>
+
+    <style>
+    /* TODO move to css */
+      .sortInterestBox{
+        width: fit-content;
+        height: auto;
+        margin: 5px;
+        display:inline-block;
+        border: solid black 3px;
+        border-radius: 25px;
+
+        /* position: relative; */
+      }
+      .labelSort{
+        border: 0px;
+        width: fit-content;
+        height: auto;
+        /* color: aquamarine; */
+        margin: 2px;
+        display:inline-block;
+        /* position: relative; */
+      }
+      .h_iframe iframe {
+        width:90%;
+        height:100%;
+        margin: auto;
+      }
+      .h_iframe {
+        height: 100%;
+        width:100%;
+      }
+
+      .favVideoPg{
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        background: gray;
+        /* opacity: 0.3; */
+        z-index: 7;
+        overflow: scroll;
+        display: none;
+      }
+
+      .hideStuff{
+        font-size:0px;
+        height:0px;
+        margin:0px;
+      }
+      .workspace {
+        height: 99%;
+        width: 98%;
+        /* border: 5px solid black; */
+        position: relative;
+        overflow: auto
+      }
+
+      .workspaceheader {
+        /* border: 5px solid black; */
+        margin-top: 10px;
+        position: relative;
+        /* height: 100%; */
+        width: 98%;
+        display: none;
+      }
+
+      .table {
+        height: fit-content;
+        width: 98%;
+        /* border: 5px solid yellow; */
+        margin: 10px auto;
+        position: relative;
+        text-align: center;
+      }
+
+      .tabletext{
+        display: inline;
+        font-family: Arial;
+        font-size: 14pt;
+      }
+
+      .favCard{
+        margin-top: 20px;
+        width: 100%;
+        height: 380px;
+        color: #000;
+        background-color: #fff;
+        position: relative;
+
+        /* border: 5px solid red; */
+      }
+
+      .favCardThumbnail{
+        /* margin-top: 5px; */
+        margin: auto;
+        width: 22%;
+        height: 100%;
+        position: absolute;
+        /* background-color: #0f0f0f; */
+      }
+
+      .favCardTitle{
+        margin-right: 5px;
+        width: 60%;
+        height: 45%;
+        float: right;
+        position: relative;
+        /* background-color: brown; */
+        overflow-y: scroll;
+      }
+
+      .favCardInterest{
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: royalblue; */
+        font-weight: bold;
+      }
+
+      .favCardTopBtn{
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: mediumspringgreen; */
+      }
+
+      .favDeleteBtn{
+        margin: 15px;
+        border-radius: 50%;
+        float:right;
+        width: auto;
+        height:60px;
+      }
+
+      @media only screen and (max-width: 1350px) {
+        .favCard{
+
+        width: 100%;
+        height: 200px;
+        color: #000;
+        background-color: #fff;
+        position: relative;
+        /* border: 1px solid red; */
+        }
+
+        .favCardThumbnail{
+
+        width: 40%;
+        height: 100%;
+        position: absolute;
+        /* background-color: #fff; */
+        }
+
+        .favCardInterest{
+
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: #fff; */
+        font-weight: bold;
+      }
+
+        .favCardTitle{
+        margin-right: 5px;
+        width: 60%;
+        height: 65%;
+        float: right;
+        position: relative;
+        /* background-color: blue; */
+        overflow-y: scroll;
+        }
+
+        .favCardTopBtn{
+        margin-right: 5px;
+        width: 60%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: blue; */
+        }
+        .favDeleteBtn{
+        margin: 10px;
+        border-radius: 50%;
+        float:right;
+        width: auto;
+        height:50px;
+      }
+      }
+
+      @media only screen and (max-width: 600px) {
+        .favCard{
+        width: 100%;
+        height: 120px;
+        color: #000;
+        background-color: #fff;
+        position: relative;
+        /* border: 1px solid red; */
+        }
+
+        .favCardThumbnail{
+        width: 35%;
+        height: 100%;
+        position: absolute;
+        /* background-color: #fff; */
+        }
+
+        .favCardInterest{
+        margin-right: 5px;
+        width: 50%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: pink; */
+        font-weight: bold;
+        font-family: Arial;
+        font-size: 14pt;
+      }
+
+        .favCardTitle{
+
+        margin-right: 5px;
+        width: 50%;
+        height: 50%;
+        float: right;
+        position: relative;
+        /* background-color: green; */
+        overflow-y: scroll;
+        font-family: Arial;
+        font-size: 14pt;
+
+        }
+
+        .favCardTopBtn{
+        margin-right: 5px;
+        width: 50%;
+        height: auto;
+        float: right;
+        position: relative;
+        /* background-color: red; */
+        }
+        .favDeleteBtn{
+        margin: 0px;
+        border-radius: 50%;
+        float:right;
+        width: auto;
+        height: 30px;
+        }
+      }
+      .img-centre {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      }
+      #nav-icons{
+      font-size: 30px;
+      padding-bottom: 20px;
+      }
+      i.icon-teal{
+      color:#006DAE;
+      }
+      i.icon-teal2{
+      color:#00695c;
+      }
+      .mdl-navigation__link{
+      font-size: 16px;
+      text-align: left;
+      padding-left: 0;
+      padding-right: 3;
+      }
+      .mdl-grid-body{
+      margin: 0;
+      padding: 0;
+      }
+
+    </style>
+
+    <!-- TODO: Enable First Input Delay polyfill library. -->
+  </head>
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <!-- Header section -->
+    <header class="mdl-layout__header">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+          <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+            <h3>Favourite</h3>
+              <a class="mdl-navigation__link" href="recommender_Ui.html">
+              <button class="mdl-button mdl-js-button mdl-button--raised">Return</button>
+            </a>
+          </div>
+          <div id="user-container">
+            <div hidden id="user-pic"></div>
+            <div hidden id="user-name"></div>
+            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+              Sign-out
+            </button>
+            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+              <i class="material-icons">account_circle</i>Sign-in with Google
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="mdl-layout__drawer">
+        <br>
+        <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
+        <br>
+        <span class="mdl-layout-title">Favourite</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i>Home</a>
+          <a class="mdl-navigation__link" href="forum.html"><i class="material-icons icon-teal" id="nav-icons" >forum</i>Forum</a>
+          <a class="mdl-navigation__link" href="chatbot.html"><i class="material-icons icon-teal" id="nav-icons" >chat</i>Chatbot</a>
+        </nav>
+      </div>
+
+  <body>
+    <div class = workspace >
+      <div class = favVideoPg id="favVideo">
+        <div id="favVideoPlayer"></div>
+      </div>
+      <!-- Sort -->
+      <button id="favSortBtn" onclick="show_sort()">Sort by interest</button>
+      <div id="sortingArea" class="workspaceheader" style="overflow: scroll; display: none;">
+        <button onclick="filter()">Filter</button><br><br>
+      </div>
+
+      <table class="table" id="favtable">
+        <p id="favEmptyText" style="text-align: center;"></p>
+      </table>
+    </div>
+    <p class="hideStuff" id="favIdCount"></p>
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    <script src="./script/Youtube.min.js"></script>
+    <script src="./script/favpage.js"></script>
+  </body>
+</html>
