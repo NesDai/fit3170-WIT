@@ -493,8 +493,11 @@ function printPost(post, button_num, i )
     }
 
     let field = document.getElementById("postField");
+    let atchar = "@";
     if(post.username == undefined)
         post.username = "";
+    else
+        post.username = atchar+post.username;
     if(post.created == undefined)
         post.created = "";
 
@@ -505,7 +508,7 @@ function printPost(post, button_num, i )
                   <!-- POST HEADER -->
                   <br>
                   <div class="f">
-                     <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
+                     <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>${post.username}</h2>
                   </div>
                   <br>
                   <div class="post_header" style="margin:0 10px; background-color: white">
