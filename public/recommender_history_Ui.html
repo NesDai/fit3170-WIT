@@ -35,7 +35,7 @@
 
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/recommender_main.css">
 
     <title>Recommender</title>
     <!-- TODO: Enable First Input Delay polyfill library. -->
@@ -88,12 +88,12 @@
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <!-- Header section -->
-    <header class="mdl-layout__header mdl-color-text--white">
+    <header class="mdl-layout__header">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-            <h3 style= "margin-left: -55%; margin-right: 55% ; margin-bottom: 3%;">Recommender - History</h3>
-            <a class="mdl-navigation__link" href="recommenderUi.html" style = "margin-left: 100%;">
-              <button class="mdl-button mdl-js-button mdl-button--raised" style = "background-color: white;">Return</button>
+            <h3>History</h3>
+            <a class="mdl-navigation__link" href="recommender_Ui.html">
+              <button class="mdl-button mdl-js-button mdl-button--raised">Return</button>
             </a>
           </div>
           <div id="user-container">
@@ -109,11 +109,14 @@
         </div>
       </header>
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Recommender</span>
+        <br>
+        <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
+        <br>
+        <span class="mdl-layout-title">Video History</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="main_page.html">Home</a>
-          <a class="mdl-navigation__link" href="">Forum</a>
-          <a class="mdl-navigation__link" href="chatbot.html">Chatbot</a>
+          <a class="mdl-navigation__link" href="main_page.html"><i class="material-icons icon-teal notranslate" id="nav-icons">home</i>Home</a>
+          <a class="mdl-navigation__link" href="forum.html"><i class="material-icons icon-teal" id="nav-icons" >forum</i>Forum</a>
+          <a class="mdl-navigation__link" href="chatbot.html"><i class="material-icons icon-teal" id="nav-icons" >chat</i>Chatbot</a>
         </nav>
       </div>
   <body>
@@ -128,7 +131,7 @@
           <th>URL</th>
           <th class="mdl-data-table__cell--non-numeric"></th>
           <th>
-            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="deleteAllHistory()">
+            <a class="mdl-button mdl-js-button mdl-button--raised" onclick="deleteAllHistory()">
               Delete All
             </a>
           </th>
@@ -148,7 +151,7 @@
 
     <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
     <script src="./script/Youtube.min.js"></script>
-    <script src="./script/recommenderHistoryPageController.js"></script>
+    <script src="./script/recommender_history_page_controller.js"></script>
 
   </body>
 </html>

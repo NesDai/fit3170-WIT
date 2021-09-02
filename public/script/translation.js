@@ -15,17 +15,24 @@ function execute(){
 }
 
 
-function eraseCookiesGoogle() {   
-
+function eraseCookiesGoogle() {
 
     let list = ["__Secure-3PSIDCC","__Secure-3PSID","SID","SIDCC","__Secure-3PAPISID","__Secure-1PAPISID","HSID","SAPISID","APISID","SSID","1P_JAR","OGPC","CONSENT","OTZ","ANID","NID"]
     for(let cookie of list){
         document.cookie = `${cookie}=; domain=.google.com; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-        
+
     }
-        
 
 
+
+}
+
+function showTranslationModal(){
+    document.getElementById("myModal").style.display = "block";
+}
+
+function hideTranslationModal(){
+    document.getElementById("myModal").style.display = "none";
 }
 
 function showTranslationModal(){
@@ -81,8 +88,8 @@ function changeLang(lang){
     translateLanguage(lang);
 
     // if (window.location.pathname =="/"){  //reset the captcha
-    //     setTimeout(function(){ 
-    //         window.location.reload(false); 
+    //     setTimeout(function(){
+    //         window.location.reload(false);
     //     }, 1000);
     //     }
 
@@ -97,9 +104,9 @@ function reset(){
     jQuery('#\\:2\\.container').contents().find('#\\:2\\.restore').click();
 
     if (window.location.pathname =="/"){  //reset the captcha
-    setTimeout(function(){ 
-        window.location.reload(false); 
-    }, 1000);
+        setTimeout(function(){
+            window.location.reload(false);
+        }, 1000);
     }
 
 }
@@ -108,10 +115,10 @@ function reset(){
 function googleTranslateElementInit() {
     eraseCookiesGoogle();
     new google.translate.TranslateElement(
-                { pageLanguage: 'en',
-                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
-                 autoDisplay: false },
-                 'google_translate_element');
+        { pageLanguage: 'en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false },
+        'google_translate_element');
 }
 
 function translateLanguage(lang) {

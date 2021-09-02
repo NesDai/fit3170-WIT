@@ -53,6 +53,14 @@ function getPostDetails() {
 
 
 function printPostDetails(post, button_num) {
+
+    if(post.username == undefined)
+        post.username = "";
+
+
+    if(post.created == undefined)
+        post.created = "";
+        
     let post_details = document.getElementById("post_details");
     let button = `
     <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
@@ -97,15 +105,19 @@ function printPostDetails(post, button_num) {
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                     <!-- POST HEADER -->
                     <br>
-                    <div class="f">
-                       <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>
-                    </div>
+                    <div class="f">`;
+                    if (post.username == "")
+                        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'></h2>`;
+                    else
+                        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>`;
+                    
+                    post_display +=    `</div>
                     <div>
                       <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
                         <img src="./css/images/delete_icon.png"  id="delete_post_icon"></img>
                       </button>
                     </div>
-                    `
+                    `;
     if (current_user.username != post.username)
         post_display += `<br>`
 

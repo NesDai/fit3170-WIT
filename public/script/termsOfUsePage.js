@@ -49,7 +49,7 @@ function checkAccepted(){
     if (checkbox.checked){
 
         window.location.href = "./signup.html";
- 
+
 
     } else {
         // if the tickbox is not ticked, display error message

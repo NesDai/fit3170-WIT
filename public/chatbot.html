@@ -37,12 +37,30 @@
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="css/main-chatbot.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <!-- to remove top header for google translate -->
+    <style>
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-logo-link {
+            display:none !important;
+        }
+        .trans-section {
+            margin: 100px;
+        }
+    </style>
 
     <title>Chat App</title>
     <!-- TODO: Enable First Input Delay polyfill library. -->
     <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
 </head>
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header"></div>
 
     <!-- Header section containing logo -->
     <header class="mdl-layout__header mdl-color-text--white topheader">
@@ -65,7 +83,7 @@
     </div> -->
     <body>
     <main id = "Live" class= "tabcontent" class="mdl-layout__content mdl-color--grey-100">
-        <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+        <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid notranslate">
             <div id="progress-bar" class="mdl-progress mdl-js-progress"></div>
             <div id="messages-card" class="mdl-card mdl-shadow--2dp">
                 <div id="messages">
@@ -73,6 +91,8 @@
                 <div id="error-bar">
                     <p id="error-text" style="text-align: center; color: red"></p>
                 </div>
+                <div id="hint_area" style="text-align: center; color: limegreen;"></div>
+                <div id="likert_scale" style="text-align: center"></div>
                 <div id="message-form">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
@@ -87,35 +107,10 @@
         </div>
     </main>
 
-    <div id = "History" class = " tabcontent" >
-        <label for="Dropdown">Please choose a date to see your chatlog:</label>
-        <div class="dropdown">
-            <select onclick="dates()" class="dropbtn" id="Dropdown">
-                <div id="myDropdown" class="dropdown-content">
-            </select>
-        </div>
-
-        <button id="confirm1" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="selectdate()">
-            Confirm
-        </button>
-        <div id = "attemptsection" class = "dropdown-content">
-        </div>
-        <button id="confirm2" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="selectattempt()">
-            Confirm
-        </button>
-
-        <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
-            <div id="history-messages-card" class="mdl-card mdl-shadow--2dp">
-                <div id="logs"></div>
-            </div>
-        </div>
-    </div>
-
     <!-- USING JQUERY TO ANIMATE SCROLL -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script src="script/constants.js"></script>
-    <script src="script/first_time_survey.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -131,8 +126,21 @@
 
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
-
     <script src = "script/tabdisplay.js"></script>
+
+    <!-- These scripts don't run on themselves when initialized,
+    so they can be placed in front -->
+    <script src="script/constants.js"></script>
+    <script src="chatbot/script/chatbot-ui.js"></script>
+    <script src="chatbot/script/likert-scale.js"></script>
+    <script src="chatbot/script/history-tab.js"></script>
+    <script src="chatbot/script/response-storage.js"></script>
+    <script src="script/first_time_survey.js"></script>
+    <script src="script/translation.js"></script>
+
+    <!-- These scripts run their own thing on startup, so they should
+    be placed at the back -->
+    <script src="chatbot/script/chatbot-init.js"></script>
 
     </body>
 </html>

@@ -1,13 +1,27 @@
+// Caches the title question of the current sub-question
+let titleQuestionString = null;
+
 // Initializing variables
 let messages = document.getElementById("messages");
 let textBoxInput = document.getElementById("message");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
-let hintIndex = 0;
-
-let messageColour = 'white';
 let messageHistoryColour = 'white';
+
+// get user's selected language and set the questions branches id to the corresponding index for that language
+let select_language = localStorage.getItem("LANGUAGE");
+
+let branch_id;
+if (select_language == "English") {
+    branch_id = EN_INDEX;
+} else if (select_language == "Chinese (Simplified)") {
+    branch_id = ZH_CN_INDEX;
+} else if (select_language == "Malay") {
+    branch_id = MS_INDEX;
+} else if (select_language == "Thai") {
+    branch_id = TH_INDEX;
+}
 
 /*
 The user object of the currently logged in user
@@ -18,10 +32,7 @@ and user ID.
 let currentUser = null;
 let currentQuestionId = null;
 let currentQuestionObject = null;
-let currentSetId = 0;
-let logDate = null;
-let logAttempt = null;
-let longQueId = null;
+
 /*
 Stores the index of the current question object
 <br>
@@ -37,83 +48,14 @@ let currentSubQuestionId = null;
 let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
-// Runs as a first-time greeting from the bot
-window.onload = function () {
-    initialiseCurrentUser();
-    greeting();
-
-    // Initialises progress bar
-    document.querySelector('#progress-bar').addEventListener('mdl-componentupgraded', function() {
-        this.MaterialProgress.setProgress(0);
-    });
-};
-
-/**
- * function to initialise current user from firebase storage. this is mainly to help chat history work.
+/*
+Used for likert scale idexes of questions stored in firebase
+"very nice" - Yong Peng
  */
-function initialiseCurrentUser() {
-    // Listen to auth state changes.
-    firebase.auth().onAuthStateChanged(() => {
-        // Initialize current user object
-        currentUser = firebase.auth().currentUser;
-    });
-}
-
-/**
- * function to initialise starting messages in chat and create "start survey" button.
- */
-function greeting() {
-    // format starting message html
-    let quesTemplate =
-        "<div class='space'>" +
-        "<div class='message-container sender blue'>" +
-        "<p>Hi! I am the chatbot for this App.</p>" +
-        "<p>To get started, I would like to get to know " +
-        "you better by asking a few questions. Are you ready?</p>" +
-        "</div>" +
-        "</div>";
-
-    // format start survey button html
-    let mcqOptions = "<div class=\"space\">"
-    mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"startSurvey(this)\">Start Survey</button>";
-    mcqOptions += "</div>";
-
-    // set time out to display the message and start survey button
-    setTimeout(() => {
-        messages.innerHTML += quesTemplate;
-        messages.innerHTML += mcqOptions;
-    }, 750);
-
-    // disable textbox
-    disableTextInput();
-}
-
-/**
- * function that starts the survey.
- */
-function startSurvey(button) {
-    // display that the start survey button has been clicked
-    let choice = button.textContent.trim();
-
-    let ansTemplate = '<div class="space">\
-                            <div class="message-container receiver">\
-                                <p>' + choice + '</p>\
-                            </div>\
-                        </div>';
-
-    // disable start survey button
-    let space = button.parentElement;
-    for (let i = 0; i < space.childNodes.length; i++) {
-        space.childNodes[i].disabled = true;
-    }
-    messages.innerHTML += ansTemplate;
-
-    // initialise currentUser and open a new collection for this survey instance
-    initFirebaseAuth();
-    // scroll to bottom of chat and start displaying the questions from firebase
-    scrollToBottom();
-    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
-}
+let agreeLikertQues = [13, 27]; //[1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree
+let satisfyLikertQues = [16]; //[0] Not Applicable [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
+let confidentLikertQues = [19,20,22]; //[0] Not Applicable [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident
+let interestedLikertQues = [25] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
 
 /**
  * onclick function for option buttons.
@@ -150,13 +92,15 @@ function select(button) {
     // check the type of skip target
     if (skipTarget === SKIP_NOT_ALLOWED) {
         // Don't skip next question
-        setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+        let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+        setTimeout(() => nextQuestion(), delay);
     } else if (skipTarget === SKIP_END_SURVEY) {
         // check if one of the skipChoices were selected. If so, end survey
         if (skipChoices.includes(choice)) {
             endSurvey();
         } else { // else move onto the next question
-            setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => nextQuestion(), delay);
         }
     } else {
         // Skip to a question ID if the selected answer is in skipChoices
@@ -167,14 +111,15 @@ function select(button) {
             // Set the current question index to the question before the
             // skip target since nextQuestion increments
             // the question index by 1
-            questionIndex = QUESTION_IDS.indexOf(skipTarget) - 1;
+            questionIndex = QUESTION_IDS[branch_id].indexOf(skipTarget) - 1;
 
             // In case the user was answering a long question,
             // reset params related to long questions
             currentSubQuestionIds = null;
         }
         // display the next question after a small delay
-        setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
+        let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+        setTimeout(() => nextQuestion(), delay);
     }
 
     // scroll to bottom of chat log
@@ -186,23 +131,37 @@ function select(button) {
  */
 function addMessage() {
     let message = input.value;
-
-    // Saving the response before clearing the input box
-    saveResponse(input.value);
+    let type = currentQuestionObject.type;
+    if (type ===TYPE_MULTIPLE_CHOICE ||
+        type === TYPE_MULTIPLE_CHOICE_OTHERS ||
+        type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
+            let selection = currentQuestionObject.restrictions.choices[message-1];
+            saveResponse(selection);
+            message = selection;
+        }
+        else{
+          // Saving the response before clearing the input box
+          saveResponse(input.value);
+        }
 
     // check if the input is valid
     if (message.length > 0) {
         // display input and clear textbox
         showMessageReceiver(message);
         input.value = "";
+
+            // Prevent users from using text box
+            disableTextInput();
+
+            // display next question after time delay and scroll to bottom of screen
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => nextQuestion(), delay);
+            scrollToBottom();
     }
-
-    // Prevent users from using text box
-    disableTextInput();
-
-    // display next question after time delay and scroll to bottom of screen
-    setTimeout(() => nextQuestion(), MESSAGE_OUTPUT_DELAY);
-    scrollToBottom();
+    else{
+      errorText.style.visibility = "visible";
+      errorText.innerHTML = "Please type your answer in the text box.";
+    }
 }
 
 
@@ -211,7 +170,6 @@ function addMessage() {
  */
 function nextQuestion() {
     console.log("nextQuestion() is called.")
-
     // check if currentQuestionObject is null
     if (currentQuestionObject === null) {
         // The user is answering its first survey question
@@ -232,18 +190,26 @@ function nextQuestion() {
             showQuestion(true);
             subQuestionIndex++;
         }
-    } else if (questionIndex < QUESTION_IDS.length - 1) { // check if questionIndex is still not at the end of survey questions
+    } else if (questionIndex < QUESTION_IDS[branch_id].length - 1) { // check if questionIndex is still not at the end of survey questions
         // The user is answering a normal question
         questionIndex++;
         showQuestion(false);
     } else { //  else end the survey
-        let endingMessage = "That's all the questions we have for you " +
-            "right now. You can either continue answerng questions, or" +
-            " browse the rest of the application!"
-        showMessageSenderWithoutHints(endingMessage);
-        scrollToBottom();
+        showEndingMessage();
     }
-    // updateProgress();
+}
+
+/**
+ * Shows the ending message when the survey has been completed.
+ */
+function showEndingMessage() {
+    let endingMessage = "That's all the questions we have for you " +
+        "right now. You can either continue answerng questions, or" +
+        " browse the rest of the application!"
+    showMessageSenderWithoutHints(endingMessage);
+    questionIndex = QUESTION_IDS[branch_id].length;
+    updateProgress();
+    scrollToBottom();
 }
 
 /**
@@ -255,34 +221,11 @@ function showMessageSender(message) {
     // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender " + messageColour + "'>" +
+        "<div class='message-container sender blue current'>" +
         `<p>${message}</p>` +
-        `<button
-         id = ${hintIndex}
-         type="button"
-         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
-         </button>`+
-        "<div style='display: inline-block;'>" +
-        `<p id='hintTxt${hintIndex}'style='margin-left: 1em;'></p>` +
-        "</div>" +
         "</div>" +
         "</div>";
-    hintIndex++;
-    changeMessageColour();
-}
-
-/**
- * function to display messages onto the chat log by th user
- * @param message - user response
- */
-function showMessageReceiver(message) {
-    //display user message in given html format
-    messages.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container receiver'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
+    showHints();
 }
 
 /**
@@ -292,71 +235,34 @@ function showMessageReceiver(message) {
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender " + messageColour + "'>" +
+        "<div class='message-container sender blue current'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
-    changeMessageColour();
-}
-
-/**
- * function to add a message in history log under chatbot.
- * @param message
- */
-function showQuestionLog(message) {
-    logs.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container sender " + messageHistoryColour + "'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
-    changeMessageHistoryColour();
-}
-
-/**
- * function to add a message in history log under user.
- * @param message
- */
-function showAnswerLog(message) {
-    logs.innerHTML +=
-        "<div class='space'>" +
-        "<div class='message-container receiver'>" +
-        `<p>${message}</p>` +
-        "</div>" +
-        "</div>"
+    document.getElementById('hint_area').innerHTML = "";
 }
 
 /**
  * Appends a message bubble to the chat bot containing
- * the specified question string with the prompt
- * "Please type your answer in the box below."
+ * the specified question string
  * @param questionString The question string
  */
 function showShortQuestionMessage(questionString) {
     document.getElementById("messages").innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender " + messageColour + "'>" +
+        "<div class='message-container sender blue current'>" +
         `<p>${questionString}</p>` +
-        "<p>Please type your answer in the box below.</p>" +
-        `<button 
-         id =${hintIndex}
-         type="button"
-         style="margin-bottom: 1em; font-size:0.8rem;display: inline-block;" onclick='showHints(id);'>Hints
-         </button>`+
-        "<div style='display: inline-block;'>" +
-        `<p id='hintTxt${hintIndex}'style='margin-left: 1em;'></p>` +
-        "</div>" +
         "</div>" +
         "</div>";
-    hintIndex++;
-    changeMessageColour();
+    showHints();
 }
 
 /**
  * function to scroll to bottom of screen
  */
 function scrollToBottom() {
-    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, delay);
 }
 
 /**
@@ -364,9 +270,13 @@ function scrollToBottom() {
  * @param isSubQuestion
  */
 function showQuestion(isSubQuestion) {
+
+    //Resets linkert scale
+    document.getElementById('likert_scale').innerHTML='';
+
     // Get the ID of the current question
     let question_id = "";
-
+    
     // check if the current question is a sub-question
     if (isSubQuestion) {
         // get the firebase ID of the sub-question
@@ -374,45 +284,68 @@ function showQuestion(isSubQuestion) {
         question_id = currentSubQuestionId;
     } else {
         // get the firebase ID of the question
-        currentQuestionId = QUESTION_IDS[questionIndex];
+        currentQuestionId = QUESTION_IDS[branch_id][questionIndex];
         question_id = currentQuestionId;
     }
     console.log("Reading ", question_id);
 
-    firebase.firestore().collection(QUESTIONS_BRANCH)
+    firebase.firestore().collection(QUESTIONS_BRANCHES[branch_id])
         .doc(question_id)
         .get()
         .then((docRef) => {
             let questionObject = docRef.data();
             let questionType = questionObject.type;
 
-            console.log(questionObject);
             currentQuestionObject = questionObject;
 
             // checking the type of the question to assign the appropriate function to display it
-            if (questionType == TYPE_NUMERIC || questionType == TYPE_NUMERIC_SUB_QUESTION) {
-                showNumeric(questionObject);
-            } else if (questionType == TYPE_MULTIPLE_CHOICE || questionType == TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
-                showMultipleChoice(questionObject);
-            } else if (questionType == TYPE_MULTIPLE_CHOICE_OTHERS) {
-                showMultipleChoiceOthers(questionObject);
-            } else if (questionType == TYPE_SHORT_TEXT) {
-                showShortText(questionObject);
-            } else if (questionType == TYPE_LONG_TEXT) {
-                showLongText(questionObject);
-            } else if (questionType == TYPE_LONG_QUESTION) {
-                showLongQuestion(questionObject);
-            } else {
-                let errorLog = "[ERROR]Invalid question type supplied: " +
-                    questionType +
-                    "\nQuestion object: " +
-                    questionObject;
-                console.log(errorLog)
+            switch (questionType) {
+                case TYPE_NUMERIC:
+                case TYPE_NUMERIC_SUB_QUESTION:
+                    showNumeric(questionObject);
+                    if (agreeLikertQues.includes(questionIndex)) {
+                        makeAgreeLikertScale(branch_id);
+                    } else if (satisfyLikertQues.includes(questionIndex)){
+                        makeSatisfyLikertScale(branch_id);
+                    } else if (confidentLikertQues.includes(questionIndex)){
+                        makeConfidentLikertScale(branch_id);
+                    } else if (interestedLikertQues.includes(questionIndex)){
+                        makeInterestedLikertScale(branch_id);
+                    }
+                    break;
+
+                case TYPE_MULTIPLE_CHOICE:
+                case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                    showMultipleChoice(questionObject);
+                    break;
+
+                case TYPE_MULTIPLE_CHOICE_OTHERS:
+                    showMultipleChoiceOthers(questionObject);
+                    break;
+
+                case TYPE_SHORT_TEXT:
+                    showShortText(questionObject);
+                    break;
+
+                case TYPE_LONG_TEXT:
+                    showLongText(questionObject);
+                    break;
+
+                case TYPE_LONG_QUESTION:
+                    showLongQuestion(questionObject);
+                    break;
+
+                default:
+                    let errorLog = "[ERROR]Invalid question type supplied: " +
+                        questionType +
+                        "\nQuestion object: " +
+                        questionObject;
+                    console.log(errorLog);
             }
 
+            updateProgress();
             // Scroll the chat box window to the correct position
             scrollToBottom();
-            updateProgress();
         });
 }
 
@@ -494,148 +427,25 @@ function repromptQuestion() {
         type === TYPE_SHORT_TEXT ||
         type === TYPE_NUMERIC ||
         type === TYPE_NUMERIC_SUB_QUESTION ||
-        type === TYPE_LONG_TEXT) {
+        type === TYPE_LONG_TEXT||
+        type ===TYPE_MULTIPLE_CHOICE ||
+        type === TYPE_MULTIPLE_CHOICE_OTHERS ||
+        type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
         let wrongInput = input.value;
         showMessageReceiver(wrongInput);
     }
-
-    // print out the question again onto chat
-    showShortQuestionMessage(question);
 
     // print out multiple choice options if question reprompted is a MCQ
     if (type ===TYPE_MULTIPLE_CHOICE ||
         type === TYPE_MULTIPLE_CHOICE_OTHERS ||
         type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION) {
-        showOptions(currentQuestionObject.choices);
+        showMultipleChoice(currentQuestionObject);
+    }else{
+      // print out the question again onto chat
+      showShortQuestionMessage(question);
     }
-}
-
-/**
- * function to display buttons for each MCQ question's answer options
- * only used for MCQ questions
- */
-function loadOptions(){
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-
-    var x = document.getElementById("Dropdown");
-    x.options.length = 0;
-    const collectionRef = firebase.firestore().collection(userID);
-    collectionRef.get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var option = document.createElement("option");
-                // Splitting the year month and day from date
-                var ymd = doc.id.split("-");
-                var dateString = ymd[0] + "-" + ("0" + ymd[1]).slice(-2) + "-" + ("0" + ymd[2]).slice(-2);
-                option.text = dateString;
-                x.add(option);
-            });
-        })
-        .catch((error) => {
-            console.log("Error getting documents: ", error);
-        });
-}
-
-/**
- * function to display history log's dropdown date
- */
-function dates(){
-    document.getElementById("Dropdown").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
-/**
- *
- */
-function selectdate(){
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-
-    var mylist = document.getElementById('Dropdown');
-    const collectionRef = firebase.firestore().collection(userID).doc(mylist.options[mylist.selectedIndex].text);
-    collectionRef.get().then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data().set_id);
-            if (document.contains(document.getElementById("attempt"))) {
-                document.getElementById("attempt").remove();
-                document.getElementById("label_id").remove();
-            }
-            var select = document.createElement("select");
-            select.id = "attempt";
-            select.class = "dropbtn";
-            var label = document.createElement("label");
-            label.id = "label_id";
-            for (var i = 0;i<=doc.data().set_id;i++){
-                var option = document.createElement("option");
-                option.value = i+1;
-                option.text = i+1;
-                select.appendChild(option);
-            }
-            label.innerHTML = "Choose which attempt you'd like to view: "
-            label.htmlFor = "attemptsection";
-
-            document.getElementById("attemptsection").appendChild(label).appendChild(select);
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    logDate = mylist.options[mylist.selectedIndex].text;
-}
-
-/**
- * function to select which attempt is going to be displayed in history chatlog
- */
-function selectattempt(){
-    var mylist = document.getElementById('attempt');
-    logAttempt = mylist.options[mylist.selectedIndex].text;
-
-    let log = document.getElementById('logs');
-    log.innerHTML = "";
-
-    showlog();
-}
-
-/**
- * function to display which old survey is going to be displayed in history page
- */
-function showlog(){
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-
-  const collectionRef = firebase.firestore().collection(userID).doc(logDate).collection('responses').orderBy('timestamp').where('set_id','==',parseInt(logAttempt-1));
-      collectionRef.get()
-      .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              if(doc.data().longQuestionId!=null && doc.data().longQuestionId!=longQueId){
-                longQueId = doc.data().longQuestionId;
-                firebase.firestore().collection('chatbot').doc('survey_questions').collection('questions').doc(longQueId).get().then((doc) => {
-                  console.log("long question:", doc.data().question);
-                  showQuestionLog(doc.data().question);
-                }).catch((error) => {
-                console.log("Error getting document:", error);
-                });
-              }
-              console.log(doc.id, " => ", doc.data().question);
-              showQuestionLog(doc.data().question);
-              showAnswerLog(doc.data().answer);
-          });
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-      });
+    updateProgress();
+    scrollToBottom();
 }
 
 /**
@@ -658,6 +468,20 @@ function showMultipleChoice(questionObject) {
         hint: "select an option"
     };
 
+
+    input.onkeyup = () => {
+        let message = parseInt(input.value);
+        if (message > 0 && message < (questionObject.restrictions.choices.length + 1)) {
+            // errorText.innerHTML = "";
+            // errorText.style.visibility = "hidden";
+            submit.onclick = addMessage;
+        } else {
+            // errorText.style.visibility = "visible";
+            // errorText.innerHTML = "Please enter a valid choice index.";
+            submit.onclick = null;
+        }
+    }
+    enableTextInput();
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
@@ -721,10 +545,12 @@ function showLongQuestion(questionObject) {
         arrangement: []
     };
 
+    // Cache title question for easier outputting (when resuming)
+    titleQuestionString = questionObject.question;
+
     showMessageSender(questionObject.question);
 
-    // Initialize fields for looping over the sub-question IDs
-    // array
+    // Initialize fields for looping over the sub-question IDs array
     subQuestionIndex = 0;
     currentSubQuestionIds = questionObject.arrangement;
     nextQuestion();
@@ -777,8 +603,6 @@ function showOptions(choices) {
     }
     mcqOptions += "</div>";
     messages.innerHTML += mcqOptions;
-
-    disableTextInput();
 }
 
 /**
@@ -786,8 +610,7 @@ function showOptions(choices) {
  * @param hintId
  */
 function showHints(hintId) {
-    document.getElementById('hintTxt' + hintId).innerHTML = currentQuestionObject.hint;
-    console.log('hintTxt' + hintId);
+    document.getElementById('hint_area').innerHTML = currentQuestionObject.hint;
 }
 
 /**
@@ -804,150 +627,6 @@ function disableTextInput() {
 function enableTextInput() {
     submit.disabled = false;
     input.disabled = false;
-}
-
-/**
- * Listen for changes in the firebase auth system
- * and initializes the user object.
- */
-function initFirebaseAuth() {
-    // Listen to auth state changes.
-    firebase.auth().onAuthStateChanged(() => {
-        // Initialize current user object
-        currentUser = firebase.auth().currentUser;
-        initSetId();
-    });
-}
-
-/**
- * Saves a user response to a survey question into the
- * Firestore Database.
- *
- * @param answer A string indicating the user's selected or typed answer.
- *               Objects are also accepted in more complex scenarios.
- */
-function saveResponse(answer) {
-    // Formulating the branch
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-    let today = new Date();
-    let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    let branch = `${userID}/${date}/responses`;
-
-    // Formulating the response object
-
-    let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-    // Writing a response object to survey_responses
-    let responseObject = {
-        question_id: currentQuestionId,
-        type: currentQuestionObject.type,
-        question: currentQuestionObject.question,
-        restrictions: currentQuestionObject.restrictions,
-        set_id: currentSetId,
-        answer: answer,
-        timestamp: timestamp
-    };
-
-    if (isAnsweringSubQuestions()) {
-        // For sub-questions
-        // 1. Append the longQuestionId attribute
-        // to the response object
-        responseObject.longQuestionId = currentQuestionId;
-
-        // 2. Change the question_id to the sub question's ID
-        // (instead of the "title" question's
-        responseObject.question_id = currentSubQuestionId;
-    }
-
-    // Add an auto-ID response entry to the data branch
-    firebase.firestore().collection(branch).add(responseObject)
-        .then((docRef) => {
-            console.log("Response object written with ID: ", docRef.id);
-
-            // After writing the response to survey_responses, also
-            // write it to survey_questions/question_id
-            let reducedResponseObject = {
-                phone: userID,
-                data: date,
-                answer: answer,
-                timestamp: timestamp
-            };
-            let responseBranch = `chatbot/survey_responses/${currentQuestionId}`;
-
-            firebase.firestore().collection(responseBranch)
-                .doc(docRef.id)
-                // The response ID we got in the first store
-                .set(reducedResponseObject)
-                .then(() => {
-                    console.log("Response written with ID: ", docRef.id,
-                        " at survey_responses branch");
-                })
-                .catch((error) => {
-                    console.error("Error writing response copy at" +
-                        " survey_responses branch: ", error);
-                });
-        })
-        .catch((error) => {
-            console.error("Error writing response at " + userID +
-                " branch: ", error);
-        });
-}
-
-/**
- * function to access the user's firebase storage and check if there is a collection for storing survey responses for
- * the current date. if there is not collection under the current date, the function will make a new collection instead
- * for the current date.
- */
-function initSetId() {
-    // Formulating the branch
-    let phone = currentUser.phoneNumber;
-    let userID = phone === undefined ? currentUser.email : phone;
-    let today = new Date();
-    let date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-
-    // Formulating the response object
-
-    // Retrieve the set id
-    let reference = firebase.firestore().collection(userID).doc(date);
-
-    reference.get().then((document) => {
-        if (document.exists) {
-            // If the data branch exists, that means this isn't the first
-            // survey instance for the day.
-            currentSetId = document.data().set_id + 1;
-
-            // Increment the set_id at the Firestore Database by 1
-            // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userID).doc(date)
-                .set({set_id: currentSetId})
-                .then(() => {
-                    console.log("Document written with ID: ", date);
-                })
-                .catch((error) => {
-                    console.error("Error writing content: ", error);
-                });
-        } else {
-            // The user is taking the survey for the first time
-            // at this moment.
-
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-
-            // If the document doesn't exist, it means that this
-            // is the first survey instance for the day.
-
-            // Initialize set_id to 0 and write it to the database
-            firebase.firestore().collection(userID).doc(date)
-                .set({set_id: 0})
-                .then(() => {
-                    console.log("Document written with ID: ", date);
-                })
-                .catch((error) => {
-                    console.error("Error writing content: ", error);
-                });
-        }
-    });
 }
 
 /**
@@ -972,7 +651,11 @@ function isAnsweringSubQuestions() {
  * Ends the survey
  */
 function endSurvey() {
-    questionIndex = QUESTION_IDS.length;
+    questionIndex = QUESTION_IDS[branch_id].length-1;
+
+    // Update the questionIndex on the cloud with the local one
+    updateQuestionIndex();
+
     nextQuestion();
 }
 
@@ -983,25 +666,14 @@ function endSurvey() {
  * To be used by text-based survey questions ONLY
  */
 function endSurveyText() {
-    showMessageSender(input.value);
-    questionIndex = QUESTION_IDS.length;
+    showMessageReceiver(input.value);
+    questionIndex = QUESTION_IDS[branch_id].length-1;
+
+    // Update the questionIndex on the cloud with the local one
+    updateQuestionIndex();
+
     errorText.style.visibility = "hidden";
     nextQuestion();
-}
-
-/**
- * Changes the colour of the next message based on
- * the colour of the current message.
- *
- * Used in SENDER messages only (bot side)
- */
-function changeMessageColour() {
-    if (messageColour == 'white') {
-        messageColour = 'blue';
-    }
-    else {
-        messageColour = 'white';
-    }
 }
 
 /**
@@ -1019,8 +691,56 @@ function changeMessageColour() {
     }
 }
 
+/**
+ * Updates the progress bar. Also changes previous sender question to
+ * white.
+ */
 function updateProgress() {
-    var progress = (questionIndex/QUESTION_IDS.length) * 100;
+    var progress = (questionIndex/QUESTION_IDS[branch_id].length) * 100;
     console.log('updateProgress() is called. Current percentage is ' + progress + '%.');
     document.querySelector('#progress-bar').MaterialProgress.setProgress(progress);
+
+    changeColour();
+}
+
+/**
+ * Changes all blue colour messages to white unless they have a current tag.
+ * Current class tag will be removed.
+ */
+function changeColour() {
+    var prev = $('.blue');
+    $.each(prev, function() {
+        if (!$(this).hasClass('current')) {
+            $(this).animate({
+                backgroundColor: "#FFFFF",
+                color: "#006DAE",
+            }, 500 );
+        }
+        $(this).removeClass('current')
+    })
+}
+
+/** Function of selecting likert options **/
+function likertSelect(number)
+{
+    // format choice html text bubble
+    let ansTemp = '<div class="space">\
+                            <div class="message-container receiver">\
+                                <p>' + number + '</p>\
+                            </div>\
+                        </div>';
+
+    // display user's choice on chat
+    messages.innerHTML += ansTemp;
+
+    // save choice onto firebase
+    saveResponse(number);
+
+    // Prevent users from using text box
+    disableTextInput();
+
+    // display next question after time delay and scroll to bottom of screen
+    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+    setTimeout(() => nextQuestion(), delay);
+    scrollToBottom();
 }

@@ -321,9 +321,16 @@ transition: color 0.15s ease-in;
 		padding: 0.75rem;
 		border-radius: 15px;
 		height: 50px;
-		width: 734px;
+		width: 724px;
         color:rgb(0, 0, 0);
 	}
+
+	#tab0 {
+		position: relative;
+		bottom: 10px;
+		left: 0px;
+	}
+
 	#tab1 {
 		position: relative;
 		bottom: 10px;
@@ -332,7 +339,7 @@ transition: color 0.15s ease-in;
 	#tab2 {
 		position: relative;
 		bottom: 10px;
-		left: 190px
+		left: 100px
 	}
 	input[type="radio"]:checked+label {
 		color: var(--primary-color);
@@ -355,11 +362,16 @@ transition: color 0.15s ease-in;
 		border-radius: 25px;
 		transition: 0.25s ease-out;
 	}
+
+	input[id="radio-0"]:checked~.glider {
+		transform: translateX(5%);
+	}
+
 	input[id="radio-1"]:checked~.glider {
-		transform: translateX(25%);
+		transform: translateX(140%);
 	}
 	input[id="radio-2"]:checked~.glider {
-		transform: translateX(220%);
+		transform: translateX(280%);
 	}
     
 	#more_btn {
@@ -391,7 +403,7 @@ transition: color 0.15s ease-in;
 	}
 }
 
-@media all and (max-width: 1023px) {
+@media all and (max-width: 541px) {
 	/* phone */
 	.mobile-br {
 		display: inline;
@@ -433,7 +445,7 @@ transition: color 0.15s ease-in;
 		padding: 0.75rem;
 		border-radius: 15px;
 		height: 70px;
-		width: 355px;
+		width: 370x;
 	}
 	input[type="radio"]:checked+label {
 		color: var(--primary-color);
@@ -446,21 +458,23 @@ transition: color 0.15s ease-in;
 		position: absolute;
 		bottom: 7px;
 		height: 55px;
-		width: 130px;
+		width: 125px;
 		background-color: var(--secondary-color);
 		z-index: 1;
 		border-radius: 25px;
 		transition: 0.25s ease-out;
 	}
+	input[id="radio-0"]:checked~.glider {
+		transform: translateX(-5%);
+        color: black;
+	}
+
 	input[id="radio-1"]:checked~.glider {
-		transform: translateX(15%);
+		transform: translateX(95%);
         color: black;
 	}
 	input[id="radio-2"]:checked~.glider {
-		/* transform: translateX(100%);
-        }
-        input[id="radio-3"]:checked ~ .glider { */
-		transform: translateX(140%);
+		transform: translateX(190%);
 	}
 	#more_btn {
 		border-radius: 10px;
@@ -584,6 +598,38 @@ transition: color 0.15s ease-in;
 	}
     
 }
+
+
+/* small mobile view (375px)*/
+@media all and (max-width: 400px) {
+	/* for glider */
+	.glider {
+		position: absolute;
+		bottom: 7px;
+		height: 55px;
+		width: 30%;
+		background-color: var(--secondary-color);
+		z-index: 1;
+		border-radius: 25px;
+		transition: 0.25s ease-out;
+	}
+	input[id="radio-0"]:checked~.glider {
+		transform: translateX(0%);
+	}
+
+	input[id="radio-1"]:checked~.glider {
+		transform: translateX(105%);
+	}
+	input[id="radio-2"]:checked~.glider {
+		transform: translateX(215%);
+	}
+	#tab0, #tab1, #tab2{
+		font-size:16px ;
+	}
+}
+
+
+
 
 /* post detailed*/
 .comment_input,
@@ -741,7 +787,7 @@ button.reply {
 
 
 /* search */
-@media all and (min-width:800px) {
+@media all and (min-width:551px) {
 	.search {
 		height: 65px;
 		position: relative;
@@ -769,7 +815,7 @@ button.reply {
 	}
 }
 
-@media only screen and (max-device-width: 600px) {
+@media only screen and (max-device-width: 541px) {
 	.search {
 		height: 70px;
 	}
