@@ -23,13 +23,7 @@ let current_us = JSON.parse(localStorage.getItem("USER"));
  document.getElementById("username").innerHTML = "Welcome @" + current_us["username"];
 
  
- function showTranslationModal(){
-  document.getElementById("myModal").style.display = "block";  
-}
 
-function hideTranslationModal(){
-  document.getElementById("myModal").style.display = "none";  
-}
 
 
 

@@ -51,16 +51,6 @@
       <!-- App Styling -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
       <title>Forum</title>
-      <!-- TODO: Enable First Input Delay polyfill library. -->
-      <script type="text/javascript">
-         !function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";
-         function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}
-         function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}
-         function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}
-         function c(){r()}
-         function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}
-         function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);
-      </script>
    </head>
    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <!--HEADER -->
@@ -82,7 +72,6 @@
             <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
             <a class="mdl-navigation__link" href="./recommenderUi.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
             <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
-            <a class="mdl-navigation__link" href="./create_post.html"> <img src="./css/images/create_post_icon.png" class="nav_icon"  id="create_post_icon"> New Post</a>
          </nav>
       </div>
       <body>
@@ -91,46 +80,40 @@
             <div class="container">
                <!-- Tab navigation -->
                <div class="tabs">
+                  <input type="radio" id="radio-0" name="tabs" value="thread" onclick="printThread();"/>
+                  <label class="tab" for="radio-0" id="tab0"><b>Trend</b></label>
+
                   <input type="radio" id="radio-1" name="tabs" value="feed" onclick="printAllPosts();" checked/>
-                  <label class="tab" for="radio-1" id="tab1"><b>Feed</b></label>
-                  <!-- <input type="radio" id="radio-2" name="tabs" value="your" onclick="printUserPosts();"/>
-                  <label class="tab" for="radio-2" id="tab2"><b>Your posts</b></label> -->
+                  <label class="tab" for="radio-1" id="tab1"><b>Create post</b></label>
+                  
                   <input type="radio" id="radio-2" name="tabs" onclick="printUserPosts();"/>
                   <label class="tab" for="radio-2" id="tab2"><b>Feed</b></label>
-                  <!-- new tab for new feed (favourite + user posts) -->
-                  <!-- <input type="radio" id="radio-3" name="tabs" onclick="printUserFavouritePosts();"/>
-                  <label class="tab" for="radio-3" id="tab3"><b>Feed</b></label> -->
+                  
                   <span class="glider"></span>
                </div>
             </div>
-
-            
-                  <!--SEARCH-->
-                  <div class="search-container" >
-                     <div class="search">
-                        <div id="icon-background">
-                           <a id="search-icon"> <img src="./css/images/Icon_Interest-etc_14.png" class="nav_icon notranslate" id="search_ico"></a> 
-                        </div>
-
-                        <input type="text" class="search-input" placeholder="Search..." name="" id="searchBox">
-
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="searchButton" 
-                        onclick="searchAllPosts(document.getElementById('searchBox').value)">Search</button>
-                     </div>
+            <!--SEARCH-->
+            <div class="search-container" >
+               <div class="search">
+                  <div id="icon-background">
+                     <a id="search-icon"> <img src="./css/images/Icon_Interest-etc_14.png" class="nav_icon notranslate" id="search_ico"></a> 
                   </div>
-                     <!--SEARCH ENDS-->
-          
-             
-                  <div class = "forum-container">
-                     <div class="forum-posts">
-                        <!-- DISPLAY ALL POST BY OTHER USERS -->
-                        <br>
-                        <div id="postField">
-                        </div>
-                     </div>
+                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBox">
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="searchButton" 
+                     onclick="searchAllPosts(document.getElementById('searchBox').value)">Search</button>
+               </div>
+            </div>
+            <!--SEARCH ENDS-->
+            <br>
+            <div class = "forum-container">
+               <div class="forum-posts">
+                  <!-- DISPLAY ALL POST BY OTHER USERS -->
+                  <div id="create_post">
                   </div>
-                 
-            
+                  <div id="postField">
+                  </div>
+               </div>
+            </div>
          </main>
          <!-- Change language -->
          <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
@@ -142,15 +125,12 @@
                   </b>
                </p>
                <hr style="margin: 0;">
-
-
                <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset()"
                   value="English">
                <label>
                <span id="lang_text" style="color:white;">English</span>
                </label>
                </button>
-
                <br>
                <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
                   value="Chinese (Simplified)">
@@ -158,7 +138,6 @@
                <span id="lang_text" style="color:white;">中文</span>
                </label>
                </button>
-
                <br>
                <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
                   value="Thai" >
@@ -166,7 +145,6 @@
                <span id="lang_text" style="color:white;">ภาษาไทย</span>
                </label>
                </button>
-
                <br>
                <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
                   value="Malay">
@@ -174,8 +152,6 @@
                <span id="lang_text" style="color:white;">Bahasa Melayu</span>
                </label>
                </button>
-
-
                <br>
                <br>
                <div>

@@ -38,16 +38,6 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
       <link rel="stylesheet"  href="css/forum.css">
       <title>Forum</title>
-      <!-- TODO: Enable First Input Delay polyfill library. -->
-      <script type="text/javascript">
-         !function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";
-         function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())};
-         function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])};
-         function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()};
-         function c(){r()};
-         function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}};
-         function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);
-      </script>
    </head>
    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <!-- Header section containing logo -->
@@ -73,7 +63,6 @@
             <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
             <a class="mdl-navigation__link" href="./recommenderUi.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
             <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
-            <a class="mdl-navigation__link" href="./create_post.html"> <img src="./css/images/create_post_icon.png" class="nav_icon"  id="create_post_icon"> New Post</a>
          </nav>
       </div>
       <body>
@@ -84,7 +73,6 @@
             </div>
             <div class="mdl-cell mdl-cell--8-col">
                <div class="forum-posts">
-                  <!-- DISPLAY ALL POST BY OTHER USERS -->
                   <br>
                   <div id = "post_details">
                   </div>
@@ -115,37 +103,33 @@
    </b>
    </p>
    <hr style="margin: 0;">
-
-         <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset()"
-         value="English">
-      <label>
-      <span id="lang_text" style="color:white;">English</span>
-      </label>
-      </button>
-
-      <br>
-      <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-         value="Chinese (Simplified)">
-      <label>
-      <span id="lang_text" style="color:white;">中文</span>
-      </label>
-      </button>
-
-      <br>
-      <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-         value="Thai" >
-      <label>
-      <span id="lang_text" style="color:white;">ภาษาไทย</span>
-      </label>
-      </button>
-
-      <br>
-      <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
-         value="Malay">
-      <label>
-      <span id="lang_text" style="color:white;">Bahasa Melayu</span>
-      </label>
-      </button>
+   <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset()"
+      value="English">
+   <label>
+   <span id="lang_text" style="color:white;">English</span>
+   </label>
+   </button>
+   <br>
+   <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+      value="Chinese (Simplified)">
+   <label>
+   <span id="lang_text" style="color:white;">中文</span>
+   </label>
+   </button>
+   <br>
+   <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+      value="Thai" >
+   <label>
+   <span id="lang_text" style="color:white;">ภาษาไทย</span>
+   </label>
+   </button>
+   <br>
+   <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+      value="Malay">
+   <label>
+   <span id="lang_text" style="color:white;">Bahasa Melayu</span>
+   </label>
+   </button>
    <br>
    <br>
    <div>

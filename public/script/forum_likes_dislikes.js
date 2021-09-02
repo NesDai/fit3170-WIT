@@ -10,7 +10,7 @@ async function likePostDetailed(post_id) {
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
             action: 1
         }).then(() => {
-            alert("Liked");
+            //alert("Liked");
             updateLikes(post_id, 1) // add 1 like 
         });
 
