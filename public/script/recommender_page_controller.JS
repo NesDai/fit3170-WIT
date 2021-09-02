@@ -273,7 +273,7 @@ function checkSurveyCompletion() {
     db.collection(phoneNum).get().then((querySnapshot) => {
         if (db.collection(phoneNum).exists) {
             userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
-            location.href = "recommenderUi.html"; // redirect to recommender page
+            location.href = "recommender_Ui.html"; // redirect to recommender page
         } else {
             userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey 
         }
@@ -287,7 +287,7 @@ function checkForPreference(stringPath) {
     firebase.database().ref(stringPath + "/preferences").once('value').then((snapshot) => {
         if (snapshot.exists()) {
             console.log(snapshot.val());
-            location.href = "recommenderUi.html"; // redirect to recommender
+            location.href = "recommender_Ui.html"; // redirect to recommender
         }
         else {
             console.log("No data available");
