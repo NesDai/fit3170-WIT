@@ -238,4 +238,7 @@ main {
   .mdl-card {
     width: 100%;
   }
+  #progress-bar {
+    width:100%;
+  }
 }
