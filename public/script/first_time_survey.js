@@ -135,7 +135,9 @@ function addMessage() {
     if (type ===TYPE_MULTIPLE_CHOICE ||
         type === TYPE_MULTIPLE_CHOICE_OTHERS ||
         type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
-        saveResponse(currentQuestionObject.restrictions.choices[message-1]);
+            let selection = currentQuestionObject.restrictions.choices[message-1];
+            saveResponse(selection);
+            message = selection;
         }
         else{
           // Saving the response before clearing the input box
@@ -470,15 +472,14 @@ function showMultipleChoice(questionObject) {
     input.onkeyup = () => {
         let message = parseInt(input.value);
         if (message > 0 && message < (questionObject.restrictions.choices.length + 1)) {
-            errorText.innerHTML = "";
-            errorText.style.visibility = "hidden";
+            // errorText.innerHTML = "";
+            // errorText.style.visibility = "hidden";
             submit.onclick = addMessage;
         } else {
-            errorText.style.visibility = "visible";
-            errorText.innerHTML = "Please enter a valid choice index.";
-            submit.onclick = repromptQuestion;
+            // errorText.style.visibility = "visible";
+            // errorText.innerHTML = "Please enter a valid choice index.";
+            submit.onclick = null;
         }
-
     }
     enableTextInput();
     let question = questionObject.question;
