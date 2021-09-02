@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="completed  question-uploader_th.js and completed question ids in constants.js.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/chatbot/script/question-uploader_th.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/chatbot/script/question-uploader_th.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/script/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/script/first_time_survey.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/first_time_survey.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/images/chatbot.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/images/forum.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/images/recommender.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
