@@ -90,7 +90,8 @@ function makeNewPost() {
             videoURL: embedding_video_url,
             created: new Date().toString(), 
             likes:0,
-            dislikes:0
+            dislikes:0,
+            recommender: false
         }
 
         firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
@@ -180,20 +181,24 @@ function printAllPosts(){
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-                let button_num=0
-                for (let i =0; i<data_list.length; i++) {
-                    if(data_list[i][0] == data.key){  // if an action was performed on this post
-                        if(data_list[i][1] == 1) { // liked
-                            button_num=1
+
+                if(data.val().recommender == false || data.val().recommender == undefined){  //todo accept undefined for now but remove later
+                    let button_num=0
+                    for (let i =0; i<data_list.length; i++) {
+                        if(data_list[i][0] == data.key){  // if an action was performed on this post
+                            if(data_list[i][1] == 1) { // liked
+                                button_num=1
+                            }
+                            else{
+                                button_num=-1
+                            }
                         }
-                        else{
-                            button_num=-1
-                        }
-                    }
-            }
-                button_nums.push(button_num);
+                }
+                    button_nums.push(button_num);
                 posts.push(data.val());
+        }
             });
+        
 
         }).then(()=>{
 
@@ -210,30 +215,53 @@ function printAllPosts(){
  * @returns null
  */
 function printThread(){
-    document.getElementById("searchBox").value = "";
-    document.getElementById("create_post").innerHTML = "";
-
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
-    let video_arr = [
-        "https://www.youtube.com/embed/nsO-TbTqRK4", 
-        "https://www.youtube.com/embed/3H6_bcfts8g",
-        "https://www.youtube.com/embed/wN0x9eZLix4",
-        "https://www.youtube.com/embed/tWVWeAqZ0WU", 
-        "https://www.youtube.com/embed/UflHuQj6MVA",
-        "https://www.youtube.com/embed/7KSNmziMqog",
-        "https://www.youtube.com/embed/nsO-TbTqRK4", 
-        "https://www.youtube.com/embed/VuBHV3ZiOJQ",
-        "https://www.youtube.com/embed/oQm8Df4UYNw",
-        "https://www.youtube.com/embed/nsO-TbTqRK4", 
-        "https://www.youtube.com/embed/3H6_bcfts8g"
-    ]
-    let button_nums = [1, -1, 0, 1, -1, 1, 0, 0, 1, -1]
 
-    for(let i=9; i>=0 ; i--){
-        printRecommendedVideo(video_arr, button_nums[i], i)
-    }
+    let data_list = [];
+    let button_nums = []
+    let posts = [];
+
+    firebase.database().ref('likesDislikes')
+    .once('value', x => {
+        x.forEach(data => {
+            if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
+                data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
+            }
+
+        })
+    }).then(()=>{
+        firebase.database().ref('posts')
+        .once('value', x => {
+            x.forEach(data => {
+
+                if(data.val().recommender == true){ 
+                    let button_num=0
+                    for (let i =0; i<data_list.length; i++) {
+                        if(data_list[i][0] == data.key){  // if an action was performed on this post
+                            if(data_list[i][1] == 1) { // liked
+                                button_num=1
+                            }
+                            else{
+                                button_num=-1
+                            }
+                        }
+                }
+                    button_nums.push(button_num);
+                posts.push(data.val());
+        }
+            });
+        
+
+        }).then(()=>{
+
+            for(let i=posts.length-1; i>=0 ; i--){
+                printPost(posts[i], button_nums[i], i )
+            }
+        });
+    });
 }
+
 
 
 /**
@@ -542,6 +570,11 @@ function printPost(post, button_num, i )
     }
 
     let field = document.getElementById("postField");
+    if(post.username == undefined)
+        post.username = "";
+    if(post.created == undefined)
+        post.created = "";
+         
     field.innerHTML +=
     `   <div style="padding-top: 20px;">
             <span class="post_card">
