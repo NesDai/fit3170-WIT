@@ -140,6 +140,10 @@ i.icon-teal{
     background-color: #d2d2d2;
 }
 
+#option_buttons{
+    background-color: #006dae;
+}
+
 .mdl-button .material-icons {
     top: -1px;
     margin-right: 5px;
@@ -175,31 +179,32 @@ i.icon-teal{
     padding-left: 20px;
 }
 
+/*Media query*/
+@media (min-width:1281px) { 
+    /* hi-res laptops and desktops */ 
+    #option_buttons{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+}
+
 @media screen and (max-width: 610px) {
+    /* for mobile */ 
     header {
       height: 113px;
       padding-bottom: 80px !important;
     }
-    #user-container {
-      top: 72px;
-      background-color: rgb(3,155,229);
-      height: 38px;
-      padding-top: 3px;
-      padding-right: 2px;
-    }
-    #user-container #user-pic {
-      top: 2px;
-      width: 33px;
-      height: 33px;
-      background-size: 33px;
-    }
+
     .mdl-card {
       width: 100%;
     }
 
-    /* The translation*/
+    /* For the translation portion*/
     .modal-content {
         width: 80%;
         height: 60%;
     }
+
 }

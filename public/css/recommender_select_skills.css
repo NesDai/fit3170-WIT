@@ -263,18 +263,34 @@ table {
 }
 
 /* Media query for mobile screens */
-@media screen and (max-height: 450px){
+
+@media (min-width:1281px) { 
     .tab {
         /* The height is 100%, when the viewport is 700px or smaller */
-        height: 200px;
+        height: 800px;
     }
 
     .tabcontent {
-        height: 200px;
+        height: 800px;
     }
 }
 
-@media screen and (min-height: 1000px){
+@media screen and (max-width: 610px) {
+    header {
+      height: 113px;
+      padding-bottom: 80px !important;
+    }
+
+    .mdl-card {
+      width: 100%;
+    }
+
+    /* The translation*/
+    .modal-content {
+        width: 80%;
+        height: 60%;
+    }
+
     .tab {
         /* The height is 100%, when the viewport is 700px or smaller */
         height: 800px;

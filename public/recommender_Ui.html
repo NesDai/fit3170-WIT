@@ -110,19 +110,6 @@
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop ">
             <h3>Recommender</h3>
-            <a class="mdl-navigation__link" href="fav_page_Ui.html">
-              <button class="mdl-button mdl-js-button mdl-button--raised" id="fav_button"><i class="material-icons icon-gray">favorite</i>Favourite</button>
-            </a>
-            <a class="mdl-navigation__link" href="recommender_history_Ui.html">
-              <button class="mdl-button mdl-js-button mdl-button--raised" id="history_button"><i class="material-icons icon-gray">history</i>History</button>
-            </a>
-            <a class="mdl-navigation__link" href="recommender_select_skills.html">
-              <button class="mdl-button mdl-js-button mdl-button--raised" id="edit_button"><i class="material-icons icon-gray">mode_edit</i>Edit skill selection</button>
-            </a>
-            <a class="mdl-navigation__link" href="main_page.html">
-              <button class="mdl-button mdl-js-button mdl-button--raised" id="go_back_button">Go back</button>
-            </a>
-
           </div>
           <div id="user-container">
             <div hidden id="user-pic"></div>
@@ -136,6 +123,7 @@
           </div>
         </div>
       </header>
+      
       <div class="mdl-layout__drawer">
         <br>
         <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
@@ -150,6 +138,23 @@
        </nav>
       </div>
   <body>
+    <div class="row" id=option_buttons>
+      <div class="col-9">
+        <a class="mdl-navigation__link" href="fav_page_Ui.html">
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="fav_button"><i class="material-icons icon-gray">favorite</i>Favourite</button>
+        </a>
+        <a class="mdl-navigation__link" href="recommender_history_Ui.html">
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="history_button"><i class="material-icons icon-gray">history</i>History</button>
+        </a>
+        <a class="mdl-navigation__link" href="recommender_select_skills.html">
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="edit_button"><i class="material-icons icon-gray">mode_edit</i>Edit skill selection</button>
+        </a>
+        <a class="mdl-navigation__link" href="main_page.html">
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="go_back_button">Go back</button>
+        </a>
+      </div>
+    </div>
+
     <main class="mdl-layout__content mdl-color--grey-100">
     <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
       
@@ -196,7 +201,7 @@
             <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">record_voice_over</i>
           </button>
           
-          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-left: 25%; margin-bottom: 5%; background-color: transparent;" >
+          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-bottom: 5%; background-color: transparent;" >
               <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">skip_next</i>
           </button>
           
