@@ -53,6 +53,11 @@ function getPostDetails() {
 
 
 function printPostDetails(post, button_num) {
+    if(post.username == undefined)
+        post.username = "";
+    if(post.created == undefined)
+        post.created = "";
+        
     let post_details = document.getElementById("post_details");
     let button = `
     <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
