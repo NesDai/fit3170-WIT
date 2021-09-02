@@ -2,8 +2,9 @@ let tableArea = document.getElementById('favtable');
 let favCount = 0;
 let current_user = JSON.parse(localStorage.getItem("USER"));
 let emptyTxt = "<br><br><br>There are no videos saved in favorites right now";
-let listInterest = ["Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8"]
-// let listInterest = ["Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","A very very very long interest with spaces in between","Looooooooooooooooooooooooooooooooooonnnnnnnggggggggggggggggggg","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8"]
+let listInterest = ["Email Management and Setup","Search Engine Use","Smartphone/Tablet Use","Social Media Use","Online Collaboration","Effective Communication","Negotiation","Listening","Relationship Management","Persuasion","Cooking","Art","Caregiving","Exercise","Professional Writing","Collaboration and Teamwork","Leadership","Entrepreneurship","Personal Selling","Critical Thinking"];
+
+// let listInterest = ["Art","Baking","Smartphone/Tablet Use","Interest4","Interest5","Interest6","Interest7","Interest8","A very very very long interest with spaces in between","Looooooooooooooooooooooooooooooooooonnnnnnnggggggggggggggggggg","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8"]
 phoneNum = current_user['phone'];
 let myFavList = [];
 let sortGenerated = false;
@@ -166,7 +167,7 @@ function show_sort(){
   if (sortGenerated == false){
     sortGenerated = true;
     for (let i = 0; i<listInterest.length; i++){
-      sortArea.innerHTML+=`<div class="sortInterestBox"><input type="checkbox" name="interest" style="margin-left: 15px;margin-top: 10px;" value="`+listInterest[i]+`"><label class="labelSort">`+listInterest[i]+`</label></div>`
+      sortArea.innerHTML+=`<div class="sortInterestBox"><input type="checkbox" name="interest" style="margin-left: 15px;margin-top: 10px;" value="`+listInterest[i]+`"><label class="labelSort">`+listInterest[i]+"&nbsp"+`</label></div>`
     }
   }
 }
