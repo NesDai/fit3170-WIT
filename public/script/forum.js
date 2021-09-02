@@ -702,6 +702,7 @@ function printUserPosts(){
  function searchAllPosts(param){
 
     let data_list = [];
+    let toPrint =[];
     let button_nums = []
     let posts = [];
 
@@ -756,6 +757,7 @@ function printUserPosts(){
                     }
                     button_nums.push(button_num);
                     posts.push(data.val());
+                    toPrint.push(data.val().id);  // get the post id
                 })
             })
         //find interests in posts
@@ -777,7 +779,12 @@ function printUserPosts(){
                         }
                     }
                     button_nums.push(button_num);
-                    posts.push(data.val());
+
+                    if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                        posts.push(data.val());
+                        toPrint.push(data.val().id);
+                    }
+
                 })
             })
 
@@ -799,7 +806,11 @@ function printUserPosts(){
                             }
                         }
                         button_nums.push(button_num);
-                        posts.push(data.val());
+
+                        if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                            posts.push(data.val());
+                            toPrint.push(data.val().id);
+                        }
                     })
                 }).then(()=>{
                     let i = 0;
@@ -825,6 +836,7 @@ function searchYourPosts(param){
     let button_nums = []
     let posts = [];
     let field = document.getElementById("postField");
+    let toPrint = [];
 
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
@@ -871,6 +883,8 @@ function searchYourPosts(param){
                         }
                         button_nums.push(button_num);
                         posts.push(data.val());
+                        toPrint.push(data.val().id);
+
                     }
                 })
             })
@@ -882,6 +896,10 @@ function searchYourPosts(param){
                 x.forEach(data => {
 
                     let users_fav = data.val().users_favourite // all the users who favourited the post
+
+                    if(users_fav == undefined){
+                        users_fav = [];
+                    }
 
                     if(data.val().username == current_user["username"] || users_fav.includes(current_user["phone"])){
                         for (let i =0; i<data_list.length; i++) {
@@ -898,7 +916,11 @@ function searchYourPosts(param){
                             }
                         }
                         button_nums.push(button_num);
-                        posts.push(data.val());
+                        if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                            posts.push(data.val());
+                            toPrint.push(data.val().id);
+                        }
+   
                     }
                 })
             })
@@ -909,6 +931,10 @@ function searchYourPosts(param){
                     x.forEach(data => {
 
                         let users_fav = data.val().users_favourite // all the users who favourited the post
+                        
+                        if(users_fav == undefined){
+                            users_fav = [];
+                        }
 
                         if(data.val().username == current_user["username"] || users_fav.includes(current_user["phone"])){
                             for (let i =0; i<data_list.length; i++) {
@@ -925,7 +951,10 @@ function searchYourPosts(param){
                                 }
                             }
                             button_nums.push(button_num);
-                            posts.push(data.val());
+                            if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                                posts.push(data.val());
+                                toPrint.push(data.val().id);
+                            }
                         }
                     })
                 }).then(()=>{
@@ -951,6 +980,7 @@ function searchYourPosts(param){
     let button_nums = []
     let posts = [];
     let field = document.getElementById("postField");
+    let toPrint = [];
 
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
@@ -995,6 +1025,7 @@ function searchYourPosts(param){
                         }
                         button_nums.push(button_num);
                         posts.push(data.val());
+                        toPrint.push(data.val().id);
                     }
                 })
             })
@@ -1022,7 +1053,10 @@ function searchYourPosts(param){
                             }
                         }
                         button_nums.push(button_num);
-                        posts.push(data.val());
+                        if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                            posts.push(data.val());
+                            toPrint.push(data.val().id);
+                        }
                     }
                 })
             })
@@ -1049,7 +1083,11 @@ function searchYourPosts(param){
                                 }
                             }
                             button_nums.push(button_num);
-                            posts.push(data.val());
+                            
+                            if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                                posts.push(data.val());
+                                toPrint.push(data.val().id);
+                            }
                         }
                     })
                 }).then(()=>{
