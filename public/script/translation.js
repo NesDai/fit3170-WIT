@@ -17,7 +17,6 @@ function execute(){
 
 function eraseCookiesGoogle() {   
 
-
     let list = ["__Secure-3PSIDCC","__Secure-3PSID","SID","SIDCC","__Secure-3PAPISID","__Secure-1PAPISID","HSID","SAPISID","APISID","SSID","1P_JAR","OGPC","CONSENT","OTZ","ANID","NID"]
     for(let cookie of list){
         document.cookie = `${cookie}=; domain=.google.com; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
@@ -119,4 +118,12 @@ function translateLanguage(lang) {
     }
     $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
     return new Promise(function(resolve, reject){resolve(false)});
+}
+
+function showTranslationModal(){
+    document.getElementById("myModal").style.display = "block";
+}
+
+function hideTranslationModal(){
+    document.getElementById("myModal").style.display = "none";
 }

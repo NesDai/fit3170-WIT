@@ -1,0 +1,168 @@
+/* Header and navigation */
+html, body {
+    font-family: "Arial", sans-serif;
+    font-size: 14pt;
+    background-color: #d2d2d2;
+    color: #006dae;
+}
+
+.mdl-layout__header{
+    background-color: #006dae;
+}
+
+.img-centre {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+}
+
+.lang_butt {
+    margin: 2%; 
+    width: 30%; 
+    background-color: #006DAE;
+}
+
+#lang_text{
+    display: inline;
+}
+
+i.icon-teal{
+    color:#006DAE;
+}
+
+.mdl-navigation__link{
+    font-size: 16px;
+    text-align: left;
+    padding-left: 0;
+    padding-right: 3;
+}
+
+.mdl-grid-body{
+    margin: 0;
+    padding: 0;
+}
+
+/*Body*/
+.mdl-grid {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.vjs-control-bar {
+    font-size: 200%
+}
+
+.mdl-card {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5%;
+    width: 60%;
+    height: 40em;
+    min-height: 0;
+    background: linear-gradient(white, #f9f9f9);
+    justify-content: space-between;
+}
+
+.mdl-card__media{
+    width: 100%;
+}
+
+.mdl-js-button {
+    border-radius: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+}
+
+.mdl-button .material-icons {
+    top: -1px;
+    margin-right: 5px;
+}
+
+.material-icons {
+    font-size: 36px;
+    top: 8px;
+    position: relative;
+}
+
+.space {
+    display: inline-block;
+    width: 100%;
+}
+
+#user-container #user-pic {
+    top: -3px;
+    position: relative;
+    display: inline-block;
+    background-image: url('/images/profile_placeholder.png');
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    background-size: 40px;
+    border-radius: 20px;
+}
+
+#user-container #user-name {
+    font-size: 16px;
+    line-height: 36px;
+    padding-right: 10px;
+    padding-left: 20px;
+}
+
+@media screen and (max-width: 610px) {
+    header {
+      height: 113px;
+      padding-bottom: 80px !important;
+    }
+    #user-container {
+      top: 72px;
+      background-color: rgb(3,155,229);
+      height: 38px;
+      padding-top: 3px;
+      padding-right: 2px;
+    }
+    #user-container #user-pic {
+      top: 2px;
+      width: 33px;
+      height: 33px;
+      background-size: 33px;
+    }
+    .mdl-card {
+      width: 100%;
+    }
+}
