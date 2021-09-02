@@ -35,13 +35,6 @@ function hideTranslationModal(){
     document.getElementById("myModal").style.display = "none";
 }
 
-function showTranslationModal(){
-    document.getElementById("myModal").style.display = "block";
-}
-
-function hideTranslationModal(){
-    document.getElementById("myModal").style.display = "none";
-}
 
 function disableTranslateButton(){
 
