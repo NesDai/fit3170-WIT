@@ -110,7 +110,7 @@ async function dislikePostDetailed(post_id)
                 // add 1 dislike and remove 1 like
                 updateDislikes(post_id, 1)
                 updateLikes(post_id,-1)
-                });  
+                //});  
                 // UI   
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';
