@@ -93,7 +93,7 @@ function changeLang(lang){
 function reset(){
 
     eraseCookiesGoogle();
-    localStorage.setItem(LANGUAGE_KEY, "en");
+    localStorage.setItem(LANGUAGE_KEY, "English");
     jQuery('#\\:2\\.container').contents().find('#\\:2\\.restore').click();
 
     if (window.location.pathname =="/"){  //reset the captcha
