@@ -208,6 +208,7 @@ function showEndingMessage() {
         " browse the rest of the application!"
     showMessageSenderWithoutHints(endingMessage);
     questionIndex = QUESTION_IDS[branch_id].length;
+    showHints();
     updateProgress();
     scrollToBottom();
 }
@@ -225,7 +226,7 @@ function showMessageSender(message) {
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
-    showHints();
+    // showHints();
 }
 
 /**
@@ -254,7 +255,7 @@ function showShortQuestionMessage(questionString) {
         `<p>${questionString}</p>` +
         "</div>" +
         "</div>";
-    showHints();
+    // showHints();
 }
 
 /**
@@ -342,7 +343,7 @@ function showQuestion(isSubQuestion) {
                         questionObject;
                     console.log(errorLog);
             }
-
+            showHints();
             updateProgress();
             // Scroll the chat box window to the correct position
             scrollToBottom();
@@ -444,6 +445,7 @@ function repromptQuestion() {
       // print out the question again onto chat
       showShortQuestionMessage(question);
     }
+    showHints();
     updateProgress();
     scrollToBottom();
 }
@@ -472,10 +474,11 @@ function showMultipleChoice(questionObject) {
     input.onkeyup = () => {
         let message = parseInt(input.value);
         if (message > 0 && message < (questionObject.restrictions.choices.length + 1)) {
-            // errorText.innerHTML = "";
+            errorText.innerHTML = "";
             // errorText.style.visibility = "hidden";
             submit.onclick = addMessage;
         } else {
+            errorText.innerHTML = "";
             // errorText.style.visibility = "visible";
             // errorText.innerHTML = "Please enter a valid choice index.";
             submit.onclick = null;
