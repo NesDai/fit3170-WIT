@@ -44,8 +44,8 @@ function initFirebaseAuth() {
 function initQuestionIndex() {
     // The question index should be stored in
     // users/ [phone number/email] /questionIndex
-    let phone = currentUser.phoneNumber;
-    let userID = phone === null ? currentUser.email : phone;
+    let userID = getUserID();
+    //let userID = phone === null ? currentUser.email : phone;
 
     // Formulating the response object
 

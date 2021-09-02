@@ -93,8 +93,10 @@ function saveResponse(answer) {
 }
 
 function getUserID() {
-    let phone = currentUser.phoneNumber;
-    return phone === null ? currentUser.email : phone;
+    let userString = localStorage.getItem("USER");
+    console.log(userString);
+    let user = JSON.parse(userString);
+    return user["phone"]; //=== null ? currentUser.email : phone;
 }
 
 function getUserResponsesBranch() {
