@@ -368,7 +368,7 @@ function playVideo() {
     })
 
     updateDescription(playlist[0][0][2]);
-    changeShareDetails();
+    
 
     checkFavoriteStatus(playlist[0][0][0]);
     // Fires when the player is ready
@@ -379,7 +379,7 @@ function playVideo() {
     checkIcon();
 
     // Fires when player starts playing a video
-    player.one('play', function () {
+    player.on('play', function () {
         let playlist = JSON.parse(localStorage.getItem('playlist'));
         let currentVideoUrl = player.currentSrc();
         for (i in playlist[0]) {
@@ -435,7 +435,6 @@ var player = null;
 if (localStorage.getItem('playlist') != null) {
     playlist = JSON.parse(localStorage.getItem('playlist'));
     playVideo();
-    queryVideoOnChatbot();
 } else {
     querySelector();
 }
