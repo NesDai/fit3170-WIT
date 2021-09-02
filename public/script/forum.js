@@ -208,6 +208,10 @@ function printAllPosts(){
             }
         });
     });
+
+    setTimeout(function(){
+        // 2 seconds to load everything
+    }, 2000);
 }
 
 /**
@@ -263,6 +267,9 @@ function printThread(){
             }
         });
     });
+    setTimeout(function(){
+        // 2 seconds to load everything
+    }, 2000);
 }
 
 
@@ -650,6 +657,9 @@ function printUserPosts(){
                         printUserFavouritePosts(posts,button_nums);
                     })
                 });
+                setTimeout(function(){
+                    // 2 seconds to load everything
+                }, 2000);
 }
 
                         // field.innerHTML = field.innerHTML +
