@@ -47,34 +47,6 @@ if (select_language == "Chineses (Simplified)") {
 function checkAccepted(){
     // if it is checked, update user's realtime database data that they accept the terms of use
     if (checkbox.checked){
-        // initialise username and phone
-        let username
-        let phone = current_us.phone
-
-        // check if user's phone number exist in database
-        firebase.database().ref(`users/${phone}`).once("value", snapshot => {
-            if (snapshot.exists()){
-                // get user's username from database and asign it to username
-                username = snapshot.val().username;
-
-                //update user's data in database with termsOfUseAccepted as true
-                let updates = {};
-                updates['/termsOfUseAccepted'] = true;
-
-                firebase.database().ref(`users/${phone}`).update(updates);
-            }
-        })
-
-        //check if termsOfUseAccepted is there before sending them to chatbot page
-        firebase.database().ref(`users/${phone}`).once("value", snapshot => {
-            if (snapshot.exists()){
-                if (snapshot.val().termsOfUseAccepted) {
-                    window.location.href = "./main_page.html"
-                }
-            } else {
-                console.log("Terms of Use Accepted field not updated on user's info in database")
-            }
-        })
 
         window.location.href = "./signup.html";
 
