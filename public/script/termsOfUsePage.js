@@ -23,19 +23,19 @@ let confirmButtonTexts = ["确认", "mengesahkan", "ยืนยัน"];
 let select_language = localStorage.getItem("LANGUAGE");
 
 // change page elements according to selected language
-if (select_language == "zh-CN") {
+if (select_language == "Chineses (Simplified)") {
     titleRef.innerHTML = titles[0];
     checkbox_textRef.innerHTML = checkbox_texts[0];
     tick_warningRef.innerHTML = tick_warnings[0];
     backButtonRef.innerHTML = backButtonTexts[0];
     confirmButtonRef.innerHTML = confirmButtonTexts[0];
-} else if (select_language == "ms") {
+} else if (select_language == "Malay") {
     titleRef.innerHTML = titles[1];
     checkbox_textRef.innerHTML = checkbox_texts[1];
     tick_warningRef.innerHTML = tick_warnings[1];
     backButtonRef.innerHTML = backButtonTexts[1];
     confirmButtonRef.innerHTML = confirmButtonTexts[1];
-} else if (select_language == "th") {
+} else if (select_language == "Thai") {
     titleRef.innerHTML = titles[2];
     checkbox_textRef.innerHTML = checkbox_texts[2];
     tick_warningRef.innerHTML = tick_warnings[2];
@@ -75,6 +75,9 @@ function checkAccepted(){
                 console.log("Terms of Use Accepted field not updated on user's info in database")
             }
         })
+
+        window.location.href = "./signup.html";
+
 
     } else {
         // if the tickbox is not ticked, display error message
@@ -139,7 +142,7 @@ function updatePageContent(selected_language, languageBranch) {
     let content;
 
     // check the selected language and and extract the corresponding translation of the terms of use and update the page
-    if (select_language == "en") {
+    if (select_language == "English") {
         let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[0]);
         TermsOfUseRef.get().then((doc) => {
             if (doc.exists) {
@@ -149,7 +152,7 @@ function updatePageContent(selected_language, languageBranch) {
         }).catch((error) => { // print error in getting the terms of use from firestore
             console.log("Error getting document:", error);
         });
-    } else if (select_language == "zh-CN") {
+    } else if (select_language == "Chinese (Simplified)") {
         let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[1]);
         TermsOfUseRef.get().then((doc) => {
             if (doc.exists) {
@@ -159,7 +162,7 @@ function updatePageContent(selected_language, languageBranch) {
         }).catch((error) => { // print error in getting the terms of use from firestore
             console.log("Error getting document:", error);
         });
-    } else if (select_language == "ms") {
+    } else if (select_language == "Malay") {
         let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[2]);
         TermsOfUseRef.get().then((doc) => {
             if (doc.exists) {
@@ -169,7 +172,7 @@ function updatePageContent(selected_language, languageBranch) {
         }).catch((error) => { // print error in getting the terms of use from firestore
             console.log("Error getting document:", error);
         });
-    } else if (select_language == "th") { //TODO this is defaulted to english until the thai question uploader is made
+    } else if (select_language == "Thai") { //TODO this is defaulted to english until the thai question uploader is made
         let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[0]);
         TermsOfUseRef.get().then((doc) => {
             if (doc.exists) {

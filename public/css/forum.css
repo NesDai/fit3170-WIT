@@ -1,11 +1,13 @@
+
 /* forum */
 html,body {
     font-family: "Arial";
     font-size: 100%;
     }
     body {
-    background-color: #eee;
-    }
+        background-color: #d2d2d2;
+        height: 50px;
+        }
     /* HEADER CSS */
     .material-icons {
     font-size: 36px;
@@ -23,11 +25,12 @@ html,body {
     .mdl-layout__header-row {
     padding: auto;
     margin: 0 auto;
-    } 
+    }
     .mdl-button .material-icons {
     top: -1px;
     margin-right: 5px;
     } 
+
     @media screen and (max-width: 610px) {
     header {
     height: 80px;
@@ -67,20 +70,20 @@ html,body {
     color: white;
     padding: 5px 16px;
     }
-    #like_post_icon, #dislike_post_icon{
+    #favourite_post_icon{
     font-size: 17px;
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     color: white
     }
-    button.like, button.dislike{
+    button.favourite{
     border-radius: 15px;
-    margin: 0 0 0 20px;
+    margin: 0 0 0 10px;
     }
     #interest1_id
     {
-    background-color: #00ac3e; 
+    background-color: #00ac3e;
     position: relative;
-    border-radius: 12px; 
+    border-radius: 12px;
     }
     #interest2_id
     {
@@ -88,23 +91,29 @@ html,body {
     position: relative;
     border-radius: 12px;
     }    
+
     @media all and (min-width:551px) {
+    /* laptop */
     .mobile-br {display: none;}
     .demo-card-wide{
-    width: 110%;
+    width: 764px;
     border-radius: 20px;
     background: #E4E4E4;
+    
     }
     .lang_butt {
-    margin: 2%; 
-    width:30%; 
+    margin: 2%;
+    width:30%;
     background-color: #006DAE;
     }
     #lang_text{
     display: inline;
     }
     }
+
+
     @media all and (max-width: 1000px) {
+    /* phone */
     .mobile-br {display:inline;}
     .demo-card-wide{
     width: 100%;
@@ -113,21 +122,39 @@ html,body {
     }
     .lang_butt {
     margin: 10%; 
-    width:60%; 
+    width:80%; 
     background-color: #006DAE;
     }
     #lang_text{
-    display: none;
+    display: inline;
     }
     #interest1_id
     {
-    left: 10px; 
+    left: 10px;
     }
     #interest2_id
     {
     left:10px;
     }
+
+    .seacrh-container
+    {
+        justify-content: center;  
+        width:95% ;
+        margin-left:8px;
     }
+    .forum-container
+    {
+        justify-content: center;  
+        width:95% ;
+        margin-left:8px;
+    }
+    .container {
+        margin-top: 12px;
+        justify-content: center;
+        }
+    }
+
     #like_post_btn
     {
     color: black;
@@ -140,6 +167,12 @@ html,body {
     border: 2px solid #e53935;
     width: 100px 
     }
+    .favourite
+    {
+    color: black;
+    border: 2px solid blue;
+    width: max-content;
+    }
     /* All below is for the tab navigation */
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
     :root {
@@ -149,16 +182,8 @@ html,body {
     *, *:after, *:before {
     box-sizing: border-box;
     }
-    body {
-    font-family: "Arial";
-    background-color: #d2d2d2;
-    height: 50px;
-    }
-    .container {
-    position: relative;
-    top: 12px;
-    justify-content: center;
-    }
+
+
     .tabs * {
     z-index: 2;
     }
@@ -181,21 +206,42 @@ html,body {
     }
     #h3
     {
-    position:relative; 
+    position:relative;
     left:300px;
     }
+   
     @media all and (min-width:800px) {
     /* laptop */
     h3{
     position: relative;
     left: 330px;
     }
+    
     .container {
     position: relative;
     top: 12px;
-    left: 52px;
+    left: 25px;
     display: flex;
     justify-content: center;
+    }
+    .search-container
+    {
+    position: relative;
+    top: 12px;
+    left: 25px;
+    display: flex;
+    justify-content: center;
+    }
+    .search-container:hover
+    {
+    transform: scale(1.1);
+    transition: 0.25s;
+    }
+    .forum-container
+    {
+        position: relative;
+        display: flex;
+        justify-content: center;   
     }
     .tabs {
     display: flex;
@@ -210,16 +256,22 @@ html,body {
     }
     #tab1
     {
-    position: relative; 
-    bottom: 10px; 
+    position: relative;
+    bottom: 10px;
     left: 40px
     }
     #tab2
     {
-    position: relative; 
-    bottom: 10px; 
+    position: relative;
+    bottom: 10px;
     left: 190px
     }
+    /* #tab3
+    {
+    position: relative; 
+    bottom: 10px; 
+    left: 40px
+    } */
     input[type="radio"]:checked + label {
     color: var(--primary-color);
     position: relative;
@@ -247,6 +299,9 @@ html,body {
     input[id="radio-2"]:checked ~ .glider {
     transform: translateX(220%);
     }
+    /* input[id="radio-3"]:checked ~ .glider {
+    transform: translateX(250%);
+    } */
     #more_btn
     {
     border-radius: 10px;
@@ -261,16 +316,16 @@ html,body {
     position: relative;
     font-size: 20px;
     color:#383838;
-    top: 5px; 
+    top: 5px;
     text-align: left; float: left; left: 10px;
     }
     #interest1_id
     {
-    left: 450px; 
+    left: 10px;
     }
     #interest2_id
     {
-    left:460px;
+    left: 10px;
     }
     }
     @media all and (max-width: 1024px) {
@@ -310,6 +365,9 @@ html,body {
     transform: translateX(15%);
     }
     input[id="radio-2"]:checked ~ .glider {
+    /* transform: translateX(100%);
+    }
+    input[id="radio-3"]:checked ~ .glider { */
     transform: translateX(140%);
     }
     #more_btn
@@ -319,7 +377,7 @@ html,body {
     color: white;
     background-color: #006DAE;
     position: relative;
-    width: 60px;
+    width: 25%;
     left: 10px
     }
     #date_posted{
@@ -327,14 +385,14 @@ html,body {
     left: 10px;
     font-size: 20px;
     color:#33322f;
-    top: 5px; 
+    top: 5px;
     }
     }
     /* To change the like button back and forth */
     .like_button_comment_liked {
     color: white !important ;
-    background-color:#2bbd7e; 
-    } 
+    background-color:#2bbd7e;
+    }
     .like_button_comment_liked:hover
     {
     color: white;
@@ -342,8 +400,8 @@ html,body {
     }
     .dislike_button_comment_clicked {
     color: white !important ;
-    background-color:#e53935; 
-    } 
+    background-color:#e53935;
+    }
     .dislike_button_comment_clicked:hover
     {
     background-color:#e53935;
@@ -420,11 +478,6 @@ html,body {
     }
     #reply_comment_icon{
     font-size: 20px;
-    }
-    #like_comment_icon, #dislike_comment_icon, #like_post_icon, #dislike_post_icon{
-    font-size: 17px;
-    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-    color: white !important;
     }
     #send_reply_icon
     {
@@ -513,23 +566,18 @@ html,body {
     }
     .lang_butt {
     margin: 10%; 
-    width:60%; 
+    width:80%; 
     background-color: #006DAE;
     }
     #lang_text{
-    display: none;
+    display: inline;
     }
+
     @media all and (min-width:551px) {
     /* laptop */
-    .mobile-br {display: none;}
-    .demo-card-wide{
-    width: 110%;
-    border-radius: 20px;
-    background: #E4E4E4;
-    }
     .lang_butt {
-    margin: 2%; 
-    width:30%; 
+    margin: 2%;
+    width:30%;
     background-color: #006DAE;
     }
     #back_btn
@@ -565,12 +613,6 @@ html,body {
     }
     @media all and (max-width: 1000px) {
     /* phone */
-    .mobile-br {display:inline;}
-    .demo-card-wide{
-    width: 100%;
-    border-radius: 20px;
-    background: #E4E4E4;
-    }
     #reply_box
     {
     margin:0 10px;
@@ -601,7 +643,7 @@ html,body {
     #back_btn {
     border-radius: 20px;
     background-color: #00507e;
-    color: white;    
+    color: white;
     position: relative;
     left: 25px;
     top:5px
@@ -613,21 +655,23 @@ html,body {
     font-size: 20px;
     }
     }
-    #like_post_btn
+    /* #favourite_post_btn
     {
     color: black;
-    border: 2px solid #04AA6D;
-    width: 100px
-    }
-    #dislike_post_btn
-    {
-    color: black;
-    border: 2px solid #e53935;
-    width: 100px
-    }
+    border: 2px solid blue;
+    width: 230px;
+    } */
+
     .mdl-checkbox {
-    display: inline;     
+    display: inline;
     width: 200px;
+    }
+    #delete_post_btn
+    {
+    display: inline;
+    position: relative;
+    left: 88%;
+    bottom: 70px
     }
     #delete_post_btn
     {
@@ -641,3 +685,191 @@ html,body {
     font-size:40px;
     color: black;
     }
+
+    /* all likes related */
+    .like
+    {
+    color: black;
+    border: 2px solid #2bbd7e;
+    width: 100px;
+    border-radius: 15px;
+    margin: 0 0 0 10px;
+    }
+    .dislike
+    {
+    color: black;
+    border: 2px solid #e53935;
+    width: 100px;
+    border-radius: 15px;
+    margin: 0 0 0 10px;
+    }
+        
+    .like:hover
+    {
+    color: white;
+    background-color:#2bbd7e;
+    }
+    .dislike:hover
+    {
+    background-color:#e53935;
+    color: white;
+    }
+    #like_post_icon, #dislike_post_icon{
+    height: 22px;
+    margin-bottom: 5px;
+        
+    }
+
+   /* favourite */
+   .favourite
+   {
+   color: black;
+   border: 2px solid blue;
+   width: max-content;
+   border-radius: 15px;
+   margin: 0 0 0 10px;
+   }
+
+   #favourite_post_icon{
+    height: 22px;
+    margin-bottom: 5px;
+    }
+
+    .favourite:hover
+    {
+    background-color:blue;
+    color: white;
+    }
+
+
+    @media all and (max-width: 1024px) {
+        /* mobile */
+        .search {
+            position: relative;
+            left:30px;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            height: 65px;
+            background-color: #fff;
+            box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+            padding: 0.75rem;
+            border-radius: 15px;
+            width: 325px;
+        }
+
+        #searchButton{
+            background-color:#006DAE;
+            padding-right: 50px;
+            margin-top: 5px;
+            border-radius: 15px;
+        }
+
+        .search:hover #icon-background{
+            margin-right: 15px;
+            transform: scale(1.1);
+            transition: 0.25s;
+        }
+    }
+
+
+
+    @media all and (min-width:800px) {
+    .search {
+        height: 65px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin-bottom: auto;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+        right:29px;
+        padding: 0.75rem;
+        border-radius: 15px;
+        width: 600px;
+    }
+
+    .search:hover #icon-background{
+        margin-right: 15px;
+        transform: scale(1.1);
+        transition: 0.25s;
+    }
+
+    #searchButton{
+        background-color:#006DAE;
+        padding-right: 50px;
+        margin-top: 3px;
+        border-radius: 15px;
+    }
+}
+
+@media only screen and (max-device-width: 600px){
+    .search{
+        height: 70px;
+    }
+
+    #searchButton{
+        background-color:#006DAE;
+        padding-right: 50px;
+        margin-top: 5px;
+        border-radius: 15px;
+    }
+
+    .search:hover #icon-background{
+        margin-right: 15px;
+        transform: scale(1.1);
+        transition: 0.25s;
+    }
+}
+    .search-input {
+        padding-left: 2px;
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 200%;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear
+    }
+    
+    .search .search-input {
+        width: 200%;
+        caret-color: #006DAE;
+        font-size: 19px;
+        font-weight: 300;
+        color: black;
+        transition: width 0.4s linear
+    }
+    
+    a:link {
+        text-decoration: none
+    }
+
+#search-icon{
+    color:#006DAE;
+    margin-bottom: 250px;
+}
+
+
+.search:hover #icon-background{
+    margin-right: 15px;
+    transform: scale(1.1);
+    transition: 0.25s;
+}
+
+
+.nav_icon, #translate_icon
+{
+    height: 50px;
+    position: relative;
+    right: 10px;
+    width: 49px; 
+}
+
+#recommender_icon
+{
+   width: 49px; 
+}

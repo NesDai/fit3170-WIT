@@ -57,6 +57,25 @@
         h3{
             left: auto;
         }
+<<<<<<<< HEAD:public/termsOfUsePage.html
+========
+    </style>
+
+    <!-- to remove top header for google translate -->
+    <style>
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-logo-link {
+            display:none !important;
+        }
+        .trans-section {
+            margin: 100px;
+        }
+>>>>>>>> master:public/termsAndConditionsPage.html
     </style>
 </head>
 <body>
@@ -69,7 +88,11 @@
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop"
                  style="padding:0px 16px 0px 16px; width:auto;">
+<<<<<<<< HEAD:public/termsOfUsePage.html
                 <h3 id="title">Terms of Use</h3>
+========
+                <h3>Terms and Conditions</h3>
+>>>>>>>> master:public/termsAndConditionsPage.html
                 <div class="mdl-layout-spacer"></div>
             </div>
         </div>
@@ -77,7 +100,7 @@
     <main class="mdl-layout__content">
         <div class="page-content">
             <div class = "chatbot-card mdl-card mdl-shadow--4dp">
-                <div class = "mdl-card__supporting-text textArea" id="content-box"></div>
+                <div class = "mdl-card__supporting-text textArea notranslate" id="content-box"></div>
                 <br class="desktop-br"> <br class="desktop-br">
                 <div class="checkbox-div">
                     <input type="checkbox" id="checkbox">
@@ -88,7 +111,7 @@
                     <br class="desktop-br">
                 </div>
                 <div class="button-div">
-                    <button id="backButton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick='window.location.href = "./main_page.html"'>
+                    <button id="backButton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick='window.location.href = "./login.html"'>
                         Back
                     </button>
                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="confirmButton">
@@ -140,5 +163,10 @@
 <script src ="script/termsOfUse_ms_Uploader.js"></script>
 <script src ="script/termsOfUse_en_Uploader.js"></script>
 <script src ="script/termsOfUsePage.js"></script>
+========
+<script src ="script/termsAndConditions_en_short_Uploader.js"></script>
+<script src ="script/termsAndConditionsPage.js"></script>
+<script src="script/translation.js"></script>
+>>>>>>>> master:public/termsAndConditionsPage.html
 </body>
 </html>
