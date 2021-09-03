@@ -70,7 +70,7 @@ function displayFav(){
           output += `<div class="favCardThumbnail" onclick="watch_vid(${i})"><img src=`+ favList[i]['videoThumbnail'] +` style="width:auto;height:100%; position: relative; background-color: #fff;"></div>`
           output += `<div class="favCardTopBtn">`
           output += `<button class="favDeleteBtn" onclick="fav_delete(${i})">
-                      <img src="./css/images/trash_icon.jpeg" style="background:transparent; height: 80%;"/>
+                      <img src="./css/images/delete_icon.png" style="background:transparent; height: 80%;"/>
                     </button></div>`
           output += `<div class="favCardInterest" onclick="watch_vid(${i})">`+favList[i]['videoPreference']+`</div>`
           output += `<div class="favCardTitle" onclick="watch_vid(${i})">`+favList[i]['videoTitle']+`</div>`
