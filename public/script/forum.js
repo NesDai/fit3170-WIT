@@ -166,6 +166,9 @@ function printAllPosts(){
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
 
+    let printPostCount = 10; // start printing 10 posts first
+    let printStartIndex;
+
     let data_list = [];
     let button_nums = []
     let posts = [];
@@ -202,16 +205,12 @@ function printAllPosts(){
         
 
         }).then(()=>{
-
-            for(let i=posts.length-1; i>=0 ; i--){
-                printPost(posts[i], button_nums[i], i )
-            }
+            printStartIndex = posts.length-1;
+            printPostQuan(printStartIndex, printPostCount, posts, button_nums);
         });
     });
 
-    setTimeout(function(){
-        // 2 seconds to load everything
-    }, 2000);
+
 }
 
 /**
@@ -224,6 +223,9 @@ function printThread(){
     document.getElementById("create_post").innerHTML = "";
     let field = document.getElementById("postField");
     field.innerHTML = ""; // emtpy the field of any previous posts
+
+    let printPostCount = 10; // start printing 10 posts first
+    let printStartIndex;
 
     let data_list = [];
     let button_nums = []
@@ -261,16 +263,61 @@ function printThread(){
         
 
         }).then(()=>{
+            printStartIndex = posts.length - 1;
+            printPostQuan(printStartIndex, printPostCount, posts, button_nums);
 
-            for(let i=posts.length-1; i>=0 ; i--){
-                printPost(posts[i], button_nums[i], i )
-            }
+            
         });
     });
-    setTimeout(function(){
-        // 2 seconds to load everything
-    }, 2000);
+
+   
+
 }
+
+/**
+ * Function used to print a specific amount of posts in the posts field. Used to prevent delays or browser crashes when printing many posts.
+ * @param {1} startIndex  the starting index from which to begin printing posts from posts list
+ * @param {2} numberOfPosts the number of posts to be printed
+ * @param {3} PostsList the list containing all the post json data
+ * @param {4} buttonNums list of the like and dislike button numbers for each post
+ */
+function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
+
+
+        if(startIndex-numberOfPosts > 0){
+            for(let i=startIndex; i>startIndex-numberOfPosts ; i--){ // print specific number of posts
+                printPost(postsList[i], buttonNums[i], i);
+            }
+        }
+        else{
+            for(let i=startIndex; i>=0 ; i--){// print ot 0 otherwise
+                printPost(postsList[i], buttonNums[i], i);
+            }
+        }
+
+        let field = document.getElementById("postField");
+
+        // add a print more button
+        if(startIndex-numberOfPosts>0){ // only if more posts to load
+        field.innerHTML += `<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
+         >Load More</button>`; // emtpy the field of any previous posts
+
+         let moreBut = document.getElementById("moreBut");
+         moreBut.onclick = function(){ 
+            moreBut.remove();
+            printPostQuan(startIndex-numberOfPosts,numberOfPosts,postsList,buttonNums);
+     
+            };
+        }
+
+    
+}
+
+// function loadMorePosts(){
+//     let field = document.getElementById("postField");
+//     console.log('')
+//     return;
+// }
 
 
 function print_create_post()
@@ -686,9 +733,7 @@ function printUserPosts(){
                         printUserFavouritePosts(posts,button_nums.length);
                     })
                 });
-                setTimeout(function(){
-                    // 2 seconds to load everything
-                }, 2000);
+   
 }
        
 
