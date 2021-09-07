@@ -163,8 +163,7 @@ function findAllPosts() {
 function printAllPosts(){
     document.getElementById("searchBox").value = ""; // clear search box
     print_create_post();
-    let field = document.getElementById("postField");
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    $('#postField').text(``); // emtpy the field of any previous posts
 
     let printPostCount = 10; // start printing 10 posts first
     let printStartIndex;
@@ -219,10 +218,12 @@ function printAllPosts(){
  * @returns null
  */
 function printThread(){
-    document.getElementById("searchBox").value = ""; // clear search box
-    document.getElementById("create_post").innerHTML = "";
-    let field = document.getElementById("postField");
-    field.innerHTML = ""; // emtpy the field of any previous posts
+
+    $('#searchBox').text(``); // clear search box
+    $('#create_post').text(``);  // remove create post ui
+    $('#postField').text(``); // clear post field from posts
+
+
 
     let printPostCount = 10; // start printing 10 posts first
     let printStartIndex;
@@ -296,8 +297,6 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
             }
         }
 
-        let field = document.getElementById("postField");
-
         // add a print more button
         if(startIndex>0){ // only if more posts to load
             $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
@@ -319,8 +318,8 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
 
 function print_create_post()
 {
-    document.getElementById("create_post").innerHTML = 
-    `<div id="create_post">
+    $('#create_post').html(
+        `<div id="create_post">
     <br>
     <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="create_post">
     <div class="mdl-card__title">
@@ -499,7 +498,9 @@ function print_create_post()
        POST
        </button>
     </div>
- </div>`;
+ </div>`
+    );
+    
 }
 
 
@@ -536,7 +537,7 @@ function printPost(post, button_num, i )
          </button>`
     }
 
-    let field = document.getElementById("postField");
+
     let atchar = "@";
     if(post.username == undefined)
         post.username = "";
@@ -683,8 +684,7 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
                         }
                         }).then(() => {
                                 for(let i=post_arr.length-1; i>=0 ; i--){
-                                    console.log(button_nums[i]);
-                                    console.log(post_arr[i].title)
+
                                     printPost(post_arr[i], button_nums[i], buttons_index)
                                     buttons_index++;
                                 }
@@ -694,11 +694,10 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
 
 function printUserPosts(){
 
-    document.getElementById("searchBox").value = ""; // clear search box
-    document.getElementById("create_post").innerHTML = "";
- 
-    let field = document.getElementById("postField");
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    $('#searchBox').text(''); //clear search box
+    $('#create_post').text(''); // clear create post ui area
+
+    $('#postField').text(''); // emtpy the field of any previous posts
 
     let data_list = [];
     let button_nums = [];
@@ -770,14 +769,13 @@ function printUserPosts(){
         return;
     }
 
-    let field = document.getElementById("postField");
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printAllPosts();
         return // exit function
     }
 
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    $('#postField').html(''); // emtpy the field of any previous posts
 
 
     firebase.database().ref('likesDislikes')
@@ -870,8 +868,7 @@ function printUserPosts(){
                         printPost(posts[i], button_nums[i], i )
                     }
                     if(i == posts.length-1){
-                        let field = document.getElementById("postField");
-                        field.innerHTML += `<h2>No results found<h2>`
+                        $('#postField').append(`<h2>No results found<h2>`);
                     }
                 });
     })
@@ -887,7 +884,7 @@ function searchYourPosts(param){
     let data_list = [];
     let button_nums = []
     let posts = [];
-    let field = document.getElementById("postField");
+    let field = document.getElementById("#postField");
     let toPrint = [];
 
 
@@ -896,7 +893,7 @@ function searchYourPosts(param){
         return // exit function
     }
 
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    $('#postField').html(""); // emtpy the field of any previous posts
 
 
     firebase.database().ref('likesDislikes')
@@ -1015,8 +1012,7 @@ function searchYourPosts(param){
                         printPost(posts[i], button_nums[i], i )
                     }
                     if(i == posts.length-1){
-                        let field = document.getElementById("postField");
-                        field.innerHTML += `<h2>No results found<h2>`
+                        $('#postField').append(`<h2>No results found<h2>`); // no results found
                     }
                 });
             })
@@ -1031,7 +1027,6 @@ function searchYourPosts(param){
     let data_list = [];
     let button_nums = []
     let posts = [];
-    let field = document.getElementById("postField");
     let toPrint = [];
 
 
@@ -1040,7 +1035,7 @@ function searchYourPosts(param){
         return // exit function
     }
 
-    field.innerHTML = ""; // emtpy the field of any previous posts
+    $('#postField').html(``); // emtpy the field of any previous posts
 
 
     firebase.database().ref('likesDislikes')
@@ -1148,8 +1143,7 @@ function searchYourPosts(param){
                         printPost(posts[i], button_nums[i], i )
                     }
                     if(i == posts.length-1){
-                        let field = document.getElementById("postField");
-                        field.innerHTML += `<h2>No results found<h2>`
+                        $('#postField').append(`<h2>No results found<h2>`);
                     }
                 });
             })
@@ -1182,7 +1176,8 @@ async function likePost(post_id, i) {
         current_value=like_btn_addr.value
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
-        document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+        $('#button_div'+i).find('.number_of_likes').html(new_value);
+
 
 
 
@@ -1209,13 +1204,14 @@ async function likePost(post_id, i) {
                 current_value=like_btn_addr.value
                 new_value=parseInt(current_value)+1
                 like_btn_addr.value=new_value
-                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                $('#button_div'+i).find('.number_of_likes').html(new_value);
                 //decrease dislike count
                 current_value=dislike_btn_addr.value
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
                 console.log(dislike_btn_addr.value)
-                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                $('#button_div'+i).find('.number_of_dislikes').html(new_value);
+
 
             } else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
@@ -1227,7 +1223,8 @@ async function likePost(post_id, i) {
                 current_value=like_btn_addr.value
                 new_value=parseInt(current_value)-1
                 like_btn_addr.value=new_value
-                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+                $('#button_div'+i).find('.number_of_likes').html(new_value);
+
             }
         })
     }
@@ -1255,7 +1252,8 @@ async function dislikePost(post_id, i)
         current_value=dislike_btn_addr.value
         new_value=parseInt(current_value)+1
         dislike_btn_addr.value=new_value
-        document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+
+        $('#button_div'+i).find('.number_of_dislikes').html(new_value);
     }
     else{
         // if there is action
@@ -1278,12 +1276,15 @@ async function dislikePost(post_id, i)
                 current_value=dislike_btn_addr.value
                 new_value=parseInt(current_value)+1
                 dislike_btn_addr.value=new_value
-                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                $('#button_div'+i).find('.number_of_dislikes').html(new_value);
+
                 //decrease like count
                 current_value=like_btn_addr.value
                 new_value=parseInt(current_value)-1
                 like_btn_addr.value=new_value
-                document.getElementById("button_div"+i).getElementsByClassName("number_of_likes")[0].innerHTML=new_value
+
+                $('#button_div'+i).find('.number_of_likes').html(new_value);
+
 
 
             }
@@ -1299,7 +1300,8 @@ async function dislikePost(post_id, i)
                 current_value=dislike_btn_addr.value
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
-                document.getElementById("button_div"+i).getElementsByClassName("number_of_dislikes")[0].innerHTML=new_value
+                $('#button_div'+i).find('.number_of_dislikes').html(new_value);
+
 
             }
         }
@@ -1311,38 +1313,4 @@ function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
 } 
 
-// /*
-// A function that checks if the user has favourited the selected post and
-// will output the correct text on button
-// */
-// function checkUserFavouritedPost(post){
-//     let post_id = post.id;
-//     let user_exist = false;
-//     let button = document.getElementById("favourite_post_btn");
 
-//     firebase.database().ref(`posts/${post_id}`).once("value", (snapshot) => {
-//       let hasFavouriteData = snapshot.hasChild("users_favourite");
-//       if (hasFavouriteData){
-//         let users_arr = snapshot.val()["users_favourite"];
-
-//         // looping through users list in database
-//         for(let i = 0; i < users_arr.length; i++) {
-//           if (current_user["phone"] == users_arr[i]){
-//             user_exist = true;
-//           }
-//         }
-
-//         if (user_exist){
-//           button.innerHTML = `
-//           <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
-//           <span id=\"favourite_btn\"> Remove</span>
-//           `
-//         } else {
-//           button.innerHTML = `
-//           <i class=\"material-icons notranslate\" id=\"favourite_post_icon\">favorite</i>
-//           <span id=\"favourite_btn\"> Add</span>
-//           `
-//         }
-//       }
-//     })
-//   }
