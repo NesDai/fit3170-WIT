@@ -574,8 +574,16 @@ function printPost(post, button_num, i )
                                   `
                                   <br>
                      <div style='display: inline-block'>
-                        <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
-                        <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                     `
+                     +
+                     `
+                     ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>` :
+                      `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
+                      <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>`}
+                     `
+                     +
+                     `
+                        
                      </div>
                      <br><br>
                   </form>
