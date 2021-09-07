@@ -302,8 +302,6 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         if(startIndex>0){ // only if more posts to load
             $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
             >Load More</button>`);
-        // field.innerHTML += `<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
-        //  >Load More</button>`; // emtpy the field of any previous posts
 
          let moreBut = document.getElementById("moreBut");
          moreBut.onclick = function(){ 
@@ -607,63 +605,6 @@ function printPost(post, button_num, i )
      </div>`
 
     );
-    // field.innerHTML +=
-    // `   <div style="padding-top: 20px;">
-    //         <span class="post_card">
-    //            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-    //               <!-- POST HEADER -->
-    //               <br>
-    //               <div class="f">
-    //                  <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>${post.username}</h2>
-    //               </div>
-    //               <br>
-    //               <div class="post_header" style="margin:0 10px; background-color: white">
-    //                  <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
-    //               </div>
-    //               <!-- POST FORM -->
-    //               <form class="post_content" style="margin:0 10px; background-color: white">
-    //                  <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
-    //                  <br>
-    //                  `
-    //                               +
-    //                               `
-    //                               ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
-    //                               `
-    //                               +
-    //                               `
-    //                               <br>
-    //                  <div style='display: inline-block'>
-    //                  `
-    //                  +
-    //                  `
-    //                  ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>` :
-    //                   `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
-    //                   <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>`}
-    //                  `
-    //                  +
-    //                  `
-                        
-    //                  </div>
-    //                  <br><br>
-    //               </form>
-    //               <div class="f">
-    //               <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-    //               </div>
-    //               <br>
-    //                  <!--  LIKE DISLIKE FOR POST -->
-    //                  <br>
-    //                 <div id="button_div${i}">
-    //                  ${button}
-    //                 <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-    //                 <i class="material-icons notranslate" id="more_icon">read_more</i><span> More</span>
-    //                 </button>
-    //                 </div>
-    //                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    //                 <script type="text/javascript">
-    //                 </script>
-    //               <br>
-    //         </span>
-    //  </div>`;
 
 }
 
