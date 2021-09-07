@@ -284,7 +284,7 @@ function printThread(){
 function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
 
 
-        if(startIndex-numberOfPosts > 0){
+        if(startIndex-numberOfPosts >= 0){ // if have at least 10 posts to print
             for(let i=startIndex; i>startIndex-numberOfPosts ; i--){ // print specific number of posts
                 printPost(postsList[i], buttonNums[i], i);
             }
@@ -298,7 +298,7 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         let field = document.getElementById("postField");
 
         // add a print more button
-        if(startIndex-numberOfPosts>0){ // only if more posts to load
+        if(startIndex>0){ // only if more posts to load
         field.innerHTML += `<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
          >Load More</button>`; // emtpy the field of any previous posts
 
