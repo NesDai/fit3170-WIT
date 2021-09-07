@@ -161,6 +161,8 @@ function findAllPosts() {
 
 
 function printAllPosts(){
+    
+    $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
     print_create_post();
     $('#postField').text(``); // emtpy the field of any previous posts
@@ -206,6 +208,7 @@ function printAllPosts(){
         }).then(()=>{
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+            // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
         });
     });
 
@@ -219,10 +222,10 @@ function printAllPosts(){
  */
 function printThread(){
 
-    $('#searchBox').text(``); // clear search box
+    document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
     $('#postField').text(``); // clear post field from posts
-
+    $('#resNum').html(``);
 
 
     let printPostCount = 10; // start printing 10 posts first
@@ -268,6 +271,7 @@ function printThread(){
             printStartIndex = posts.length - 1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
 
+
             
         });
     });
@@ -285,7 +289,6 @@ function printThread(){
  */
 function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
 
-
         if(startIndex-numberOfPosts >= 0){ // if have at least 10 posts to print
             for(let i=startIndex; i>startIndex-numberOfPosts ; i--){ // print specific number of posts
                 printPost(postsList[i], buttonNums[i], i);
@@ -298,7 +301,8 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         }
 
         // add a print more button
-        if(startIndex>0){ // only if more posts to load
+
+        if(startIndex-numberOfPosts>=0){ // only if more posts to load
             $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
             >Load More</button>`);
 
@@ -694,7 +698,9 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
 
 function printUserPosts(){
 
-    $('#searchBox').text(''); //clear search box
+    $('#resNum').html(``);   
+
+    document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(''); // clear create post ui area
 
     $('#postField').text(''); // emtpy the field of any previous posts
@@ -740,6 +746,8 @@ function printUserPosts(){
                         printUserFavouritePosts(posts,button_nums.length);
                     })
                 });
+
+                     
    
 }
        
@@ -751,6 +759,9 @@ function printUserPosts(){
  * @returns Nothing. The function automatically updates the screen with relevant posts.
  */
  function searchAllPosts(param){
+
+    let printPostCount = 10; // start printing 10 posts first
+    let printStartIndex;
 
     let data_list = [];
     let toPrint =[];
@@ -806,8 +817,10 @@ function printUserPosts(){
                         }
                     }
                     button_nums.push(button_num);
-                    posts.push(data.val());
-                    toPrint.push(data.val().id);  // get the post id
+                    if(data.val().username != undefined){ // only if created by a user
+                        posts.push(data.val());
+                        toPrint.push(data.val().id);  // get the post id
+                    }
                 })
             })
         //find interests in posts
@@ -830,7 +843,7 @@ function printUserPosts(){
                     }
                     button_nums.push(button_num);
 
-                    if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                    if(!toPrint.includes(data.val().id) && data.val().username != undefined){ // push only if its not yet being printed
                         posts.push(data.val());
                         toPrint.push(data.val().id);
                     }
@@ -857,19 +870,19 @@ function printUserPosts(){
                         }
                         button_nums.push(button_num);
 
-                        if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                        if(!toPrint.includes(data.val().id) && data.val().username != undefined){ // push only if its not yet being printed
                             posts.push(data.val());
                             toPrint.push(data.val().id);
                         }
                     })
                 }).then(()=>{
-                    let i = 0;
-                    for(i=posts.length-1; i>=0 ; i--){
-                        printPost(posts[i], button_nums[i], i )
-                    }
-                    if(i == posts.length-1){
-                        $('#postField').append(`<h2>No results found<h2>`);
-                    }
+                    
+                    printStartIndex = posts.length-1;
+                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+                    // if(printStartIndex < 0){
+                    //     $('#postField').html(`<h2>No results found<h2>`);
+                    // }
                 });
     })
 }
@@ -1008,12 +1021,19 @@ function searchYourPosts(param){
                     })
                 }).then(()=>{
                     let i =0;
+
+                    
+
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
                     }
-                    if(i == posts.length-1){
-                        $('#postField').append(`<h2>No results found<h2>`); // no results found
-                    }
+
+                    $('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
+
+                    // if(i == posts.length-1){
+                    //     $('#postField').append(`<h2>No results found<h2>`); // no results found
+                    // }
+
                 });
             })
 }
@@ -1028,6 +1048,9 @@ function searchYourPosts(param){
     let button_nums = []
     let posts = [];
     let toPrint = [];
+
+    let printStartIndex;
+    let printPostCount = 10;
 
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
@@ -1138,13 +1161,13 @@ function searchYourPosts(param){
                         }
                     })
                 }).then(()=>{
-                    let i =0;
-                    for(i=posts.length-1; i>=0 ; i--){
-                        printPost(posts[i], button_nums[i], i )
-                    }
-                    if(i == posts.length-1){
-                        $('#postField').append(`<h2>No results found<h2>`);
-                    }
+                    printStartIndex = posts.length-1;
+                    
+                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+                    // if(printStartIndex < 0){
+                    //     $('#postField').html(`<h2>No results found<h2>`);
+                    // }
                 });
             })
 }
