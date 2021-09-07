@@ -239,6 +239,16 @@ transition: color 0.15s ease-in;
 		width: 30%;
 		background-color: #006DAE;
 	}
+	#moreBut{
+		margin: 2%;
+		width: 30%;
+		background-color: #006DAE;			
+		
+		margin-top: 70px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+	}
     #back_btn {
 		display: none
 	}
@@ -418,6 +428,17 @@ transition: color 0.15s ease-in;
 		width: 80%;
 		background-color: #006DAE;
 	}
+	#moreBut{
+		width: 50%;
+		background-color: #006DAE;
+		
+
+		margin-top: 70px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+	}
+	
 	.seacrh-container {
 		justify-content: center;
 		width: 95%;
