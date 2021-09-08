@@ -57,6 +57,9 @@ let satisfyLikertQues = [16]; //[0] Not Applicable [1] Very Dissatisfied [2] Dis
 let confidentLikertQues = [19,20,22]; //[0] Not Applicable [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident
 let interestedLikertQues = [25] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
 
+//translation
+changeLang(select_language);
+
 /**
  * onclick function for option buttons.
  * This functions displays and records the response of the MCQ answer option clicked from user.
