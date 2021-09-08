@@ -143,7 +143,7 @@ const HINTS_PART2 = [
     // The above question is a placeholder to allow 1-indexing
 
     "Select an Option",
-    "Type in a Resonse",
+    "Type in a Response",
     "Select an Option",
     "Select an Option",
     "Select an Option",
@@ -315,7 +315,7 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
+    "Enter a Number",
     "Enter a Number",
     // The question above this line is question 4.2
 

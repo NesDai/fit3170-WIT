@@ -19,10 +19,10 @@ const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
-    "pilih pilihan",
-    "pilih pilihan",
-    "pilih pilihan"
+    "memillih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_1_13 = [
@@ -39,10 +39,10 @@ const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_1_14 = [
@@ -59,10 +59,10 @@ const SUB_QUESTIONS_HINTS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const PART1 = [
@@ -101,12 +101,12 @@ const HINTS_PART1 = [
     // The above question is a placeholder to allow 1-indexing
 
     "masukkan nombor",
-    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
-    "pilih pilihan",
-    "pilih pilihan",
-    "pilih pilihan",
-    "pilih pilihan",
-    "pilih pilihan",
+    "memilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
     "masukkan nombor",
     "masukkan nombor",
 
@@ -114,14 +114,14 @@ const HINTS_PART1 = [
 
 
     "masukkan nombor",
-    "pilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
-    "pilih pilihan",
+    "memilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "memilih pilihan",
     // The question above this line is a long question (1.14)
 
-    "pilih pilihan",
+    "memilih pilihan",
     // The question above this line is a long question (1.14)
 
-    "pilih pilihan"
+    "memilih pilihan"
     // The question above this line is a long question (1.14)
 ];
 
@@ -142,13 +142,13 @@ const HINTS_PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "Menaipkan jawapan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_3_2 = [
@@ -183,29 +183,29 @@ const SUB_QUESTIONS_HINTS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
     // The question above this line is question 3.2g
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
     // The question above this line is question 3.2p
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
 ];
 
 const PART3 = [
@@ -223,7 +223,7 @@ const HINTS_PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
+    "memilih pilihan",
     // The question above this line is question 3.1
 
     ""
@@ -244,10 +244,10 @@ const SUB_QUESTIONS_4_3 = [
 const SUB_QUESTIONS_HINTS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_4_5 = [
@@ -271,19 +271,19 @@ const SUB_QUESTIONS_4_5 = [
 const SUB_QUESTIONS_HINTS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const PART4 = [
@@ -312,15 +312,15 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "pilih pilihan",
+    "masukkan nombor",
     "masukkan nombor",
     // The question above this line is question 4.2
 
-    "pilih pilihan",
+    "memilih pilihan",
     // The question above this line is a long question (4.3)
 
     "",
-    "pilih pilihan"
+    "memilih pilihan"
 ]
 
 const PART5 = [

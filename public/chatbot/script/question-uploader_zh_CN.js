@@ -39,10 +39,10 @@ const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项"
 ];
 
 const SUB_QUESTIONS_1_14 = [
@@ -59,10 +59,10 @@ const SUB_QUESTIONS_HINTS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项"
 ];
 
 const PART1 = [
@@ -142,13 +142,13 @@ const HINTS_PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "选择一个选项",
+    "请输入答案",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项"
 ];
 
 const SUB_QUESTIONS_3_2 = [
@@ -183,29 +183,29 @@ const SUB_QUESTIONS_HINTS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
     // The question above this line is question 3.2g
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
     // The question above this line is question 3.2p
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
 ];
 
 const PART3 = [
@@ -223,7 +223,7 @@ const HINTS_PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
+    "选择一个选项",
     // The question above this line is question 3.1
 
     ""
@@ -244,10 +244,10 @@ const SUB_QUESTIONS_4_3 = [
 const SUB_QUESTIONS_HINTS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项"
 ];
 
 const SUB_QUESTIONS_4_5 = [
@@ -271,19 +271,19 @@ const SUB_QUESTIONS_4_5 = [
 const SUB_QUESTIONS_HINTS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项",
+    "选择一个选项"
 ];
 
 const PART4 = [
@@ -310,7 +310,7 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "选择一个选项",
+    "请输入数字",
     "请输入数字",
     // The question above this line is question 4.2
 

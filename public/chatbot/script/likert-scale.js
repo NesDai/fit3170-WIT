@@ -16,7 +16,7 @@ hash[EN_INDEX] =
         ["Strongly <br> Disagree", "Disagree", "Neutral", "Agree", "Strongly<br> Agree"],
 
         // Satisfy
-        ["Not <br> Applicable", "Very <br> Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very<br> Satisfied"],
+        ["Not <br> Applicable", "Very <br>Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very<br> Satisfied"],
 
         // Confident
         ["Not <br> Applicable", "Not Confident <br> At All", "Somewhat <br> Not Confident", "Moderately <br>Confident" , "Somewhat <br>Confident", "Extremely <br>Confident"],
@@ -38,7 +38,7 @@ hash[ZH_CN_INDEX] =
         ["不适用 (N/A)", "极度不自信", "有点不自信", "适度自信" , "有点自信", "极度自信"],
 
         // Interested
-        ["非常不感兴趣", "没兴趣", "中立", "感兴趣", "非常感兴趣"]
+        ["非常<br>不感兴趣", "没兴趣", "中立", "感兴趣", "非常感兴趣"]
 
     ];
 
@@ -73,6 +73,45 @@ hash[TH_INDEX] =
         ["ไม่มีความสนใจเป็นอย่างมาก", "ไม่สนใจ", "เฉยๆ", "สนใจ", "สนใจอย่างมาก"]
 
     ];
+
+let fontSize = "";
+
+/**
+ * General function to make likert scales
+ * @language the language index
+ */
+
+function makeLikertScale(language, type) {
+    switch (language) {
+        case EN_INDEX:
+            fontSize = "calc(50% + 0.08vw)"
+            break;
+        case ZH_CN_INDEX:
+            fontSize = "calc(60% + 0.08vw)"
+            break;
+        case MS_INDEX:
+            fontSize = "calc(50% + 0.08vw)"
+            break;
+        case TH_INDEX:
+            fontSize = "calc(65% + 0.08vw)"
+            break;
+    }
+
+    switch (type){
+        case "agree":
+            makeAgreeLikertScale(language);
+
+        case "satisfy":
+            makeSatisfyLikertScale(language);
+
+        case "confident":
+            makeConfidentLikertScale(language);
+
+        case "interested":
+            makeInterestedLikertScale(language);
+    }
+}
+
 /**
  * Generates agree likert scale buttons to the div likert_scale in chatbot.html
  */
@@ -81,31 +120,31 @@ function makeAgreeLikertScale(language) {
         `<button 
          id = 1
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][0][0]+` </span>
+         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][0][0]+` </span>
          </button>`+
 
         `<button 
          id = 2
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br> `+hash[language][0][1]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br> `+hash[language][0][1]+` </span>
          </button>`+
 
         `<button 
          id = 3
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> `+hash[language][0][2]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> `+hash[language][0][2]+` </span>
          </button>` +
 
         `<button 
          id = 4
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>`+hash[language][0][3]+` </span>
+         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>`+hash[language][0][3]+` </span>
          </button>` +
 
         `<button 
          id = 5
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 8.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> `+hash[language][0][4]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> `+hash[language][0][4]+` </span>
          </button>`;
 
     componentHandler.upgradeDom();
@@ -115,42 +154,43 @@ function makeAgreeLikertScale(language) {
  * Generates satisfy likert scale buttons to the div likert_scale in chatbot.html
  */
 function makeSatisfyLikertScale(language) {
+
     document.getElementById('likert_scale').innerHTML =
 
         `<button 
          id = 0
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px; margin-left: 0; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(0)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>0<br> <br> `+hash[language][1][0]+` </span>
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect notranslate"
+         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px; margin-left: 0; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(0)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>0<br> <br> `+hash[language][1][0]+` </span>
          </button>`+
 
         `<button 
          id = 1
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px; margin-left: 5px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][1][1]+` </span>
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect notranslate"
+         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px; margin-left: 5px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][1][1]+` </span>
          </button>`+
 
         `<button 
          id = 2
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br> `+hash[language][1][2]+` </span>
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect notranslate"
+         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br> `+hash[language][1][2]+` </span>
          </button>`+
 
         `<button 
          id = 3
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> `+hash[language][1][3]+` </span>
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect notranslate"
+         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> `+hash[language][1][3]+` </span>
          </button>` +
 
         `<button 
          id = 4
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>`+hash[language][1][4]+` </span>
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect notranslate"
+         style="margin-bottom: 1em;display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>`+hash[language][1][4]+` </span>
          </button>` +
 
         `<button 
          id = 5
-         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: 8px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> `+hash[language][1][5]+` </span>
+         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect notranslate"
+         style="margin-bottom: 1em; display: inline-block;width: 14%; border-radius: 12px;margin-left: 5px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> `+hash[language][1][5]+` </span>
          </button>`;
 
     componentHandler.upgradeDom();
@@ -165,37 +205,37 @@ function makeConfidentLikertScale(language) {
         `<button 
          id = 0
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 0; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(0)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>0<br> <br> `+hash[language][2][0]+` </span>
+         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 0; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(0)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>0<br> <br> `+hash[language][2][0]+` </span>
          </button>`+
 
         `<button 
          id = 1
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][2][1]+` </span>
+         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px; margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][2][1]+` </span>
          </button>`+
 
         `<button 
          id = 2
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br> `+hash[language][2][2]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br> `+hash[language][2][2]+` </span>
          </button>`+
 
         `<button 
          id = 3
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br> <br> `+hash[language][2][3]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br> <br> `+hash[language][2][3]+` </span>
          </button>` +
 
         `<button 
          id = 4
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br> <br> `+hash[language][2][4]+` </span>
+         style="margin-bottom: 1em;display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br> <br> `+hash[language][2][4]+` </span>
          </button>` +
 
         `<button 
          id = 5
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: 7.25px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br> <br> `+hash[language][2][5]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 13%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br> <br> `+hash[language][2][5]+` </span>
          </button>`
 
     componentHandler.upgradeDom();
@@ -209,31 +249,31 @@ function makeInterestedLikertScale(language) {
         `<button 
          id = 1
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][3][0]+` </span>
+         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px; margin-left: 0; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(1)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>1<br> <br> `+hash[language][3][0]+` </span>
          </button>`+
 
         `<button 
          id = 2
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br>`+hash[language][3][1]+`</span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size:`+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(2)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>2<br> <br>`+hash[language][3][1]+`</span>
          </button>`+
 
         `<button 
          id = 3
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> `+hash[language][3][2]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(3)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>3<br><br> `+hash[language][3][2]+` </span>
          </button>` +
 
         `<button 
          id = 4
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>`+hash[language][3][3]+` </span>
+         style="margin-bottom: 1em;display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(4)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>4<br><br>`+hash[language][3][3]+` </span>
          </button>` +
 
         `<button 
          id = 5
          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: 7.5px; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> `+hash[language][3][4]+` </span>
+         style="margin-bottom: 1em; display: inline-block;width: 16%; border-radius: 12px;margin-left: 8px; font-size: `+fontSize+`; height: 90px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(5)'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>5<br><br> `+hash[language][3][4]+` </span>
          </button>`;
 
     componentHandler.upgradeDom();
