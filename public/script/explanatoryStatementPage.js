@@ -40,7 +40,7 @@ function checkAccepted(){
 
 window.onload = function(){
     // initialise firestore reference to terms and conditions and content
-    let TermsAndConditionRef = firebase.firestore().collection("Terms&Conditions").doc("T&C_en_short");
+    let TermsAndConditionRef = firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_en_short");
     let content;
 
     // checks if the collection exists then displays T&C else upload the T&C and then display it.
