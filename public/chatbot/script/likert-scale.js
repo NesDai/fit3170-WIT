@@ -29,16 +29,16 @@ hash[EN_INDEX] =
 hash[ZH_CN_INDEX] =
     [
         // Agree
-        ["非常不同意", "不同意", "中立", "同意", "非常同意"],
+        ["非常<br>不同意", "不同意", "中立", "同意", "非常同意"],
 
         // Satisfy
-        ["不适用 （N/A）", "非常不满意", "不满意", "中立", "满意", "非常满意"],
+        ["不适用 （N/A）", "非常<br>不满意", "不满意", "中立", "满意", "非常满意"],
 
         // Confident
         ["不适用 (N/A)", "极度<br>不自信", "有点<br>不自信", "适度自信" , "有点自信", "极度自信"],
 
         // Interested
-        ["非常<br>不感兴趣", "没兴趣", "中立", "感兴趣", "非常感兴趣"]
+        ["非常<br>不感兴趣", "没兴趣", "中立", "感兴趣", "非常<br>感兴趣"]
 
     ];
 
@@ -84,7 +84,7 @@ let fontSize = "";
 function makeLikertScale(language, type) {
     switch (language) {
         case EN_INDEX:
-            fontSize = "calc(50% + 0.08vw)"
+            fontSize = "calc(47% + 0.05vw)"
             break;
         case ZH_CN_INDEX:
             fontSize = "calc(60% + 0.08vw)"
