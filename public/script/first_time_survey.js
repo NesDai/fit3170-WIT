@@ -608,7 +608,7 @@ function showOptions(choices) {
     let numberOption = 1;
     let index = 1;
     for (let choice of choices) {
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"select(this, "+index+")\">" + numberOption + ". " + choice + "</button>";
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised \" onclick=\"select(this, "+index+")\">" + numberOption + ". " + choice + "</button>";
         numberOption ++;
         index++;
     }
