@@ -180,30 +180,29 @@
                 <img src="./css/images/button-designs_24.png" style="height:80%">
             </button>
 
-          <!-- <a>
-            <img id="positiveImage" src = "./css/images/thumbs_up.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "positiveRating()"></img>
-          </a> -->
-
-          <!-- <a>
-            <img id="negativeImage" src = "./css/images/thumbs_down.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "negativeRating()"></img>
-          </a> -->
-
-          <!-- <a>
-            <img id = "favoriteIcon"  src = "./css/images/heart_icon.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "favoriteRating()"></img>
-          </a> -->
-
           <button id="favoriteIcon" onclick= "favoriteRating()" class="mdl-button mdl-js-button mdl-button--fab mdl-button" style = "background-color: transparent; margin-bottom: 5%;" >
             <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px; ">favorite_border</i> -->
             <img src="./css/images/button-designs_25.png" style="height:80%">
           </button>
 
-          <button onclick= "speakButtonOnClick()"  class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "margin-left: 5%; margin-bottom: 5%; background-color: transparent;" >
+          <button id="forumIcon" onclick= "" class="mdl-button mdl-js-button mdl-button--fab mdl-button" style = "background-color: transparent; margin-bottom: 5%;" >
+            <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px; ">favorite_border</i> -->
+            <img src="./css/images/forum_icon.png" style="height:80%">
+          </button>
+
+          <button onclick= "speakButtonOnClick()"  class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "margin-bottom: 5%; background-color: transparent;" >
             <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">record_voice_over</i>
           </button>
           
-          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "margin-bottom: 5%; background-color: transparent;" >
-              <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">skip_next</i>
+          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "float: right; margin-bottom: 5%; background-color: transparent;" >
+            <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">skip_next</i>
+        </button>
+
+          <button id="skipPrevious" onclick= "" class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "float: right; margin-bottom: 5%; margin-right: 1%; background-color: transparent;" >
+            <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">skip_previous</i>
           </button>
+
+          
           
           <div id="messagePopUp" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
