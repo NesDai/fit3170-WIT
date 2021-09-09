@@ -65,9 +65,10 @@ changeLang(select_language);
  * This functions displays and records the response of the MCQ answer option clicked from user.
  * @param button The option button
  */
-function select(button) {
+function select(button, index) {
+    console.log(index);
     // get selected button's text
-    let choice = button.textContent.trim();
+    let choice = currentQuestionObject.restrictions.choices[index-1];
 
     // format choice html text bubble
     let ansTemplate = '<div class="space">\
@@ -604,8 +605,12 @@ function showLongText(questionObject) {
  */
 function showOptions(choices) {
     let mcqOptions = "<div class=\"space\">"
+    let numberOption = 1;
+    let index = 1;
     for (let choice of choices) {
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"select(this)\">" + choice + "</button>";
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"select(this, "+index+")\">" + numberOption + ". " + choice + "</button>";
+        numberOption ++;
+        index++;
     }
     mcqOptions += "</div>";
     messages.innerHTML += mcqOptions;
