@@ -136,20 +136,21 @@ function select(button, index) {
 function addMessage() {
     let message = input.value;
     let type = currentQuestionObject.type;
-    if (type ===TYPE_MULTIPLE_CHOICE ||
-        type === TYPE_MULTIPLE_CHOICE_OTHERS ||
-        type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
+
+    // check if the input is valid
+    if (message.length > 0) {
+        if (type ===TYPE_MULTIPLE_CHOICE ||
+            type === TYPE_MULTIPLE_CHOICE_OTHERS ||
+            type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
             let selection = currentQuestionObject.restrictions.choices[message-1];
             saveResponse(selection);
             message = selection;
         }
         else{
-          // Saving the response before clearing the input box
-          saveResponse(input.value);
+            // Saving the response before clearing the input box
+            saveResponse(input.value);
         }
 
-    // check if the input is valid
-    if (message.length > 0) {
         // display input and clear textbox
         showMessageReceiver(message);
         input.value = "";
@@ -207,14 +208,195 @@ function nextQuestion() {
  * Shows the ending message when the survey has been completed.
  */
 function showEndingMessage() {
-    let endingMessage = "That's all the questions we have for you " +
+    /*let endingMessage = "That's all the questions we have for you " +
         "right now. You can either continue answerng questions, or" +
         " browse the rest of the application!"
-    showMessageSenderWithoutHints(endingMessage);
+    showMessageSenderWithoutHints(endingMessage);*/
+
+    // disable the textbox and send button and empty textbox
+    input.value = "";
+    input.disabled = true;
+    submit.disabled = true;
+
+    // update progress bar
     questionIndex = QUESTION_IDS[branch_id].length;
-    showHints();
     updateProgress();
+
+    // initialise userID and reference to user's branch in firestore database
+    let userID = getUserID();
+    let reference = firebase.firestore().collection(USERS_BRANCH).doc(userID)
+
+    reference.get().then((document) => {
+        if (document.exists) {
+            // check if the first closing message has been answered before by user
+            let joinFutureResearch = document.data().joinFutureResearch;
+
+            if (joinFutureResearch == null) {
+                // ask first closing message
+                showFutureResearchQuestion()
+            } else {
+                // Show option to move to different pages of the app
+                showMoveToDifferentPages();
+            }
+        } else {
+            console.log("user does not exist.")
+        }
+    })
+
+    // scroll to bottom of page
     scrollToBottom();
+}
+
+/**
+ * function to display the first closing message of the survey.
+ * To ask if the user would want to participate in future research.
+ */
+function showFutureResearchQuestion(){
+    // display a question asking if the user wants to participate in future research
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Are you willing to opt-in for future related research projects that have obtained ethical approval?</p>` +
+        "</div>" +
+        "</div>";
+    document.getElementById('hint_area').innerHTML = "";
+
+    // display the options
+    let questionOptions = "<div class=\"space\">"
+    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectFutureResearchOption(this, 1)\">1. Yes</button>";
+    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectFutureResearchOption(this, 2)\">2. No</button>";
+    questionOptions += "</div>";
+    messages.innerHTML += questionOptions;
+
+    // open the text box to take input
+    input.disabled = false;
+    submit.disabled = false;
+    submit.setAttribute("onclick", "textInputFutureResearch()");
+}
+
+/**
+ * function to store response from user on future research participation and move on to next closing message.
+ * @param button - the html element of the button that was clicked
+ * @param index - the index of the option chosen
+ */
+function selectFutureResearchOption(button, index){
+    // disable the textbox and send button and empty textbox
+    input.value = "";
+    input.disabled = true;
+    submit.disabled = true;
+
+    // initialise choice and get the user's ID (phone number they registered under)
+    let choice;
+    let userID = getUserID();
+
+    // assign the choice with the strings used in the option and update the user's detail in firestore
+    // with joinFutureResearch and choice
+    if (index == 1) {
+        choice = "Yes";
+        firebase.firestore().collection(USERS_BRANCH).doc(userID).update({
+            joinFutureResearch: choice
+        })
+    } else if (index == 2) {
+        choice = "No";
+        firebase.firestore().collection(USERS_BRANCH).doc(userID).update({
+            joinFutureResearch: choice
+        })
+    }
+
+    // print the choice chosen onto console
+    console.log(choice);
+
+    // format choice html text bubble
+    let ansTemplate = '<div class="space">\
+                            <div class="message-container receiver">\
+                                <p>' + choice + '</p>\
+                            </div>\
+                        </div>';
+
+    // disable clicked button and other button options from MCQ question
+    let space = button.parentElement;
+    for (let i = 0; i < space.childNodes.length; i++) {
+        space.childNodes[i].disabled = true;
+    }
+
+    // display user's choice on chat
+    messages.innerHTML += ansTemplate;
+
+    // Show online transaction options
+    showOnlineTransactionOptions();
+
+    // Show option to move to different pages of the app
+    showMoveToDifferentPages();
+
+    // scroll to bottom of message log
+    scrollToBottom();
+}
+
+/**
+ * function to check user input from textbox for answering the future research participation question from
+ * showFutureResearchQuestion().
+ */
+function textInputFutureResearch(){
+    // initialise yesOptions and noOptions
+    let yesOptions = ["yes", "1", "1. yes"];
+    let noOptions = ["no", "2", "2. No"];
+
+    // check if the text input from textbox is one of the options in yesOptions after converting all
+    // alphabetic characters to lowercase
+    if (yesOptions.includes(input.value.toLowerCase())) {
+        // activate selectFutureResearchOption with respective chosen option value
+        selectFutureResearchOption(document.getElementById("futureResearchYes"), 1);
+    }
+    // check if the text input from textbox is one of the options in noOptions after converting all
+    // alphabetic characters to lowercase
+    else if (noOptions.includes(input.value.toLowerCase())){
+        // activate selectFutureResearchOption with respective chosen option value
+        selectFutureResearchOption(document.getElementById("futureResearchNo"), 2);
+    }
+}
+
+/**
+ * function to show the online transaction options for users when they complete the survey.
+ * the options will create a new tab to transaction links
+ */
+function showOnlineTransactionOptions(){
+    // message
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Thank you for completing the survey! A token of participation will be granted via online transaction.</p>` +
+        "</div>" +
+        "</div>";
+    document.getElementById('hint_area').innerHTML = "";
+
+    // display the options
+    let options = "<div class=\"space\">"
+    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">Banking</button>";
+    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">e-Wallet</button>";
+    options += "</div>";
+    messages.innerHTML += options;
+}
+
+/**
+ * function to display options for users to click on to move to different pages of the app.
+ */
+function showMoveToDifferentPages(){
+    // message
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Thank you so much for your participation in this survey. Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!</p>` +
+        "</div>" +
+        "</div>";
+    document.getElementById('hint_area').innerHTML = "";
+
+    // display the options to got to recommender, forum and main page respectively
+    let options = "<div class=\"space\">"
+    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'recommender_Ui.html\'\">Recommender</button>";
+    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'forum.html\'\">Forum</button>";
+    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Main Page</button>";
+    options += "</div>";
+    messages.innerHTML += options;
 }
 
 /**
@@ -399,17 +581,19 @@ function showNumeric(questionObject) {
                 // check if question requires use to end the survey if an invalid response is given
                 if (questionObject.restrictions.skipIfInvalid) {
                     submit.onclick = endSurveyText;
-                } else {
+                }
+                /*else {
                     // re prompt the question
                     submit.onclick = repromptQuestion;
-                }
+                }*/
             }
-        } else {
+        }
+        /*else {
                 // If it's not a number
                 errorText.style.visibility = "visible";
                 errorText.innerHTML = "the answer needs to be a number.";
                 submit.onclick = repromptQuestion;
-        }
+        }*/
     }
 
     // display the question and enable the textbox
@@ -514,7 +698,7 @@ function showMultipleChoiceOthers(questionObject) {
             // If it's super long
             errorText.style.visibility = "visible";
             errorText.innerHTML = "character limit exceeded";
-            submit.onclick = repromptQuestion;
+            //submit.onclick = repromptQuestion;
         }
 
     }
@@ -581,7 +765,7 @@ function showShortText(questionObject) {
             // If it's super long
             errorText.style.visibility = "visible";
 
-            submit.onclick = repromptQuestion;
+            //submit.onclick = repromptQuestion;
         }
 
     }
@@ -707,7 +891,7 @@ function endSurveyText() {
  * white.
  */
 function updateProgress() {
-    var progress = (questionIndex/QUESTION_IDS[branch_id].length) * 100;
+    let progress = (questionIndex/QUESTION_IDS[branch_id].length) * 100;
     console.log('updateProgress() is called. Current percentage is ' + progress + '%.');
     document.querySelector('#progress-bar').MaterialProgress.setProgress(progress);
 
