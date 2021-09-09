@@ -80,7 +80,12 @@ body {
   width:60%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2.5%;
+  margin-top: 15px;
+}
+#percentage {
+  text-align: center;
+  height: 10px;
+  width: 100%;
 }
 main {
   height: 100%;

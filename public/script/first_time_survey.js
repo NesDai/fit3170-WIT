@@ -711,6 +711,8 @@ function updateProgress() {
     console.log('updateProgress() is called. Current percentage is ' + progress + '%.');
     document.querySelector('#progress-bar').MaterialProgress.setProgress(progress);
 
+    $('#percentage').html(progress.toFixed(2) + "%");
+
     changeColour();
 }
 
