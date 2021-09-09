@@ -114,10 +114,10 @@
           <div id="user-container">
             <div hidden id="user-pic"></div>
             <div hidden id="user-name"></div>
-            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+            <button hidden id="sign-out" class="mdl-button mdl-js-button  mdl-color-text--white">
               Sign-out
             </button>
-            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+            <button hidden id="sign-in" class="mdl-button mdl-js-button  mdl-color-text--white">
               <i class="material-icons">account_circle</i>Sign-in with Google
             </button>
           </div>
@@ -171,11 +171,11 @@
         <div class="mdl-card__subtitle-text notranslate" id="videoDescription" style="margin-left: 5%; margin-right: 5%">This is the description for this video.</div>
         
         <div class="mdl-card__actions mdl-card--border">
-            <button id= "positiveRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "positiveRating()" >
+            <button id= "positiveRating" class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "positiveRating()" >
                 <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_down</i> -->
                 <img src="./css/images/button-designs_23.png" style="height:80%">
             </button>
-            <button id= "negativeRating" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "negativeRating()" >
+            <button id= "negativeRating" class="mdl-button mdl-js-button mdl-button--fab mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "negativeRating()" >
                 <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_up</i> -->
                 <img src="./css/images/button-designs_24.png" style="height:80%">
             </button>
@@ -192,16 +192,16 @@
             <img id = "favoriteIcon"  src = "./css/images/heart_icon.png" style = "height: 50%; width: 15%;" hspace = "10" vspace = "10" onclick = "favoriteRating()"></img>
           </a> -->
 
-          <button id="favoriteIcon" onclick= "favoriteRating()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "background-color: transparent; margin-bottom: 5%;" >
+          <button id="favoriteIcon" onclick= "favoriteRating()" class="mdl-button mdl-js-button mdl-button--fab mdl-button" style = "background-color: transparent; margin-bottom: 5%;" >
             <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -5px; ">favorite_border</i> -->
             <img src="./css/images/button-designs_25.png" style="height:80%">
           </button>
 
-          <button onclick= "speakButtonOnClick()"  class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-left: 5%; margin-bottom: 5%; background-color: transparent;" >
+          <button onclick= "speakButtonOnClick()"  class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "margin-left: 5%; margin-bottom: 5%; background-color: transparent;" >
             <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">record_voice_over</i>
           </button>
           
-          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button" style = "margin-bottom: 5%; background-color: transparent;" >
+          <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "margin-bottom: 5%; background-color: transparent;" >
               <i class= "material-icons notranslate" style ="margin-top: 50%; margin-left: -5px;">skip_next</i>
           </button>
           
@@ -224,7 +224,7 @@
            <hr style="margin: 0;">
 
 
-           <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset()"
+           <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="reset()"
               value="English">
            <label>
            <span id="lang_text" style="color:white;">English</span>
@@ -232,7 +232,7 @@
            </button>
 
            <br>
-           <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+           <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
               value="Chinese (Simplified)">
            <label>
            <span id="lang_text" style="color:white;">中文</span>
@@ -240,7 +240,7 @@
            </button>
 
            <br>
-           <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+           <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
               value="Thai" >
            <label>
            <span id="lang_text" style="color:white;">ภาษาไทย</span>
@@ -248,7 +248,7 @@
            </button>
 
            <br>
-           <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+           <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
               value="Malay">
            <label>
            <span id="lang_text" style="color:white;">Bahasa Melayu</span>
@@ -259,7 +259,7 @@
            <br>
            <br>
            <div>
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
+              <button class="mdl-button mdl-js-button mdl-button--raised  button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
               Back
               </button>
            </div>
