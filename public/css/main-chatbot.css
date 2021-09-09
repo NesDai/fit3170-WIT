@@ -8,6 +8,14 @@ body {
 }
 
 /* HEADER CSS */
+
+@media screen and (max-width: 1024px) {
+  .mdl-layout__header {
+    display: block;
+    height: 20px;
+  }
+}
+
 .material-icons {
   font-size: 36px;
   top: 8px;
