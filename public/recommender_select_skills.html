@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Learn how to use the Firebase platform on the Web">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Recommender</title>
+        <title>Recommender - Learning Interests</title>
 
         <!-- Disable tap highlight on IE -->
         <meta name="msapplication-tap-highlight" content="no">
@@ -51,7 +51,7 @@
             margin: 100px;
             }
         </style>
-        <title>Recommender</title>
+        <title>Recommender - Learning Interests</title>
         <!-- TODO: Enable First Input Delay polyfill library. -->
         <script type="text/javascript">
             !function(n,e)
@@ -105,26 +105,16 @@
             <header class="mdl-layout__header" id="defaultHeader">
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
                   <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                    <h3>Recommender</h3>
-                  </div>
-                  <div id="user-container">
-                    <div hidden id="user-pic"></div>
-                    <div hidden id="user-name"></div>
-                    <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                      Sign-out
-                    </button>
-                    <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                      <i class="material-icons">account_circle</i>Sign-in with Google
-                    </button>
+                    <h4>Recommender - Learning Interests</h4>
+                    <div class="mdl-layout-spacer"></div>
                   </div>
                 </div>
             </header>
 
               <div class="mdl-layout__drawer">
                 <br>
-                <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
+                <img src = "./css/images/logo.png" width=90 height=90 class="img-centre notranslate">
                 <br>
-                <span class="mdl-layout-title">Recommender</span>
                 <nav class="mdl-navigation">
                   <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();"> <img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img> Translate</a>
                   <a class="mdl-navigation__link" href="./main_page.html"> <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon"> Home Page</a>
@@ -143,15 +133,15 @@
                 ICT/Tech&shy;nology Skills
                 <img src="./css/images/ict_options.png" style="width:300px;background:transparent;"/>
               </button>
-              <button class="tablinks" onclick="openInterest(event, 'Social Communication Skills')">
+              <button class="tablinks" onclick="openInterest(event, 'Social Communication Skills')" id="social_comm">
                 Social Communi&shy;cation Skills
                 <img src="./css/images/social_comm_options.png" style="width:300px;background:transparent;"/>
               </button>
-              <button class="tablinks" onclick="openInterest(event, 'Complementary Skills')">
+              <button class="tablinks" onclick="openInterest(event, 'Complementary Skills')" id="comple_options">
                 Comple&shy;mentary Skills
                 <img src="./css/images/complementary_options.png" style="width:300px;background:transparent;"/>
               </button>
-              <button class="tablinks" onclick="openInterest(event, 'Work-related Skills')">
+              <button class="tablinks" onclick="openInterest(event, 'Work-related Skills')" id="work_options">
                 Work-related Skills
                 <img src="./css/images/work_related_options.png" style="width:300px;background:transparent;"/>
               </button>
