@@ -98,12 +98,14 @@ function favoriteRating() {
     let current_color = document.getElementById("favoriteIcon").style.color;
     let snackbarContainer = document.querySelector('#messagePopUp');
     let data = null;
+    let playlist = JSON.parse(localStorage.getItem("playlist"));
+    let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
 
     if (current_color == "red") {
         document.getElementById("favoriteIcon").style.color = "black";
         data = { message: 'Removed from Favourite Videos' };
         snackbarContainer.MaterialSnackbar.showSnackbar(data);
-        removeFromFavourite(player.currentSrc());
+        removeFromFavourite(playlist[currentVideoNum].videoUrl);
 
         let btn = document.getElementById("favoriteIcon");
         btn.innerHTML = `<img src="./css/images/button-designs_25.png" style="height:80%"></img>`
@@ -112,7 +114,7 @@ function favoriteRating() {
         document.getElementById("favoriteIcon").style.color = "red";
         data = { message: 'Added to Favourite Videos' };
         snackbarContainer.MaterialSnackbar.showSnackbar(data);
-        addToFavourite(player.currentSrc());
+        addToFavourite(playlist[currentVideoNum]);
 
         let btn = document.getElementById("favoriteIcon");
         btn.innerHTML = `<img src="./css/images/button-designs_28.png" style="height:80%"></img>`
@@ -136,66 +138,27 @@ function getTopic() {
 
 }
 
-// Function to update watch history
-function updateHistory(currentVideoInfo) {
-    let current_user = JSON.parse(localStorage.getItem("USER"));
-    let currentVideo = {
-        videoUrl: currentVideoInfo[0],
-        videoThumbnail: currentVideoInfo[1],
-        videoTitle: currentVideoInfo[2]
-    }
-
-    // Retrieves the currently stored watch history
-    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
-        let currentHistory = []
-        let videoExist = false
-
-        // If history is not empty and video already exists in history, set videoExist to true
-        if (snapshot.exists()) {
-            currentHistory = snapshot.val();
-            for (i in currentHistory) {
-                if (currentHistory[i].videoUrl == currentVideoInfo[0]) {
-                    videoExist = true;
-                }
-            }
-        }
-
-        // Add video url to history only if video doesn't exist
-        if (videoExist != true) {
-            currentHistory.push(currentVideo)
-            updateFirebase(currentHistory, current_user, 'videoHistory');
-        }
-    })
-}
-
 // Function to add video to favourites
-function addToFavourite(currentVideoUrl) {
-    let currentVideoInfo = "";
-    for (i in playlist[0]) {
-        if (playlist[0][i][0] == currentVideoUrl) {
-            currentVideoInfo = playlist[0][i];
-            break;
-        }
-    }
+function addToFavourite(currentVideoInfo) {
 
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
-        videoUrl: currentVideoInfo[0],
-        videoThumbnail: currentVideoInfo[1],
-        videoTitle: currentVideoInfo[2],
-        videoPreference: currentVideoInfo[3]
+        videoUrl: currentVideoInfo.videoUrl,
+        videoThumbnail: currentVideoInfo.videoThumbnail,
+        videoTitle: currentVideoInfo.title,
+        videoPreference: currentVideoInfo.interest
     }
 
     // Retrieves the currently stored watch history
     firebase.database().ref('users').child(`${current_user.phone}/videoFavourite/`).once("value", function (snapshot) {
         let currentFavourites = []
         let videoExist = false
-        console.log(snapshot.val())
+
         // If favourite is not empty and video already exists in history, set videoExist to true
         if (snapshot.exists()) {
             currentFavourites = snapshot.val();
             for (i in currentFavourites) {
-                if (currentFavourites[i].videoUrl == currentVideoInfo[0]) {
+                if (currentFavourites[i].videoUrl == currentVideoInfo.videoUrl) {
                     videoExist = true;
                 }
             }
@@ -203,7 +166,7 @@ function addToFavourite(currentVideoUrl) {
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true) {
-            currentFavourites.push(currentVideo)
+            currentFavourites.push(currentVideo);
             updateFirebase(currentFavourites, current_user, 'videoFavourite');
         }
     })
@@ -218,9 +181,13 @@ function checkFavoriteStatus(currentVideoUrl) {
             for (i in currentFavourites) {
                 if (currentFavourites[i].videoUrl == currentVideoUrl) {
                     document.getElementById("favoriteIcon").style.color = "red";
+                    let btn = document.getElementById("favoriteIcon");
+                    btn.innerHTML = `<img src="./css/images/button-designs_28.png" style="height:80%"></img>`
                     break;
                 } else {
                     document.getElementById("favoriteIcon").style.color = "black";
+                    let btn = document.getElementById("favoriteIcon");
+                    btn.innerHTML = `<img src="./css/images/button-designs_25.png" style="height:80%"></img>`
                 }
             }
         }
@@ -255,13 +222,13 @@ function updateFirebase(video_list, current_user, child_name) {
         })
 }
 
-// Function to update description based on current video (to be done)
+// Function to update description based on current video
 function updateDescription(description) {
     document.getElementById('videoDescription').innerHTML = description;
 }
 
 // Function to check whether user completed survey or not
-function checkSurveyCompletion() {
+function checkForPreference() {
     let phoneNum = "";
     let current_user = JSON.parse(localStorage.getItem("USER"));
     phoneNum = current_user['phone'];
@@ -270,20 +237,6 @@ function checkSurveyCompletion() {
     let db = firebase.firestore();
 
 
-    db.collection(phoneNum).get().then((querySnapshot) => {
-        if (db.collection(phoneNum).exists) {
-            userRef.update({ completedSurvey: 'yes' });  // indicates user completed survey
-            location.href = "recommender_Ui.html"; // redirect to recommender page
-        } else {
-            userRef.update({ completedSurvey: 'no' });  // indicates user has not completed survey 
-        }
-    });
-
-    checkForPreference(stringPath);
-
-}
-
-function checkForPreference(stringPath) {
     firebase.database().ref(stringPath + "/preferences").once('value').then((snapshot) => {
         if (snapshot.exists()) {
             console.log(snapshot.val());
@@ -296,45 +249,11 @@ function checkForPreference(stringPath) {
     }).catch((error) => {
         console.error(error);
     });
-}
-
-// Calls the Youtube Data Api v3 to find videos based on the keyword
-function makeRequest(keywordList) {
-
-    playlist = Array(keywordList.length);
-    for (i in keywordList) {
-        playlist[i] = [];
-        let key = i;
-        let keyword = keywordList[i]
-        let request = new XMLHttpRequest();
-        let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${keyword}&key=${API_KEY}`
-
-        request.onreadystatechange = function () {
-            if (this.readyState == 4 && request.status == 200) {
-                let videos = JSON.parse(this.response);
-                for (j in videos.items) {
-                    let videoUrl = "https://www.youtube.com/watch?v=" + videos.items[j].id.videoId;
-                    let thumbnailUrl = videos.items[j].snippet.thumbnails.high.url;
-                    let description = videos.items[j].snippet.title;
-                    playlist[key].push([videoUrl, thumbnailUrl, description, keyword])
-
-                    localStorage.setItem("playlist", JSON.stringify(playlist))
-
-                    if (playlist[0] != []) {
-                        playVideo();
-                    }
-                }
-            }
-        }
-
-        request.open('GET', url);
-        request.send()
-    }
-
 
 }
 
-function querySelector() {
+
+function queryVideosOnPreferences() {
     let current_user = JSON.parse(localStorage.getItem("USER"));
     phoneNum = current_user['phone'];
     let stringPath = "users/" + phoneNum;
@@ -342,138 +261,160 @@ function querySelector() {
     let pref = JSON.parse(localStorage.getItem("preference"));
     userRef.update({preferences: pref});
     
-    queryVideosOnPreferences(pref);
-
+    if (localStorage.getItem("playlist") == null) {
+        makeRequest(pref);
+    }
 }
 
-function queryVideosOnPreferences(preferences) {
-    console.log(preferences)
-    if (localStorage.getItem("playlist") == null) {
-        makeRequest(preferences);
-    }
+function getVideoId(videoURL){
+    var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+    videoId = videoURL.match(rx);
+    
+    return videoId[1];
+}
+
+// Gets all the video that fits the preference and stores them in localstorage
+function makeRequest(preference) {
+
+    firebase.database().ref("posts").once('value').then((snapshot) => {
+        if (snapshot.exists()) {
+            snapshot.forEach(function(childSnap){
+                if (childSnap.val().interest[0] == preference && childSnap.val().recommender){
+                    let value = childSnap.val();
+                    let videoObj = {
+                        title: value.title,
+                        videoUrl: value.videoURL,
+                        videoThumbnail: value.videoThumbnail,
+                        videoId: getVideoId(value.videoURL),
+                        postId: childSnap.key,
+                        interest: value.interest[0]
+                    }
+                    playlist.push(videoObj);
+                }
+            })
+            localStorage.setItem("playlist", JSON.stringify(playlist));
+            localStorage.setItem("currentVideoNumber", 0);
+            playVideo();
+        }
+        else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
 }
 
 function playVideo() {
 
     playlist = JSON.parse(localStorage.getItem("playlist"));
+    currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
 
-    
-      
+    //Checks favourite status
+    checkFavoriteStatus(playlist[currentVideoNumber].videoUrl);
+    console.log(playlist[currentVideoNumber])
 
-    // player = videojs('my-video', {
-    //     controls: true,
-    //     techOrder: ['html5', 'youtube'],
-    //     sources: [{
-    //         type: 'video/youtube',
-    //         src: playlist[0][0][0]
-    //     }],
-    //     youtube: { "customVars": { "rel": 0 } }
-    // })
+    // Loads a new video
+    player.loadVideoById(playlist[currentVideoNumber].videoId);
+    player.stopVideo();
 
-    updateDescription(playlist[0][0][2]);
-    
+    // Updates the page's description with the video title
+    updateDescription(playlist[currentVideoNumber].title);
 
-    checkFavoriteStatus(playlist[0][0][0]);
-
-
-    checkIcon();
-
-    // Fires when player starts playing a video
-    // player.on('play', function () {
-    //     let playlist = JSON.parse(localStorage.getItem('playlist'));
-    //     let currentVideoUrl = player.currentSrc();
-    //     for (i in playlist[0]) {
-    //         if (playlist[0][i][0] == currentVideoUrl) {
-    //             let currentVideoInfo = playlist[0][i];
-    //             updateHistory(currentVideoInfo);
-    //             break;
-    //         }
-    //     }
-    // })
-
+    // checkIcon();
 }
 
+// Fires when the skip next button is clicked
 function skipToNextVideo() {
-    let playlist = JSON.parse(localStorage.getItem("playlist"));
+    playlist = JSON.parse(localStorage.getItem("playlist"));
 
-    if (player != null) {
-        if (playlist.length != 0) {
-            playlist[0].shift();
-            if (playlist[0].length != 0) {
-                localStorage.setItem("playlist", JSON.stringify(playlist))
-                location.reload();
-            } else {
-                playlist.shift();
-                localStorage.setItem("playlist", JSON.stringify(playlist))
-                if (playlist.length == 0) {
-                    alert("You have gone through all the recommended videos")
-                    localStorage.removeItem('playlist');
-                } else {
-                    location.reload();
-                }
-            }
-        }
+    let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
+    currentVideoNum += 1;
+    
+    if (currentVideoNum >= playlist.length){
+        currentVideoNum = 0;
+        alert("You have gone through all the recommended videos");
     }
+    
+    localStorage.setItem("currentVideoNumber", currentVideoNum);
+    location.reload();
 }
 
 function onPlayerReady(){
+
     // Adds listener to the state change of the player (play,pause, etc.)
     player.addEventListener('onStateChange', onPlayerStateChange);
 
-    // player.loadVideoById("");
+    if (localStorage.getItem('playlist') != null) {
+        playlist = JSON.parse(localStorage.getItem('playlist'));
+        playVideo();
+    } else {
+        queryVideosOnPreferences();
+    }
+    player.stopVideo();
 }
 
 function onPlayerStateChange(event){
+    // Fires if the video is playing
     if (event.data == YT.PlayerState.PLAYING) {
         //Do something
-        alert("playing")
+        let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+        playlist = JSON.parse(localStorage.getItem("playlist"));
+        updateHistory(playlist[currentVideoNumber]);
     }
 }
+
+// Function to update watch history
+function updateHistory(currentVideoInfo) {
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+    let currentVideo = {
+        videoUrl: currentVideoInfo.videoUrl,
+        videoThumbnail: currentVideoInfo.videoThumbnail,
+        videoTitle: currentVideoInfo.title,
+        postId: currentVideoInfo.postId
+    }
+
+    // Retrieves the currently stored watch history
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+        let currentHistory = []
+        let videoExist = false
+
+        // If history is not empty and video already exists in history, set videoExist to true
+        if (snapshot.exists()) {
+            currentHistory = snapshot.val();
+            for (i in currentHistory) {
+                if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
+                    videoExist = true;
+                }
+            }
+        }
+
+        // Add video url to history only if video doesn't exist
+        if (videoExist != true) {
+            currentHistory.push(currentVideo)
+            updateFirebase(currentHistory, current_user, 'videoHistory');
+        }
+    })
+}
+
+
+// Runs on page load
+// Initializing variables
+var current_user = JSON.parse(localStorage.getItem("USER"));
+var playlist = [];
+var player = null;
 
 // Runs as soon as the iframe api code has been downloaded
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('my-video', {
         height: '390',
         width: '640',
-        videoId: 'YnopHCL1Jk8',
         playerVars: {
-        'playsinline': 1,
-        'modestbranding': 1,
-        'autoplay': 1
+        'autoplay': 0
         },
         events: {
             'onReady': onPlayerReady,
         }
     });
 }
-
-// Runs on page load
-var counter = 1
-const API_KEY = "AIzaSyDgqlIyt9f7NhbjmkoWytHs2EEGMD7wsAo";
-var current_user = JSON.parse(localStorage.getItem("USER"));
-
-var playlist = null;
-var player = null;
-
-if (localStorage.getItem('playlist') != null) {
-    playlist = JSON.parse(localStorage.getItem('playlist'));
-    playVideo();
-} else {
-    querySelector();
-}
-
-let list1 = null;
-
-firebase.database().ref("posts").once('value').then((snapshot) => {
-    if (snapshot.exists()) {
-        snapshot.forEach(function(childSnap){
-            console.log(childSnap.val());
-        })
-    }
-    else {
-        console.log("No data available");
-    }
-}).catch((error) => {
-    console.error(error);
-});
 
