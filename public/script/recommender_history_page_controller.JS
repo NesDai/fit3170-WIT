@@ -19,7 +19,6 @@ function getTopic(){
 }
 
 
-var videoNames = [];
 // Function to populate history page table
 function showHistoryTable(){
   console.log("Show history grid ran.");
@@ -46,10 +45,6 @@ function showHistoryTable(){
 
               console.log("second success callback");
               title = currentVideo.videoTitle;
-
-
-              // console.log(data);
-              videoNames += title;
 
               // Grid implementation
 
@@ -83,7 +78,7 @@ function showHistoryTable(){
               cardAction = document.createElement("div");
               cardAction.className = "mdl-card__actions mdl-card--border";
               cardActionButton_1 = document.createElement("a");
-              cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect";
+              cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
               cardActionButton_1.innerHTML = "VIEW";
               cardAction.appendChild(cardActionButton_1);
 
@@ -95,7 +90,7 @@ function showHistoryTable(){
               }, false);
 
               cardActionButton_2 = document.createElement("a");
-              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent";
+              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
               cardActionButton_2.innerHTML = "DELETE";
               cardAction.appendChild(cardActionButton_2);
 
