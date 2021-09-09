@@ -357,47 +357,40 @@ function playVideo() {
 
     playlist = JSON.parse(localStorage.getItem("playlist"));
 
-    player = videojs('my-video', {
-        controls: true,
-        techOrder: ['html5', 'youtube'],
-        sources: [{
-            type: 'video/youtube',
-            src: playlist[0][0][0]
-        }],
-        youtube: { "customVars": { "rel": 0 } }
-    })
+    
+      
+
+    // player = videojs('my-video', {
+    //     controls: true,
+    //     techOrder: ['html5', 'youtube'],
+    //     sources: [{
+    //         type: 'video/youtube',
+    //         src: playlist[0][0][0]
+    //     }],
+    //     youtube: { "customVars": { "rel": 0 } }
+    // })
 
     updateDescription(playlist[0][0][2]);
     
 
     checkFavoriteStatus(playlist[0][0][0]);
-    // Fires when the player is ready
-    player.ready(function () {
 
-    })
 
     checkIcon();
 
     // Fires when player starts playing a video
-    player.on('play', function () {
-        let playlist = JSON.parse(localStorage.getItem('playlist'));
-        let currentVideoUrl = player.currentSrc();
-        for (i in playlist[0]) {
-            if (playlist[0][i][0] == currentVideoUrl) {
-                let currentVideoInfo = playlist[0][i];
-                updateHistory(currentVideoInfo);
-                break;
-            }
-        }
-    })
+    // player.on('play', function () {
+    //     let playlist = JSON.parse(localStorage.getItem('playlist'));
+    //     let currentVideoUrl = player.currentSrc();
+    //     for (i in playlist[0]) {
+    //         if (playlist[0][i][0] == currentVideoUrl) {
+    //             let currentVideoInfo = playlist[0][i];
+    //             updateHistory(currentVideoInfo);
+    //             break;
+    //         }
+    //     }
+    // })
 
-    // Fires when players finishes playing a video
-    player.on('ended', function () {
-        player.exitFullscreen();
-        player.resetProgressBar_();
-        player.pause();
-        skipToNextVideo();
-    })
 }
 
 function skipToNextVideo() {
@@ -423,10 +416,40 @@ function skipToNextVideo() {
     }
 }
 
+function onPlayerReady(){
+    // Adds listener to the state change of the player (play,pause, etc.)
+    player.addEventListener('onStateChange', onPlayerStateChange);
+
+    // player.loadVideoById("");
+}
+
+function onPlayerStateChange(event){
+    if (event.data == YT.PlayerState.PLAYING) {
+        //Do something
+        alert("playing")
+    }
+}
+
+// Runs as soon as the iframe api code has been downloaded
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('my-video', {
+        height: '390',
+        width: '640',
+        videoId: 'YnopHCL1Jk8',
+        playerVars: {
+        'playsinline': 1,
+        'modestbranding': 1,
+        'autoplay': 1
+        },
+        events: {
+            'onReady': onPlayerReady,
+        }
+    });
+}
 
 // Runs on page load
 var counter = 1
-const API_KEY = "AIzaSyAVC1xcE4jHY7m1lGcgKEcHNwE8MCDVHBs";
+const API_KEY = "AIzaSyDgqlIyt9f7NhbjmkoWytHs2EEGMD7wsAo";
 var current_user = JSON.parse(localStorage.getItem("USER"));
 
 var playlist = null;
@@ -438,4 +461,19 @@ if (localStorage.getItem('playlist') != null) {
 } else {
     querySelector();
 }
+
+let list1 = null;
+
+firebase.database().ref("posts").once('value').then((snapshot) => {
+    if (snapshot.exists()) {
+        snapshot.forEach(function(childSnap){
+            console.log(childSnap.val());
+        })
+    }
+    else {
+        console.log("No data available");
+    }
+}).catch((error) => {
+    console.error(error);
+});
 
