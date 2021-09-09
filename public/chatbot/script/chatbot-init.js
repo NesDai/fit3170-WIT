@@ -29,7 +29,6 @@ function initFirebaseAuth() {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
         initQuestionIndex().then(() => {
-            console.log("Question Index GET!")
             initChatbot();
         })
     });
@@ -57,9 +56,13 @@ function initQuestionIndex() {
             // If the branch exists, that means the user has visited
             // the chat bot page at least once
 
-            // Synchronize the question index and leave the other functions
+            // Synchronize question data and leave the other functions
             // to do the rest
-            questionIndex = document.data().questionIndex;
+            let questionData = document.data();
+            questionIndex = questionData.questionIndex;
+            currentSubQuestionIds = questionData.currentSubQuestionIds;
+            subQuestionIndex = questionData.subQuestionIndex;
+            console.log(questionIndex, currentSubQuestionIds, subQuestionIndex);
         } else {
             // The user is visiting the chat bot page for the
             // first time
@@ -185,7 +188,7 @@ function startSurvey(button) {
         // Reset the local question index and update the
         // question index stored in the cloud
         questionIndex = 0;
-        updateQuestionIndex();
+        syncQuestionData();
 
         // Clear responses stored in the cloud
         purgeUserResponses();
@@ -240,24 +243,24 @@ function resumeSurvey(button) {
 
                 showShortQuestionMessage(question);
                 showMessageReceiver(answer);
-                updateProgress();
             });
 
         })
         .then(() => {
+            // Disable options
+            document.getElementById("restart-survey-button")
+                .disabled = true;
+            document.getElementById("resume-survey-button")
+                .disabled = true;
+
+            scrollToBottom();
+
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => nextQuestion(), delay);
+            updateProgress();
+
             // After previous conversations are loaded, re-enable
             // message delay
-            noDelayMode = true;
+            noDelayMode = false;
         });
-
-    // Disable options
-    document.getElementById("restart-survey-button")
-        .disabled = true;
-    document.getElementById("resume-survey-button")
-        .disabled = true;
-
-    scrollToBottom();
-
-    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-    setTimeout(() => nextQuestion(), delay);
 }

@@ -66,7 +66,6 @@ changeLang(select_language);
  * @param button The option button
  */
 function select(button, index) {
-    console.log(index);
     // get selected button's text
     let choice = currentQuestionObject.restrictions.choices[index-1];
 
@@ -175,10 +174,7 @@ function addMessage() {
 function nextQuestion() {
     console.log("nextQuestion() is called.")
     // check if currentQuestionObject is null
-    if (currentQuestionObject === null) {
-        // The user is answering its first survey question
-        showQuestion(false);
-    } else if (currentSubQuestionIds !== null) { // checking if currentSubQuestionIds is not null
+    if (currentSubQuestionIds !== null) {
         // The user is answering sub-questions
         console.log("subquestionIndex is ", subQuestionIndex);
 
@@ -194,6 +190,9 @@ function nextQuestion() {
             showQuestion(true);
             subQuestionIndex++;
         }
+    } else if (currentQuestionObject === null) {
+        // The user is answering its first survey question
+        showQuestion(false);
     } else if (questionIndex < QUESTION_IDS[branch_id].length - 1) { // check if questionIndex is still not at the end of survey questions
         // The user is answering a normal question
         questionIndex++;
@@ -302,6 +301,9 @@ function showQuestion(isSubQuestion) {
             let questionType = questionObject.type;
 
             currentQuestionObject = questionObject;
+
+            // DONT REMOVE THIS - Yong Peng
+            console.log(currentQuestionObject);
 
             // checking the type of the question to assign the appropriate function to display it
             switch (questionType) {
@@ -664,9 +666,6 @@ function isAnsweringSubQuestions() {
 function endSurvey() {
     questionIndex = QUESTION_IDS[branch_id].length-1;
 
-    // Update the questionIndex on the cloud with the local one
-    updateQuestionIndex();
-
     nextQuestion();
 }
 
@@ -679,9 +678,6 @@ function endSurvey() {
 function endSurveyText() {
     showMessageReceiver(input.value);
     questionIndex = QUESTION_IDS[branch_id].length-1;
-
-    // Update the questionIndex on the cloud with the local one
-    updateQuestionIndex();
 
     errorText.style.visibility = "hidden";
     nextQuestion();
