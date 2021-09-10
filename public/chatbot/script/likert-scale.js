@@ -133,7 +133,7 @@ function getScaleString(language, scaleIndex, options) {
             `<button 
              id = ${option}
              class="mdl-button mdl-js-button mdl-button--raised notranslate"
-             style="margin-bottom: 1em;display: inline-block;width: 25%; border-radius: 12px; margin-left: 0; font-size: `+fontSize+`; height: 80px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(${option})'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>${option}<br> <br> `+hash[language][scaleIndex][i]+` </span>
+             style="margin-bottom: 1em;display: inline-block;width: 28%; border-radius: 12px; margin-left: 8px; margin-right: 3px; font-size: `+fontSize+`; height: 80px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(${option})'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>${option}<br> <br> `+hash[language][scaleIndex][i]+` </span>
              </button>`
     }
 
