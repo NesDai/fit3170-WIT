@@ -354,21 +354,23 @@ function print_create_post()
         <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label> </span>
         <div class="box">
           <label class="checkbox-inline" id="interest1" >
-          <input type="checkbox" name="interests" value="Browser Search" /> Browser Search
+          <input type="checkbox" name="interests" value="Browser_Search" /> Browser Search
           </label>
+          <br class="desktop-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Device Use" /> Device Use
+          <input type="checkbox" name="interests" value="Device_Use" /> Device Use
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
           <input type="checkbox" name="interests" value="E-mail" /> E-mail
           </label>
+          <br class="desktop-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Online Collaboration" /> Online Collaboration
+          <input type="checkbox" name="interests" value="Online_Collaboration" /> Online Collaboration
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Social Media Use" /> Social Media Use
+          <input type="checkbox" name="interests" value="Social_Media_Use" /> Social Media Use
           </label>
         </div>
         <br>
@@ -379,14 +381,16 @@ function print_create_post()
 
         <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Active Listening" /> Active Listening
+          <input type="checkbox" name="interests" value="Active_Listening" /> Active Listening
           </label>
           <br class="desktop-br">
+          <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Effective Communication" /> Effective Communication
+          <input type="checkbox" name="interests" value="Effective_Communication" /> Effective Communication
           </label>
+          <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Negotiation Skill" /> Negotiation Skill
+          <input type="checkbox" name="interests" value="Negotiation_Skill" /> Negotiation Skill
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
@@ -394,7 +398,7 @@ function print_create_post()
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Relationship Management" /> Relationship Management
+          <input type="checkbox" name="interests" value="Relationship_Management" /> Relationship Management
           </label>
         </div>
         <br>
@@ -408,9 +412,11 @@ function print_create_post()
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Art" /> Art
           </label>
+          <br class="mobile-br">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Caregiving" /> Caregiving
           </label>
+          <br class="mobile-br">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Cooking" /> Cooking
           </label>
@@ -418,8 +424,9 @@ function print_create_post()
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Excercises" /> Exercises
           </label>
+          <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Professional Writing" /> Professional Writing
+          <input type="checkbox" name="interests" value="Professional_Writing" /> Professional Writing
           </label>
         </div>
         <br>
@@ -430,21 +437,24 @@ function print_create_post()
         </span>
         <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Collaboration and Teamwork" /> Collaboration and Teamwork
+          <input type="checkbox" name="interests" value="Collaboration_and_Teamwork" /> Collaboration and Teamwork
           </label>
+          <br class="mobile-br">
           <br class="desktop-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Critical Thinking" /> Critical Thinking
-          </label>
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
-          </label>
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="People and Leadership" /> People and Leadership
+          <input type="checkbox" name="interests" value="Critical_Thinking" /> Critical Thinking
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Personal Selling" /> Personal Selling
+          <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="People_and_Leadership" /> People and Leadership
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Personal_Selling" /> Personal Selling
           </label>
         </div>
 
