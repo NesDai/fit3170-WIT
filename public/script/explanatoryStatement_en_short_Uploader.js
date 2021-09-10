@@ -3,8 +3,8 @@
 * */
 
 function uploadTermsAndConditions_en_short(){
-    let contents = "<center><h3>EXPLANATORY STATEMENT</h3></center><br>" +
-        "<center><b>(Survey Participant Group)</b></center><br>" +
+    // "<center><h3>EXPLANATORY STATEMENT</h3></center><br>" +
+    let contents = "<center><b>(Survey Participant Group)</b></center><br>" +
         "<b>Project ID: 29459</b><br>" +
         "<b>Project title: Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand:</b><br>" +
         "<b>Integrating Action Research and Design Science Approach</b><br><br>" +
@@ -41,9 +41,9 @@ function uploadTermsAndConditions_en_short(){
         "Monash University Human Research Ethics Committee at muhrec@monash.edu<br><br>" +
         "Please note, by continuing the survey you consent to take part in this research and agree to the information " +
         "provided in the Explanatory Statement.<br><br>" +
-        "<a href='./termsAndConditionsLongPage.html'>Long Version of Terms and Conditions</a>"
+        "<a href='./explanatoryStorageLongPage.html'>Long Version of Explanatory Statement</a>"
 
-    firebase.firestore().collection("Terms&Conditions").doc("T&C_en_short").set({
+    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_en_short").set({
         contents: contents
     })
         .then(() => {

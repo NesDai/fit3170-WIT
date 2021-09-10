@@ -28,22 +28,21 @@ function initFirebaseAuth() {
     firebase.auth().onAuthStateChanged(() => {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
-        initQuestionIndex().then(() => {
-            console.log("Question Index GET!")
+        initProgressData().then(() => {
             initChatbot();
         })
     });
 }
 
 /**
- * Synchronizes the local questionIndex value with the one
+ * Synchronizes the local question data with the one
  * on the firestore database. Alternatively, initialize
  * the user branch on the firestore database.
  * @returns {PromiseLike<any> | Promise<any>}
  */
-function initQuestionIndex() {
-    // The question index should be stored in
-    // users/ [phone number/email] /questionIndex
+function initProgressData() {
+    // The question data should be stored in
+    // users/ [phone number/email] /
     let userID = getUserID();
     //let userID = phone === null ? currentUser.email : phone;
 
@@ -57,9 +56,24 @@ function initQuestionIndex() {
             // If the branch exists, that means the user has visited
             // the chat bot page at least once
 
-            // Synchronize the question index and leave the other functions
+            // Synchronize question data and leave the other functions
             // to do the rest
-            questionIndex = document.data().questionIndex;
+            let questionData = document.data();
+            questionIndex = questionData.questionIndex;
+
+            if (questionData.currentSubQuestionIds === undefined) {
+                currentSubQuestionIds = null;
+            } else {
+                currentSubQuestionIds = questionData.currentSubQuestionIds;
+            }
+
+            if (questionData.subQuestionIndex === undefined) {
+                subQuestionIndex = null;
+            } else {
+                subQuestionIndex = questionData.subQuestionIndex;
+            }
+
+            console.log(questionIndex, currentSubQuestionIds, subQuestionIndex);
         } else {
             // The user is visiting the chat bot page for the
             // first time
@@ -67,15 +81,20 @@ function initQuestionIndex() {
             // document.data() will be undefined in this case
             console.log("User branch not found, initializing...");
 
-            // Initialize questionIndex to 0 and write it to the database
+            // Initialize questionIndex to 0 and sub question data to their
+            // initial values
             firebase.firestore().collection(USERS_BRANCH)
                 .doc(userID)
-                .set({questionIndex: NO_QUESTIONS_DONE})
+                .set({
+                    questionIndex: NO_QUESTIONS_DONE,
+                    currentSubQuestionIds: currentSubQuestionIds,
+                    subQuestionIndex: subQuestionIndex
+                })
                 .then(() => {
                     console.log(`Branch 'users/${userID}' created`);
                     console.log(`questionIndex set to ${NO_QUESTIONS_DONE}`)
                 })
-                .catch((error) => {
+                .catch(() => {
                     console.error("Error while initializing user branch " +
                         `'users/${userID}'`);
                 });
@@ -182,10 +201,12 @@ function startSurvey(button) {
     showMessageReceiver(choice);
 
     if (choice === "Restart") {
-        // Reset the local question index and update the
-        // question index stored in the cloud
+        // Reset local progress data and sync with the cloud
         questionIndex = 0;
-        updateQuestionIndex();
+        subQuestionIndex = 0;
+        currentSubQuestionIds = null;
+
+        syncProgress();
 
         // Clear responses stored in the cloud
         purgeUserResponses();
@@ -240,24 +261,24 @@ function resumeSurvey(button) {
 
                 showShortQuestionMessage(question);
                 showMessageReceiver(answer);
-                updateProgress();
             });
 
         })
         .then(() => {
+            // Disable options
+            document.getElementById("restart-survey-button")
+                .disabled = true;
+            document.getElementById("resume-survey-button")
+                .disabled = true;
+
+            scrollToBottom();
+
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => nextQuestion(), delay);
+            updateProgress();
+
             // After previous conversations are loaded, re-enable
             // message delay
-            noDelayMode = true;
+            noDelayMode = false;
         });
-
-    // Disable options
-    document.getElementById("restart-survey-button")
-        .disabled = true;
-    document.getElementById("resume-survey-button")
-        .disabled = true;
-
-    scrollToBottom();
-
-    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-    setTimeout(() => nextQuestion(), delay);
 }

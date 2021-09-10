@@ -9,49 +9,49 @@ const SUB_QUESTIONS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "和其他人同居", // Qs 1.12.1
-    "独居", // Qs 1.12.2
-    "在老年护理机构和其他人同居", // Qs 1.12.3
-    "在老年护理机构独居" // Qs 1.12.4
+    "Tinggal bersama seseorang di rumah", // Qs 1.12.1
+    "Tinggal bersendirian di rumah", // Qs 1.12.2
+    "Tinggal bersama seseorang di tempat penjagaan orang tua", // Qs 1.12.3
+    "Tinggal bersendirian di tempat penjagaan orang tua" // Qs 1.12.4
 ];
 
 const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "选择一个选项", // Select an Option (needs translation confirmation)
-    "选择一个选项",
-    "选择一个选项",
-    "选择一个选项" // Select an Option (needs translation confirmation)
+    "memillih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "依赖他人来满足<b>我的需要。</b>", // Qs 1.13.a
-    "无法得到<b>医疗。</b>", // Qs 1.13.b
-    "没钱买<b>生活用品</b>。", // Qs 1.13.c
-    "无法支付<b>至少一张</b>账单。" // Qs l.13.d
+    "Bergantung pada orang lain untuk memenuhi <b>keperluan saya</b>.", // Qs 1.13.a
+    "Tidak mendapat rawatan <b>perubatan</b> yang diperlukan? ", // Qs 1.13.b
+    "Tidak mempunyai wang untuk membeli <b>bahan makanan</b>. ", // Qs 1.13.c
+    "Tidak dapat membayar <b>sekurang-kurangnya satu</b> bil." // Qs l.13.d
 ];
 
 const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "总的来说，我的生活很理想。", // Qs 1.14.a
-    "我现在的生活状态很好。", // Qs 1.14.b
-    "我对我的生活感到满意。" // Qs 1.14.c
+    "Secara keseluruhan, kehidupan saya hampir ideal.", // Qs 1.14.a
+    "Keadaan hidup saya sekarang sangat baik.", // Qs 1.14.b
+    "Saya berpuas hati dengan hidup saya." // Qs 1.14.c
 ];
 
 // TODO Fill in tooltips
@@ -59,39 +59,39 @@ const SUB_QUESTIONS_HINTS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "您的<b>年龄</b>是几岁？", // Qs 1.1
-    "您的<b>性别</b>是?", // Qs 1.2
-    "您的<b>种族</b>是？", // Qs 1.3
-    "您<b>现在</b>住在哪里？", // Qs 1.4
-    "您每月的平均家庭<b>净收入</b>是多少？", // Qs 1.5
-    "您完成的最高<b>教育程度</b>是？", // Qs 1.6
-    "您的<b>婚姻状况</b>为？", // Qs 1.7
-    "您<b>养育</b>了几名孩子？", // Qs 1.8
-    "您每周与几个<b>孩子交谈或通信</b>？", // Qs 1.9
+    "Berapakah <b>umur</b> anda dalam tahun?", // Qs 1.1
+    "Apakah <b>jantina</b> anda?", // Qs 1.2
+    "Apakah kumpulan <b>etnik</b> anda?", // Qs 1.3
+    "Di mana anda tinggal sekarang?", // Qs 1.4
+    "Berapakah <b>purata pendapatan isi rumah</b> anda sebulan?", // Qs 1.5
+    "Apakah tahap <b>pendidikan</b> tertinggi anda yang telah habis diselesaikan?", // Qs 1.6
+    "Apakah <b>status perkahwinan</b> anda?", // Qs 1.7
+    "Berapa banyak <b>anak</b> yang dalam <b>tanggungan</b> anda?", // Qs 1.8
+    "Berapa orang <b>anak</b> yang anda <b>berkomunikasi atau hubungi</b> setiap minggu? ", // Qs 1.9
 
     // The question above this line is question 1.9
 
-    "您与几个<b>亲戚</b>比较亲近？", // Qs 1.10
-    "您有多少个<b>关系好的朋友</b>？", // Qs 1.11
-    "您的生活状态是？", // Qs 1.12
+    "Berapa banyak <b>saudara mara</b> yang rapat dengan anda?", // Qs 1.10 TODO get confirmation on translation "saudara" -> "saudara mara"
+    "Berapa ramai <b>rakan karib</b> anda? ", // Qs 1.11
+    "Apakah status kehidupan berdikari anda?", // Qs 1.12
 
     // The question above this line is a long question 1.12
 
-    "在过去的 6 个月中，您是否经历过以下情况？", // Qs 13
+    "Dalam 6 bulan terakhir, adakah anda mengalami situasi berikut?", // Qs 13
 
     // The question above this line is a long question (1.13)
 
-    "您对现在的生活<b>满意</b>吗？（等级从 1 到 5）"// Qs 1.14
+    "Sejauh mana anda <b>berpuas hati</b> dengan kehidupan anda sekarang? (Nilai dari 1 hingga 5)" // Qs 1.14
 
     // The question above this line is a long question 1.14
 ];
@@ -100,28 +100,28 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "请输入数字",
-    "选择一个选项", // Select an Option (needs translation confirmation)
-    "选择一个选项",
-    "选择一个选项",
-    "选择一个选项",
-    "选择一个选项",
-    "选择一个选项", // Select an Option (needs translation confirmation)
-    "请输入数字",
-    "请输入数字",
+    "masukkan nombor",
+    "memilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "masukkan nombor",
+    "masukkan nombor",
 
     // The question above this line is question 1.10
 
 
-    "请输入数字",
-    "选择一个选项",// Select an Option (needs translation confirmation)
-    "选择一个选项",
+    "masukkan nombor",
+    "memilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
+    "memilih pilihan",
     // The question above this line is a long question (1.14)
 
-    "选择一个选项",
+    "memilih pilihan",
     // The question above this line is a long question (1.14)
 
-    "选择一个选项"// Select an Option (needs translation confirmation)
+    "memilih pilihan"
     // The question above this line is a long question (1.14)
 ];
 
@@ -129,93 +129,93 @@ const PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "您<b>目前</b>的就业状况如何？", // Qs 2.1
-    "您<b>目前</b>的工作/职业/专业是什么？", // Qs 2.2
-    "您对目前的就业状况<b>满意</b>吗？ （等级从 1 到 5）", // Qs 2.3
-    "由于COVID-19大流行您失去了<b>工作</b>？", // Qs 2.4
-    "您是否因 COVID-19 大流行而失去了<b>收入</b>？", // Qs 2.5
-    "您对在不久的将来找到<b>新工作</b>的信心如何？", // Qs 2.6
-    "您对能够在不久的将来保住<b>目前的工作</b>有多大信心？" // Qs 2.7
+    "Apakah status <b>pekerjaan anda sekarang?</b>", // Qs 2.1
+    "Apa yang anda lakukan/ pekerjaan / profesion anda <b>sekarang?</b>", // Qs 2.2
+    "Sejauh mana anda <b>berpuas hati</b> dengan status pekerjaan anda sekarang? (Nilai dari 1 hingga 5)", // Qs 2.3
+    "Adakah anda kehilangan <b>pekerjaan</b> kerana wabak COVID-19?", // Qs 2.4
+    "Adakah anda kehilangan <b>pendapatan</b> anda kerana wabak COVID-19?", // Qs 2.5
+    "Seberapa yakin anda dalam mencari <b>pekerjaan baru</b> dalam masa terdekat?", // Qs 2.6
+    "Sejauh mana anda yakin dapat mengekalkan <b>pekerjaan semasa</b> anda dalam masa terdekat?" // Qs 2.7
 ];
 
 const HINTS_PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "Menaipkan jawapan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "短信、短信（如 Whatsapp、微信等)", // Qs 3.2.a
-    "浏览/浏览网站", // Qs 3.2.b
-    "观看影片", // Qs 3.2.c
-    "使用 Zoom、Facetime、Skype、Google Talk 等。", // Qs 3.2.d
-    "使用 COVID-19 联系人追踪应用程序（例如 MySejahtera）", // Qs 3.2.e
-    "网上购物或电子商务（如 Lazada、Shopee 等）", // Qs 3.2.f
-    "使用手机银行/电子钱包（例如 GrabPay、BoostPay、FavePay、Touch N Go Pay 等）", // Qs 3.2.g
+    "SMS, pesanan teks (seperti Whatsapp, WeChat, dll.)", // Qs 3.2.a
+    "Melayari laman web", // Qs 3.2.b
+    "Menonton video", // Qs 3.2.c
+    "Menggunakan Zoom, Facetime, Skype, Google Talk, dll.", // Qs 3.2.d
+    "Menggunakan aplikasi pengesanan kontak COVID-19 (seperti MySejahtera)", // Qs 3.2.e
+    "Membeli-belah atas talian atau e-dagang (seperti Lazada, Shopee, dll.)", // Qs 3.2.f
+    "Menggunakan perbankan mudah alih / e-wallet (seperti GrabPay, BoostPay, FavePay, Touch N Go Pay, dll.)", // Qs 3.2.g
     // The question above this line is question 3.2g
 
-    "在线订购食品或杂货", // Qs 3.2.h
-    "使用社交网络（如 Facebook、Instagram、Twitter 等）", // Qs 3.2.i
-    "拍照 ", // Qs 3.2.j
-    "地图导航器（如 Google Map、Waze、Tom-Tom 等）", // Qs 3.2.k
-    "在我的日历上管理我的约会", // Qs 3.2.l
-    "阅读在线新闻或在线杂志", // Qs 3.2.m
-    "记下我需要做的笔记（例如购物清单或任务)", // Qs 3.2.n
-    "拍摄影片", // Qs 3.2.o
+    "Pemesanan atas talian untuk makanan atau bahan makanan mentah", // Qs 3.2.h
+    "Menggunakan rangkaian sosial (seperti Facebook, Instagram, Twitter, dll.)", // Qs 3.2.i
+    "Mengambil gambar", // Qs 3.2.j
+    "Pemetaan (seperti Peta Google, Waze, Tom-Tom, dll.)", // Qs 3.2.k
+    "Menguruskan janji temu di kalendar saya", // Qs 3.2.l
+    "Membaca berita atas talian atau majalah atas talian", // Qs 3.2.m
+    "Mencatat (seperti senarai belanja atau tugas) yang perlu saya lakukan", // Qs 3.2.n
+    "Penggambaran video", // Qs 3.2.o
     // The question above this line is question 3.2o
 
-    "听音乐", // Qs 3.2.p
-    "玩游戏", // Qs 3.2.q
-    "用于联系政府当局" // Qs 3.2.r
+    "Mendengarkan muzik", // Qs 3.2.p
+    "Bermain permainan", // Qs 3.2.q
+    "Menggunakan untuk menghubungi pihak berkuasa kerajaan" // Qs 3.2.r
 ];
 
 const SUB_QUESTIONS_HINTS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
     // The question above this line is question 3.2g
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
     // The question above this line is question 3.2p
 
-    "placeholder",
-    "placeholder",
-    "placeholder",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
 ];
 
 const PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "您如何使用手机使用互联网？", // Qs 3.1
+    "Bagaimana anda mengakses Internet menggunakan telefon bimbit anda?", // Qs 3.1
     // The question above this line is question 3.1
 
-    "您的<b>手机使用状况</b>是？(等级从 1 到 5)" // Qs 3.2
+    "Sejauh mana anda <b>yakin menggunakan telefon bimbit anda</b> untuk aktiviti berikut? (Nilai dari 1 hingga 5)" // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
@@ -223,7 +223,7 @@ const HINTS_PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "placeholder",
+    "memilih pilihan",
     // The question above this line is question 3.1
 
     ""
@@ -235,74 +235,76 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "ICT/技术技能（例如如何使用手机或电脑软件）", // Qs 4.3.a
-    "社交沟通技巧（例如如何改善人际关系或与他人互动）", // Qs 4.3.b
-    "辅助技能（例如学习与工作无关的技能或爱好） ", // Qs 4.3.c
-    "与工作相关的技能（例如如何提高工作/企业生产力）" // Qs 4.3.d
+    "Kemahiran ICT / teknologi (seperti cara menggunakan perisian telefon bimbit atau komputer)", // Qs 4.3.a
+    "Kemahiran komunikasi sosial (seperti bagaimana memperbaiki hubungan atau berinteraksi dengan orang lain)", // Qs 4.3.b
+    "Kemahiran pelengkap (seperti belajar kemahiran atau hobi yang tidak berkaitan dengan pekerjaan)", // Qs 4.3.c
+    "Kemahiran yang berkaitan dengan pekerjaan (seperti cara meningkatkan produktiviti pekerjaan / perniagaan)" // Qs 4.3.d
 ];
 
 const SUB_QUESTIONS_HINTS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const SUB_QUESTIONS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "我明白生命的意义。", // Qs 4.5.a
-    "我了解日常生活活动的意义。", // Qs 4.5.b
-    "我觉得生活很精彩。", // Qs 4.5.c
-    "我对日常生活活动有信心。", // Qs 4.5.d
-    "我心态很好。", // Qs 4.5.e
-    "我对新的日常活动有信心。", // Qs 4.5.f
-    "我有表达自我的能力", // Qs 4.5.g
-    "我有能力选择更好的替代品。", // Qs 4.5.h
-    "我有能力对特定问题做出决定。", // Qs 4.5.i
-    "我有与他人合作的能力。", // Qs 4.5.j
-    "我有能力与他人建立团队。", // Qs 4.5.k
-    "我有建立朋友交往的能力。", // Qs 4.5.l
-    "我有与他人一起解决问题的能力。" // Qs 4.5.m
+    "Saya memahami erti kehidupan.", // Qs 4.5.a
+    "Saya memahami maksud aktiviti kehidupan seharian.", // Qs 4.5.b
+    "Saya tertarik dalam aktiviti kehidupan seharian.", // Qs 4.5.c
+    "Saya mempunyai keyakinan dalam aktiviti kehidupan seharian.", // Qs 4.5.d
+    "Saya mempunyai keyakinan diri dalam pelaksanaan aktiviti kehidupan seharian.", // Qs 4.5.e
+    "Saya mempunyai keyakinan terhadap aktiviti kehidupan seharian yang baru dibentuk.", // Qs 4.5.f
+    "Saya mempunyai keupayaan untuk menunjukkan diri sendiri.", // Qs 4.5.g
+    "Saya mempunyai keupayaan untuk memilih alternatif yang lebih baik.", // Qs 4.5.h
+    "Saya mempunyai keupayaan untuk membuat keputusan mengenai masalah tertentu.", // Qs 4.5.i
+    "Saya mempunyai keupayaan untuk bekerjasama dengan orang lain.", // Qs 4.5.j
+    "Saya mempunyai keupayaan membina pasukan dengan yang lain.", // Qs 4.5.k
+    "Saya mempunyai keupayaan untuk membina gabungan.", // Qs 4.5.l
+    "Saya mempunyai keupayaan menyelesaikan masalah dengan orang lain." // Qs 4.5.m
 ];
 
 const SUB_QUESTIONS_HINTS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder",
-    "placeholder"
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan",
+    "memilih pilihan"
 ];
 
 const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "您尝试使用手机学习新的或有用的东西的<b>频率</b>如何？(等级从 1 到 7)\n" +
-    "[1] 从不, [2] 一个月一次, [3] 一个月几次, [4] 每周一次, [5] 一周几次, [6] 一天一次, [7] 一天多次", // Qs 4.1
+    "Berapa <b>kerap</b> anda cuba mempelajari sesuatu yang baru atau berguna menggunakan \n" +
+    "telefon bimbit? (Nilai dari 1 hingga 7)\n" +
+    "[1] Tidak pernah, [2] Sebulan sekali, [3] Beberapa kali dalam sebulan, [4] Seminggu sekali, " +
+    "[5] Beberapa kali seminggu, [6] Sekali sehari, [7] Berkali-kali sehari", // Qs 4.1
 
-    "您<b>每周花多少小时</b>用手机学习新的或有用的东西？（请输入数字）", // Qs 4.2
+    "Berapa <b>jam seminggu</b> yang anda curahkan untuk mempelajari sesuatu yang baru atau berguna, menggunakan telefon bimbit?", // Qs 4.2
     // The question above this line is question 4.2
 
-    "您对<b>使用手机学习</b>以下技能的<b>兴趣</b>如何？(等级从 1 到 5)", // Qs 4.3
+    "Seberapa <b>minat</b> anda <b>mempelajari</b> kemahiran berikut menggunakan telefon bimbit? (Nilai dari 1 hingga 5)", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "您希望通过手机学习哪些<b>与工作相关的技能</b>？", // Qs 4.4
+    "Apakah <b>kemahiran yang berkaitan dengan pekerjaan</b> yang ingin anda pelajari menggunakan telefon bimbit?", // Qs 4.4
     // The question above this line is question 4.4
 
-    "您在多大程度上同意或不同意以下陈述<b>对您的描述</b>？(等级从 1 到 5)" // Qs 4.5
+    "Sejauh mana anda bersetuju atau tidak setuju bahawa pernyataan berikut <b>menerangkan tentang anda</b>? (Nilai dari 1 hingga 5)" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -310,35 +312,35 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "选择一个选项",
-    "请输入数字",
+    "masukkan nombor",
+    "masukkan nombor",
     // The question above this line is question 4.2
 
-    "选择一个选项",
+    "memilih pilihan",
     // The question above this line is a long question (4.3)
 
     "",
-    "选择一个选项"
+    "memilih pilihan"
 ]
 
 const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "您为什么对使用手机学习感兴趣？", // Qs 5.1
-    "您希望拥有哪些使用手机学习的资源？", // Qs 5.2
-    "到目前为止，使用手机学习最令人沮丧的事情是什么？", // Qs 5.3
-    "告诉我们您在工作中遇到的问题或挑战。" // Qs 5.4
+    "Mengapa anda berminat belajar menggunakan telefon bimbit?", // Qs 5.1
+    "Sumber apa yang anda mahukan untuk belajar menggunakan telefon bimbit?", // Qs 5.2
+    "Apakah perkara yang paling mengecewakan sejauh ini semasa belajar menggunakan telefon bimbit?", // Qs 5.3
+    "Beritahu kami mengenai masalah atau cabaran anda di tempat kerja. " // Qs 5.4
 ]
 
 const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "输入回复",
-    "输入回复",
-    "输入回复",
-    "输入回复"
+    "Taipkan tindak balas",
+    "Taipkan tindak balas",
+    "Taipkan tindak balas",
+    "Taipkan tindak balas"
 ]
 
 // TODO 2.6 and 2.7 - Likert Scale
@@ -355,29 +357,29 @@ function pushPart1Questions() {
     pushNumeric("1.1", PART1[1], 50, 100, true, HINTS_PART1[1]);
 
     // Question 1.2
-    let choices_1_2 = ["男性", "女性"]
-    let skip_choices_1_2 = ["男性"];
+    let choices_1_2 = ["Lelaki", "Perempuan"]
+    let skip_choices_1_2 = ["Lelaki"];
     pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2, SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
-    let choices_1_3 = ["巫裔", "华裔", "印裔", "泰裔", "其他"];
+    let choices_1_3 = ["Malayu", "Cina", "India", "Thai", "Lain-lain"];
     //pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
     pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
-    let choices_1_4 = ["市区", "农村"];
+    let choices_1_4 = ["Kawasan bandar", "Kawasan luar bandar"];
     pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED, HINTS_PART1[4]);
 
     // Question 1.5
-    let choices_1_5 = ["没有收入", "低于 MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 或以上"];
+    let choices_1_5 = ["Tiada pendapatan", "Kurang dari MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 atau lebih"];
     pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED, HINTS_PART1[5]);
 
     // Question 1.6
-    let choices_1_6 = ["没有受过正规教育", "小学", "中学/高中", "职业/技术认证", "大学"];
+    let choices_1_6 = ["Tiada pendidkan formal", "Sekolah rendah", "Sekolah menengah / tinggi", "Sijil vokasional / teknikal", "Universiti"];
     pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED, HINTS_PART1[6]);
 
     // Question 1.7
-    let choices_1_7 = ["单身", "已婚", "离婚", "丧偶", "其他关系"];
+    let choices_1_7 = ["Bujang", "Berkahwin", "Bercerai", "Kematian pasangan", "Hubungan lain"];
     pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
@@ -409,8 +411,8 @@ function pushPart1Questions() {
             initLongQuestionParams();
 
             // Question 1.12a
-            let choices_1_12 = ["是", "否"];
-            let skip_choices_1_12 = ["是"];
+            let choices_1_12 = ["Ya", "Tidak"];
+            let skip_choices_1_12 = ["Ya"];
             appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[1], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[1]);
 
             // Question 1.12b
@@ -436,7 +438,7 @@ function pushPart1Questions() {
         initLongQuestionParams();
 
         // Question 1.13a
-        let choices_1_13 = ["是", "否"];
+        let choices_1_13 = ["Ya", "Tidak"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_13[1]);
@@ -489,8 +491,8 @@ function pushPart2Questions() {
     setPartNumber(2);
 
     // Question 2.1
-    let choices_2_1 = ["工作", "退休", "半退休", "不工作", "不工作但做义工", "不工作但在找工作", "其他"];
-    let skip_choices_2_1 = ["退休", "不工作", "不工作但做义工", "不工作但在找工作"];
+    let choices_2_1 = ["Bekerja", "Bersara", "Separa pesara", "Tidak berkerja", "Tidak bekerja tetapi melakukan kerja sukarela", "Tidak bekerja tetapi mencari pekerjaan", "Lain-Lain"];
+    let skip_choices_2_1 = ["Bersara", "Tidak berkerja", "Tidak bekerja tetapi melakukan kerja sukarela", "Tidak bekerja tetapi mencari pekerjaan"];
     pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1, skip_choices_2_1, "insert question 2.3 id here", HINTS_PART2[1]);
 
     // Question 2.2
@@ -500,23 +502,23 @@ function pushPart2Questions() {
     pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
-    let choices_2_4 = ["是", "否", "不适用"];
+    let choices_2_4 = ["Ya", "Tidak", "Tidak berkenaan"];
     pushMultipleChoice("2.4", PART2[4], choices_2_4, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
-    let choices_2_5 = ["是", "否", "不适用"];
+    let choices_2_5 = ["Ya", "Tidak", "Tidak berkenaan"];
     pushMultipleChoice("2.5", PART2[5], choices_2_5, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
     // Question 2.6
-    let choices_2_6 = ["不适用", "极度不自信", "有点不自信", "适度自信", "有点自信", "极度自信"];
+    let choices_2_6 = ["Tidak berkenaan", "Tidak yakin sama sekali", "Agak tidak yakin", "Cukup yakin", "Agak yakin", "Sangat yakin"];
     pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
-    let choices_2_7 = ["不适用", "极度不自信", "有点不自信", "适度自信", "有点自信", "极度自信"];
+    let choices_2_7 = ["Tidak berkenaan", "Tidak yakin sama sekali", "Agak tidak yakin", "Cukup yakin", "Agak yakin", "Sangat yakin"];
     pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
@@ -527,11 +529,11 @@ function pushPart3Questions() {
 
     // Question 3.1
     let choices_3_1 = [
-        "预付费移动数据计划",
-        "后付费移动数据计划",
-        "家庭无线宽带计划",
-        "公共无线热点",
-        "我不清楚如何上网"
+        "Pelan data mudah alih prabayar",
+        "Pelan data mudah alih pascabayar",
+        "Pelan jalur lebar WiFi rumah",
+        "Hotspot WiFi awam",
+        "Saya tidak tahu cara mengakses Internet"
     ];
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
@@ -942,7 +944,7 @@ function appendMultipleChoice(questionNumber, longQuestionId,
         longQuestionId: longQuestionId
     };
 
-    // Increment the alphabetIndex (the alphabetic numerics of sub-questions)
+    // Increment the alphabetIndex (the alphabetic numericals of sub-questions)
     alphabetIndex++;
 
     pushQuestionObject(questionObject)
@@ -952,7 +954,7 @@ function appendMultipleChoice(questionNumber, longQuestionId,
 }
 
 function pushQuestionObject(questionObject) {
-    return firebase.firestore().collection(QUESTIONS_BRANCHES[ZH_CN_INDEX]).add(questionObject);
+    return firebase.firestore().collection(QUESTIONS_BRANCHES[MS_INDEX]).add(questionObject);
 }
 
 let partNumber = 0;
@@ -1056,7 +1058,7 @@ function updateLongQuestionsWithSubQuestionIds() {
 
         let arrangement = subQuestionIds[longQuestionId];
 
-        firebase.firestore().collection(QUESTIONS_BRANCHES[ZH_CN_INDEX]).doc(longQuestionId)
+        firebase.firestore().collection(QUESTIONS_BRANCHES[MS_INDEX]).doc(longQuestionId)
             .update({
                 "arrangement": arrangement
             })
@@ -1070,7 +1072,7 @@ function updateLongQuestionsWithSubQuestionIds() {
     }
 }
 
-function uploadQuestions_zh_CN() {
+function uploadQuestions_ms() {
     pushPart1Questions();
     pushPart2Questions();
     pushPart3Questions();
@@ -1085,7 +1087,7 @@ function uploadQuestions_zh_CN() {
  * <br>
  * 2. To update the long question objects with IDs of their sub-questions.
  */
-function housekeeping_zh_CN() {
+function housekeeping_ms() {
     updateLongQuestionsWithSubQuestionIds();
 
     let result = [];
@@ -1118,7 +1120,7 @@ function housekeeping_zh_CN() {
     }
 
     // Update question 2.1's skipTarget with 2.3's ID
-    firebase.firestore().collection(QUESTIONS_BRANCHES[ZH_CN_INDEX]).doc(question_2_1_id)
+    firebase.firestore().collection(QUESTIONS_BRANCHES[MS_INDEX]).doc(question_2_1_id)
         .update({
             "restrictions.skipTarget": question_2_3_id
         })

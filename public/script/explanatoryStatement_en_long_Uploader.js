@@ -3,8 +3,8 @@
 * */
 
 function uploadTermsAndConditions_en_long(){
-    let contents = "<center><h3>EXPLANATORY STATEMENT</h3></center><br>" +
-        "<center><b>(Survey Participant Group)</b></center><br>" +
+    // "<center><h3>EXPLANATORY STATEMENT</h3></center><br>" +
+    let contents = "<center><b>(Survey Participant Group)</b></center><br>" +
         "<b>Project ID: 29459</b><br>" +
         "<b>Project title: Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand:</b><br>" +
         "<b>Integrating Action Research and Design Science Approach</b><br><br>" +
@@ -112,7 +112,7 @@ function uploadTermsAndConditions_en_long(){
         "School of Business, Monash University Malaysia.<br>" +
         "Tel: +603-55144971; Email: teh.pei.lee@monash.edu"
 
-    firebase.firestore().collection("Terms&Conditions").doc("T&C_en_long").set({
+    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_en_long").set({
         contents: contents
     })
         .then(() => {
