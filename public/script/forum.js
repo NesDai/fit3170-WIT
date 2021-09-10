@@ -455,6 +455,7 @@ function print_create_post()
           <input type="checkbox" name="interests" value="Personal_Selling" /> Personal Selling
           </label>
         </div>
+        <br>
 
        </div>
        <script type="text/javascript">
