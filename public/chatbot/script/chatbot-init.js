@@ -28,21 +28,21 @@ function initFirebaseAuth() {
     firebase.auth().onAuthStateChanged(() => {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
-        initQuestionIndex().then(() => {
+        initQuestionData().then(() => {
             initChatbot();
         })
     });
 }
 
 /**
- * Synchronizes the local questionIndex value with the one
+ * Synchronizes the local question data with the one
  * on the firestore database. Alternatively, initialize
  * the user branch on the firestore database.
  * @returns {PromiseLike<any> | Promise<any>}
  */
-function initQuestionIndex() {
-    // The question index should be stored in
-    // users/ [phone number/email] /questionIndex
+function initQuestionData() {
+    // The question data should be stored in
+    // users/ [phone number/email] /
     let userID = getUserID();
     //let userID = phone === null ? currentUser.email : phone;
 
@@ -70,10 +70,15 @@ function initQuestionIndex() {
             // document.data() will be undefined in this case
             console.log("User branch not found, initializing...");
 
-            // Initialize questionIndex to 0 and write it to the database
+            // Initialize questionIndex to 0 and sub question data to their
+            // initial values
             firebase.firestore().collection(USERS_BRANCH)
                 .doc(userID)
-                .set({questionIndex: NO_QUESTIONS_DONE})
+                .set({
+                    questionIndex: NO_QUESTIONS_DONE,
+                    currentSubQuestionIds: currentSubQuestionIds,
+                    subQuestionIndex: subQuestionIndex
+                })
                 .then(() => {
                     console.log(`Branch 'users/${userID}' created`);
                     console.log(`questionIndex set to ${NO_QUESTIONS_DONE}`)
