@@ -28,7 +28,7 @@ function initFirebaseAuth() {
     firebase.auth().onAuthStateChanged(() => {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
-        initQuestionData().then(() => {
+        initProgressData().then(() => {
             initChatbot();
         })
     });
@@ -40,7 +40,7 @@ function initFirebaseAuth() {
  * the user branch on the firestore database.
  * @returns {PromiseLike<any> | Promise<any>}
  */
-function initQuestionData() {
+function initProgressData() {
     // The question data should be stored in
     // users/ [phone number/email] /
     let userID = getUserID();
@@ -60,8 +60,19 @@ function initQuestionData() {
             // to do the rest
             let questionData = document.data();
             questionIndex = questionData.questionIndex;
-            currentSubQuestionIds = questionData.currentSubQuestionIds;
-            subQuestionIndex = questionData.subQuestionIndex;
+
+            if (questionData.currentSubQuestionIds === undefined) {
+                currentSubQuestionIds = null;
+            } else {
+                currentSubQuestionIds = questionData.currentSubQuestionIds;
+            }
+
+            if (questionData.subQuestionIndex === undefined) {
+                subQuestionIndex = null;
+            } else {
+                subQuestionIndex = questionData.subQuestionIndex;
+            }
+
             console.log(questionIndex, currentSubQuestionIds, subQuestionIndex);
         } else {
             // The user is visiting the chat bot page for the
@@ -83,7 +94,7 @@ function initQuestionData() {
                     console.log(`Branch 'users/${userID}' created`);
                     console.log(`questionIndex set to ${NO_QUESTIONS_DONE}`)
                 })
-                .catch((error) => {
+                .catch(() => {
                     console.error("Error while initializing user branch " +
                         `'users/${userID}'`);
                 });
@@ -193,7 +204,7 @@ function startSurvey(button) {
         // Reset the local question index and update the
         // question index stored in the cloud
         questionIndex = 0;
-        syncQuestionData();
+        syncProgress();
 
         // Clear responses stored in the cloud
         purgeUserResponses();

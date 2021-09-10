@@ -6,7 +6,7 @@
 /**
  * Stores local question indices and other data to the cloud
  */
-function syncQuestionData() {
+function syncProgress() {
     // Storing questionIndex to the cloud
     firebase.firestore().collection(USERS_BRANCH).doc(getUserID())
         .set({
@@ -22,7 +22,7 @@ function syncQuestionData() {
                 `\tsubQuestionIndex = ${subQuestionIndex}\n`
             );
         })
-        .catch((error) => {
+        .catch(() => {
             console.error("Error while storing question index: " +
                 `'users/${getUserID()}'`);
         });
@@ -60,7 +60,7 @@ function saveResponse(answer) {
     }
 
     // Update the questionIndex on the cloud with the local one
-    syncQuestionData();
+    syncProgress();
 
     // Add an auto-ID response entry to the user branch
     firebase.firestore().collection(getUserResponsesBranch())
