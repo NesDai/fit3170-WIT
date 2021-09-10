@@ -349,139 +349,105 @@ function print_create_post()
        <br>
        <!-- INTEREST BUTTON -->
        <div id="interests_box">
+
+        <!-- ICT/TECHNOLOGY SKILLS -->
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label>
+        </span>
+        <div class="box">
           <label class="checkbox-inline" id="interest1" >
-          <input type="checkbox" name="interests" value="Technology_Skills" /> #Technology_Skills
+          <input type="checkbox" name="interests" value="Browser Search" /> Browser Search
           </label>
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Email_Management" /> #Email_Management
+          <input type="checkbox" name="interests" value="Device Use" /> Device Use
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Email_Setup" /> #Email_Setup
+          <input type="checkbox" name="interests" value="E-mail" /> E-mail
           </label>
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Online_collaboration" /> #Online_collaboration
+          <input type="checkbox" name="interests" value="Online Collaboration" /> Online Collaboration
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Video_Conference" /> #Video_Conference
+          <input type="checkbox" name="interests" value="Social Media Use" /> Social Media Use
           </label>
+        </div>
+
+        <!-- Social Communication Skills -->
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
+        </span>
+
+        <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Zoom" /> #Zoom
+          <input type="checkbox" name="interests" value="Active Listening" /> Active Listening
           </label>
           <br class="desktop-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Google_doc" /> #Google_doc
+          <input type="checkbox" name="interests" value="Effective Communication" /> Effective Communication
           </label>
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Microsoft_Teams" /> #Microsoft_Teams
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Microsoft_Office" /> #Microsoft_Office
-          </label>
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Browser" /> #Browser
-          </label>
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Bookmarks" /> #Bookmarks
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Smartphone" /> #Smartphone
+          <input type="checkbox" name="interests" value="Negotiation Skill" /> Negotiation Skill
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Tablet" /> #Tablet
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Computer" /> #Computer
+          <input type="checkbox" name="interests" value="Persuation" /> Persuation
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Active_Listening" /> #Active_Listening
+          <input type="checkbox" name="interests" value="Relationship Management" /> Relationship Management
           </label>
+        </div>
 
+        <!-- Complementary skills --> 
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
+        </span>
+
+        <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Effective_Communication" /> #Effective_Communication
+          <input type="checkbox" name="interests" value="Art" /> Art
           </label>
-
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Negotiation_Skill" /> #Negotiation_Skill
+          <input type="checkbox" name="interests" value="Caregiving" /> Caregiving
+          </label>
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Cooking" /> Cooking
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Excercises" /> Exercises
+          </label>
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Professional Writing" /> Professional Writing
+          </label>
+        </div>
+
+        <!-- Work-related Skills --> 
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
+        </span>
+        <div class="box"> 
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Collaboration and Teamwork" /> Collaboration and Teamwork
           </label>
           <br class="desktop-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Persuasion" /> #Persuasion
+          <input type="checkbox" name="interests" value="Critical Thinking" /> Critical Thinking
           </label>
-
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Relationship_Management" /> #Relationship_Management
+          <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
           </label>
-
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Art" /> #Art
+          <input type="checkbox" name="interests" value="People and Leadership" /> People and Leadership
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Photography" /> #Photography
+          <input type="checkbox" name="interests" value="Personal Selling" /> Personal Selling
           </label>
+        </div>
 
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Video_Recording" /> #Video_Recording
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Video_Editing" /> #Video_Editing
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Photo_Editing" /> #Photo_Editing
-          </label>
-         <br class="desktop-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Caregiving" /> #Caregiving
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Cooking_Recipe" /> #Cooking_Recipe
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Nutrition" /> #Nutrition
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Healthy_diets" /> #Healthy_diets
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Exercises" /> #Exercises
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Professional_Writing" /> #Professional_Writing
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Collaboration_and_Teamwork" /> #Collaboration_and_Teamwork
-          </label>
-          <br class="desktop-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Critical_thinking" /> #Critical_thinking
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Entrepreneurship" /> #Entrepreneurship
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="People_and_leadership" /> #People_and_leadership
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Personal_selling" /> #Personal_selling
-          </label>
        </div>
        <script type="text/javascript">
           $(document).ready(function () {
