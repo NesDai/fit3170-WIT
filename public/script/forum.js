@@ -349,11 +349,9 @@ function print_create_post()
        <br>
        <!-- INTEREST BUTTON -->
        <div id="interests_box">
-
+       <br>
         <!-- ICT/TECHNOLOGY SKILLS -->
-        <span class="label success">
-            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label>
-        </span>
+        <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label> </span>
         <div class="box">
           <label class="checkbox-inline" id="interest1" >
           <input type="checkbox" name="interests" value="Browser Search" /> Browser Search
@@ -373,7 +371,7 @@ function print_create_post()
           <input type="checkbox" name="interests" value="Social Media Use" /> Social Media Use
           </label>
         </div>
-
+        <br>
         <!-- Social Communication Skills -->
         <span class="label success">
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
@@ -399,6 +397,7 @@ function print_create_post()
           <input type="checkbox" name="interests" value="Relationship Management" /> Relationship Management
           </label>
         </div>
+        <br>
 
         <!-- Complementary skills --> 
         <span class="label success">
@@ -423,7 +422,8 @@ function print_create_post()
           <input type="checkbox" name="interests" value="Professional Writing" /> Professional Writing
           </label>
         </div>
-
+        <br>
+        
         <!-- Work-related Skills --> 
         <span class="label success">
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
