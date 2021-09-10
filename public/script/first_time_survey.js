@@ -8,6 +8,7 @@ let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let messageHistoryColour = 'white';
+let skippedToEnd = null;
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -208,11 +209,6 @@ function nextQuestion() {
  * Shows the ending message when the survey has been completed.
  */
 function showEndingMessage() {
-    /*let endingMessage = "That's all the questions we have for you " +
-        "right now. You can either continue answerng questions, or" +
-        " browse the rest of the application!"
-    showMessageSenderWithoutHints(endingMessage);*/
-
     // disable the textbox and send button and empty textbox
     input.value = "";
     input.disabled = true;
@@ -227,14 +223,25 @@ function showEndingMessage() {
     let userID = getUserID();
     let reference = firebase.firestore().collection(USERS_BRANCH).doc(userID)
 
+    // if skippedTOEnd was
+    if (skippedToEnd == true) {
+        let userID = getUserID();
+        firebase.firestore().collection(USERS_BRANCH).doc(userID).update({
+            skippedToEnd: "Yes"
+        });
+    }
+
+    // check if user exist in firestore
     reference.get().then((document) => {
         if (document.exists) {
-            // check if the first closing message has been answered before by user
-            let joinFutureResearch = document.data().joinFutureResearch;
+            // check if the first closing message has been answered before by user and that if
+            // skippedToEnd exists in user's branch
+            let closedSurvey = document.data().closedSurvey;
+            skippedToEnd = (document.data().skippedToEnd != null);
 
-            if (joinFutureResearch == null) {
-                // ask first closing message
-                showFutureResearchQuestion()
+            if (closedSurvey == null) {
+                // asks if the user is ready to end the survey
+                showReadyClosingMessage();
             } else {
                 // Show option to move to different pages of the app
                 showMoveToDifferentPages();
@@ -246,6 +253,28 @@ function showEndingMessage() {
 
     // scroll to bottom of page
     scrollToBottom();
+}
+
+function showReadyClosingMessage(){
+    // display a question asking if the user wants to participate in future research
+    messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Are you ready to finish the survey?</p>` +
+        "</div>" +
+        "</div>";
+    document.getElementById('hint_area').innerHTML = "";
+
+    // display the options
+    let questionOptions = "<div class=\"space\">"
+    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"endSurveyYes\" onclick=\"selectClosingQuestionOption(this, 1, 0)\">1. Yes</button>";
+    questionOptions += "</div>";
+    messages.innerHTML += questionOptions;
+
+    // open the text box to take input
+    input.disabled = false;
+    submit.disabled = false;
+    submit.setAttribute("onclick", "textInputClosingQuestion(0)");
 }
 
 /**
@@ -264,15 +293,15 @@ function showFutureResearchQuestion(){
 
     // display the options
     let questionOptions = "<div class=\"space\">"
-    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectFutureResearchOption(this, 1)\">1. Yes</button>";
-    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectFutureResearchOption(this, 2)\">2. No</button>";
+    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectClosingQuestionOption(this, 1, 1)\">1. Yes</button>";
+    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectClosingQuestionOption(this, 2, 1)\">2. No</button>";
     questionOptions += "</div>";
     messages.innerHTML += questionOptions;
 
     // open the text box to take input
     input.disabled = false;
     submit.disabled = false;
-    submit.setAttribute("onclick", "textInputFutureResearch()");
+    submit.setAttribute("onclick", "textInputClosingQuestion(1)");
 }
 
 /**
@@ -280,7 +309,7 @@ function showFutureResearchQuestion(){
  * @param button - the html element of the button that was clicked
  * @param index - the index of the option chosen
  */
-function selectFutureResearchOption(button, index){
+function selectClosingQuestionOption(button, index, closingQsID){
     // disable the textbox and send button and empty textbox
     input.value = "";
     input.disabled = true;
@@ -290,15 +319,19 @@ function selectFutureResearchOption(button, index){
     let choice;
     let userID = getUserID();
 
-    // assign the choice with the strings used in the option and update the user's detail in firestore
-    // with joinFutureResearch and choice
+    // assign the choice with the strings used in the option
     if (index == 1) {
         choice = "Yes";
-        firebase.firestore().collection(USERS_BRANCH).doc(userID).update({
-            joinFutureResearch: choice
-        })
     } else if (index == 2) {
         choice = "No";
+    }
+
+    // update user's branch in firestore with data based on which closingQsID was answered
+    if (closingQsID == 0) {
+        firebase.firestore().collection(USERS_BRANCH).doc(userID).update({
+            closedSurvey: choice
+        })
+    } else if (closingQsID == 1) {
         firebase.firestore().collection(USERS_BRANCH).doc(userID).update({
             joinFutureResearch: choice
         })
@@ -323,21 +356,33 @@ function selectFutureResearchOption(button, index){
     // display user's choice on chat
     messages.innerHTML += ansTemplate;
 
-    // Show online transaction options
-    showOnlineTransactionOptions();
+    // display the next parts of the closing message depending on which the closingQsID
+    if (closingQsID == 0) {
+        if (skippedToEnd == true) { // scenario where user causes the end survey immediately logic
+            // Show online transaction options
+            showOnlineTransactionOptions();
+            // Show option to move to different pages of the app
+            showMoveToDifferentPages();
+        } else if (skippedToEnd == false) { // when user finishes the survey normally
+            // ask user if they want to participate in future research
+            showFutureResearchQuestion();
+        }
+    } else if (closingQsID == 1) { // after user given their answer if they want to participate in future research
+        // Show online transaction options
+        showOnlineTransactionOptions();
 
-    // Show option to move to different pages of the app
-    showMoveToDifferentPages();
+        // Show option to move to different pages of the app
+        showMoveToDifferentPages();
+    }
 
     // scroll to bottom of message log
     scrollToBottom();
 }
 
 /**
- * function to check user input from textbox for answering the future research participation question from
- * showFutureResearchQuestion().
+ * function to check user input from textbox for answering the 2 closing questions of the chatbot
  */
-function textInputFutureResearch(){
+function textInputClosingQuestion(closingQsID){
     // initialise yesOptions and noOptions
     let yesOptions = ["yes", "1", "1. yes"];
     let noOptions = ["no", "2", "2. No"];
@@ -345,14 +390,19 @@ function textInputFutureResearch(){
     // check if the text input from textbox is one of the options in yesOptions after converting all
     // alphabetic characters to lowercase
     if (yesOptions.includes(input.value.toLowerCase())) {
-        // activate selectFutureResearchOption with respective chosen option value
-        selectFutureResearchOption(document.getElementById("futureResearchYes"), 1);
+        if (closingQsID == 0) {
+            // activate selectClosingQuestionOption with respective chosen option value and closingQsID
+            selectClosingQuestionOption(document.getElementById("endSurveyYes"), 1, closingQsID);
+        } else if (closingQsID == 1) {
+            // activate selectClosingQuestionOption with respective chosen option value and closingQsID
+            selectClosingQuestionOption(document.getElementById("futureResearchYes"), 1, closingQsID);
+        }
     }
     // check if the text input from textbox is one of the options in noOptions after converting all
     // alphabetic characters to lowercase
     else if (noOptions.includes(input.value.toLowerCase())){
-        // activate selectFutureResearchOption with respective chosen option value
-        selectFutureResearchOption(document.getElementById("futureResearchNo"), 2);
+        // activate selectClosingQuestionOption with respective chosen option value and closingQsID
+        selectClosingQuestionOption(document.getElementById("futureResearchNo"), 2, closingQsID);
     }
 }
 
@@ -796,7 +846,7 @@ function showOptions(choices) {
     let numberOption = 1;
     let index = 1;
     for (let choice of choices) {
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised \" onclick=\"select(this, "+index+")\">" + numberOption + ". " + choice + "</button>";
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised \" onclick=\"(this, "+index+")\">" + numberOption + ". " + choice + "</button>";
         numberOption ++;
         index++;
     }
@@ -851,6 +901,7 @@ function isAnsweringSubQuestions() {
  */
 function endSurvey() {
     questionIndex = QUESTION_IDS[branch_id].length-1;
+    skippedToEnd = true;
 
     nextQuestion();
 }
@@ -864,6 +915,7 @@ function endSurvey() {
 function endSurveyText() {
     showMessageReceiver(input.value);
     questionIndex = QUESTION_IDS[branch_id].length-1;
+    skippedToEnd = true;
 
     errorText.style.visibility = "hidden";
     nextQuestion();
