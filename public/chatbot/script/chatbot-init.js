@@ -201,9 +201,11 @@ function startSurvey(button) {
     showMessageReceiver(choice);
 
     if (choice === "Restart") {
-        // Reset the local question index and update the
-        // question index stored in the cloud
+        // Reset local progress data and sync with the cloud
         questionIndex = 0;
+        subQuestionIndex = 0;
+        subQuestionIds = null;
+
         syncProgress();
 
         // Clear responses stored in the cloud
