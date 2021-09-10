@@ -110,10 +110,10 @@
                   <div id="user-container">
                     <div hidden id="user-pic"></div>
                     <div hidden id="user-name"></div>
-                    <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                    <button hidden id="sign-out" class="mdl-button mdl-js-button  mdl-color-text--white">
                       Sign-out
                     </button>
-                    <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                    <button hidden id="sign-in" class="mdl-button mdl-js-button  mdl-color-text--white">
                       <i class="material-icons">account_circle</i>Sign-in with Google
                     </button>
                   </div>
@@ -166,7 +166,7 @@
                         <label for="RadioEmail"><img src="./css/images/email.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioEmail" name="selection" onclick="goToRecommender(this.id)" value="Email Management and Setup"/>
+                        <input type="radio" id="RadioEmail" name="selection" onclick="goToRecommender(this.id)" value="Email"/>
                         <label for="RadioEmail" style="display:inline-block;"></label>E-mail (e.g. Management and Setup)</label>
                       </td>
                     </tr>
@@ -181,7 +181,7 @@
                         <label for="RadioSearch"><img src="./css/images/search_for_info.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioSearch" name="selection" onclick="goToRecommender(this.id)" value="Search Engine Use"/>
+                        <input type="radio" id="RadioSearch" name="selection" onclick="goToRecommender(this.id)" value="Search for information"/>
                         <label for="RadioSearch" style="display:inline-block;"></label>Search for information (e.g., browser, bookmarks)</label>
                       </td>
                     </tr>
@@ -196,7 +196,7 @@
                         <label for="RadioDevice"><img src="./css/images/smartphone_tablet_pc.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioDevice" name="selection" onclick="goToRecommender(this.id)" value="Smartphone/Tablet Use"/>
+                        <input type="radio" id="RadioDevice" name="selection" onclick="goToRecommender(this.id)" value="SmartphoneTabletComputerUse"/>
                         <label for="RadioDevice" style="display:inline-block;"></label>Device Use</label>
                       </td>
                     </tr>
@@ -210,7 +210,7 @@
                         <label for="RadioSocialMedia"><img src="./css/images/social_media.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioSocialMedia" name="selection" onclick="goToRecommender(this.id)" value="Social Media Use"/>
+                        <input type="radio" id="RadioSocialMedia" name="selection" onclick="goToRecommender(this.id)" value="Social media use"/>
                         <label for="RadioSocialMedia" style="display:inline-block;"></label>Social Media Use</label>
                       </td>
                     </tr>
@@ -224,7 +224,7 @@
                         <label for="RadioOnlineCollaboration"><img src="./css/images/online_collaboration.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioOnlineCollaboration" name="selection" onclick="goToRecommender(this.id)" value="Online Collaboration"/>
+                        <input type="radio" id="RadioOnlineCollaboration" name="selection" onclick="goToRecommender(this.id)" value="Online collaboration"/>
                         <label for="RadioOnlineCollaboration" style="display:inline-block;"></label>Online Collaboration</label>
                       </td>
                     </tr>
@@ -242,7 +242,7 @@
                         <label for="RadioEffective"><img src="./css/images/effective_comm.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioEffective" name="selection" onclick="goToRecommender(this.id)" value="Effective Communication"/>
+                        <input type="radio" id="RadioEffective" name="selection" onclick="goToRecommender(this.id)" value="Effective communication"/>
                         <label for="RadioEffective" style="display:inline-block;"></label>Effective Communication</label>
                       </td>
                     </tr>
@@ -256,8 +256,8 @@
                       <td>
                         <label for="RadioNegotiation"><img src="./css/images/negotiation.png" class="interests"/></label>
                       </td>
-                      <td id="description">
-                        <input type="radio" id="RadioNegotiation" name="selection" onclick="goToRecommender(this.id)" value="Negotiation"/>
+                      <td id="description"></td>
+                        <input type="radio" id="RadioNegotiation" name="selection" onclick="goToRecommender(this.id)" value="Negotiation skill"/>
                         <label for="RadioNegotiation" style="display:inline-block;"></label>Negotiation Skill</label>
                       </td>
                     </tr>
@@ -271,7 +271,7 @@
                         <label for="RadioListening"><img src="./css/images/active_listening.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioListening" name="selection" onclick="goToRecommender(this.id)" value="Listening"/>
+                        <input type="radio" id="RadioListening" name="selection" onclick="goToRecommender(this.id)" value="Active listening"/>
                         <label for="RadioListening" style="display:inline-block;"></label>Active Listening</label>
                       </td>
                     </tr>
@@ -285,7 +285,7 @@
                         <label for="RadioRelationshipManagement"><img src="./css/images/relationship_management.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioRelationshipManagement" name="selection" onclick="goToRecommender(this.id)" value="Relationship Management"/>
+                        <input type="radio" id="RadioRelationshipManagement" name="selection" onclick="goToRecommender(this.id)" value="Relationship management"/>
                         <label for="RadioRelationshipManagement" style="display:inline-block;"></label>Relationship Management</label>
                       </td>
                     </tr>
@@ -374,7 +374,7 @@
                         <label for="RadioProfessionalWriting"><img src="./css/images/professional_writing.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioProfessionalWriting" name="selection" onclick="goToRecommender(this.id)" value="Professional Writing"/>
+                        <input type="radio" id="RadioProfessionalWriting" name="selection" onclick="goToRecommender(this.id)" value="Professional writing"/>
                         <label for="RadioProfessionalWriting" style="display:inline-block;"></label>Professional Writing</label>
                       </td>
                     </tr>
@@ -393,7 +393,7 @@
                         <label for="RadioCollabTeamwork"><img src="./css/images/collab_teamwork.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioCollabTeamwork" name="selection" onclick="goToRecommender(this.id)" value="Collaboration and Teamwork"/>
+                        <input type="radio" id="RadioCollabTeamwork" name="selection" onclick="goToRecommender(this.id)" value="Collaboration and teamwork"/>
                         <label for="RadioCollabTeamwork" style="display:inline-block;"></label>Collaboration and Teamwork</label>
                       </td>
                     </tr>
@@ -407,7 +407,7 @@
                         <label for="RadioLeadership"><img src="./css/images/people_leadership.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioLeadership" name="selection" onclick="goToRecommender(this.id)" value="Leadership"/>
+                        <input type="radio" id="RadioLeadership" name="selection" onclick="goToRecommender(this.id)" value="People and Leadership"/>
                         <label for="RadioLeadership" style="display:inline-block;"></label>People and Leadership</label>
                       </td>
                     </tr>
@@ -435,7 +435,7 @@
                         <label for="RadioPersonalSelling"><img src="./css/images/personal_selling.png" class="interests"/></label>
                       </td>
                       <td id="description">
-                        <input type="radio" id="RadioPersonalSelling" name="selection" onclick="goToRecommender(this.id)" value="Personal Selling"/>
+                        <input type="radio" id="RadioPersonalSelling" name="selection" onclick="goToRecommender(this.id)" value="Personal selling"/>
                         <label for="RadioPersonalSelling" style="display:inline-block;"></label>Personal Selling</label>
                       </td>
                     </tr>
@@ -469,7 +469,7 @@
                <hr style="margin: 0;">
 
 
-               <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="reset()"
+               <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="reset()"
                   value="English">
                <label>
                <span id="lang_text" style="color:white;">English</span>
@@ -477,7 +477,7 @@
                </button>
 
                <br>
-               <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+               <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
                   value="Chinese (Simplified)">
                <label>
                <span id="lang_text" style="color:white;">中文</span>
@@ -485,7 +485,7 @@
                </button>
 
                <br>
-               <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+               <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
                   value="Thai" >
                <label>
                <span id="lang_text" style="color:white;">ภาษาไทย</span>
@@ -493,7 +493,7 @@
                </button>
 
                <br>
-               <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect lang_butt notranslate" onclick="changeLang(this.value)"
+               <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
                   value="Malay">
                <label>
                <span id="lang_text" style="color:white;">Bahasa Melayu</span>
@@ -504,7 +504,7 @@
                <br>
                <br>
                <div>
-                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
+                  <button class="mdl-button mdl-js-button mdl-button--raised  button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
                   Back
                   </button>
                </div>

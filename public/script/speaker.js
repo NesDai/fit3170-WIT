@@ -8,7 +8,7 @@ function speakButtonOnClick(){
 
     voices = speechSynth.getVoices();
     voices.forEach((voice)=>{
-        if(voice.name === 'Google UK English Male'){
+        if(voice.name === 'Google UK English Female'){
             toSpeak.voice = voice;
         }
     });
