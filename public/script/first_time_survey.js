@@ -199,6 +199,7 @@ function nextQuestion() {
         questionIndex++;
         showQuestion(false);
     } else { //  else end the survey
+        saveResponse(input.value);
         showEndingMessage();
     }
 }
@@ -216,6 +217,7 @@ function showEndingMessage() {
     input.value = "";
     input.disabled = true;
     submit.disabled = true;
+    input.onkeyup = () => {};
 
     // update progress bar
     questionIndex = QUESTION_IDS[branch_id].length;
