@@ -574,7 +574,7 @@ function printPost(post, button_num, i )
                     <div id="button_div${i}">
                      ${button}
                     <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-                    <i class="material-icons notranslate" id="more_icon">read_more</i><span> More</span>
+                    <img src="./css/images/more_icon.png" id="more_icon"></img><span> More</span>
                     </button>
                     </div>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

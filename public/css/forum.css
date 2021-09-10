@@ -390,8 +390,13 @@ transition: color 0.15s ease-in;
 		color: white;
 		background-color: #006DAE;
 		position: relative;
-		width: 160px;
+		width: 150px;
 		left: 290px;
+	}
+	
+	#more_icon {
+		width: 35px;
+		height: 35px;
 	}
 	#date_posted {
 		position: relative;
@@ -508,6 +513,12 @@ transition: color 0.15s ease-in;
 		width: 25%;
 		left: 10px
 	}
+
+	#more_icon {
+		width: 32px;
+		height: 32px;
+	}
+
 	#date_posted {
 		position: relative;
 		left: 10px;
@@ -597,6 +608,12 @@ transition: color 0.15s ease-in;
 	#back_btn_icon {
 		font-size: 20px;
 	}
+
+	#back_icon {
+		width:32px; 
+		height:32px;	
+	}
+
     /* The translation*/
     .modal-content {
         width: 80%;
