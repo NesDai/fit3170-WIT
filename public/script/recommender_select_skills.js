@@ -1,6 +1,6 @@
 let phoneNum = "";
 
-// Function to open the content (skills list) under each interest 
+// Function to open the content (skills list) under each interest
 function openInterest(event, interest) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -13,9 +13,9 @@ function openInterest(event, interest) {
     }
     document.getElementById(interest).style.display = "block";
     event.currentTarget.className += " active";
-    
+
 }
-  
+
 document.getElementById("defaultOpen").click();  // get the element with id="defaultOpen" and click on it
 
 // Function to check for the user's details in local storage
@@ -52,12 +52,13 @@ function storeCurrentSkill(id){
         console.log("here")
     }
 
-    setInterval(function(){ 
+    setInterval(function(){
         location.href = "recommender_Ui.html";
     }, 500); // redirect to recommender page after 0.5 seconds
 }
 
 function goToRecommender(id){
+    document.getElementById(id).checked = true;
     storeCurrentSkill(id);
 }
 
