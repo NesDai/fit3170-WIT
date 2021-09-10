@@ -204,7 +204,7 @@ function startSurvey(button) {
         // Reset local progress data and sync with the cloud
         questionIndex = 0;
         subQuestionIndex = 0;
-        subQuestionIds = null;
+        currentSubQuestionIds = null;
 
         syncProgress();
 
