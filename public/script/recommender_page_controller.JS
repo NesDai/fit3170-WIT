@@ -287,7 +287,7 @@ function makeRequest(preference) {
                         videoUrl: value.videoURL,
                         videoThumbnail: value.videoThumbnail,
                         videoId: getVideoId(value.videoURL),
-                        postId: childSnap.key,
+                        postId: value.id,
                         interest: value.interest[0]
                     }
                     playlist.push(videoObj);
@@ -322,6 +322,33 @@ function playVideo() {
     updateDescription(playlist[currentVideoNumber].title);
 
     // checkIcon();
+}
+
+// Fires when the move to forum button is clicked
+function moveToForum(){
+    const baseurl = "http://localhost:5000/post.html?post_id=";
+
+    playlist = JSON.parse(localStorage.getItem("playlist"));
+    let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
+
+    let destinationUrl = baseurl.concat(playlist[currentVideoNum].postId);
+    window.location = destinationUrl;
+}
+
+// Fires when the skip previous button is clicked
+function skipToPreviousVideo() {
+    playlist = JSON.parse(localStorage.getItem("playlist"));
+
+    let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
+    currentVideoNum -= 1;
+    
+    if (currentVideoNum < 0){
+        currentVideoNum = 0;
+        alert("You are already at the beginning of the list of recommended videos");
+    }
+    
+    localStorage.setItem("currentVideoNumber", currentVideoNum);
+    location.reload();
 }
 
 // Fires when the skip next button is clicked
