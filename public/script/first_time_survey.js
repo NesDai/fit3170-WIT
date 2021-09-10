@@ -175,7 +175,7 @@ function addMessage() {
 function nextQuestion() {
     console.log("nextQuestion() is called.")
     // check if currentQuestionObject is null
-    if (currentSubQuestionIds !== null) {
+    if (currentSubQuestionIds !== null && currentSubQuestionIds !== undefined) {
         // The user is answering sub-questions
         console.log("subquestionIndex is ", subQuestionIndex);
 
