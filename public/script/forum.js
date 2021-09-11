@@ -6,8 +6,8 @@ window.onload = execute()
 function execute(){
     // check which tab is ticked
 
-
-    printAllPosts();
+    printUserPosts();
+    // printAllPosts();
 
 }
 
