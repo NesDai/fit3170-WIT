@@ -471,7 +471,7 @@ transition: color 0.15s ease-in;
 		padding: 0.75rem;
 		border-radius: 15px;
 		height: 70px;
-		width: 370px;
+		width: 350px;
 	}
 	input[type="radio"]:checked+label {
 		color: var(--primary-color);
