@@ -2,10 +2,11 @@
 // Changes the url, title, media and description to fit the video that is to be shared
 function changeShareDetails(){
     let playlist = JSON.parse(localStorage.getItem("playlist"));
-
-    let url = playlist[0][0][0];
-    let description = playlist[0][0][2];
-    let media = playlist[0][0][1];
+    let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+    
+    let url = playlist[currentVideoNumber].videoUrl;
+    let description = playlist[currentVideoNumber].title;
+    let media = playlist[currentVideoNumber].videoThumbnail;
 
     addthis_share = {
         url: url,
