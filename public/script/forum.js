@@ -4,6 +4,9 @@ let current_user = JSON.parse(localStorage.getItem("USER"));
 window.onload = execute()
 
 function execute(){
+    // check which tab is ticked
+
+
     printAllPosts();
 
 }
@@ -746,16 +749,18 @@ function printUserPosts(){
     let tab = document.getElementsByName("tabs");
 
 
-    if(tab[2].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
+    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
+
         searchYourPosts(param);
         return
     }
     else if(tab[0].checked){ // if the navigation tab is tending video
+  
         searchTrendingPosts(param);
         return;
     }
 
-
+    console.log("all")
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printAllPosts();
         return // exit function
