@@ -22,7 +22,7 @@ function uploadTermsAndConditions_en_short(){
         "Monash Malaysia researchers, which will take about 15 – 30 minutes.<br><br>" +
         "<b>Who can complete the survey?</b> Open to <b>all women aged 50 years and above <u>only</u>.</b><br><br>" +
         "<b>Withdrawal:</b> You may withdraw anytime during the survey duration, or pick up the survey later on " +
-        "where you left from the last attempt." +
+        "where you left from the last attempt.<br>" +
         "<b>Payment:</b> You will be awarded a token of appreciation of <b>RM10 cash</b> upon completion.<br><br>" +
         "<b>Confidentiality:</b> The survey is anonymous. All responses that you contribute will be anonymised. " +
         "At the end of the survey, you will be redirected to another Qualtrics survey and asked for two additional " +
@@ -41,7 +41,7 @@ function uploadTermsAndConditions_en_short(){
         "Monash University Human Research Ethics Committee at muhrec@monash.edu<br><br>" +
         "Please note, by continuing the survey you consent to take part in this research and agree to the information " +
         "provided in the Explanatory Statement.<br><br>" +
-        "<a href='./explanatoryStorageLongPage.html'>Long Version of Explanatory Statement</a>"
+        "<a href='./explanatoryStatementLongPage.html'>Long Version of Explanatory Statement</a>"
 
     firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_en_short").set({
         contents: contents

@@ -1,7 +1,6 @@
 //References
 let checkbox = document.getElementById("checkbox")
 let tick_warning = document.getElementById("tick-warning")
-let tick_line = document.getElementById("tick-warning-line")
 let content_box = document.getElementById("content-box")
 let confirmButtonRef = document.getElementById("confirmButton")
 
@@ -34,7 +33,6 @@ function checkAccepted(){
     } else {
         // if the tickbox is not ticked, display error message
         tick_warning.hidden = false
-        tick_line.hidden = false
     }
 }
 
