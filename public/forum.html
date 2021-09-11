@@ -69,9 +69,9 @@
          <nav class="mdl-navigation">
             <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();"> <img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img> Translate</a>
             <a class="mdl-navigation__link" href="./main_page.html"> <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon"> Home Page</a>
-            <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
-            <a class="mdl-navigation__link" href="./recommender_Ui.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
             <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
+            <a class="mdl-navigation__link" href="./recommender_Ui.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
+            <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
          </nav>
       </div>
       <body>
@@ -80,13 +80,19 @@
             <div class="container">
                <!-- Tab navigation -->
                <div class="tabs">
-                  <input type="radio" id="radio-0" name="tabs" value="thread" onclick="printThread();"/>
-                  <label class="tab" for="radio-0" id="tab0"><b>Trend</b></label>
 
-                  <input type="radio" id="radio-1" name="tabs" value="feed" onclick="printAllPosts();" checked/>
-                  <label class="tab" for="radio-1" id="tab1"><b>Create post</b></label>
-                  <input type="radio" id="radio-2" name="tabs" onclick="printUserPosts();"/>
-                  <label class="tab" for="radio-2" id="tab2"><b>Feed</b></label>
+                  <!-- Recommended tab -->
+                  <input type="radio" id="radio-0" name="tabs" value="Recommended" onclick="printThread();"/>
+                  <label class="tab" for="radio-0" id="tab0"><b>Recommended</b></label>
+
+                  <!-- feed tab -->
+                  <input type="radio" id="radio-1" name="tabs" onclick="printUserPosts();" checked/>
+                  <label class="tab" for="radio-1" id="tab1"><b>Feed</b></label>
+
+                  <!-- create post tab -->
+                  <input type="radio" id="radio-2" name="tabs" value="create_post" onclick="printAllPosts();"/>
+                  <label class="tab" for="radio-2" id="tab2"><b>Create post</b></label>
+
                   
                   <span class="glider"></span>
                </div>
@@ -104,6 +110,10 @@
             </div>
             <!--SEARCH ENDS-->
             <br>
+            
+            <!--Res number message-->
+               <div id="resNum" style="text-align: center;"></div>
+
             <div class = "forum-container">
                <div class="forum-posts">
                   <!-- DISPLAY ALL POST BY OTHER USERS -->

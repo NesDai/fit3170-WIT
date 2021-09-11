@@ -4,7 +4,10 @@ let current_user = JSON.parse(localStorage.getItem("USER"));
 window.onload = execute()
 
 function execute(){
-    printAllPosts();
+    // check which tab is ticked
+
+    printUserPosts();
+    // printAllPosts();
 
 }
 
@@ -161,6 +164,8 @@ function findAllPosts() {
 
 
 function printAllPosts(){
+    
+    $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
     print_create_post();
     $('#postField').text(``); // emtpy the field of any previous posts
@@ -206,6 +211,7 @@ function printAllPosts(){
         }).then(()=>{
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+            // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
         });
     });
 
@@ -219,10 +225,10 @@ function printAllPosts(){
  */
 function printThread(){
 
-    $('#searchBox').text(``); // clear search box
+    document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
     $('#postField').text(``); // clear post field from posts
-
+    $('#resNum').html(``);
 
 
     let printPostCount = 10; // start printing 10 posts first
@@ -268,6 +274,7 @@ function printThread(){
             printStartIndex = posts.length - 1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
 
+
             
         });
     });
@@ -285,7 +292,6 @@ function printThread(){
  */
 function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
 
-
         if(startIndex-numberOfPosts >= 0){ // if have at least 10 posts to print
             for(let i=startIndex; i>startIndex-numberOfPosts ; i--){ // print specific number of posts
                 printPost(postsList[i], buttonNums[i], i);
@@ -298,7 +304,8 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         }
 
         // add a print more button
-        if(startIndex>0){ // only if more posts to load
+
+        if(startIndex-numberOfPosts>=0){ // only if more posts to load
             $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
             >Load More</button>`);
 
@@ -345,139 +352,114 @@ function print_create_post()
        <br>
        <!-- INTEREST BUTTON -->
        <div id="interests_box">
+       <br>
+        <!-- ICT/TECHNOLOGY SKILLS -->
+        <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label> </span>
+        <div class="box">
           <label class="checkbox-inline" id="interest1" >
-          <input type="checkbox" name="interests" value="Technology_Skills" /> #Technology_Skills
-          </label>
-          <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Email_Management" /> #Email_Management
+          <input type="checkbox" name="interests" value="Browser_Search" /> Browser Search
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Email_Setup" /> #Email_Setup
-          </label>
-          <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Online_collaboration" /> #Online_collaboration
+          <input type="checkbox" name="interests" value="Device_Use" /> Device Use
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Video_Conference" /> #Video_Conference
+          <input type="checkbox" name="interests" value="E-mail" /> E-mail
           </label>
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Zoom" /> #Zoom
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Online_Collaboration" /> Online Collaboration
           </label>
-          <br class="desktop-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Google_doc" /> #Google_doc
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Social_Media_Use" /> Social Media Use
           </label>
+        </div>
+        <br>
+        <!-- Social Communication Skills -->
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
+        </span>
+
+        <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Microsoft_Teams" /> #Microsoft_Teams
+          <input type="checkbox" name="interests" value="Active_Listening" /> Active Listening
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Microsoft_Office" /> #Microsoft_Office
-          </label>
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Browser" /> #Browser
-          </label>
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Bookmarks" /> #Bookmarks
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Smartphone" /> #Smartphone
+          <input type="checkbox" name="interests" value="Effective_Communication" /> Effective Communication
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Tablet" /> #Tablet
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Computer" /> #Computer
+          <input type="checkbox" name="interests" value="Negotiation_Skill" /> Negotiation Skill
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Active_Listening" /> #Active_Listening
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Effective_Communication" /> #Effective_Communication
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Negotiation_Skill" /> #Negotiation_Skill
-          </label>
-          <br class="desktop-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Persuasion" /> #Persuasion
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Relationship_Management" /> #Relationship_Management
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Art" /> #Art
+          <input type="checkbox" name="interests" value="Persuation" /> Persuation
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Photography" /> #Photography
+          <input type="checkbox" name="interests" value="Relationship_Management" /> Relationship Management
           </label>
+        </div>
+        <br>
 
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Video_Recording" /> #Video_Recording
-          </label>
+        <!-- Complementary skills --> 
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
+        </span>
 
+        <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Video_Editing" /> #Video_Editing
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Photo_Editing" /> #Photo_Editing
-          </label>
-         <br class="desktop-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Caregiving" /> #Caregiving
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Cooking_Recipe" /> #Cooking_Recipe
+          <input type="checkbox" name="interests" value="Art" /> Art
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Nutrition" /> #Nutrition
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Healthy_diets" /> #Healthy_diets
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Exercises" /> #Exercises
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Professional_Writing" /> #Professional_Writing
-          </label>
-
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Collaboration_and_Teamwork" /> #Collaboration_and_Teamwork
-          </label>
-          <br class="desktop-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Critical_thinking" /> #Critical_thinking
+          <input type="checkbox" name="interests" value="Caregiving" /> Caregiving
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Entrepreneurship" /> #Entrepreneurship
+          <input type="checkbox" name="interests" value="Cooking" /> Cooking
           </label>
-
+          <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="People_and_leadership" /> #People_and_leadership
+          <input type="checkbox" name="interests" value="Excercises" /> Exercises
           </label>
-
+          <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Personal_selling" /> #Personal_selling
+          <input type="checkbox" name="interests" value="Professional_Writing" /> Professional Writing
           </label>
+        </div>
+        <br>
+        
+        <!-- Work-related Skills --> 
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
+        </span>
+        <div class="box"> 
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Collaboration_and_Teamwork" /> Collaboration and Teamwork
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Critical_Thinking" /> Critical Thinking
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="People_and_Leadership" /> People and Leadership
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Personal_Selling" /> Personal Selling
+          </label>
+        </div>
+        <br>
+
        </div>
        <script type="text/javascript">
           $(document).ready(function () {
@@ -567,7 +549,7 @@ function printPost(post, button_num, i )
                      `
                                   +
                                   `
-                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
                                   `
                                   +
                                   `
@@ -595,7 +577,7 @@ function printPost(post, button_num, i )
                     <div id="button_div${i}">
                      ${button}
                     <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-                    <i class="material-icons notranslate" id="more_icon">read_more</i><span> More</span>
+                    <img src="./css/images/more_icon.png" id="more_icon"></img><span> More</span>
                     </button>
                     </div>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -694,7 +676,9 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
 
 function printUserPosts(){
 
-    $('#searchBox').text(''); //clear search box
+    $('#resNum').html(``);   
+
+    document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(''); // clear create post ui area
 
     $('#postField').text(''); // emtpy the field of any previous posts
@@ -740,6 +724,8 @@ function printUserPosts(){
                         printUserFavouritePosts(posts,button_nums.length);
                     })
                 });
+
+                     
    
 }
        
@@ -752,6 +738,9 @@ function printUserPosts(){
  */
  function searchAllPosts(param){
 
+    let printPostCount = 10; // start printing 10 posts first
+    let printStartIndex;
+
     let data_list = [];
     let toPrint =[];
     let button_nums = []
@@ -760,16 +749,18 @@ function printUserPosts(){
     let tab = document.getElementsByName("tabs");
 
 
-    if(tab[2].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
+    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
+
         searchYourPosts(param);
         return
     }
     else if(tab[0].checked){ // if the navigation tab is tending video
+  
         searchTrendingPosts(param);
         return;
     }
 
-
+    console.log("all")
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printAllPosts();
         return // exit function
@@ -806,8 +797,10 @@ function printUserPosts(){
                         }
                     }
                     button_nums.push(button_num);
-                    posts.push(data.val());
-                    toPrint.push(data.val().id);  // get the post id
+                    if(data.val().username != undefined){ // only if created by a user
+                        posts.push(data.val());
+                        toPrint.push(data.val().id);  // get the post id
+                    }
                 })
             })
         //find interests in posts
@@ -830,7 +823,7 @@ function printUserPosts(){
                     }
                     button_nums.push(button_num);
 
-                    if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                    if(!toPrint.includes(data.val().id) && data.val().username != undefined){ // push only if its not yet being printed
                         posts.push(data.val());
                         toPrint.push(data.val().id);
                     }
@@ -857,19 +850,19 @@ function printUserPosts(){
                         }
                         button_nums.push(button_num);
 
-                        if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
+                        if(!toPrint.includes(data.val().id) && data.val().username != undefined){ // push only if its not yet being printed
                             posts.push(data.val());
                             toPrint.push(data.val().id);
                         }
                     })
                 }).then(()=>{
-                    let i = 0;
-                    for(i=posts.length-1; i>=0 ; i--){
-                        printPost(posts[i], button_nums[i], i )
-                    }
-                    if(i == posts.length-1){
-                        $('#postField').append(`<h2>No results found<h2>`);
-                    }
+                    
+                    printStartIndex = posts.length-1;
+                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+                    // if(printStartIndex < 0){
+                    //     $('#postField').html(`<h2>No results found<h2>`);
+                    // }
                 });
     })
 }
@@ -1008,12 +1001,19 @@ function searchYourPosts(param){
                     })
                 }).then(()=>{
                     let i =0;
+
+                    
+
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
                     }
-                    if(i == posts.length-1){
-                        $('#postField').append(`<h2>No results found<h2>`); // no results found
-                    }
+
+                    $('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
+
+                    // if(i == posts.length-1){
+                    //     $('#postField').append(`<h2>No results found<h2>`); // no results found
+                    // }
+
                 });
             })
 }
@@ -1028,6 +1028,9 @@ function searchYourPosts(param){
     let button_nums = []
     let posts = [];
     let toPrint = [];
+
+    let printStartIndex;
+    let printPostCount = 10;
 
 
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
@@ -1138,18 +1141,16 @@ function searchYourPosts(param){
                         }
                     })
                 }).then(()=>{
-                    let i =0;
-                    for(i=posts.length-1; i>=0 ; i--){
-                        printPost(posts[i], button_nums[i], i )
-                    }
-                    if(i == posts.length-1){
-                        $('#postField').append(`<h2>No results found<h2>`);
-                    }
+                    printStartIndex = posts.length-1;
+                    
+                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+                    // if(printStartIndex < 0){
+                    //     $('#postField').html(`<h2>No results found<h2>`);
+                    // }
                 });
             })
 }
-
-
 
 
 

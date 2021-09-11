@@ -106,23 +106,14 @@
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <!-- Header section -->
-    <header class="mdl-layout__header">
-        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-          <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop ">
-            <h3>Recommender</h3>
-          </div>
-          <div id="user-container">
-            <div hidden id="user-pic"></div>
-            <div hidden id="user-name"></div>
-            <button hidden id="sign-out" class="mdl-button mdl-js-button  mdl-color-text--white">
-              Sign-out
-            </button>
-            <button hidden id="sign-in" class="mdl-button mdl-js-button  mdl-color-text--white">
-              <i class="material-icons">account_circle</i>Sign-in with Google
-            </button>
-          </div>
+    <header class="mdl-layout__header" id="defaultHeader">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+        <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+          <h3>Recommender</h3>
+          <div class="mdl-layout-spacer"></div>
         </div>
-      </header>
+      </div>
+    </header>
       
       <div class="mdl-layout__drawer">
         <br>
@@ -132,13 +123,13 @@
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();"> <img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img> Translate</a>
           <a class="mdl-navigation__link" href="./main_page.html"> <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon"> Home Page</a>
-          <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
-          <a class="mdl-navigation__link" href="./recommender_Ui.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
           <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
+                  <a class="mdl-navigation__link" href="./recommender_Ui.html"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
+                  <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
        </nav>
       </div>
   <body>
-    <div class="row" id=option_buttons>
+    <!-- <div class="row" id=option_buttons>
       <div class="col-9">
         <a class="mdl-navigation__link" href="fav_page_Ui.html">
           <button class="mdl-button mdl-js-button mdl-button--raised" id="fav_button"><img src="./css/images/fav_icon.png" style="height:80%"> Favourite</button>
@@ -153,9 +144,25 @@
           <button class="mdl-button mdl-js-button mdl-button--raised" id="go_back_button">Go back</button>
         </a>
       </div>
-    </div>
+    </div> -->
 
     <main class="mdl-layout__content mdl-color--grey-100">
+      <div class="row" id=option_buttons>
+        <div class="col-9">
+          <a class="mdl-navigation__link" href="fav_page_Ui.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised" id="fav_button"><img src="./css/images/fav_icon.png" style="height:80%"> Favourite</button>
+          </a>
+          <a class="mdl-navigation__link" href="recommender_history_Ui.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised" id="history_button"><img src="./css/images/history_icon.png" style="height:80%"> History</button>
+          </a>
+          <a class="mdl-navigation__link" href="recommender_select_skills.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised" id="edit_button"><img src="./css/images/create_post_icon.png" style="height:80%; width: 15%"> Edit skill selection</button>
+          </a>
+          <a class="mdl-navigation__link" href="main_page.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised" id="go_back_button">Go back</button>
+          </a>
+        </div>
+      </div>
     <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
       
         <div id="recommendation-card" class="mdl-card mdl-shadow--2dp" style="align-items: center;">

@@ -49,11 +49,19 @@
    </head>
    <body>
       <div class="container" id="container-s">
+            <img src="./css/images/logo.png" width="90" class="img-centre notranslate" style="
+                  margin-left: auto;
+                  margin-right: auto;
+                  display: block;
+            ">
             <div class="wrap-s">
                <span class="title">
                Signup
                </span>
                <div id="error_username" style="color:red"></div>
+
+               <p><b>Step 1: Please choose the username</b></p>
+
                <div class = "input_div">
                   <span class="label">Phone number</span>
                   <input class="input" type="text" id="username" placeholder="Enter a username..." onchange="usernameValidation()">
@@ -61,6 +69,7 @@
                </div>
                <br>
                <div id="input-error" style="color: red"></div>
+               <p><b>Step 2: Please enter your phone number</b></p>
                <form class = "input_div">
                   <span class="label">Phone number</span>
                   <br>
@@ -71,6 +80,7 @@
                <br>
                <br>
                <div id="error" style="color:red"></div>
+               <p><b>Please click the SEND PIN button after you complete step 1 and 2</b></p>
                <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="send-button"  onclick="phoneAuth()">Send Pin</button>               
                <br>
                <div id="input-pin" style="color: green"></div>

@@ -1,14 +1,12 @@
 <html>
 <head>
+    <title>Explanatory Statement</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
     <link rel = "stylesheet" href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-    <link rel="stylesheet"  href="css/forum.css">
+    <link rel="stylesheet"  href="css/explanatory-statement.css">
     <style>
-        body {
-            font-family: Arial
-        }
         body {
             background-color: #eee;
         }
@@ -48,9 +46,10 @@
             font-size: 20px;
             line-height: 1.6;
         }
-        @media all and (min-width:551px) {
+        @media all and (min-width:610px) {
             .desktop-br {display: inline;}
         }
+
         h4{
             font-weight: bold;
         }
@@ -81,11 +80,11 @@
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <!-- Header section containing logo -->
-    <header class="mdl-layout__header mdl-color-text--white" id='topheader'>
+    <header class="mdl-layout__header mdl-color-text--white topheader">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop"
-                 style="padding:0px 16px 0px 16px; width:auto;">
-                <h3>Explanatory Statement</h3>
+                 style="padding:0px 16px 0px 16px;">
+                <h3 id="title">Explanatory Statement</h3>
                 <div class="mdl-layout-spacer"></div>
             </div>
         </div>
@@ -96,12 +95,12 @@
                 <div class = "mdl-card__supporting-text textArea notranslate" id="content-box"></div>
                 <br class="desktop-br"> <br class="desktop-br">
                 <div class="checkbox-div">
+                    <center>
                     <input type="checkbox" id="checkbox">
-                    <label for="checkbox">I have read and accept the Explanatory Statement</label>
+                    <label for="checkbox" id="acceptStatement">I have read and accept the Explanatory Statement</label>
                     <br class="desktop-br">
                     <label class="tick-warning" id="tick-warning" hidden>Please Tick Above to Accept the Explanatory Statement</label>
-                    <br class="desktop-br" id="tick-warning-line" hidden>
-                    <br class="desktop-br">
+                    </center>
                 </div>
                 <div class="button-div">
                     <button class="mdl-button mdl-js-button mdl-button--raised" onclick='window.location.href = "./main_page.html"'>
