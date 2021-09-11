@@ -2,35 +2,15 @@ let tableArea = document.getElementById('favtable');
 let favCount = 0;
 let current_user = JSON.parse(localStorage.getItem("USER"));
 let emptyTxt = "<br><br><br>There are no videos saved in favorites right now";
-let listInterest = ["Email Management and Setup","Search Engine Use","Smartphone/Tablet Use","Social Media Use","Online Collaboration","Effective Communication","Negotiation","Listening","Relationship Management","Persuasion","Cooking","Art","Caregiving","Exercise","Professional Writing","Collaboration and Teamwork","Leadership","Entrepreneurship","Personal Selling","Critical Thinking"];
-
-// let listInterest = ["Art","Baking","Smartphone/Tablet Use","Interest4","Interest5","Interest6","Interest7","Interest8","A very very very long interest with spaces in between","Looooooooooooooooooooooooooooooooooonnnnnnnggggggggggggggggggg","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8"]
+let listInterest = ["Art","Caregiving","Collaboration and Teamwork","Cooking","Critical Thinking","Effective Communication","Email Management and Setup","Entrepreneurship","Exercise","Leadership","Listening","Negotiation","Online Collaboration","Personal Selling","Persuasion","Professional Writing","Relationship Management","Search Engine Use","Smartphone/Tablet Use","Social Media Use"]
+// let listInterest = ["Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","A very very very long interest with spaces in between","Looooooooooooooooooooooooooooooooooonnnnnnnggggggggggggggggggg","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8"]
 phoneNum = current_user['phone'];
 let myFavList = [];
 let sortGenerated = false;
 
 let mylst = [];
-displayFav();
-
-// function addFavIdCount(){
-//   let count = parseInt(getFavIdCount());
-//   count += 1
-//   firebase.database().ref('users/'+phoneNum+'/favCount').set(count);
-// }
-
-// function getFavIdCount(){
-//   firebase.database().ref('users/'+phoneNum+'/favCount').on('value', (snapshot) => {
-//     // console.log("get: " + snapshot.val())
-//     if (snapshot.val() != null){ 
-//       document.getElementById("favIdCount").innerHTML = snapshot.val();
-//     }
-//     else{
-//       firebase.database().ref('users/'+phoneNum+'/favCount').set(0);
-//     }
-//   })
-//   return document.getElementById("favIdCount").innerHTML
-// }
-// output += `<p onclick="addFavIdCount()">a</p>`+`<p onclick="getFavIdCount()">b</p>`
+// displayFav();
+showFavTable();
 
 function displayFav(){
   // Read from firebase realtime database and display fav in html
@@ -70,7 +50,7 @@ function displayFav(){
           output += `<div class="favCardThumbnail" onclick="watch_vid(${i})"><img src=`+ favList[i]['videoThumbnail'] +` style="width:auto;height:100%; position: relative; background-color: #fff;"></div>`
           output += `<div class="favCardTopBtn">`
           output += `<button class="favDeleteBtn" onclick="fav_delete(${i})">
-                      <img src="./css/images/delete_icon.png" style="background:transparent; height: 80%;"/>
+                      <img src="./css/images/trash_icon.jpeg" style="background:transparent; height: 80%;"/>
                     </button></div>`
           output += `<div class="favCardInterest" onclick="watch_vid(${i})">`+favList[i]['videoPreference']+`</div>`
           output += `<div class="favCardTitle" onclick="watch_vid(${i})">`+favList[i]['videoTitle']+`</div>`
@@ -166,6 +146,7 @@ function show_sort(){
   // alert(myFavList)
   if (sortGenerated == false){
     sortGenerated = true;
+    sortArea.innerHTML+=`<br><br>`;
     for (let i = 0; i<listInterest.length; i++){
       sortArea.innerHTML+=`<div class="sortInterestBox"><input type="checkbox" name="interest" style="margin-left: 15px;margin-top: 10px;" value="`+listInterest[i]+`"><label class="labelSort">`+listInterest[i]+"&nbsp"+`</label></div>`
     }
@@ -216,4 +197,110 @@ function filter() {
       cards.style.display = "none"
     }
   }
+}
+
+function showFavTable(){
+  console.log("Show history grid ran.");
+  let current_user = JSON.parse(localStorage.getItem("USER"));
+
+  grid = document.getElementById('favGrid');
+
+  // Retrieves the currently stored watch history
+  firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function(snapshot){
+      let currentHistory = []
+
+      // If history is not empty and video already exists in history, set videoExist to true
+      if (snapshot.exists()){
+          currentHistory = snapshot.val();
+          console.log(currentHistory);
+
+          // Table implementation
+          var title;
+
+          for (i in currentHistory){
+            currentVideo = currentHistory[i];
+
+            $(document).ready(function() {
+
+              console.log("second success callback");
+              title = currentVideo.videoTitle;
+              skill = currentVideo.videoPreference;
+
+              // Grid implementation
+
+              cell = document.createElement("div");
+              cell.className = "mdl-cell mdl-cell--6-col";
+
+              card = document.createElement("div");
+              card.className = "demo-card-wide mdl-card mdl-shadow--2dp";
+              card.style.height = "400px";
+              card.style.width = "auto";
+
+              cardTitle = document.createElement("div");
+              cardTitle.className = "mdl-card__title";
+              cardTitle.style.background = "url(" + currentVideo.videoThumbnail + ") center / cover";
+              cardTitle.style.height = "300px";
+              console.log(currentVideo.videoThumbnail);
+
+              card.appendChild(cardTitle);
+
+              cardSupport_1 = document.createElement("div");
+              cardSupport_1.className = "mdl-card__supporting-text";
+              cardSupport_1.innerHTML = currentVideo.videoUrl;
+              cardSupport_1.style.display = "none";
+              cardSupport_1.style.height = "1px";
+              card.appendChild(cardSupport_1);
+
+              cardSupport_2 = document.createElement("div");
+              cardSupport_2.className = "mdl-card__supporting-text";
+              cardSupport_2.innerHTML = `<b>`+skill+`<b><br>`;
+              cardSupport_2.innerHTML += title;
+              card.appendChild(cardSupport_2);
+
+              cardAction = document.createElement("div");
+              cardAction.className = "mdl-card__actions mdl-card--border";
+              cardActionButton_1 = document.createElement("a");
+              cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
+              cardActionButton_1.innerHTML = "VIEW";
+              cardAction.appendChild(cardActionButton_1);
+
+              cardActionButton_1.addEventListener('click', function(){
+                var row = this.parentElement.parentElement;
+                var url = row.getElementsByTagName("div")[1].innerHTML;
+                console.log(url);
+                window.open(url, '_blank').focus();
+              }, false);
+
+              cardActionButton_2 = document.createElement("a");
+              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
+              cardActionButton_2.innerHTML = "DELETE";
+              cardAction.appendChild(cardActionButton_2);
+
+              cardActionButton_2.addEventListener('click', function(){
+                if(confirm("Are you sure you want to delete this entry?")){
+                  console.log("Deleted an entry.");
+                  var row = this.parentElement.parentElement;
+                  console.log("Row index: " + row.rowIndex);
+                  var url = row.getElementsByTagName("div")[1].innerHTML;
+                  console.log(url);
+                  var cell = this.parentElement.parentElement.parentElement;
+                  console.log(cell);
+                  removeFromHistory(url);
+                  cell.remove();
+                };
+              }, false);
+
+              card.appendChild(cardAction);
+
+              cell.appendChild(card);
+              grid.appendChild(cell);
+            })
+          }
+      }
+
+      // If favourite is empty, add message to show history is empty
+      else{
+        console.log("Fav is currently empty.")
+      }
+  })
 }
