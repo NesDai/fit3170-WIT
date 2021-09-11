@@ -1154,8 +1154,6 @@ function searchYourPosts(param){
 
 
 
-
-
 // Likes for posts
 async function likePost(post_id, i) {
 
