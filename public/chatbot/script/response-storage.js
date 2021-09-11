@@ -4,19 +4,25 @@
  */
 
 /**
- * Stores the local question index to the cloud
+ * Stores local question indices and other data to the cloud
  */
-function updateQuestionIndex() {
-    // Store the current questionIndex value to the database
+function syncProgress() {
+    // Storing questionIndex to the cloud
     firebase.firestore().collection(USERS_BRANCH).doc(getUserID())
-        .set({questionIndex: questionIndex + 1})
+        .set({
+            questionIndex: questionIndex + 1,
+            currentSubQuestionIds: currentSubQuestionIds,
+            subQuestionIndex: subQuestionIndex
+        })
         .then(() => {
             console.log(
-                `questionIndex set to ${questionIndex + 1} ` +
-                `at 'users/${getUserID()}'`
+                `Synchronizing with cloud... (at 'users/${getUserID()}')\n` +
+                `\tquestionIndex = ${questionIndex + 1}\n` +
+                `\tcurrentSubQuestionIds = [${currentSubQuestionIds}]\n` +
+                `\tsubQuestionIndex = ${subQuestionIndex}\n`
             );
         })
-        .catch((error) => {
+        .catch(() => {
             console.error("Error while storing question index: " +
                 `'users/${getUserID()}'`);
         });
@@ -54,13 +60,13 @@ function saveResponse(answer) {
     }
 
     // Update the questionIndex on the cloud with the local one
-    updateQuestionIndex();
+    syncProgress();
 
     // Add an auto-ID response entry to the user branch
     firebase.firestore().collection(getUserResponsesBranch())
         .add(responseObject)
         .then((docRef) => {
-            console.log("Response object written with ID: ", docRef.id);
+            // console.log("Response object written with ID: ", docRef.id);
 
             // After writing the response to the user branch, also
             // write it to the responses branch
@@ -78,8 +84,8 @@ function saveResponse(answer) {
                 // The response ID we got in the first store
                 .set(reducedResponseObject)
                 .then(() => {
-                    console.log("Response written with ID: ", docRef.id,
-                        " at survey_responses branch");
+                    // console.log("Response written with ID: ", docRef.id,
+                    //     " at survey_responses branch");
                 })
                 .catch((error) => {
                     console.error("Error writing response copy at" +
@@ -94,7 +100,6 @@ function saveResponse(answer) {
 
 function getUserID() {
     let userString = localStorage.getItem("USER");
-    console.log(userString);
     let user = JSON.parse(userString);
     return user["phone"]; //=== null ? currentUser.email : phone;
 }

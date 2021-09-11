@@ -1,7 +1,6 @@
 //References
 let checkbox = document.getElementById("checkbox")
 let tick_warning = document.getElementById("tick-warning")
-let tick_line = document.getElementById("tick-warning-line")
 let content_box = document.getElementById("content-box")
 let confirmButtonRef = document.getElementById("confirmButton")
 
@@ -34,13 +33,12 @@ function checkAccepted(){
     } else {
         // if the tickbox is not ticked, display error message
         tick_warning.hidden = false
-        tick_line.hidden = false
     }
 }
 
 window.onload = function(){
     // initialise firestore reference to terms and conditions and content
-    let TermsAndConditionRef = firebase.firestore().collection("Terms&Conditions").doc("T&C_en_short");
+    let TermsAndConditionRef = firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_en_short");
     let content;
 
     // checks if the collection exists then displays T&C else upload the T&C and then display it.

@@ -19,14 +19,12 @@ function getTopic(){
 }
 
 
-var videoNames = [];
 // Function to populate history page table
 function showHistoryTable(){
-  console.log("Show history table ran.");
+  console.log("Show history grid ran.");
   let current_user = JSON.parse(localStorage.getItem("USER"));
 
-  table = document.getElementById('historyTableBody');
-  table.innerHTML = "";
+  grid = document.getElementById('historyGrid');
 
   // Retrieves the currently stored watch history
   firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function(snapshot){
@@ -37,84 +35,83 @@ function showHistoryTable(){
           currentHistory = snapshot.val();
           console.log(currentHistory);
 
-
-          table = document.getElementById('historyTableBody');
+          // Table implementation
           var title;
 
           for (i in currentHistory){
             currentVideo = currentHistory[i];
 
             $(document).ready(function() {
-                
+
               console.log("second success callback");
-
-            //   url = "https://www.youtube.com/watch?v=" + getVideoUrl(data);
-
-              tr = document.createElement("tr");
-
-              td0 = document.createElement("td");
-              td0.className = "mdl-data-table__cell--non-numeric";
-              img = document.createElement("img");
-              img.src = currentVideo.videoThumbnail;
-              td0.appendChild(img);
-
-              td1 = document.createElement("td");
-              td1.className = "mdl-data-table__cell--non-numeric";
-
-              td2 = document.createElement("td");
-              td2.className = "mdl-data-table__cell--non-numeric";
-              td2.innerHTML = currentVideo.videoUrl;
-
-              td3 = document.createElement("td");
-              a = document.createElement("a");
-              a.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent";
-              a.innerHTML = "DELETE";
-
-              td4 = document.createElement("td");
-              a2 = document.createElement("a");
-              a2.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button";
-              a2.innerHTML = "VIEW";
-
-
               title = currentVideo.videoTitle;
-              td1.innerHTML = title;
 
-              a.addEventListener('click', function(){
-                if(confirm("Are you sure you want to delete this entry?")){
-                  console.log("Deleted an entry.");
-                  var row = this.parentElement.parentElement;
-                  console.log("Row index: " + row.rowIndex);
-                  var url = row.getElementsByTagName("td")[2].innerHTML;
-                  console.log(url);
-                  var table = this.parentElement.parentElement.parentElement;
-                  removeFromHistory(url);
-                  table.deleteRow(row.rowIndex-1);
-                };
-              }, false);
+              // Grid implementation
 
-              td3.appendChild(a);
+              cell = document.createElement("div");
+              cell.className = "mdl-cell mdl-cell--6-col";
 
-              td4.appendChild(a2);
+              card = document.createElement("div");
+              card.className = "demo-card-wide mdl-card mdl-shadow--2dp";
+              card.style.height = "400px";
 
-              a2.addEventListener('click', function(){
+              cardTitle = document.createElement("div");
+              cardTitle.className = "mdl-card__title";
+              cardTitle.style.background = "url(" + currentVideo.videoThumbnail + ") center / cover";
+              cardTitle.style.height = "300px";
+              console.log(currentVideo.videoThumbnail);
+
+              card.appendChild(cardTitle);
+
+              cardSupport_1 = document.createElement("div");
+              cardSupport_1.className = "mdl-card__supporting-text";
+              cardSupport_1.innerHTML = currentVideo.videoUrl;
+              cardSupport_1.style.display = "none";
+              cardSupport_1.style.height = "1px";
+              card.appendChild(cardSupport_1);
+
+              cardSupport_2 = document.createElement("div");
+              cardSupport_2.className = "mdl-card__supporting-text";
+              cardSupport_2.innerHTML = title;
+              card.appendChild(cardSupport_2);
+
+              cardAction = document.createElement("div");
+              cardAction.className = "mdl-card__actions mdl-card--border";
+              cardActionButton_1 = document.createElement("a");
+              cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
+              cardActionButton_1.innerHTML = "VIEW";
+              cardAction.appendChild(cardActionButton_1);
+
+              cardActionButton_1.addEventListener('click', function(){
                 var row = this.parentElement.parentElement;
-                var url = row.getElementsByTagName("td")[2].innerHTML;
+                var url = row.getElementsByTagName("div")[1].innerHTML;
                 console.log(url);
                 window.open(url, '_blank').focus();
               }, false);
 
-              tr.appendChild(td0);
-              tr.appendChild(td1);
-              tr.appendChild(td2);
-              tr.appendChild(td4);
-              tr.appendChild(td3);
-              table.appendChild(tr);
+              cardActionButton_2 = document.createElement("a");
+              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
+              cardActionButton_2.innerHTML = "DELETE";
+              cardAction.appendChild(cardActionButton_2);
 
+              cardActionButton_2.addEventListener('click', function(){
+                if(confirm("Are you sure you want to delete this entry?")){
+                  console.log("Deleted an entry.");
+                  var row = this.parentElement.parentElement;
+                  console.log("Row index: " + row.rowIndex);
+                  var url = row.getElementsByTagName("div")[1].innerHTML;
+                  console.log(url);
+                  var cell = this.parentElement.parentElement.parentElement;
+                  console.log(cell);
+                  removeFromHistory(url);
+                  cell.remove();
+                };
+              }, false);
 
-              // console.log(data);
-              videoNames += title;
+              card.appendChild(cardAction);
 
-
+              cell.appendChild(card);
+              grid.appendChild(cell);
             })
           }
       }

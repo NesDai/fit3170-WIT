@@ -9,49 +9,49 @@ const SUB_QUESTIONS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "living with someone at home?", // Qs 1.12.1
-    "living alone at home?", // Qs 1.12.2
-    "living with someone at aged care setting?", // Qs 1.12.3
-    "living alone at aged care setting?" // Qs 1.12.4
+    "อยู่อาศัยกับบุคคลอื่นในบ้าน", // Qs 1.12.1
+    "อยู่อาศัยคนเดียวในบ้าน", // Qs 1.12.2
+    "อยู่อาศัยกับบุคคลอื่นที่สถานดูแลผู้สูงอายุ", // Qs 1.12.3
+    "อยู่อาศัยลำพังที่สถานดูแลผู้สูงอายุ" // Qs 1.12.4
 ];
 
 const SUB_QUESTIONS_HINTS_1_12 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก"
 ];
 
 const SUB_QUESTIONS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Depending on others to meet <b>my needs</b>.", // Qs 1.13.a
-    "Not being able to get <b>medical</b> treatment.", // Qs 1.13.b
-    "Had no money to buy <b>groceries</b>.", // Qs 1.13.c
-    "Not being able to pay <b>at least one</b> bill." // Qs l.13.d
+    "พึ่งพาผู้อื่นในการทำเรื่องสำคัญต่างๆ", // Qs 1.13.a
+    "ไม่สามารถที่จะเข้าถึงและได้รับการรักษาทางการแพทย์ได้", // Qs 1.13.b
+    "ไม่มีเงินที่จะซื้ออาหารสดหรือข้าวของเครื่องใช้", // Qs 1.13.c
+    "ไม่สามารถที่จะจ่ายค่าบริการบางอย่างได้อย่างน้อย 1 รายการ (เช่น ค่าน้ำ ค่าไฟ ค่าโทรศัพท์)" // Qs l.13.d
 ];
 
 const SUB_QUESTIONS_HINTS_1_13 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก"
 ];
 
 const SUB_QUESTIONS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Overall, my life is close to my ideal.", // Qs 1.14.a
-    "My current life state is excellent.", // Qs 1.14.b
-    "I am satisfied with my life." // Qs 1.14.c
+    "โดยรวมแล้ว ชีวิตของฉันใกล้เคียงกับที่ฉันวาดฝันไว้", // Qs 1.14.a
+    "ชีวิตตอนนี้ของฉันดีมากๆ", // Qs 1.14.b
+    "ฉันพึงพอใจกับชีวิตของฉัน" // Qs 1.14.c
 ];
 
 // TODO Fill in tooltips
@@ -59,39 +59,39 @@ const SUB_QUESTIONS_HINTS_1_14 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก"
 ];
 
 const PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What is your <b>age</b> in years?", // Qs 1.1
-    "What is your <b>gender</b>?", // Qs 1.2
-    "What is your <b>ethnic</b> group?", // Qs 1.3
-    "Where do you <b>currently</b> live?", // Qs 1.4
-    "What is your average <b>net household income</b> per month?", // Qs 1.5
-    "What is your completed highest <b>education</b> level?", // Qs 1.6
-    "What is your <b>marital status</b>?", // Qs 1.7
-    "How many <b>children</b> have you <b>raised</b>?", // Qs 1.8
-    "How many <b>children</b> do you <b>talk or correspond</b> with weekly?", // Qs 1.9
+    "คุณมีอายุกี่ปี?", // Qs 1.1
+    "โปรดระบุเพศของคุณ?", // Qs 1.2
+    "โปรดระบุเชื้อชาติของคุณ?", // Qs 1.3
+    "ณ ปัจจุบันคุณอาศัยอยู่ในเขตใด?", // Qs 1.4
+    "รายได้เฉลี่ยต่อครัวเรือนของครอบครัวคุณ ต่อเดือน เป็นเท่าไหร่?", // Qs 1.5
+    "โปรดระบุระดับการศึกษาสูงสุดของคุณ?", // Qs 1.6
+    "โปรดระบุสถานภาพสมรสของคุณ?", // Qs 1.7
+    "คุณมีลูกกี่คน?", // Qs 1.8
+    "คุณคุยหรือติดต่อกับลูกกี่คนในสัปดาห์หนึ่งๆ?", // Qs 1.9
 
     // The question above this line is question 1.9
 
-    "How many other <b>relatives</b> do you feel close to?", // Qs 1.10
-    "How many <b>close friends</b> do you have?", // Qs 1.11
-    "What is your independent living status?", // Qs 1.12
+    "คุณมีญาติสนิทกี่คน?", // Qs 1.10
+    "คุณมีเพื่อนสนิทกี่คน?", // Qs 1.11
+    "โปรดระบุลักษณะการอยู่อาศัยของคุณ?", // Qs 1.12
 
     // The question above this line is a long question 1.12
 
-    "In the past 6 months, have you experienced the following situations?", // Qs 13
+    "ใน 6 เดือนที่ผ่านมา คุณเคยมีประสบการณ์ดังต่อไปนี้หรือไม่?", // Qs 13
 
     // The question above this line is a long question (1.13)
 
-    "How <b>satisfied</b> are you with your current life now? (Rate from 1 to 5)"// Qs 1.14
+    "คุณมีความพึงพอใจมากน้อยแค่ไหนกับความเป็นอยู่ในปัจจุบัน?" // Qs 1.14
 
     // The question above this line is a long question 1.14
 ];
@@ -100,28 +100,28 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Enter a Number",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Enter a Number",
-    "Enter a Number",
+    "โปรดระบุเป็นตัวเลข",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือกn",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือกn",
+    "เลือกตัวเลือกn",
+    "โปรดระบุเป็นตัวเลข",
+    "โปรดระบุเป็นตัวเลข",
 
     // The question above this line is question 1.10
 
 
-    "Enter a Number",
-    "Select an Option",
-    "Select an Option",
+    "โปรดระบุเป็นตัวเลข",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "เลือกตัวเลือก",
     // The question above this line is a long question (1.14)
 
-    "Select an Option",
+    "เลือกตัวเลือก",
     // The question above this line is a long question (1.14)
 
-    "Select an Option"
+    "เลือกตัวเลือก"
     // The question above this line is a long question (1.14)
 ];
 
@@ -129,94 +129,93 @@ const PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "What is your <b>current</b> employment status?", // Qs 2.1
-    "What is your <b>current</b> job/ occupation/ profession?", // Qs 2.2
-    "How <b>satisfied</b> are you in your current employment status? (Rate from 1 to 5)", // Qs 2.3
-    "Did you lose your <b>job</b> due to the COVID-19 pandemic?", // Qs 2.4
-    "Did you lose your <b>earning income</b> due to the COVID-19 pandemic?", // Qs 2.5
-    "How confident are you in finding a <b>new job</b> in the near future?", // Qs 2.6
-    "How confident are you in being able to keep your <b>current job</b> in the near future?" // Qs 2.7
+    "โปรดระบุสถานะการทำงานของคุณในปัจจุบัน?", // Qs 2.1
+    "โปรดระบุงานหรืออาชีพที่คุณทำอยู่ในตอนนี้?", // Qs 2.2
+    "คุณมีความพึงพอใจในระดับใดกับสถานการณ์ทำงานในปัจจุบันของคุณมากน้อยเพียงใด? (โปรดระบุเป็นคะแนนตั้งแต่ 1 ถึง 5)", // Qs 2.3
+    "คุณตกงานหรือถูกเลิกจ้างในช่วงที่มีการแพร่ระบาดของเชื้อโควิด 19 หรือไม่?", // Qs 2.4
+    "คุณสูญเสียรายได้โดยมีสาเหตุมาจากการแพร่ระบาดของเชื้อโควิด 19 หรือไม่?", // Qs 2.5
+    "คุณมีความมั่นใจแค่ไหนในการหางานใหม่ในอนาคตอันใกล้นี้?", // Qs 2.6
+    "คุณมั่นใจแค่ไหนว่าคุณจะสามารถรักษาตำแหน่งงานปัจจุบันของคุณไว้ได้ในอนาคตอันใกล้นี้?" // Qs 2.7
 ];
 
 const HINTS_PART2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Type in a Resonse",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก"
 ];
 
 const SUB_QUESTIONS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "SMS, text messaging (such as Whatsapp, WeChat, etc.)", // Qs 3.2.a
-    "Browsing/ surfing websites", // Qs 3.2.b
-    "Watching videos", // Qs 3.2.c
-    "Using Zoom, Facetime, Skype, Google Talk, etc.", // Qs 3.2.d
-    "Using COVID-19 contact tracing app (such as MySejahtera)", // Qs 3.2.e
-    "Online shopping or e-commerce (such as Lazada, Shopee, etc.)", // Qs 3.2.f
-    "Using mobile banking/ e-wallet (such as GrabPay, BoostPay, FavePay, Touch N" +
-    "Go Pay, etc.)", // Qs 3.2.g
+    "ส่งรับ SMS หรือข้อความในแอปพลิเคชั่นเช่น LINE (ไลน์) หรือ Facebook messenger (เฟซบุ๊ค)", // Qs 3.2.a
+    "เล่นอินเตอร์เน็ต", // Qs 3.2.b
+    "ดูคลิปวีดีโอ", // Qs 3.2.c
+    "โทรศัพท์แบบเห็นหน้าผ่าน Zoom (โปรแกรมซูม) LINE call (ไลน์), Facetime (เฟสไทม์), หรือ เฟซบุ๊ค", // Qs 3.2.d
+    "ใช้แอปพลิเคชั่นในการติดตามสถานการณ์โควิด เช่น หมอชนะ เราชนะ", // Qs 3.2.e
+    "ซื้อของออนไลน์ผ่านร้านค้าบนลาซาด้า ซ็อปปี หรือร้านค้าออนไลน์อื่นๆ", // Qs 3.2.f
+    "ทำธุรกรรมทางการเงินผ่านโทรศัพท์มือถือ (เช่น ใช้โมบายแบงค์กิ้งของธนาคารต่างๆ หรือใช้ Rabbit LINE Pay, ทรูมันนี่วอลเล็ต)", // Qs 3.2.g
     // The question above this line is question 3.2g
 
-    "Online ordering for food or groceries", // Qs 3.2.h
-    "Using social network (such as Facebook, Instagram, Twitter, etc.)", // Qs 3.2.i
-    "Taking a photo", // Qs 3.2.j
-    "Mapping navigator (such as Google Map, Waze, Tom-Tom, etc.)", // Qs 3.2.k
-    "Managing my appointment on the calendar in my smartphone or computer", // Qs 3.2.l
-    "Reading online news or online magazines", // Qs 3.2.m
-    "Taking notes (such as shopping lists or tasks) that I need to do", // Qs 3.2.n
-    "Filming a video", // Qs 3.2.o
+    "สั่งอาหารหรือของสดออนไลน์", // Qs 3.2.h
+    "เล่นโซเชียลมีเดีย เช่น เฟซบุ๊ค อินสตาแกรม ทวิตเตอร์", // Qs 3.2.i
+    "ถ่ายรูป", // Qs 3.2.j
+    "ใช้แอปพลิเคชันนำทางหรือบอกทาง เช่น กูเกิลแม็ป", // Qs 3.2.k
+    "จัดการนัดหมายต่างๆ ในปฏิทิน", // Qs 3.2.l
+    "อ่านข่าวหรือนิตยสารออนไลน์", // Qs 3.2.m
+    "จดบันทึก รายการซื้อของ หรือ งานต่างๆที่ต้องทำ", // Qs 3.2.n
+    "ถ่ายวีดีโอ", // Qs 3.2.o
     // The question above this line is question 3.2o
 
-    "Listening to music", // Qs 3.2.p
-    "Playing games", // Qs 3.2.q
-    "Using to contact government authorities" // Qs 3.2.r
+    "ฟังเพลง", // Qs 3.2.p
+    "เล่นเกมส์", // Qs 3.2.q
+    "ติดต่อหน่วยงานราชากรต่างๆ" // Qs 3.2.r
 ];
 
 const SUB_QUESTIONS_HINTS_3_2 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
     // The question above this line is question 3.2g
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
     // The question above this line is question 3.2p
 
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
 ];
 
 const PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "How do you access the Internet using your mobile phone?", // Qs 3.1
+    "คุณใช้อินเตอร์เน็ตแบบไหนในโทรศัพท์มือถือของคุณ?", // Qs 3.1
     // The question above this line is question 3.1
 
-    "How <b>confident</b> are you in <b>using your mobile phone</b> the following activities? (Rate from 0 to 5)" // Qs 3.2
+    "คุณมีความมั่นใจในระดับใดในการใช้โทรศัพท์มือถือเพื่อทำกิจกรรมต่างๆ ต่อไปนี้? (โปรดระบุเป็นตัวเลขระดับจาก 1 ถึง 5)" // Qs 3.2
     // The question above this line is a long question (3.2)
 ];
 
@@ -224,7 +223,7 @@ const HINTS_PART3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
+    "เลือกตัวเลือก",
     // The question above this line is question 3.1
 
     ""
@@ -236,78 +235,74 @@ const SUB_QUESTIONS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "ICT/ technology skills (such as how to use mobile phone or computer software)", // Qs 4.3.a
-    "Social communication skills (such as how to improve relationships or interact " +
-    "with others)", // Qs 4.3.b
-    "Complementary skills (such as learning non-work-related skills or hobbies)", // Qs 4.3.c
-    "Work-related skills (such as how to increase job/ business productivity)" // Qs 4.3.d
+    "ทักษะเกี่ยวกับเทคโนโลยี เช่น การใช้โทรศัพท์มือถือ หรือ การใช้ซอฟต์แวร์คอมพิวเตอร์", // Qs 4.3.a
+    "ทักษะเกี่ยวกับการสื่อสารหรือทักษะทางสังคม (เช่น การพัฒนาความสัมพันธ์ที่ดีกับผู้อื่น เป็นต้น)", // Qs 4.3.b
+    "ทักษะเกี่ยวกับงานอดิเรกที่สนใจ (เช่น การปลูกดอกไม้ การถักไหมพรม เป็นต้น)", // Qs 4.3.c
+    "ทักษะเกี่ยวกับงานหรืออาชีพ (เช่น การเพิ่มประสิทธิภาพในการทำงาน เป็นต้น)" // Qs 4.3.d
 ];
 
 const SUB_QUESTIONS_HINTS_4_3 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก"
 ];
 
 const SUB_QUESTIONS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "I understand the meaning of life.", // Qs 4.5.a
-    "I understand the meaning of daily life activities.", // Qs 4.5.b
-    "I find attractiveness in daily life activities.", // Qs 4.5.c
-    "I have confidence in daily life activities.", // Qs 4.5.d
-    "I have self-assurance in the performance of daily life activities.", // Qs 4.5.e
-    "I have confidence in newly formed daily life activities.", // Qs 4.5.f
-    "I have capabilities of expressing the self.", // Qs 4.5.g
-    "I have capabilities of selecting better alternatives.", // Qs 4.5.h
-    "I have capabilities of making decisions on particular problems.", // Qs 4.5.i
-    "I have capabilities of working together with others.", // Qs 4.5.j
-    "I have capabilities of building teams with others.", // Qs 4.5.k
-    "I have capabilities of building coalitions.", // Qs 4.5.l
-    "I have capabilities of solving problems with others." // Qs 4.5.m
+    "ฉันเข้าใจความหมายของชีวิต", // Qs 4.5.a
+    "ฉันเข้าใจความหมายของกิจกรรมประจำวันต่างๆ", // Qs 4.5.b
+    "ฉันพบความน่าสนใจในกิจกรรมประจำวันต่างๆ", // Qs 4.5.c
+    "ฉันมีความมั่นใจในกิจกรรมประจำวันต่างๆ", // Qs 4.5.d
+    "ฉันมีความมั่นใจในประสิทธิภาพของการทำกิจกรรมประจำวันต่างๆ", // Qs 4.5.e
+    "ฉันมีความมั่นใจในกิจกรรมประจำวันรูปแบบใหม่ๆ", // Qs 4.5.f
+    "ฉันมีความสามารถในการแสดงออกเกี่ยวกับตัวฉันหรือความรู้สึกของฉัน", // Qs 4.5.g
+    "ฉันมีความสามารถในการเลือกทางเลือกที่ดีกว่า", // Qs 4.5.h
+    "ฉันมีความสามารถในการตัดสินใจเมื่อประสบปัญหาใดๆ", // Qs 4.5.i
+    "ฉันมีความสามารถในการทำงานร่วมกับผู้อื่น", // Qs 4.5.j
+    "ฉันมีความสามารถในการสร้างทีมร่วมกับผู้อื่น", // Qs 4.5.k
+    "ฉันมีความสามารถในการสร้างพันธมิตร", // Qs 4.5.l
+    "ฉันมีความสามารถในการแก้ปัญหาร่วมกับผู้อื่น" // Qs 4.5.m
 ];
 
 const SUB_QUESTIONS_HINTS_4_5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option",
-    "Select an Option"
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก",
+    "เลือกตัวเลือก"
 ];
 
 const PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "How <b>often</b> do you try to learn something new or useful using a mobile \n" +
-    "phone? (Rate from 1 to 7)\n" +
-    "[1] Never, [2] Once a month, [3] Few times a month, [4] Once a week, [5] Few times a week, [6] Once a day, [7] Many times a day", // Qs 4.1
+    "คุณพยายามเรียนรู้สิ่งใหม่ๆ หรือสิ่งที่เป็นประโยชน์ผ่านโทรศัพท์มือถือของคุณบ่อยแค่ไหน? (ระบุเป็นตัวเลขระดับ 1 ถึง 7)\n" +
+    "[1] ไม่เคยเลย, [2] เดือนละครั้ง, [3] 2-3 ครั้งต่อเดือน, [4] สัปดาห์ละครั้ง, [5] หลายครั้งต่อสัปดาห์, [6] วันละครั้ง, [7] หลายครั้งใน 1 วัน", // Qs 4.1
 
-    "How many <b>hours per week</b> do you devote to learning something new or useful" +
-    " using a mobile phone?", // Qs 4.2
+    "คุณแบ่งเวลาประมาณกี่ชั่วโมงต่อ 1 สัปดาห์ไว้สำหรับการเรียนรู้สิ่งใหม่ๆ หรือสิ่งที่เป็นประโยชน์ผ่านโทรศัพท์มือถือของคุณ?", // Qs 4.2
     // The question above this line is question 4.2
 
-    "How <b>interested</b> are you to <b>learn</b> the following skills using a mobile phone?" +
-    "(Rate from 1 to 5)", // Qs 4.3
+    "คุณสนใจที่จะใช้โทรศัพท์มือถือในการเรียนรู้ทักษะต่างๆต่อไปนี้มากน้อยแค่ไหน?", // Qs 4.3
     // The question above this line is a long question (4.3)
 
-    "What <b>work-related skills</b> do you wish to learn using a mobile phone? ", // Qs 4.4
+    "คุณต้องการใช้โทรศัพท์มือถือของคุณเรียนรู้ทักษะใดเกี่ยวกับงานหรืออาชีพ?", // Qs 4.4
     // The question above this line is question 4.4
 
-    "How much do you agree or disagree that the following statement <b>describes you</b>? (Rate from 1 to 5)" // Qs 4.5
+    "คุณเห็นด้วยหรือไม่เห็นด้วยมากน้อยเพียงใดว่าประโยคต่อไปนี้อธิบายความเป็นตัวคุณ?" // Qs 4.5
     // The question above this line is question 4.5
 ];
 
@@ -315,36 +310,35 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Select an Option",
-    "Enter a Number",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
+    "ใส่จำนวนชั่วโมงเป็นตัวเลข",
     // The question above this line is question 4.2
 
-    "Select an Option",
+    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
     // The question above this line is a long question (4.3)
 
     "",
-    "Select an Option"
+    "เลือกตัวเลือก" // TODO get confirmation from clients on translation of "Select an option"
 ]
 
 const PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Why are you interested in learning using a mobile phone?", // Qs 5.1
-    "What resources do you wish to have for learning using a mobile phone?", // Qs 5.2
-    "What has been the most frustrating things so far about learning using a " +
-    "mobile phone?", // Qs 5.3
-    "Tell us about your problems or challenges faced at work." // Qs 5.4
+    "ทำไมคุณจึงสนใจที่จะเรียนรู้เกี่ยวกบการใช้โทรศัพท์มือถือ?", // Qs 5.1
+    "คุณต้องการทรัพยากรอะไรเพื่อที่จะเรียนรู้เกี่ยวกับการใช้โทรศัพท์มือถือ?", // Qs 5.2
+    "อะไรเป็นสิ่งที่น่าหงุดหงิดใจที่สุดที่คุณเคยเจอหรือรู้สึกเมื่อพยายามเรียนรู้เกี่ยวกับการใช้โทรศัพท์มือถือ?", // Qs 5.3
+    "ช่วยเล่าเกี่ยวกับปัญหาหรือความท้าทายในเรื่องงาน หรือที่ทำงานให้ฟังหน่อย?" // Qs 5.4
 ]
 
 const HINTS_PART5 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Type in a Response",
-    "Type in a Response",
-    "Type in a Response",
-    "Type in a Response"
+    "พิมพ์ตอบกลับ", // TODO get confirmation on translation of "Type in a Response"
+    "พิมพ์ตอบกลับ",
+    "พิมพ์ตอบกลับ",
+    "พิมพ์ตอบกลับ"
 ]
 
 // TODO 2.6 and 2.7 - Likert Scale
@@ -361,29 +355,29 @@ function pushPart1Questions() {
     pushNumeric("1.1", PART1[1], 50, 100, true, HINTS_PART1[1]);
 
     // Question 1.2
-    let choices_1_2 = ["Male", "Female"]
-    let skip_choices_1_2 = ["Male"];
+    let choices_1_2 = ["ผู้ชาย", "ผู้หญิง"]
+    let skip_choices_1_2 = ["ผู้ชาย"];
     pushMultipleChoice("1.2", PART1[2], choices_1_2, skip_choices_1_2, SKIP_END_SURVEY, HINTS_PART1[2]);
 
     // Question 1.3
-    let choices_1_3 = ["Malay", "Chinese", "Indian", "Thai", "Others"];
+    let choices_1_3 = ["เชื้อสายมาเลย์", "เชื้อสายจีน", "เชื้อสายอินเดีย", "เชื้อสายไทย", "อื่นๆ"];
     //pushMultipleChoice("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
     pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
-    let choices_1_4 = ["Urban area", "Rural area"];
+    let choices_1_4 = ["เขตตัวเมือง", "เขตชนบท"];
     pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED, HINTS_PART1[4]);
 
     // Question 1.5
-    let choices_1_5 = ["No income", "Less than MYR2500", "MYR2501-3169", "MYR3170-3969", "MYR3970-4849", "MYR4850 or more"];
+    let choices_1_5 = ["ไม่มีรายได้", "น้อยกว่า 25,000 บาท", "ระหว่าง 25,001 – 31,690 บาท", "ระหว่าง 31,700 – 39,690 บาท", "ระหว่าง 39,700 - 48,490 บาท", "มากกว่า 48,500 บาท"];
     pushMultipleChoice("1.5", PART1[5], choices_1_5, [], SKIP_NOT_ALLOWED, HINTS_PART1[5]);
 
     // Question 1.6
-    let choices_1_6 = ["No formal education", "Primary school", "Secondary/ high school", "Vocational/ technical certification", "University"];
+    let choices_1_6 = ["ไม่ได้ผ่านระบบการศึกษาอย่างเป็นทางการ", "ประถมศึกษา", "มัธยมศึกษา", "อาชีวศึกษา หรือ อนุปริญญา", "อุดมศึกษา (ปริญญาตรี หรือ สูงกว่า)"];
     pushMultipleChoice("1.6", PART1[6], choices_1_6, [], SKIP_NOT_ALLOWED, HINTS_PART1[6]);
 
     // Question 1.7
-    let choices_1_7 = ["Single", "Married", "Divorced", "Widowed", "Other relationship"];
+    let choices_1_7 = ["โสด", "สมรส", "หย่า", "หม้าย", "ความสัมพันธ์แบบอื่น"];
     pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
@@ -415,8 +409,8 @@ function pushPart1Questions() {
             initLongQuestionParams();
 
             // Question 1.12a
-            let choices_1_12 = ["Yes", "No"];
-            let skip_choices_1_12 = ["Yes"];
+            let choices_1_12 = ["เคย", "ไม่เคย"];
+            let skip_choices_1_12 = ["เคย"];
             appendMultipleChoice(questionNumber, q12docRef.id, SUB_QUESTIONS_1_12[1], choices_1_12, skip_choices_1_12, q13docRef.id, SUB_QUESTIONS_HINTS_1_12[1]);
 
             // Question 1.12b
@@ -442,7 +436,7 @@ function pushPart1Questions() {
         initLongQuestionParams();
 
         // Question 1.13a
-        let choices_1_13 = ["Yes", "No"];
+        let choices_1_13 = ["เคย", "ไม่เคย"];
         appendMultipleChoice(questionNumber, q13docRef.id, SUB_QUESTIONS_1_13[1],
             choices_1_13, [], SKIP_NOT_ALLOWED,
             SUB_QUESTIONS_HINTS_1_13[1]);
@@ -495,13 +489,9 @@ function pushPart2Questions() {
     setPartNumber(2);
 
     // Question 2.1
-    let choices_2_1 = ["Working", "Retired", "Semi-retired", "Not working",
-        "Not working but doing voluntary work", "Not working but looking for a job", "others"];
-    let skip_choices_2_1 = ["Retired", "Not working", "Not working but doing voluntary work", "Not working but looking for a job"];
-    pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1,
-        skip_choices_2_1,
-        "insert question 2.3 id here",
-        HINTS_PART2[1]);
+    let choices_2_1 = ["ทำงาน", "เกษียณอายุ", "กึ่งเกษียณ (ทำงานบ้างเป็นครั้งคราว)", "ไม่ได้ทำงาน ", "ไม่ได้ทำงานประจำแต่ทำงานอาสาสมัครเพื่อสังคมบางอย่าง", "ไม่ได้ทำงานแต่กำลังมองหางานอยู่", "อื่นๆ โปรดระบุ"];
+    let skip_choices_2_1 = ["เกษียณอายุ", "ไม่ได้ทำงาน ", "ไม่ได้ทำงานประจำแต่ทำงานอาสาสมัครเพื่อสังคมบางอย่าง", "ไม่ได้ทำงานแต่กำลังมองหางานอยู่"];
+    pushMultipleChoiceOthers("2.1", PART2[1], choices_2_1, skip_choices_2_1, "insert question 2.3 id here", HINTS_PART2[1]);
 
     // Question 2.2
     pushShortText("2.2", PART2[2], HINTS_PART2[2]);
@@ -510,25 +500,23 @@ function pushPart2Questions() {
     pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
 
     // Question 2.4
-    let choices_2_4 = ["Yes", "No", "Not applicable"];
+    let choices_2_4 = ["ใช่", "ไม่ใช่", "ไม่เกี่ยวข้อง"];
     pushMultipleChoice("2.4", PART2[4], choices_2_4, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[4]);
 
     // Question 2.5
-    let choices_2_5 = ["Yes", "No", "Not applicable"];
+    let choices_2_5 = ["ใช่", "ไม่ใช่", "ไม่เกี่ยวข้อง"];
     pushMultipleChoice("2.5", PART2[5], choices_2_5, [],
         SKIP_NOT_ALLOWED, HINTS_PART2[5]);
 
     // TODO 2.6 and 2.7 - Are these numeric questions or multiple-choice questions?
 
     // Question 2.6
-    let choices_2_6 = ["Not applicable", "Not confident at all", "Somewhat not confident",
-        "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_6 = ["ไม่เกี่ยวข้อง", "ไม่มีความมั่นใจเลยl", "ไม่ค่อยมั่นใจ", "มั่นใจเล็กน้อย", "ค่อนข้างมั่นใจ", "มั่นใจมาก"];
     pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
 
     // Question 2.7
-    let choices_2_7 = ["Not applicable", "Not confident at all", "Somewhat not confident",
-        "Moderately confident", "Somewhat confident", "Extremely confident"];
+    let choices_2_7 = ["ไม่เกี่ยวข้อง", "ไม่มีความมั่นใจเลย", "ไม่ค่อยมั่นใจ", "มั่นใจเล็กน้อย", "ค่อนข้างมั่นใจ", "มั่นใจมาก"];
     pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
 }
 
@@ -539,11 +527,11 @@ function pushPart3Questions() {
 
     // Question 3.1
     let choices_3_1 = [
-        "Prepaid mobile data plan",
-        "Postpaid mobile data plan",
-        "Home WiFi broadband plan",
-        "Public WiFi hotspot",
-        "I don't know how to access the Internet"
+        "แพคเกจอินเตอ์เน็ตแบบเติมเงิน",
+        "แพคเกจอินเตอร์เน็ตแบบจ่ายรายเดือน",
+        "เชื่อมต่อกับ WiFi ของที่บ้าน",
+        "เชื่อมต่อกับ WiFi ตามที่สาธารณะ",
+        "ฉันไม่รู้วิธีเชื่อมต่ออินเตอร์เน็ต"
     ];
     pushMultipleChoice("3.1", PART3[1], choices_3_1, [],
         SKIP_NOT_ALLOWED, HINTS_PART3[1]);
@@ -651,13 +639,13 @@ function pushNumeric(questionNumber, questionText, lowerRange, upperRange, skipI
         question_number: "1.1",
         category: "Part I: About yourself",
         type: "numeric",
-        question: "What is your age in years?",
+        question: "What is your age in years? (enter a number)",
         restrictions: {
             lowerRange: 50,
             upperRange: 100,
             skipIfInvalid: true
         },
-        hint: "Enter a Number"
+        hint: "placeholder"
     };
 
     let questionObject = {
@@ -853,7 +841,12 @@ function pushLongQuestion(questionNumber, questionText) {
         category: "Part IV: About your learning interest",
         type: "long-question",
         question: "How interested are you to learn the following skills" +
-            "using a mobile phone ? (Rate from 1 to 7)",
+            "using a mobile phone ? (Rate from 1 to 7)" +
+            "[1] extremely not interested, [2] very not interested, " +
+            "[3] not interested," +
+            "[4] moderately interested, [5] highly interested, " +
+            "[6] very interested," +
+            "[7] extremely interested",
         restrictions: {},
         hint: "placeholder",
         arrangement: []
@@ -959,7 +952,7 @@ function appendMultipleChoice(questionNumber, longQuestionId,
 }
 
 function pushQuestionObject(questionObject) {
-    return firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX]).add(questionObject);
+    return firebase.firestore().collection(QUESTIONS_BRANCHES[TH_INDEX]).add(questionObject);
 }
 
 let partNumber = 0;
@@ -1063,7 +1056,7 @@ function updateLongQuestionsWithSubQuestionIds() {
 
         let arrangement = subQuestionIds[longQuestionId];
 
-        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX]).doc(longQuestionId)
+        firebase.firestore().collection(QUESTIONS_BRANCHES[TH_INDEX]).doc(longQuestionId)
             .update({
                 "arrangement": arrangement
             })
@@ -1077,7 +1070,7 @@ function updateLongQuestionsWithSubQuestionIds() {
     }
 }
 
-function uploadQuestions_en() {
+function uploadQuestions_th() {
     pushPart1Questions();
     pushPart2Questions();
     pushPart3Questions();
@@ -1092,7 +1085,7 @@ function uploadQuestions_en() {
  * <br>
  * 2. To update the long question objects with IDs of their sub-questions.
  */
-function housekeeping_en() {
+function housekeeping_th() {
     updateLongQuestionsWithSubQuestionIds();
 
     let result = [];
@@ -1125,7 +1118,7 @@ function housekeeping_en() {
     }
 
     // Update question 2.1's skipTarget with 2.3's ID
-    firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX]).doc(question_2_1_id)
+    firebase.firestore().collection(QUESTIONS_BRANCHES[TH_INDEX]).doc(question_2_1_id)
         .update({
             "restrictions.skipTarget": question_2_3_id
         })
