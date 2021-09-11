@@ -647,21 +647,23 @@ transition: color 0.15s ease-in;
 		position: absolute;
 		bottom: 7px;
 		height: 55px;
-		width: 30%;
+		width: 37%;
 		background-color: var(--secondary-color);
 		z-index: 1;
 		border-radius: 25px;
 		transition: 0.25s ease-out;
 	}
 	input[id="radio-0"]:checked~.glider {
-		transform: translateX(0%);
+		transform: translateX(-5%);
 	}
 
 	input[id="radio-1"]:checked~.glider {
-		transform: translateX(105%);
+		transform: translateX(140%);
+		width:25%;
 	}
 	input[id="radio-2"]:checked~.glider {
-		transform: translateX(215%);
+		transform: translateX(211%);
+		width:30%;
 	}
 	#tab0, #tab1, #tab2{
 		font-size:16px ;
