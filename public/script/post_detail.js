@@ -63,29 +63,29 @@ function printPostDetails(post, button_num) {
         
     let post_details = document.getElementById("post_details");
     let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
+    <button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+    <button class="dislike mdl-button mdl-js-button mdl-button--raised "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
     if (button_num == 1) {
         // liked
         button = `<button
-         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+         class="like mdl-button mdl-js-button mdl-button--raised"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
     } else if (button_num == -1) {
         // disliked
-        button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+        button = `<button class="like mdl-button mdl-js-button mdl-button--raised" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
@@ -150,7 +150,7 @@ function printPostDetails(post, button_num) {
                           <!--  LIKE DISLIKE FOR POST -->
                           <br>
                           ${button}
-                          <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
+                          <button class="favourite mdl-button mdl-js-button mdl-button--raised" id="favourite_post_btn" onclick="checkButtonStatus()">
                           <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
                           </button>
                        </div>
@@ -167,7 +167,7 @@ function printPostDetails(post, button_num) {
                           <!-- ANONYMOUS CHECKBOX BUTTON -->
                        <form>
                           <div>
-                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                             <label class="mdl-checkbox mdl-js-checkbox" >
                              <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
                              <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                              </label>
@@ -175,7 +175,7 @@ function printPostDetails(post, button_num) {
                        </form>
                        <!-- SEND BUTTON -->
                        <div>
-                          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="send_comment_btn" type="submit" onclick="addComment()">
+                          <button class="mdl-button mdl-js-button mdl-button--raised" id="send_comment_btn" type="submit" onclick="addComment()">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
@@ -401,7 +401,7 @@ function printComments() {
                  </div>
                  <!--  LIKE FOR COMMENT -->
                  <span id='like_button_comment' href="#">
-                 <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
+                 <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised" id="like_comment_btn">
                  <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img>
                  </button>
                  </span>
@@ -409,7 +409,7 @@ function printComments() {
 
                  <!-- ADD REPLY BUTTON FOR COMMENT -->
                  <span>
-                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
+                 <button class="reply mdl-button mdl-js-button mdl-button--raised" id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
                  <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                  </span>
                  <br>
@@ -424,13 +424,13 @@ function printComments() {
 
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
                         <div>
-                          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                          <label class="mdl-checkbox mdl-js-checkbox" >
                             <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                           </label>
 
                         <!-- SEND BUTTON -->
-                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
+                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
@@ -494,7 +494,7 @@ function printReplies(comment_id, comment_index) {
 
                             <!-- ADD REPLY BUTTON FOR COMMENT -->
                             <span>
-                            <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${comment_index},${i})">
+                            <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${comment_index},${i})">
                             <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                             </span>
 
@@ -509,13 +509,13 @@ function printReplies(comment_id, comment_index) {
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                                     <div>
-                                      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                                      <label class="mdl-checkbox mdl-js-checkbox" >
                                         <input type="checkbox" id="anonymous${comment_index},${i}"" class="mdl-checkbox__input" >
                                         <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                                       </label>
 
                                       <!-- SEND BUTTON -->
-                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReplyToReply('${comment_index}', '${i}', '${reply.id}')">
+                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReplyToReply('${comment_index}', '${i}', '${reply.id}')">
                                         <i class="material-icons notranslate" id="send_reply_icon">send</i>
                                         SEND
                                         </button>
@@ -582,7 +582,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
 
                             <!-- ADD REPLY BUTTON FOR COMMENT -->
                             <span>
-                            <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;"onclick="showReplyToReplyToReplyInput(${comment_index},${reply_index},${start})">
+                            <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyToReplyInput(${comment_index},${reply_index},${start})">
                             <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                             </span>
 
@@ -597,13 +597,13 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                                     <div>
-                                      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                                      <label class="mdl-checkbox mdl-js-checkbox" >
                                         <input type="checkbox" id="anonymous${comment_index},${reply_index},${start}" class="mdl-checkbox__input" >
                                         <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                                       </label>
 
                                       <!-- SEND BUTTON -->
-                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn"  onclick=" addReplyToReplyToReply('${comment_index}', '${reply_index}','${start}', '${reply.id}')">
+                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn"  onclick=" addReplyToReplyToReply('${comment_index}', '${reply_index}','${start}', '${reply.id}')">
                                         <i class="material-icons notranslate" id="send_reply_icon">send</i>
                                         SEND
                                         </button>
