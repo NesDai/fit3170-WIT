@@ -290,7 +290,11 @@ function makeRequest(preference) {
                         postId: value.id,
                         interest: value.interest[0]
                     }
-                    playlist.push(videoObj);
+                    if (childSnap.val().topVideo){
+                        playlist.unshift(videoObj);
+                    } else {
+                        playlist.push(videoObj);
+                    }
                 }
             })
             localStorage.setItem("playlist", JSON.stringify(playlist));
@@ -312,7 +316,7 @@ function playVideo() {
 
     //Checks favourite status
     checkFavoriteStatus(playlist[currentVideoNumber].videoUrl);
-    console.log(playlist[currentVideoNumber])
+
 
     // Loads a new video
     player.loadVideoById(playlist[currentVideoNumber].videoId);
@@ -444,4 +448,3 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
-
