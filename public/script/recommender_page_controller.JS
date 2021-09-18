@@ -431,7 +431,11 @@ function updateHistory(currentVideoInfo) {
 // Function to get video analytics and store it to Firebase
 function fetchAnalytics(dataLayer){
     let current_user = JSON.parse(localStorage.getItem("USER"));
-    let timestampAsId = Date.now();  // get the current time as Unix timestamp
+    let todaysDate = new Date()
+    const offset = todaysDate.getTimezoneOffset()
+    todaysDate = new Date(todaysDate.getTime() - (offset*60*1000))
+    todaysDate = todaysDate.toISOString().split('T')[0];
+    let currentUnixTimestamp = Date.now();  // get the current time as Unix timestamp
     let currentDataLayerEntry = dataLayer[dataLayer.length-1]
 
     if(currentDataLayerEntry['event'] === 'gtm.video'){
@@ -474,7 +478,7 @@ function fetchAnalytics(dataLayer){
 
             if(videoIndex !== -1){  // if the video is in history, videoIndex should not be -1
                 // Update firebase with the current video analytics and timestamp as the ID
-                firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${timestampAsId}`).set(currentVideoAnalytics).then(() => {
+                firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentUnixTimestamp}`).set(currentVideoAnalytics).then(() => {
                     console.log(videoIndex);
                     console.log(timestampAsId);
                 });
