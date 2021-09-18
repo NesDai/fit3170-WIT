@@ -9,6 +9,7 @@ let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let messageHistoryColour = 'white';
 let skippedToEnd = null;
+let otherChosen = false;
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -86,8 +87,8 @@ function select(button, index) {
     // display user's choice on chat
     messages.innerHTML += ansTemplate;
 
-    // save choice onto firebase
-    saveResponse(choice);
+    // save index of choice onto firebase
+    saveResponse(index-1);
 
     // extract skip target and skip choices from currentQuestionObject
     let skipTarget = currentQuestionObject.restrictions.skipTarget;
@@ -140,11 +141,22 @@ function addMessage() {
     // check if the input is valid
     if (message.length > 0) {
         if (type ===TYPE_MULTIPLE_CHOICE ||
-            type === TYPE_MULTIPLE_CHOICE_OTHERS ||
             type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
             let selection = currentQuestionObject.restrictions.choices[message-1];
-            saveResponse(selection);
+            //saveResponse(selection);
+            saveResponse(message-1);
             message = selection;
+        }
+        else if (type === TYPE_MULTIPLE_CHOICE_OTHERS){
+            if (otherChosen) {
+                // resets otherChosen
+                otherChosen = false;
+                saveResponse((currentQuestionObject.restrictions.choices.length -1) + ". " + message);
+            } else {
+                let selection = currentQuestionObject.restrictions.choices[message-1];
+                saveResponse(message-1);
+                message = selection;
+            }
         }
         else{
             // Saving the response before clearing the input box
@@ -731,7 +743,7 @@ function showMultipleChoice(questionObject) {
     let choices = questionObject.restrictions.choices;
 
     showMessageSender(question);
-    showOptions(choices);
+    showOptions(choices, false);
 }
 
 /**
@@ -739,22 +751,23 @@ function showMultipleChoice(questionObject) {
  * @param questionObject- an Object from firebase which contain the question, it's multiple choice answers and skip logic.
  */
 function showMultipleChoiceOthers(questionObject) {
-    let message = input.value;
     input.onkeyup = () => {
-        if (message.length <= SHORT_TEXT_LENGTH) {
-            // If it's not too long
+        let message = parseInt(input.value);
+        if (message > 0 && message < questionObject.restrictions.choices.length) {
             errorText.innerHTML = "";
-            // TODO Spellcheck here
-
-            errorText.style.visibility = "hidden";
+            // errorText.style.visibility = "hidden";
             submit.onclick = addMessage;
-        } else {
-            // If it's super long
-            errorText.style.visibility = "visible";
-            errorText.innerHTML = "character limit exceeded";
-            //submit.onclick = repromptQuestion;
         }
-
+        else if (message == (questionObject.restrictions.choices.length)){
+            errorText.innerHTML = "";
+            submit.onclick = othersOptionInput;
+        }
+        else {
+            errorText.innerHTML = "";
+            // errorText.style.visibility = "visible";
+            // errorText.innerHTML = "Please enter a valid choice index.";
+            submit.onclick = null;
+        }
     }
 
     // allow users to use textbox
@@ -764,7 +777,39 @@ function showMultipleChoiceOthers(questionObject) {
     let choices = questionObject.restrictions.choices;
 
     showMessageSender(question);
-    showOptions(choices);
+    showOptions(choices, true);
+}
+
+
+/**
+ * function that let the users enter their "others" option for MCQs in the textbox
+ */
+function othersOptionInput(){
+    // reset textbox and scroll chat log to bottom
+    scrollToBottom();
+    input.value = "";
+    otherChosen = true;
+
+    showMessageSender(currentQuestionObject.restrictions.choices[currentQuestionObject.restrictions.choices.length-1] + ":");
+    document.getElementById('hint_area').innerHTML = OTHERS_OPTION_HINTS[branch_id];
+
+    input.onkeyup = () => {
+        let message = input.value;
+        if (message.length <= SHORT_TEXT_LENGTH) {
+            // If it's not too long
+            errorText.innerHTML = "";
+
+            errorText.style.visibility = "hidden";
+            submit.onclick = addMessage;
+        } else {
+            // If it's super long
+            errorText.style.visibility = "visible";
+            errorText.innerHTML = "character limit exceeded";
+        }
+    }
+
+    // allow users to use textbox
+    enableTextInput();
 }
 
 /**
@@ -839,17 +884,28 @@ function showLongText(questionObject) {
 
 /**
  * function to create MCQ answer buttons on screen for users to select to answer the MCQs
- * @param choices
+ * @param choices an array of string representing the options of an MCQ
  */
-function showOptions(choices) {
+function showOptions(choices, hasOther) {
     let mcqOptions = "<div class=\"space\">"
     let numberOption = 1;
     let index = 1;
-    for (let choice of choices) {
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\">" + numberOption + ". " + choice + "</button>";
-        numberOption ++;
-        index++;
+
+    if(!hasOther) {
+        for (let choice of choices) {
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\">" + numberOption + ". " + choice + "</button>";
+            numberOption ++;
+            index++;
+        }
+    } else {
+        for (let i = 0; i < choices.length -1; i++){
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\">" + numberOption + ". " + choices[i] + "</button>";
+            numberOption ++;
+            index++;
+        }
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"othersOptionInput()\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
     }
+
     mcqOptions += "</div>";
     messages.innerHTML += mcqOptions;
 }

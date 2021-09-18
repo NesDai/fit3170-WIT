@@ -250,6 +250,7 @@ function resumeSurvey(button) {
                 let titleQuestion = responseObject.titleQuestion;
                 let question = responseObject.question;
                 let answer = responseObject.answer;
+                let questionChoices = responseObject.restrictions.choices;
 
                 if (titleQuestion !== undefined) {
                     // If this is a sub-question
@@ -260,7 +261,16 @@ function resumeSurvey(button) {
                 }
 
                 showShortQuestionMessage(question);
-                showMessageReceiver(answer);
+
+                if (questionChoices == null){
+                    showMessageReceiver(answer);
+                } else {
+                    if (typeof answer == "string") {
+                        showMessageReceiver(answer.substr(3))
+                    } else {
+                        showMessageReceiver(questionChoices[answer]);
+                    }
+                }
             });
 
         })

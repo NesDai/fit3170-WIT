@@ -260,6 +260,13 @@ QUESTION_IDS = [
     QUESTION_IDS_TH
 ];
 
+OTHERS_OPTION_HINTS = [
+    "Type in a Response",
+    "输入回复",
+    "Taipkan tindak balas",
+    "พิมพ์ตอบกลับ"
+]
+
 // The value of questionIndex when answering the first question
 const NO_QUESTIONS_DONE = 0;
 
