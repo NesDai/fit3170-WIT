@@ -428,6 +428,69 @@ function updateHistory(currentVideoInfo) {
     })
 }
 
+// Function to get video analytics and store it to Firebase
+function fetchAnalytics(dataLayer){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+    let timestampAsId = Date.now();  // get the current time as Unix timestamp
+    let currentDataLayerEntry = dataLayer[dataLayer.length-1]
+
+    if(currentDataLayerEntry['event'] === 'gtm.video'){
+        let currentVideoAnalytics = {
+            // add currentWatchCount here (add a watch count in updateHistory function)
+            videoCurrentTime: currentDataLayerEntry['gtm.videoCurrentTime'],
+            videoDuration: currentDataLayerEntry['gtm.videoDuration'],
+            videoElapsedTime: currentDataLayerEntry['gtm.videoElapsedTime'],
+            videoPercent: currentDataLayerEntry['gtm.videoPercent'],
+            videoStatus: currentDataLayerEntry['gtm.videoStatus'],
+            videoVisible: currentDataLayerEntry['gtm.videoVisible']
+        }
+
+        let videoIndex = -1;
+
+        firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+            let currentHistory = []
+    
+            // Check if history is not empty and video already exists in history
+            if (snapshot.exists()) {
+                currentHistory = snapshot.val();
+                for (i in currentHistory) {
+                    let currentHistoryUrlStrip = currentHistory[i].videoUrl.replace("https://www.youtube.com/embed/", "")
+                    
+                    let currentGTMUrl = currentDataLayerEntry['gtm.videoUrl']
+                    let index = currentGTMUrl.indexOf(currentHistoryUrlStrip)
+                    let currentGTMUrlStrip = currentGTMUrl.substring(index, currentGTMUrl.length);
+                    
+                    console.log(currentHistoryUrlStrip)
+                    console.log(currentGTMUrlStrip)
+
+                    if (currentHistoryUrlStrip === currentGTMUrlStrip) { // check if videoIDs are the same
+                        videoIndex = i;  // get the index that is used in Firebase
+                    }
+                    else{
+                      console.log("Not " + i);
+                    }
+                }
+            }
+
+            if(videoIndex !== -1){  // if the video is in history, videoIndex should not be -1
+                // Update firebase with the current video analytics and timestamp as the ID
+                firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${timestampAsId}`).set(currentVideoAnalytics).then(() => {
+                    console.log(videoIndex);
+                    console.log(timestampAsId);
+                });
+            }
+            else{
+              console.log("Something is not right")
+            }
+            
+        })
+        
+        
+
+    }
+
+}
+
 
 // Runs on page load
 // Initializing variables
@@ -448,3 +511,8 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
+
+// Fetch the analytics every 10s (in progress: find better method to do this)
+setInterval(function(){
+    fetchAnalytics(dataLayer)
+}, 10000)
