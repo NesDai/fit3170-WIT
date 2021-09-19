@@ -366,22 +366,6 @@ function removePost() {
     });
 }
 
-
-async function checkCommentLikes(comments_list){
-    let buttons=[];
-    for (let i =comments_list.length - 1; i >= 0; i--){
-        let comment = comments_list[i];
-        let res = await checkForLikesComment(comments_list[i].id);
-        if (res){
-            printComment(1, comment, i);
-        }
-        else{
-            printComment(0, comment, i);
-        }
-    }
-}
-
-
 function printComments() {
     let id = params.get('post_id');
 
@@ -396,7 +380,7 @@ function printComments() {
                         data_list.push(data.val())
                     });
             }).then(() => {
-                checkCommentLikes(data_list)
+                checkCommentForLikes(data_list)
             }).then(() => {
                 for (let comment_index = data_list.length - 1; comment_index >= 0; comment_index--) {
                     printReplies(data_list[comment_index].id, comment_index)
@@ -404,7 +388,26 @@ function printComments() {
             });
 }
 
+async function checkCommentForLikes(comments_list){
+    //looping throough all the comments for the post to check for likes
+    for (let i =comments_list.length - 1; i >= 0; i--){
+        let comment = comments_list[i];
+        //checks whether the post was liked by the user
+        let res = await checkForLikesComment(comments_list[i].id);
+        if (res){
+            //prints the comment with liked button
+            printComment(1, comment, i);
+        }
+        else{
+            //prints the comment with not liked button
+            printComment(0, comment, i);
+        }
+    }
+}
+
+
 function printComment(button_num, comment, i ){
+
     let comment_section = document.getElementById("comment_section");
     let comment_username;
     if (comment.anonymous) {
@@ -412,6 +415,8 @@ function printComment(button_num, comment, i ){
     } else {
         comment_username = comment.username;
     };
+
+    //choosing the proper color for the button
     if (button_num==1){
         button=`<button class="like mdl-button mdl-js-button mdl-button--raised" style="color: white !important; background-color:#2bbd7e !important;"  onclick="likeComment('${comment.id}', ${i})"; value="${comment.likes}" >
         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
@@ -424,56 +429,54 @@ function printComment(button_num, comment, i ){
     }
 
     comment_section.innerHTML +=
-                `<div>
-                    <div style="margin:0 10px; background-color: white; width: 97%">
-                        <span class="mdi mdi-cow"></span>
-                        <h6 name="username" id="username" class="notranslate">@${comment_username}</h6>
-                        <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
-                        <p>
-                        <span id = "user_comment">${comment.content}</span>
-                        </p>
-                    </div>
-                    <div id="button_div${i}">
-                        <!--  LIKE FOR COMMENT -->
-                        ${button}
+        `<div>
+            <div style="margin:0 10px; background-color: white; width: 97%">
+                <span class="mdi mdi-cow"></span>
+                <h6 name="username" id="username" class="notranslate">@${comment_username}</h6>
+                <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
+                <p><span id = "user_comment">${comment.content}</span></p>
+            </div>
 
-                    <!-- ADD REPLY BUTTON FOR COMMENT -->
-                    <span>
+            <div id="button_div${i}">
+                <!--  LIKE FOR COMMENT -->
+                ${button}
+
+                <!-- ADD REPLY BUTTON FOR COMMENT -->
+                <span>
                     <button class="reply mdl-button mdl-js-button mdl-button--raised" id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
                     <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                    </span>
-                    <br>
-                 </div>
+                </span>
+                <br>
+            </div>
 
-                 <!-- REPLY SECTION -->
-                 <div id = "add_reply_section${i}" style="display:none">
+            <!-- REPLY SECTION -->
+            <div id = "add_reply_section${i}" style="display:none">
+                <br>
+                <div class="post_reply">
+                    <!-- REPLY INPUT -->
+                    <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
                     <br>
-                      <div class="post_reply">
-                        <!-- REPLY INPUT -->
-                        <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
-                        <br>
 
-                        <!-- ANONYMOUS CHECKBOX BUTTON -->
-                        <div>
-                          <label class="mdl-checkbox mdl-js-checkbox" >
+                    <!-- ANONYMOUS CHECKBOX BUTTON -->
+                    <div>
+                        <label class="mdl-checkbox mdl-js-checkbox" >
                             <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
-                          </label>
+                        </label>
 
                         <!-- SEND BUTTON -->
-                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
-                          <i class="material-icons notranslate" id="send_reply_icon">send</i>
-                          SEND
-                          </button>
-                        </div>
-                      </div>
+                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
+                            <i class="material-icons notranslate" id="send_reply_icon">send</i>SEND
+                        </button>
                     </div>
-                    <br>
-                    <div id= "reply_section${i}" style="margin-bottom:10px">
-                    </div>
-              </div>
-              <hr style="margin: 0;">`;
-              document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
+                 </div>
+            </div>
+            <br>
+            <div id= "reply_section${i}" style="margin-bottom:10px">
+            </div>
+        </div>
+        <hr style="margin: 0;">`;
+    document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
 }
 
 
@@ -483,19 +486,22 @@ function printComment(button_num, comment, i ){
  * @param {integer} index an integer to indicate the section
  */
 function printReplies(comment_id, comment_index) {
-
+    console.log(comment_id)
+    console.log(comment_index)
     let reply_section = document.getElementById("reply_section" + comment_index.toString());
+    console.log(document.getElementById("reply_section0"))
     let reply_list = [];
 
+    
     // print replies of a comment
     firebase.database().ref('replies')
         .orderByChild('reply_comment_parent')
-        .equalTo(comment_id)
-        .once('value', x => {
-            x.forEach(data => {
-                reply_list.push(data.val())
-            })
-        }).then(() => {
+            .equalTo(comment_id)
+                .once('value', x => {
+                    x.forEach(data => {
+                        reply_list.push(data.val())
+                    })
+                }).then(() => {
             if (reply_list.length != 0) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
                     let reply = reply_list[i];
@@ -554,7 +560,6 @@ function printReplies(comment_id, comment_index) {
                                 </div>
                           </div>`
                         //for the UI
-                        //for the ui
                         if (window.screen.width>1024){
                           document.getElementById(`reply_input${comment_index},${i}`).setAttribute("style", "width:93%");
                         }
@@ -668,7 +673,6 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
  * @param {string} comment_id the id associated with the comment
  */
 function addReply(btn_num, comment_id) {
-
     if (checkUserExistence()) {
         console.log(comment_id);
         const options = { // options for Date
