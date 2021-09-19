@@ -398,7 +398,9 @@ async function checkCommentForLikes(comments_list){
             //prints the comment with not liked button
             printComment(0, comment, i);
         }
-        printReplies(comment.id, i)
+    }
+    for (let comment_index = comments_list.length - 1; comment_index >= 0; comment_index--) {
+        printReplies(comments_list[comment_index].id, comment_index)
     }
 }
 
@@ -641,13 +643,13 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                                 <div id= ""reply_2_reply_section"${comment_index},${reply_index},${start}" style="margin-bottom:10px">
                                 </div>
                           </div>`
-                        // //for the ui
-                        // if (window.screen.width>1024){
-                        //   document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:92%");
-                        // }
-                        // else{
-                        //   document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:88%");
-                        // }
+                        //for the ui
+                        if (window.screen.width>1024){
+                          document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:92%");
+                        }
+                        else{
+                          document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:88%");
+                        }
                     }
                     start = start + 1;
                 }
@@ -703,7 +705,6 @@ function addReply(btn_num, comment_id) {
                 username: current_user["username"],
             };
 
-            console.log(post_id);
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
                 window.location = "post.html" + "?post_id=" + post_id;
             });
@@ -737,7 +738,6 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-            console.log("hi");
             // new data to upload in api
             let newData = {
                 anonymous: stay_anonymous,
@@ -758,7 +758,7 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
 
         };
     } else {
-        window.location = "forum.html";
+       // window.location = "forum.html";
     }
 }
 
