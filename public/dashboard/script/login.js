@@ -1,4 +1,4 @@
-const EMAILS = ["goroy007@gmail.com"]; // the preset emails of valid admins
+
 
 
 /**
@@ -8,9 +8,28 @@ const EMAILS = ["goroy007@gmail.com"]; // the preset emails of valid admins
  */
 function adminLogin(email){
 
-    if(EMAILS.includes(email))
-        console.log("valid!");
-    else
-        //display an error
-        $('#input-error').html('The email entered is not a valid administrator email');
+    let found = false;
+
+    firebase.database().ref('admins')
+    .orderByChild('email')
+        .equalTo(email)
+            .once('value', x => {
+                x.forEach(data => {
+                    console.log("valid email",data);
+                    found = true;
+                });
+  
+
+                }).then(()=>{
+
+                    if (!found){
+                        //display an error
+                        $('#input-error').html('The email entered is not a valid administrator email');
+                    }
+                    else{
+                        $('#input-error').val('');
+                    }
+                    
+                })
+
 }
