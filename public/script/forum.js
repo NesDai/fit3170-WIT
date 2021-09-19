@@ -84,6 +84,12 @@ function makeNewPost() {
 
         }
 
+        let now = new Date();
+        let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+        utc = utc.toString();
+        utc = utc.substring(0,25);
+        utc+="(UTC TIME)";
+
         let newData = {
             id: key,
             description: description,
@@ -92,7 +98,7 @@ function makeNewPost() {
             userID: current_user["phone"],
             username: current_user["username"],
             videoURL: embedding_video_url,
-            created: new Date().toString(), 
+            created: utc, 
             likes:0,
             dislikes:0,
             recommender: false
