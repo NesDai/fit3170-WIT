@@ -15,7 +15,7 @@ function adminLogin(email){
         .equalTo(email)
             .once('value', x => {
                 x.forEach(data => {
-                    console.log("valid email",data);
+                    console.log("valid email",data); //todo redirect later
                     found = true;
                 });
   
