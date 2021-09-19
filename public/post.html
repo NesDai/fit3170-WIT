@@ -33,12 +33,26 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
       <!-- Link to css files -->
       <link rel="stylesheet"  href="css/forum.css">
-
       <!-- I havent noticed any difference when I removed it -->
       <!-- <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script> -->
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
       <!-- <script src="js/scripts.js"></script> -->
       <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" /> -->
+      <!-- Remove google banner -->
+      <style>
+         .goog-te-banner-frame.skiptranslate {
+         display: none !important;
+         } 
+         body {
+         top: 0px !important; 
+         }
+         .goog-logo-link {
+         display:none !important;
+         }
+         .trans-section {
+         margin: 100px;
+         }
+      </style>
       <title>Forum</title>
    </head>
    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -50,7 +64,7 @@
                <div class="mdl-layout-spacer"></div>
                <!-- BACK BUTTON -->
                <button class="mdl-button mdl-js-button" id="back_btn" onclick='window.location.href = "./forum.html"'>
-                  <img src="./css/images/back_icon.png" id="back_icon"></img><span class="mobileHide">Back</span>
+               <img src="./css/images/back_icon.png" id="back_icon"></img><span class="mobileHide">Back</span>
                </button>
             </div>
          </div>
@@ -74,73 +88,51 @@
             <div class="forum-posts">
                <!-- DISPLAY ALL POST BY OTHER USERS -->
                <br>
-                  <div id = "post_details">
-                  </div>
+               <div id = "post_details">
+               </div>
             </div>
          </div>
    </div>
-
-   <!-- MODAL -->
+   <!-- Change language-->
    <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
-   <div id="google_translate_element" style="display: none;">
+      <div id="google_translate_element" style="display: none;"></div>
+      <div class="modal-content">
+         <p style="margin-top: 10%;">
+            <b>Choose Language:</b>
+         </p>
+         <hr style="margin: 0;">
+         <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="reset();changeLang(this.value)"
+         value="English">
+            <label>
+               <span id="lang_text" style="color:white;">English</span>
+            </label>
+         </button>
+         <br>
+         <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
+         value="Chinese (Simplified)">
+            <label>
+               <span id="lang_text" style="color:white;">中文</span>
+            </label>
+         </button>
+         <br>
+         <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
+         value="Thai" >
+            <label>
+               <span id="lang_text" style="color:white;">ภาษาไทย</span>
+            </label>
+         </button>
+         <br>
+         <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
+         value="Malay">
+            <label>
+               <span id="lang_text" style="color:white;">Bahasa Melayu</span>
+            </label>
+         </button>
+         <br>
+         <br>
+      <div>
+      <button class="mdl-button mdl-js-button mdl-button--raised button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">Back</button>
    </div>
-   <div class="modal-content">
-   <p style="margin-top: 10%;">
-   <b>Choose Language:
-   </b>
-   </p>
-   <hr style="margin: 0;">
-   <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="reset();changeLang(this.value)"
-      value="English">
-   <label>
-   <span id="lang_text" style="color:white;">English</span>
-   </label>
-   </button>
-   <br>
-   <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
-      value="Chinese (Simplified)">
-   <label>
-   <span id="lang_text" style="color:white;">中文</span>
-   </label>
-   </button>
-   <br>
-   <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
-      value="Thai" >
-   <label>
-   <span id="lang_text" style="color:white;">ภาษาไทย</span>
-   </label>
-   </button>
-   <br>
-   <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
-      value="Malay">
-   <label>
-   <span id="lang_text" style="color:white;">Bahasa Melayu</span>
-   </label>
-   </button>
-   <br>
-   <br>
-   <div>
-   <button class="mdl-button mdl-js-button mdl-button--raised button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
-   Back
-   </button>
-   </div>
-   </div>
-   </div>
-   <!-- remove google banner -->
-   <style>
-   .goog-te-banner-frame.skiptranslate {
-   display: none !important;
-   } 
-   body {
-   top: 0px !important; 
-   }
-   .goog-logo-link {
-   display:none !important;
-   }
-   .trans-section {
-   margin: 100px;
-   }
-   </style>
    <!--FIREBASE-->
    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
