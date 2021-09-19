@@ -42,10 +42,48 @@ function storeCurrentSkill(id){
     let skillTxt = [skill.value];
     let stringPath = "users/" + phoneNum;
     let userRef = firebase.database().ref(stringPath);
+    let time = Date.now();
 
     skillTxt = JSON.stringify(skillTxt);
     localStorage.setItem("preference", skillTxt);
     // userRef.update({ preferences: skillTxt });  // add or modify the preferences property to the user
+
+    console.log("Store function triggered");
+
+    // Code for updating data on which skills have been selected and when
+    firebase.database().ref('recommenderData').child(`skills/`).once("value", function (snapshot) {
+        if (snapshot.exists()) {
+            currentSkills = snapshot.val();
+
+            // Check if the skill has previously been selected on the database, update if so
+            if (currentSkills[id] != undefined){
+                currentSkills[id].selectedAmmount += 1;
+                currentSkills[id].selectedTime[time] = time;
+            }
+            
+            // Else if this is the first time skill is being selected
+            else {
+                let selectedTime = {}
+                selectedTime[time] = time;
+                
+                let newSkillCombine = {
+                    selectedAmmount: 1,
+                    selectedTime: selectedTime
+                }
+
+                currentSkills[id] = newSkillCombine;
+            }
+
+            // Update the firebase skills data section with changes
+            firebase.database().ref('recommenderData/skills').set(
+                currentSkills
+                , function (error) {
+                    if (error) {
+                        console.log(error)
+                    }
+                })
+        }
+    })
 
     if (localStorage.getItem("playlist") != null){
         localStorage.removeItem("playlist");
@@ -54,7 +92,7 @@ function storeCurrentSkill(id){
 
     setInterval(function(){
         location.href = "recommender_Ui.html";
-    }, 500); // redirect to recommender page after 0.5 seconds
+    }, 2000); // redirect to recommender page after 2 seconds
 }
 
 function goToRecommender(id){
