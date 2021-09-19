@@ -10,6 +10,8 @@ let errorText = document.getElementById("error-text");
 let messageHistoryColour = 'white';
 let skippedToEnd = null;
 let otherChosen = false;
+let MCQOptionIDs = [];
+let possibleAnswersMCQ = [];
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -142,38 +144,56 @@ function addMessage() {
     if (message.length > 0) {
         if (type ===TYPE_MULTIPLE_CHOICE ||
             type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
-            let selection = currentQuestionObject.restrictions.choices[message-1];
-            //saveResponse(selection);
-            saveResponse(message-1);
-            message = selection;
+            message = message.trim();
+
+            // getting which index does message correspond to in currentQuestionObject.restrictions.choices based on possibleAnswersMCQ
+            for (let i = 0; i < possibleAnswersMCQ.length; i++) {
+                if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                    select(document.getElementById(MCQOptionIDs[i]), i+1);
+                }
+            }
         }
-        else if (type === TYPE_MULTIPLE_CHOICE_OTHERS){
+        else if (type === TYPE_MULTIPLE_CHOICE_OTHERS) {
+            message = message.trim();
             if (otherChosen) {
                 // resets otherChosen
                 otherChosen = false;
-                saveResponse((currentQuestionObject.restrictions.choices.length -1) + ". " + message);
+                saveResponse((currentQuestionObject.restrictions.choices.length - 1) + ". " + message);
+
+                // display input
+                showMessageReceiver(message);
+
+                // display next question after time delay and scroll to bottom of screen
+                let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+                setTimeout(() => nextQuestion(), delay);
+                scrollToBottom();
             } else {
-                let selection = currentQuestionObject.restrictions.choices[message-1];
-                saveResponse(message-1);
-                message = selection;
+                // getting which index does message correspond to in currentQuestionObject.restrictions.choices based on possibleAnswersMCQ
+                for (let i = 0; i < possibleAnswersMCQ.length; i++) {
+                    if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                        select(document.getElementById(MCQOptionIDs[i]), i+1);
+                    }
+                }
             }
         }
-        else{
+        else {
             // Saving the response before clearing the input box
             saveResponse(input.value);
-        }
 
-        // display input and clear textbox
-        showMessageReceiver(message);
-        input.value = "";
-
-            // Prevent users from using text box
-            disableTextInput();
+            // display input
+            showMessageReceiver(message);
 
             // display next question after time delay and scroll to bottom of screen
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
             setTimeout(() => nextQuestion(), delay);
             scrollToBottom();
+        }
+
+        // clear textbox
+        input.value = "";
+
+        // Prevent users from using text box
+        disableTextInput();
     }
     else{
       errorText.style.visibility = "visible";
@@ -617,8 +637,6 @@ function showNumeric(questionObject) {
         // get user's input
         let message = parseInt(input.value);
 
-        console.log(isNaN(message))
-
         // If it's a number
         if (!isNaN(message)) {
             // If there is no upper/lower range specified set either to infinity and negative infinity respectively
@@ -726,10 +744,36 @@ function showMultipleChoice(questionObject) {
 
 
     input.onkeyup = () => {
-        let message = parseInt(input.value);
-        if (message > 0 && message < (questionObject.restrictions.choices.length + 1)) {
+        let message = (input.value).trim();
+
+        // reset possibleAnswersMCQ back to an empty array
+        possibleAnswersMCQ = [];
+
+        // for loop to add possible answer string for each MCQ option
+        for (let i=0; i < questionObject.restrictions.choices.length; i++) {
+            possibleAnswersMCQ.push([]); // add empty array to store answer strings for choice i
+            possibleAnswersMCQ[i].push((i+1).toString()); // MCQ option number
+            possibleAnswersMCQ[i].push(i+1 + "."); // MCQ option number + .
+            possibleAnswersMCQ[i].push(questionObject.restrictions.choices[i].toLowerCase()); // MCQ option word
+            // MCQ option number + . + MCQ option word (no space before and after .)
+            possibleAnswersMCQ[i].push((i+1) + "." + questionObject.restrictions.choices[i].toLowerCase());
+            // MCQ option number + . + MCQ option word (with space after . only)
+            possibleAnswersMCQ[i].push((i+1) + ". " + questionObject.restrictions.choices[i].toLowerCase());
+        }
+
+        let found = false;
+
+        // for loop to check if message is in possibleAnswersMCQ
+        for (let i=0; i < possibleAnswersMCQ.length; i++){
+            // if message is found to be in possibleAnswers
+            if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                found = true;
+            }
+        }
+
+        // set submit.onclick appropriately based on found
+        if (found) {
             errorText.innerHTML = "";
-            // errorText.style.visibility = "hidden";
             submit.onclick = addMessage;
         } else {
             errorText.innerHTML = "";
@@ -738,6 +782,7 @@ function showMultipleChoice(questionObject) {
             submit.onclick = null;
         }
     }
+
     enableTextInput();
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
@@ -752,21 +797,59 @@ function showMultipleChoice(questionObject) {
  */
 function showMultipleChoiceOthers(questionObject) {
     input.onkeyup = () => {
-        let message = parseInt(input.value);
-        if (message > 0 && message < questionObject.restrictions.choices.length) {
-            errorText.innerHTML = "";
-            // errorText.style.visibility = "hidden";
-            submit.onclick = addMessage;
+        let message = (input.value).trim();
+
+        // reset possibleAnswersMCQ back to an empty array
+        possibleAnswersMCQ = [];
+        // initialise othersAnswers
+        let othersAnswers = [];
+
+        // for loop to add possible answer string for each MCQ option
+        for (let i=0; i < questionObject.restrictions.choices.length-1; i++) {
+            possibleAnswersMCQ.push([]); // add empty array to store answer strings for choice i
+            possibleAnswersMCQ[i].push((i+1).toString()); // MCQ option number
+            possibleAnswersMCQ[i].push(i+1 + "."); // MCQ option number + .
+            possibleAnswersMCQ[i].push(questionObject.restrictions.choices[i].toLowerCase()); // MCQ option word
+            // MCQ option number + . + MCQ option word (no space before and after .)
+            possibleAnswersMCQ[i].push((i+1) + "." + questionObject.restrictions.choices[i].toLowerCase());
+            // MCQ option number + . + MCQ option word (with space after . only)
+            possibleAnswersMCQ[i].push((i+1) + ". " + questionObject.restrictions.choices[i].toLowerCase());
         }
-        else if (message == (questionObject.restrictions.choices.length)){
+
+        // add possible answer string for each others option
+        othersAnswers.push((questionObject.restrictions.choices.length).toString());// MCQ option number
+        othersAnswers.push(questionObject.restrictions.choices.length + "."); // MCQ option number + .
+        othersAnswers.push(questionObject.restrictions.choices[questionObject.restrictions.choices.length-1].toLowerCase()); // MCQ option word
+        // MCQ option number + . + MCQ option word (no space before and after .)
+        othersAnswers.push(questionObject.restrictions.choices.length + "." + questionObject.restrictions.choices[questionObject.restrictions.choices.length-1].toLowerCase());
+        // MCQ option number + . + MCQ option word (with space after . only)
+        othersAnswers.push(questionObject.restrictions.choices.length + ". " + questionObject.restrictions.choices[questionObject.restrictions.choices.length-1].toLowerCase());
+
+        // check if message is in othersAnswer
+        if (othersAnswers.includes(message.toLowerCase())){
             errorText.innerHTML = "";
             submit.onclick = othersOptionInput;
-        }
-        else {
-            errorText.innerHTML = "";
-            // errorText.style.visibility = "visible";
-            // errorText.innerHTML = "Please enter a valid choice index.";
-            submit.onclick = null;
+        } else {
+            let found = false;
+
+            // for loop to check if message is in possibleAnswersMCQ
+            for (let i=0; i < possibleAnswersMCQ.length; i++){
+                // if message is found to be in possibleAnswers
+                if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                    found = true;
+                }
+            }
+
+            // set submit.onclick appropriately based on found
+            if (found) {
+                errorText.innerHTML = "";
+                submit.onclick = addMessage;
+            } else {
+                errorText.innerHTML = "";
+                // errorText.style.visibility = "visible";
+                // errorText.innerHTML = "Please enter a valid choice index.";
+                submit.onclick = null;
+            }
         }
     }
 
@@ -891,19 +974,24 @@ function showOptions(choices, hasOther) {
     let numberOption = 1;
     let index = 1;
 
+    MCQOptionIDs = [];
+
     if(!hasOther) {
-        for (let choice of choices) {
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\">" + numberOption + ". " + choice + "</button>";
+        for (let i = 0; i < choices.length; i++){
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
             numberOption ++;
             index++;
+            MCQOptionIDs.push(currentQuestionObject.question_number + i);
         }
     } else {
         for (let i = 0; i < choices.length -1; i++){
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\">" + numberOption + ". " + choices[i] + "</button>";
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
             numberOption ++;
             index++;
+            MCQOptionIDs.push(currentQuestionObject.question_number + i);
         }
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"othersOptionInput()\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"othersOptionInput()\" id=\"" + currentQuestionObject.question_number + (choices.length-1) + "\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
+        MCQOptionIDs.push(currentQuestionObject.question_number + (choices.length-1));
     }
 
     mcqOptions += "</div>";
