@@ -16,6 +16,7 @@ function showReplyToReplyInput(button_num, comment_index) {
 function showReplyToReplyToReplyInput(comment_index, reply_index, reply_to_reply_index) {
     document.getElementById("add_reply_2_reply_section" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).style.display = "block";
 }
+
 //check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then
@@ -228,6 +229,7 @@ function checkButtonStatus() {
             }
         })
 }
+
 /**
  * Function which removes the current post from user's favourite
  */
@@ -334,7 +336,7 @@ function addComment() {
                 commenterID: current_user["phone"],
                 content: comment,
                 id: key,
-                like: 0,
+                likes: 0,
                 postID: post_id,
                 username: current_user["username"],
                 created: new Date().toString()
@@ -365,6 +367,21 @@ function removePost() {
 }
 
 
+async function checkCommentLikes(comments_list){
+    let buttons=[];
+    for (let i =comments_list.length - 1; i >= 0; i--){
+        let comment = comments_list[i];
+        let res = await checkForLikesComment(comments_list[i].id);
+        if (res){
+            printComment(1, comment, i);
+        }
+        else{
+            printComment(0, comment, i);
+        }
+    }
+}
+
+
 function printComments() {
     let id = params.get('post_id');
 
@@ -373,45 +390,60 @@ function printComments() {
     let data_list = [];
     firebase.database().ref('comments')
         .orderByChild('postID')
-        .equalTo(id)
-        .once('value', x => {
-            x.forEach(data => {
-                data_list.push(data.val())
+            .equalTo(id)
+                .once('value', x => {
+                    x.forEach(data => {
+                        data_list.push(data.val())
+                    });
+            }).then(() => {
+                checkCommentLikes(data_list)
+            }).then(() => {
+                for (let comment_index = data_list.length - 1; comment_index >= 0; comment_index--) {
+                    printReplies(data_list[comment_index].id, comment_index)
+                }
             });
-        }).then(() => {
-            for (let i = data_list.length - 1; i >= 0; i--) {
-                let comment = data_list[i];
-                let comment_username;
-                if (comment.anonymous) {
-                    comment_username = "Anonymous";
-                } else {
-                    comment_username = comment.username;
-                };
+}
 
-                comment_section.innerHTML +=
-                    `<div>
-                 <div style="margin:0 10px; background-color: white; width: 97%">
-                    <span class="mdi mdi-cow"></span>
-                    <h6 name="username" id="username" class="notranslate">@${comment_username}</h6>
-                    <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
-                    <p>
-                       <span id = "user_comment">${comment.content}</span>
-                    </p>
+function printComment(button_num, comment, i ){
+    let comment_section = document.getElementById("comment_section");
+    let comment_username;
+    if (comment.anonymous) {
+        comment_username = "Anonymous";
+    } else {
+        comment_username = comment.username;
+    };
+    if (button_num==1){
+        button=`<button class="like mdl-button mdl-js-button mdl-button--raised" style="color: white !important; background-color:#2bbd7e !important;"  onclick="likeComment('${comment.id}', ${i})"; value="${comment.likes}" >
+        <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
+        </button>`
+    }
+    else{
+        button=`<button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likeComment('${comment.id}', ${i})"; value="${comment.likes}" >
+        <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
+        </button>`
+    }
+
+    comment_section.innerHTML +=
+                `<div>
+                    <div style="margin:0 10px; background-color: white; width: 97%">
+                        <span class="mdi mdi-cow"></span>
+                        <h6 name="username" id="username" class="notranslate">@${comment_username}</h6>
+                        <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
+                        <p>
+                        <span id = "user_comment">${comment.content}</span>
+                        </p>
+                    </div>
+                    <div id="button_div${i}">
+                        <!--  LIKE FOR COMMENT -->
+                        ${button}
+
+                    <!-- ADD REPLY BUTTON FOR COMMENT -->
+                    <span>
+                    <button class="reply mdl-button mdl-js-button mdl-button--raised" id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
+                    <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                    </span>
+                    <br>
                  </div>
-                 <!--  LIKE FOR COMMENT -->
-                 <span id='like_button_comment' href="#">
-                 <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised" id="like_comment_btn">
-                 <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img>
-                 </button>
-                 </span>
-
-
-                 <!-- ADD REPLY BUTTON FOR COMMENT -->
-                 <span>
-                 <button class="reply mdl-button mdl-js-button mdl-button--raised" id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
-                 <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                 </span>
-                 <br>
 
                  <!-- REPLY SECTION -->
                  <div id = "add_reply_section${i}" style="display:none">
@@ -442,13 +474,8 @@ function printComments() {
               </div>
               <hr style="margin: 0;">`;
               document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
-            }
-        }).then(() => {
-            for (let comment_index = data_list.length - 1; comment_index >= 0; comment_index--) {
-                printReplies(data_list[comment_index].id, comment_index)
-            }
-        });
 }
+
 
 /**
  * A function which prints out the replies of a comment
@@ -785,7 +812,6 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
 
 
 
-
 function redirect(url, msg) {
     window.location = url;
     return msg;
@@ -823,5 +849,67 @@ function checkUserFavouritedPost() {
                 fav_button.style.color='black';
             }
         }
+    })
+}
+
+async function likeComment(comment_id, i){
+
+    let res = await checkForLikesComment(comment_id);
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+
+    username=current_user["username"]
+    
+    if (!res) {
+        // if there is no action at all, lilke
+        firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).set({
+            action: 1
+        }).then(() => {
+            updateCommentLikes(comment_id, 1) // add 1 like 
+        });
+        // UI
+        like_btn_addr.style.background='#2bbd7e';
+        like_btn_addr.style.color='white';
+
+        //increase like count
+        current_value=like_btn_addr.value
+        new_value=parseInt(current_value)+1
+        like_btn_addr.value=new_value
+        $('#button_div'+i).find('.number_of_likes').html(new_value);
+
+    } else {
+        firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).remove();
+        updateCommentLikes(comment_id, -1)  // remove 1 like 
+        //UI 
+        like_btn_addr.style.background='#dadada';
+        like_btn_addr.style.color='black';
+        // change like number 
+        current_value=like_btn_addr.value
+        new_value=parseInt(current_value)-1
+        like_btn_addr.value=new_value
+        $('#button_div'+i).find('.number_of_likes').html(new_value);
+    }
+}
+
+
+function checkForLikesComment(comment_id){
+    return new Promise(resolve => {
+            firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).once("value", snapshot => {
+                if (snapshot.exists()){
+                    resolve(true);
+                }
+                else{
+                    resolve(false);
+                }
+            });
+    });
+}
+
+
+function updateCommentLikes(comment_id, number){
+    firebase.database().ref(`comments/${comment_id}/likes`).once('value', (snapshot) => {
+        let current_likes = snapshot.val();
+        var updates = {};
+        updates[`comments/${comment_id}/likes`] = current_likes + number
+        firebase.database().ref().update(updates);
     })
 }

@@ -267,15 +267,10 @@ function printThread(){
                 posts.push(data.val());
         }
             });
-        
-
         }).then(()=>{
 
             printStartIndex = posts.length - 1;
-            printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-
-
-            
+            printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
         });
     });
 
