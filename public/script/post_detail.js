@@ -333,7 +333,6 @@ function addComment() {
                 anonymous: stay_anonymous,
                 commenterID: current_user["phone"],
                 content: comment,
-                dislike: 0,
                 id: key,
                 like: 0,
                 postID: post_id,
