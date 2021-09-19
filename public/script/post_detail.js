@@ -16,6 +16,7 @@ function showReplyToReplyInput(button_num, comment_index) {
 function showReplyToReplyToReplyInput(comment_index, reply_index, reply_to_reply_index) {
     document.getElementById("add_reply_2_reply_section" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).style.display = "block";
 }
+
 //check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then
@@ -63,29 +64,29 @@ function printPostDetails(post, button_num) {
         
     let post_details = document.getElementById("post_details");
     let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
+    <button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+    <button class="dislike mdl-button mdl-js-button mdl-button--raised "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
     if (button_num == 1) {
         // liked
         button = `<button
-         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+         class="like mdl-button mdl-js-button mdl-button--raised"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
     } else if (button_num == -1) {
         // disliked
-        button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+        button = `<button class="like mdl-button mdl-js-button mdl-button--raised" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
@@ -150,7 +151,7 @@ function printPostDetails(post, button_num) {
                           <!--  LIKE DISLIKE FOR POST -->
                           <br>
                           ${button}
-                          <button class="favourite mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="favourite_post_btn" onclick="checkButtonStatus()">
+                          <button class="favourite mdl-button mdl-js-button mdl-button--raised" id="favourite_post_btn" onclick="checkButtonStatus()">
                           <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
                           </button>
                        </div>
@@ -167,7 +168,7 @@ function printPostDetails(post, button_num) {
                           <!-- ANONYMOUS CHECKBOX BUTTON -->
                        <form>
                           <div>
-                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                             <label class="mdl-checkbox mdl-js-checkbox" >
                              <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
                              <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                              </label>
@@ -175,7 +176,7 @@ function printPostDetails(post, button_num) {
                        </form>
                        <!-- SEND BUTTON -->
                        <div>
-                          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="send_comment_btn" type="submit" onclick="addComment()">
+                          <button class="mdl-button mdl-js-button mdl-button--raised" id="send_comment_btn" type="submit" onclick="addComment()">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
@@ -228,6 +229,7 @@ function checkButtonStatus() {
             }
         })
 }
+
 /**
  * Function which removes the current post from user's favourite
  */
@@ -333,9 +335,8 @@ function addComment() {
                 anonymous: stay_anonymous,
                 commenterID: current_user["phone"],
                 content: comment,
-                dislike: 0,
                 id: key,
-                like: 0,
+                likes: 0,
                 postID: post_id,
                 username: current_user["username"],
                 created: new Date().toString()
@@ -366,6 +367,21 @@ function removePost() {
 }
 
 
+async function checkCommentLikes(comments_list){
+    let buttons=[];
+    for (let i =comments_list.length - 1; i >= 0; i--){
+        let comment = comments_list[i];
+        let res = await checkForLikesComment(comments_list[i].id);
+        if (res){
+            printComment(1, comment, i);
+        }
+        else{
+            printComment(0, comment, i);
+        }
+    }
+}
+
+
 function printComments() {
     let id = params.get('post_id');
 
@@ -374,45 +390,60 @@ function printComments() {
     let data_list = [];
     firebase.database().ref('comments')
         .orderByChild('postID')
-        .equalTo(id)
-        .once('value', x => {
-            x.forEach(data => {
-                data_list.push(data.val())
+            .equalTo(id)
+                .once('value', x => {
+                    x.forEach(data => {
+                        data_list.push(data.val())
+                    });
+            }).then(() => {
+                checkCommentLikes(data_list)
+            }).then(() => {
+                for (let comment_index = data_list.length - 1; comment_index >= 0; comment_index--) {
+                    printReplies(data_list[comment_index].id, comment_index)
+                }
             });
-        }).then(() => {
-            for (let i = data_list.length - 1; i >= 0; i--) {
-                let comment = data_list[i];
-                let comment_username;
-                if (comment.anonymous) {
-                    comment_username = "Anonymous";
-                } else {
-                    comment_username = comment.username;
-                };
+}
 
-                comment_section.innerHTML +=
-                    `<div>
-                 <div style="margin:0 10px; background-color: white; width: 97%">
-                    <span class="mdi mdi-cow"></span>
-                    <h6 name="username" id="username" class="notranslate">@${comment_username}</h6>
-                    <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
-                    <p>
-                       <span id = "user_comment">${comment.content}</span>
-                    </p>
+function printComment(button_num, comment, i ){
+    let comment_section = document.getElementById("comment_section");
+    let comment_username;
+    if (comment.anonymous) {
+        comment_username = "Anonymous";
+    } else {
+        comment_username = comment.username;
+    };
+    if (button_num==1){
+        button=`<button class="like mdl-button mdl-js-button mdl-button--raised" style="color: white !important; background-color:#2bbd7e !important;"  onclick="likeComment('${comment.id}', ${i})"; value="${comment.likes}" >
+        <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
+        </button>`
+    }
+    else{
+        button=`<button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likeComment('${comment.id}', ${i})"; value="${comment.likes}" >
+        <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
+        </button>`
+    }
+
+    comment_section.innerHTML +=
+                `<div>
+                    <div style="margin:0 10px; background-color: white; width: 97%">
+                        <span class="mdi mdi-cow"></span>
+                        <h6 name="username" id="username" class="notranslate">@${comment_username}</h6>
+                        <h8 name="comment_date_posted" id="comment_date_posted">${comment.created}</h8>
+                        <p>
+                        <span id = "user_comment">${comment.content}</span>
+                        </p>
+                    </div>
+                    <div id="button_div${i}">
+                        <!--  LIKE FOR COMMENT -->
+                        ${button}
+
+                    <!-- ADD REPLY BUTTON FOR COMMENT -->
+                    <span>
+                    <button class="reply mdl-button mdl-js-button mdl-button--raised" id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
+                    <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
+                    </span>
+                    <br>
                  </div>
-                 <!--  LIKE FOR COMMENT -->
-                 <span id='like_button_comment' href="#">
-                 <button class="like_button_comment_not_liked like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="like_comment_btn">
-                 <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img>
-                 </button>
-                 </span>
-
-
-                 <!-- ADD REPLY BUTTON FOR COMMENT -->
-                 <span>
-                 <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
-                 <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                 </span>
-                 <br>
 
                  <!-- REPLY SECTION -->
                  <div id = "add_reply_section${i}" style="display:none">
@@ -424,13 +455,13 @@ function printComments() {
 
                         <!-- ANONYMOUS CHECKBOX BUTTON -->
                         <div>
-                          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                          <label class="mdl-checkbox mdl-js-checkbox" >
                             <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                           </label>
 
                         <!-- SEND BUTTON -->
-                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
+                          <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
                           <i class="material-icons notranslate" id="send_reply_icon">send</i>
                           SEND
                           </button>
@@ -443,13 +474,8 @@ function printComments() {
               </div>
               <hr style="margin: 0;">`;
               document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
-            }
-        }).then(() => {
-            for (let comment_index = data_list.length - 1; comment_index >= 0; comment_index--) {
-                printReplies(data_list[comment_index].id, comment_index)
-            }
-        });
 }
+
 
 /**
  * A function which prints out the replies of a comment
@@ -494,7 +520,7 @@ function printReplies(comment_id, comment_index) {
 
                             <!-- ADD REPLY BUTTON FOR COMMENT -->
                             <span>
-                            <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${comment_index},${i})">
+                            <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${comment_index},${i})">
                             <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                             </span>
 
@@ -509,13 +535,13 @@ function printReplies(comment_id, comment_index) {
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                                     <div>
-                                      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                                      <label class="mdl-checkbox mdl-js-checkbox" >
                                         <input type="checkbox" id="anonymous${comment_index},${i}"" class="mdl-checkbox__input" >
                                         <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                                       </label>
 
                                       <!-- SEND BUTTON -->
-                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn" onclick="addReplyToReply('${comment_index}', '${i}', '${reply.id}')">
+                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReplyToReply('${comment_index}', '${i}', '${reply.id}')">
                                         <i class="material-icons notranslate" id="send_reply_icon">send</i>
                                         SEND
                                         </button>
@@ -582,7 +608,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
 
                             <!-- ADD REPLY BUTTON FOR COMMENT -->
                             <span>
-                            <button class="reply mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " style="background-color: #006DAE; color: white;"onclick="showReplyToReplyToReplyInput(${comment_index},${reply_index},${start})">
+                            <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyToReplyInput(${comment_index},${reply_index},${start})">
                             <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                             </span>
 
@@ -597,13 +623,13 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                                     <div>
-                                      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+                                      <label class="mdl-checkbox mdl-js-checkbox" >
                                         <input type="checkbox" id="anonymous${comment_index},${reply_index},${start}" class="mdl-checkbox__input" >
                                         <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                                       </label>
 
                                       <!-- SEND BUTTON -->
-                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" " id="send_reply_btn"  onclick=" addReplyToReplyToReply('${comment_index}', '${reply_index}','${start}', '${reply.id}')">
+                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn"  onclick=" addReplyToReplyToReply('${comment_index}', '${reply_index}','${start}', '${reply.id}')">
                                         <i class="material-icons notranslate" id="send_reply_icon">send</i>
                                         SEND
                                         </button>
@@ -786,7 +812,6 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
 
 
 
-
 function redirect(url, msg) {
     window.location = url;
     return msg;
@@ -824,5 +849,67 @@ function checkUserFavouritedPost() {
                 fav_button.style.color='black';
             }
         }
+    })
+}
+
+async function likeComment(comment_id, i){
+
+    let res = await checkForLikesComment(comment_id);
+    like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
+
+    username=current_user["username"]
+    
+    if (!res) {
+        // if there is no action at all, lilke
+        firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).set({
+            action: 1
+        }).then(() => {
+            updateCommentLikes(comment_id, 1) // add 1 like 
+        });
+        // UI
+        like_btn_addr.style.background='#2bbd7e';
+        like_btn_addr.style.color='white';
+
+        //increase like count
+        current_value=like_btn_addr.value
+        new_value=parseInt(current_value)+1
+        like_btn_addr.value=new_value
+        $('#button_div'+i).find('.number_of_likes').html(new_value);
+
+    } else {
+        firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).remove();
+        updateCommentLikes(comment_id, -1)  // remove 1 like 
+        //UI 
+        like_btn_addr.style.background='#dadada';
+        like_btn_addr.style.color='black';
+        // change like number 
+        current_value=like_btn_addr.value
+        new_value=parseInt(current_value)-1
+        like_btn_addr.value=new_value
+        $('#button_div'+i).find('.number_of_likes').html(new_value);
+    }
+}
+
+
+function checkForLikesComment(comment_id){
+    return new Promise(resolve => {
+            firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).once("value", snapshot => {
+                if (snapshot.exists()){
+                    resolve(true);
+                }
+                else{
+                    resolve(false);
+                }
+            });
+    });
+}
+
+
+function updateCommentLikes(comment_id, number){
+    firebase.database().ref(`comments/${comment_id}/likes`).once('value', (snapshot) => {
+        let current_likes = snapshot.val();
+        var updates = {};
+        updates[`comments/${comment_id}/likes`] = current_likes + number
+        firebase.database().ref().update(updates);
     })
 }
