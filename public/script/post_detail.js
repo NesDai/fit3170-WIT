@@ -331,6 +331,13 @@ function addComment() {
             //generating a key for the comment
             let myRef = firebase.database().ref(`comments`);
             let key = myRef.push().key;
+
+            let now = new Date();
+            let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+            utc = utc.toString();
+            utc = utc.substring(0,25);
+            utc+="(UTC TIME)";
+
             let newData = {
                 anonymous: stay_anonymous,
                 commenterID: current_user["phone"],
@@ -339,7 +346,7 @@ function addComment() {
                 likes: 0,
                 postID: post_id,
                 username: current_user["username"],
-                created: new Date().toString()
+                created: utc
             }
 
             firebase.database().ref(`comments/${key}`).set(newData).then(() => {
@@ -691,12 +698,18 @@ function addReply(btn_num, comment_id) {
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-            console.log("hi");
+            
+            let now = new Date();
+            let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+            utc = utc.toString();
+            utc = utc.substring(0,25);
+            utc+="(UTC TIME)";
+
             // new data to upload in api
             let newData = {
                 anonymous: stay_anonymous,
                 content: reply_input,
-                created: new Date().toString(),
+                created: utc,
                 dislike: 0,
                 id: key,
                 like: 0,
@@ -738,11 +751,17 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
+
+            let now = new Date();
+            let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+            utc = utc.toString();
+            utc = utc.substring(0,25);
+            utc+="(UTC TIME)";
             // new data to upload in api
             let newData = {
                 anonymous: stay_anonymous,
                 content: reply_input,
-                created: new Date().toString(),
+                created: utc,
                 dislike: 0,
                 id: key,
                 like: 0,
@@ -786,11 +805,18 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
+
+            let now = new Date();
+            let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+            utc = utc.toString();
+            utc = utc.substring(0,25);
+            utc+="(UTC TIME)";
+
             // new data to upload in api
             let newData = {
                 anonymous: stay_anonymous,
                 content: reply_input,
-                created: new Date().toString(),
+                created: utc,
                 dislike: 0,
                 id: key,
                 like: 0,
