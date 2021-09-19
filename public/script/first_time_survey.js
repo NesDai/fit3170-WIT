@@ -554,6 +554,8 @@ function showQuestion(isSubQuestion) {
             // checking the type of the question to assign the appropriate function to display it
             switch (questionType) {
                 case TYPE_NUMERIC:
+                    showNumeric(questionObject);
+                    break;
                 case TYPE_NUMERIC_SUB_QUESTION:
                     showNumeric(questionObject);
                     if (agreeLikertQues.includes(questionIndex)) {
@@ -615,6 +617,8 @@ function showNumeric(questionObject) {
         // get user's input
         let message = parseInt(input.value);
 
+        console.log(isNaN(message))
+
         // If it's a number
         if (!isNaN(message)) {
             // If there is no upper/lower range specified set either to infinity and negative infinity respectively
@@ -648,18 +652,14 @@ function showNumeric(questionObject) {
                 if (questionObject.restrictions.skipIfInvalid) {
                     submit.onclick = endSurveyText;
                 }
-                /*else {
-                    // re prompt the question
-                    submit.onclick = repromptQuestion;
-                }*/
             }
         }
-        /*else {
+        else {
                 // If it's not a number
                 errorText.style.visibility = "visible";
                 errorText.innerHTML = "the answer needs to be a number.";
-                submit.onclick = repromptQuestion;
-        }*/
+                submit.onclick = "";
+        }
     }
 
     // display the question and enable the textbox
