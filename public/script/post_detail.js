@@ -381,11 +381,7 @@ function printComments() {
                     });
             }).then(() => {
                 checkCommentForLikes(data_list)
-            }).then(() => {
-                for (let comment_index = data_list.length - 1; comment_index >= 0; comment_index--) {
-                    printReplies(data_list[comment_index].id, comment_index)
-                }
-            });
+            })
 }
 
 async function checkCommentForLikes(comments_list){
@@ -402,6 +398,7 @@ async function checkCommentForLikes(comments_list){
             //prints the comment with not liked button
             printComment(0, comment, i);
         }
+        printReplies(comment.id, i)
     }
 }
 
@@ -486,10 +483,7 @@ function printComment(button_num, comment, i ){
  * @param {integer} index an integer to indicate the section
  */
 function printReplies(comment_id, comment_index) {
-    console.log(comment_id)
-    console.log(comment_index)
     let reply_section = document.getElementById("reply_section" + comment_index.toString());
-    console.log(document.getElementById("reply_section0"))
     let reply_list = [];
 
     
@@ -647,13 +641,13 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                                 <div id= ""reply_2_reply_section"${comment_index},${reply_index},${start}" style="margin-bottom:10px">
                                 </div>
                           </div>`
-                        //for the ui
-                        if (window.screen.width>1024){
-                          document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:92%");
-                        }
-                        else{
-                          document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:88%");
-                        }
+                        // //for the ui
+                        // if (window.screen.width>1024){
+                        //   document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:92%");
+                        // }
+                        // else{
+                        //   document.getElementById(`reply_input${comment_index},${reply_index},${start}`).setAttribute("style", "width:88%");
+                        // }
                     }
                     start = start + 1;
                 }
