@@ -20,14 +20,13 @@
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme">
  
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-
-
+    <link rel="stylesheet" href="css/forum_user.css">
 
 
 
   </head>
   <body class="vertical  dark  ">
-    <div class="wrapper">
+   
 
 
 
@@ -46,12 +45,15 @@
                       
                         <!-- SEARCH -->
 
-                        <form class="pure-form" action="return false;">
+                        <div id="userError"></div>
+                        <form class="pure-form" id="box1">
                           <fieldset>
                               
-                              <input type="text" placeholder="Search..."><button id="search-butt" class="pure-button pure-button-primary">Search</button></input>
+                             
+                              <input type="text" placeholder="Search for a User" id="searchbar"/>
+                              <button id="search-butt" class="pure-button pure-button-primary">Search</button>
                               </fieldset>
-                              </form>
+                        </form>
     
 
                       <!-- <canvas id="barChartjs" width="400" height="300"></canvas> -->
@@ -62,13 +64,35 @@
                   <div class="card shadow">
                     <div class="card-header">
                       <strong class="card-title mb-0">Total Number of Users</strong>
+                      
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="totalUsersCard">
+                      <h1 id="totalUsers">30</h1>
                       <!-- <canvas id="lineChartjs" width="400" height="300"></canvas> -->
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
               </div> <!-- end section -->
+
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+
+        <!--USER DESCRIPTION-->
+        <div class="container-fluid">
+          <div class="card shadow">
+            <div class="card-header">
+          <div id="userInfo"><h2>No User Selected</h2></div>
+        </div>
+          </div>
+        </div>
+        <!--END OF USER DESCRIPTION-->
+
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12">
+
+
               <div class="row my-4">
                 <div class="col-md-6 mb-4">
                   <div class="card shadow">
@@ -94,6 +118,7 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
