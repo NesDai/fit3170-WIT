@@ -182,6 +182,22 @@ function printPostDetails(post, button_num) {
                     <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
                 </div>
 
+                <!-- Alert UI -->
+                    <dialog class="mdl-dialog">
+                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+                        <hr style="margin: 0;">
+                        <div class="mdl-dialog__content">
+                            <h8>
+                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
+                            </h8>
+                            <br>
+                            <br>
+                            <div class="mdl-dialog__actions">
+                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+                            </div>
+                        </div>
+                    </dialog>
+
                 <script>
                     //checks for double click on like button
                     $('#btn_like').on('click',function(){
@@ -194,7 +210,7 @@ function printPostDetails(post, button_num) {
                             }
                             
                             // do what needs to happen on double click. 
-                            alert("The paragraph double clicked");
+                            dialog.showModal();
                         }else{
                             $button.data('alreadyclicked', true);
                             
@@ -219,7 +235,7 @@ function printPostDetails(post, button_num) {
                             }
                             
                             // do what needs to happen on double click. 
-                            alert("The paragraph double clicked");
+                            dialog.showModal();
                         }else{
                             $button.data('alreadyclicked', true);
                             
@@ -232,6 +248,17 @@ function printPostDetails(post, button_num) {
                         return false;
                     });
                 </script>
+
+                <!-- Alert control-->
+                    <script>
+                        var dialog = document.querySelector('dialog');
+                        if (! dialog.showModal) {
+                            dialogPolyfill.registerDialog(dialog);
+                        }
+                        dialog.querySelector('.close_btn').addEventListener('click', function() {
+                            dialog.close();
+                        });
+                    </script>
 
             </div>`
     $('#post_details').append(post_display);
@@ -522,6 +549,23 @@ function printComment(button_num, comment, i ){
                     </div>
                  </div>
             </div>
+
+            <!-- Alert UI -->
+                    <dialog class="mdl-dialog">
+                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+                        <hr style="margin: 0;">
+                        <div class="mdl-dialog__content">
+                            <h8>
+                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
+                            </h8>
+                            <br>
+                            <br>
+                            <div class="mdl-dialog__actions">
+                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+                            </div>
+                        </div>
+                    </dialog>
+
             <script>
                 //checks for double click on like button
                 $('#btn_cmnt_like${i}').on('click',function(){
@@ -534,7 +578,7 @@ function printComment(button_num, comment, i ){
                         }
                         
                         // do what needs to happen on double click. 
-                        alert("The paragraph double clicked");
+                        dialog.showModal();
                     }else{
                         $button.data('alreadyclicked', true);
                         
@@ -547,6 +591,18 @@ function printComment(button_num, comment, i ){
                     return false;
                 });
             </script>
+
+            <!-- Alert control-->
+                    <script>
+                        var dialog = document.querySelector('dialog');
+                        if (! dialog.showModal) {
+                            dialogPolyfill.registerDialog(dialog);
+                        }
+                        dialog.querySelector('.close_btn').addEventListener('click', function() {
+                            dialog.close();
+                        });
+                    </script>
+
             <br>
             <div id= "reply_section${i}" style="margin-bottom:10px">
             </div>
