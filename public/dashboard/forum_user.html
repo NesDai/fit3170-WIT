@@ -50,7 +50,7 @@
                           <fieldset>
                               
                              
-                              <input type="text" placeholder="Search for a User" id="searchbar"/>
+                              <input type="text" placeholder="Search for a User by Username..." id="searchbar"/>
                               <button id="search-butt" class="pure-button pure-button-primary">Search</button>
                               </fieldset>
                         </form>
@@ -103,13 +103,14 @@
                     </div>
                     <div class="card-body">
       
+
                       <div class="container-fluid">
                         <div class="row justify-content-center">
                           <div class="col-12">
 
-                        <div class="row my-4">
-                          <div class="col-md-3 mb-4">
-                            <div class="card shadow">
+                            <div class="row">
+                              <div class="col-md-3 mb-2">
+                            <div class="card shadow userInfoCard">
                               <div class="card-header">
                                 Likes on Posts
                               </div>
@@ -117,80 +118,83 @@
                               
                             </div>
                           </div>
-                        </div>
-                      </div>
+                            
+                      
 
-                      <div class="container-fluid">
-                        <div class="row my-4">
-                          <div class="col-md-3 mb-4">
-                            <div class="card shadow">
+
+                          <div class="col-md-3 mb-2">
+                            <div class="card shadow userInfoCard">
                               <div class="card-header">
                                 Dislikes on Posts
                               </div>
                                 <div class="card-body" id="dislikesOnPosts"></div>
-                              
                             </div>
                           </div>
-                        </div>
-                      </div>
+                            
+            
+                      
 
-                      <div class="container-fluid">
-                        <div class="row my-6">
-                          <div class="col-md-3 mb-4">
-                            <div class="card shadow">
+                          <div class="col-md-3 mb-2">
+                            <div class="card shadow userInfoCard">
                               <div class="card-header">
                                 Comments & Replies
                                 </div>
 
                                 <div class="card-body" id="commentsReplies"></div>
-                              
                             </div>
                           </div>
-                        </div>
-                      </div>
+                            
+                
+                            
+                          </div> <!-- .col-3 -->
+                        </div> <!-- .row -->
+                      </div> <!-- .container-fluid -->
+
 
                       <div class="container-fluid">
-                        <div class="row my-4">
-                          <div class="col-md-3 mb-4">
-                            <div class="card shadow">
-                              <div class="card-header">
-                                Favourite Posts
+                        <div class="row justify-content-center">
+                          <div class="col-12">
+          
+                            <div class="row my-1">
+                              <div class="col-md-3 mb-2">
+                                <div class="card shadow userInfoCard">
+                                  <div class="card-header">
+                                    Favourite Posts
+                                  </div>
+                                    <div class="card-body" id="favouritePosts"></div>
+                                </div>
                               </div>
-                                <div class="card-body" id="favouritePosts"></div>
-                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                
+                      
 
-                      <div class="container-fluid">
-                        <div class="row my-4">
-                          <div class="col-md-3 mb-4">
-                            <div class="card shadow">
+        
+                          <div class="col-md-3 mb-2">
+                            <div class="card shadow userInfoCard">
                               <div class="card-header">
                                 Posts Created
                               </div>
                                 <div class="card-body" id="postsCreated"></div>
-                              
                             </div>
                           </div>
-                        </div>
-                      </div>
+         
+                     
 
-                      <div class="container-fluid">
-                        <div class="row my-4">
-                          <div class="col-md-3 mb-4">
-                            <div class="card shadow">
+                      
+                          <div class="col-md-3 mb-2">
+                            <div class="card shadow userInfoCard">
                               <div class="card-header">
                                 Likes on Comments
                               </div>
                                 <div class="card-body" id="likesOnComments"></div>
-                              
                             </div>
                           </div>
-                        </div>
-                      </div>
+                       
+             
+                      
+                            </div>
+                          </div>
 
+                        </div>
                         </div>
                       </div>
                     </div> <!-- /.card-body -->
@@ -202,7 +206,7 @@
                       <strong class="card-title mb-0">Total Interactions With Users</strong>
                     </div>
                     <div class="card-body">
-                      <canvas id="pieChartjs" width="400" height="300"></canvas>
+                      <canvas id="pieChartjs" width="500" height="400"></canvas>
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
