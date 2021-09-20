@@ -233,21 +233,19 @@
 
                       <div class="container-fluid">
                         <div class="row justify-content-center">
-                          <div class="col-6">
+                          <div class="col-10">
                             <div class="row">
                               
-                              <input type="radio" id="createdPostsRadio" name="historySec" class="historyRadio">
-                              <label for="createdPostsRadio">Created Posts</label><br>
-                              <input type="radio" id="likedPostsRadio" name="historySec" class="historyRadio">
-                              <label for="likedPostsRadio">Liked Posts</label><br>
-                              <input type="radio" id="dislikedPostsRadio" name="historySec" class="historyRadio">
-                              <label for="dislikedPostsRadio"> Disliked Posts</label><br>
-                              <input type="radio" id="commentsRadio" name="historySec" class="historyRadio"> 
-                              <label for="commentsRadio">Comments</label><br>
-                              <input type="radio" id="favouritesRadio" name="historySec" class="historyRadio">
-                              <label for="favouritesRadio">Favourite Posts</label><br>
-                              <input type="radio" id="likedCommentsRadio" name="historySec" class="historyRadio">
-                              <label for="likedCommentsRadio">Comment Likes</label><br>
+                              <form class="pure-form pure-form-stacked">
+                                <select id="stacked-state">
+                                  <option value="1">Created Posts</option>
+                                  <option value="2">Liked Posts</option>
+                                  <option value="3">Disliked Posts</option>
+                                  <option value="4">Comments</option>
+                                  <option value="5">Favourite Posts</option>
+                                  <option value="6">Liked Comments</option>
+                                </select>
+                              </form>
                               
                             </div>
                           </div>
