@@ -69,7 +69,7 @@
                       
                     </div>
                     <div class="card-body" id="totalUsersCard">
-                      <h1 id="totalUsers">30</h1>
+                      <h1 id="totalUsers">30 (placeholder)</h1>
                       <!-- <canvas id="lineChartjs" width="400" height="300"></canvas> -->
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
@@ -229,39 +229,70 @@
                     <strong class="card-title mb-0">History of User Actions</strong>
                   </div>
                   <div class="card-body">
+
+
+                      <div class="container-fluid">
+                        <div class="row justify-content-center">
+                          <div class="col-6">
+                            <div class="row">
+                              
+                              <input type="radio" id="createdPostsRadio" name="historySec" class="historyRadio">
+                              <label for="createdPostsRadio">Created Posts</label><br>
+                              <input type="radio" id="likedPostsRadio" name="historySec" class="historyRadio">
+                              <label for="likedPostsRadio">Liked Posts</label><br>
+                              <input type="radio" id="dislikedPostsRadio" name="historySec" class="historyRadio">
+                              <label for="dislikedPostsRadio"> Disliked Posts</label><br>
+                              <input type="radio" id="commentsRadio" name="historySec" class="historyRadio"> 
+                              <label for="commentsRadio">Comments</label><br>
+                              <input type="radio" id="favouritesRadio" name="historySec" class="historyRadio">
+                              <label for="favouritesRadio">Favourite Posts</label><br>
+                              <input type="radio" id="likedCommentsRadio" name="historySec" class="historyRadio">
+                              <label for="likedCommentsRadio">Comment Likes</label><br>
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     
+                      <div class="container-fluid">
+                        <div class="row justify-content-center">
+                          <div class="col-12">
 
-                    <table class="pure-table" id="historyTable">
-                      <thead>
-                          <tr>
-                              <th>#</th>
-                              <th>Make</th>
-                              <th>Model</th>
-                              <th>Year</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>1</td>
-                              <td>Honda</td>
-                              <td>Accord</td>
-                              <td>2009</td>
-                          </tr>
-                          <tr>
-                              <td>2</td>
-                              <td>Toyota</td>
-                              <td>Camry</td>
-                              <td>2012</td>
-                          </tr>
-                          <tr>
-                              <td>3</td>
-                              <td>Hyundai</td>
-                              <td>Elantra</td>
-                              <td>2010</td>
-                          </tr>
-                      </tbody>
-                  </table>
-
+                            <div class="row my-1" >
+                              <table class="pure-table" id="historyTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Make</th>
+                                        <th>Model</th>
+                                        <th>Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Honda</td>
+                                        <td>Accord</td>
+                                        <td>2009</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Toyota</td>
+                                        <td>Camry</td>
+                                        <td>2012</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Hyundai</td>
+                                        <td>Elantra</td>
+                                        <td>2010</td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
 
                   </div> <!-- /.card-body -->
@@ -269,7 +300,7 @@
 
 
 
-            </div> <!--/col-->
+            </div>
           </div><!--/justify content-->
         </div><!--/container-->
 

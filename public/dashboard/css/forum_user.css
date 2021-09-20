@@ -27,7 +27,14 @@
 
 
 #historyTable{
+    margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
     width:90%;
 }
+
+.historyRadio{
+    margin-left: 2%;
+    margin-right: 2px;
+}
+
