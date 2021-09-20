@@ -49,6 +49,11 @@
          position: relative;
          left: 100px;
          }
+         #skillscard
+         {
+         position: relative;
+         left: 100px;
+         }
          }
          @media all and (max-width: 1024px) {
          .desktop-br {display: none;}
@@ -66,7 +71,7 @@
          }
          .interest-card > .mdl-card__title {
          color: #fff;
-         height: 20px;
+         height: 70px;
          background: #ff7c00
          }
          .post-card > .mdl-card__title {
@@ -106,7 +111,58 @@
             <div class="page-content"><!-- Your content goes here --></div>
           </section>
           <section class="mdl-layout__tab-panel" id="fixed-recommender">
-            <div class="page-content"><!-- Your content goes here --></div>
+            <div class="page-content">
+              <!-- Your content goes here -->
+              <div class = "mdl-grid">
+                <div class = "mdl-cell mdl-cell--4-col" id="usercard">
+                   <div class = "user-card mdl-card mdl-shadow--4dp ">
+                      <div class = "mdl-card__title ">
+                         <img src="css/images/admin_users_icon.png">
+                         <h2 class = "mdl-card__title-text ">Users</h2>
+                      </div>
+                      <div class = "mdl-card__supporting-text">
+                         Get video analytics on all the users
+                      </div>
+                      <br class="desktop-br"> <br class="desktop-br">
+                      <div class = "mdl-card__actions mdl-card--border">
+                         <a class = "mdl-button mdl-button--colored mdl-js-button">view more</a>
+                      </div>
+                   </div>
+                </div>
+
+                <div class = "mdl-cell mdl-cell--4-col" id="favouritescard">
+                   <div class = "interest-card mdl-card mdl-shadow--4dp ">
+                      <div class = "mdl-card__title ">
+                         <img src="css/images/admin_fav_icon.png">
+                         <h2 class = "mdl-card__title-text ">Favourites</h2>
+                      </div>
+                      <div class = "mdl-card__supporting-text">
+                         Get information on all favourited videos
+                      </div>
+                      <br class="desktop-br"> <br class="desktop-br">
+                      <div class = "mdl-card__actions mdl-card--border">
+                         <a class = "mdl-button mdl-button--colored mdl-js-button "> view more</a>
+                      </div>
+                   </div>
+                </div>
+
+                <div class = "mdl-cell mdl-cell--4-col" id="skillscard">
+                   <div class = "post-card mdl-card mdl-shadow--4dp ">
+                      <div class = "mdl-card__title ">
+                         <img src="css/images/admin_skill_icon.png">
+                         <h2 class = "mdl-card__title-text ">Skills</h2>
+                      </div>
+                      <div class = "mdl-card__supporting-text">
+                         Get information on all the skills
+                      </div>
+                      <br class="desktop-br"> <br class="desktop-br">
+                      <div class = "mdl-card__actions mdl-card--border">
+                         <a class = "mdl-button mdl-button--colored mdl-js-button " > View more</a>
+                      </div>
+                   </div>
+                </div>
+              </div>
+            </div>
           </section>
           <section class="mdl-layout__tab-panel" id="fixed-forum">
             <div class="page-content">
@@ -158,7 +214,7 @@
                       </div>
                       <br class="desktop-br"> <br class="desktop-br">
                       <div class = "mdl-card__actions mdl-card--border">
-                         <a class = "mdl-button mdl-button--colored mdl-js-button " > View more</a>
+                         <a class = "mdl-button mdl-button--colored mdl-js-button " onclick='window.location.href = "forum_post.html"'> View more</a>
                       </div>
                    </div>
                 </div>
