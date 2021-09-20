@@ -20,3 +20,14 @@
     color: red;
 }
 
+
+#historyCard{
+    width:98%;
+}
+
+
+#historyTable{
+    margin-left: auto;
+    margin-right: auto;
+    width:90%;
+}
