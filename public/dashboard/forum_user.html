@@ -24,13 +24,6 @@
 
 
 
-    <script>
-      document.getElementById("search-butt").addEventListener("click", function(event){
-            event.preventDefault();
-          handleFireButton();
-        });
-    </script>
-
 
   </head>
   <body class="vertical  dark  ">
@@ -267,9 +260,10 @@
           document.getElementById("search-butt").addEventListener("click", function(event){
                 event.preventDefault();
             });
-            document.getElementById("search-butt").addEventListener("click", function(event){
-                console.log("hi");
-            });
+
+          localStorage.setItem("mode", "light")
+          modeSwitch();
+    
 
         </script>
   </body>
