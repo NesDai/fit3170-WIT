@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+        <title>Post Analytics</title>
+        <!-- Simple bar CSS -->
+        <link rel="stylesheet" href="css/simplebar.css">
+        <!-- Fonts CSS -->
+        <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <!-- Icons CSS -->
+        <link rel="stylesheet" href="css/feather.css">
+        <!-- Date Range Picker CSS -->
+        <link rel="stylesheet" href="css/daterangepicker.css">
+        <!-- App CSS -->
+        <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
+        <!-- <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled> -->
+
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/forum_post.css">
+    </head>
+    <body class="vertical  light  ">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white flex-row border-bottom shadow">
+            <!-- BACK BUTTON -->
+            <div>
+                <button class="btn btn-primary" type="button" style="margin: 10px 20px;"> <i class="fe fe-arrow-left"></i> Back</button>
+            </div>
+            <h2>Post Analytics</h2>
+            <h4></h4>
+        </nav>
+        <main role="main" class="main-content">
+            <div class="container-fluid">
+                
+
+                 
+
+
+
+
+
+
+
+
+
+              <div class="row justify-content-center">
+                <div class="col-12">
+                    <!-- <h2>Post Analytics</h2> -->
+                    
+                    <!-- ROW 1 -->
+                    <div class ="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow"  style="height: 350px;">
+
+                                <div class="card-body">
+                                  <h4 class="card-title">Total Number of Posts:</h4>
+                                  <br>
+                                  <div class="row align-items-center">
+
+                                    <div class="container-fluid">
+                                        <div class="row justify-content-center">
+                                          <div class="col-12">
+                                            <div class="row">
+
+                                                <!-- NUMBER OF POST POSTED TO RECOMMENDED -->
+                                                <div class="col-md-6 mb-4">
+                                                    <div class="card shadow">
+                                                      <div class="card-header">
+                                                        Posted to Recommended
+                                                      </div>
+                                                        <div class="card-body"></div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- NUMBER OF POST POSTED BY ALL USERS -->
+                                                <div class="col-md-6 mb-4">
+                                                    <div class="card shadow">
+                                                      <div class="card-header">
+                                                        Posted by All Users
+                                                      </div>
+                                                        <div class="card-body"></div>
+                                                    </div>
+                                                </div>
+
+                                              </div> <!-- .row inner-->
+                                          </div> <!-- .col-12 inner-->
+                                        </div> <!-- .row justify-content-center inner-->
+                                    </div> <!-- .container-fluid inner -->
+                                  </div> <!-- .row align-items-center-->
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card shadow-->
+                        </div> <!-- .col-md-6 mb-4-->
+
+                        
+                         <!-- SEARCH BY POST ID -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow" style="height: 350px;">
+                                <div class="card-body">
+                                    <h4 class="card-title">Search via post ID</h4>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Enter a post ID">
+                                        <div class="input-group-append">
+                                          <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+                                        </div>
+                                      </div>
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card shadow-->
+                        </div> <!-- .col-md-6 mb-4-->
+                    </div> <!-- .row-->
+
+                    <!-- ROW 2 -->
+                    <div class ="row">
+
+                        <!-- SUMMARY OF A POST -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow"  style="height: 350px;">
+                                <div class="card-body">
+                                    <h4 class="card-title">Summary of (id) post</h4>
+                                    <div class="row align-items-center">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>POST TITLE</th>
+                                                <td> title placeholder </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>DESCRIPTION</th>
+                                                <td> desc placeholder </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>VIDEO LINK</th>
+                                                <td> video link placeholder </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>CREATOR or RECOMMENDED</th>
+                                                <td> creator placeholder </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>APPLIED INTERESTS</th>
+                                                <td> interest1, interest2 placeholder </td>
+                                            </tr>
+
+                                        </table>
+                                    </div> <!-- .row align-items-center-->
+                                </div> <!-- .card-body -->
+                            </div> <!-- .card shadow-->
+                        </div> <!-- .col-md-6 mb-4-->
+
+                        <!-- GRAPH BASED ON A POST -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow"  style="height: 350px;">
+                                <div class="card-body">
+                                    <h4 class="card-title">Overall Statistics for (id)</h4>
+                                        <canvas id="barChartjs" width="400" height="300"></canvas>
+                                </div> <!-- .card-body -->
+                                <br>
+                            </div> <!-- .card shadow-->
+                        </div> <!-- .col-md-6 mb-4-->
+                    </div> <!-- .row-->
+                </div> <!-- .col-12 -->
+              </div> <!-- .row justify-content-center -->
+            </div> <!-- .container-fluid -->
+        </main>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/simplebar.min.js"></script>
+    <script src='js/daterangepicker.js'></script>
+    <script src='js/jquery.stickOnScroll.js'></script>
+    <script src="js/tinycolor-min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/d3.min.js"></script>
+    <script src="js/topojson.min.js"></script>
+    <script src="js/datamaps.all.min.js"></script>
+    <script src="js/datamaps-zoomto.js"></script>
+    <script src="js/datamaps.custom.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script>
+      /* defind global options */
+      Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+      Chart.defaults.global.defaultFontColor = colors.mutedColor;
+    </script>
+    <script src="js/gauge.min.js"></script>
+    <script src="js/jquery.sparkline.min.js"></script>
+    <script src="js/apexcharts.min.js"></script>
+    <script src="js/apexcharts.custom.js"></script>
+    <script src="js/apps.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+        <script>
+          document.getElementById("search-butt").addEventListener("click", function(event){
+                event.preventDefault();
+            });
+
+          localStorage.setItem("mode", "light")
+          modeSwitch();
+    
+
+        </script>
+    </body>
+    </body>
+</html>
