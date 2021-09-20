@@ -61,10 +61,9 @@ function makeNewPost() {
         });
 
         if (!interest_arr.length){
-            alert("The post needs to have at least one interest")
+            dialog.showModal();
             return
         }
-        console.log(interest_arr);
 
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
@@ -78,7 +77,7 @@ function makeNewPost() {
         if (video_url !== "") {
             embedding_video_url = checkEmbeddingVideo(video_url);
             if (embedding_video_url == 0) {
-                alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+                dialog_vid.showModal();
                 return;
             }
 
@@ -218,7 +217,6 @@ function printAllPosts(){
         }).then(()=>{
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-            // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
         });
     });
 
@@ -469,7 +467,7 @@ function print_create_post()
                  var cnt = $("input[name='interests']:checked").length;
                  if (cnt > maxAllowed) {
                      $(this).prop("checked", "");
-                     alert('You can select maximum ' + maxAllowed + ' interests!!');
+                     dialog.showModal();
                  }
              });
           });
@@ -481,6 +479,54 @@ function print_create_post()
        POST
        </button>
     </div>
+
+    <!-- Alert UI -->
+    <dialog class="mdl-dialog">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
+    
+    <!-- Alert for wrong video link UI-->
+    <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Alert control-->
+    <script>
+        var dialog = document.querySelector('dialog');
+        if (! dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        dialog.querySelector('.close_btn').addEventListener('click', function() {
+            dialog.close();
+        });
+
+        var dialog_vid=document.querySelector('.mdl-dialog-vid')
+        if (! dialog_vid.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
+            dialog_vid.close();
+        });
+
+    </script>
  </div>`
     );
     
