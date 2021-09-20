@@ -274,15 +274,10 @@ function printThread(){
                 posts.push(data.val());
         }
             });
-        
-
         }).then(()=>{
 
             printStartIndex = posts.length - 1;
-            printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-
-
-            
+            printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
         });
     });
 
@@ -313,7 +308,7 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         // add a print more button
 
         if(startIndex-numberOfPosts>=0){ // only if more posts to load
-            $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
+            $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised' style='color:white; background-color:#006dae'
             >Load More</button>`);
 
          let moreBut = document.getElementById("moreBut");
@@ -482,7 +477,7 @@ function print_create_post()
        </script>
        <br>
        <!-- POST BUTTON -->
-       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="post_btn"
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="post_btn"
           style="background-color:#006DAE; border: white;" onclick="makeNewPost()">
        POST
        </button>
@@ -496,10 +491,10 @@ function print_create_post()
 function printPost(post, button_num, i )
 {
     let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePost('${post.id}', ${i});" value="${post.likes}" >
+    <button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likePost('${post.id}', ${i});" value="${post.likes}" >
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+    <button class="dislike mdl-button mdl-js-button mdl-button--raised"  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
@@ -507,10 +502,10 @@ function printPost(post, button_num, i )
     {
          // liked
          button = `<button
-         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         class="like mdl-button mdl-js-button mdl-button--raised"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
@@ -518,10 +513,10 @@ function printPost(post, button_num, i )
     else if(button_num==-1)
     {
          // disliked
-         button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         button = `<button class="like mdl-button mdl-js-button mdl-button--raised" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}">
+         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
@@ -556,7 +551,7 @@ function printPost(post, button_num, i )
                      `
                                   +
                                   `
-                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe loading="lazy" allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
                                   `
                                   +
                                   `
@@ -583,7 +578,7 @@ function printPost(post, button_num, i )
                      <br>
                     <div id="button_div${i}">
                      ${button}
-                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
                     <img src="./css/images/more_icon.png" id="more_icon"></img><span> More</span>
                     </button>
                     </div>
