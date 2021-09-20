@@ -4,7 +4,7 @@
 /**
  * the function is used to check if the user's entered email is valid or not, and perform the according actions.
  * Redirect to admin dashboard if correct email, and display an error otherwise
- * @param {1} email the input input from the user 
+ * @param {1} email the input input from the user
  */
 function adminLogin(email){
 
@@ -18,7 +18,7 @@ function adminLogin(email){
                     console.log("valid email",data); //todo redirect later
                     found = true;
                 });
-  
+
 
                 }).then(()=>{
 
@@ -28,8 +28,9 @@ function adminLogin(email){
                     }
                     else{
                         $('#input-error').val('');
+                        window.location = "admin_dashboard_landing.html"
                     }
-                    
+
                 })
 
 }
