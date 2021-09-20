@@ -1,9 +1,11 @@
 let tableArea = document.getElementById('favtable');
+// let updateFavOnce = false;
+// localStorage.setItem("updateFavOnce", JSON.stringify(updateFavOnce));
 let favCount = 0;
 let current_user = JSON.parse(localStorage.getItem("USER"));
 let emptyTxt = "<br><br><br>There are no videos saved in favorites right now";
 let listInterest = ["Art","Caregiving","Collaboration and Teamwork","Cooking","Critical Thinking","Effective Communication","Email Management and Setup","Entrepreneurship","Exercise","Leadership","Listening","Negotiation","Online Collaboration","Personal Selling","Persuasion","Professional Writing","Relationship Management","Search Engine Use","Smartphone/Tablet Use","Social Media Use"]
-// let listInterest = ["Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","A very very very long interest with spaces in between","Looooooooooooooooooooooooooooooooooonnnnnnnggggggggggggggggggg","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8"]
+// let listInterest = [];
 phoneNum = current_user['phone'];
 let myFavList = [];
 let sortGenerated = false;
@@ -65,13 +67,23 @@ function displayFav(){
     }
   })
 }
+function deleteAllFav(){
+  let a = false;
+  a = confirm("Remove all from favourite?");
+  if (a == true) {
+    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).remove();
+    showFavTable();
+    location.reload();
+  }
+
+}
 
 function fav_delete(id){
   // Delete a favCard element in HTML
   // alert("You deleted me :C" + id)
 
   let a = false;
-  a = confirm("Remove from favourite?");
+  a = confirm("Remove from favourite?" + id);
   if (a == true) {
     let card = document.getElementById("favCard"+id);
     card.parentNode.removeChild(card);
@@ -199,10 +211,65 @@ function filter() {
   }
 }
 
+function compareUrl(url, urlList){
+  // check if first arg is in the second arg list
+  // return index in urlList if found else -1
+  console.log(url)
+  for (let i = 0; i < urlList.length; i++){
+    if (url == urlList[i]){
+      return i;
+    } 
+  }
+  return -1;
+}
+
+function getVideoId(videoURL){
+    var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+    videoId = videoURL.match(rx);
+    
+    return videoId[1];
+}
+
+
+function updateFavList(){
+  // Convert urls from firebase favourite list and convert them into standard object to use in recomemder main page for redirected videos
+  // from favourite page to reco main page filling in infomation from post
+  firebase.database().ref("posts").once('value').then((snapshot) => {
+    let urlList = JSON.parse(localStorage.getItem("favList"));
+    if (snapshot.exists()) {
+      let favList = []
+      localStorage.setItem("temp", JSON.stringify(favList));    
+      let lst = JSON.parse(localStorage.getItem("temp"));
+      let check = null;
+        snapshot.forEach(function(childSnap){
+            let value = childSnap.val();
+            check = compareUrl(value.videoURL, urlList);
+            console.log(check)
+            if (check >= 0){
+                let videoObj = {
+                    title: value.title,
+                    videoUrl: value.videoURL,
+                    videoThumbnail: value.videoThumbnail,
+                    videoId: getVideoId(value.videoURL),
+                    postId: value.id,
+                    interest: value.interest[0]
+                }
+                lst.push(videoObj);
+            }
+        })
+      lst.reverse();
+      localStorage.setItem("temp", JSON.stringify(lst));
+    }
+    else {
+        console.log("No data available");
+    }
+  })
+}
+
 function showFavTable(){
   console.log("Show history grid ran.");
   let current_user = JSON.parse(localStorage.getItem("USER"));
-
   grid = document.getElementById('favGrid');
 
   // Retrieves the currently stored watch history
@@ -214,22 +281,34 @@ function showFavTable(){
           currentHistory = snapshot.val();
           console.log(currentHistory);
 
+          let favList = [];
+
           // Table implementation
           var title;
+          let count = -1;
+          myFavList = [];
 
           for (i in currentHistory){
+            count += 1;
+            myFavList.push(currentHistory[i].videoPreference);
+
             currentVideo = currentHistory[i];
+
+            favList.push(currentVideo.videoUrl);
+            localStorage.setItem("favList", JSON.stringify(favList));
 
             $(document).ready(function() {
 
               console.log("second success callback");
               title = currentVideo.videoTitle;
-              skill = currentVideo.videoPreference;
+              let skill = currentVideo.videoPreference;
+              let card_url = currentVideo.videoUrl;
 
               // Grid implementation
 
               cell = document.createElement("div");
               cell.className = "mdl-cell mdl-cell--6-col";
+              cell.id = "favCard" + count;
 
               card = document.createElement("div");
               card.className = "demo-card-wide mdl-card mdl-shadow--2dp";
@@ -262,32 +341,45 @@ function showFavTable(){
               cardActionButton_1 = document.createElement("a");
               cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
               cardActionButton_1.innerHTML = "VIEW";
+              cardActionButton_1.id = count; 
               cardAction.appendChild(cardActionButton_1);
 
+              // cardActionButton_1.addEventListener('click', function(){
+                // var row = this.parentElement.parentElement;
+                // var url = row.getElementsByTagName("div")[1].innerHTML;
+                // console.log(url);
+                // window.open(url, '_blank').focus();
+              // }, false);
+
               cardActionButton_1.addEventListener('click', function(){
-                var row = this.parentElement.parentElement;
-                var url = row.getElementsByTagName("div")[1].innerHTML;
-                console.log(url);
-                window.open(url, '_blank').focus();
+                let flag = false;
+                // let playlist = JSON.parse(localStorage.getItem("playlist"));
+                // let currentVideoNumber = JSON.parse(localStorage.getItem("playlist"));
+
+                // let playlist = JSON.parse(localStorage.getItem("playlist"));
+                // for (let i = 0; i < playlist.length; i++){
+                  // if (card_url === playlist[i].videoUrl){
+                    // alert("in playlist");
+                    // flag = true;
+                    // break;
+                  // }
+                // }
+                // if (flag == false){
+                  // alert("not in playlist")
+                // }
+                shiftPlaylist(this.id);
+                window.location.replace("recommender_Ui.html");
               }, false);
 
               cardActionButton_2 = document.createElement("a");
               cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
               cardActionButton_2.innerHTML = "DELETE";
+              cardActionButton_2.id = i;
               cardAction.appendChild(cardActionButton_2);
 
               cardActionButton_2.addEventListener('click', function(){
-                if(confirm("Are you sure you want to delete this entry?")){
-                  console.log("Deleted an entry.");
-                  var row = this.parentElement.parentElement;
-                  console.log("Row index: " + row.rowIndex);
-                  var url = row.getElementsByTagName("div")[1].innerHTML;
-                  console.log(url);
-                  var cell = this.parentElement.parentElement.parentElement;
-                  console.log(cell);
-                  removeFromHistory(url);
-                  cell.remove();
-                };
+                fav_delete(this.id);
+                console.log("Deleted an entry.");                                                                        
               }, false);
 
               card.appendChild(cardAction);
@@ -296,11 +388,40 @@ function showFavTable(){
               grid.appendChild(cell);
             })
           }
+          // updateFavOnce = JSON.parse(localStorage.getItem("updateFavOnce"));
+          // if (updateFavOnce == true) {
+          // }
+          // else{
+            // updateFavList();
+            // updateFavOnce = true;
+            // localStorage.setItem("updateFavOnce", JSON.stringify(updateFavOnce));
+          // }
+          // 
+          updateFavList();
       }
+      
 
-      // If favourite is empty, add message to show history is empty
+      // If favourite is empty, add message to show fav is empty
       else{
         console.log("Fav is currently empty.")
       }
   })
 }
+
+function shiftPlaylist (id){
+  // add the video from fav to show favourite video, 
+  // and when redirected the next will still recommend from current playlist 
+  // while the back still shows last video played.
+  let playlist = JSON.parse(localStorage.getItem("playlist"));
+  let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+  let temp = JSON.parse(localStorage.getItem("temp"));
+  let tempLst = [];
+  for (let i = 0; i < playlist.length; i++){
+    if (i == currentVideoNumber) {
+      tempLst.push(temp[id]);
+    }
+    tempLst.push(playlist[i]);
+  }
+  localStorage.setItem("playlist", JSON.stringify(tempLst));
+}
+
