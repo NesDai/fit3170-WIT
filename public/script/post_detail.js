@@ -61,37 +61,35 @@ function printPostDetails(post, button_num) {
 
     if(post.created == undefined)
         post.created = "";
-        
-    let post_details = document.getElementById("post_details");
+
     let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likePostDetailed('${post.id}');" value="${post.likes}" >
+    <button class="like mdl-button mdl-js-button" id="btn_like" value="${post.likes}">
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised "  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike">
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
     if (button_num == 1) {
         // liked
         button = `<button
-         class="like mdl-button mdl-js-button mdl-button--raised"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+         class="like mdl-button mdl-js-button"  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}"  id="btn_like">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}" >
+         <button class="dislike mdl-button mdl-js-button " value="${post.dislikes}" id="btn_dislike">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
     } else if (button_num == -1) {
         // disliked
-        button = `<button class="like mdl-button mdl-js-button mdl-button--raised" onclick="likePostDetailed('${post.id}');"  value="${post.likes}">
+        button = `<button class="like mdl-button mdl-js-button" value="${post.likes}"  id="btn_like">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  style="background-color:#e53935; color: white;" onclick="dislikePostDetailed('${post.id}');"  value="${post.dislikes}">
+         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;"  value="${post.dislikes}" id="btn_dislike">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
 
-    post_details.innerHTML = "";
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
         interest += `<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
@@ -103,92 +101,140 @@ function printPostDetails(post, button_num) {
     post_display = "";
     post_display +=
         `
-                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                    <!-- POST HEADER -->
-                    <br>
-                    <div class="f">`;
-                    if (post.username == "")
-                        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'></h2>`;
-                    else
-                        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>`;
-                    
-                    post_display +=    `</div>
-                    <div>
-                      <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
-                        <img src="./css/images/delete_icon.png"  id="delete_post_icon"></img>
-                      </button>
-                    </div>
-                    `;
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+            <!-- POST HEADER -->
+            <br>
+            <div class="f">`;
+    if (post.username == "")
+        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'></h2>`;
+    else
+        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>`;     
+    post_display += 
+            `</div>
+            <div>
+                <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
+                    <img src="./css/images/delete_icon.png"  id="delete_post_icon"></img>
+                </button>
+            </div>`;
     if (current_user.username != post.username)
         post_display += `<br>`
 
     post_display +=
         `
-                    <div class="post_header" style="margin:0 10px; background-color: white">
-                       <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
-                    </div>
-                    <!-- POST FORM -->
-                    <form class="post_content" style="margin:0 10px; background-color: white">
-                       <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description}</h6>
-                       <br>
-                       ` +
-        `
-                       ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
-                       ` +
-        `
-                       <br>
-                       <div style='display: inline-block'>
-                          <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
-                          <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
-                       </div>
-                       <br><br>
-                    </form>
-                    <div class="f">
-                    <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-                    <div>
-                       <br>
-                       <div>
-                          <!--  LIKE DISLIKE FOR POST -->
-                          <br>
-                          ${button}
-                          <button class="favourite mdl-button mdl-js-button mdl-button--raised" id="favourite_post_btn" onclick="checkButtonStatus()">
-                          <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
-                          </button>
-                       </div>
-                       <br>
-                       <hr style="margin: 0">
-                       <div class="post_comments_header" style="margin:0 10px; ">
-                          <h5 class="comment_header mdl-color-text--black">WRITE A COMMENT</h5>
-                       </div>
-                       <!-- COMMENT FORM -->
-                       <form class="post_comment">
-                          <!-- COMMENT INPUT -->
-                          <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
-                          <br>
-                          <!-- ANONYMOUS CHECKBOX BUTTON -->
-                       <form>
-                          <div>
-                             <label class="mdl-checkbox mdl-js-checkbox" >
-                             <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
-                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
-                             </label>
+            <div class="post_header" style="margin:0 10px; background-color: white">
+                <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+            </div>
+            <!-- POST FORM -->
+            <form class="post_content" style="margin:0 10px; background-color: white">
+                <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description}</h6>
+                <br>
+        ` + `
+        ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+        ` + `
+                <br>
+                <div style='display: inline-block'>
+                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
+                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                </div>
+                <br><br>
+            </form>
+            <div class="f">
+                <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                <br>
+                <div>
+                    <!--  LIKE DISLIKE FOR POST -->
+                    <br>
+                    ${button}
+                    <button class="favourite mdl-button mdl-js-button mdl-button--raised" id="favourite_post_btn" onclick="checkButtonStatus()">
+                        <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
+                    </button>
+                </div>
+                <br>
+                <hr style="margin: 0">
+                <div class="post_comments_header" style="margin:0 10px; ">
+                    <h5 class="comment_header mdl-color-text--black">WRITE A COMMENT</h5>
+                </div>
+                    
+                <!-- COMMENT FORM -->
+                <form class="post_comment">
+                    <!-- COMMENT INPUT -->
+                    <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
+                    <br>
+                    <!-- ANONYMOUS CHECKBOX BUTTON -->
+                    <form>
+                        <div>
+                            <label class="mdl-checkbox mdl-js-checkbox" >
+                                <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
+                                <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
+                            </label>
                           </div>
-                       </form>
-                       <!-- SEND BUTTON -->
-                       <div>
-                          <button class="mdl-button mdl-js-button mdl-button--raised" id="send_comment_btn" type="submit" onclick="addComment()">
-                          <i class="material-icons notranslate" id="send_reply_icon">send</i>
-                          SEND
-                          </button>
-                       </div>
-                       </form>
-                       <br>
-                       <hr style="margin: 0;">
-                       <div id="comment_section">
-                          <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
-                       </div>
-                    </div>`
-    post_details.innerHTML = post_display;
+                    </form>
+                    <!-- SEND BUTTON -->
+                    <div>
+                        <button class="mdl-button mdl-js-button mdl-button--raised" id="send_comment_btn" type="submit" onclick="addComment()">
+                            <i class="material-icons notranslate" id="send_reply_icon">send</i> SEND
+                        </button>
+                    </div>
+                </form>
+                <br>
+                <hr style="margin: 0;">
+                <div id="comment_section">
+                    <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
+                </div>
+
+                <script>
+                    //checks for double click on like button
+                    $('#btn_like').on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            alert("The paragraph double clicked");
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                likePostDetailed('${post.id}')
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
+
+                    //checks for double click on dislike button
+                    $("#btn_dislike").on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
+                            
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            alert("The paragraph double clicked");
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                dislikePostDetailed('${post.id}')
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
+                </script>
+
+            </div>`
+    $('#post_details').append(post_display);
     checkUserFavouritedPost();
     printComments();
     if (current_user.username != post.username) // remove the delete button if not the poster of the post
@@ -414,7 +460,6 @@ async function checkCommentForLikes(comments_list){
 
 function printComment(button_num, comment, i ){
 
-    let comment_section = document.getElementById("comment_section");
     let comment_username;
     if (comment.anonymous) {
         comment_username = "Anonymous";
@@ -424,17 +469,17 @@ function printComment(button_num, comment, i ){
 
     //choosing the proper color for the button
     if (button_num==1){
-        button=`<button class="like mdl-button mdl-js-button mdl-button--raised" style="color: white !important; background-color:#2bbd7e !important;"  onclick="likeComment('${comment.id}', ${i})"; value="${comment.likes}" >
+        button=`<button class="like mdl-button mdl-js-button" style="color: white !important; background-color:#2bbd7e !important;"   value="${comment.likes}" id="btn_cmnt_like${i}">
         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
         </button>`
     }
     else{
-        button=`<button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likeComment('${comment.id}', ${i})"; value="${comment.likes}" >
+        button=`<button class="like mdl-button mdl-js-button"  value="${comment.likes}" id="btn_cmnt_like${i}">
         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
         </button>`
     }
-
-    comment_section.innerHTML +=
+    
+    $('#comment_section').append(
         `<div>
             <div style="margin:0 10px; background-color: white; width: 97%">
                 <span class="mdi mdi-cow"></span>
@@ -477,11 +522,38 @@ function printComment(button_num, comment, i ){
                     </div>
                  </div>
             </div>
+            <script>
+                //checks for double click on like button
+                $('#btn_cmnt_like${i}').on('click',function(){
+                    var $button=$(this);
+                    if ($button.data('alreadyclicked')){
+                        $button.data('alreadyclicked', false); // reset
+                        
+                        if ($button.data('alreadyclickedTimeout')){
+                            clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                        }
+                        
+                        // do what needs to happen on double click. 
+                        alert("The paragraph double clicked");
+                    }else{
+                        $button.data('alreadyclicked', true);
+                        
+                        var alreadyclickedTimeout=setTimeout(function(){
+                            $button.data('alreadyclicked', false); // reset when it happens
+                            likeComment('${comment.id}', ${i})
+                        },300); // <-- dblclick tolerance here
+                        $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                    }
+                    return false;
+                });
+            </script>
             <br>
             <div id= "reply_section${i}" style="margin-bottom:10px">
             </div>
         </div>
-        <hr style="margin: 0;">`;
+        <hr style="margin: 0;">
+    `
+    );
     document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
 }
 
@@ -539,7 +611,7 @@ function printReplies(comment_id, comment_index) {
                                 <div class="post_reply">
 
                                     <!-- REPLY INPUT -->
-                                    <input class="reply_input" type="text" id="reply_input${comment_index},${i}"" placeholder="Write a reply..." value="@${reply_username}">
+                                    <input class="reply_input" type="text" id="reply_input${comment_index},${i}"" placeholder="Write a reply..." value="@${reply_username}  ">
                                     <br>
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
@@ -626,7 +698,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                                 <div class="post_reply">
 
                                     <!-- REPLY INPUT -->
-                                    <input class="reply_input" type="text" id="reply_input${comment_index},${reply_index},${start}" placeholder="Write a reply..." value="@${reply_username}">
+                                    <input class="reply_input" type="text" id="reply_input${comment_index},${reply_index},${start}" placeholder="Write a reply..." value="@${reply_username}"  >
                                     <br>
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
@@ -691,7 +763,6 @@ function addReply(btn_num, comment_id) {
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + btn_num.toString()).value;
-        console.log(reply_input);
         let stay_anonymous = document.getElementById("anonymous" + btn_num.toString()).checked;
         // new data to upload in api
         if (reply_input) { // only adding reply if it's not empty

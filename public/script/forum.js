@@ -583,6 +583,11 @@ function printPost(post, button_num, i )
                     </div>
                     
                     <script>
+                    console.log("qwe")
+                    </script>
+                    
+                    <script>
+                    console.log("io")
                     //checks for double click on like button
                     $("#btn_like"+${i}).on('click',function(){
                         var $button=$(this);
@@ -639,12 +644,10 @@ function printPost(post, button_num, i )
                     </script>
 
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-                    <script type="text/javascript">
-                    </script>
+                    <script type="text/javascript"></script>
                   <br>
             </span>
      </div>`
-
     );
 
 }
