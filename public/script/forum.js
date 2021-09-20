@@ -159,11 +159,11 @@ function findAllPosts() {
         for (let post_id in postsObj) {
             firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
                 let post = snapshot.val();
-                // console.log(post["title"]);
-                // console.log(post["description"]);
-                // console.log(post["interest"]);
-                // console.log(post["like"]);
-                // console.log(post["dislike"]);
+                console.log(post["title"]);
+                console.log(post["description"]);
+                console.log(post["interest"]);
+                console.log(post["like"]);
+                console.log(post["dislike"]);
             });
         }
     });
@@ -196,6 +196,7 @@ function printAllPosts(){
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
+
                 if(data.val().recommender == false || data.val().recommender == undefined){  //todo accept undefined for now but remove later
                     let button_num=0
                     for (let i =0; i<data_list.length; i++) {
@@ -207,14 +208,17 @@ function printAllPosts(){
                                 button_num=-1
                             }
                         }
-                    }
-                    button_nums.push(button_num);
-                    posts.push(data.val());
                 }
+                    button_nums.push(button_num);
+                posts.push(data.val());
+        }
             });
+        
+
         }).then(()=>{
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+            // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
         });
     });
 
@@ -485,125 +489,165 @@ function print_create_post()
 
 
 function printPost(post, button_num, i )
-{   
-    let like_no=0;
-    let dislike_no=0;
+{
+    let button = `
+    <button class="like mdl-button mdl-js-button" value="${post.likes}" id="btn_like${i}">
+    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+    </button>
+    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike${i}">
+    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+    </button>
+    `
+    if (button_num==1)
+    {
+         // liked
+         button = `<button
+         class="like mdl-button mdl-js-button "  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}" id="btn_like${i}">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button" value="${post.dislikes}" id="btn_dislike${i}">
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+         </button>
+         `
+    }
+    else if(button_num==-1)
+    {
+         // disliked
+         button = `<button class="like mdl-button mdl-js-button"  value="${post.likes}" id="btn_like${i}">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+         </button>
+         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;" value="${post.dislikes}" id="btn_dislike${i}">
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+         </button>`
+    }
 
-    //gets the number of likes and dislikes on the post
-    firebase.database().ref(`likesDislikes/${post.id}`).once("value", x=>{
-        x.forEach(data => {
-            if (data.val().action==1) like_no+=1;
-            if (data.val().action==-1) dislike_no+=1;
-        })
-    })
-    .then(()=>{
-        let button = `
-        <button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likePost('${post.id}', ${i});" value="${like_no}" id="btn_like${i}">
-        <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${like_no}</span>
-        </button>
-        <button class="dislike mdl-button mdl-js-button mdl-button--raised"  onclick="dislikePost('${post.id}', ${i});"  value="${dislike_no}" id="btn_dislike${i}">
-        <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${dislike_no}</span>
-        </button>
-        `
-        if (button_num==1)
-        {
-            // liked
-            button = `<button
-            class="like mdl-button mdl-js-button mdl-button--raised"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${like_no}" id="btn_like${i}">
-            <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${like_no}</span>
-            </button>
-            <button class="dislike mdl-button mdl-js-button mdl-button--raised "  onclick="dislikePost('${post.id}', ${i});"  value="${dislike_no}" id="btn_dislike${i}">
-            <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${dislike_no}</span>
-            </button>
-            `
-        }
-        else if(button_num==-1)
-        {
-            // disliked
-            button = `<button class="like mdl-button mdl-js-button mdl-button--raised" onclick="likePost('${post.id}', ${i});"  value="${like_no}" id="btn_like${i}">
-            <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${like_no}</span>
-            </button>
-            <button class="dislike mdl-button mdl-js-button mdl-button--raised"  style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}', ${i});"  value="${dislike_no}" id="btn_dislike${i}">
-            <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${dislike_no}</span>
-            </button>`
-        }
-        let atchar = "@";
-        if(post.username == undefined)
-            post.username = "";
-        else
-            post.username = atchar+post.username;
-        if(post.created == undefined)
-            post.created = "";
-    
-    
-        $('#postField').append(
-            `   <div style="padding-top: 20px;">
-                <span class="post_card">
-                   <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-                      <!-- POST HEADER -->
-                      <br>
-                      <div class="f">
-                         <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>${post.username}</h2>
-                      </div>
-                      <br>
-                      <div class="post_header" style="margin:0 10px; background-color: white">
-                         <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
-                      </div>
-                      <!-- POST FORM -->
-                      <form class="post_content" style="margin:0 10px; background-color: white">
-                         <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
-                         <br>
-                         `
-                                      +
-                                      `
-                                      ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
-                                      `
-                                      +
-                                      `
-                                      <br>
-                         <div style='display: inline-block'>
-                         `
-                         +
-                         `
-                         ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>` :
-                          `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
-                          <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>`}
-                         `
-                         +
-                         `
+    let atchar = "@";
+    if(post.username == undefined)
+        post.username = "";
+    else
+        post.username = atchar+post.username;
+    if(post.created == undefined)
+        post.created = "";
+
+
+    $('#postField').append(
+        `   <div style="padding-top: 20px;">
+            <span class="post_card">
+               <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                  <!-- POST HEADER -->
+                  <br>
+                  <div class="f">
+                     <h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>${post.username}</h2>
+                  </div>
+                  <br>
+                  <div class="post_header" style="margin:0 10px; background-color: white">
+                     <h5 class="post_header mdl-color-text--black;"style="padding-left:18px; font-size: 30px; color: #006DAE">${post.title}</h5>
+                  </div>
+                  <!-- POST FORM -->
+                  <form class="post_content" style="margin:0 10px; background-color: white">
+                     <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description} </h6>
+                     <br>
+                     `
+                                  +
+                                  `
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  `
+                                  +
+                                  `
+                                  <br>
+                     <div style='display: inline-block'>
+                     `
+                     +
+                     `
+                     ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>` :
+                      `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
+                      <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>`}
+                     `
+                     +
+                     `
+                        
+                     </div>
+                     <br><br>
+                  </form>
+                  <div class="f">
+                  <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
+                  </div>
+                  <br>
+                     <!--  LIKE DISLIKE FOR POST -->
+                     <br>
+                    <div id="button_div${i}">
+                     ${button}
+                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                    <img src="./css/images/more_icon.png" id="more_icon"></img><span> More</span>
+                    </button>
+                    </div>
+                    
+                    <script>
+                    //checks for double click on like button
+                    $("#btn_like"+${i}).on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
                             
-                         </div>
-                         <br><br>
-                      </form>
-                      <div class="f">
-                      <h2 class="mdl-card__title-text mdl-color-text--black" id='date_posted'>${post.created}</h2>
-                      </div>
-                      <br>
-                         <!--  LIKE DISLIKE FOR POST -->
-                         <br>
-                        <div id="button_div${i}">
-                         ${button}
-                        <button class="more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
-                        <img src="./css/images/more_icon.png" id="more_icon"></img><span> More</span>
-                        </button>
-                        </div>
-                        <script>
-                            $("#btn_like"+${i}).dblclick(function(){
-                                alert("The paragraph was double-clicked");
-                            });
-                        </script>
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-                        <script type="text/javascript">
-                        </script>
-                      <br>
-                </span>
-         </div>`
-        );
-    });
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            alert("The paragraph double clicked");
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                
+                                $('#action').val('Was single clicked');
+                                likePost('${post.id}', ${i});
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
+
+                    //checks for double click on dislike button
+                    $("#btn_dislike"+${i}).on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
+                            
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            alert("The paragraph double clicked");
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                
+                                $('#action').val('Was single clicked');
+                                dislikePost('${post.id}', ${i});
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
+                    </script>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                    <script type="text/javascript">
+                    </script>
+                  <br>
+            </span>
+     </div>`
+
+    );
+
 }
-
-
-
 
 /**
  * A function which prints an array of post that user has favourited
@@ -1170,33 +1214,18 @@ function searchYourPosts(param){
 
 // Likes for posts
 async function likePost(post_id, i) {
-    $("#btn_like"+i).attr("disabled", "disabled");
 
-    //address of both like and dislike buttons
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
-    let action=false;
-    //getting the color of the button to know its state
-    let dislike_btn_color = $( "#btn_dislike"+i ).css("background-color");
-    let like_btn_color=$( "#btn_like"+i ).css("background-color");
-    
 
-    //if the post is disliked
-    if (dislike_btn_color=="rgb(229, 57, 53)" ){
-        action=true
-        current_state=-1;
-    }
-    //if the post is liked
-    if (like_btn_color=="rgb(43, 189, 126)"){
-        action=true
-        current_state=1;
-    }
-
-    if (action==false) {
-        // if there is no action at all, like
+    let res = await checkForLikeDislike(post_id);
+    if (!res) {
+        // if there is no action at all, lilke
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
             action: 1
-        })
+        }).then(() => {
+            updateLikes(post_id, 1) // add 1 like
+        });
 
         // UI
         like_btn_addr.style.background='#2bbd7e';
@@ -1207,45 +1236,57 @@ async function likePost(post_id, i) {
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
         $('#button_div'+i).find('.number_of_likes').html(new_value);
+
+
+
+
     } else {
-        // if the post is disliked, switch from dislike to like
-        if (current_state == -1) {
-            //update firebase
-            firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
-                action: 1
-            })
+        // if there is action
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state = snapshot.val();
+            if (current_state == -1) {
+                // if action is dislike
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({
+                    action: 1
+                }).then(() => {
+                    updateLikes(post_id, 1) // add 1 like
+                    updateDislikes(post_id, -1)
+                });
 
-            // UI
-            like_btn_addr.style.background='#2bbd7e';
-            like_btn_addr.style.color='white';
-            dislike_btn_addr.style.background='#dadada';
-            dislike_btn_addr.style.color='black';
+                // UI
+                like_btn_addr.style.background='#2bbd7e';
+                like_btn_addr.style.color='white';
+                dislike_btn_addr.style.background='#dadada';
+                dislike_btn_addr.style.color='black';
 
-            // increase like count
-            current_value=like_btn_addr.value
-            new_value=parseInt(current_value)+1
-            like_btn_addr.value=new_value
-            $('#button_div'+i).find('.number_of_likes').html(new_value);
-            //decrease dislike count
-            current_value=dislike_btn_addr.value
-            new_value=parseInt(current_value)-1
-            dislike_btn_addr.value=new_value
-            $('#button_div'+i).find('.number_of_dislikes').html(new_value);
+                // increase like count
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)+1
+                like_btn_addr.value=new_value
+                $('#button_div'+i).find('.number_of_likes').html(new_value);
+                //decrease dislike count
+                current_value=dislike_btn_addr.value
+                new_value=parseInt(current_value)-1
+                dislike_btn_addr.value=new_value
+                console.log(dislike_btn_addr.value)
+                $('#button_div'+i).find('.number_of_dislikes').html(new_value);
 
-        }else {
-            // if the post is liked, remove like
-            firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
-            //UI
-            like_btn_addr.style.background='#dadada';
-            like_btn_addr.style.color='black';
-            // change like number
-            current_value=like_btn_addr.value
-            new_value=parseInt(current_value)-1
-            like_btn_addr.value=new_value
-            $('#button_div'+i).find('.number_of_likes').html(new_value);
-        }
+
+            } else {
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
+                updateLikes(post_id, -1)  // remove 1 like
+                //UI
+                like_btn_addr.style.background='#dadada';
+                like_btn_addr.style.color='black';
+                // change like number
+                current_value=like_btn_addr.value
+                new_value=parseInt(current_value)-1
+                like_btn_addr.value=new_value
+                $('#button_div'+i).find('.number_of_likes').html(new_value);
+
+            }
+        })
     }
-    $("#btn_like"+i).removeAttr("disabled")
 }
 
 async function dislikePost(post_id, i)
@@ -1253,30 +1294,14 @@ async function dislikePost(post_id, i)
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
-    // let res = await checkForLikeDislike(post_id);
-    let res=false;
-    
-    let dislike_btn_color = $( "#btn_dislike"+i ).css("background-color");
-    let like_btn_color=$( "#btn_like"+i ).css("background-color");
-    
+    let res = await checkForLikeDislike(post_id);
 
-    if (dislike_btn_color=="rgb(229, 57, 53)" )
-    {
-        console.log("1")
-        res=true
-        current_state=-1;
-    }
-    if (like_btn_color=="rgb(43, 189, 126)")
-    {
-        console.log("2")
-        res=true
-        current_state=1;
-
-    }
-    
     if (!res){
         // if there is no action at all
-        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1})
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
+                // add 1 dislike
+                updateDislikes(post_id, 1)
+            });
 
         // UI
         dislike_btn_addr.style.background='#e53935';
@@ -1291,9 +1316,15 @@ async function dislikePost(post_id, i)
     }
     else{
         // if there is action
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
+            let current_state=snapshot.val();
             if (current_state==1){
                 // if action is like
-                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1})
+                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{
+                // add 1 dislike and remove 1 like
+                updateDislikes(post_id, 1)
+                updateLikes(post_id,-1)
+                 });
                 // UI
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';
@@ -1312,6 +1343,9 @@ async function dislikePost(post_id, i)
                 like_btn_addr.value=new_value
 
                 $('#button_div'+i).find('.number_of_likes').html(new_value);
+
+
+
             }
             else{
                 // remove 1 dislike
@@ -1326,7 +1360,11 @@ async function dislikePost(post_id, i)
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
                 $('#button_div'+i).find('.number_of_dislikes').html(new_value);
+
+
             }
+        }
+        )
     }
 }
 
