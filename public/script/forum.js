@@ -551,7 +551,7 @@ function printPost(post, button_num, i )
                      `
                                   +
                                   `
-                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe loading="lazy" allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
                                   `
                                   +
                                   `
