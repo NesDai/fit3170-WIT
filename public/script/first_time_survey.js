@@ -150,11 +150,14 @@ function addMessage() {
             for (let i = 0; i < possibleAnswersMCQ.length; i++) {
                 if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
                     select(document.getElementById(MCQOptionIDs[i]), i+1);
+                    break;
                 }
             }
         }
         else if (type === TYPE_MULTIPLE_CHOICE_OTHERS) {
             message = message.trim();
+
+            // check if others option was chosen
             if (otherChosen) {
                 // resets otherChosen
                 otherChosen = false;
@@ -167,14 +170,28 @@ function addMessage() {
                 let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
                 setTimeout(() => nextQuestion(), delay);
                 scrollToBottom();
-            } else {
+            }
+            else {
                 // getting which index does message correspond to in currentQuestionObject.restrictions.choices based on possibleAnswersMCQ
                 for (let i = 0; i < possibleAnswersMCQ.length; i++) {
                     if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
                         select(document.getElementById(MCQOptionIDs[i]), i+1);
+                        break;
                     }
                 }
             }
+        }
+        else if(type === TYPE_NUMERIC || type === TYPE_NUMERIC_SUB_QUESTION){
+            // Saving the response before clearing the input box
+            saveResponse(parseInt(input.value));
+
+            // display input
+            showMessageReceiver(message);
+
+            // display next question after time delay and scroll to bottom of screen
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => nextQuestion(), delay);
+            scrollToBottom();
         }
         else {
             // Saving the response before clearing the input box
@@ -574,8 +591,6 @@ function showQuestion(isSubQuestion) {
             // checking the type of the question to assign the appropriate function to display it
             switch (questionType) {
                 case TYPE_NUMERIC:
-                    showNumeric(questionObject);
-                    break;
                 case TYPE_NUMERIC_SUB_QUESTION:
                     showNumeric(questionObject);
                     if (agreeLikertQues.includes(questionIndex)) {
@@ -768,6 +783,7 @@ function showMultipleChoice(questionObject) {
             // if message is found to be in possibleAnswers
             if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
                 found = true;
+                break;
             }
         }
 
@@ -837,6 +853,7 @@ function showMultipleChoiceOthers(questionObject) {
                 // if message is found to be in possibleAnswers
                 if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
                     found = true;
+                    break;
                 }
             }
 
