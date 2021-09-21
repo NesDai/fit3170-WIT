@@ -415,6 +415,9 @@ function updateHistory(currentVideoInfo) {
             currentHistory = snapshot.val();
             for (i in currentHistory) {
                 if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
+                    let updateCount = parseInt(currentHistory[i].totalWatchCount)
+                    updateCount += 1;
+                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${index}`).update({totalWatchCount: updateCount});
                     videoExist = true;
                 }
             }
@@ -422,6 +425,7 @@ function updateHistory(currentVideoInfo) {
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true) {
+            currentVideo.totalWatchCount = 1;
             currentHistory.push(currentVideo)
             updateFirebase(currentHistory, current_user, 'videoHistory');
         }
