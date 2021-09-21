@@ -114,12 +114,48 @@
                             <div class="card shadow" style="height: 320px;">
                                 <div class="card-body">
                                     <h4 class="card-title">Search via post ID</h4>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Enter a post ID">
-                                        <div class="input-group-append">
-                                          <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
-                                        </div>
+                                    
+                                      <div class="input-group mb-3">
+                                          <input type="text" class="form-control" placeholder="Enter a post ID" id="searchInput">
+                                          <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button" id="search-butt">Search</button>
+                                          </div>
                                       </div>
+                                    
+
+                                    <div id="userTable">
+                                      <!-- <table class="pure-table" id="historyTable" style="width: 90%; margin-left: 5%;">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Make</th>
+                                                <th>Model</th>
+                                                <th>Year</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Honda</td>
+                                                <td>Accord</td>
+                                                <td>2009</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Toyota</td>
+                                                <td>Camry</td>
+                                                <td>2012</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Hyundai</td>
+                                                <td>Elantra</td>
+                                                <td>2010</td>
+                                            </tr>
+                                        </tbody>
+                                      </table> -->
+                                    </div>
+
                                 </div> <!-- .card-body -->
                             </div> <!-- .card shadow-->
                         </div> <!-- .col-md-6 mb-4-->
@@ -181,7 +217,24 @@
               </div> <!-- .row justify-content-center -->
             </div> <!-- .container-fluid -->
         </main>
+
+
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+           https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+        <script src = "script/firebaseConfig.js"></script>
+        <!-- FIREBAS STUFF I GOT FROM YT-->
+        <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+        <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+        <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+        <script src="/__/firebase/init.js?useEmulator=true"></script>
+
+
     <script src="js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -196,6 +249,8 @@
     <script src="js/datamaps-zoomto.js"></script>
     <script src="js/datamaps.custom.js"></script>
     <script src="js/Chart.min.js"></script>
+   
+    <script src="script/forum_post.js"></script>
     <script>
       /* defind global options */
       Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
@@ -208,6 +263,8 @@
     <script src="js/apps.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+
+
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -223,11 +280,13 @@
                 event.preventDefault();
             });
 
-          localStorage.setItem("mode", "light")
-          modeSwitch();
+
     
 
         </script>
+
+
+
     </body>
     </body>
 </html>
