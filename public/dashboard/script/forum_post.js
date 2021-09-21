@@ -79,24 +79,16 @@ function updateUI(postId){
     }
 
     //else continue to show data
-    $("#chart").html(`
-            <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    `);
-    $("#postDetailTable").html(`
-            <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    `);
 
 
 
+    // description table
+    let url;
     let creator;
     let interests;
 
-    if(post.creator != undefined){
-        creator = post.creator;
+    if(post.username != undefined){
+        creator = post.username;
     }
     else{
         creator = "Recommender";
@@ -108,6 +100,14 @@ function updateUI(postId){
     }
     else{
         interests = post.interest[0]
+    }
+
+
+    if(post.videoURL == 0){
+        url = "No video attached"
+    }
+    else{
+        url = post.videoURL;
     }
 
     $("#postDetailTable").html(`
@@ -124,7 +124,7 @@ function updateUI(postId){
 
                 <tr>
                     <th>VIDEO LINK</th>
-                    <td>${post.videoURL}</td>
+                    <td>${url}</td>
                 </tr>
 
                 <tr>
@@ -139,6 +139,70 @@ function updateUI(postId){
 
             </table>
     `);
+
+
+    // chart
+    $("#chart").html("");
+    var xValues = ["Likes", "Dislikes", "Comments & Replies", "User's Favourited"];
+    
+
+    // get y values
+    let likes=0;
+    let dislikes=0;
+    let comments=0;
+    let favourited=0;
+    // get likes
+    likes = post.likes;
+    //get dislikes
+    dislikes = post.dislikes;
+    // get favourites
+    if(post.users_favourite != undefined)
+        favourited = post.users_favourite.length
+    
+    //get comments
+    firebase.database().ref('comments')
+    .orderByChild('postID')
+        .equalTo(post.id)
+            .once('value', x => {
+                x.forEach(data => {
+                    comments++;
+                });
+
+            }).then(()=>{
+
+                firebase.database().ref('replies')
+                .orderByChild('postID')
+                    .equalTo(post.id)
+                        .once('value', x => {
+                            x.forEach(data => {
+                                comments++;
+                            });
+            
+                        })
+
+
+
+                let yValues = [likes, dislikes, comments, favourited]
+                var barColors = ["red", "green","blue","orange"];
+
+                new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                    }]
+                },
+                options: {
+                    legend: {display: false}
+                  }
+                });
+
+
+            })
+
+
 
 }
 
