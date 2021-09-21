@@ -17,9 +17,13 @@ async function execute(){
         
         updateUI();
         // autocomplete(document.getElementById("searchInput"), postid);
-        $( "#searchInput" ).autocomplete({
-            source: postid
-    })
+
+
+        $('#searchInput').autocomplete({
+
+            source : postid,              
+        }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+
 
 })
 }
