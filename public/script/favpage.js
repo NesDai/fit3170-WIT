@@ -100,11 +100,11 @@ function fav_del_db(id){
 
     console.log(snapshot.val())
     if (snapshot.exists()){
-      myFavList[id] = myFavList[myFavList.length-1]
+      myFavList[id] = myFavList[myFavList.length-1];
       myFavList.pop()
       currentFav = snapshot.val();
-      currentFav[id] = currentFav[currentFav.length-1]
-      currentFav.pop()
+      currentFav[id] = currentFav[currentFav.length-1];
+      currentFav.pop();
       firebase.database().ref('users/'+phoneNum+'/videoFavourite/').set(currentFav);
 
       // update fav video view
@@ -149,8 +149,8 @@ function show_sort(){
   }
   else{
     sortArea.style.display = "none";
-    myBtn.innerHTML = "Sort by interest"
-    filter()
+    myBtn.innerHTML = "Sort by interest";
+    filter();
   }
 
   // generate sort checkboxes for all skill
@@ -175,7 +175,7 @@ function inList(value, list){
   }
   for (let i = 0; i<list.length; i++){
     if (value == list[i]){
-      console.log(true)
+      console.log(true);
       return true;
     }
   }
@@ -190,7 +190,7 @@ function filter() {
   let values = [];
   for (let i = 0; i < checkboxes.length; i++){  
     if(checkboxes[i].checked){
-      values.push(checkboxes[i].value)
+      values.push(checkboxes[i].value);
     } 
   }
   console.log(values, myFavList, favCount);
@@ -202,12 +202,12 @@ function filter() {
     // console.log(myFavList[j] in values);
     // console.log(!(myFavList[j] in values));
     cards = document.getElementById(`favCard${j}`);
-    cards.style.display = "block"
+    cards.style.display = "block";
 
     // If not in values hide favCard
     if (inList(myFavList[j], values) == false){
       cards = document.getElementById(`favCard${j}`);
-      cards.style.display = "none"
+      cards.style.display = "none";
     }
   }
 }
@@ -239,14 +239,14 @@ function updateFavList(){
   firebase.database().ref("posts").once('value').then((snapshot) => {
     let urlList = JSON.parse(localStorage.getItem("favList"));
     if (snapshot.exists()) {
-      let favList = []
+      let favList = [];
       localStorage.setItem("temp", JSON.stringify(favList));    
       let lst = JSON.parse(localStorage.getItem("temp"));
       let check = null;
         snapshot.forEach(function(childSnap){
             let value = childSnap.val();
             check = compareUrl(value.videoURL, urlList);
-            console.log(check)
+            console.log(check);
             if (check >= 0){
                 let videoObj = {
                     title: value.title,
@@ -276,7 +276,7 @@ function showFavTable(){
 
   // Retrieves the currently stored watch history
   firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function(snapshot){
-      let currentHistory = []
+      let currentHistory = [];
 
       // If fav is not empty and video already exists in fav, set videoExist to true
       if (snapshot.exists()){
@@ -412,13 +412,18 @@ function shiftPlaylist (id){
   let playlist = JSON.parse(localStorage.getItem("playlist"));
   let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
   let temp = JSON.parse(localStorage.getItem("temp"));
+  
   let tempLst = [];
+  let atVideo = currentVideoNumber;
   for (let i = 0; i < playlist.length; i++){
-    if (i == currentVideoNumber) {
-      tempLst.push(temp[id]);
-    }
     tempLst.push(playlist[i]);
+    if (i == atVideo) {
+      tempLst.push(temp[id]);
+      currentVideoNumber+=1;
+    }
   }
   localStorage.setItem("playlist", JSON.stringify(tempLst));
+  localStorage.setItem("currentVideoNumber", JSON.stringify(currentVideoNumber));
+  
 }
 
