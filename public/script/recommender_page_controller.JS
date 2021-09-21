@@ -429,70 +429,51 @@ function updateHistory(currentVideoInfo) {
 }
 
 // Function to get video analytics and store it to Firebase
-function fetchAnalytics(dataLayer){
+function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let todaysDate = new Date()
     const offset = todaysDate.getTimezoneOffset()
     todaysDate = new Date(todaysDate.getTime() - (offset*60*1000))
     todaysDate = todaysDate.toISOString().split('T')[0];
-    let currentUnixTimestamp = Date.now();  // get the current time as Unix timestamp
-    let currentDataLayerEntry = dataLayer[dataLayer.length-1]
+    let currentUnixTimestamp = Date.now();
 
-    if(currentDataLayerEntry['event'] === 'gtm.video'){
-        let currentVideoAnalytics = {
-            // add currentWatchCount here (add a watch count in updateHistory function)
-            videoCurrentTime: currentDataLayerEntry['gtm.videoCurrentTime'],
-            videoDuration: currentDataLayerEntry['gtm.videoDuration'],
-            videoElapsedTime: currentDataLayerEntry['gtm.videoElapsedTime'],
-            videoPercent: currentDataLayerEntry['gtm.videoPercent'],
-            videoStatus: currentDataLayerEntry['gtm.videoStatus'],
-            videoVisible: currentDataLayerEntry['gtm.videoVisible']
-        }
+    let videoIndex = -1;
 
-        let videoIndex = -1;
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+        let currentHistory = []
 
-        firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
-            let currentHistory = []
-    
-            // Check if history is not empty and video already exists in history
-            if (snapshot.exists()) {
-                currentHistory = snapshot.val();
-                for (i in currentHistory) {
-                    let currentHistoryUrlStrip = currentHistory[i].videoUrl.replace("https://www.youtube.com/embed/", "")
-                    
-                    let currentGTMUrl = currentDataLayerEntry['gtm.videoUrl']
-                    let index = currentGTMUrl.indexOf(currentHistoryUrlStrip)
-                    let currentGTMUrlStrip = currentGTMUrl.substring(index, currentGTMUrl.length);
-                    
-                    console.log(currentHistoryUrlStrip)
-                    console.log(currentGTMUrlStrip)
+        // If history is not empty and video already exists in history, set videoExist to true
+        if (snapshot.exists()) {
+            currentHistory = snapshot.val();
+            for (i in currentHistory) {
+                let currentHistoryUrlStrip = currentHistory[i].videoUrl.replace("https://www.youtube.com/embed/", "")
+                
+                let index = currentGTMUrl.indexOf(currentHistoryUrlStrip)
+                let currentGTMUrlStrip = currentGTMUrl.substring(index, currentGTMUrl.length);
+                
+                console.log(currentHistoryUrlStrip)
+                console.log(currentGTMUrlStrip)
 
-                    if (currentHistoryUrlStrip === currentGTMUrlStrip) { // check if videoIDs are the same
-                        videoIndex = i;  // get the index that is used in Firebase
-                    }
-                    else{
-                      console.log("Not " + i);
-                    }
+                if (currentHistoryUrlStrip === currentGTMUrlStrip) {
+                    videoIndex = i;
+                }
+                else{
+                console.log("Not" + i);
                 }
             }
+        }
 
-            if(videoIndex !== -1){  // if the video is in history, videoIndex should not be -1
-                // Update firebase with the current video analytics and timestamp as the ID
-                firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentUnixTimestamp}`).set(currentVideoAnalytics).then(() => {
-                    console.log(videoIndex);
-                    console.log(timestampAsId);
-                });
-            }
-            else{
-              console.log("Something is not right")
-            }
-            
-        })
+        if(videoIndex !== -1){
+            firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentUnixTimestamp}`).set(currentVideoAnalytics).then(() => {
+                console.log(videoIndex);
+                console.log(currentUnixTimestamp);
+            });
+        }
+        else{
+        console.log("Something is not right")
+        }
         
-        
-
-    }
-
+    })
 }
 
 
@@ -516,7 +497,34 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-// Fetch the analytics every 10s (in progress: find better method to do this)
-setInterval(function(){
-    fetchAnalytics(dataLayer)
+// Fetch the analytics and store every 10s
+let pauseCounter = 0;
+let interval = setInterval(function(){
+    let currentDataLayerEntry = dataLayer[dataLayer.length-1]
+
+    if(currentDataLayerEntry['event'] === 'gtm.video'){
+        let currentGTMUrl = currentDataLayerEntry['gtm.videoUrl']
+        let currentVideoAnalytics = {
+            //currentWatchCount: 
+            videoCurrentTime: currentDataLayerEntry['gtm.videoCurrentTime'],
+            videoDuration: currentDataLayerEntry['gtm.videoDuration'],
+            videoElapsedTime: currentDataLayerEntry['gtm.videoElapsedTime'],
+            videoPercent: currentDataLayerEntry['gtm.videoPercent'],
+            videoStatus: currentDataLayerEntry['gtm.videoStatus'],
+            videoVisible: currentDataLayerEntry['gtm.videoVisible']
+        }
+    
+        if(currentVideoAnalytics.videoStatus === 'pause' || currentVideoAnalytics.videoStatus === 'complete'){
+            pauseCounter += 1;
+            if(pauseCounter < 13) {
+                saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+            }
+
+            // if video is paused / not replayed for some time, stop saving to database
+        }
+        else{
+            pauseCounter = 0;
+            saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+        }
+    }
 }, 10000)
