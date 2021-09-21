@@ -3,22 +3,32 @@ let tableArea = document.getElementById('favtable');
 // localStorage.setItem("updateFavOnce", JSON.stringify(updateFavOnce));
 let favCount = 0;
 let current_user = JSON.parse(localStorage.getItem("USER"));
-let emptyTxt = "<br><br><br>There are no videos saved in favorites right now";
-let listInterest = ["Art","Caregiving","Collaboration and Teamwork","Cooking","Critical Thinking","Effective Communication","Email Management and Setup","Entrepreneurship","Exercise","Leadership","Listening","Negotiation","Online Collaboration","Personal Selling","Persuasion","Professional Writing","Relationship Management","Search Engine Use","Smartphone/Tablet Use","Social Media Use"]
-// let listInterest = [];
+// let listInterest = ["Art","Caregiving","Collaboration and Teamwork","Cooking","Critical Thinking","Effective Communication","Email Management and Setup","Entrepreneurship","Exercise","Leadership","Listening","Negotiation","Online Collaboration","Personal Selling","Persuasion","Professional Writing","Relationship Management","Search Engine Use","Smartphone/Tablet Use","Social Media Use"]
+let listInterest = ["Active listening","Art","Caregiving","Collaboration and teamwork","Cooking","Critical thinking","Effective communication","Email","Entrepreneurship","Exercise","Negotiation skill","Online collaboration","People and Leadership","Personal selling","Persuasion","Professional writing","Relationship management","Search for information","SmartphoneTabletComputerUse","Social media use"];
 phoneNum = current_user['phone'];
 let myFavList = [];
 let sortGenerated = false;
 
 let mylst = [];
-// displayFav();
+
+// Generate grid and display all of user favourited videos.
 showFavTable();
+
+function showEmptyText(visible){
+  // show text when input is 1 and dont show when input is not 1
+  let toggleTxt = document.getElementById("noVideoFavDisplay");
+  if (visible == 1){
+    toggleTxt.style.display = "block";
+  }
+  else{
+    toggleTxt.style.display = "none";
+  }
+}
 
 function displayFav(){
   // Read from firebase realtime database and display fav in html
     
   firebase.database().ref('users/'+phoneNum+'/videoFavourite').on('value', (snapshot) => {
-    // console.log(snapshot.val())
     if (snapshot.val() == null){
       let showEmpty = document.getElementById("favEmptyText");
       showEmpty.innerHTML = "";
@@ -26,21 +36,6 @@ function displayFav(){
     }
     else{
       let favList = snapshot.val();
-      // console.log(Object.keys(favList).length)
-      // console.log(favList[0]);
-      // console.log(favList[1]);
-      // console.log(favList[2]);
-      // console.log(favList.length);
-      // console.log("len: " + favList.length);
-      // console.log("favList: " + favList[favList.length-1]);
-      // console.log("favList: " + favList[favList.length-1]["videoTitle"]);
-      
-      // console.log(favList);
-      // console.log(favList[0]);
-      // console.log(favList[0]['videoPreference']);
-      // console.log(favList[0]['videoThumbnail']);
-      // console.log(favList[0]['videoTitle']);
-      // console.log(favList[0]['videoUrl']);
       output = "";
       let count = 0;
       myFavList = []
@@ -74,30 +69,32 @@ function deleteAllFav(){
     firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).remove();
     showFavTable();
     location.reload();
+    showEmptyText(1);
   }
-
 }
 
 function fav_delete(id){
-  // Delete a favCard element in HTML
-  // alert("You deleted me :C" + id)
+  // Delete a favCard element by favCard id in HTML
 
   let a = false;
-  a = confirm("Remove from favourite?" + id);
+  a = confirm("Remove from favourite?");
   if (a == true) {
     let card = document.getElementById("favCard"+id);
     card.parentNode.removeChild(card);
     favCount -= 1;
-    fav_del_db(id);
-    
+    // display no videos
     if (favCount == 0){
-      let showEmpty = document.getElementById("favEmptyText");
-      showEmpty.innerHTML = emptyTxt;
-    } 
+      // let showEmpty = document.getElementById("favEmptyText");
+      // showEmpty.innerHTML = emptyTxt;
+      showEmptyText(1);
+    }
+    // remove from firebase
+    fav_del_db(id); 
   }
 }
 
 function fav_del_db(id){
+  // delete the selected favCard using its id, to delete video from firebase realtime database
   firebase.database().ref('users').child(`${current_user.phone}/videoFavourite/`).once("value", function(snapshot){
     let currentFav = []
 
@@ -108,11 +105,10 @@ function fav_del_db(id){
       currentFav = snapshot.val();
       currentFav[id] = currentFav[currentFav.length-1]
       currentFav.pop()
-      // console.log("After: " + currentFav)
-      // Delete favourite data in firebase realtime database
       firebase.database().ref('users/'+phoneNum+'/videoFavourite/').set(currentFav);
-      // firebase.database().ref('users/'+phoneNum+'/videoFavourite/'+currentFav.length-1).remove();
-      filter()
+
+      // update fav video view
+      filter();
     }
   })
 }
@@ -143,6 +139,7 @@ function hide_vid(){
 }
 
 function show_sort(){
+  // Show and hide sorting area for HTML
   let sortArea = document.getElementById("sortingArea");
   let myBtn = document.getElementById("favSortBtn");
 
@@ -155,7 +152,8 @@ function show_sort(){
     myBtn.innerHTML = "Sort by interest"
     filter()
   }
-  // alert(myFavList)
+
+  // generate sort checkboxes for all skill
   if (sortGenerated == false){
     sortGenerated = true;
     sortArea.innerHTML+=`<br><br>`;
@@ -184,7 +182,9 @@ function inList(value, list){
   console.log(false)
   return false;
 }
+
 function filter() {
+  // Refresh display of favCard, only shows the checked interest, by default show all.
   let checkboxes = document.getElementsByName("interest");
   console.log(checkboxes);
   let values = [];
@@ -203,6 +203,7 @@ function filter() {
     // console.log(!(myFavList[j] in values));
     cards = document.getElementById(`favCard${j}`);
     cards.style.display = "block"
+
     // If not in values hide favCard
     if (inList(myFavList[j], values) == false){
       cards = document.getElementById(`favCard${j}`);
@@ -268,7 +269,8 @@ function updateFavList(){
 }
 
 function showFavTable(){
-  console.log("Show history grid ran.");
+  // Generate grid and display all of user favourited videos.
+  console.log("Show fav grid ran.");
   let current_user = JSON.parse(localStorage.getItem("USER"));
   grid = document.getElementById('favGrid');
 
@@ -276,8 +278,9 @@ function showFavTable(){
   firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function(snapshot){
       let currentHistory = []
 
-      // If history is not empty and video already exists in history, set videoExist to true
+      // If fav is not empty and video already exists in fav, set videoExist to true
       if (snapshot.exists()){
+          showEmptyText(0);
           currentHistory = snapshot.val();
           console.log(currentHistory);
 
@@ -289,6 +292,7 @@ function showFavTable(){
           myFavList = [];
 
           for (i in currentHistory){
+            favCount += 1;
             count += 1;
             myFavList.push(currentHistory[i].videoPreference);
 
@@ -344,13 +348,6 @@ function showFavTable(){
               cardActionButton_1.id = count; 
               cardAction.appendChild(cardActionButton_1);
 
-              // cardActionButton_1.addEventListener('click', function(){
-                // var row = this.parentElement.parentElement;
-                // var url = row.getElementsByTagName("div")[1].innerHTML;
-                // console.log(url);
-                // window.open(url, '_blank').focus();
-              // }, false);
-
               cardActionButton_1.addEventListener('click', function(){
                 let flag = false;
                 // let playlist = JSON.parse(localStorage.getItem("playlist"));
@@ -400,10 +397,10 @@ function showFavTable(){
           updateFavList();
       }
       
-
       // If favourite is empty, add message to show fav is empty
       else{
-        console.log("Fav is currently empty.")
+        console.log("Fav is currently empty.");
+        showEmptyText(1);
       }
   })
 }
