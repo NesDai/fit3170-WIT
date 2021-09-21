@@ -130,6 +130,8 @@ function updateUI(postId){
         url = post.videoURL;
     }
 
+    $("#summaryPostTitle").html(`Summary of ${postId} post`)
+
     $("#postDetailTable").html(`
                 <table class="table table-bordered">
                 <tr>
@@ -162,6 +164,7 @@ function updateUI(postId){
 
 
     // chart
+    $("#statsTitle").html(`Overall statistics of ${postId} post`)
     $("#chart").html(`<canvas id="myChart"></canvas>`);
 
     var xValues = ["Likes", "Dislikes", "Comments & Replies", "User's Favourited"];
