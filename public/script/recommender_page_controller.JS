@@ -435,7 +435,8 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
     const offset = todaysDate.getTimezoneOffset()
     todaysDate = new Date(todaysDate.getTime() - (offset*60*1000))
     todaysDate = todaysDate.toISOString().split('T')[0];
-    let currentUnixTimestamp = Date.now();
+    //let currentUnixTimestamp = Date.now();
+    let currentTimestamp = new Date().toISOString().substr(11, 8);
 
     let videoIndex = -1;
 
@@ -464,7 +465,7 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
         }
 
         if(videoIndex !== -1){
-            firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentUnixTimestamp}`).set(currentVideoAnalytics).then(() => {
+            firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentTimestamp}`).set(currentVideoAnalytics).then(() => {
                 console.log(videoIndex);
                 console.log(currentUnixTimestamp);
             });
