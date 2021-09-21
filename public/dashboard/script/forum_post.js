@@ -3,7 +3,9 @@
 let posts;
 let postid;
 let numOfPostsUsers;
-let numbOfPostsRecommender;
+let numOfPostsRecommender;
+
+let currentPost;  // holds the current post id or undefined
 
 
 
@@ -60,14 +62,22 @@ async function collectPosts(){
  */
 function updateUI(postId){
 
-  
+    
+    
+    collectPosts().then(()=>{
 
-    $("#postsByUsers").html(`<h3>${numOfPostsUsers}</h3>`);
-    $("#postsByRecommender").html(`<h3>${numOfPostsRecommender}</h3>`);
+        $("#postsByUsers").html(`<h3>${numOfPostsUsers}</h3>`);
+        $("#postsByRecommender").html(`<h3>${numOfPostsRecommender}</h3>`);
 
-    if(postId==null){
+    
+
+
+    if(postId==null || postId == undefined){
         return // exit
     }
+
+   
+
 
     let post;
 
@@ -78,6 +88,14 @@ function updateUI(postId){
         }
     }
 
+    if(post == undefined){
+        $("#qerr").html("Invalid Post Id");
+        return;
+    }
+    else{
+        $("#qerr").html("");
+    }
+
     //else continue to show data
 
 
@@ -86,6 +104,8 @@ function updateUI(postId){
     let url;
     let creator;
     let interests;
+
+    currentPost = postId;
 
     if(post.username != undefined){
         creator = post.username;
@@ -142,7 +162,8 @@ function updateUI(postId){
 
 
     // chart
-    $("#chart").html("");
+    $("#chart").html(`<canvas id="myChart"></canvas>`);
+
     var xValues = ["Likes", "Dislikes", "Comments & Replies", "User's Favourited"];
     
 
@@ -183,7 +204,7 @@ function updateUI(postId){
 
 
                 let yValues = [likes, dislikes, comments, favourited]
-                var barColors = ["red", "green","blue","orange"];
+                var barColors = ["#006dae", "#00ac3e","#D2D2D2","#c00095"];
 
                 new Chart("myChart", {
                 type: "bar",
@@ -201,24 +222,25 @@ function updateUI(postId){
 
 
             })
+        })
+    }
 
 
 
-}
 
 
 
 
 // update posts on an interval (10 sec) to mimic realtime dashboard
-// setInterval(
-//     async function(){ 
-//     collectPosts().then(()=>{
-//         //call function to update all the ui fields
-//         let a = 0;
-//     }); 
+setInterval(
+    async function(){ 
+    collectPosts().then(()=>{
+        //call function to update all the ui fields
+        updateUI(currentPost);
+    }); 
 
     
-// }, 10000);
+}, 30000);
 
 
 
