@@ -44,6 +44,9 @@ function storeCurrentSkill(id){
     let userRef = firebase.database().ref(stringPath);
     let time = Date.now();
 
+    id = id.split("Radio");
+    id = id[1];
+
     skillTxt = JSON.stringify(skillTxt);
     localStorage.setItem("preference", skillTxt);
     // userRef.update({ preferences: skillTxt });  // add or modify the preferences property to the user
@@ -67,6 +70,7 @@ function storeCurrentSkill(id){
                 selectedTime[time] = time;
                 
                 let newSkillCombine = {
+                    favouritedAmmount: 0,
                     selectedAmmount: 1,
                     selectedTime: selectedTime
                 }

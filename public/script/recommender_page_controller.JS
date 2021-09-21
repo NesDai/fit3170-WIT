@@ -140,7 +140,6 @@ function getTopic() {
 
 // Function to add video to favourites
 function addToFavourite(currentVideoInfo) {
-
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
         videoUrl: currentVideoInfo.videoUrl,
@@ -197,6 +196,7 @@ function addToFavourite(currentVideoInfo) {
                 user[current_user.phone] = current_user;
                 let newFavourite = {
                     favouritedAmmount: 1,
+                    preferenceType: currentVideo.videoPreference,
                     favouritedUsers: user
                 }
 
@@ -207,6 +207,48 @@ function addToFavourite(currentVideoInfo) {
             console.log(currentFavourites);
             firebase.database().ref('recommenderData/favourite').set(
                 currentFavourites
+                , function (error) {
+                    if (error) {
+                        console.log(error)
+                    }
+                })
+        }
+    })
+
+    id = currentVideo.videoPreference;
+    // Update skill favourited statistics
+    firebase.database().ref('recommenderData').child(`skills/`).once("value", function (snapshot) {
+        if (snapshot.exists()) {
+            currentSkills = snapshot.val();
+
+            // Check if the skill has previously selected/favourited on the database, update if so
+            if (currentSkills[id] != undefined){
+                if(currentSkills[id].favouritedAmmount != undefined){
+                    currentSkills[id].favouritedAmmount += 1;
+                }
+                else{
+                    currentSkills[id].favouritedAmmount = 1;
+                }
+                
+            }
+            
+            // Else if this is the first time skill is being selected/favourited
+            else {
+                let selectedTime = {}
+                selectedTime[time] = time;
+                
+                let newSkillCombine = {
+                    selectedAmmount: 0,
+                    favouritedAmmount: 1,
+                    selectedTime: selectedTime
+                }
+
+                currentSkills[id] = newSkillCombine;
+            }
+
+            // Update the firebase skills data section with changes
+            firebase.database().ref('recommenderData/skills').set(
+                currentSkills
                 , function (error) {
                     if (error) {
                         console.log(error)
