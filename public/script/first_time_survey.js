@@ -89,9 +89,6 @@ function select(button, index) {
     // display user's choice on chat
     messages.innerHTML += ansTemplate;
 
-    // save index of choice onto firebase
-    saveResponse(index-1);
-
     // extract skip target and skip choices from currentQuestionObject
     let skipTarget = currentQuestionObject.restrictions.skipTarget;
     let skipChoices = currentQuestionObject.restrictions.skipChoices;
@@ -100,33 +97,47 @@ function select(button, index) {
     if (skipTarget === SKIP_NOT_ALLOWED) {
         // Don't skip next question
         let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-        setTimeout(() => nextQuestion(), delay);
+        setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
     } else if (skipTarget === SKIP_END_SURVEY) {
         // check if one of the skipChoices were selected. If so, end survey
         if (skipChoices.includes(choice)) {
-            endSurvey();
+            endSurvey(index-1);
         } else { // else move onto the next question
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => nextQuestion(), delay);
+            setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
         }
     } else {
         // Skip to a question ID if the selected answer is in skipChoices
         if (skipChoices.includes(choice)) {
-            // set currentQuestionObject to skipTarget
-            currentQuestionObject = skipTarget;
+            // display the next question after a small delay
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
 
-            // Set the current question index to the question before the
-            // skip target since nextQuestion increments
-            // the question index by 1
-            questionIndex = QUESTION_IDS[branch_id].indexOf(skipTarget) - 1;
+            setTimeout(() => {
+                // save index of choice onto firebase
+                saveResponse(index-1);
 
-            // In case the user was answering a long question,
-            // reset params related to long questions
-            currentSubQuestionIds = null;
+                // set currentQuestionObject to skipTarget
+                currentQuestionObject = skipTarget;
+
+                // Set the current question index to the question before the
+                // skip target since nextQuestion increments
+                // the question index by 1
+                questionIndex = QUESTION_IDS[branch_id].indexOf(skipTarget) - 1;
+
+                // In case the user was answering a long question,
+                // reset params related to long questions
+                currentSubQuestionIds = null;
+
+                nextQuestion();
+
+                // call sync progress to update currentSubQuestionIds and questionID after nextQuestion
+                syncProgress();
+                }, delay);
+        } else {
+            // display the next question after a small delay
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
         }
-        // display the next question after a small delay
-        let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-        setTimeout(() => nextQuestion(), delay);
     }
 
     // scroll to bottom of chat log
@@ -161,14 +172,13 @@ function addMessage() {
             if (otherChosen) {
                 // resets otherChosen
                 otherChosen = false;
-                saveResponse((currentQuestionObject.restrictions.choices.length - 1) + ". " + message);
 
                 // display input
                 showMessageReceiver(message);
 
                 // display next question after time delay and scroll to bottom of screen
                 let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-                setTimeout(() => nextQuestion(), delay);
+                setTimeout(() => {nextQuestion(); saveResponse((currentQuestionObject.restrictions.choices.length - 1) + ". " + message);}, delay);
                 scrollToBottom();
             }
             else {
@@ -183,26 +193,26 @@ function addMessage() {
         }
         else if(type === TYPE_NUMERIC || type === TYPE_NUMERIC_SUB_QUESTION){
             // Saving the response before clearing the input box
-            saveResponse(parseInt(input.value));
+            let numInput = input.value;
 
             // display input
             showMessageReceiver(message);
 
             // display next question after time delay and scroll to bottom of screen
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => nextQuestion(), delay);
+            setTimeout(() => {nextQuestion(); saveResponse(parseInt(numInput));}, delay);
             scrollToBottom();
         }
         else {
             // Saving the response before clearing the input box
-            saveResponse(input.value);
+            let textInput = input.value;
 
             // display input
             showMessageReceiver(message);
 
             // display next question after time delay and scroll to bottom of screen
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => nextQuestion(), delay);
+            setTimeout(() => {nextQuestion(); saveResponse(textInput);}, delay);
             scrollToBottom();
         }
 
@@ -248,8 +258,9 @@ function nextQuestion() {
         // The user is answering a normal question
         questionIndex++;
         showQuestion(false);
+    } else if (skippedToEnd){
+        showEndingMessage();
     } else { //  else end the survey
-        saveResponse(input.value);
         showEndingMessage();
     }
 }
@@ -1060,9 +1071,10 @@ function isAnsweringSubQuestions() {
 /**
  * Ends the survey
  */
-function endSurvey() {
-    questionIndex = QUESTION_IDS[branch_id].length-1;
+function endSurvey(endingAns) {
+    questionIndex = QUESTION_IDS[branch_id].length;
     skippedToEnd = true;
+    saveResponse(endingAns);
 
     nextQuestion();
 }
@@ -1074,10 +1086,15 @@ function endSurvey() {
  * To be used by text-based survey questions ONLY
  */
 function endSurveyText() {
+    // show answer given
     showMessageReceiver(input.value);
-    questionIndex = QUESTION_IDS[branch_id].length-1;
+
+    // set question index to end, set skippedToEnd to true and save the answer
+    questionIndex = QUESTION_IDS[branch_id].length;
+    saveResponse(input.value);
     skippedToEnd = true;
 
+    // hide errorText and call next question
     errorText.style.visibility = "hidden";
     nextQuestion();
 }
