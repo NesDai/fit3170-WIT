@@ -3,3 +3,16 @@
     color: #000;
 }
 
+#postsByUsers{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#postsByRecommender{
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+}

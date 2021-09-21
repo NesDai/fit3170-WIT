@@ -2,7 +2,8 @@
 
 let posts;
 let postid;
-let numOfPosts;
+let numOfPostsUsers;
+let numbOfPostsRecommender;
 
 
 
@@ -13,7 +14,8 @@ window.onload = execute();
 async function execute(){
     // onload function
     collectPosts().then(()=>{
-
+        
+        updateUI();
         // autocomplete(document.getElementById("searchInput"), postid);
         $( "#searchInput" ).autocomplete({
             source: postid
@@ -30,14 +32,18 @@ async function collectPosts(){
 
     posts = []; // reset posts to 0 / initialize to a list
     postid = [];
-    numOfPosts=0;
+    numOfPostsRecommender=0;
+    numOfPostsUsers=0;
 
      await firebase.database().ref('posts')
     .once('value', x => {
         x.forEach(data => {
             posts.push(data.val()); //pus  h the data to the list
             postid.push(data.val().id);
-            numOfPosts++;
+            if(data.val().recommender)
+                numOfPostsRecommender++;
+            else
+                numOfPostsUsers++;
         })
     
             
@@ -48,7 +54,10 @@ async function collectPosts(){
 /**
  * Function used to update all the data on the user interface
  */
-function updateData(){
+function updateUI(){
+
+    $("#postsByUsers").html(`<h3>${numOfPostsUsers}</h3>`);
+    $("#postsByRecommender").html(`<h3>${numOfPostsRecommender}</h3>`);
 
 }
 
