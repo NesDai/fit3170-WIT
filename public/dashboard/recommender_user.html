@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme">
 
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/forum_user.css">
+    <link rel="stylesheet" href="css/recommender_user.css">
 
 
 
@@ -81,9 +81,7 @@
 
                         <form class="pure-form" id="box1">
                           <fieldset>
-
-
-                              <input type="text" placeholder="Search Username..." id="searchbar"/>
+                            <input type="text" placeholder="Search Username..." id="searchbar"/>
                               <button id="search-butt" class="pure-button pure-button-primary">Search</button>
                               </fieldset>
                         </form>
@@ -98,7 +96,7 @@
 
                     </div>
                     <div class="card-body" id="userListCard">
-                      <h1>username</h1>
+                      <h5>username placeholder</h5>
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
@@ -125,7 +123,7 @@
 
                 <div class="card shadow" id="historyCard">
                   <div class="card-header">
-                    <strong class="card-title mb-0">Video History</strong>
+                    <strong class="card-title mb-0">Video History of #Username</strong>
                   </div>
                   <div class="card-body">
                     <div class="container-fluid">
@@ -136,8 +134,8 @@
                             <table class="pure-table" id="videoHistoryTable">
                               <thead>
                                   <tr>
-                                      <th>#</th>
-                                      <th>Id</th>
+                                      <th>No</th>
+                                      <th>Date</th>
                                       <th>Video title</th>
                                       <th></th>
                                   </tr>
@@ -145,19 +143,19 @@
                               <tbody>
                                   <tr>
                                       <td>1</td>
-                                      <td>-Mj9bawx8tQ3dPns4xCM</td>
+                                      <td>2021-09-19</td>
                                       <td>Email Management Virtual Assistant (BECOME THE BEST AT EMAIL MANAGEMENT!)</td>
                                       <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
                                   </tr>
                                   <tr>
                                       <td>2</td>
-                                      <td>-MjF1J17iVnE9Q6KcuLf</td>
+                                      <td>2021-09-01</td>
                                       <td>Health care and Well being; how to care for the elderly</td>
                                       <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
                                   </tr>
                                   <tr>
                                       <td>3</td>
-                                      <td>-MjF1gRSN6gf3HT1YJVV</td>
+                                      <td>2021-08-22</td>
                                       <td>Being a Professional Writer</td>
                                       <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
                                   </tr>
@@ -172,62 +170,71 @@
                 </div><!--/justify content-->
               </div><!--/container-->
 
-              <div class="container-fluid">
-                <div class="row justify-content-center">
-                  <div class="container-fluid">
-                    <div class="row justify-content-center">
+              <!-- SPECIFIC VIDEO ANALYTIC -->
+              <div class="container-fluid" style="margin-left:15px;margin-top:25px;">
+                <div class="row justify-content-left">
+                      <div class="card shadow" id="videoAnalyticCard">
+                        <div class="card-header">
+                          <strong class="card-title mb-0">Video analytic of #Id</strong>
+                        </div>
+                        <div class="card-body">
+                          <div class="container-fluid">
+                            <div class="row justify-content-center">
+                              <div class="col-12">
+                                <div class="row my-1" >
+                                  <table class="table table-bordered">
+                                    <tr>
+                                        <th>VIDEO TITLE</th>
+                                        <td> title placeholder </td>
+                                    </tr>
 
-                          <div class="card shadow" id="historyCard">
-                            <div class="card-header">
-                              <strong class="card-title mb-0">Video History</strong>
-                            </div>
-                            <div class="card-body">
-                              <div class="container-fluid">
-                                <div class="row justify-content-center">
-                                  <div class="col-12">
+                                    <tr>
+                                        <th>VIDEO LENGTH</th>
+                                        <td> length placeholder </td>
+                                    </tr>
 
-                                    <div class="row my-1" >
-                                      <table class="pure-table" id="videoHistoryTable">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Id</th>
-                                                <th>Video title</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>-Mj9bawx8tQ3dPns4xCM</td>
-                                                <td>Email Management Virtual Assistant (BECOME THE BEST AT EMAIL MANAGEMENT!)</td>
-                                                <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>-MjF1J17iVnE9Q6KcuLf</td>
-                                                <td>Health care and Well being; how to care for the elderly</td>
-                                                <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>-MjF1gRSN6gf3HT1YJVV</td>
-                                                <td>Being a Professional Writer</td>
-                                                <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
-                                            </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
+                                    <tr>
+                                        <th>SEEN NUMBER</th>
+                                        <td> seen number placeholder </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>WATCHED DATE</th>
+                                        <td>date placeholder </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>PLAY NUMBER</th>
+                                        <td> play placeholder </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>PAUSE TIME</th>
+                                        <td> pause placeholder </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>STOP TIME</th>
+                                        <td> stop placeholder </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>WATCHING DURATION</th>
+                                        <td> duration placeholder </td>
+                                    </tr>
+                                  </table>
                                 </div>
                               </div>
-                            </div> <!-- /.card-body -->
                             </div>
-                          </div><!--/justify content-->
-                        </div><!--/container-->
+                          </div>
+                        </div> <!-- /.card-body -->
+                        </div>
+                      </div><!--/justify content-->
+                    </div><!--/container-->
+                    </main> <!-- main -->
+                  </div> <!-- .wrapper -->
 
-      </main> <!-- main -->
-    </div> <!-- .wrapper -->
+
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
