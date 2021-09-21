@@ -85,7 +85,13 @@
                                                       <div class="card-header">
                                                         Posted to Recommended
                                                       </div>
-                                                        <div class="card-body" id="postsByRecommender"></div>
+                                                        <div class="card-body" id="postsByRecommender">
+
+                                                          <div class="spinner-border" role="status">
+                                                            <span class="sr-only">Loading...</span>
+                                                          </div>
+
+                                                        </div>
                                                           
                                                     </div>
                                                 </div>
@@ -96,7 +102,13 @@
                                                       <div class="card-header">
                                                         Posted by All Users
                                                       </div>
-                                                        <div class="card-body" id="postsByUsers"></div>
+                                                        <div class="card-body" id="postsByUsers">
+
+                                                          <div class="spinner-border" role="status">
+                                                            <span class="sr-only">Loading...</span>
+                                                          </div>
+
+                                                        </div>
                                                      
                                                     </div>
                                                 </div> 
@@ -117,10 +129,10 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Search via post ID</h4>
                                     
-                                      <div class="input-group mb-3 ui-widget">
+                                      <div class="input-group mb-3">
                                           <input type="text" class="form-control" placeholder="Enter a post ID" id="searchInput">
                                           <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" id="search-butt">Search</button>
+                                            <button class="btn btn-primary" type="button" id="search-butt" onclick="updateUI(document.getElementById('searchInput').value)"">Search</button>
                                           </div>
                                       </div>
                                     
@@ -168,11 +180,12 @@
 
                         <!-- SUMMARY OF A POST -->
                         <div class="col-md-6 mb-4">
-                            <div class="card shadow"  style="height: 320px;">
+                            <div class="card shadow"  style="height: 100%;">
                                 <div class="card-body">
                                     <h4 class="card-title">Summary of (id) post</h4>
-                                    <div class="row align-items-center">
-                                        <table class="table table-bordered">
+                                    <div class="row align-items-center" id="postDetailTable">
+                                        <h5 style="text-align: center; margin-left: 30%; margin-top: 10%;">No Post Selected</h5>
+                                        <!-- <table class="table table-bordered">
                                             <tr>
                                                 <th>POST TITLE</th>
                                                 <td> title placeholder </td>
@@ -198,7 +211,7 @@
                                                 <td> interest1, interest2 placeholder </td>
                                             </tr>
 
-                                        </table>
+                                        </table> -->
                                     </div> <!-- .row align-items-center-->
                                 </div> <!-- .card-body -->
                             </div> <!-- .card shadow-->
@@ -206,10 +219,11 @@
 
                         <!-- GRAPH BASED ON A POST -->
                         <div class="col-md-6 mb-4">
-                            <div class="card shadow"  style="height: 320px;">
+                            <div class="card shadow"  style="height: 100%;">
                                 <div class="card-body">
                                     <h4 class="card-title">Overall Statistics for (id)</h4>
-                                        <canvas id="barChartjs" width="400" height="300"></canvas>
+                                      <h5 style="text-align: center; margin-top: 10%;" id="chart">No Post Selected</h5>
+                                        <!-- <canvas id="barChartjs" width="400" height="300"></canvas> -->
                                 </div> <!-- .card-body -->
                                 <br>
                             </div> <!-- .card shadow-->
