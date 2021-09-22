@@ -225,6 +225,25 @@
                           </div>
                         </div> <!-- /.card-body -->
                         </div>
+
+                        <div class="col-md-6 mb-4">
+                          <div class="card shadow">
+                            <div class="card-header">
+                              <strong class="card-title mb-0">Total Favourited Videos</strong>
+                              <div class="dropdown float-right">
+                                <button class="btn btn-sm btn-link text-muted dropdown-toggle p-0" type="button" id="rangeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 7 days </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="rangeDropdown">
+                                  <a class="dropdown-item small text-muted" href="#">30 days</a>
+                                  <a class="dropdown-item small active" href="#">90 days</a>
+                                  <a class="dropdown-item small text-muted" href="#">All</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-body">
+                              <canvas id="barChartjs" width="400" height="300"></canvas>
+                            </div> <!-- /.card-body -->
+                          </div> <!-- /.card -->
+                        </div> <!-- /. col -->
                       </div><!--/justify content-->
                     </div><!--/container-->
                     </main> <!-- main -->
