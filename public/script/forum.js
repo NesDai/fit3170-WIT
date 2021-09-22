@@ -171,6 +171,9 @@ function findAllPosts() {
 
 
 function printAllPosts(){
+
+    $("#radio-0").attr("disabled",true);
+    $("#radio-1").attr("disabled",true);
     
     $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
@@ -219,8 +222,14 @@ function printAllPosts(){
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
             // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
-        });
-    });
+        }).then(()=>{
+
+            // Reenable the other tabs
+        $("#radio-0").attr("disabled",false);
+        $("#radio-1").attr("disabled",false);
+    
+    })
+    })
 
 
 }
@@ -231,6 +240,11 @@ function printAllPosts(){
  * @returns null
  */
 function printThread(){
+    // thread is radio button index 0. Disable other tabs
+    $("#radio-1").attr("disabled",true);
+    $("#radio-2").attr("disabled",true);
+
+    console.log(document.getElementById(`radio-1`), document.getElementById(`radio-2`))
 
     document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
@@ -278,11 +292,16 @@ function printThread(){
 
             printStartIndex = posts.length - 1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
-        });
+        }).then(()=>{
+
+            // Reenable the other tabs
+    $("#radio-1").attr("disabled",false);
+    $("#radio-2").attr("disabled",false);
+
+    });
     });
 
    
-
 }
 
 /**
@@ -598,7 +617,7 @@ function printPost(post, button_num, i )
  * @param {*} current_user_posts a list of user's personal posts
  * @param {*} button_nums an indicator for like and dislike button
  */
-function printUserFavouritePosts(current_user_posts, buttons_index){
+async function printUserFavouritePosts(current_user_posts, buttons_index){
     let post_arr = [];
     let fav_post_arr =[];
     let users_arr = [];
@@ -672,11 +691,24 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
                                     printPost(post_arr[i], button_nums[i], buttons_index)
                                     buttons_index++;
                                 }
+
+                                const promise = new Promise((resolve, reject) => {
+
+                                    resolve(1);
+                                 });
                     })
         })
+
+
 }
 
 function printUserPosts(){
+
+    //disable other tabs
+    $("#radio-0").attr("disabled",true);
+    $("#radio-2").attr("disabled",true);
+
+  
 
     $('#resNum').html(``);   
 
@@ -698,6 +730,7 @@ function printUserPosts(){
 
         })
     }).then(()=>{
+
         firebase.database().ref('posts')
             .orderByChild('username')
                 .equalTo(current_user['username'])
@@ -723,11 +756,16 @@ function printUserPosts(){
                             printPost(posts[i], button_nums[i], i )
                         }
                     }).then(() => {
-                        printUserFavouritePosts(posts,button_nums.length);
-                    })
-                });
+                        printUserFavouritePosts(posts,button_nums.length).then(()=>{
 
-                     
+                                                     // Reenable the other tabs
+                        $("#radio-0").attr("disabled",false);
+                        $("#radio-2").attr("disabled",false);
+
+                        })
+                    });
+                });
+                                
    
 }
        
