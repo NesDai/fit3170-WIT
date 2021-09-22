@@ -61,7 +61,7 @@ function makeNewPost() {
         });
 
         if (!interest_arr.length){
-            dialog.showModal();
+            dialog_int.showModal();
             return
         }
 
@@ -467,7 +467,7 @@ function print_create_post()
                  var cnt = $("input[name='interests']:checked").length;
                  if (cnt > maxAllowed) {
                      $(this).prop("checked", "");
-                     dialog.showModal();
+                     dialog_int.showModal();
                  }
              });
           });
@@ -481,7 +481,7 @@ function print_create_post()
     </div>
 
     <!-- Alert UI -->
-    <dialog class="mdl-dialog">
+    <dialog class="mdl-dialog mdl-dialog-int">
         <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
         <hr style="margin: 0;">
         <div class="mdl-dialog__content">
@@ -510,17 +510,17 @@ function print_create_post()
 
     <!-- Alert control-->
     <script>
-        var dialog = document.querySelector('dialog');
-        if (! dialog.showModal) {
-            dialogPolyfill.registerDialog(dialog);
+        var dialog_int = document.querySelector('.mdl-dialog-int');
+        if (! dialog_int.showModal) {
+            dialogPolyfill.registerDialog(dialog_int);
         }
-        dialog.querySelector('.close_btn').addEventListener('click', function() {
-            dialog.close();
+        dialog_int.querySelector('.close_btn').addEventListener('click', function() {
+            dialog_int.close();
         });
 
         var dialog_vid=document.querySelector('.mdl-dialog-vid')
         if (! dialog_vid.showModal) {
-            dialogPolyfill.registerDialog(dialog);
+            dialogPolyfill.registerDialog(dialog_vid);
         }
         dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
             dialog_vid.close();
@@ -629,7 +629,7 @@ function printPost(post, button_num, i )
 
 
                     <!-- Alert UI -->
-                    <dialog class="mdl-dialog">
+                    <dialog class="mdl-dialog mdl-dialog-like">
                         <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
                         <hr style="margin: 0;">
                         <div class="mdl-dialog__content">
@@ -658,7 +658,7 @@ function printPost(post, button_num, i )
                             }
                             
                             // do what needs to happen on double click. 
-                            dialog.showModal();
+                            dialog_like.showModal();
                         }else{
                             $button.data('alreadyclicked', true);
                             
@@ -685,7 +685,7 @@ function printPost(post, button_num, i )
                             }
                             
                             // do what needs to happen on double click. 
-                            dialog.showModal();
+                            dialog_like.showModal();
 
                         }else{
                             $button.data('alreadyclicked', true);
@@ -704,12 +704,12 @@ function printPost(post, button_num, i )
 
                     <!-- Alert control-->
                     <script>
-                        var dialog = document.querySelector('dialog');
-                        if (! dialog.showModal) {
-                            dialogPolyfill.registerDialog(dialog);
+                        var dialog_like = document.querySelector('.mdl-dialog-like');
+                        if (! dialog_like.showModal) {
+                            dialogPolyfill.registerDialog(dialog_like);
                         }
-                        dialog.querySelector('.close_btn').addEventListener('click', function() {
-                            dialog.close();
+                        dialog_like.querySelector('.close_btn').addEventListener('click', function() {
+                            dialog_like.close();
                         });
                     </script>
 
