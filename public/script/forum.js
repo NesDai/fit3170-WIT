@@ -535,34 +535,46 @@ function print_create_post()
 
 function printPost(post, button_num, i )
 {
+    let like_no=0;
+    let dislike_no=0;
+
+    //gets the number of likes and dislikes on the post
+    firebase.database().ref(`likesDislikes/${post.id}`).once("value", x=>{
+        x.forEach(data => {
+            if (data.val().action==1) like_no+=1;
+            if (data.val().action==-1) dislike_no+=1;
+        })
+    })
+    .then(()=>{
+
     let button = `
-    <button class="like mdl-button mdl-js-button" value="${post.likes}" id="btn_like${i}">
-    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+    <button class="like mdl-button mdl-js-button" value="${like_no}" id="btn_like${i}">
+    <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${like_no}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike${i}">
-    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+    <button class="dislike mdl-button mdl-js-button"  value="${dislike_no}" id="btn_dislike${i}">
+    <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${dislike_no}</span>
     </button>
     `
     if (button_num==1)
     {
          // liked
          button = `<button
-         class="like mdl-button mdl-js-button "  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}" id="btn_like${i}">
-         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+         class="like mdl-button mdl-js-button "  style="color: white !important; background-color:#2bbd7e !important;"  value="${like_no}" id="btn_like${i}">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${like_no}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button" value="${post.dislikes}" id="btn_dislike${i}">
-         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+         <button class="dislike mdl-button mdl-js-button" value="${dislike_no}" id="btn_dislike${i}">
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${dislike_no}</span>
          </button>
          `
     }
     else if(button_num==-1)
     {
          // disliked
-         button = `<button class="like mdl-button mdl-js-button"  value="${post.likes}" id="btn_like${i}">
-         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
+         button = `<button class="like mdl-button mdl-js-button"  value="${like_no}" id="btn_like${i}">
+         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${like_no}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;" value="${post.dislikes}" id="btn_dislike${i}">
-         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
+         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;" value="${dislike_no}" id="btn_dislike${i}">
+         <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${dislike_no}</span>
          </button>`
     }
 
@@ -719,6 +731,7 @@ function printPost(post, button_num, i )
             </span>
      </div>`
     );
+                    });
 
 }
 
