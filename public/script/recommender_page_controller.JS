@@ -415,6 +415,9 @@ function updateHistory(currentVideoInfo) {
             currentHistory = snapshot.val();
             for (i in currentHistory) {
                 if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
+                    let updateCount = parseInt(currentHistory[i].totalWatchCount)
+                    updateCount += 1;
+                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${index}`).update({totalWatchCount: updateCount});
                     videoExist = true;
                 }
             }
@@ -422,9 +425,59 @@ function updateHistory(currentVideoInfo) {
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true) {
+            currentVideo.totalWatchCount = 1;
             currentHistory.push(currentVideo)
             updateFirebase(currentHistory, current_user, 'videoHistory');
         }
+    })
+}
+
+// Function to get video analytics and store it to Firebase
+function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+    let todaysDate = new Date()
+    const offset = todaysDate.getTimezoneOffset()
+    todaysDate = new Date(todaysDate.getTime() - (offset*60*1000))
+    todaysDate = todaysDate.toISOString().split('T')[0];
+    //let currentUnixTimestamp = Date.now();
+    let currentTimestamp = new Date().toISOString().substr(11, 8);
+
+    let videoIndex = -1;
+
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+        let currentHistory = []
+
+        // If history is not empty and video already exists in history, set videoExist to true
+        if (snapshot.exists()) {
+            currentHistory = snapshot.val();
+            for (i in currentHistory) {
+                let currentHistoryUrlStrip = currentHistory[i].videoUrl.replace("https://www.youtube.com/embed/", "")
+                
+                let index = currentGTMUrl.indexOf(currentHistoryUrlStrip)
+                let currentGTMUrlStrip = currentGTMUrl.substring(index, currentGTMUrl.length);
+                
+                console.log(currentHistoryUrlStrip)
+                console.log(currentGTMUrlStrip)
+
+                if (currentHistoryUrlStrip === currentGTMUrlStrip) {
+                    videoIndex = i;
+                }
+                else{
+                console.log("Not" + i);
+                }
+            }
+        }
+
+        if(videoIndex !== -1){
+            firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentTimestamp}`).set(currentVideoAnalytics).then(() => {
+                console.log(videoIndex);
+                console.log(currentUnixTimestamp);
+            });
+        }
+        else{
+        console.log("Something is not right")
+        }
+        
     })
 }
 
@@ -448,3 +501,35 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
+
+// Fetch the analytics and store every 10s
+let pauseCounter = 0;
+let interval = setInterval(function(){
+    let currentDataLayerEntry = dataLayer[dataLayer.length-1]
+
+    if(currentDataLayerEntry['event'] === 'gtm.video'){
+        let currentGTMUrl = currentDataLayerEntry['gtm.videoUrl']
+        let currentVideoAnalytics = {
+            //currentWatchCount: 
+            videoCurrentTime: currentDataLayerEntry['gtm.videoCurrentTime'],
+            videoDuration: currentDataLayerEntry['gtm.videoDuration'],
+            videoElapsedTime: currentDataLayerEntry['gtm.videoElapsedTime'],
+            videoPercent: currentDataLayerEntry['gtm.videoPercent'],
+            videoStatus: currentDataLayerEntry['gtm.videoStatus'],
+            videoVisible: currentDataLayerEntry['gtm.videoVisible']
+        }
+    
+        if(currentVideoAnalytics.videoStatus === 'pause' || currentVideoAnalytics.videoStatus === 'complete'){
+            pauseCounter += 1;
+            if(pauseCounter < 13) {
+                saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+            }
+
+            // if video is paused / not replayed for some time, stop saving to database
+        }
+        else{
+            pauseCounter = 0;
+            saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+        }
+    }
+}, 10000)
