@@ -119,4 +119,10 @@ i.icon-teal2 {
 	#tab0, #tab1, #tab2{
 		font-size:16px ;
 	}
+
+	#csv_forum_export {
+		position: relative;
+		top: 10px;
+		right: -180px;
+	}
 }
