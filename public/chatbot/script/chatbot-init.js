@@ -252,7 +252,7 @@ function resumeSurvey(button) {
                 let answer = responseObject.answer;
                 let questionChoices = responseObject.restrictions.choices;
 
-                if (titleQuestion !== null) {
+                if (titleQuestion !== null && titleQuestion !== undefined) {
                     // If this is the first sub-question of a long question type
                     if (lastTitleQuestion !== titleQuestion) {
                         lastTitleQuestion = titleQuestion;

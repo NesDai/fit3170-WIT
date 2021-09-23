@@ -78,46 +78,46 @@ const SHORT_TEXT_LENGTH = 50;
 // list of Questions IDs for each language translation
 const QUESTION_IDS_EN = [
     // Part 1
-    'IoX9n0O8SEk82gR8SWoL',
-    'ofqTyifcznzY7hSbDA02',
-    'ao6z2nPQQiA5ZNTkm2Hf',
-    '5SbM8rAT3qL6RVry0mKE',
-    '9tFDMdDMjFV7QG5jJkJ7',
-    'q74FOp2KJHt5uF6JMeEt',
-    'elLYCd03V09Hi7vV2Bna',
-    'nlnAGAnCN9WipmJ7Fze5',
-    'Whd0m9fo4FkwLsUXCIb3',
-    '5oIGSLnxnngdYO6jRUyY',
-    'hskQGsQreAxqoGZSBnFH',
-    '7sqnbWljNVuwCE6XWUaf',
-    '2XYFBRF4C92K7rVFzR0m',
-    'srmae3poWvPqjLeemnRq',
+    '97CZlwR9i5LAOGoDA0eU',
+    'UI87LYHm2t48pDP33b3W',
+    't6IdJmJl86GptX3wceqx',
+    'Ttg5Gaj7LhfcFkAVeYil',
+    'FJ6h87xxovaT4gHJNqdR',
+    'qCURrsJ78pw8KmsSLxOn',
+    'JU4CUokiarx4VezKU4V4',
+    'xYmWMQzvcekUkvlRFJkF',
+    'rQCttvYOlGRd3SaCXzv2',
+    '48I5h7d3OSCK3eU0fbqB',
+    'XmLMzVlK0xJleP2lfOp1',
+    'jqYwvwrJpdAQOgYwGDja',
+    'uvdZ4DRXcgyMJNPa8Irq',
+    'fZzBLQn07Slft3mLtzgt',
 
     // Part 2
-    '1QK9R4yVJKZjUNhXcVd5',
-    'ltv12cKVae9ltpbl2LYT',
-    'pdFwO49cWdsnMGbhPP9N',
-    'tTCkJ0fQEgp5ubsH0vmr',
-    'nHsWNICn1iyuinudIG3c',
-    'gyVaEdwJk0MLfV14zj3Z',
-    'YRFUCePqwwdfAINOCn0D',
+    '55i88aywrPXUpZQHOhNB',
+    'XntBkc8ucAS0RpdsmXrU',
+    'eyBkfq8X7vFTrX6Nfo8r',
+    'W8MSIRlxs7fcOln2OXgS',
+    'qv49aN7bddR4Z7WCuX2b',
+    '7an0h0SbtFzwNSdQvKrk',
+    'Kb2OAGkMNAjy7kzxSwKa',
 
     // Part 3
-    'VCLHGwzQHVckpB1LTMjY',
-    'os37yw51uVaKj2BsfrU5',
+    'Z5JqsrL17Kcn8gE7pBtQ',
+    '76CqJj4uWlOzdLpeZvzV',
 
     // Part 4
-    'pwcuxOTscZGBW4M4fUbd',
-    'izWrQUUI4ARCUotG0WDq',
-    'dpYqljnw1c4Cb8JNWT9L',
-    '4GsEA1f25wgKxAQVwoGN',
-    'dXCJdjRnnr3EUj0Itoig',
+    '3UjWRM7J6ykqzaQo3pvp',
+    '7MnMgfXVkJyucVUOT2Ap',
+    'M16oBJ94sCqQWl2kvPQ0',
+    'q02KCLUHrzbcOCtGTvVe',
+    'wS3YFYkLSg5acQYda7Sx',
 
     // Part 5
-    'i3tAkn1my4bD8JgeVr8j',
-    'zhJmzBKzA7f3qotBFzjV',
-    'MioHXcjBIADX5rbmzPfK',
-    'gmWgalOEj2wMsmZPcCXZ'
+    'JCjP9diQVuN4sJwbR0Zv',
+    'tgU2XIaLjuLeLJj0DsQX',
+    'LK3hfoPfwOMAjFWANLc8',
+    'MtpfX0thgfZXVH917lFP'
 ];
 
 const QUESTION_IDS_ZH_CN = [

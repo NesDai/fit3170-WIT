@@ -198,6 +198,22 @@ function addMessage() {
             // display input
             showMessageReceiver(message);
 
+            if (currentQuestionObject.restrictions.skipIfInvalid) {
+                if (currentQuestionObject.restrictions.skipTarget !== SKIP_END_SURVEY) {
+                    if (currentQuestionObject.restrictions.skipTarget !== SKIP_NOT_ALLOWED) {
+                        // Set the current question index to the question before the skip target since nextQuestion increments
+                        // the question index by 1
+                        questionIndex = QUESTION_IDS[branch_id].indexOf(currentQuestionObject.restrictions.skipTarget) - 1;
+
+                        // In case the user was answering a long question, reset params related to long questions
+                        currentSubQuestionIds = null;
+
+                        // call sync progress to update currentSubQuestionIds and questionID after nextQuestion
+                        syncProgress();
+                    }
+                }
+            }
+
             // display next question after time delay and scroll to bottom of screen
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
             setTimeout(() => {nextQuestion(); saveResponse(parseInt(numInput));}, delay);
@@ -694,7 +710,11 @@ function showNumeric(questionObject) {
 
                 // check if question requires use to end the survey if an invalid response is given
                 if (questionObject.restrictions.skipIfInvalid) {
-                    submit.onclick = endSurveyText;
+                    if (questionObject.restrictions.skipTarget === SKIP_END_SURVEY) {
+                        submit.onclick = endSurveyText;
+                    } else {
+                        submit.onclick = addMessage;
+                    }
                 }
             }
         }
