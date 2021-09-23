@@ -1,5 +1,6 @@
 
 
 function csvExportForum() {
-    alert("bruj");
+    root_data = firebase.database().ref();
+    console.log(root_data);
 }

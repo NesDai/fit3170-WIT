@@ -90,7 +90,6 @@ i.icon-teal2 {
     bottom: 0px;
 }
 
-
 /* small mobile view (375px)*/
 @media all and (max-width: 400px) {
 	/* for glider */
@@ -120,9 +119,4 @@ i.icon-teal2 {
 		font-size:16px ;
 	}
 
-	#csv_forum_export {
-		position: relative;
-		top: 10px;
-		right: -180px;
-	}
 }
