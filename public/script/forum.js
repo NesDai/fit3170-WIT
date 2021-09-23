@@ -61,10 +61,9 @@ function makeNewPost() {
         });
 
         if (!interest_arr.length){
-            alert("The post needs to have at least one interest")
+            dialog_int.showModal();
             return
         }
-        console.log(interest_arr);
 
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
@@ -78,7 +77,7 @@ function makeNewPost() {
         if (video_url !== "") {
             embedding_video_url = checkEmbeddingVideo(video_url);
             if (embedding_video_url == 0) {
-                alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+                dialog_vid.showModal();
                 return;
             }
 
@@ -343,7 +342,6 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
 
 
 
-
 function print_create_post()
 {
     $('#create_post').html(
@@ -489,7 +487,7 @@ function print_create_post()
                  var cnt = $("input[name='interests']:checked").length;
                  if (cnt > maxAllowed) {
                      $(this).prop("checked", "");
-                     alert('You can select maximum ' + maxAllowed + ' interests!!');
+                     dialog_int.showModal();
                  }
              });
           });
@@ -501,6 +499,54 @@ function print_create_post()
        POST
        </button>
     </div>
+
+    <!-- Alert UI -->
+    <dialog class="mdl-dialog mdl-dialog-int">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
+    
+    <!-- Alert for wrong video link UI-->
+    <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Alert control-->
+    <script>
+        var dialog_int = document.querySelector('.mdl-dialog-int');
+        if (! dialog_int.showModal) {
+            dialogPolyfill.registerDialog(dialog_int);
+        }
+        dialog_int.querySelector('.close_btn').addEventListener('click', function() {
+            dialog_int.close();
+        });
+
+        var dialog_vid=document.querySelector('.mdl-dialog-vid')
+        if (! dialog_vid.showModal) {
+            dialogPolyfill.registerDialog(dialog_vid);
+        }
+        dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
+            dialog_vid.close();
+        });
+
+    </script>
  </div>`
     );
     
@@ -510,10 +556,10 @@ function print_create_post()
 function printPost(post, button_num, i )
 {
     let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised"  onclick="likePost('${post.id}', ${i});" value="${post.likes}" >
+    <button class="like mdl-button mdl-js-button" value="${post.likes}" id="btn_like${i}">
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised"  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike${i}">
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
@@ -521,10 +567,10 @@ function printPost(post, button_num, i )
     {
          // liked
          button = `<button
-         class="like mdl-button mdl-js-button mdl-button--raised"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         class="like mdl-button mdl-js-button "  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}" id="btn_like${i}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+         <button class="dislike mdl-button mdl-js-button" value="${post.dislikes}" id="btn_dislike${i}">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
@@ -532,14 +578,13 @@ function printPost(post, button_num, i )
     else if(button_num==-1)
     {
          // disliked
-         button = `<button class="like mdl-button mdl-js-button mdl-button--raised" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         button = `<button class="like mdl-button mdl-js-button"  value="${post.likes}" id="btn_like${i}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised"  style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}">
+         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;" value="${post.dislikes}" id="btn_dislike${i}">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
-
 
     let atchar = "@";
     if(post.username == undefined)
@@ -601,13 +646,98 @@ function printPost(post, button_num, i )
                     <img src="./css/images/more_icon.png" id="more_icon"></img><span> More</span>
                     </button>
                     </div>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-                    <script type="text/javascript">
+
+
+                    <!-- Alert UI -->
+                    <dialog class="mdl-dialog mdl-dialog-like">
+                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+                        <hr style="margin: 0;">
+                        <div class="mdl-dialog__content">
+                            <h8>
+                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
+                            </h8>
+                            <br>
+                            <br>
+                            <div class="mdl-dialog__actions">
+                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+                            </div>
+                        </div>
+                    </dialog>
+
+                    <!-- Like dislike double click -->
+                    <script>
+                    //checks for double click on like button
+                    $("#btn_like"+${i}).on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
+                            
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            dialog_like.showModal();
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                
+                                $('#action').val('Was single clicked');
+                                likePost('${post.id}', ${i});
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
+
+                    //checks for double click on dislike button
+                    $("#btn_dislike"+${i}).on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
+                            
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            dialog_like.showModal();
+
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                
+                                $('#action').val('Was single clicked');
+                                dislikePost('${post.id}', ${i});
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
                     </script>
+
+                    <!-- Alert control-->
+                    <script>
+                        var dialog_like = document.querySelector('.mdl-dialog-like');
+                        if (! dialog_like.showModal) {
+                            dialogPolyfill.registerDialog(dialog_like);
+                        }
+                        dialog_like.querySelector('.close_btn').addEventListener('click', function() {
+                            dialog_like.close();
+                        });
+                    </script>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                    <script type="text/javascript"></script>
                   <br>
             </span>
      </div>`
-
     );
 
 }
