@@ -1,6 +1,8 @@
 
 
 function csvExportForum() {
-    root_data = firebase.database().ref();
-    console.log(root_data);
+    firebase.database().ref().once("value").then(snapshot => {
+       root_data = snapshot.val();
+       console.log(root_data);
+    });
 }
