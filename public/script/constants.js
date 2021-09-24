@@ -53,7 +53,6 @@ const PART_TITLE = [
 
 // The paths for storing/retrieving questions from
 // the Firebase Firestore Database
-const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
 const QUESTIONS_BRANCHES = [
     "chatbot/survey_questions/questions_en/",
     "chatbot/survey_questions/questions_zh_CN/",

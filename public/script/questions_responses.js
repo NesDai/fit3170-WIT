@@ -3,6 +3,7 @@ let selected = null;
 let viewingSubQuestions = false;
 let responsesList = document.getElementById("responses-list-div");
 let questionsList = document.getElementById("questions-list");
+const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
 
 // A list of sub-question IDs of the currently in view
 // long question
