@@ -73,9 +73,9 @@ function changeQuestion(index) {
 
     let header = "";
     if (!viewingSubQuestions) {
-        header = "Question " + questions[index].question_number + " Responses";
+        header = "<h3>Question " + questions[index].question_number + " Responses</h3>";
     } else {
-        header = "Question " + subquestions[index].question_number + " Responses";
+        header = "<h3>Question " + subquestions[index].question_number + " Responses</h3>";
     }
 
     let list = null;
@@ -95,7 +95,7 @@ function changeQuestion(index) {
         list = responsesList;
     }
 
-    document.getElementById("right-pane-label").innerText = header;
+    responsesList.innerHTML = header;
 
     let responses_branch = "";
     if (!viewingSubQuestions) {
@@ -136,7 +136,7 @@ function changeSubQuestion(index) {
     subquestions = [];
     subQuestionIds = questions[index].arrangement;
     for (let i = 0; i < subQuestionIds.length; i++) {
-        firebase.firestore().collection(QUESTIONS_BRANCH)
+        firebase.firestore().collection(QUESTIONS_BRANCHES[languageIndex])
             .doc(subQuestionIds[i])
             .get()
             .then((document) => {
@@ -180,9 +180,7 @@ function displayLanguageMenu() {
         "Select Languages";
     document.getElementById("left-pane-label").hidden = false;
 
-    document.getElementById("right-pane-label").innerText =
-        "Please select a language to get started.";
-
+    responsesList.innerHTML = "<h3>Please select a language to get started.</h3>";
 
     questionsList.innerHTML = `
         <li class="mdl-list__item mdl-list__item"
@@ -269,8 +267,8 @@ function loadQuestions(languageSelection) {
                 }
 
                 // and clear the left/right pane labels
-                document.getElementById("left-pane-label").innerHTML = "";
-                document.getElementById("right-pane-label").innerHTML = "";
+                document.getElementById("left-pane-label").innerText = "";
+                responsesList.innerHTML = "<h3>Select a question</h3>";
             })
     }
 }
