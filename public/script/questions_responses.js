@@ -1,9 +1,11 @@
+let branch = "";
+let languageIndex = -1;
+
 // Initialising variables
 let selected = null;
 let viewingSubQuestions = false;
 let responsesList = document.getElementById("responses-list-div");
 let questionsList = document.getElementById("questions-list");
-const QUESTIONS_BRANCH = "chatbot/survey_questions/questions/";
 
 // A list of sub-question IDs of the currently in view
 // long question
@@ -51,6 +53,7 @@ function addQuestionsList() {
                                 </li>';
     }
     questionsList.innerHTML = questionsListString;
+    appendBackButton();
 }
 
 /**
@@ -70,9 +73,9 @@ function changeQuestion(index) {
 
     let header = "";
     if (!viewingSubQuestions) {
-        header = "<h3>Question " + questions[index].question_number + " Responses</h3>"
+        header = "Question " + questions[index].question_number + " Responses";
     } else {
-        header = "<h3>Question " + subquestions[index].question_number + " Responses</h3>"
+        header = "Question " + subquestions[index].question_number + " Responses";
     }
 
     let list = null;
@@ -91,11 +94,12 @@ function changeQuestion(index) {
     else {
         list = responsesList;
     }
-    list.innerHTML = header;
+
+    document.getElementById("right-pane-label").innerText = header;
 
     let responses_branch = "";
     if (!viewingSubQuestions) {
-        responses_branch = `chatbot/survey_responses/${QUESTION_IDS[index]}`
+        responses_branch = `chatbot/survey_responses/${QUESTION_IDS[languageIndex][index]}`
     } else {
         responses_branch = `chatbot/survey_responses/${subQuestionIds[index]}`
     }
@@ -168,15 +172,91 @@ function changeSubQuestion(index) {
     }
 }
 
-window.onload = function () {
-    // On load, get the list of questions, then populate
-    // questions list
-    questions = [];
-    for (let i = 0; i < QUESTION_IDS.length; i++) {
-        let branch = QUESTIONS_BRANCH + QUESTION_IDS[i];
+/**
+ * Clear and populate the left pane with survey language options
+ */
+function displayLanguageMenu() {
+    document.getElementById("left-pane-label").innerText =
+        "Select Languages";
+    document.getElementById("left-pane-label").hidden = false;
 
-        firebase.firestore().collection(QUESTIONS_BRANCH)
-            .doc(QUESTION_IDS[i])
+    document.getElementById("right-pane-label").innerText =
+        "Please select a language to get started.";
+
+
+    questionsList.innerHTML = `
+        <li class="mdl-list__item mdl-list__item"
+        onclick="loadQuestions(this)" id="select-english"
+        style="cursor: pointer;" value=0>
+            <span class="mdl-list__item-primary-content">
+            English
+            </span>
+        </li>
+        
+        <li class="mdl-list__item mdl-list__item"
+        onclick="loadQuestions(this)" id="select-chinese"
+        style="cursor: pointer;" value=1>
+            <span class="mdl-list__item-primary-content">
+            Chinese
+            </span>
+        </li>
+        
+        <li class="mdl-list__item mdl-list__item"
+        onclick="loadQuestions(this)" id="select-malay"
+        style="cursor: pointer;" value=2>
+            <span class="mdl-list__item-primary-content">
+            Malay
+            </span>
+        </li>
+        
+        <li class="mdl-list__item mdl-list__item"
+        onclick="loadQuestions(this)" id="select-thai"
+        style="cursor: pointer;" value=3>
+            <span class="mdl-list__item-primary-content">
+            Thai
+            </span>
+        </li>
+    `;
+
+}
+displayLanguageMenu();
+
+/**
+ * Adds a back button to the left pane.
+ * <br>
+ * Note: Implementation only covers navigating back to the
+ * language selection.
+ */
+function appendBackButton() {
+    const menuItem = `
+        <li class="mdl-list__item mdl-list__item"
+        onclick="displayLanguageMenu()" id="select-thai"
+        style="cursor: pointer;" value=3>
+            <span class="mdl-list__item-primary-content">
+                Back to Language Selection
+            </span>
+        </li>
+    `;
+
+    questionsList.innerHTML += menuItem;
+}
+
+function loadQuestions(languageSelection) {
+    // After language selection, get the list of questions, then populate
+    // questions list
+
+    languageIndex = languageSelection.value;
+    branch = QUESTIONS_BRANCHES[languageIndex];
+
+    questions = [];
+
+    questionsList.innerHTML = "";
+    document.getElementById("left-pane-label").innerText =
+        "Loading...";
+
+    for (let i = 0; i < QUESTION_IDS[languageIndex].length; i++) {
+        firebase.firestore().collection(branch)
+            .doc(QUESTION_IDS[languageIndex][i])
             .get()
             .then((document) => {
                 questions.push(document.data());
@@ -184,12 +264,16 @@ window.onload = function () {
             .then(() => {
                 // After the last question is fetched, populate the HTML
                 // question elements
-                if (i === QUESTION_IDS.length - 1) {
+                if (i === QUESTION_IDS[languageIndex].length - 1) {
                     addQuestionsList();
                 }
+
+                // and clear the left/right pane labels
+                document.getElementById("left-pane-label").innerHTML = "";
+                document.getElementById("right-pane-label").innerHTML = "";
             })
     }
-};
+}
 
 // Checks everytime the window is resized to prevent two response tabs
 $(window).resize(function () {
