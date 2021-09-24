@@ -252,14 +252,14 @@ const QUESTION_IDS_TH = [
 ];
 
 // A list of arrays of IDs of question objects of each supported language that are stored in the Firestore Database
-QUESTION_IDS = [
+const QUESTION_IDS = [
     QUESTION_IDS_EN,
     QUESTION_IDS_ZH_CN,
     QUESTION_IDS_MS,
     QUESTION_IDS_TH
 ];
 
-OTHERS_OPTION_HINTS = [
+const OTHERS_OPTION_HINTS = [
     "Type in a Response",
     "输入回复",
     "Taipkan tindak balas",
