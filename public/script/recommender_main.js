@@ -1,5 +1,3 @@
-
-
 // Activated when "Rate" is pressed, transitioning the users to the screen where they will rate their last recommendation
 function transitionRatePage() {
     // Adjust header to mention to Rate
