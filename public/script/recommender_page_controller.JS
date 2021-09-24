@@ -310,6 +310,7 @@ function makeRequest(preference) {
 }
 
 function playVideo() {
+    changeShareDetails();
 
     playlist = JSON.parse(localStorage.getItem("playlist"));
     currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
@@ -352,7 +353,9 @@ function skipToPreviousVideo() {
     }
     
     localStorage.setItem("currentVideoNumber", currentVideoNum);
-    location.reload();
+    
+    player.loadVideoById(playlist[currentVideoNum].videoId);
+    changeShareDetails();
 }
 
 // Fires when the skip next button is clicked
@@ -368,7 +371,9 @@ function skipToNextVideo() {
     }
     
     localStorage.setItem("currentVideoNumber", currentVideoNum);
-    location.reload();
+
+    player.loadVideoById(playlist[currentVideoNum].videoId);
+    changeShareDetails();
 }
 
 function onPlayerReady(){
@@ -382,6 +387,7 @@ function onPlayerReady(){
     } else {
         queryVideosOnPreferences();
     }
+
     player.stopVideo();
 }
 
@@ -417,7 +423,7 @@ function updateHistory(currentVideoInfo) {
                 if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
                     let updateCount = parseInt(currentHistory[i].totalWatchCount)
                     updateCount += 1;
-                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${index}`).update({totalWatchCount: updateCount});
+                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({totalWatchCount: updateCount});
                     videoExist = true;
                 }
             }
@@ -499,7 +505,7 @@ function onYouTubeIframeAPIReady() {
         events: {
             'onReady': onPlayerReady,
         }
-    });
+    });  
 }
 
 // Fetch the analytics and store every 10s

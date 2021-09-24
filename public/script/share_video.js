@@ -27,10 +27,6 @@ function addShareButtons(){
 
     document.body.appendChild(script);
 
-    script.addEventListener('load', ()=>{
-        // Listen for the ready event
-        addthis.addEventListener('addthis.ready', changeShareDetails);
-    })
 }
 
 // Variable to initialize the details when user shares a video
