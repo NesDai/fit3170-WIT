@@ -391,6 +391,7 @@ function onPlayerStateChange(event){
         //Do something
         let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
         playlist = JSON.parse(localStorage.getItem("playlist"));
+        console.log("Fire")
         updateHistory(playlist[currentVideoNumber]);
     }
 }
@@ -417,7 +418,7 @@ function updateHistory(currentVideoInfo) {
                 if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
                     let updateCount = parseInt(currentHistory[i].totalWatchCount)
                     updateCount += 1;
-                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${index}`).update({totalWatchCount: updateCount});
+                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({totalWatchCount: updateCount});
                     videoExist = true;
                 }
             }
@@ -471,7 +472,7 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
         if(videoIndex !== -1){
             firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentTimestamp}`).set(currentVideoAnalytics).then(() => {
                 console.log(videoIndex);
-                console.log(currentUnixTimestamp);
+                console.log(currentTimestamp);
             });
         }
         else{
@@ -498,7 +499,8 @@ function onYouTubeIframeAPIReady() {
         },
         events: {
             'onReady': onPlayerReady,
-        }
+        },
+        enablejsapi: 1
     });
 }
 
