@@ -355,6 +355,7 @@ function skipToPreviousVideo() {
     localStorage.setItem("currentVideoNumber", currentVideoNum);
     
     player.loadVideoById(playlist[currentVideoNum].videoId);
+    updateDescription(playlist[currentVideoNum].title);
     changeShareDetails();
 }
 
@@ -373,13 +374,14 @@ function skipToNextVideo() {
     localStorage.setItem("currentVideoNumber", currentVideoNum);
 
     player.loadVideoById(playlist[currentVideoNum].videoId);
+    updateDescription(playlist[currentVideoNum].title);
     changeShareDetails();
 }
 
 function onPlayerReady(){
 
     // Adds listener to the state change of the player (play,pause, etc.)
-    player.addEventListener('onStateChange', onPlayerStateChange);
+    // player.addEventListener('onStateChange', onPlayerStateChange);
 
     if (localStorage.getItem('playlist') != null) {
         playlist = JSON.parse(localStorage.getItem('playlist'));
@@ -505,6 +507,7 @@ function onYouTubeIframeAPIReady() {
         },
         events: {
             'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
         },
         enablejsapi: 1
     });
