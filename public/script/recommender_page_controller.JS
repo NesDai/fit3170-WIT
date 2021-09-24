@@ -397,6 +397,7 @@ function onPlayerStateChange(event){
         //Do something
         let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
         playlist = JSON.parse(localStorage.getItem("playlist"));
+        console.log("Fire")
         updateHistory(playlist[currentVideoNumber]);
     }
 }
@@ -477,7 +478,7 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
         if(videoIndex !== -1){
             firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentTimestamp}`).set(currentVideoAnalytics).then(() => {
                 console.log(videoIndex);
-                console.log(currentUnixTimestamp);
+                console.log(currentTimestamp);
             });
         }
         else{
@@ -504,8 +505,9 @@ function onYouTubeIframeAPIReady() {
         },
         events: {
             'onReady': onPlayerReady,
-        }
-    });  
+        },
+        enablejsapi: 1
+    });
 }
 
 // Fetch the analytics and store every 10s
