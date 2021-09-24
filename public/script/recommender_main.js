@@ -138,7 +138,6 @@ function getTopic() {
 
 // Function to add video to favourites
 function addToFavourite(currentVideoInfo) {
-
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
         videoUrl: currentVideoInfo.videoUrl,
@@ -146,6 +145,12 @@ function addToFavourite(currentVideoInfo) {
         videoTitle: currentVideoInfo.title,
         videoPreference: currentVideoInfo.interest
     }
+
+    let videoUrlEnd = currentVideo.videoUrl.split("https://www.youtube.com/embed/");
+    videoUrlEnd = videoUrlEnd[1];
+    console.log(videoUrlEnd);
+
+    let time = Date.now();
 
     // Retrieves the currently stored watch history
     firebase.database().ref('users').child(`${current_user.phone}/videoFavourite/`).once("value", function (snapshot) {
@@ -166,6 +171,87 @@ function addToFavourite(currentVideoInfo) {
         if (videoExist != true) {
             currentFavourites.push(currentVideo);
             updateFirebase(currentFavourites, current_user, 'videoFavourite');
+        }
+    })
+
+    current_user["time"] = time;
+    //Storing data on how many times each video has been favourited, cumulatively
+    firebase.database().ref('recommenderData').child(`favourite/`).once("value", function (snapshot) {
+        if (snapshot.exists()) {
+            currentFavourites = snapshot.val();
+            // If the video has previously been favourited
+            if (currentFavourites[videoUrlEnd] != undefined){
+                // If the user has not previously favourited this video
+                if (currentFavourites[videoUrlEnd].favouritedUsers[current_user.phone] == undefined){
+                    currentFavourites[videoUrlEnd].favouritedAmmount += 1;
+                    currentFavourites[videoUrlEnd].favouritedUsers[current_user.phone] = current_user;
+                }
+            }
+
+            // If the video has not been previously favourited
+            else{
+                let user = {}
+                user[current_user.phone] = current_user;
+                let newFavourite = {
+                    favouritedAmmount: 1,
+                    preferenceType: currentVideo.videoPreference,
+                    favouritedUsers: user
+                }
+
+                currentFavourites[videoUrlEnd] = newFavourite;
+            }
+
+            // Setting changes on firebase
+            console.log(currentFavourites);
+            firebase.database().ref('recommenderData/favourite').set(
+                currentFavourites
+                , function (error) {
+                    if (error) {
+                        console.log(error)
+                    }
+                })
+        }
+    })
+
+    id = currentVideo.videoPreference;
+    // Update skill favourited statistics
+    firebase.database().ref('recommenderData').child(`skills/`).once("value", function (snapshot) {
+        if (snapshot.exists()) {
+            currentSkills = snapshot.val();
+
+            // Check if the skill has previously selected/favourited on the database, update if so
+            if (currentSkills[id] != undefined){
+                if(currentSkills[id].favouritedAmmount != undefined){
+                    currentSkills[id].favouritedAmmount += 1;
+                }
+                else{
+                    currentSkills[id].favouritedAmmount = 1;
+                }
+                
+            }
+            
+            // Else if this is the first time skill is being selected/favourited
+            else {
+                let selectedTime = {}
+                selectedTime[time] = time;
+                
+                let newSkillCombine = {
+                    selectedAmmount: 0,
+                    favouritedAmmount: 1,
+                    selectedTime: selectedTime
+                }
+
+                currentSkills[id] = newSkillCombine;
+            }
+
+            // Update the firebase skills data section with changes
+            firebase.database().ref('recommenderData/skills').set(
+                currentSkills
+                , function (error) {
+                    if (error) {
+                        console.log(error)
+                    }
+                })
         }
     })
 }
@@ -207,6 +293,7 @@ function removeFromFavourite(currentVideoUrl) {
             }
         }
     })
+
 }
 
 // Function to update watch history of specific user in database
