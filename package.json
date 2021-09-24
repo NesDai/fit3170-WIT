@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@google-cloud/speech": "^4.9.0",
+    "firebase": "^9.0.2",
+    "node-record-lpcm16": "^1.0.1",
+    "sox": "^0.1.0"
+  }
+}
