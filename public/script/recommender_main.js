@@ -464,9 +464,8 @@ function skipToNextVideo() {
 }
 
 function onPlayerReady(){
-
+    console.log("ready")
     // Adds listener to the state change of the player (play,pause, etc.)
-    // player.addEventListener('onStateChange', onPlayerStateChange);
 
     if (localStorage.getItem('playlist') != null) {
         playlist = JSON.parse(localStorage.getItem('playlist'));
@@ -478,16 +477,7 @@ function onPlayerReady(){
     player.stopVideo();
 }
 
-function onPlayerStateChange(event){
-    // Fires if the video is playing
-    if (event.data == YT.PlayerState.PLAYING) {
-        //Do something
-        let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
-        playlist = JSON.parse(localStorage.getItem("playlist"));
-        console.log("Fire")
-        updateHistory(playlist[currentVideoNumber]);
-    }
-}
+
 
 // Function to update watch history
 function updateHistory(currentVideoInfo) {
@@ -575,6 +565,16 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
     })
 }
 
+function onPlayerStateChange(event){
+    console.log(event.data)
+    // Fires if the video is playing
+    if (event.data == YT.PlayerState.PLAYING) {
+        //Do something
+        let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+        playlist = JSON.parse(localStorage.getItem("playlist"));
+        updateHistory(playlist[currentVideoNumber]);
+    }
+}
 
 // Runs on page load
 // Initializing variables
@@ -584,18 +584,24 @@ var player = null;
 
 // Runs as soon as the iframe api code has been downloaded
 function onYouTubeIframeAPIReady() {
-    player = new YT.Player('my-video', {
-        height: '390',
-        width: '640',
-        playerVars: {
-        'autoplay': 0
-        },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        },
-        enablejsapi: 1
-    });
+    setTimeout(()=>{
+        player = new YT.Player('my-video', {
+            height: '390',
+            width: '640',
+            playerVars: {
+            'autoplay': 0
+            },
+            events: {
+                'onStateChange': onPlayerStateChange,
+                'onReady': onPlayerReady,
+                'onError': function(){
+                    console.log("error");
+                }
+            },
+            enablejsapi: 1
+        });
+    }, 1000)
+    
 }
 
 // Fetch the analytics and store every 10s
