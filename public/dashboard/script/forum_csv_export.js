@@ -123,6 +123,66 @@ function csvExportLikesDislikes() {
     });
 }
 
+function csvExportComment() {
+    var data;
+    var csv_data;
+    const comment_arr = [];
+    firebase.database().ref('comments').once('value', x => {
+        x.forEach(snapshot => {
+            const comment_data = snapshot.val();
+            comment_data["comment_id"] = snapshot.key; 
+            comment_arr.push(comment_data);
+            data = comment_arr.map(comment => ({
+                post_id: comment.postID,
+                content: removeSpecialChar(JSON.stringify(comment.content)),
+                username: comment.username ? comment.username : "no username given", 
+                anonymous: JSON.stringify(comment.anonymous),
+                created: comment.created ? comment.created : "No created time given",
+                commenter_id: comment.commenterID ? comment.commenterID : "No commenter ID given",
+                like: comment.like ? comment.like : 0,
+            }));
+        });
+    }).then(() => {
+        csv_data = objectToCsv(data);
+    }).then(() => {
+        csvDownload(csv_data);
+    });
+}
+
+/*
+function csvExportlikesComments() {
+    var data;
+    var csv_data;
+    const likes_dislikes_arr = [];
+    firebase.database().ref('likesDislikes').once('value', x => {
+        x.forEach(snapshot => {
+            snapshot.forEach(y => {
+                const likes_dislikes_data = {};
+                likes_dislikes_data["post_id"] = snapshot.key;
+                likes_dislikes_data["username"] = y.key
+                action = y.val();
+                if (action["action"] == -1) {
+                    likes_dislikes_data["action"] = "Dislike";
+                } else {
+                    likes_dislikes_data["action"] = "Like";             
+                }
+                likes_dislikes_arr.push(likes_dislikes_data);
+                data = likes_dislikes_arr.map(likes_dislikes => ({
+                    post_id: likes_dislikes.post_id,
+                    username: likes_dislikes.username ? likes_dislikes.username : "No username",
+                    action: likes_dislikes.action
+                })); 
+            });
+        });
+    }).then(() => {
+        csv_data = objectToCsv(data);
+    }).then(() => {
+        csvDownload(csv_data);
+    });
+}
+*/
+
+//csvExportComment();
 //csvExportLikesDislikes();
 
 //csvExportPost();
