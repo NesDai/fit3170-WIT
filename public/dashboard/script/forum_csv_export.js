@@ -1,5 +1,5 @@
 
-function objectToCsv(data) {
+function convertObjectToCSV(data) {
 
     // get the headers 
     var headers = Object.keys(data[0]);
@@ -15,10 +15,10 @@ function objectToCsv(data) {
     return headers + body;
 }
 
-function csvDownload(csv_data) {
+function csvDownload(csv_data, filename) {
 
-    // output filename 
-    var filename = "forum user data" + '.' + "csv";
+    // adding the extension 
+    var filename = filename + ".csv";
 
     var blob = new Blob([csv_data], {type: 'text/csv;charset=utf-8'});
     const url = window.URL.createObjectURL(blob);
@@ -31,26 +31,6 @@ function csvDownload(csv_data) {
     document.body.removeChild(a);
 }
 
-function csvExportForum() { // later change the function name appropriately
-    const user_arr = [];
-    var data;
-    var csv_data;
-    firebase.database().ref('users').once("value", x => {
-        x.forEach(snapshot => {
-            user_arr.push(snapshot.val());
-            data = user_arr.map(user => ({
-                user_id: user.phone,
-                username: user.username, 
-                phone: user.phone
-            }));
-        });
-    }).then(() => {
-        csv_data = objectToCsv(data); 
-    }).then(() => {
-        csvDownload(csv_data);
-    });
-}
-
 function removeSpecialChar(str) {
     /* this function serves a purpose of preventing the csv format from 
     * being messy due to some special characters, such as comma and double quotation marks. 
@@ -60,6 +40,26 @@ function removeSpecialChar(str) {
         return '';
     }
     return str.replace(/[^a-zA-Z0-9 ]/g, '');
+}
+
+function csvExportForum() { // later change the function name appropriately
+    const user_arr = [];
+    var data;
+    var csv_data;
+    firebase.database().ref('users').once("value", x => {
+        x.forEach(snapshot => {
+            user_arr.push(snapshot.val());
+            data = user_arr.map(user => ({
+                user_id: user.phone,
+                username: user.username ? user.username : "No username given", 
+                phone: user.phone
+            }));
+        });
+    }).then(() => {
+        csv_data = convertObjectToCSV(data); 
+    }).then(() => {
+        csvDownload(csv_data, "forum_User_data");
+    });
 }
 
 function csvExportPost() {
@@ -86,9 +86,9 @@ function csvExportPost() {
             }));
         });
     }).then(() => {
-        csv_data = objectToCsv(data);
+        csv_data = convertObjectToCSV(data);
     }).then(() => {
-        csvDownload(csv_data);
+        csvDownload(csv_data, "forum_Post_data");
     });
 }
 
@@ -117,9 +117,9 @@ function csvExportLikesDislikes() {
             });
         });
     }).then(() => {
-        csv_data = objectToCsv(data);
+        csv_data = convertObjectToCSV(data);
     }).then(() => {
-        csvDownload(csv_data);
+        csvDownload(csv_data, "forum_LikesDislikes_data");
     });
 }
 
@@ -143,9 +143,9 @@ function csvExportComment() {
             }));
         });
     }).then(() => {
-        csv_data = objectToCsv(data);
+        csv_data = convertObjectToCSV(data);
     }).then(() => {
-        csvDownload(csv_data);
+        csvDownload(csv_data, "forum_Comment_data");
     });
 }
 
@@ -174,15 +174,16 @@ function csvExportLikesComments() {
             });
         });
     }).then(() => {
-        csv_data = objectToCsv(data);
+        csv_data = convertObjectToCSV(data);
     }).then(() => {
-        csvDownload(csv_data);
+        csvDownload(csv_data, "forum_LikesComments_data");
     });
 }
 
-//csvExportLikesComments();
-//csvExportComment();
-//csvExportLikesDislikes();
-
-//csvExportPost();
-//csvExportForum();
+function csvExportForumData() {
+    csvExportLikesComments();
+    csvExportComment();
+    csvExportLikesDislikes();
+    csvExportPost();
+    csvExportForum();
+}
