@@ -89,8 +89,41 @@ function csvExportPost() {
         csv_data = objectToCsv(data);
     }).then(() => {
         csvDownload(csv_data);
-    })
+    });
 }
 
-csvExportPost();
-csvExportForum();
+function csvExportLikesDislikes() {
+    var data;
+    var csv_data;
+    const likes_dislikes_arr = [];
+    firebase.database().ref('likesDislikes').once('value', x => {
+        x.forEach(snapshot => {
+            snapshot.forEach(y => {
+                const likes_dislikes_data = {};
+                likes_dislikes_data["post_id"] = snapshot.key;
+                likes_dislikes_data["username"] = y.key
+                action = y.val();
+                if (action["action"] == -1) {
+                    likes_dislikes_data["action"] = "Dislike";
+                } else {
+                    likes_dislikes_data["action"] = "Like";             
+                }
+                likes_dislikes_arr.push(likes_dislikes_data);
+                data = likes_dislikes_arr.map(likes_dislikes => ({
+                    post_id: likes_dislikes.post_id,
+                    username: likes_dislikes.username ? likes_dislikes.username : "No username",
+                    action: likes_dislikes.action
+                })); 
+            });
+        });
+    }).then(() => {
+        csv_data = objectToCsv(data);
+    }).then(() => {
+        csvDownload(csv_data);
+    });
+}
+
+//csvExportLikesDislikes();
+
+//csvExportPost();
+//csvExportForum();
