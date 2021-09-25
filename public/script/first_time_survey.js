@@ -790,9 +790,6 @@ function showMultipleChoice(questionObject) {
     };
 
 
-    input.onkeyup = () => {
-        let message = (input.value).trim();
-
         // reset possibleAnswersMCQ back to an empty array
         possibleAnswersMCQ = [];
 
@@ -808,27 +805,11 @@ function showMultipleChoice(questionObject) {
             possibleAnswersMCQ[i].push((i+1) + ". " + questionObject.restrictions.choices[i].toLowerCase());
         }
 
-        let found = false;
 
-        // for loop to check if message is in possibleAnswersMCQ
-        for (let i=0; i < possibleAnswersMCQ.length; i++){
-            // if message is found to be in possibleAnswers
-            if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
-                found = true;
-                break;
-            }
-        }
-
-        // set submit.onclick appropriately based on found
-        if (found) {
-            errorText.innerHTML = "";
-            submit.onclick = addMessage;
-        } else {
-            errorText.innerHTML = "";
-            // errorText.style.visibility = "visible";
-            // errorText.innerHTML = "Please enter a valid choice index.";
-            submit.onclick = null;
-        }
+    input.onkeyup = () => {
+      // set submit.onclick appropriately based on found
+      submit.disabled = false;
+      submit.onclick = checkChoiceInput;
     }
 
     enableTextInput();
@@ -837,6 +818,32 @@ function showMultipleChoice(questionObject) {
 
     showMessageSender(question);
     showOptions(choices, false);
+}
+
+function checkChoiceInput(){
+  let message = (input.value).trim();
+  let found = false;
+
+  // for loop to check if message is in possibleAnswersMCQ
+  for (let i=0; i < possibleAnswersMCQ.length; i++){
+      // if message is found to be in possibleAnswers
+      if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+          found = true;
+          break;
+      }
+  }
+
+  // set submit.onclick appropriately based on found
+  if (found) {
+      errorText.innerHTML = "";
+      addMessage();
+  } else {
+      errorText.innerHTML = "";
+      errorText.style.visibility = "visible";
+      errorText.innerHTML = "Please enter a valid choice index.";
+      submit.onclick = null;
+  }
+
 }
 
 /**
@@ -874,7 +881,7 @@ function showMultipleChoiceOthers(questionObject) {
     input.onkeyup = () => {
       // set submit.onclick appropriately based on found
       submit.disabled = false;
-      submit.onclick = checkChoiceInput;
+      submit.onclick = checkChoiceInputOthers;
     }
 
     // allow users to use textbox
@@ -887,7 +894,7 @@ function showMultipleChoiceOthers(questionObject) {
     showOptions(choices, true);
 }
 
-function checkChoiceInput(){
+function checkChoiceInputOthers(){
 
   let message = (input.value).trim();
   if (othersAnswers.includes(message.toLowerCase())){
