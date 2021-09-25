@@ -1,4 +1,6 @@
 
+// TODO: ADD COMMENTS TO ALL THE FUNCTIONS!
+
 function convertObjectToCSV(data) {
 
     // get the headers 
@@ -42,7 +44,7 @@ function removeSpecialChar(str) {
     return str.replace(/[^a-zA-Z0-9 ]/g, '');
 }
 
-function csvExportForum() { // later change the function name appropriately
+function csvExportUserForum() { // later change the function name appropriately
     const user_arr = [];
     var data;
     var csv_data;
@@ -62,7 +64,7 @@ function csvExportForum() { // later change the function name appropriately
     });
 }
 
-function csvExportPost() {
+function csvExportPostForum() {
     var data;
     var csv_data;
     const post_arr = [];
@@ -92,7 +94,7 @@ function csvExportPost() {
     });
 }
 
-function csvExportLikesDislikes() {
+function csvExportLikesDislikesForum() {
     var data;
     var csv_data;
     const likes_dislikes_arr = [];
@@ -123,7 +125,7 @@ function csvExportLikesDislikes() {
     });
 }
 
-function csvExportComment() {
+function csvExportCommentForum() {
     var data;
     var csv_data;
     const comment_arr = [];
@@ -149,7 +151,7 @@ function csvExportComment() {
     });
 }
 
-function csvExportLikesComments() {
+function csvExportLikesCommentsForum() {
     var data;
     var csv_data;
     const likes_comments_arr = [];
@@ -181,9 +183,9 @@ function csvExportLikesComments() {
 }
 
 function csvExportForumData() {
-    csvExportLikesComments();
-    csvExportComment();
-    csvExportLikesDislikes();
-    csvExportPost();
-    csvExportForum();
+    csvExportLikesCommentsForum();
+    csvExportCommentForum();
+    csvExportLikesDislikesForum();
+    csvExportPostForum();
+    csvExportUserForum();
 }
