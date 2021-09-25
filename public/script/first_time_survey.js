@@ -12,6 +12,7 @@ let skippedToEnd = null;
 let otherChosen = false;
 let MCQOptionIDs = [];
 let possibleAnswersMCQ = [];
+let othersAnswers = [];
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -590,7 +591,7 @@ function showQuestion(isSubQuestion) {
 
     // Get the ID of the current question
     let question_id = "";
-    
+
     // check if the current question is a sub-question
     if (isSubQuestion) {
         // get the firebase ID of the sub-question
@@ -843,13 +844,11 @@ function showMultipleChoice(questionObject) {
  * @param questionObject- an Object from firebase which contain the question, it's multiple choice answers and skip logic.
  */
 function showMultipleChoiceOthers(questionObject) {
-    input.onkeyup = () => {
-        let message = (input.value).trim();
 
         // reset possibleAnswersMCQ back to an empty array
         possibleAnswersMCQ = [];
         // initialise othersAnswers
-        let othersAnswers = [];
+        othersAnswers = [];
 
         // for loop to add possible answer string for each MCQ option
         for (let i=0; i < questionObject.restrictions.choices.length-1; i++) {
@@ -872,33 +871,10 @@ function showMultipleChoiceOthers(questionObject) {
         // MCQ option number + . + MCQ option word (with space after . only)
         othersAnswers.push(questionObject.restrictions.choices.length + ". " + questionObject.restrictions.choices[questionObject.restrictions.choices.length-1].toLowerCase());
 
-        // check if message is in othersAnswer
-        if (othersAnswers.includes(message.toLowerCase())){
-            errorText.innerHTML = "";
-            submit.onclick = othersOptionInput;
-        } else {
-            let found = false;
-
-            // for loop to check if message is in possibleAnswersMCQ
-            for (let i=0; i < possibleAnswersMCQ.length; i++){
-                // if message is found to be in possibleAnswers
-                if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
-                    found = true;
-                    break;
-                }
-            }
-
-            // set submit.onclick appropriately based on found
-            if (found) {
-                errorText.innerHTML = "";
-                submit.onclick = addMessage;
-            } else {
-                errorText.innerHTML = "";
-                // errorText.style.visibility = "visible";
-                // errorText.innerHTML = "Please enter a valid choice index.";
-                submit.onclick = null;
-            }
-        }
+    input.onkeyup = () => {
+      // set submit.onclick appropriately based on found
+      submit.disabled = false;
+      submit.onclick = checkChoiceInput;
     }
 
     // allow users to use textbox
@@ -911,6 +887,38 @@ function showMultipleChoiceOthers(questionObject) {
     showOptions(choices, true);
 }
 
+function checkChoiceInput(){
+
+  let message = (input.value).trim();
+  if (othersAnswers.includes(message.toLowerCase())){
+      errorText.innerHTML = "";
+      othersOptionInput();
+  } else {
+      let found = false;
+
+      // for loop to check if message is in possibleAnswersMCQ
+      for (let i=0; i < possibleAnswersMCQ.length; i++){
+          // if message is found to be in possibleAnswers
+          if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+              found = true;
+              break;
+          }
+      }
+
+      // set submit.onclick appropriately based on found
+      if (found) {
+          errorText.innerHTML = "";
+          addMessage();
+
+      } else {
+
+          errorText.innerHTML = "";
+          errorText.style.visibility = "visible";
+          errorText.innerHTML = "Please enter a valid choice index.";
+          submit.onclick = null;
+      }
+  }
+}
 
 /**
  * function that let the users enter their "others" option for MCQs in the textbox
