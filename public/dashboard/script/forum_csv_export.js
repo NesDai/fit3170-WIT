@@ -51,4 +51,44 @@ function csvExportForum() { // later change the function name appropriately
     });
 }
 
+function removeSpecialChar(str) {
+    if (str == null || str == '') {
+        return '';
+    }
+    return str.replace(/[^a-zA-Z0-9 ]/g, '');
+}
+
+function csvExportPost() {
+    // TODO: find a bug that causes other values of a key to go to different keys (maybe because of , ? or emoji or character length)
+    // TODO: maybe limit the char length?
+    var data;
+    var csv_data;
+    const post_arr = [];
+    firebase.database().ref('posts').once('value', x => {
+        x.forEach(snapshot => {
+            const post_data = snapshot.val();
+            post_data["post_id"] = snapshot.key; 
+            post_arr.push(post_data);
+            data = post_arr.map(post => ({
+                post_id: post.post_id,
+                title: removeSpecialChar(JSON.stringify(post.title)),
+                description: removeSpecialChar(JSON.stringify(post.description)),
+                username: post.username ? post.username : "No username",
+                created: post.created ? post.created : "No created time given",
+                interest_1: post.interest[0] ? post.interest[0] : "No interest given",
+                interest_2: post.interest[1] ? post.interest[1] : "No interest given",
+                likes: post.likes ? post.likes : 0,
+                dislikes: post.dislikes ? post.dislikes : 0,
+                videoURL: post.videoURL ? post.videoURL : "No video URL given",
+                // later add recommender key and value
+            }));
+        });
+    }).then(() => {
+        csv_data = objectToCsv(data);
+    }).then(() => {
+        csvDownload(csv_data);
+    })
+}
+
+csvExportPost();
 csvExportForum();
