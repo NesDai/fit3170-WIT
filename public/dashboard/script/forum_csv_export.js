@@ -52,6 +52,10 @@ function csvExportForum() { // later change the function name appropriately
 }
 
 function removeSpecialChar(str) {
+    /* this function serves a purpose of preventing the csv format from 
+    * being messy due to some special characters, such as comma and double quotation marks. 
+    */
+    
     if (str == null || str == '') {
         return '';
     }
@@ -59,8 +63,6 @@ function removeSpecialChar(str) {
 }
 
 function csvExportPost() {
-    // TODO: find a bug that causes other values of a key to go to different keys (maybe because of , ? or emoji or character length)
-    // TODO: maybe limit the char length?
     var data;
     var csv_data;
     const post_arr = [];
