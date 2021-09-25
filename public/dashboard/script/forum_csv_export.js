@@ -9,17 +9,18 @@ function objectToCsv(data) {
 }
 
 function csvExportForum() { // later change the function name appropriately
-    firebase.database().ref('users').once("value").then(snapshot => {
-      user_data = snapshot.val(); 
+    const user_arr = [];
+    var data;
+    firebase.database().ref('users').once("value", x => {
+        x.forEach(snapshot => {
+            user_arr.push(snapshot.val());
+            data = user_arr.map(user => ({
+                user_id: user.phone,
+                username: user.username, 
+                phone: user.phone
+            }));
+        });
+    }).then(() => {
+        const csvData = objectToCsv(data); 
     });
-    console.log(user_data);
-    console.log("outside");
-
-    const data = user_data.map(user => ({
-        user_id: a,
-        username: user.username, 
-        phone: user.phone,
-    }));
-
-    const csvData = objectToCsv(data);
 }
