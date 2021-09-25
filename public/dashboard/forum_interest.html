@@ -61,13 +61,14 @@
                         <div class ="row">
                             <!-- GRAPH BASED ON A POST -->
                             <div class="col-md-12 mb-4">
-                                <div class="card shadow"  style="height: 500px; margin:auto">
+                                <div class="card shadow">
                                     <div class="card-header">
                                         <h4 class="card-title">Total interactions with each interest:</h4>
                                     </div>
   
                                       <div class="card-body">
-                                          <canvas id="barChartjs" width="400" height="300"></canvas>
+                                            <canvas id="myInterestChart" height="100%"></canvas>
+                                          <!-- <canvas id="barChartjs" width="400" height="300"></canvas> -->
                                       </div><!-- <div class="card-body"> -->
                                     <br>
                                 </div> <!-- .card shadow-->
@@ -179,7 +180,25 @@
 
 
       </main>
+
+      <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+      <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+      <script src = "script/firebaseConfig.js"></script>
+      <!-- FIREBAS STUFF I GOT FROM YT-->
+      <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+      <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+      <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+      <script src="/__/firebase/init.js?useEmulator=true"></script>
+
+
       <script src="js/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+      <link rel="stylesheet" href=
+      "http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
+  
       <script src="js/popper.min.js"></script>
       <script src="js/moment.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
@@ -194,6 +213,8 @@
       <script src="js/datamaps-zoomto.js"></script>
       <script src="js/datamaps.custom.js"></script>
       <script src="js/Chart.min.js"></script>
+
+      <script src="script/forum_interest.js"></script>
       <script>
          /* defind global options */
          Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
@@ -206,6 +227,8 @@
       <script src="js/apps.js"></script>
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+      
+      
       <script>
          window.dataLayer = window.dataLayer || [];
          
@@ -220,11 +243,7 @@
          document.getElementById("search-butt").addEventListener("click", function(event){
                event.preventDefault();
            });
-         
-         localStorage.setItem("mode", "light")
-         modeSwitch();
-         
-         
+
       </script>
    </body>
    </body>
