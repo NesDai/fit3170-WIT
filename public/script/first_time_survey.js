@@ -789,7 +789,6 @@ function showMultipleChoice(questionObject) {
         hint: "select an option"
     };
 
-
         // reset possibleAnswersMCQ back to an empty array
         possibleAnswersMCQ = [];
 
@@ -805,11 +804,10 @@ function showMultipleChoice(questionObject) {
             possibleAnswersMCQ[i].push((i+1) + ". " + questionObject.restrictions.choices[i].toLowerCase());
         }
 
-
     input.onkeyup = () => {
       // set submit.onclick appropriately based on found
       submit.disabled = false;
-      submit.onclick = checkChoiceInput;
+      submit.onclick = checkMCQInput;
     }
 
     enableTextInput();
@@ -820,30 +818,34 @@ function showMultipleChoice(questionObject) {
     showOptions(choices, false);
 }
 
-function checkChoiceInput(){
-  let message = (input.value).trim();
-  let found = false;
+/**
+* Function to check the text input from user to answer an MCQ.
+*/
+function checkMCQInput(){
+    // get answer from textbox and remove spaces before the first non-space character and remove spaces after last non-space cahracters
+    let message = (input.value).trim();
+    // set found as false
+    let found = false;
 
-  // for loop to check if message is in possibleAnswersMCQ
-  for (let i=0; i < possibleAnswersMCQ.length; i++){
-      // if message is found to be in possibleAnswers
-      if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
-          found = true;
-          break;
-      }
-  }
+    // for loop to check if message is in possibleAnswersMCQ
+    for (let i=0; i < possibleAnswersMCQ.length; i++){
+        // if message is found to be in possibleAnswers
+        if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+            found = true;
+            break;
+          }
+    }
 
-  // set submit.onclick appropriately based on found
-  if (found) {
-      errorText.innerHTML = "";
-      addMessage();
-  } else {
-      errorText.innerHTML = "";
-      errorText.style.visibility = "visible";
-      errorText.innerHTML = "Please enter a valid choice index.";
-      submit.onclick = null;
-  }
-
+    // set submit.onclick appropriately based on found
+    if (found) {
+        errorText.innerHTML = "";
+        addMessage();
+    } else {
+        errorText.innerHTML = "";
+        errorText.style.visibility = "visible";
+        errorText.innerHTML = "Please enter a number from (1 to " + (currentQuestionObject.restrictions.choices.length) + ") or enter the option word(s)";
+        submit.onclick = null;
+    }
 }
 
 /**
@@ -881,7 +883,7 @@ function showMultipleChoiceOthers(questionObject) {
     input.onkeyup = () => {
       // set submit.onclick appropriately based on found
       submit.disabled = false;
-      submit.onclick = checkChoiceInputOthers;
+      submit.onclick = checkMCQInputOthers;
     }
 
     // allow users to use textbox
@@ -894,37 +896,44 @@ function showMultipleChoiceOthers(questionObject) {
     showOptions(choices, true);
 }
 
-function checkChoiceInputOthers(){
+/**
+ * function to check textbox input for MCQ with others option
+ * */
+function checkMCQInputOthers(){
+    // get answer from textbox and remove spaces before the first non-space character and remove spaces after last non-space cahracters
+    let message = (input.value).trim();
 
-  let message = (input.value).trim();
-  if (othersAnswers.includes(message.toLowerCase())){
-      errorText.innerHTML = "";
-      othersOptionInput();
-  } else {
-      let found = false;
+    // check if text input is for "others" option
+    if (othersAnswers.includes(message.toLowerCase())){
+        // remove last error message and call othersOptionInput()
+        errorText.innerHTML = "";
+        othersOptionInput();
+    } else {
+        // initialise found as false
+        let found = false;
 
-      // for loop to check if message is in possibleAnswersMCQ
-      for (let i=0; i < possibleAnswersMCQ.length; i++){
-          // if message is found to be in possibleAnswers
-          if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
-              found = true;
-              break;
-          }
-      }
+        // for loop to check if message is in possibleAnswersMCQ
+        for (let i=0; i < possibleAnswersMCQ.length; i++){
+            // if message is found to be in possibleAnswers
+            if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                found = true;
+                break;
+            }
+        }
 
-      // set submit.onclick appropriately based on found
-      if (found) {
-          errorText.innerHTML = "";
-          addMessage();
-
-      } else {
-
-          errorText.innerHTML = "";
-          errorText.style.visibility = "visible";
-          errorText.innerHTML = "Please enter a valid choice index.";
-          submit.onclick = null;
-      }
-  }
+        // set submit.onclick appropriately based on found
+        if (found) {
+            // remove last error message and call addMessage()
+            errorText.innerHTML = "";
+            addMessage();
+        } else {
+            // clear old error message and display a new one. Set the send button to null
+            errorText.innerHTML = "";
+            errorText.style.visibility = "visible";
+            errorText.innerHTML = "Please enter a number from (1 to " + (currentQuestionObject.restrictions.choices.length) + ") or enter the option word(s)";
+            submit.onclick = null;
+        }
+    }
 }
 
 /**
