@@ -131,7 +131,7 @@ function changeSubQuestion(index) {
     subquestions = [];
     subQuestionIds = questions[index].arrangement;
     for (let i = 0; i < subQuestionIds.length; i++) {
-        firebase.firestore().collection(QUESTIONS_BRANCH)
+        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
             .doc(subQuestionIds[i])
             .get()
             .then((document) => {
@@ -171,11 +171,11 @@ window.onload = function () {
     // On load, get the list of questions, then populate
     // questions list
     questions = [];
-    for (let i = 0; i < QUESTION_IDS.length; i++) {
-        let branch = QUESTIONS_BRANCH + QUESTION_IDS[i];
+    for (let i = 0; i < QUESTION_IDS_EN.length; i++) {
+        let branch = QUESTIONS_BRANCH + QUESTION_IDS_EN[i];
 
-        firebase.firestore().collection(QUESTIONS_BRANCH)
-            .doc(QUESTION_IDS[i])
+        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
+            .doc(QUESTION_IDS_EN[i])
             .get()
             .then((document) => {
                 questions.push(document.data());
