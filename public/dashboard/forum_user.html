@@ -85,12 +85,12 @@
                       
                         <!-- SEARCH -->
 
-                        <div id="userError"></div>
+                        <div id="userError" style="color:red;"></div>
                         
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search Username">
+                          <input id = "userSearchInput" type="text" class="form-control" placeholder="Search Username">
                           <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="seach-butt">Search</button>
+                            <button class="btn btn-primary" type="button" id="seach-butt" onclick="updateUserUI(document.getElementById('userSearchInput').value)"">Search</button>
                           </div>
                         </div>
                         
@@ -107,7 +107,7 @@
                       
                     </div>
                     <div class="card-body" id="totalUsersCard">
-                      <h1 id="totalUsers">30 (placeholder)</h1>
+                      <h1 id="totalUsers">No user found</h1>
                       <!-- <canvas id="lineChartjs" width="400" height="300"></canvas> -->
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
@@ -349,7 +349,23 @@
               
       </main> <!-- main -->
     </div> <!-- .wrapper -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+    <script src = "script/firebaseConfig.js"></script>
+    <!-- FIREBAS STUFF I GOT FROM YT-->
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+
     <script src="js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href=
+    "http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
+
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -369,13 +385,13 @@
       Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
       Chart.defaults.global.defaultFontColor = colors.mutedColor;
     </script>
+    <script src="script/forum_user.js"></script>
     <script src="js/gauge.min.js"></script>
     <script src="js/jquery.sparkline.min.js"></script>
     <script src="js/apexcharts.min.js"></script>
     <script src="js/apexcharts.custom.js"></script>
     <script src="js/apps.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
