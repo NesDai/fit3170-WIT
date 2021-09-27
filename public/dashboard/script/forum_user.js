@@ -1,14 +1,12 @@
-
 let users;
 let user_ids_arr;
+let current_user;
 
-let curren_user;
 window.onload = execute();
 
 async function execute(){
     await collectUsers().then(() => {
         updateUserUI(null);
-
 
         $('#userSearchInput').autocomplete({
             source : user_ids_arr,
@@ -30,40 +28,50 @@ async function collectUsers() {
 
 function updateUserUI(user_id) {
     
-        collectUsers().then(()=>{
+    collectUsers().then(() => {
             
-            if (users.length > 0) {
-                $('#totalUsers').html(`${users.length}`)
-            }
-    
-            if(user_id == null || user_id == undefined){
-                return;
-            }
-    
-            let user;
-        
-            for (let i = 0; i < users.length; i++){
-                if(user_ids_arr[i] == user_id){
-                    user = user_ids_arr[i] // if the user is found from the given user_id
-                    break; 
-                }
-            }
-            console.log(user);
-        
-            if (user == undefined) { // if the user is undefined
-                $("#userError").html("Invalid User Id");
-                return;
-            } else {
-                $("#userError").html("");
-            }
+        if (users.length > 0) {
+            $('#totalUsers').html(`${users.length}`)
+        }
 
-            current_user = user_id;
-            alert(current_user);
-            console.log(current_user);
-        });
+        if(user_id == null || user_id == undefined){
+            return;
+        }
+
+        let user;
     
+        for (let i = 0; i < users.length; i++){
+            if(user_ids_arr[i] == user_id){
+                user = user_ids_arr[i] // if the user is found from the given user_id
+                break; 
+            }
+        }
+    
+        if (user == undefined) { // if the user is undefined
+            $("#userError").html("Invalid User Id");
+            return; // exit from the function block
+        } else {
+            $("#userError").html("");
+        }
+
+        current_user = user_id;
+
+
+    });
 }
     
+// update posts on an interval (10 sec) to mimic realtime dashboard
+setInterval(
+    async function(){ 
+    collectUsers().then(()=>{
+        if (current_user == undefined || current_user == null) {
+            updateUserUI(null);
+        } else {
+            updateUserUI(current_user);
+        }
+    }); 
+}, 30000);
+
     
     
     
