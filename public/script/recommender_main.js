@@ -499,9 +499,6 @@ function updateHistory(currentVideoInfo) {
             currentHistory = snapshot.val();
             for (i in currentHistory) {
                 if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
-                    let updateCount = parseInt(currentHistory[i].totalWatchCount)
-                    updateCount += 1;
-                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({totalWatchCount: updateCount});
                     videoExist = true;
                 }
             }
@@ -509,10 +506,34 @@ function updateHistory(currentVideoInfo) {
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true) {
-            currentVideo.totalWatchCount = 1;
+            currentVideo.totalWatchCount = 0;
             currentHistory.push(currentVideo)
             updateFirebase(currentHistory, current_user, 'videoHistory');
         }
+    })
+}
+
+function updateWatchCount(currentVideoInfo){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+
+    // Retrieves the currently stored watch history
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+        let currentHistory = []
+
+        // If history is not empty and video already exists in history, set videoExist to true
+        if (snapshot.exists()) {
+            currentHistory = snapshot.val();
+            for (i in currentHistory) {
+                if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
+                    let updateCount = parseInt(currentHistory[i].totalWatchCount)
+                    updateCount += 1;
+                    console.log("Update count", updateCount)
+                    firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({totalWatchCount: updateCount});
+
+                }
+            }
+        }
+
     })
 }
 
@@ -572,6 +593,7 @@ function onPlayerStateChange(event){
         //Do something
         let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
         playlist = JSON.parse(localStorage.getItem("playlist"));
+        console.log("Fire")
         updateHistory(playlist[currentVideoNumber]);
     }
 }
@@ -605,8 +627,10 @@ function onYouTubeIframeAPIReady() {
 }
 
 // Fetch the analytics and store every 10s
-let pauseCounter = 0;
-let interval = setInterval(function(){
+let pauseCounter = 0; 
+let intervalTime = 10000;
+
+let interval = setInterval(function (){
     let currentDataLayerEntry = dataLayer[dataLayer.length-1]
 
     if(currentDataLayerEntry['event'] === 'gtm.video'){
@@ -620,18 +644,31 @@ let interval = setInterval(function(){
             videoStatus: currentDataLayerEntry['gtm.videoStatus'],
             videoVisible: currentDataLayerEntry['gtm.videoVisible']
         }
+
     
-        if(currentVideoAnalytics.videoStatus === 'pause' || currentVideoAnalytics.videoStatus === 'complete'){
+        if(currentVideoAnalytics.videoStatus === 'start'){
+            updateWatchCount(playlist[currentVideoNumber])
+               
+            pauseCounter = 0;
+            saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+        }
+        else if(currentVideoAnalytics.videoStatus === 'pause'){
             pauseCounter += 1;
             if(pauseCounter < 13) {
                 saveAnalytics(currentVideoAnalytics, currentGTMUrl);
             }
 
-            // if video is paused / not replayed for some time, stop saving to database
+            // if video is paused / not replayed for some time (2 mins), stop saving to database
+        }
+        else if(currentVideoAnalytics.videoStatus === 'complete'){
+            pauseCounter += 1;
+            if(pauseCounter < 13) {
+                saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+            }
         }
         else{
             pauseCounter = 0;
             saveAnalytics(currentVideoAnalytics, currentGTMUrl);
         }
     }
-}, 10000)
+}, intervalTime)
