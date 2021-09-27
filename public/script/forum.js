@@ -1324,7 +1324,12 @@ function searchYourPosts(param){
 
 
 
-// Likes for posts
+/**
+ * Allows to like a post, updating the firebase and UI accordingly
+ * @param {string} post_id the id of the post to be liked
+ * @param {number} i the index of the post on the page
+ * @returns Nothing. The function automatically updates the screen with liked post
+ */
 async function likePost(post_id, i) {
 
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
