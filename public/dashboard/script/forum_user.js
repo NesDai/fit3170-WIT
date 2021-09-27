@@ -9,6 +9,7 @@ async function execute(){
     await collectUsers().then(() => {
         updateUserUI(null);
 
+
         $('#userSearchInput').autocomplete({
             source : user_ids_arr,
         }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;')
