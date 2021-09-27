@@ -68,6 +68,83 @@ function updateUserUI(user_id) {
                         $("#username").html(user_info_intro);
                     }
                 });
+
+                //print the cards
+                let cards=
+                `<div class="container-fluid">
+                    <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow userInfoCard">
+                            <div class="card-header">
+                                Likes on Posts
+                            </div>
+                                <div class="card-body" id="likesOnPosts"> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow userInfoCard">
+                            <div class="card-header">
+                                Dislikes on Posts
+                            </div>
+                                <div class="card-body" id="dislikesOnPosts"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow userInfoCard">
+                            <div class="card-header">
+                                Comments & Replies
+                                </div>
+                                <div class="card-body" id="commentsReplies"></div>
+                            </div>
+                        </div>
+
+                        </div> <!-- .row-->
+                    </div> <!-- .col -->
+                    </div> <!-- .justify content -->       
+                </div> <!-- /.cont fluid -->
+
+
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow userInfoCard">
+                            <div class="card-header">
+                                Favourite Posts
+                            </div>
+                                <div class="card-body" id="favouritePosts"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow userInfoCard">
+                            <div class="card-header">
+                                Posts Created
+                            </div>
+                                <div class="card-body" id="postsCreated"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow userInfoCard">
+                            <div class="card-header">
+                                Likes on Comments
+                            </div>
+                                <div class="card-body" id="likesOnComments"></div>
+                            </div>
+                        </div>
+                        </div> <!-- /.row -->
+                    </div> <!-- /.col -->
+                    </div> <!-- /.justify content -->
+                </div> <!-- /.container fluid -->
+                `;
+                $("#card-body").html(cards);
+
+                
                 let loading_bar=`<div class="spinner-border text-primary" role="status">
                     <span class="sr-only">Loading...</span>
                     </div>`
