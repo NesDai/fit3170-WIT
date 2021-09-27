@@ -394,14 +394,13 @@ function showFavTable(){
             // localStorage.setItem("updateFavOnce", JSON.stringify(updateFavOnce));
           // }
           // 
-          updateFavList();
       }
-      
       // If favourite is empty, add message to show fav is empty
       else{
         console.log("Fav is currently empty.");
         showEmptyText(1);
       }
+      updateFavList();
   })
 }
 

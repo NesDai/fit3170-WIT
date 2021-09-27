@@ -37,9 +37,14 @@ function showHistoryTable(){
 
           // Table implementation
           var title;
+          let historyList = [];
+          let count = -1;
 
           for (i in currentHistory){
+            count += 1;
             currentVideo = currentHistory[i];
+            historyList.push(currentVideo.videoUrl);
+            localStorage.setItem("historyList", JSON.stringify(historyList));
 
             $(document).ready(function() {
 
@@ -80,13 +85,16 @@ function showHistoryTable(){
               cardActionButton_1 = document.createElement("a");
               cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
               cardActionButton_1.innerHTML = "VIEW";
+              cardActionButton_1.id = count;
               cardAction.appendChild(cardActionButton_1);
 
               cardActionButton_1.addEventListener('click', function(){
-                var row = this.parentElement.parentElement;
-                var url = row.getElementsByTagName("div")[1].innerHTML;
-                console.log(url);
-                window.open(url, '_blank').focus();
+                // var row = this.parentElement.parentElement;
+                // var url = row.getElementsByTagName("div")[1].innerHTML;
+                // console.log(url);
+                // window.open(url, '_blank').focus();
+                shiftPlaylist(this.id);
+                window.location.replace("recommender_Ui.html");
               }, false);
 
               cardActionButton_2 = document.createElement("a");
@@ -120,6 +128,7 @@ function showHistoryTable(){
       else{
         console.log("History is currently empty.")
       }
+      updateHistoryList();
   })
 }
 
@@ -163,3 +172,81 @@ function updateFirebase(video_list, current_user, child_name){
         }
     })
 }
+
+function compareUrl(url, urlList){
+  // check if first arg is in the second arg list
+  // return index in urlList if found else -1
+  console.log(url)
+  for (let i = 0; i < urlList.length; i++){
+    if (url == urlList[i]){
+      return i;
+    } 
+  }
+  return -1;
+}
+
+function getVideoId(videoURL){
+  var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+  videoId = videoURL.match(rx);
+  
+  return videoId[1];
+}
+
+function updateHistoryList(){
+  // Convert urls from firebase history list and convert them into standard object 
+  // to use in recomemder main page for redirected videos
+  // from history page to reco main page filling in infomation from post
+  firebase.database().ref("posts").once('value').then((snapshot) => {
+    let urlList = JSON.parse(localStorage.getItem("historyList"));
+    if (snapshot.exists()) {
+      let lst = [];
+      // localStorage.setItem("temp", JSON.stringify(lst));    
+      // lst = JSON.parse(localStorage.getItem("temp"));
+      let check = null;
+        snapshot.forEach(function(childSnap){
+            let value = childSnap.val();
+            check = compareUrl(value.videoURL, urlList);
+            console.log(check);
+            if (check >= 0){
+                let videoObj = {
+                    title: value.title,
+                    videoUrl: value.videoURL,
+                    videoThumbnail: value.videoThumbnail,
+                    videoId: getVideoId(value.videoURL),
+                    postId: value.id,
+                    interest: value.interest[0]
+                }
+                lst.push(videoObj);
+            }
+        })
+      lst.reverse();
+      localStorage.setItem("temp", JSON.stringify(lst));
+    }
+    else {
+        console.log("No data available");
+    }
+  })
+}
+
+function shiftPlaylist (id){
+  // add the video from history to show history video, 
+  // and when redirected the next will still recommend from current playlist 
+  // while the back still shows last video played.
+  let playlist = JSON.parse(localStorage.getItem("playlist"));
+  let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+  let temp = JSON.parse(localStorage.getItem("temp"));
+  
+  let tempLst = [];
+  let atVideo = currentVideoNumber;
+  for (let i = 0; i < playlist.length; i++){
+    tempLst.push(playlist[i]);
+    if (i == atVideo) {
+      tempLst.push(temp[id]);
+      currentVideoNumber+=1;
+    }
+  }
+  localStorage.setItem("playlist", JSON.stringify(tempLst));
+  localStorage.setItem("currentVideoNumber", JSON.stringify(currentVideoNumber)); 
+}
+
