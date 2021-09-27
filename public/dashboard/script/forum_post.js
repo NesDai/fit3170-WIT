@@ -41,7 +41,7 @@ async function collectPosts(){
     numOfPostsRecommender=0;
     numOfPostsUsers=0;
 
-     await firebase.database().ref('posts')
+    await firebase.database().ref('posts')
     .once('value', x => {
         x.forEach(data => {
             posts.push(data.val()); //pus  h the data to the list
@@ -68,10 +68,6 @@ function updateUI(postId){
 
         $("#postsByUsers").html(`<h3>${numOfPostsUsers}</h3>`);
         $("#postsByRecommender").html(`<h3>${numOfPostsRecommender}</h3>`);
-
-    
-
-
     if(postId==null || postId == undefined){
         return // exit
     }
