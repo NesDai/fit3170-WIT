@@ -56,7 +56,22 @@ function updateUserUI(user_id) {
 
         current_user = user_id;
 
-
+        firebase.database().ref('users').orderByChild('phone').equalTo(current_user).once('value', x => {
+            x.forEach(snapshot => {
+                current_username = snapshot.val().username;
+                if (current_username !== undefined && current_username !== null) {
+                    let user_info_intro = "information about @" + current_username + ", " + current_user;
+                    $("#username").html(user_info_intro);
+                }
+            });
+        }).then(() => {
+            //TODO: retrieve the number of likes and dislikes 
+            //TODO: retrieve the number of posts created by the user
+            //TODO: retrieve the number of posts favorited by the user
+            //TODO: retrieve the number of likes on comments
+            //TODO: retroeve the number of replies and comments
+            console.log(current_username);
+        });
     });
 }
     
