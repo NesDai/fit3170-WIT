@@ -14,20 +14,33 @@ let currentPost;  // holds the current post id or undefined
 window.onload = execute();
 
 async function execute(){
-    // onload function
-    collectPosts().then(()=>{
-        
-        updateUI(null);
-        // autocomplete(document.getElementById("searchInput"), postid);
+    var post_id = localStorage.getItem("POST_ID");
+    if (post_id != null){
+      // onload function
+      collectPosts().then(()=>{
+
+          updateUI(post_id);
 
 
-        $('#searchInput').autocomplete({
+        })
+    } else if(post_id == null){
+      // onload function
+      collectPosts().then(()=>{
 
-            source : postid,              
-        }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+          updateUI(null);
+          // autocomplete(document.getElementById("searchInput"), postid);
 
 
-})
+          $('#searchInput').autocomplete({
+
+              source : postid,
+          }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+
+
+  })
+    }
+      localStorage.setItem("POST_ID", null);
+
 }
 
 /**
@@ -51,8 +64,8 @@ async function collectPosts(){
             else
                 numOfPostsUsers++;
         })
-    
-            
+
+
     });
 }
 
@@ -62,21 +75,21 @@ async function collectPosts(){
  */
 function updateUI(postId){
 
-    
-    
+
+
     collectPosts().then(()=>{
 
         $("#postsByUsers").html(`<h3>${numOfPostsUsers}</h3>`);
         $("#postsByRecommender").html(`<h3>${numOfPostsRecommender}</h3>`);
 
-    
+
 
 
     if(postId==null || postId == undefined){
         return // exit
     }
 
-   
+
 
 
     let post;
@@ -114,7 +127,7 @@ function updateUI(postId){
         creator = "Recommender";
     }
 
-    
+
     if(post.interest.length == 2){
         interests = post.interest[0] + ", " + post.interest[1]
     }
@@ -168,7 +181,7 @@ function updateUI(postId){
     $("#chart").html(`<canvas id="myChart"></canvas>`);
 
     var xValues = ["Likes", "Dislikes", "Comments & Replies", "User's Favourited"];
-    
+
 
     // get y values
     let likes=0;
@@ -182,7 +195,7 @@ function updateUI(postId){
     // get favourites
     if(post.users_favourite != undefined)
         favourited = post.users_favourite.length
-    
+
     //get comments
     firebase.database().ref('comments')
     .orderByChild('postID')
@@ -201,7 +214,7 @@ function updateUI(postId){
                             x.forEach(data => {
                                 comments++;
                             });
-            
+
                         })
 
 
@@ -236,16 +249,11 @@ function updateUI(postId){
 
 // update posts on an interval (10 sec) to mimic realtime dashboard
 setInterval(
-    async function(){ 
+    async function(){
     collectPosts().then(()=>{
         //call function to update all the ui fields
         updateUI(currentPost);
-    }); 
+    });
 
-    
+
 }, 30000);
-
-
-
-
-
