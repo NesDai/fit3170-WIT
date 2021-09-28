@@ -77,7 +77,7 @@ function saveResponse(answer) {
                 answer: answer,
                 timestamp: timestamp
             };
-            let responsesBranch = `chatbot/survey_responses/${currentQuestionId}`;
+            let responsesBranch = `chatbot/survey_responses/${responseObject.question_id}`;
 
             firebase.firestore().collection(responsesBranch)
                 .doc(docRef.id)
