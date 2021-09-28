@@ -223,7 +223,6 @@ function updateHistoryList(){
                 lst[check] = videoObj;
             }
         })
-      alert(JSON.stringify(lst));
       localStorage.setItem("temp", JSON.stringify(lst));
     }
     else {
@@ -233,7 +232,7 @@ function updateHistoryList(){
 }
 
 function shiftPlaylist (id){
-  alert(id)
+  // alert(id)
   // add the video from history to show history video, 
   // and when redirected the next will still recommend from current playlist 
   // while the back still shows last video played.

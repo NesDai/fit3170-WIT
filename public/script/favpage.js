@@ -98,7 +98,7 @@ function fav_del_db(id){
   firebase.database().ref('users').child(`${current_user.phone}/videoFavourite/`).once("value", function(snapshot){
     let currentFav = []
 
-    console.log(snapshot.val())
+    // console.log(snapshot.val())
     if (snapshot.exists()){
       myFavList[id] = myFavList[myFavList.length-1];
       myFavList.pop()
@@ -215,7 +215,7 @@ function filter() {
 function compareUrl(url, urlList){
   // check if first arg is in the second arg list
   // return index in urlList if found else -1
-  console.log(url)
+  // console.log(url)
   for (let i = 0; i < urlList.length; i++){
     if (url == urlList[i]){
       return i;
@@ -250,7 +250,6 @@ function updateFavList(){
         snapshot.forEach(function(childSnap){
             let value = childSnap.val();
             check = compareUrl(value.videoURL, urlList);
-            console.log(check);
             if (check >= 0){
                 let videoObj = {
                     title: value.title,
