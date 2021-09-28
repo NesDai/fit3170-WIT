@@ -23,23 +23,23 @@ let confirmButtonTexts = ["确认", "mengesahkan", "ยืนยัน"];
 let select_language = localStorage.getItem("LANGUAGE");
 
 // change page elements according to selected language
-if (select_language == "Chineses (Simplified)") {
-    titleRef.innerHTML = titles[0];
+if (select_language == "Chinese (Simplified)") {
+    //titleRef.innerHTML = titles[0];
     checkbox_textRef.innerHTML = checkbox_texts[0];
     tick_warningRef.innerHTML = tick_warnings[0];
-    backButtonRef.innerHTML = backButtonTexts[0];
+    //backButtonRef.innerHTML = backButtonTexts[0];
     confirmButtonRef.innerHTML = confirmButtonTexts[0];
 } else if (select_language == "Malay") {
-    titleRef.innerHTML = titles[1];
+    //titleRef.innerHTML = titles[1];
     checkbox_textRef.innerHTML = checkbox_texts[1];
     tick_warningRef.innerHTML = tick_warnings[1];
-    backButtonRef.innerHTML = backButtonTexts[1];
+    //backButtonRef.innerHTML = backButtonTexts[1];
     confirmButtonRef.innerHTML = confirmButtonTexts[1];
 } else if (select_language == "Thai") {
-    titleRef.innerHTML = titles[2];
+    //titleRef.innerHTML = titles[2];
     checkbox_textRef.innerHTML = checkbox_texts[2];
     tick_warningRef.innerHTML = tick_warnings[2];
-    backButtonRef.innerHTML = backButtonTexts[2];
+    //backButtonRef.innerHTML = backButtonTexts[2];
     confirmButtonRef.innerHTML = confirmButtonTexts[2];
 }
 
@@ -60,7 +60,7 @@ function checkAccepted(){
 
 // checking if all translations for terms and conditions are on the firebase. If not , upload them.
 // initialise string array of language branches
-let languageBranch = ["TermsOfUse_en", "TermsOfUse_zn_CN", "TermsOfUse_ms"]; // TODO awaiting thailand translations to create an uploader for it
+let languageBranch = ["TermsOfUse_en", "TermsOfUse_zn_CN", "TermsOfUse_ms", "TermsOfUse_th"];
 let updatePage = false;
 
 // for-loop to check if all of the supported language translations are on the firebase
@@ -85,7 +85,7 @@ for (let i  = 0; i < languageBranch.length; i++) {
                 updatePage = true;
             } else if (i == 3) {
                 // upload the thai translation onto the firebase and update the page
-                // Thailand uploader function goes here
+                uploadTermsOfUse_th();
                 updatePageContent(select_language, languageBranch);
                 updatePage = true;
             }
@@ -144,8 +144,8 @@ function updatePageContent(selected_language, languageBranch) {
         }).catch((error) => { // print error in getting the terms of use from firestore
             console.log("Error getting document:", error);
         });
-    } else if (select_language == "Thai") { //TODO this is defaulted to english until the thai question uploader is made
-        let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[0]);
+    } else if (select_language == "Thai") {
+        let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[3]);
         TermsOfUseRef.get().then((doc) => {
             if (doc.exists) {
                 content =  doc.data();

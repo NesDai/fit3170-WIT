@@ -1,42 +1,34 @@
 let tableArea = document.getElementById('favtable');
+// let updateFavOnce = false;
+// localStorage.setItem("updateFavOnce", JSON.stringify(updateFavOnce));
 let favCount = 0;
 let current_user = JSON.parse(localStorage.getItem("USER"));
-let emptyTxt = "<br><br><br>There are no videos saved in favorites right now";
-let listInterest = ["Email Management and Setup","Search Engine Use","Smartphone/Tablet Use","Social Media Use","Online Collaboration","Effective Communication","Negotiation","Listening","Relationship Management","Persuasion","Cooking","Art","Caregiving","Exercise","Professional Writing","Collaboration and Teamwork","Leadership","Entrepreneurship","Personal Selling","Critical Thinking"];
-
-// let listInterest = ["Art","Baking","Smartphone/Tablet Use","Interest4","Interest5","Interest6","Interest7","Interest8","A very very very long interest with spaces in between","Looooooooooooooooooooooooooooooooooonnnnnnnggggggggggggggggggg","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8","Art","Baking","Interest3","Interest4","Interest5","Interest6","Interest7","Interest8"]
+// let listInterest = ["Art","Caregiving","Collaboration and Teamwork","Cooking","Critical Thinking","Effective Communication","Email Management and Setup","Entrepreneurship","Exercise","Leadership","Listening","Negotiation","Online Collaboration","Personal Selling","Persuasion","Professional Writing","Relationship Management","Search Engine Use","Smartphone/Tablet Use","Social Media Use"]
+let listInterest = ["Active listening","Art","Caregiving","Collaboration and teamwork","Cooking","Critical thinking","Effective communication","Email","Entrepreneurship","Exercise","Negotiation skill","Online collaboration","People and Leadership","Personal selling","Persuasion","Professional writing","Relationship management","Search for information","SmartphoneTabletComputerUse","Social media use"];
 phoneNum = current_user['phone'];
 let myFavList = [];
 let sortGenerated = false;
 
 let mylst = [];
-displayFav();
 
-// function addFavIdCount(){
-//   let count = parseInt(getFavIdCount());
-//   count += 1
-//   firebase.database().ref('users/'+phoneNum+'/favCount').set(count);
-// }
+// Generate grid and display all of user favourited videos.
+showFavTable();
 
-// function getFavIdCount(){
-//   firebase.database().ref('users/'+phoneNum+'/favCount').on('value', (snapshot) => {
-//     // console.log("get: " + snapshot.val())
-//     if (snapshot.val() != null){ 
-//       document.getElementById("favIdCount").innerHTML = snapshot.val();
-//     }
-//     else{
-//       firebase.database().ref('users/'+phoneNum+'/favCount').set(0);
-//     }
-//   })
-//   return document.getElementById("favIdCount").innerHTML
-// }
-// output += `<p onclick="addFavIdCount()">a</p>`+`<p onclick="getFavIdCount()">b</p>`
+function showEmptyText(visible){
+  // show text when input is 1 and dont show when input is not 1
+  let toggleTxt = document.getElementById("noVideoFavDisplay");
+  if (visible == 1){
+    toggleTxt.style.display = "block";
+  }
+  else{
+    toggleTxt.style.display = "none";
+  }
+}
 
 function displayFav(){
   // Read from firebase realtime database and display fav in html
     
   firebase.database().ref('users/'+phoneNum+'/videoFavourite').on('value', (snapshot) => {
-    // console.log(snapshot.val())
     if (snapshot.val() == null){
       let showEmpty = document.getElementById("favEmptyText");
       showEmpty.innerHTML = "";
@@ -44,21 +36,6 @@ function displayFav(){
     }
     else{
       let favList = snapshot.val();
-      // console.log(Object.keys(favList).length)
-      // console.log(favList[0]);
-      // console.log(favList[1]);
-      // console.log(favList[2]);
-      // console.log(favList.length);
-      // console.log("len: " + favList.length);
-      // console.log("favList: " + favList[favList.length-1]);
-      // console.log("favList: " + favList[favList.length-1]["videoTitle"]);
-      
-      // console.log(favList);
-      // console.log(favList[0]);
-      // console.log(favList[0]['videoPreference']);
-      // console.log(favList[0]['videoThumbnail']);
-      // console.log(favList[0]['videoTitle']);
-      // console.log(favList[0]['videoUrl']);
       output = "";
       let count = 0;
       myFavList = []
@@ -70,7 +47,7 @@ function displayFav(){
           output += `<div class="favCardThumbnail" onclick="watch_vid(${i})"><img src=`+ favList[i]['videoThumbnail'] +` style="width:auto;height:100%; position: relative; background-color: #fff;"></div>`
           output += `<div class="favCardTopBtn">`
           output += `<button class="favDeleteBtn" onclick="fav_delete(${i})">
-                      <img src="./css/images/delete_icon.png" style="background:transparent; height: 80%;"/>
+                      <img src="./css/images/trash_icon.jpeg" style="background:transparent; height: 80%;"/>
                     </button></div>`
           output += `<div class="favCardInterest" onclick="watch_vid(${i})">`+favList[i]['videoPreference']+`</div>`
           output += `<div class="favCardTitle" onclick="watch_vid(${i})">`+favList[i]['videoTitle']+`</div>`
@@ -85,10 +62,19 @@ function displayFav(){
     }
   })
 }
+function deleteAllFav(){
+  let a = false;
+  a = confirm("Remove all from favourite?");
+  if (a == true) {
+    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).remove();
+    showFavTable();
+    location.reload();
+    showEmptyText(1);
+  }
+}
 
 function fav_delete(id){
-  // Delete a favCard element in HTML
-  // alert("You deleted me :C" + id)
+  // Delete a favCard element by favCard id in HTML
 
   let a = false;
   a = confirm("Remove from favourite?");
@@ -96,31 +82,33 @@ function fav_delete(id){
     let card = document.getElementById("favCard"+id);
     card.parentNode.removeChild(card);
     favCount -= 1;
-    fav_del_db(id);
-    
+    // display no videos
     if (favCount == 0){
-      let showEmpty = document.getElementById("favEmptyText");
-      showEmpty.innerHTML = emptyTxt;
-    } 
+      // let showEmpty = document.getElementById("favEmptyText");
+      // showEmpty.innerHTML = emptyTxt;
+      showEmptyText(1);
+    }
+    // remove from firebase
+    fav_del_db(id); 
   }
 }
 
 function fav_del_db(id){
+  // delete the selected favCard using its id, to delete video from firebase realtime database
   firebase.database().ref('users').child(`${current_user.phone}/videoFavourite/`).once("value", function(snapshot){
     let currentFav = []
 
-    console.log(snapshot.val())
+    // console.log(snapshot.val())
     if (snapshot.exists()){
-      myFavList[id] = myFavList[myFavList.length-1]
+      myFavList[id] = myFavList[myFavList.length-1];
       myFavList.pop()
       currentFav = snapshot.val();
-      currentFav[id] = currentFav[currentFav.length-1]
-      currentFav.pop()
-      // console.log("After: " + currentFav)
-      // Delete favourite data in firebase realtime database
+      currentFav[id] = currentFav[currentFav.length-1];
+      currentFav.pop();
       firebase.database().ref('users/'+phoneNum+'/videoFavourite/').set(currentFav);
-      // firebase.database().ref('users/'+phoneNum+'/videoFavourite/'+currentFav.length-1).remove();
-      filter()
+
+      // update fav video view
+      filter();
     }
   })
 }
@@ -151,6 +139,7 @@ function hide_vid(){
 }
 
 function show_sort(){
+  // Show and hide sorting area for HTML
   let sortArea = document.getElementById("sortingArea");
   let myBtn = document.getElementById("favSortBtn");
 
@@ -160,12 +149,14 @@ function show_sort(){
   }
   else{
     sortArea.style.display = "none";
-    myBtn.innerHTML = "Sort by interest"
-    filter()
+    myBtn.innerHTML = "Sort by interest";
+    filter();
   }
-  // alert(myFavList)
+
+  // generate sort checkboxes for all skill
   if (sortGenerated == false){
     sortGenerated = true;
+    sortArea.innerHTML+=`<br><br>`;
     for (let i = 0; i<listInterest.length; i++){
       sortArea.innerHTML+=`<div class="sortInterestBox"><input type="checkbox" name="interest" style="margin-left: 15px;margin-top: 10px;" value="`+listInterest[i]+`"><label class="labelSort">`+listInterest[i]+"&nbsp"+`</label></div>`
     }
@@ -184,20 +175,22 @@ function inList(value, list){
   }
   for (let i = 0; i<list.length; i++){
     if (value == list[i]){
-      console.log(true)
+      console.log(true);
       return true;
     }
   }
   console.log(false)
   return false;
 }
+
 function filter() {
+  // Refresh display of favCard, only shows the checked interest, by default show all.
   let checkboxes = document.getElementsByName("interest");
   console.log(checkboxes);
   let values = [];
   for (let i = 0; i < checkboxes.length; i++){  
     if(checkboxes[i].checked){
-      values.push(checkboxes[i].value)
+      values.push(checkboxes[i].value);
     } 
   }
   console.log(values, myFavList, favCount);
@@ -209,11 +202,229 @@ function filter() {
     // console.log(myFavList[j] in values);
     // console.log(!(myFavList[j] in values));
     cards = document.getElementById(`favCard${j}`);
-    cards.style.display = "block"
+    cards.style.display = "block";
+
     // If not in values hide favCard
     if (inList(myFavList[j], values) == false){
       cards = document.getElementById(`favCard${j}`);
-      cards.style.display = "none"
+      cards.style.display = "none";
     }
   }
 }
+
+function compareUrl(url, urlList){
+  // check if first arg is in the second arg list
+  // return index in urlList if found else -1
+  // console.log(url)
+  for (let i = 0; i < urlList.length; i++){
+    if (url == urlList[i]){
+      return i;
+    } 
+  }
+  return -1;
+}
+
+function getVideoId(videoURL){
+    var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+
+    videoId = videoURL.match(rx);
+    
+    return videoId[1];
+}
+
+
+function updateFavList(){
+  // Convert urls from firebase favourite list and convert them into standard object to use in recomemder main page for redirected videos
+  // from favourite page to reco main page filling in infomation from post
+  firebase.database().ref("posts").once('value').then((snapshot) => {
+    let urlList = JSON.parse(localStorage.getItem("favList"));
+    if (snapshot.exists()) {
+      let favList = [];
+      let lst = [];
+      for (let i = 0; i<urlList.length; i++){
+        lst.push(null);
+      }
+      // localStorage.setItem("temp", JSON.stringify(favList));    
+      // let lst = JSON.parse(localStorage.getItem("temp"));
+      let check = null;
+        snapshot.forEach(function(childSnap){
+            let value = childSnap.val();
+            check = compareUrl(value.videoURL, urlList);
+            if (check >= 0){
+                let videoObj = {
+                    title: value.title,
+                    videoUrl: value.videoURL,
+                    videoThumbnail: value.videoThumbnail,
+                    videoId: getVideoId(value.videoURL),
+                    postId: value.id,
+                    interest: value.interest[0]
+                }
+                lst[check] = videoObj;
+            }
+        })
+      localStorage.setItem("temp", JSON.stringify(lst));
+    }
+    else {
+        console.log("No data available");
+    }
+  })
+}
+
+function showFavTable(){
+  // Generate grid and display all of user favourited videos.
+  console.log("Show fav grid ran.");
+  let current_user = JSON.parse(localStorage.getItem("USER"));
+  grid = document.getElementById('favGrid');
+
+  // Retrieves the currently stored watch history
+  firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function(snapshot){
+      let currentHistory = [];
+
+      // If fav is not empty and video already exists in fav, set videoExist to true
+      if (snapshot.exists()){
+          showEmptyText(0);
+          currentHistory = snapshot.val();
+          console.log(currentHistory);
+
+          let favList = [];
+
+          // Table implementation
+          var title;
+          let count = -1;
+          myFavList = [];
+
+          for (i in currentHistory){
+            favCount += 1;
+            count += 1;
+            myFavList.push(currentHistory[i].videoPreference);
+
+            currentVideo = currentHistory[i];
+
+            favList.push(currentVideo.videoUrl);
+            localStorage.setItem("favList", JSON.stringify(favList));
+
+            $(document).ready(function() {
+
+              console.log("second success callback");
+              title = currentVideo.videoTitle;
+              let skill = currentVideo.videoPreference;
+              let card_url = currentVideo.videoUrl;
+
+              // Grid implementation
+
+              cell = document.createElement("div");
+              cell.className = "mdl-cell mdl-cell--6-col";
+              cell.id = "favCard" + count;
+
+              card = document.createElement("div");
+              card.className = "demo-card-wide mdl-card mdl-shadow--2dp";
+              card.style.height = "400px";
+              card.style.width = "auto";
+
+              cardTitle = document.createElement("div");
+              cardTitle.className = "mdl-card__title";
+              cardTitle.style.background = "url(" + currentVideo.videoThumbnail + ") center / cover";
+              cardTitle.style.height = "300px";
+              console.log(currentVideo.videoThumbnail);
+
+              card.appendChild(cardTitle);
+
+              cardSupport_1 = document.createElement("div");
+              cardSupport_1.className = "mdl-card__supporting-text";
+              cardSupport_1.innerHTML = currentVideo.videoUrl;
+              cardSupport_1.style.display = "none";
+              cardSupport_1.style.height = "1px";
+              card.appendChild(cardSupport_1);
+
+              cardSupport_2 = document.createElement("div");
+              cardSupport_2.className = "mdl-card__supporting-text";
+              cardSupport_2.innerHTML = `<b>`+skill+`<b><br>`;
+              cardSupport_2.innerHTML += title;
+              card.appendChild(cardSupport_2);
+
+              cardAction = document.createElement("div");
+              cardAction.className = "mdl-card__actions mdl-card--border";
+              cardActionButton_1 = document.createElement("a");
+              cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
+              cardActionButton_1.innerHTML = "VIEW";
+              cardActionButton_1.id = count; 
+              cardAction.appendChild(cardActionButton_1);
+
+              cardActionButton_1.addEventListener('click', function(){
+                let flag = false;
+                // let playlist = JSON.parse(localStorage.getItem("playlist"));
+                // let currentVideoNumber = JSON.parse(localStorage.getItem("playlist"));
+
+                // let playlist = JSON.parse(localStorage.getItem("playlist"));
+                // for (let i = 0; i < playlist.length; i++){
+                  // if (card_url === playlist[i].videoUrl){
+                    // alert("in playlist");
+                    // flag = true;
+                    // break;
+                  // }
+                // }
+                // if (flag == false){
+                  // alert("not in playlist")
+                // }
+                shiftPlaylist(this.id);
+                window.location.replace("recommender_Ui.html");
+              }, false);
+
+              cardActionButton_2 = document.createElement("a");
+              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
+              cardActionButton_2.innerHTML = "DELETE";
+              cardActionButton_2.id = i;
+              cardAction.appendChild(cardActionButton_2);
+
+              cardActionButton_2.addEventListener('click', function(){
+                fav_delete(this.id);
+                console.log("Deleted an entry.");                                                                        
+              }, false);
+
+              card.appendChild(cardAction);
+
+              cell.appendChild(card);
+              grid.appendChild(cell);
+            })
+          }
+          // updateFavOnce = JSON.parse(localStorage.getItem("updateFavOnce"));
+          // if (updateFavOnce == true) {
+          // }
+          // else{
+            // updateFavList();
+            // updateFavOnce = true;
+            // localStorage.setItem("updateFavOnce", JSON.stringify(updateFavOnce));
+          // }
+          // 
+      }
+      // If favourite is empty, add message to show fav is empty
+      else{
+        console.log("Fav is currently empty.");
+        showEmptyText(1);
+      }
+      updateFavList();
+  })
+}
+
+function shiftPlaylist (id){
+  // add the video from fav to show favourite video, 
+  // and when redirected the next will still recommend from current playlist 
+  // while the back still shows last video played.
+  let playlist = JSON.parse(localStorage.getItem("playlist"));
+  let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+  let temp = JSON.parse(localStorage.getItem("temp"));
+  
+  let tempLst = [];
+  let atVideo = currentVideoNumber;
+  for (let i = 0; i < playlist.length; i++){
+    tempLst.push(playlist[i]);
+    if (i == atVideo) {
+      tempLst.push(temp[id]);
+      currentVideoNumber+=1;
+    }
+  }
+  localStorage.setItem("playlist", JSON.stringify(tempLst));
+  localStorage.setItem("currentVideoNumber", JSON.stringify(currentVideoNumber));
+  
+}
+

@@ -6,6 +6,7 @@ window.onload = execute()
 function execute(){
     // check which tab is ticked
 
+        
     printUserPosts();
     // printAllPosts();
 
@@ -60,10 +61,9 @@ function makeNewPost() {
         });
 
         if (!interest_arr.length){
-            alert("The post needs to have at least one interest")
+            dialog_int.showModal();
             return
         }
-        console.log(interest_arr);
 
         // error handling if it is empty??
         let title = document.getElementById("post_title").value
@@ -77,11 +77,17 @@ function makeNewPost() {
         if (video_url !== "") {
             embedding_video_url = checkEmbeddingVideo(video_url);
             if (embedding_video_url == 0) {
-                alert("Error in embedding the video. Please try again with a correct url from Youtube.");
+                dialog_vid.showModal();
                 return;
             }
 
         }
+
+        let now = new Date();
+        let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+        utc = utc.toString();
+        utc = utc.substring(0,25);
+        utc+="(UTC TIME)";
 
         let newData = {
             id: key,
@@ -91,7 +97,7 @@ function makeNewPost() {
             userID: current_user["phone"],
             username: current_user["username"],
             videoURL: embedding_video_url,
-            created: new Date().toString(), 
+            created: utc, 
             likes:0,
             dislikes:0,
             recommender: false
@@ -164,6 +170,9 @@ function findAllPosts() {
 
 
 function printAllPosts(){
+
+    $("#radio-0").attr("disabled",true);
+    $("#radio-1").attr("disabled",true);
     
     $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
@@ -212,8 +221,14 @@ function printAllPosts(){
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
             // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
-        });
-    });
+        }).then(()=>{
+
+            // Reenable the other tabs
+        $("#radio-0").attr("disabled",false);
+        $("#radio-1").attr("disabled",false);
+    
+    })
+    })
 
 
 }
@@ -224,6 +239,11 @@ function printAllPosts(){
  * @returns null
  */
 function printThread(){
+    // thread is radio button index 0. Disable other tabs
+    $("#radio-1").attr("disabled",true);
+    $("#radio-2").attr("disabled",true);
+
+    console.log(document.getElementById(`radio-1`), document.getElementById(`radio-2`))
 
     document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
@@ -267,20 +287,20 @@ function printThread(){
                 posts.push(data.val());
         }
             });
-        
-
         }).then(()=>{
 
             printStartIndex = posts.length - 1;
-            printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+            printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
+        }).then(()=>{
 
+            // Reenable the other tabs
+    $("#radio-1").attr("disabled",false);
+    $("#radio-2").attr("disabled",false);
 
-            
-        });
+    });
     });
 
    
-
 }
 
 /**
@@ -306,7 +326,7 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         // add a print more button
 
         if(startIndex-numberOfPosts>=0){ // only if more posts to load
-            $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect' style='color:white; background-color:#006dae'
+            $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised' style='color:white; background-color:#006dae'
             >Load More</button>`);
 
          let moreBut = document.getElementById("moreBut");
@@ -319,7 +339,6 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
 
     
 }
-
 
 
 
@@ -357,23 +376,23 @@ function print_create_post()
         <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label> </span>
         <div class="box">
           <label class="checkbox-inline" id="interest1" >
-          <input type="checkbox" name="interests" value="Browser_Search" /> Browser Search
+          <input type="checkbox" name="interests" value="Browser search" /> Browser Search
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Device_Use" /> Device Use
+          <input type="checkbox" name="interests" value="Device use" /> Device Use
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="E-mail" /> E-mail
+          <input type="checkbox" name="interests" value="Email" /> E-mail
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Online_Collaboration" /> Online Collaboration
+          <input type="checkbox" name="interests" value="Online collaboration" /> Online Collaboration
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline" >
-          <input type="checkbox" name="interests" value="Social_Media_Use" /> Social Media Use
+          <input type="checkbox" name="interests" value="Social media use" /> Social Media Use
           </label>
         </div>
         <br>
@@ -384,23 +403,23 @@ function print_create_post()
 
         <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Active_Listening" /> Active Listening
+          <input type="checkbox" name="interests" value="Active listening" /> Active Listening
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Effective_Communication" /> Effective Communication
+          <input type="checkbox" name="interests" value="Effective communication" /> Effective Communication
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Negotiation_Skill" /> Negotiation Skill
+          <input type="checkbox" name="interests" value="Negotiation skill" /> Negotiation Skill
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Persuation" /> Persuation
+          <input type="checkbox" name="interests" value="Persuasion" /> Persuasion
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Relationship_Management" /> Relationship Management
+          <input type="checkbox" name="interests" value="Relationship management" /> Relationship Management
           </label>
         </div>
         <br>
@@ -424,11 +443,11 @@ function print_create_post()
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Excercises" /> Exercises
+          <input type="checkbox" name="interests" value="Exercise" /> Exercise
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Professional_Writing" /> Professional Writing
+          <input type="checkbox" name="interests" value="Professional writing" /> Professional Writing
           </label>
         </div>
         <br>
@@ -439,11 +458,11 @@ function print_create_post()
         </span>
         <div class="box"> 
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Collaboration_and_Teamwork" /> Collaboration and Teamwork
+          <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Critical_Thinking" /> Critical Thinking
+          <input type="checkbox" name="interests" value="Critical thinking" /> Critical Thinking
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
@@ -451,11 +470,11 @@ function print_create_post()
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="People_and_Leadership" /> People and Leadership
+          <input type="checkbox" name="interests" value="People and Leadership" /> People and Leadership
           </label>
           <br class="mobile-br">
           <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Personal_Selling" /> Personal Selling
+          <input type="checkbox" name="interests" value="Personal selling" /> Personal Selling
           </label>
         </div>
         <br>
@@ -468,18 +487,66 @@ function print_create_post()
                  var cnt = $("input[name='interests']:checked").length;
                  if (cnt > maxAllowed) {
                      $(this).prop("checked", "");
-                     alert('You can select maximum ' + maxAllowed + ' interests!!');
+                     dialog_int.showModal();
                  }
              });
           });
        </script>
        <br>
        <!-- POST BUTTON -->
-       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="post_btn"
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="post_btn"
           style="background-color:#006DAE; border: white;" onclick="makeNewPost()">
        POST
        </button>
     </div>
+
+    <!-- Alert UI -->
+    <dialog class="mdl-dialog mdl-dialog-int">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
+    
+    <!-- Alert for wrong video link UI-->
+    <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Alert control-->
+    <script>
+        var dialog_int = document.querySelector('.mdl-dialog-int');
+        if (! dialog_int.showModal) {
+            dialogPolyfill.registerDialog(dialog_int);
+        }
+        dialog_int.querySelector('.close_btn').addEventListener('click', function() {
+            dialog_int.close();
+        });
+
+        var dialog_vid=document.querySelector('.mdl-dialog-vid')
+        if (! dialog_vid.showModal) {
+            dialogPolyfill.registerDialog(dialog_vid);
+        }
+        dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
+            dialog_vid.close();
+        });
+
+    </script>
  </div>`
     );
     
@@ -489,10 +556,10 @@ function print_create_post()
 function printPost(post, button_num, i )
 {
     let button = `
-    <button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  onclick="likePost('${post.id}', ${i});" value="${post.likes}" >
+    <button class="like mdl-button mdl-js-button" value="${post.likes}" id="btn_like${i}">
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike${i}">
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
@@ -500,10 +567,10 @@ function printPost(post, button_num, i )
     {
          // liked
          button = `<button
-         class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"  style="color: white !important; background-color:#2bbd7e !important;" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         class="like mdl-button mdl-js-button "  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}" id="btn_like${i}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}" >
+         <button class="dislike mdl-button mdl-js-button" value="${post.dislikes}" id="btn_dislike${i}">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
@@ -511,14 +578,13 @@ function printPost(post, button_num, i )
     else if(button_num==-1)
     {
          // disliked
-         button = `<button class="like mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="likePost('${post.id}', ${i});"  value="${post.likes}">
+         button = `<button class="like mdl-button mdl-js-button"  value="${post.likes}" id="btn_like${i}">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect "  style="background-color:#e53935; color: white;" onclick="dislikePost('${post.id}', ${i});"  value="${post.dislikes}">
+         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;" value="${post.dislikes}" id="btn_dislike${i}">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
-
 
     let atchar = "@";
     if(post.username == undefined)
@@ -549,7 +615,7 @@ function printPost(post, button_num, i )
                      `
                                   +
                                   `
-                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+                                  ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe loading="lazy" allow="fullscreen" width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
                                   `
                                   +
                                   `
@@ -576,17 +642,102 @@ function printPost(post, button_num, i )
                      <br>
                     <div id="button_div${i}">
                      ${button}
-                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
+                    <button class="more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp"  id="more_btn" onclick="postDetail('${post.id}');">
                     <img src="./css/images/more_icon.png" id="more_icon"></img><span> More</span>
                     </button>
                     </div>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-                    <script type="text/javascript">
+
+
+                    <!-- Alert UI -->
+                    <dialog class="mdl-dialog mdl-dialog-like">
+                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+                        <hr style="margin: 0;">
+                        <div class="mdl-dialog__content">
+                            <h8>
+                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
+                            </h8>
+                            <br>
+                            <br>
+                            <div class="mdl-dialog__actions">
+                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+                            </div>
+                        </div>
+                    </dialog>
+
+                    <!-- Like dislike double click -->
+                    <script>
+                    //checks for double click on like button
+                    $("#btn_like"+${i}).on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
+                            
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            dialog_like.showModal();
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                
+                                $('#action').val('Was single clicked');
+                                likePost('${post.id}', ${i});
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
+
+                    //checks for double click on dislike button
+                    $("#btn_dislike"+${i}).on('click',function(){
+                        var $button=$(this);
+                        if ($button.data('alreadyclicked')){
+                            $button.data('alreadyclicked', false); // reset
+                            
+                            
+                            if ($button.data('alreadyclickedTimeout')){
+                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }
+                            
+                            // do what needs to happen on double click. 
+                            dialog_like.showModal();
+
+                        }else{
+                            $button.data('alreadyclicked', true);
+                            
+                            var alreadyclickedTimeout=setTimeout(function(){
+                                $button.data('alreadyclicked', false); // reset when it happens
+                                
+                                $('#action').val('Was single clicked');
+                                dislikePost('${post.id}', ${i});
+                            },300); // <-- dblclick tolerance here
+                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                        }
+                        return false;
+                    });
                     </script>
+
+                    <!-- Alert control-->
+                    <script>
+                        var dialog_like = document.querySelector('.mdl-dialog-like');
+                        if (! dialog_like.showModal) {
+                            dialogPolyfill.registerDialog(dialog_like);
+                        }
+                        dialog_like.querySelector('.close_btn').addEventListener('click', function() {
+                            dialog_like.close();
+                        });
+                    </script>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                    <script type="text/javascript"></script>
                   <br>
             </span>
      </div>`
-
     );
 
 }
@@ -596,7 +747,7 @@ function printPost(post, button_num, i )
  * @param {*} current_user_posts a list of user's personal posts
  * @param {*} button_nums an indicator for like and dislike button
  */
-function printUserFavouritePosts(current_user_posts, buttons_index){
+async function printUserFavouritePosts(current_user_posts, buttons_index){
     let post_arr = [];
     let fav_post_arr =[];
     let users_arr = [];
@@ -670,11 +821,24 @@ function printUserFavouritePosts(current_user_posts, buttons_index){
                                     printPost(post_arr[i], button_nums[i], buttons_index)
                                     buttons_index++;
                                 }
+
+                                const promise = new Promise((resolve, reject) => {
+
+                                    resolve(1);
+                                 });
                     })
         })
+
+
 }
 
 function printUserPosts(){
+
+    //disable other tabs
+    $("#radio-0").attr("disabled",true);
+    $("#radio-2").attr("disabled",true);
+
+  
 
     $('#resNum').html(``);   
 
@@ -696,6 +860,7 @@ function printUserPosts(){
 
         })
     }).then(()=>{
+
         firebase.database().ref('posts')
             .orderByChild('username')
                 .equalTo(current_user['username'])
@@ -721,11 +886,16 @@ function printUserPosts(){
                             printPost(posts[i], button_nums[i], i )
                         }
                     }).then(() => {
-                        printUserFavouritePosts(posts,button_nums.length);
-                    })
-                });
+                        printUserFavouritePosts(posts,button_nums.length).then(()=>{
 
-                     
+                                                     // Reenable the other tabs
+                        $("#radio-0").attr("disabled",false);
+                        $("#radio-2").attr("disabled",false);
+
+                        })
+                    });
+                });
+                                
    
 }
        

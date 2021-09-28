@@ -1,6 +1,3 @@
-let branch = "";
-let languageIndex = -1;
-
 // Initialising variables
 let selected = null;
 let viewingSubQuestions = false;
@@ -53,7 +50,6 @@ function addQuestionsList() {
                                 </li>';
     }
     questionsList.innerHTML = questionsListString;
-    appendBackButton();
 }
 
 /**
@@ -73,9 +69,9 @@ function changeQuestion(index) {
 
     let header = "";
     if (!viewingSubQuestions) {
-        header = "<h3>Question " + questions[index].question_number + " Responses</h3>";
+        header = "<h3>Question " + questions[index].question_number + " Responses</h3>"
     } else {
-        header = "<h3>Question " + subquestions[index].question_number + " Responses</h3>";
+        header = "<h3>Question " + subquestions[index].question_number + " Responses</h3>"
     }
 
     let list = null;
@@ -94,12 +90,11 @@ function changeQuestion(index) {
     else {
         list = responsesList;
     }
-
-    responsesList.innerHTML = header;
+    list.innerHTML = header;
 
     let responses_branch = "";
     if (!viewingSubQuestions) {
-        responses_branch = `chatbot/survey_responses/${QUESTION_IDS[languageIndex][index]}`
+        responses_branch = `chatbot/survey_responses/${QUESTION_IDS[index]}`
     } else {
         responses_branch = `chatbot/survey_responses/${subQuestionIds[index]}`
     }
@@ -136,7 +131,7 @@ function changeSubQuestion(index) {
     subquestions = [];
     subQuestionIds = questions[index].arrangement;
     for (let i = 0; i < subQuestionIds.length; i++) {
-        firebase.firestore().collection(QUESTIONS_BRANCHES[languageIndex])
+        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
             .doc(subQuestionIds[i])
             .get()
             .then((document) => {
@@ -172,24 +167,15 @@ function changeSubQuestion(index) {
     }
 }
 
-displayLanguageMenu();
-
-function loadQuestions(languageSelection) {
-    // After language selection, get the list of questions, then populate
+window.onload = function () {
+    // On load, get the list of questions, then populate
     // questions list
-
-    languageIndex = languageSelection.value;
-    branch = QUESTIONS_BRANCHES[languageIndex];
-
     questions = [];
+    for (let i = 0; i < QUESTION_IDS_EN.length; i++) {
+        let branch = QUESTIONS_BRANCH + QUESTION_IDS_EN[i];
 
-    questionsList.innerHTML = "";
-    document.getElementById("left-pane-label").innerText =
-        "Loading...";
-
-    for (let i = 0; i < QUESTION_IDS[languageIndex].length; i++) {
-        firebase.firestore().collection(branch)
-            .doc(QUESTION_IDS[languageIndex][i])
+        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
+            .doc(QUESTION_IDS_EN[i])
             .get()
             .then((document) => {
                 questions.push(document.data());
@@ -197,16 +183,12 @@ function loadQuestions(languageSelection) {
             .then(() => {
                 // After the last question is fetched, populate the HTML
                 // question elements
-                if (i === QUESTION_IDS[languageIndex].length - 1) {
+                if (i === QUESTION_IDS.length - 1) {
                     addQuestionsList();
                 }
-
-                // and clear the left/right pane labels
-                document.getElementById("left-pane-label").innerText = "";
-                responsesList.innerHTML = "<h3>Select a question</h3>";
             })
     }
-}
+};
 
 // Checks everytime the window is resized to prevent two response tabs
 $(window).resize(function () {

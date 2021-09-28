@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NF4CK22'); //GTM-NF4CK22 is the container ID
+    //console.log(dataLayer)
+    </script>
+    <!-- End Google Tag Manager -->
+    
     <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -14,7 +24,7 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Web Application Manifest -->
-    <link rel="manifest" href="manifest.json">
+    <!--<link rel="manifest" href="manifest.json">-->
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -129,22 +139,10 @@
        </nav>
       </div>
   <body>
-    <!-- <div class="row" id=option_buttons>
-      <div class="col-9">
-        <a class="mdl-navigation__link" href="fav_page_Ui.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="fav_button"><img src="./css/images/fav_icon.png" style="height:80%"> Favourite</button>
-        </a>
-        <a class="mdl-navigation__link" href="recommender_history_Ui.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="history_button"><img src="./css/images/history_icon.png" style="height:80%"> History</button>
-        </a>
-        <a class="mdl-navigation__link" href="recommender_select_skills.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="edit_button"><img src="./css/images/create_post_icon.png" style="height:80%; width: 15%"> Edit skill selection</button>
-        </a>
-        <a class="mdl-navigation__link" href="main_page.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="go_back_button">Go back</button>
-        </a>
-      </div>
-    </div> -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NF4CK22"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <main class="mdl-layout__content mdl-color--grey-100">
       <div class="row" id=option_buttons>
@@ -160,6 +158,9 @@
           </a>
           <a class="mdl-navigation__link" href="main_page.html">
             <button class="mdl-button mdl-js-button mdl-button--raised" id="go_back_button">Go back</button>
+          </a>
+          <a class="mdl-navigation__link" href="recommender_Admin_Dashboard.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised" id="admin_dash_button">Admin Dash</button>
           </a>
         </div>
       </div>
@@ -274,12 +275,10 @@
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js?useEmulator=true"></script>
     <script src="/__/firebase/8.3.3/firebase-firestore.js"></script>
-    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
-    <script src="./script/Youtube.min.js"></script>
-    <script src="./script/recommender_page_controller.js"></script>
-    <script src="./script/share_video.js"></script>
-    <script src="./script/speaker.js"></script>
-    <script src="./script/translation.js"></script>
+    <script src="script/share_video.js"></script>
+    <script src="script/speaker.js"></script>
+    <script src="script/recommender_main.js"></script>
+    <script src="script/translation.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     </body>
 </html>
