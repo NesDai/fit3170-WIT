@@ -9,3 +9,12 @@
     width:85%;
 }
 
+#more_btn {
+  border-radius: 10px;
+  margin: 0 0 0 20px;
+  color: white;
+  background-color: #006DAE;
+  position: relative;
+  width: 150px;
+  
+}

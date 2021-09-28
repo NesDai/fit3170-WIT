@@ -1,6 +1,6 @@
 // fixed list of 20 main interests
 const interest_list = [ ["Email", 0] , ["Online collaboration",0], ["Browser search",0], ["Device use",0], ["Social media use",0],
-["Active listening",0], ["Effective communication",0], ["Negotiation skill",0], ["Persuasion",0], ["Relationship management",0], 
+["Active listening",0], ["Effective communication",0], ["Negotiation skill",0], ["Persuasion",0], ["Relationship management",0],
 ["Art",0], ["Caregiving",0], ["Cooking",0], ["Exercise",0], ["Professional writing",0], ["Collaboration and teamwork",0], ["Critical thinking",0],
 ["Entrepreneurship",0], ["People and Leadership",0], ["Personal selling",0]];
 
@@ -8,14 +8,18 @@ const interest_list = [ ["Email", 0] , ["Online collaboration",0], ["Browser sea
 let posts;
 let likes_arr;
 let dislikes_arr;
+let  choosen_interest= document.getElementById("interest");
+choosen_interest.addEventListener('change', display_posts); //runs the function when there is a change made to the value choosen from the drop list
 
 window.onload = execute();
+display_posts(); //runs it when the page is first loaded
 
 async function execute() {
 
     collectPosts().then(() => {
-        
+
         updateChart();
+        display_posts();
     })
 }
 
@@ -55,7 +59,7 @@ function updateChart() {
     for (let i = 0; i < interest_list.length; i++){
         xValues.push(interest_list[i][0]);
         yValues.push(interest_list[i][1]);
-        
+
         // set the value for both likes and dislikes arr per interest to be 0 initially
         likes_arr.push(0);
         dislikes_arr.push(0);
@@ -155,5 +159,42 @@ function getLikesAndDislikes(post){
             }
         }
     })
-    
+
+}
+
+/*
+* Function that displays the posts based on the selected option
+*/
+function display_posts(){
+
+  let  choosen_interest= document.getElementById("interest").value;
+  let displayed_posts = [];
+
+  //getting the rows based on the interest choosen
+  for (let i = 0; i < posts.length; i++){
+    let post = posts[i];
+    let post_interest = post.interest;
+
+    for (let i = 0; i < post_interest.length; i++) {
+        if (choosen_interest == post_interest[i]){
+          displayed_posts.push(post);
+        }
+      }
+  }
+
+  //outputing the rows of posts
+  let display_table = document.getElementById("posts-rows");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>No. of likes</th><th>No. of dislikes</th><th>Post link</th></thead><tbody>";
+  for (let i = 0; i < displayed_posts.length; i++){
+    let post = displayed_posts[i];
+    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>" + post.likes + "</td><td>" + post.dislikes + "</td><td>";
+    output_rows += "<div id='button_div${i}'> <button class='more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp'  id='more_btn' > View More </button> </div>";
+    output_rows += "</td></tr>";
+
+  }
+
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
+
+
 }
