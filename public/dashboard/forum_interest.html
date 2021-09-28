@@ -56,7 +56,7 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        
+
                         <!-- ROW 1 -->
                         <div class ="row">
                             <!-- GRAPH BASED ON A POST -->
@@ -65,7 +65,7 @@
                                     <div class="card-header">
                                         <h4 class="card-title">Total interactions with each interest:</h4>
                                     </div>
-  
+
                                       <div class="card-body">
                                             <canvas id="myInterestChart" height="100%"></canvas>
                                           <!-- <canvas id="barChartjs" width="400" height="300"></canvas> -->
@@ -79,99 +79,70 @@
                         <!-- ROW 2 -->
                         <div class="container-fluid">
                             <div class="row justify-content-center">
-                                
+
                                 <div class="card shadow" id="historyCard">
                                     <div class="card-header">
-                                        <h4 class="card-title">History of posts that include *chosen interest*:</h4>
+                                        <h4 class="card-title">History of posts:</h4>
                                     </div>
 
                                     <div class="card-body">
-                                        
+                                          <h4 class="card-title">interest:</h4>
                                         <div class="row justify-content-center">
                                             <div class="col-10" >
                                                 <div class="row" >
                                                     <form class="pure-form pure-form-stacked"  style="width: 30%">
-                                                        <select id="stacked-state">
-                                                        <option value="1">Browser search</option>
-                                                        <option value="2">Device use</option>
-                                                        <option value="3">E-mail</option>
-                                                        <option value="4">Online collaboration</option>
-                                                        <option value="5">Social media use</option>
-                                                        <option value="6">Active listening</option>
-                                                        <option value="7">Effective Communication</option>
-                                                        <option value="8">Negotiation Skill</option>
-                                                        <option value="9">Persuation</option>
-                                                        <option value="10">Relationship Management</option>
-                                                        <option value="11">Art</option>
-                                                        <option value="12">Caregiving</option>
-                                                        <option value="13">Cooking</option>
-                                                        <option value="14">Exercises</option>
-                                                        <option value="15">Professional Writing</option>
-                                                        <option value="16">Collaboration and Teamwork</option>
-                                                        <option value="17">Critical Thinking</option>
-                                                        <option value="18">Entrepreneurship</option>
-                                                        <option value="19">People and Leadership</option>
-                                                        <option value="20">Personal Selling</option>
+                                                        <select id="interest">
+                                                        <option value="Browser search">Browser search</option>
+                                                        <option value="Device use">Device use</option>
+                                                        <option value="Email">E-mail</option>
+                                                        <option value="Online collaboration">Online collaboration</option>
+                                                        <option value="Social media use">Social media use</option>
+                                                        <option value="Active listening">Active listening</option>
+                                                        <option value="Effective communication">Effective Communication</option>
+                                                        <option value="Negotiation skill">Negotiation Skill</option>
+                                                        <option value="Persuation">Persuation</option>
+                                                        <option value="Relationship management">Relationship Management</option>
+                                                        <option value="Art">Art</option>
+                                                        <option value="Caregiving">Caregiving</option>
+                                                        <option value="Cooking">Cooking</option>
+                                                        <option value="Exercise">Exercise</option>
+                                                        <option value="Professional writing">Professional Writing</option>
+                                                        <option value="Collaboration and teamwork">Collaboration and Teamwork</option>
+                                                        <option value="Critical thinking">Critical Thinking</option>
+                                                        <option value="Entrepreneurship">Entrepreneurship</option>
+                                                        <option value="People and Leadership">People and Leadership</option>
+                                                        <option value="Personal selling">Personal Selling</option>
                                                         </select>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        
+
                                         <div class="col-12">
-                                            <div class="row " >
-                                                <table class="pure-table" id="historyTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Post Id</th>
-                                                            <th>Post Title</th>
-                                                            <th>No of likes</th>
-                                                            <th>No of dislikes</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Lalalslals</td>
-                                                            <td>Accord</td>
-                                                            <td>2009</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Toyota</td>
-                                                            <td>Camry</td>
-                                                            <td>2012</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Hyundai</td>
-                                                            <td>Elantra</td>
-                                                            <td>2010</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <div class="row " id="posts-rows">
+
                                             </div>
                                         </div>
-                                    
+
 
 
                                     </div>
-                                </div>   
+                                </div>
                             </div><!-- <div class="card-body"> -->
                         </div>  <!-- <div class="card shadow" id="historyCard"> -->
                     </div> <!-- <div class="col-12"> -->
                 </div><!-- <div class="row justify-content-center"> -->
-             </div> <!-- <div class="container-fluid"> --> 
-                       
-                                        
-                                       
-                                            
-                                        
+             </div> <!-- <div class="container-fluid"> -->
 
 
-                                       
-                                                
+
+
+
+
+
+
+
 
 
 
@@ -198,7 +169,7 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
       <link rel="stylesheet" href=
       "http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
-  
+
       <script src="js/popper.min.js"></script>
       <script src="js/moment.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
@@ -227,11 +198,11 @@
       <script src="js/apps.js"></script>
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-      
-      
+
+
       <script>
          window.dataLayer = window.dataLayer || [];
-         
+
          function gtag()
          {
            dataLayer.push(arguments);
@@ -239,7 +210,7 @@
          gtag('js', new Date());
          gtag('config', 'UA-56159088-1');
       </script>
-     
+
    </body>
    </body>
 </html>
