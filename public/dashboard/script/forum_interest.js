@@ -8,14 +8,15 @@ const interest_list = [ ["Email", 0] , ["Online collaboration",0], ["Browser sea
 let posts;
 let likes_arr;
 let dislikes_arr;
+let copy_interest_list = interest_list;
 
 window.onload = execute();
 
 async function execute() {
 
-    collectPosts().then(() => {
+    collectPosts(interest_list).then(() => {
         
-        updateChart();
+        updateChart(interest_list);
     })
 }
 
@@ -23,7 +24,7 @@ async function execute() {
  * This function purposes to collect all the post from the database
  * and also to obtain data of the number of post posted per interest.
  */
-async function collectPosts(){
+async function collectPosts(int_list){
 
     // variables
     posts = [];
@@ -32,7 +33,7 @@ async function collectPosts(){
     .once('value', x => {
         x.forEach(data => {
             posts.push(data.val());
-            checkInterest(data.val().interest);
+            checkInterest(int_list, data.val().interest);
         })
     })
 
@@ -43,7 +44,7 @@ async function collectPosts(){
  * information about the number of likes, dislikes and post posted for each
  * interest.
  */
-function updateChart() {
+function updateChart(int_list) {
 
     // variable
     let xValues = [];
@@ -52,9 +53,9 @@ function updateChart() {
     dislikes_arr = [];
 
     // to get number of post posted for each interest for x-axis and y-axis values
-    for (let i = 0; i < interest_list.length; i++){
-        xValues.push(interest_list[i][0]);
-        yValues.push(interest_list[i][1]);
+    for (let i = 0; i < int_list.length; i++){
+        xValues.push(int_list[i][0]);
+        yValues.push(int_list[i][1]);
         
         // set the value for both likes and dislikes arr per interest to be 0 initially
         likes_arr.push(0);
@@ -63,7 +64,7 @@ function updateChart() {
 
     // to get number of likes and dislikes for each interest
     for (let i = 0; i < posts.length; i++){
-        getLikesAndDislikes(posts[i]);
+        getLikesAndDislikes(int_list, posts[i]);
     }
 
     var ChartOptions = {
@@ -125,13 +126,13 @@ function updateChart() {
  * This function purposes to get the number of post posted per interest
  * @param {*} found_interests the interest(s) found in a post
  */
-function checkInterest(found_interests){
+function checkInterest(int_list, found_interests){
     found_interests.forEach(interest => {
-        for (let i = 0; i < interest_list.length; i++) {
+        for (let i = 0; i < int_list.length; i++) {
 
-            if (interest == interest_list[i][0]) {
-                let current_num = interest_list[i][1];
-                interest_list[i][1] = current_num + 1;
+            if (interest == int_list[i][0]) {
+                let current_num = int_list[i][1];
+                int_list[i][1] = current_num + 1;
             }
         }
     })
@@ -142,12 +143,12 @@ function checkInterest(found_interests){
  * based on all current post available in the forum.
  * @param {*} post a singular post in a forum
  */
-function getLikesAndDislikes(post){
+function getLikesAndDislikes(int_list, post){
 
     let post_interest = post.interest;
     post_interest.forEach(interest => {
-        for (let i = 0; i < interest_list.length; i++) {
-            if (interest == interest_list[i][0]){
+        for (let i = 0; i < int_list.length; i++) {
+            if (interest == int_list[i][0]){
                 let curr_likes = likes_arr[i];
                 let curr_dislikes = dislikes_arr[i];
                 likes_arr[i] = curr_likes + post.likes;
@@ -157,3 +158,20 @@ function getLikesAndDislikes(post){
     })
     
 }
+
+
+// update posts on an interval (10 sec) to mimic realtime dashboard
+setInterval(
+    async function(){ 
+    let copy_interest_list = [ ["Email", 0] , ["Online collaboration",0], ["Browser search",0], ["Device use",0], ["Social media use",0],
+    ["Active listening",0], ["Effective communication",0], ["Negotiation skill",0], ["Persuasion",0], ["Relationship management",0], 
+    ["Art",0], ["Caregiving",0], ["Cooking",0], ["Exercise",0], ["Professional writing",0], ["Collaboration and teamwork",0], ["Critical thinking",0],
+    ["Entrepreneurship",0], ["People and Leadership",0], ["Personal selling",0]];
+    
+    collectPosts(copy_interest_list).then(()=>{
+        //call function to update all the ui fields
+        updateChart(copy_interest_list);
+    }); 
+
+    
+}, 30000);
