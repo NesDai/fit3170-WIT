@@ -19,6 +19,7 @@ async function execute() {
     collectPosts().then(() => {
 
         updateChart();
+        display_posts();
     })
 }
 
@@ -168,8 +169,7 @@ function display_posts(){
 
   let  choosen_interest= document.getElementById("interest").value;
   let displayed_posts = [];
-  console.log(posts);
-  console.log(choosen_interest);
+
   //getting the rows based on the interest choosen
   for (let i = 0; i < posts.length; i++){
     let post = posts[i];
@@ -184,10 +184,13 @@ function display_posts(){
 
   //outputing the rows of posts
   let display_table = document.getElementById("posts-rows");
-  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>No. of likes</th><th>No. of dislikes</th></thead><tbody>";
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>No. of likes</th><th>No. of dislikes</th><th>Post link</th></thead><tbody>";
   for (let i = 0; i < displayed_posts.length; i++){
     let post = displayed_posts[i];
-    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>" + post.likes + "</td><td>" + post.dislikes + "</td></tr>";
+    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>" + post.likes + "</td><td>" + post.dislikes + "</td><td>";
+    output_rows += "<div id='button_div${i}'> <button class='more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp'  id='more_btn' > View More </button> </div>";
+    output_rows += "</td></tr>";
+
   }
 
   output_rows += "</tbody></table>";
