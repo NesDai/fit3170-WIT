@@ -677,53 +677,71 @@ function showNumeric(questionObject) {
         // get range of the expected answer
         let lowerRange = questionObject.restrictions.lowerRange;
         let upperRange = questionObject.restrictions.upperRange;
-        // get user's input
-        let message = parseInt(input.value);
 
-        // If it's a number
-        if (!isNaN(message)) {
-            // If there is no upper/lower range specified set either to infinity and negative infinity respectively
-            if (lowerRange != null && upperRange == null){
-                upperRange = Number.POSITIVE_INFINITY;
-            } else if (lowerRange == null && upperRange != null){
-                lowerRange = Number.NEGATIVE_INFINITY;
-            }
+        if (input.value != ""){
+            // get user's input
+            let message = parseInt(input.value);
 
-            // if number is in normal range
-            if ((message >= lowerRange) && (message <= upperRange)) {
-                // If it's within range
-                errorText.style.visibility = "hidden";
-                submit.onclick = addMessage;
-            } else {
-                // If it's out of range, display error messages
-                errorText.style.visibility = "visible";
-                if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
-                    errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
+            // If it's a number
+            if (!isNaN(message)) {
+                // If there is no upper/lower range specified set either to infinity and negative infinity respectively
+                if (lowerRange != null && upperRange == null){
+                    upperRange = Number.POSITIVE_INFINITY;
+                } else if (lowerRange == null && upperRange != null){
+                    lowerRange = Number.NEGATIVE_INFINITY;
                 }
 
-                else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
-                    errorText.innerHTML = "number is not greater than " + lowerRange;
-                }
+                // if number is in normal range
+                if ((message >= lowerRange) && (message <= upperRange)) {
+                    // If it's within range
+                    errorText.innerHTML = "";
+                    errorText.style.visibility = "hidden";
+                    submit.onclick = addMessage;
+                } else if(message < 0){
+                    // If the number is negative
+                    errorText.style.visibility = "visible";
+                    errorText.innerHTML = "the number can not be less than 0";
+                    submit.onclick = null;
+                } else if(message > upperRange){
+                    // If the number is larger than
+                    errorText.style.visibility = "visible";
+                    errorText.innerHTML = "the number can not be larger than " + upperRange;
+                    submit.onclick = null;
+                } else {
+                    // If it's out of range, display error messages
+                    /*errorText.style.visibility = "visible";
+                    if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
+                    }
 
-                else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
-                    errorText.innerHTML = "number is not lesser than " + upperRange;
-                }
+                    else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not greater than " + lowerRange;
+                    }
 
-                // check if question requires use to end the survey if an invalid response is given
-                if (questionObject.restrictions.skipIfInvalid) {
-                    if (questionObject.restrictions.skipTarget === SKIP_END_SURVEY) {
-                        submit.onclick = endSurveyText;
-                    } else {
-                        submit.onclick = addMessage;
+                    else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not lesser than " + upperRange;
+                    }*/
+
+                    // check if question requires use to end the survey if an invalid response is given
+                    if (questionObject.restrictions.skipIfInvalid) {
+                        if (questionObject.restrictions.skipTarget === SKIP_END_SURVEY) {
+                            submit.onclick = endSurveyText;
+                        } else {
+                            submit.onclick = addMessage;
+                        }
                     }
                 }
             }
-        }
-        else {
+            else {
                 // If it's not a number
                 errorText.style.visibility = "visible";
                 errorText.innerHTML = "the answer needs to be a number.";
-                submit.onclick = "";
+                submit.onclick = null;
+            }
+        } else {
+            // clear error text area
+            errorText.innerHTML = "";
+            errorText.style.visibility = "hidden";
         }
     }
 
@@ -1018,7 +1036,8 @@ function showShortText(questionObject) {
         } else {
             // If it's super long
             errorText.style.visibility = "visible";
-
+            errorText.innerHTML = "The answer is too long";
+            submit.onclick = null;
             //submit.onclick = repromptQuestion;
         }
 
