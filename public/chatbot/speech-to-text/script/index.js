@@ -32,15 +32,27 @@ function handleSuccess(stream) {
     mediaRecorder = new MediaRecorder(stream, options);
 
     mediaRecorder.addEventListener("dataavailable", event => {
-       if (event.data.size > 0){
-           recordedChunks.push(event.data);
-       }
+        if (event.data.size > 0){
+            recordedChunks.push(event.data);
+        }
     });
 
     mediaRecorder.addEventListener("stop", () => {
         // When the recording is stopped
         console.log(new Blob(recordedChunks));
+        getTranscript(recordedChunks);
     });
 
     mediaRecorder.start();
+}
+
+function getTranscript(audioData) {
+    const getTranscript = firebase.functions().httpsCallable("getTranscript");
+
+    getTranscript({audioData: audioData})
+        .then(result => {
+            console.log("Transcript GET!");
+            document.getElementById("display").innerText
+                = result.data.text;
+        });
 }
