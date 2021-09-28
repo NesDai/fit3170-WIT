@@ -201,6 +201,9 @@ function updateHistoryList(){
     let urlList = JSON.parse(localStorage.getItem("historyList"));
     if (snapshot.exists()) {
       let lst = [];
+      for (let i = 0; i<urlList.length; i++){
+        lst.push(null);
+      }
       // localStorage.setItem("temp", JSON.stringify(lst));    
       // lst = JSON.parse(localStorage.getItem("temp"));
       let check = null;
@@ -217,10 +220,10 @@ function updateHistoryList(){
                     postId: value.id,
                     interest: value.interest[0]
                 }
-                lst.push(videoObj);
+                lst[check] = videoObj;
             }
         })
-      lst.reverse();
+      alert(JSON.stringify(lst));
       localStorage.setItem("temp", JSON.stringify(lst));
     }
     else {
@@ -230,6 +233,7 @@ function updateHistoryList(){
 }
 
 function shiftPlaylist (id){
+  alert(id)
   // add the video from history to show history video, 
   // and when redirected the next will still recommend from current playlist 
   // while the back still shows last video played.
@@ -242,6 +246,9 @@ function shiftPlaylist (id){
   for (let i = 0; i < playlist.length; i++){
     tempLst.push(playlist[i]);
     if (i == atVideo) {
+      
+      
+
       tempLst.push(temp[id]);
       currentVideoNumber+=1;
     }

@@ -240,8 +240,12 @@ function updateFavList(){
     let urlList = JSON.parse(localStorage.getItem("favList"));
     if (snapshot.exists()) {
       let favList = [];
-      localStorage.setItem("temp", JSON.stringify(favList));    
-      let lst = JSON.parse(localStorage.getItem("temp"));
+      let lst = [];
+      for (let i = 0; i<urlList.length; i++){
+        lst.push(null);
+      }
+      // localStorage.setItem("temp", JSON.stringify(favList));    
+      // let lst = JSON.parse(localStorage.getItem("temp"));
       let check = null;
         snapshot.forEach(function(childSnap){
             let value = childSnap.val();
@@ -256,10 +260,9 @@ function updateFavList(){
                     postId: value.id,
                     interest: value.interest[0]
                 }
-                lst.push(videoObj);
+                lst[check] = videoObj;
             }
         })
-      lst.reverse();
       localStorage.setItem("temp", JSON.stringify(lst));
     }
     else {
