@@ -22,7 +22,6 @@ async function execute(){
       collectPosts().then(()=>{
 
           updateUI(post_id);
-    
           $("#searchInput").val(`${post_id}`);
 
 
