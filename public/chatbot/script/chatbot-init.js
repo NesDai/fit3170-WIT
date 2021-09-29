@@ -143,14 +143,16 @@ function resumeGreeting() {
         "<button id='resume-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
-        "onclick=\"resumeSurvey(this)\">" +
+        "onclick=\"resumeSurvey(this)\" " +
+        "value=\"Resume\">" +
         "Resume" +
         "</button>" +
 
         "<button id='restart-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
-        "onclick=\"startSurvey(this)\">" +
+        "onclick=\"startSurvey(this)\" " +
+        "value=\"Restart\">" +
         "Restart" +
         "</button>" +
         "</div>";
@@ -200,7 +202,7 @@ function startSurvey(button) {
     let choice = button.textContent.trim();
     showMessageReceiver(choice);
 
-    if (choice === "Restart") {
+    if (button.value === "Restart") {
         // Reset local progress data and sync with the cloud
         questionIndex = 0;
         subQuestionIndex = 0;

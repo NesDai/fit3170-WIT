@@ -71,12 +71,15 @@ changeLang(select_language);
  * @param button The option button
  */
 function select(button, index) {
+    // clear any error message
+    errorText.innerHTML = "";
+
     // get selected button's text
     let choice = currentQuestionObject.restrictions.choices[index-1];
 
     // format choice html text bubble
     let ansTemplate = '<div class="space">\
-                            <div class="message-container receiver">\
+                            <div class="message-container receiver notranslate">\
                                 <p>' + choice + '</p>\
                             </div>\
                         </div>';
@@ -536,7 +539,7 @@ function showMessageSender(message) {
     // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
@@ -550,7 +553,7 @@ function showMessageSender(message) {
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
@@ -565,7 +568,7 @@ function showMessageSenderWithoutHints(message) {
 function showShortQuestionMessage(questionString) {
     document.getElementById("messages").innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current notranslate'>" +
         `<p>${questionString}</p>` +
         "</div>" +
         "</div>";
