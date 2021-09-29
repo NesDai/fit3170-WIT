@@ -1072,19 +1072,19 @@ function showOptions(choices, hasOther) {
 
     if(!hasOther) {
         for (let i = 0; i < choices.length; i++){
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
             numberOption ++;
             index++;
             MCQOptionIDs.push(currentQuestionObject.question_number + i);
         }
     } else {
         for (let i = 0; i < choices.length -1; i++){
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
             numberOption ++;
             index++;
             MCQOptionIDs.push(currentQuestionObject.question_number + i);
         }
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"othersOptionInput()\" id=\"" + currentQuestionObject.question_number + (choices.length-1) + "\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"othersOptionInput()\" id=\"" + currentQuestionObject.question_number + (choices.length-1) + "\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
         MCQOptionIDs.push(currentQuestionObject.question_number + (choices.length-1));
     }
 
