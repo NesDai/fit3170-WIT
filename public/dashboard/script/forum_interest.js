@@ -188,7 +188,7 @@ function display_posts(){
   for (let i = 0; i < displayed_posts.length; i++){
     let post = displayed_posts[i];
     output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>" + post.likes + "</td><td>" + post.dislikes + "</td><td>";
-    output_rows += "<div id='button_div${i}'> <button class='more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp'  id='more_btn' > View More </button> </div>";
+    output_rows += `<div> <button class='more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
     output_rows += "</td></tr>";
 
   }
@@ -196,5 +196,14 @@ function display_posts(){
   output_rows += "</tbody></table>";
   display_table.innerHTML = output_rows;
 
+}
+
+/**
+ Function that transfer the admin to the post analytics detial page
+ * @param {*} post_id the post id of the post the admin wants to access
+ */
+function transfer_admin_post(post_id){
+  localStorage.setItem("POST_ID", post_id);
+  window.location = "./forum_post.html";
 
 }
