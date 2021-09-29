@@ -15,15 +15,19 @@ window.onload = execute();
 
 async function execute(){
     var post_id = localStorage.getItem("POST_ID");
-    if (post_id != null){
+
+    if (post_id != "null" && post_id != null){
       // onload function
+
       collectPosts().then(()=>{
 
           updateUI(post_id);
+    
+          $("#searchInput").val(`${post_id}`);
 
 
         })
-    } else if(post_id == null){
+    } else if(post_id == "null" || post_id == null){
       // onload function
       collectPosts().then(()=>{
 
@@ -39,7 +43,7 @@ async function execute(){
 
   })
     }
-      localStorage.setItem("POST_ID", null);
+      localStorage.removeItem("POST_ID");
 
 }
 
@@ -85,7 +89,7 @@ function updateUI(postId){
 
 
 
-    if(postId==null || postId == undefined){
+    if(postId==null || postId == undefined || postId == "null"){
         return // exit
     }
 
