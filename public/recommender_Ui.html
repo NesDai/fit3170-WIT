@@ -10,7 +10,7 @@
     //console.log(dataLayer)
     </script>
     <!-- End Google Tag Manager -->
-    
+
     <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -53,9 +53,9 @@
     <style>
         .goog-te-banner-frame.skiptranslate {
         display: none !important;
-        } 
+        }
         body {
-        top: 0px !important; 
+        top: 0px !important;
         }
         .goog-logo-link {
         display:none !important;
@@ -124,7 +124,7 @@
         </div>
       </div>
     </header>
-      
+
       <div class="mdl-layout__drawer">
         <br>
         <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
@@ -145,7 +145,27 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <main class="mdl-layout__content mdl-color--grey-100">
-      <div class="row" id=option_buttons>
+      <div class="container">
+         <!-- Tab navigation -->
+         <div class="tabs">
+
+            <!-- Favourite tab -->
+            <input type="radio" id="radio-0" name="tabs" value="Favourite" onclick='window.location.href = "fav_page_Ui.html"'/>
+            <label class="tab" for="radio-0" id="tab0"><b>Favourite</b></label>
+
+            <!-- History tab -->
+            <input type="radio" id="radio-1" name="tabs" value="History" onclick='window.location.href = "recommender_history_Ui.html"' checked/>
+            <label class="tab" for="radio-1" id="tab1"><b>History</b></label>
+
+            <!-- Edit skill selection tab -->
+            <input type="radio" id="radio-2" name="tabs" value="Edit_skill" onclick='window.location.href = "recommender_select_skills.html"'/>
+            <label class="tab" for="radio-2" id="tab2"><b>Edit selection</b></label>
+
+
+            <span class="glider"></span>
+         </div>
+      </div>
+      <!--<div class="row" id=option_buttons>
         <div class="col-9">
           <a class="mdl-navigation__link" href="fav_page_Ui.html">
             <button class="mdl-button mdl-js-button mdl-button--raised" id="fav_button"><img src="./css/images/fav_icon.png" style="height:80%"> Favourite</button>
@@ -163,14 +183,14 @@
             <button class="mdl-button mdl-js-button mdl-button--raised" id="admin_dash_button">Admin Dash</button>
           </a>
         </div>
-      </div>
+      </div>-->
     <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
-      
+
         <div id="recommendation-card" class="mdl-card mdl-shadow--2dp" style="align-items: center;">
         <div class="mdl-card__title" id="upperSectionHeader">Our recommendation for you:</div>
         <div class="mdl-card__media" id ="my-video" style="background-color: white;"></div>
         <div class="mdl-card__subtitle-text notranslate" id="videoDescription" style="margin-left: 5%; margin-right: 5%"></div>
-        
+
         <div class="mdl-card__actions mdl-card--border">
             <button id= "positiveRating" class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style="background-color: transparent; margin-bottom: 5%;" onclick = "positiveRating()" >
                 <!-- <i class= "material-icons" style ="margin-top: 50%; margin-left: -6px;">thumb_down</i> -->
@@ -194,7 +214,7 @@
           <button onclick= "speakButtonOnClick()"  class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "margin-bottom: 5%; background-color: transparent;" >
             <img src="./css/images/speaker_icon.png" style="height:80%">
           </button>
-          
+
           <button id="skipNext" onclick= "skipToNextVideo()" class="mdl-button mdl-js-button mdl-button--fab  mdl-button" style = "float: right; margin-bottom: 5%; background-color: transparent;" >
             <img src="./css/images/playnext_button.png" style="height:80%">
         </button>
@@ -203,8 +223,8 @@
             <img src="./css/images/playback_icon.png" style="height:80%">
           </button>
 
-          
-          
+
+
           <div id="messagePopUp" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>
