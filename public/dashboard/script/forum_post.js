@@ -150,6 +150,8 @@ function updateUI(postId){
         url = post.videoURL;
     }
 
+
+
     $("#summaryPostTitle").html(`Summary of ${postId} post`)
 
     $("#postDetailTable").html(`
@@ -180,7 +182,10 @@ function updateUI(postId){
                 </tr>
 
             </table>
-    `);
+            <a href="http://localhost:5000/post.html?post_id=${postId}">
+                <div> <button class='btn btn-primary'> Go to Post </button> </div>
+            </a>
+            `);
 
 
     // chart
