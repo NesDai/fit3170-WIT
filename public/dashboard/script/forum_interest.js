@@ -188,7 +188,7 @@ function display_posts(){
   for (let i = 0; i < displayed_posts.length; i++){
     let post = displayed_posts[i];
     output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>" + post.likes + "</td><td>" + post.dislikes + "</td><td>";
-    output_rows += `<div> <button class='more mdl-button mdl-js-button mdl-button--raised mdl-shadow--5dp'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
+    output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
     output_rows += "</td></tr>";
 
   }
