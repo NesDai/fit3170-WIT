@@ -61,7 +61,7 @@ async function collectPosts(){
     numOfPostsRecommender=0;
     numOfPostsUsers=0;
 
-     await firebase.database().ref('posts')
+    await firebase.database().ref('posts')
     .once('value', x => {
         x.forEach(data => {
             posts.push(data.val()); //pus  h the data to the list

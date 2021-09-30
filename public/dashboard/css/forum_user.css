@@ -37,6 +37,11 @@
     width: 100%;
 }
 
-
+#likesOnPosts, #dislikesOnPosts, #commentsReplies, #favouritePosts, #postsCreated, #likesOnComments{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: black
+}
 
 
