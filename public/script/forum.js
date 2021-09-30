@@ -556,10 +556,10 @@ function print_create_post()
 function printPost(post, button_num, i )
 {
     let button = `
-    <button class="like mdl-button mdl-js-button" value="${post.likes}" id="btn_like${i}">
+    <button class="like mdl-button mdl-js-button" value="${post.likes}" id="btn_like${i}"  style="cursor: pointer;">
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike${i}">
+    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike${i}" style="cursor: pointer;">
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
@@ -567,10 +567,10 @@ function printPost(post, button_num, i )
     {
          // liked
          button = `<button
-         class="like mdl-button mdl-js-button "  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}" id="btn_like${i}">
+         class="like mdl-button mdl-js-button "  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}" id="btn_like${i}" style="cursor: pointer;">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button" value="${post.dislikes}" id="btn_dislike${i}">
+         <button class="dislike mdl-button mdl-js-button" value="${post.dislikes}" id="btn_dislike${i}" style="cursor: pointer;">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
@@ -578,10 +578,10 @@ function printPost(post, button_num, i )
     else if(button_num==-1)
     {
          // disliked
-         button = `<button class="like mdl-button mdl-js-button"  value="${post.likes}" id="btn_like${i}">
+         button = `<button class="like mdl-button mdl-js-button"  value="${post.likes}" id="btn_like${i}" style="cursor: pointer;">
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;" value="${post.dislikes}" id="btn_dislike${i}">
+         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;" value="${post.dislikes}" id="btn_dislike${i}" style="cursor: pointer;">
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
@@ -659,7 +659,7 @@ function printPost(post, button_num, i )
                             <br>
                             <br>
                             <div class="mdl-dialog__actions">
-                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto; cursor: pointer;">OK</button>
                             </div>
                         </div>
                     </dialog>
