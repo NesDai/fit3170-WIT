@@ -45,16 +45,16 @@ hash[ZH_CN_INDEX] =
 hash[MS_INDEX] =
     [
         // Agree
-        ["Sangat <br> tidak <br>  setuju", "Tidak <br> setuju", "Neutral", "Setuju", "Sangat <br> setuju"],
+        ["Sangat <br> tidak <br>  setuju", "Tidak <br> setuju", "Berkecuali", "Setuju", "Sangat <br> setuju"],
 
         // Satisfy
-        ["Tidak <br> berkenaan", "Sangat tidak<br> berpuas<br> hati", "Tidak <br> berpuas <br>hati", "Neutral", "Berpuas <br> hati", "Sangat <br> berpuas hati"],
+        ["Tidak <br> berkenaan", "Sangat tidak<br> berpuas<br> hati", "Tidak <br> berpuas <br>hati", "Berkecuali", "Berpuas <br> hati", "Sangat <br> berpuas hati"],
 
         // Confident
         ["Tidak <br> berkenaan", "Tidak yakin <br> sama sekali", "Agak <br> tidak yakin", "Cukup <br> yakin" , "Agak <br> yakin", "Sangat <br> yakin"],
 
         // Interested
-        ["Sangat <br> tidak <br> berminat", "Tidak <br> berminat", "Neutral", "Berminat", "Sangat <br> berminat"]
+        ["Sangat <br> tidak <br> berminat", "Tidak <br> berminat", "Berkecuali", "Berminat", "Sangat <br> berminat"]
 
     ];
 
@@ -133,7 +133,7 @@ function getScaleString(language, scaleIndex, options) {
             `<button 
              id = ${option}
              class="mdl-button mdl-js-button mdl-button--raised notranslate"
-             style="margin-bottom: 1em;display: inline-block;width: 28%; border-radius: 12px; margin-left: 8px; margin-right: 3px; font-size: `+fontSize+`; height: 80px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(${option})'><span class = 'likertText' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>${option}<br> <br> `+hash[language][scaleIndex][i]+` </span>
+             style="margin-bottom: 1em;display: inline-block;width: 28%; border-radius: 12px; margin-left: 8px; margin-right: 3px; font-size: `+fontSize+`; height: 80px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(${option})'><span class = 'likertText notranslate' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"> <br>${option}<br> <br> `+hash[language][scaleIndex][i]+` </span>
              </button>`
     }
 
