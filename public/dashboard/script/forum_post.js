@@ -24,6 +24,10 @@ async function execute(){
           updateUI(post_id);
           $("#searchInput").val(`${post_id}`);
 
+          $('#searchInput').autocomplete({
+            source : postid,
+        }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+
 
         })
     } else if(post_id == "null" || post_id == null){
