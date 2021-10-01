@@ -219,7 +219,7 @@ box-sizing: border-box;
 .tabs * {
 z-index: 2;
 }
-input[type="radio"] {
+input[type="checkbox"] {
 display: none;
 position: relative;
 bottom: 10px
@@ -241,16 +241,6 @@ transition: color 0.15s ease-in;
   font-size:20px ;
 }
 
-.glider {
-    position: absolute;
-    bottom: 5px;
-    height: 40px;
-    width: 180px;
-    background-color: var(--secondary-color);
-    z-index: 1;
-    border-radius: 25px;
-    transition: 0.25s ease-out;
-}
 /* ends */
 
 
@@ -299,37 +289,6 @@ transition: color 0.15s ease-in;
   		position: relative;
   		bottom: 10px;
   		left: 100px
-  	}
-  	input[type="radio"]:checked+label {
-  		color: var(--primary-color);
-  		position: relative;
-  		bottom: 10px
-  	}
-  	input[type="radio"]:checked+label>.notification {
-  		background-color: var(--primary-color);
-  		color: #fff;
-  		position: relative;
-  		bottom: 10px
-  	}
-  	.glider {
-  		position: absolute;
-  		bottom: 5px;
-  		height: 40px;
-  		width: 180px;
-  		background-color: var(--secondary-color);
-  		z-index: 1;
-  		border-radius: 25px;
-  		transition: 0.25s ease-out;
-  	}
-
-  	input[id="radio-0"]:checked~.glider {
-  		transform: translateX(5%);
-  	}
-  	input[id="radio-1"]:checked~.glider {
-  		transform: translateX(140%);
-  	}
-  	input[id="radio-2"]:checked~.glider {
-  		transform: translateX(280%);
   	}
 
 }
@@ -381,37 +340,6 @@ transition: color 0.15s ease-in;
       left: 15px
     }
 
-  	input[type="radio"]:checked+label {
-  		color: var(--primary-color);
-  	}
-  	input[type="radio"]:checked+label>.notification {
-  		background-color: var(--primary-color);
-  		color: #fff;
-  	}
-
-  	/* phone glider */
-  	.glider {
-  		position: absolute;
-  		bottom: 7px;
-  		height: 55px;
-  		width: 29%;
-  		background-color: var(--secondary-color);
-  		z-index: 1;
-  		border-radius: 25px;
-  		transition: 0.25s ease-out;
-  	}
-  	input[id="radio-0"]:checked~.glider {
-  		transform: translateX(-5%);
-          color: black;
-  	}
-
-  	input[id="radio-1"]:checked~.glider {
-  		transform: translateX(108%);
-          color: black;
-  	}
-  	input[id="radio-2"]:checked~.glider {
-  		transform: translateX(211%);
-  	}
 
     #tab0, #tab1, #tab2{
   		font-size:18px ;
