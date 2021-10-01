@@ -224,8 +224,12 @@ function printAllPosts(){
         }).then(()=>{
 
             // Reenable the other tabs
-        $("#radio-0").attr("disabled",false);
-        $("#radio-1").attr("disabled",false);
+            $("#radio-0").attr("disabled",false);
+            $("#radio-1").attr("disabled",false);
+
+            if(posts.length == 0 ){
+                $('#postField').html('<h4>0 Posts in this section</h4>');
+            }
     
     })
     })
@@ -294,8 +298,11 @@ function printThread(){
         }).then(()=>{
 
             // Reenable the other tabs
-    $("#radio-1").attr("disabled",false);
-    $("#radio-2").attr("disabled",false);
+            $("#radio-1").attr("disabled",false);
+            $("#radio-2").attr("disabled",false);
+            if(posts.length == 0 ){
+                $('#postField').html('<h4>0 Posts in this section</h4>');
+            }
 
     });
     });
@@ -889,9 +896,13 @@ function printUserPosts(){
                     }).then(() => {
                         printUserFavouritePosts(posts,button_nums.length).then(()=>{
 
-                                                     // Reenable the other tabs
-                        $("#radio-0").attr("disabled",false);
-                        $("#radio-2").attr("disabled",false);
+                             // Reenable the other tabs
+                            $("#radio-0").attr("disabled",false);
+                            $("#radio-2").attr("disabled",false);
+
+                            if(posts.length == 0 ){
+                                $('#postField').html('<h4>0 Posts in this section</h4>');
+                            }
 
                         })
                     });
