@@ -655,7 +655,7 @@ function printPost(post, button_num, i )
                     </div>
 
                     <!-- Alert UI -->
-                    <dialog class="mdl-dialog mdl-dialog-like" style="display: none;" id="like_alert" >
+                    <dialog class="mdl-dialog mdl-dialog-like">
                         <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
                         <hr style="margin: 0;">
                         <div class="mdl-dialog__content">
@@ -684,8 +684,8 @@ function printPost(post, button_num, i )
                             }
                             
                             // do what needs to happen on double click. 
-                            //dialog_like.showModal();
-                            document.getElementById("like_alert").style.display="block";
+                            dialog_like.showModal();
+                            //document.getElementById("like_alert").style.display="block";
                         }else{
                             $button.data('alreadyclicked', true);
                             
@@ -712,8 +712,8 @@ function printPost(post, button_num, i )
                             }
                             
                             // do what needs to happen on double click. 
-                            //dialog_like.showModal();
-                            document.getElementById("like_alert").style.display="block";
+                            dialog_like.showModal();
+                            //document.getElementById("like_alert").style.display="block";
 
                         }else{
                             $button.data('alreadyclicked', true);
