@@ -51,7 +51,7 @@
           </p>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item w-100">
-              <a class="nav-link" href="https://youtu.be/dQw4w9WgXcQ">
+              <a class="nav-link" href="http://localhost:5000/dashboard/admin_dashboard_landing.html">
                 <img src="../css/images/home_page_icon.png" width = "35" height = "30">
                 <!-- <i class="fe fe-help-circle fe-16"></i> -->
                 <span class="ml-3 item-text">Admin Home Page</span>
@@ -79,18 +79,18 @@
                 <div class="col-md-6 mb-4">
                   <div class="card shadow" style="height: 200px;">
                     <div class="card-header">
-                      <strong class="card-title mb-0">Search for a User</strong>
+                      <h4 class="card-title">Search for a User</h4>
                     </div>
                     <div class="card-body">
                       
                         <!-- SEARCH -->
 
-                        <div id="userError"></div>
+                        <div id="userError" style="color:red;"></div>
                         
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search Username">
+                          <input id = "userSearchInput" type="text" class="form-control" placeholder="Search Username">
                           <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="seach-butt">Search</button>
+                            <button class="btn btn-primary" type="button" id="seach-butt" onclick="updateUserUI(document.getElementById('userSearchInput').value)">Search</button>
                           </div>
                         </div>
                         
@@ -103,11 +103,14 @@
                 <div class="col-md-6 mb-4">
                   <div class="card shadow" style="height: 200px;">
                     <div class="card-header">
-                      <strong class="card-title mb-0">Total Number of Users</strong>
-                      
+                      <h4 class="card-title">Total Number of Users</h4>
                     </div>
                     <div class="card-body" id="totalUsersCard">
-                      <h1 id="totalUsers">30 (placeholder)</h1>
+                      <h1 id="totalUsers">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </h1>
                       <!-- <canvas id="lineChartjs" width="400" height="300"></canvas> -->
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
@@ -123,7 +126,7 @@
           <div class="card shadow">
             <div class="card-header">
                 <div id="userInfo">
-                  <h2>No User Selected</h2>
+                  <h2 id="username">No User Selected</h2>
                 </div>
             </div>
           </div>
@@ -139,105 +142,17 @@
                 <div class="col-md-6 mb-4">
                   <div class="card shadow">
                     <div class="card-header">
-                      <strong class="card-title mb-0">Total Number of Interactions</strong>
+                      <h4 class="card-title">Total Number of Interactions</h4>
                     </div>
-                    <div class="card-body">
-      
-
+                    <div class="card-body" id="card-body">
+                      
                       <div class="container-fluid">
                         <div class="row justify-content-center">
-                          <div class="col-12">
-
-                            <div class="row">
-                              <div class="col-md-4 mb-3">
-                            <div class="card shadow userInfoCard">
-                              <div class="card-header">
-                                Likes on Posts
-                              </div>
-                                <div class="card-body" id="likesOnPosts"></div>
-                              
-                            </div>
+                          <div class="col-10">
+                            <h5 style="text-align: center">No User Selected</h5>
                           </div>
-                            
-                      
-
-
-                          <div class="col-md-4 mb-3">
-                            <div class="card shadow userInfoCard">
-                              <div class="card-header">
-                                Dislikes on Posts
-                              </div>
-                                <div class="card-body" id="dislikesOnPosts"></div>
-                            </div>
-                          </div>
-                            
-            
-                      
-
-                          <div class="col-md-4 mb-3">
-                            <div class="card shadow userInfoCard">
-                              <div class="card-header">
-                                Comments & Replies
-                                </div>
-
-                                <div class="card-body" id="commentsReplies"></div>
-                            </div>
-                          </div>
-                            
-                
-                            
-                          </div> <!-- .row-->
-                        </div> <!-- .col -->
-                      </div> <!-- .justify content -->
-                      </div> <!-- /.cont fluid -->
-
-
-                      <div class="container-fluid">
-                        <div class="row justify-content-center">
-                          <div class="col-12">
-          
-                            <div class="row">
-                              <div class="col-md-4 mb-3">
-                                <div class="card shadow userInfoCard">
-                                  <div class="card-header">
-                                    Favourite Posts
-                                  </div>
-                                    <div class="card-body" id="favouritePosts"></div>
-                                </div>
-                              </div>
-                
-                      
-
-        
-                          <div class="col-md-4 mb-3">
-                            <div class="card shadow userInfoCard">
-                              <div class="card-header">
-                                Posts Created
-                              </div>
-                                <div class="card-body" id="postsCreated"></div>
-                            </div>
-                          </div>
-         
-                     
-
-                      
-                          <div class="col-md-4 mb-3">
-                            <div class="card shadow userInfoCard">
-                              <div class="card-header">
-                                Likes on Comments
-                              </div>
-                                <div class="card-body" id="likesOnComments"></div>
-                            </div>
-                          </div>
-                       
-             
-                      
-                            </div> <!-- /.row -->
-                          </div> <!-- /.col -->
-
-                        </div> <!-- /.justify content -->
-                        </div> <!-- /.container fluid -->
-
+                        </div>
+                      </div>
                      
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
@@ -245,11 +160,13 @@
                 <div class="col-md-6 mb-4">
                   <div class="card shadow">
                     <div class="card-header">
-                      <strong class="card-title mb-0">Total Interactions With Users</strong>
+                      <h4 class="card-title">Total Interactions With Interests</h4>
                     </div>
-                    <div class="card-body">
-                      <canvas id="pieChartjs" width="500" height="400"></canvas>
+
+                    <div class="card-body" id="chart_body">
+                      <h5 style="text-align: center">No User Selected</h5>
                     </div> <!-- /.card-body -->
+
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
               </div> <!-- end section -->
@@ -264,7 +181,7 @@
 
                 <div class="card shadow" id="historyCard">
                   <div class="card-header">
-                    <strong class="card-title mb-0">History of User Actions</strong>
+                    <h4 class="card-title">History of User Actions</h4>
                   </div>
                   <div class="card-body">
 
@@ -349,7 +266,23 @@
               
       </main> <!-- main -->
     </div> <!-- .wrapper -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+    <script src = "script/firebaseConfig.js"></script>
+    <!-- FIREBAS STUFF I GOT FROM YT-->
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+
     <script src="js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href=
+    "http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
+
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -369,13 +302,13 @@
       Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
       Chart.defaults.global.defaultFontColor = colors.mutedColor;
     </script>
+    <script src="script/forum_user.js"></script>
     <script src="js/gauge.min.js"></script>
     <script src="js/jquery.sparkline.min.js"></script>
     <script src="js/apexcharts.min.js"></script>
     <script src="js/apexcharts.custom.js"></script>
     <script src="js/apps.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 

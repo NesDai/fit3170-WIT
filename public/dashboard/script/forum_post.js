@@ -14,20 +14,40 @@ let currentPost;  // holds the current post id or undefined
 window.onload = execute();
 
 async function execute(){
-    // onload function
-    collectPosts().then(()=>{
-        
-        updateUI(null);
-        // autocomplete(document.getElementById("searchInput"), postid);
+    var post_id = localStorage.getItem("POST_ID");
 
+    if (post_id != "null" && post_id != null){
+      // onload function
 
-        $('#searchInput').autocomplete({
+      collectPosts().then(()=>{
 
-            source : postid,              
+          updateUI(post_id);
+          $("#searchInput").val(`${post_id}`);
+
+          $('#searchInput').autocomplete({
+            source : postid,
         }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
 
 
-})
+        })
+    } else if(post_id == "null" || post_id == null){
+      // onload function
+      collectPosts().then(()=>{
+
+          updateUI(null);
+          // autocomplete(document.getElementById("searchInput"), postid);
+
+
+          $('#searchInput').autocomplete({
+
+              source : postid,
+          }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+
+
+  })
+    }
+      localStorage.removeItem("POST_ID");
+
 }
 
 /**
@@ -41,7 +61,7 @@ async function collectPosts(){
     numOfPostsRecommender=0;
     numOfPostsUsers=0;
 
-     await firebase.database().ref('posts')
+    await firebase.database().ref('posts')
     .once('value', x => {
         x.forEach(data => {
             posts.push(data.val()); //pus  h the data to the list
@@ -51,8 +71,8 @@ async function collectPosts(){
             else
                 numOfPostsUsers++;
         })
-    
-            
+
+
     });
 }
 
@@ -62,21 +82,21 @@ async function collectPosts(){
  */
 function updateUI(postId){
 
-    
-    
+
+
     collectPosts().then(()=>{
 
         $("#postsByUsers").html(`<h3>${numOfPostsUsers}</h3>`);
         $("#postsByRecommender").html(`<h3>${numOfPostsRecommender}</h3>`);
 
-    
 
 
-    if(postId==null || postId == undefined){
+
+    if(postId==null || postId == undefined || postId == "null"){
         return // exit
     }
 
-   
+
 
 
     let post;
@@ -114,7 +134,7 @@ function updateUI(postId){
         creator = "Recommender";
     }
 
-    
+
     if(post.interest.length == 2){
         interests = post.interest[0] + ", " + post.interest[1]
     }
@@ -129,6 +149,8 @@ function updateUI(postId){
     else{
         url = post.videoURL;
     }
+
+
 
     $("#summaryPostTitle").html(`Summary of ${postId} post`)
 
@@ -160,7 +182,10 @@ function updateUI(postId){
                 </tr>
 
             </table>
-    `);
+            <a href="http://localhost:5000/post.html?post_id=${postId}">
+                <div> <button class='btn btn-primary'> Go to Post </button> </div>
+            </a>
+            `);
 
 
     // chart
@@ -168,7 +193,7 @@ function updateUI(postId){
     $("#chart").html(`<canvas id="myChart"></canvas>`);
 
     var xValues = ["Likes", "Dislikes", "Comments & Replies", "User's Favourited"];
-    
+
 
     // get y values
     let likes=0;
@@ -182,7 +207,7 @@ function updateUI(postId){
     // get favourites
     if(post.users_favourite != undefined)
         favourited = post.users_favourite.length
-    
+
     //get comments
     firebase.database().ref('comments')
     .orderByChild('postID')
@@ -201,7 +226,7 @@ function updateUI(postId){
                             x.forEach(data => {
                                 comments++;
                             });
-            
+
                         })
 
 
@@ -236,16 +261,11 @@ function updateUI(postId){
 
 // update posts on an interval (10 sec) to mimic realtime dashboard
 setInterval(
-    async function(){ 
+    async function(){
     collectPosts().then(()=>{
         //call function to update all the ui fields
         updateUI(currentPost);
-    }); 
+    });
 
-    
+
 }, 30000);
-
-
-
-
-
