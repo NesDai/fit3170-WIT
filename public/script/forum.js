@@ -897,11 +897,14 @@ function printUserPosts(){
                         printUserFavouritePosts(posts,button_nums.length).then(()=>{
 
                              // Reenable the other tabs
-                            $("#radio-0").attr("disabled",false);
-                            $("#radio-2").attr("disabled",false);
+                           // $("#radio-0").attr("disabled",false);
+                            //$("#radio-2").attr("disabled",false);
+                            document.getElementById("radio-0").disabled = false;
+                            document.getElementById("radio-2").disabled = false;
 
                             if(posts.length == 0 ){
-                                $('#postField').html('<h4>0 Posts in this section</h4>');
+                                document.getElementById("postField").innerHTML = '<h4>0 Posts in this section</h4>';
+                                //$('#postField').html('<h4>0 Posts in this section</h4>');
                             }
 
                         })
@@ -948,7 +951,10 @@ function printUserPosts(){
         return // exit function
     }
 
-    $('#postField').html(''); // emtpy the field of any previous posts
+    //$('#postField').html(''); // emtpy the field of any previous posts
+
+    document.getElementById("postField").innerHTML = '';
+
 
 
     firebase.database().ref('likesDislikes')
@@ -1040,7 +1046,11 @@ function printUserPosts(){
                 }).then(()=>{
                     
                     printStartIndex = posts.length-1;
-                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+
+                    //$('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+
+                    document.getElementById("resNum").innerHTML = '<h4>0 Posts in this section</h4>';
+
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                     // if(printStartIndex < 0){
                     //     $('#postField').html(`<h2>No results found<h2>`);
@@ -1068,7 +1078,9 @@ function searchYourPosts(param){
         return // exit function
     }
 
-    $('#postField').html(""); // emtpy the field of any previous posts
+    //$('#postField').html(""); // emtpy the field of any previous posts
+
+    document.getElementById("postField").innerHTML = '';
 
 
     firebase.database().ref('likesDislikes')
@@ -1190,7 +1202,10 @@ function searchYourPosts(param){
                         printPost(posts[i], button_nums[i], i )
                     }
 
-                    $('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
+                    //$('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
+
+                    document.getElementById("resNum").innerHTML =`<h3>${posts.length-1-i} Results Found</h3>`;
+
 
                     // if(i == posts.length-1){
                     //     $('#postField').append(`<h2>No results found<h2>`); // no results found
@@ -1220,7 +1235,10 @@ function searchYourPosts(param){
         return // exit function
     }
 
-    $('#postField').html(``); // emtpy the field of any previous posts
+    //$('#postField').html(``); // emtpy the field of any previous posts
+
+    document.getElementById("postField").innerHTML = '';
+
 
 
     firebase.database().ref('likesDislikes')
@@ -1325,7 +1343,11 @@ function searchYourPosts(param){
                 }).then(()=>{
                     printStartIndex = posts.length-1;
                     
-                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    //$('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+   
+                    document.getElementById("resNum").innerHTML = `<h3>${printStartIndex+1} Results Found</h3>`;
+
+
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                     // if(printStartIndex < 0){
                     //     $('#postField').html(`<h2>No results found<h2>`);
@@ -1360,6 +1382,7 @@ async function likePost(post_id, i) {
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
         $('#button_div'+i).find('.number_of_likes').html(new_value);
+        
 
 
 
