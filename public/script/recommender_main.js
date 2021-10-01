@@ -416,7 +416,7 @@ function playVideo() {
 
 // Fires when the move to forum button is clicked
 function moveToForum(){
-    const baseurl = "http://localhost:5000/post.html?post_id=";
+    const baseurl = "/post.html?post_id=";
 
     playlist = JSON.parse(localStorage.getItem("playlist"));
     let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
