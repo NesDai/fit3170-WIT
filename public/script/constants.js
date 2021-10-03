@@ -77,20 +77,20 @@ const SHORT_TEXT_LENGTH = 50;
 // list of Questions IDs for each language translation
 const QUESTION_IDS_EN = [
     // Part 1
-    '97CZlwR9i5LAOGoDA0eU',
-    'UI87LYHm2t48pDP33b3W',
-    't6IdJmJl86GptX3wceqx',
-    'Ttg5Gaj7LhfcFkAVeYil',
-    'FJ6h87xxovaT4gHJNqdR',
-    'qCURrsJ78pw8KmsSLxOn',
-    'JU4CUokiarx4VezKU4V4',
-    'xYmWMQzvcekUkvlRFJkF',
-    'rQCttvYOlGRd3SaCXzv2',
-    '48I5h7d3OSCK3eU0fbqB',
-    'XmLMzVlK0xJleP2lfOp1',
-    'jqYwvwrJpdAQOgYwGDja',
-    'uvdZ4DRXcgyMJNPa8Irq',
-    'fZzBLQn07Slft3mLtzgt',
+    '97CZlwR9i5LAOGoDA0eU', //what is your age in years
+    'UI87LYHm2t48pDP33b3W', //what is your gender
+    't6IdJmJl86GptX3wceqx', //what is your ethnic group
+    'Ttg5Gaj7LhfcFkAVeYil', //where do you currently live
+    'FJ6h87xxovaT4gHJNqdR', //average household income
+    'qCURrsJ78pw8KmsSLxOn', //education level
+    'JU4CUokiarx4VezKU4V4', //marital status
+    'xYmWMQzvcekUkvlRFJkF', //how many children have you raised
+    'rQCttvYOlGRd3SaCXzv2', //how many children do you talk to weekly
+    '48I5h7d3OSCK3eU0fbqB', //how many other relatives do you feel close to
+    'XmLMzVlK0xJleP2lfOp1', //how many close friends do you have
+    'jqYwvwrJpdAQOgYwGDja', //long question
+    'uvdZ4DRXcgyMJNPa8Irq', //long question
+    'fZzBLQn07Slft3mLtzgt', //long question
 
     // Part 2
     '55i88aywrPXUpZQHOhNB',
