@@ -604,9 +604,15 @@ var current_user = JSON.parse(localStorage.getItem("USER"));
 var playlist = [];
 var player = null;
 
-// Runs as soon as the iframe api code has been downloaded
-function onYouTubeIframeAPIReady() {
-    setTimeout(()=>{
+
+// Loads youtube iframe api
+setTimeout(()=>{
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    $(function(){
         player = new YT.Player('my-video', {
             height: '390',
             width: '640',
@@ -622,9 +628,8 @@ function onYouTubeIframeAPIReady() {
             },
             enablejsapi: 1
         });
-    }, 1000)
-    
-}
+    })
+}, 500);
 
 // Fetch the analytics and store every 10s
 let pauseCounter = 0; 
@@ -672,3 +677,4 @@ let interval = setInterval(function (){
         }
     }
 }, intervalTime)
+
