@@ -657,7 +657,7 @@ let interval = setInterval(function (){
             pauseCounter = 0;
             saveAnalytics(currentVideoAnalytics, currentGTMUrl);
         }
-        else if(currentVideoAnalytics.videoStatus === 'pause'){
+        else if(currentVideoAnalytics.videoStatus === 'pause' || currentVideoAnalytics.videoStatus === 'complete'){
             pauseCounter += 1;
             if(pauseCounter < 13) {
                 saveAnalytics(currentVideoAnalytics, currentGTMUrl);
@@ -665,13 +665,7 @@ let interval = setInterval(function (){
 
             // if video is paused / not replayed for some time (2 mins), stop saving to database
         }
-        else if(currentVideoAnalytics.videoStatus === 'complete'){
-            pauseCounter += 1;
-            if(pauseCounter < 13) {
-                saveAnalytics(currentVideoAnalytics, currentGTMUrl);
-            }
-        }
-        else{
+        else if(currentVideoAnalytics.videoStatus === 'progress'){
             pauseCounter = 0;
             saveAnalytics(currentVideoAnalytics, currentGTMUrl);
         }
