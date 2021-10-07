@@ -15,16 +15,18 @@ function selectedSkill(){
   document.getElementById("selected").innerHTML = option.value;
   document.getElementById("selectedBarChart").innerHTML = option.value;
 
+
+
   // obtain favourites data
   collectFavourites();
-  // generate bar chart
+  // generate bar chart(execute after collectFavourites() completed)
   updateChart(option.value);
 }
 
 /* function to retrieve favourite data from firebase */
 function collectFavourites(){
 
-    favs = [];
+    let favs = [];
 
     firebase.database().ref('recommenderData').child('favourite')
     .once('value', x => {
@@ -32,21 +34,18 @@ function collectFavourites(){
             favs.push(data.val());
             checkSkill(data.val().preferenceType, data.val().favouritedAmmount);
         })
-    })        
+    })
 
 }
 
 /* Function to determine the number of favourites for each interest*/
 function checkSkill(preference, amount){
-    preference.forEach(skill => {
-        for (let i = 0; i < skill_list.length; i++) {
-
-            if (skill == skill_list[i][0]) {
-                let current_num = skill_list[i][1];
-                skill_list[i][1] = current_num + amount;
-            }
-        }
-    })
+  for (let i = 0; i < skill_list.length; i++) {
+    if (preference == skill_list[i][0]) {
+      let current_num = skill_list[i][1];
+      skill_list[i][1] = current_num + amount;
+    }
+  }
 }
 
 function updateChart(skill) {
