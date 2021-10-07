@@ -51,7 +51,7 @@
           </p>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item w-100">
-              <a class="nav-link" href="https://youtu.be/dQw4w9WgXcQ">
+              <a class="nav-link" href="http://localhost:5000/dashboard/admin_dashboard_landing.html">
                 <img src="../css/images/home_page_icon.png" width = "35" height = "30">
                 <!-- <i class="fe fe-help-circle fe-16"></i> -->
                 <span class="ml-3 item-text">Admin Home Page</span>
@@ -76,9 +76,15 @@
                     <div class="card-body"><!-- SEARCH -->
                       <div id="skillError"></div>
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Enter a Skill">
+                          <!--<input type="text" class="form-control" placeholder="Search Skill">-->
+                          <select name="skills" id="skills">
+                            <option value="ICT/Tech­nology Skills">ICT/Tech­nology Skills</option>
+                            <option value="Social Communi­cation Skills">Social Communi­cation Skills</option>
+                            <option value="Comple­mentary Skills">Comple­mentary Skills</option>
+                            <option value="Work-related Skills">Work-related Skills</option>
+                          </select>
                           <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="search-butt">Search</button>
+                            <button class="btn btn-primary" type="button" id="search-butt" onclick = "selectedSkill()">Search</button>
                           </div>
                         </div>
                     </div> <!-- /.card-body -->
@@ -93,7 +99,7 @@
 
                     </div>
                     <div class="card-body" id="skillSelectedCard">
-                      <h4>No Skill Selected</h4>
+                      <h1><span id="selected">No skill selected </span></h1>
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
@@ -178,6 +184,13 @@
       }
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
+
+      function selectedSkill(){
+        let select = document.getElementById("skills");
+				let option = select.options[select.selectedIndex];
+
+				document.getElementById("selected").innerHTML = option.value;
+      }
     </script>
         <script>
           document.getElementById("search-butt").addEventListener("click", function(event){
