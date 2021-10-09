@@ -642,9 +642,9 @@ function printPost(post, button_num, i )
                                 }
                                 
                                 // do what needs to happen on double click. 
+                                cnosole.log("showmodal");
                                 dialog_like.showModal();
                                 document.getElementById("like-Modal").style.display = "block";
-                                //document.getElementById("like_alert").style.display="block";
                             }else{
                                 $button.data('alreadyclicked', true);
                                 
