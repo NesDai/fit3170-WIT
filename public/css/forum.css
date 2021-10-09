@@ -423,8 +423,8 @@ transition: color 0.15s ease-in;
         height: 50%;
     }
 	.modal-content-alert{
-        width: 50%;
-        height: 50%;
+        width: 40%;
+        height: 45%;
     }
 
     #send_reply_btn {
@@ -636,7 +636,7 @@ transition: color 0.15s ease-in;
 
 	.modal-content-alert {
         width: 80%;
-        height: 30%;
+        height: 40%;
     }
 
     #delete_post_btn {
