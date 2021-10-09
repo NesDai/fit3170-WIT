@@ -630,72 +630,75 @@ function printPost(post, button_num, i )
 
                     <!-- Like dislike double click -->
                     <script>
-                    //checks for double click on like button
-                    $("#btn_like"+${i}).on('click',function(){
-                        var $button=$(this);
-                        if ($button.data('alreadyclicked')){
-                            $button.data('alreadyclicked', false); // reset
-                            
-                            
-                            if ($button.data('alreadyclickedTimeout')){
-                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
-                            }
-                            
-                            // do what needs to happen on double click. 
-                            dialog_like.showModal();
-                            //document.getElementById("like_alert").style.display="block";
-                        }else{
-                            $button.data('alreadyclicked', true);
-                            
-                            var alreadyclickedTimeout=setTimeout(function(){
-                                $button.data('alreadyclicked', false); // reset when it happens
+                        //checks for double click on like button
+                        $("#btn_like"+${i}).on('click',function(){
+                            var $button=$(this);
+                            if ($button.data('alreadyclicked')){
+                                $button.data('alreadyclicked', false); // reset
                                 
-                                $('#action').val('Was single clicked');
-                                likePost('${post.id}', ${i});
-                            },300); // <-- dblclick tolerance here
-                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
-                        }
-                        return false;
-                    });
-
-                    //checks for double click on dislike button
-                    $("#btn_dislike"+${i}).on('click',function(){
-                        var $button=$(this);
-                        if ($button.data('alreadyclicked')){
-                            $button.data('alreadyclicked', false); // reset
-                            
-                            
-                            if ($button.data('alreadyclickedTimeout')){
-                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
-                            }
-                            
-                            // do what needs to happen on double click. 
-                            dialog_like.showModal();
-                            //document.getElementById("like_alert").style.display="block";
-
-                        }else{
-                            $button.data('alreadyclicked', true);
-                            
-                            var alreadyclickedTimeout=setTimeout(function(){
-                                $button.data('alreadyclicked', false); // reset when it happens
                                 
-                                $('#action').val('Was single clicked');
-                                dislikePost('${post.id}', ${i});
-                            },300); // <-- dblclick tolerance here
-                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
-                        }
-                        return false;
-                    });
+                                if ($button.data('alreadyclickedTimeout')){
+                                    clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                                }
+                                
+                                // do what needs to happen on double click. 
+                                dialog_like.showModal();
+                                document.getElementById("like-Modal").style.display = "block";
+                                //document.getElementById("like_alert").style.display="block";
+                            }else{
+                                $button.data('alreadyclicked', true);
+                                
+                                var alreadyclickedTimeout=setTimeout(function(){
+                                    $button.data('alreadyclicked', false); // reset when it happens
+                                    
+                                    $('#action').val('Was single clicked');
+                                    likePost('${post.id}', ${i});
+                                },300); // <-- dblclick tolerance here
+                                $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                            }
+                            return false;
+                        });
+
+                        //checks for double click on dislike button
+                        $("#btn_dislike"+${i}).on('click',function(){
+                            var $button=$(this);
+                            if ($button.data('alreadyclicked')){
+                                $button.data('alreadyclicked', false); // reset
+                                
+                                
+                                if ($button.data('alreadyclickedTimeout')){
+                                    clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                                }
+                                
+                                // do what needs to happen on double click. 
+                                dialog_like.showModal();
+                                document.getElementById("like-Modal").style.display = "block";
+
+                            }else{
+                                $button.data('alreadyclicked', true);
+                                
+                                var alreadyclickedTimeout=setTimeout(function(){
+                                    $button.data('alreadyclicked', false); // reset when it happens
+                                    
+                                    $('#action').val('Was single clicked');
+                                    dislikePost('${post.id}', ${i});
+                                },300); // <-- dblclick tolerance here
+                                $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
+                            }
+                            return false;
+                        });
                     </script>
 
                     <!-- Alert control-->
                     <script>
                         var dialog_like = document.querySelector('.mdl-dialog-like');
                         if (! dialog_like.showModal) {
+                            //document.getElementById("like-Modal").style.display = "block";
                             dialogPolyfill.registerDialog(dialog_like);
                         }
                         dialog_like.querySelector('.close_btn').addEventListener('click', function() {
                             dialog_like.close();
+                            document.getElementById("like-Modal").style.display = "none";
                         });
                     </script>
 
