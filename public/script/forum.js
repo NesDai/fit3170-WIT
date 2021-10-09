@@ -1406,6 +1406,12 @@ async function likePost(post_id, i) {
     }
 }
 
+/**
+ * Allows to dislike a post, updating the firebase and UI accordingly
+ * @param {string} post_id the id of the post to be disliked
+ * @param {number} i the index of the post on the page
+ * @returns none
+ */
 async function dislikePost(post_id, i)
 {
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
