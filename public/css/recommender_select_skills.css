@@ -3,10 +3,15 @@ html, body {
     font-family: "Arial", sans-serif;
     font-size: 100%;
     background-color: white;
+    color: #006dae;
 }
 
 .mdl-layout__header{
     background-color: #006dae;
+}
+
+.box {
+    font-size: 18pt;
 }
 
 .material-icons {
@@ -149,7 +154,7 @@ p {
     float: left;
     border: 1px solid #ccc;
     width: 30%;
-    height: 750px;
+    height: 450px;
     margin-left: 10px;
 }
 
@@ -182,7 +187,7 @@ p {
     border: 1px solid #ccc;
     width: 65%;
     border-left: none;
-    height: 750px;
+    height: 450px;
     display: flex;
 }
 
@@ -328,12 +333,12 @@ table {
     }
   
     .tab {
-        height: 800px;
+        height: 670px;
         width: 30%;
     }
   
     .tabcontent {
-        height: 800px;
+        height: 670px;
     }
   
     div.tab {
@@ -353,7 +358,7 @@ table {
     }
 
     #home_button{
-        margin-left: 55px;
+        margin-left: 15px;
     }
 
 }
@@ -362,11 +367,6 @@ table {
     header {
         height: 113px;
         padding-bottom: 80px !important;
-    }
-  
-    h4 {
-        word-wrap: break-word;
-        width: 100%;
     }
   
     .mdl-card {
@@ -405,7 +405,7 @@ table {
     }
 
     #home_button{
-        margin-left: 55px;
+        margin-left: 15px;
     }
 
 }
@@ -458,7 +458,7 @@ table {
     }
 
     #home_button{
-        margin-left: 55px;
+        margin-left: 35px;
     }
 
 }
@@ -516,7 +516,7 @@ table {
     }
 
     #home_button{
-        margin-left: 55px;
+        margin-left: 35px;
     }
 
 
