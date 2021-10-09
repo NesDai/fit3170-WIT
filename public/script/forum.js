@@ -766,6 +766,11 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                                     buttons_index++;
                                 }
 
+                                if(post_arr.length == 0 ){
+                                    document.getElementById("postField").innerHTML = '<h4>0 Posts in this section</h4>';
+                                    //$('#postField').html('<h4>0 Posts in this section</h4>');
+                                }
+
                                 const promise = new Promise((resolve, reject) => {
 
                                     resolve(1);
@@ -838,10 +843,7 @@ function printUserPosts(){
                             document.getElementById("radio-0").disabled = false;
                             document.getElementById("radio-2").disabled = false;
 
-                            if(posts.length == 0 ){
-                                document.getElementById("postField").innerHTML = '<h4>0 Posts in this section</h4>';
-                                //$('#postField').html('<h4>0 Posts in this section</h4>');
-                            }
+                            
 
                         })
                     });

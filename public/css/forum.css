@@ -471,6 +471,7 @@ transition: color 0.15s ease-in;
 	.container {
 		margin-top: 12px;
 		justify-content: center;
+		margin-left: 12px;
 	}
     h3 {
 		position: relative;
@@ -586,6 +587,7 @@ transition: color 0.15s ease-in;
 		transition: 0.25s;
 	}
 
+
     .desktop-br {
 		display: none;
 	}
@@ -636,7 +638,7 @@ transition: color 0.15s ease-in;
 
 	.modal-content-alert {
         width: 80%;
-        height: 40%;
+        height: 50%;
     }
 
     #delete_post_btn {
