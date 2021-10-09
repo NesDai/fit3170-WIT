@@ -84,6 +84,15 @@ i.icon-teal2 {
     overflow: auto;
 }
 
+/* The translation*/
+.modal-content-alert {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    overflow: auto;
+}
+
 #lang_text {
 	display: inline;
     position:relative;
@@ -413,6 +422,10 @@ transition: color 0.15s ease-in;
         width: 50%;
         height: 50%;
     }
+	.modal-content-alert{
+        width: 50%;
+        height: 50%;
+    }
 
     #send_reply_btn {
         right: 3%;
@@ -620,6 +633,12 @@ transition: color 0.15s ease-in;
         width: 80%;
         height: 60%;
     }
+
+	.modal-content-alert {
+        width: 80%;
+        height: 30%;
+    }
+
     #delete_post_btn {
         height:50px;
         display: inline;

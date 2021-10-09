@@ -642,8 +642,9 @@ function printPost(post, button_num, i )
                                 }
                                 
                                 // do what needs to happen on double click. 
-                                cnosole.log("showmodal");
-                                dialog_like.showModal();
+                                //cnosole.log("showmodal");
+                                //dialog_like.showModal();
+                                console.log(document.getElementById("like-Modal").style.display)
                                 document.getElementById("like-Modal").style.display = "block";
                             }else{
                                 $button.data('alreadyclicked', true);
@@ -671,7 +672,8 @@ function printPost(post, button_num, i )
                                 }
                                 
                                 // do what needs to happen on double click. 
-                                dialog_like.showModal();
+                                //dialog_like.showModal();
+                                console.log(document.getElementById("like-Modal").style.display)
                                 document.getElementById("like-Modal").style.display = "block";
 
                             }else{
@@ -689,18 +691,7 @@ function printPost(post, button_num, i )
                         });
                     </script>
 
-                    <!-- Alert control-->
-                    <script>
-                        var dialog_like = document.querySelector('.mdl-dialog-like');
-                        if (! dialog_like.showModal) {
-                            //document.getElementById("like-Modal").style.display = "block";
-                            dialogPolyfill.registerDialog(dialog_like);
-                        }
-                        dialog_like.querySelector('.close_btn').addEventListener('click', function() {
-                            dialog_like.close();
-                            document.getElementById("like-Modal").style.display = "none";
-                        });
-                    </script>
+                   
 
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
                     <script type="text/javascript"></script>
@@ -709,6 +700,11 @@ function printPost(post, button_num, i )
      </div>`
     );
 
+}
+
+
+function hideLikeAlert(){
+    document.getElementById("like-Modal").style.display =  "none";
 }
 
 /**
