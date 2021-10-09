@@ -182,22 +182,6 @@ function printPostDetails(post, button_num) {
                     <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
                 </div>
 
-                <!-- Alert UI -->
-                    <dialog class="mdl-dialog">
-                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-                        <hr style="margin: 0;">
-                        <div class="mdl-dialog__content">
-                            <h8>
-                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
-                            </h8>
-                            <br>
-                            <br>
-                            <div class="mdl-dialog__actions">
-                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-                            </div>
-                        </div>
-                    </dialog>
-
                 <script>
                     //checks for double click on like button
                     $('#btn_like').on('click',function(){
@@ -929,8 +913,6 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
         window.location = "forum.html";
     }
 }
-
-
 
 function redirect(url, msg) {
     window.location = url;
