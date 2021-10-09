@@ -61,7 +61,7 @@ function makeNewPost() {
         });
 
         if (!interest_arr.length){
-            dialog_int.showModal();
+            document.getElementById("interest-Modal").style.display = "block";
             return
         }
 
@@ -77,7 +77,7 @@ function makeNewPost() {
         if (video_url !== "") {
             embedding_video_url = checkEmbeddingVideo(video_url);
             if (embedding_video_url == 0) {
-                dialog_vid.showModal();
+                document.getElementById("video-Modal").style.display = "block";
                 return;
             }
 
@@ -104,7 +104,6 @@ function makeNewPost() {
         }
 
         firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
-            //alert("Posted successfully. Redirecting back to forum")
             window.location = "forum.html";
         });
      } else{
@@ -494,7 +493,7 @@ function print_create_post()
                  var cnt = $("input[name='interests']:checked").length;
                  if (cnt > maxAllowed) {
                      $(this).prop("checked", "");
-                     dialog_int.showModal();
+                     document.getElementById("interest-Modal").style.display = "block";
                  }
              });
           });
@@ -506,26 +505,6 @@ function print_create_post()
        POST
        </button>
     </div>
-
-    <!-- Alert control-->
-    <script>
-        var dialog_int = document.querySelector('.mdl-dialog-int');
-        if (! dialog_int.showModal) {
-            dialogPolyfill.registerDialog(dialog_int);
-        }
-        dialog_int.querySelector('.close_btn').addEventListener('click', function() {
-            dialog_int.close();
-        });
-
-        var dialog_vid=document.querySelector('.mdl-dialog-vid')
-        if (! dialog_vid.showModal) {
-            dialogPolyfill.registerDialog(dialog_vid);
-        }
-        dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
-            dialog_vid.close();
-        });
-
-    </script>
 
 
  </div>`
@@ -641,10 +620,7 @@ function printPost(post, button_num, i )
                                     clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                                 }
                                 
-                                // do what needs to happen on double click. 
-                                //cnosole.log("showmodal");
-                                //dialog_like.showModal();
-                                console.log(document.getElementById("like-Modal").style.display)
+                                // do what needs to happen on double click
                                 document.getElementById("like-Modal").style.display = "block";
                             }else{
                                 $button.data('alreadyclicked', true);
@@ -672,8 +648,6 @@ function printPost(post, button_num, i )
                                 }
                                 
                                 // do what needs to happen on double click. 
-                                //dialog_like.showModal();
-                                console.log(document.getElementById("like-Modal").style.display)
                                 document.getElementById("like-Modal").style.display = "block";
 
                             }else{
@@ -690,9 +664,6 @@ function printPost(post, button_num, i )
                             return false;
                         });
                     </script>
-
-                   
-
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
                     <script type="text/javascript"></script>
                   <br>
@@ -705,6 +676,14 @@ function printPost(post, button_num, i )
 
 function hideLikeAlert(){
     document.getElementById("like-Modal").style.display =  "none";
+}
+
+function hideVideoAlert(){
+    document.getElementById("video-Modal").style.display =  "none";
+}
+
+function hideInterestAlert(){
+    document.getElementById("interest-Modal").style.display =  "none";
 }
 
 /**
