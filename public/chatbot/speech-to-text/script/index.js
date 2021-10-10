@@ -39,8 +39,22 @@ function handleSuccess(stream) {
 
     mediaRecorder.addEventListener("stop", () => {
         // When the recording is stopped
-        console.log(new Blob(recordedChunks));
         getTranscript(recordedChunks);
+
+        // Show link
+        document.body.innerHTML += `<a id="download">Download</a>`;
+        let downloadLink = document.getElementById("download");
+
+        downloadLink.href = URL.createObjectURL(new Blob(recordedChunks));
+        downloadLink.download = 'acetest.wav';
+
+        // Try uploading to Cloud Storage
+        const uploadRecording = firebase.functions().httpsCallable("uploadRecording");
+        uploadRecording({filePath: downloadLink.href})
+            .then(result => {
+                console.log(("File uploaded!"));
+                console.log(result.data.text);
+            });
     });
 
     mediaRecorder.start();
