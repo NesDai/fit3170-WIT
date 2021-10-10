@@ -897,15 +897,9 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
                 username: current_user["username"],
             };
 
-            console.log(post_id);
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                window.location = "post.html" + "?post_id=" + post_id;
+                printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
             });
-
-            // firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-            //     printRepliesToReplies(); // have yet to put the arguments
-            //     window.location = "post.html" + "?post_id=" + post_id;
-            // });
         };
     } else {
        // window.location = "forum.html";
