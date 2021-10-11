@@ -1,14 +1,11 @@
 /*
-* This file is dedicated to uploading the long english version of the terms and conditions onto the firestore
+* This file is dedicated to uploading the short english version of the explanatory statement onto the firestore
 * */
 
-function uploadTermsAndConditions_en_short(){
-    // "<center><h3>EXPLANATORY STATEMENT</h3></center><br>" +
+function uploadExplanatoryStatement_en_short(){
     let contents = "<center><b>(Survey Participant Group)</b></center><br>" +
-        "<b>Project ID: 29459</b><br>" +
-        "<b>Project title: Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand:</b><br>" +
-        "<b>Integrating Action Research and Design Science Approach</b><br><br>" +
-        "<center><b>Project email:</b> womenintech@monash.edu</center><br>" +
+        "<center><b>Project ID: 29459</b><br>" +
+        "<b>Project email:</b> womenintech@monash.edu</center><br>" +
         "<b>Professor Teh Pei Lee</b><br>" +
         "School of Business<br>" +
         "Phone: +603-55144971<br>" +
