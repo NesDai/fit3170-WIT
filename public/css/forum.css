@@ -597,9 +597,9 @@ transition: color 0.15s ease-in;
 	}
 	#back_btn {
 		border-radius: 20px;
-		background-color: #00507e;
-		color: white;
 		position: relative;
+		text-align: center;
+		padding: 0px 35%;
 		left: 25px;
 		top: 5px
 	}
