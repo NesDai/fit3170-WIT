@@ -100,20 +100,20 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Enter a Number",
+    "Enter a Number (e.g. 1, 2, 3)",
     "Select an Option",
     "Select an Option",
     "Select an Option",
     "Select an Option",
     "Select an Option",
     "Select an Option",
-    "Enter a Number",
-    "Enter a Number",
+    "Enter a Number (e.g. 1, 2, 3)",
+    "Enter a Number (e.g. 1, 2, 3)",
 
     // The question above this line is question 1.10
 
 
-    "Enter a Number",
+    "Enter a Number (e.g. 1, 2, 3)",
     "Select an Option",
     "Select an Option",
     // The question above this line is a long question (1.14)
@@ -315,8 +315,8 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "Enter a Number",
-    "Enter a Number",
+    "Enter a Number (e.g. 1, 2, 3)",
+    "Enter a Number (e.g. 1, 2, 3)",
     // The question above this line is question 4.2
 
     "Select an Option",
@@ -660,7 +660,7 @@ function pushNumeric(questionNumber, questionText, lowerRange, upperRange, skipI
             skipIfInvalid: true,
             skipTarget: "end_survey"
         },
-        hint: "Enter a Number"
+        hint: "Enter a Number (e.g. 1, 2, 3)"
     };
 
     let questionObject = {

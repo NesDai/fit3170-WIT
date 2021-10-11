@@ -100,20 +100,20 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "masukkan nombor",
+    "masukkan nombor (e.g. 1, 2, 3)",
     "memilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
     "memilih pilihan",
     "memilih pilihan",
     "memilih pilihan",
     "memilih pilihan",
     "memilih pilihan",
-    "masukkan nombor",
-    "masukkan nombor",
+    "masukkan nombor (e.g. 1, 2, 3)",
+    "masukkan nombor (e.g. 1, 2, 3)",
 
     // The question above this line is question 1.10
 
 
-    "masukkan nombor",
+    "masukkan nombor(e.g. 1, 2, 3)",
     "memilih pilihan", // TODO get translation confirmation: "Select an Option" -> "pilih pilihan"
     "memilih pilihan",
     // The question above this line is a long question (1.14)
@@ -312,8 +312,8 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "masukkan nombor",
-    "masukkan nombor",
+    "masukkan nombor (e.g. 1, 2, 3)",
+    "masukkan nombor (e.g. 1, 2, 3)",
     // The question above this line is question 4.2
 
     "memilih pilihan",

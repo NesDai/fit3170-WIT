@@ -100,20 +100,20 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "โปรดระบุเป็นตัวเลข",
+    "โปรดระบุเป็นตัวเลข (เช่น 1, 2, 3)",
     "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
     "เลือกตัวเลือก",
     "เลือกตัวเลือกn",
     "เลือกตัวเลือก",
     "เลือกตัวเลือกn",
     "เลือกตัวเลือกn",
-    "โปรดระบุเป็นตัวเลข",
-    "โปรดระบุเป็นตัวเลข",
+    "โปรดระบุเป็นตัวเลข (เช่น 1, 2, 3)",
+    "โปรดระบุเป็นตัวเลข (เช่น 1, 2, 3)",
 
     // The question above this line is question 1.10
 
 
-    "โปรดระบุเป็นตัวเลข",
+    "โปรดระบุเป็นตัวเลข (เช่น 1, 2, 3)",
     "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
     "เลือกตัวเลือก",
     // The question above this line is a long question (1.14)
@@ -310,8 +310,8 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
-    "ใส่จำนวนชั่วโมงเป็นตัวเลข",
+    "โปรดระบุเป็นตัวเลข (เช่น 1, 2, 3)", // TODO get confirmation from clients on translation of "Select an option"
+    "โปรดระบุเป็นตัวเลข (เช่น 1, 2, 3)",
     // The question above this line is question 4.2
 
     "เลือกตัวเลือก", // TODO get confirmation from clients on translation of "Select an option"
