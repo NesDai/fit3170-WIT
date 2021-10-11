@@ -1,5 +1,5 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-
+let post_names = [":'("];
 
 window.onload = execute()
 
@@ -21,6 +21,7 @@ function checkUserExistence() {
         return false;
     }
 }
+
 
 
 /**
@@ -171,11 +172,16 @@ function findAllPosts() {
 
 function printAllPosts(){
 
+    $('#searchBoxRecommender').hide();
+    $('#searchBoxFeed').hide();
+    $('#searchBoxCreatePost').show();
+
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
     
     $('#resNum').html(``);
-    document.getElementById("searchBox").value = ""; // clear search box
+    document.getElementById("searchBoxCreatePost").value = ""; // clear search box
+
     print_create_post();
     $('#postField').text(``); // emtpy the field of any previous posts
 
@@ -185,6 +191,8 @@ function printAllPosts(){
     let data_list = [];
     let button_nums = []
     let posts = [];
+
+    post_names = [];
 
     firebase.database().ref('likesDislikes')
     .once('value', x => {
@@ -213,6 +221,7 @@ function printAllPosts(){
                 }
                     button_nums.push(button_num);
                 posts.push(data.val());
+                post_names.push(data.val().title);
         }
             });
         
@@ -230,10 +239,13 @@ function printAllPosts(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-    
-    })
-    })
 
+            $('#searchBoxCreatePost').autocomplete({
+                source: post_names
+            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+            
+    })
+    })
 
 }
 
@@ -247,9 +259,15 @@ function printThread(){
     $("#radio-1").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
+    $('#searchBoxRecommender').show();
+    $('#searchBoxFeed').hide();
+    $('#searchBoxCreatePost').hide();
+
+    post_names = [];
+
     console.log(document.getElementById(`radio-1`), document.getElementById(`radio-2`))
 
-    document.getElementById("searchBox").value = ""; // clear search box
+    document.getElementById("searchBoxRecommender").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
     $('#postField').text(``); // clear post field from posts
     $('#resNum').html(``);
@@ -289,6 +307,7 @@ function printThread(){
                 }
                     button_nums.push(button_num);
                 posts.push(data.val());
+                post_names.push(data.val().title);
         }
             });
         }).then(()=>{
@@ -303,6 +322,13 @@ function printThread(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
+            
+            
+            $('#searchBoxRecommender').autocomplete({
+                source: post_names
+            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;').on('focus', function() { 
+                $(this).keydown();
+            });
 
     });
     });
@@ -846,11 +872,19 @@ function printUserPosts(){
     $("#radio-0").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
+    $('#searchBoxRecommender').hide();
+    $('#searchBoxFeed').show();
+    $('#searchBoxCreatePost').hide();
+
+    post_names = [];
+
   
 
     $('#resNum').html(``);   
 
-    document.getElementById("searchBox").value = ""; // clear search box
+    document.getElementById("searchBoxFeed").value = ""; // clear search box
+    document.getElementById("searchBoxRecommender").value = ""; // clear search box
+    document.getElementById("searchBoxCreatePost").value = ""; // clear search box
     $('#create_post').text(''); // clear create post ui area
 
     $('#postField').text(''); // emtpy the field of any previous posts
@@ -887,6 +921,7 @@ function printUserPosts(){
                             }
                             button_nums.push(button_num);
                             posts.push(data.val());
+                            post_names.push(data.val().title);
                         });
 
                     }).then(()=>{
@@ -903,6 +938,11 @@ function printUserPosts(){
                             if(posts.length == 0 ){
                                 $('#postField').html('<h4>0 Posts in this section</h4>');
                             }
+
+                            
+                            $('#searchBoxFeed').autocomplete({
+                                source: post_names
+                            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
 
                         })
                     });
@@ -922,7 +962,6 @@ function printUserPosts(){
 
     let printPostCount = 10; // start printing 10 posts first
     let printStartIndex;
-
     let data_list = [];
     let toPrint =[];
     let button_nums = []
@@ -1318,6 +1357,7 @@ function searchYourPosts(param){
                             
                             if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
                                 posts.push(data.val());
+                                post_names.push(data.val().title);
                                 toPrint.push(data.val().id);
                             }
                         }
@@ -1506,5 +1546,10 @@ async function dislikePost(post_id, i)
 function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
 } 
+
+
+function test(){
+    console.log(post_names);
+}
 
 

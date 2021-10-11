@@ -109,7 +109,9 @@
                   <div id="icon-background">
                      <a id="search-icon"> <img src="./css/images/Icon_Interest-etc_14.png" class="nav_icon notranslate" id="search_ico"></a> 
                   </div>
-                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBox">
+                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBoxFeed" onkeyup="test()">
+                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBoxRecommender" onkeyup="test()">
+                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBoxCreatePost" onkeyup="test()">
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="searchButton" 
                      onclick="searchAllPosts(document.getElementById('searchBox').value)">Search</button>
                </div>
@@ -172,6 +174,12 @@
             </div>
          </div>
 
+
+         
+         <script src="js/jquery.min.js"></script>
+         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+         <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
          
          <!-- Include Firebase Library and Config-->
          <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
@@ -183,9 +191,9 @@
          <script src="/__/firebase/7.18.0/firebase-database.js"></script>
          <script src="/__/firebase/init.js?useEmulator=true"></script>
          <!---Translation stuff-->
-         <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+         <!-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
          <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>
+         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script> -->
          <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js" type="text/javascript"></script> -->
          <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script> -->
          <!-- Links to js files -->
