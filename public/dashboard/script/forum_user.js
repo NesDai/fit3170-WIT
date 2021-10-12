@@ -2,9 +2,11 @@ let users;
 let user_ids_arr;
 let current_user;
 let posts=[];
+
+// used for table display
 let likes_dislikes=[];
 let comments_replies=[];
-
+let created_posts = [];
 window.onload = execute();
 
 async function execute(){
@@ -32,7 +34,7 @@ async function collectUsers() {
 function updateUserUI(user_id) {
     collectPosts().then(() => {
                 collectUsers().then(() => {
-                        
+
                     if (users.length > 0) {
                         $('#totalUsers').html(`${users.length}`)
                     }
@@ -42,14 +44,14 @@ function updateUserUI(user_id) {
                     }
 
                     let user;
-                
+
                     for (let i = 0; i < users.length; i++){
                         if(user_ids_arr[i] == user_id){
                             user = user_ids_arr[i] // if the user is found from the given user_id
-                            break; 
+                            break;
                         }
                     }
-                
+
                     if (user == undefined) { // if the user is undefined
                         $("#userError").html("Invalid User Id");
                         return; // exit from the function block
@@ -65,7 +67,7 @@ function updateUserUI(user_id) {
                             if (current_username !== undefined && current_username !== null) {
                                 let user_info_intro = "Information about @" + current_username + ", " + current_user;
                                 $("#username").html(user_info_intro);
-                                
+
                                 //represent all the total information
                                 $("#username").html(user_info_intro);
                             }
@@ -86,7 +88,7 @@ function updateUserUI(user_id) {
                                         <div class="card-body" id="likesOnPosts"> </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-4 mb-3">
                                     <div class="card shadow userInfoCard">
                                     <div class="card-header">
@@ -106,7 +108,7 @@ function updateUserUI(user_id) {
 
                                 </div> <!-- .row-->
                             </div> <!-- .col -->
-                            </div> <!-- .justify content -->       
+                            </div> <!-- .justify content -->
                         </div> <!-- /.cont fluid -->
 
 
@@ -146,7 +148,7 @@ function updateUserUI(user_id) {
                         `;
                         $("#card-body").html(cards);
 
-                        
+
                         let loading_bar=`<div class="spinner-border text-primary" role="status">
                             <span class="sr-only">Loading...</span>
                             </div>`
@@ -157,7 +159,7 @@ function updateUserUI(user_id) {
                             $("#favouritePosts").html( loading_bar);
                             $("#likesOnComments").html(loading_bar);
                     }).then(() => {
-                        //updates the total number of likes and dislikes for the chosen user 
+                        //updates the total number of likes and dislikes for the chosen user
                         updateLikesDislikes(current_username)
                         //updates the number of replies and comments
                         updateCommentsReplies(current_username)
@@ -169,6 +171,8 @@ function updateUserUI(user_id) {
                         updateLikesComments(current_username)
                         //updates the pie chart
                         updateChart(current_username,  current_user)
+                        //updates the table viewed
+                        updateTable();
                     });
                 });
             });
@@ -183,7 +187,7 @@ function updateUserUI(user_id) {
     .once('value', x => {
         x.forEach(data => {
             posts.push(data.val()); //push the data to the list
-        })   
+        })
     });
 }
 
@@ -196,7 +200,7 @@ function updateLikesDislikes(current_username){
             if(data.val()[current_username] != undefined){ // if the user performed an action on the post
                 if (data.val()[current_username].action==1)
                     likes_count+=1;
-                else 
+                else
                     dislikes_count+=1
             }
         })
@@ -229,9 +233,11 @@ function updateCommentsReplies(current_username){
 
 function updatePosts(current_username){
     let posts_count=0;
+    created_posts = [];
     for (let i=0; i<posts.length; i++) {
         if (posts[i].username == current_username){
-            posts_count+=1 
+            posts_count+=1
+            created_posts.push(posts[i]);
         }
     }
     $("#postsCreated").html(`<h3>${posts_count}</h3>`);
@@ -274,8 +280,8 @@ function updateChart(current_username, current_user_phone){
     let labels_arr=[];
     let data_arr=[];
     let colors_arr=[];
-    
-    //colors array 
+
+    //colors array
     let colors=["#201c5b", "#282372", "#3831a0", "#483fcd", "#756cfa", "#938dfb", "#c1bdfd", "#002b54", "#003b73", "#0052a1", "#2E97FC", "#73b8fd", "#a2dofd", "#d13c33", "#c2594c", "#co7765", "#d28c76", "#3cb39f", "#5cc2b4", "bcd5c9"]
     //check what inetersts the user created posts with
     for (let i=0; i<posts.length; i++) {
@@ -292,7 +298,7 @@ function updateChart(current_username, current_user_phone){
             }
         }
     }
-    
+
 
     let liked_post_ids=[];
     //check what posts the user liked
@@ -370,7 +376,7 @@ function updateChart(current_username, current_user_phone){
                                 }
                             }
                         }
-                    } 
+                    }
                 }
             }
 
@@ -401,26 +407,72 @@ function updateChart(current_username, current_user_phone){
             else{
                 $("#chart_body").html( `<h5 style="text-align: center">No Actions performed</h5>`);
             }
-        });  
+        });
     });
 }
 
 
+/* Function that updates the table that is displayed for the user based on the value of the checked radio
+*
+*/
+function updateTable(){
+  let checked_value =  document.getElementById('tableDisplay').value;
+
+  if (checked_value == "createdPosts"){
+    displayCreatedPosts();
+  } else if (checked_value == "likedPosts") {
+
+  } else if (checked_value == "dislikedPosts"){
+
+  } else if (checked_value == "comments"){
+
+  } else if (checked_value == "favouritePosts") {
+
+  } else if (checked_value == "likedComments"){
+
+  }
+}
+
+/* Table that is used to display the created posts by the user
+*/
+function displayCreatedPosts(){
+  //outputing the rows of posts
+  console.log(created_posts)
+  let display_table = document.getElementById("tableDisplayRow");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>Post link</th></thead><tbody>";
+  for (let i = 0; i < created_posts.length; i++){
+    let post = created_posts[i];
+    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>";
+    output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
+    output_rows += "</td></tr>";
+
+  }
+
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
+
+
+}
+
+
+/**
+ Function that transfer the admin to the post analytics detial page
+ * @param {*} post_id the post id of the post the admin wants to access
+ */
+function transfer_admin_post(post_id){
+  localStorage.setItem("POST_ID", post_id);
+  window.location = "./forum_post.html";
+
+}
 
 // update posts on an interval (10 sec) to mimic realtime dashboard
 setInterval(
-    async function(){ 
+    async function(){
     collectUsers().then(()=>{
         if (current_user == undefined || current_user == null) {
             updateUserUI(null);
         } else {
             updateUserUI(current_user);
         }
-    }); 
+    });
 }, 30000);
-
-    
-    
-    
-    
-   
