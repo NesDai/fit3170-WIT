@@ -19,7 +19,7 @@ async function execute(){
     if (post_id != "null" && post_id != null){
       // onload function
 
-      collectPosts().then(()=>{
+      await collectPosts().then(()=>{
 
           updateUI(post_id);
           $("#searchInput").val(`${post_id}`);
@@ -29,23 +29,23 @@ async function execute(){
         }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
 
 
-        })
+        });
     } else if(post_id == "null" || post_id == null){
-      // onload function
-      collectPosts().then(()=>{
+        // onload function
+        await collectPosts().then(()=>{
 
-          updateUI(null);
-          // autocomplete(document.getElementById("searchInput"), postid);
-
-
-          $('#searchInput').autocomplete({
-
-              source : postid,
-          }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+            updateUI(null);
+            // autocomplete(document.getElementById("searchInput"), postid);
 
 
-  })
-    }
+            $('#searchInput').autocomplete({
+
+                source : postid,
+            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+
+
+            });
+        }
       localStorage.removeItem("POST_ID");
 
 }

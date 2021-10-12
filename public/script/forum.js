@@ -1,6 +1,14 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 
 
+let postNamesCreatePost = [];
+let postNamesFeed = [];
+let postNamesRecommender = [];
+
+
+
+
+
 window.onload = execute()
 
 function execute(){
@@ -12,6 +20,41 @@ function execute(){
 
 }
 
+/**
+ * The function displays a list of available options to autocomplete to the search query limited to 10 options
+ * @param {1} query: the query text inputed into the search field 
+ * returns void
+ */
+function autoComplete(query){
+
+    document.getElementById("autocomplete").innerHTML = ""; // empty autocomplete box
+
+    let tab = document.getElementsByName("tabs");
+
+    let inputarr;
+
+    if (tab[0].checked){ // recommender
+        inputarr = postNamesRecommender;
+    }
+    else if (tab[1].checked){ // feed
+        inputarr = postNamesFeed;
+    }
+    else{ // create Post
+        inputarr = postNamesCreatePost;
+    }
+
+	let output = [];
+    let count = 0;
+	for (let i = 0 ; i < inputarr.length ; i++){
+        if(query != "" && (inputarr[i].toLowerCase()).indexOf(query.toLowerCase()) != -1 && count<10){
+            //output.push(inputarr[i]);
+            document.getElementById("autocomplete").innerHTML += `<div class="autocomplete-item" onclick="document.getElementById('searchBox').value = '${inputarr[i]}'"><strong>${inputarr[i]}<strong/></div>`;
+            count++;
+        } 
+  }
+}
+
+
 //check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then
@@ -21,6 +64,7 @@ function checkUserExistence() {
         return false;
     }
 }
+
 
 
 /**
@@ -171,11 +215,14 @@ function findAllPosts() {
 
 function printAllPosts(){
 
+
+
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
     
     $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
+
     print_create_post();
     $('#postField').text(``); // emtpy the field of any previous posts
 
@@ -185,6 +232,8 @@ function printAllPosts(){
     let data_list = [];
     let button_nums = []
     let posts = [];
+
+    postNamesCreatePost = [];
 
     firebase.database().ref('likesDislikes')
     .once('value', x => {
@@ -213,6 +262,7 @@ function printAllPosts(){
                 }
                     button_nums.push(button_num);
                 posts.push(data.val());
+                postNamesCreatePost.push(data.val().title);
         }
             });
         
@@ -230,10 +280,10 @@ function printAllPosts(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-    
-    })
-    })
 
+            
+    })
+    })
 
 }
 
@@ -246,6 +296,9 @@ function printThread(){
     // thread is radio button index 0. Disable other tabs
     $("#radio-1").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
+
+
+    postNamesRecommender = [];
 
     console.log(document.getElementById(`radio-1`), document.getElementById(`radio-2`))
 
@@ -289,6 +342,7 @@ function printThread(){
                 }
                     button_nums.push(button_num);
                 posts.push(data.val());
+                postNamesRecommender.push(data.val().title);
         }
             });
         }).then(()=>{
@@ -303,6 +357,11 @@ function printThread(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
+            
+            
+            $('#searchBoxRecommender').autocomplete({
+                source: post_names
+            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
 
     });
     });
@@ -846,11 +905,15 @@ function printUserPosts(){
     $("#radio-0").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
+
+    postNamesFeed = [];
+
   
 
     $('#resNum').html(``);   
 
     document.getElementById("searchBox").value = ""; // clear search box
+
     $('#create_post').text(''); // clear create post ui area
 
     $('#postField').text(''); // emtpy the field of any previous posts
@@ -887,6 +950,7 @@ function printUserPosts(){
                             }
                             button_nums.push(button_num);
                             posts.push(data.val());
+                            postNamesFeed.push(data.val().title);
                         });
 
                     }).then(()=>{
@@ -904,6 +968,7 @@ function printUserPosts(){
                                 $('#postField').html('<h4>0 Posts in this section</h4>');
                             }
 
+
                         })
                     });
                 });
@@ -920,9 +985,10 @@ function printUserPosts(){
  */
  function searchAllPosts(param){
 
+    document.getElementById("autocomplete").innerHTML = ""; // empty autocomplete
+
     let printPostCount = 10; // start printing 10 posts first
     let printStartIndex;
-
     let data_list = [];
     let toPrint =[];
     let button_nums = []
@@ -1318,6 +1384,7 @@ function searchYourPosts(param){
                             
                             if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
                                 posts.push(data.val());
+                                post_names.push(data.val().title);
                                 toPrint.push(data.val().id);
                             }
                         }
@@ -1506,5 +1573,10 @@ async function dislikePost(post_id, i)
 function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
 } 
+
+
+function test(){
+    console.log(post_names);
+}
 
 
