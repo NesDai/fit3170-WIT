@@ -21,6 +21,15 @@ function execute(){
 }
 
 /**
+ * Function used to check whether or not a post exists provided the post id. Function should be called before performing any action on the post.
+ * @param {1} id: the post id
+ * returns 0 if the post exists and 1 otherwise
+ */
+function checkPostExists(id){
+    
+}
+
+/**
  * The function displays a list of available options to autocomplete to the search query limited to 10 options
  * @param {1} query: the query text inputed into the search field 
  * returns void
@@ -867,6 +876,7 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
 
                                 if (!duplicate){
                                     post_arr.push(fav_post);
+                                    postNamesFeed.push(fav_post.title);
                                 }
                             })
                     }).then(()=>{
