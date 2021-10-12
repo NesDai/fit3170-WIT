@@ -420,7 +420,9 @@ function print_create_post()
     <hr style="margin: 0;">
     <div class="new_post_form">
        <!-- POST TITLE -->
+       <div>
        <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
+       </div>
        <input class="input" type="text" id="post_title" name="post_title" placeholder=" Share your thoughts with the community!" required></input><br>
        <!-- POST DESCRIPTION -->
        <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
@@ -1106,7 +1108,7 @@ function printUserPosts(){
                 }).then(()=>{
                     
                     printStartIndex = posts.length-1;
-                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                     // if(printStartIndex < 0){
                     //     $('#postField').html(`<h2>No results found<h2>`);
@@ -1255,8 +1257,7 @@ function searchYourPosts(param){
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
                     }
-
-                    $('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
+                    document.getElementById('resNum').innerHTML = `${posts.length-1-i} Results Found`;
 
                     // if(i == posts.length-1){
                     //     $('#postField').append(`<h2>No results found<h2>`); // no results found
@@ -1392,7 +1393,7 @@ function searchYourPosts(param){
                 }).then(()=>{
                     printStartIndex = posts.length-1;
                     
-                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                     // if(printStartIndex < 0){
                     //     $('#postField').html(`<h2>No results found<h2>`);

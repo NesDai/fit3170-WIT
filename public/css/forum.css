@@ -287,6 +287,11 @@ transition: color 0.15s ease-in;
 		position: relative;
 		right: 100px
 	}
+	#post_title {
+		width: 95%;
+		border-radius: 10px;
+	}
+
 	#post_description {
 		width: 95%;
 		resize: none;
@@ -564,6 +569,7 @@ transition: color 0.15s ease-in;
 		width: 325px;
 	}
 	#searchButton {
+		text-align: center;
 		background-color: #006DAE;
 		padding-right: 50px;
 		margin-top: 5px;
@@ -591,6 +597,10 @@ transition: color 0.15s ease-in;
 		resize: none;
 		height: 150px;
 		padding: 10px 15px;
+		border-radius: 10px;
+	}
+	#post_title {
+		width: 91%;
 		border-radius: 10px;
 	}
 
@@ -854,6 +864,7 @@ button.reply {
 		transition: 0.25s;
 	}
 	#searchButton {
+		text-align: center;
 		background-color: #006DAE;
 		padding-right: 50px;
 		margin-top: 3px;
@@ -866,6 +877,7 @@ button.reply {
 		height: 70px;
 	}
 	#searchButton {
+		text-align: center;
 		background-color: #006DAE;
 		padding-right: 50px;
 		margin-top: 5px;
@@ -924,9 +936,7 @@ input[type=text] {
 	margin: 10px 0;
 }
 
-#post_title {
-	border-radius: 10px;
-}
+
 
 .new_post_form {
 	padding: 16px 10px;
@@ -995,6 +1005,16 @@ input[type=text] {
 	width: 600px;
 	margin-top: 2px;
 	}
+	#resNum{
+		font-size: 30px;
+		text-align: center;
+		display: block;
+		margin: auto;
+		width: 50%;
+		padding: 10px;
+		width: 600px;
+		margin-top: 2px;
+	}
 }
 @media all and (max-width: 541px) {
 	#autocomplete{
@@ -1007,6 +1027,15 @@ input[type=text] {
 		width: 325px;
 		margin-top: 0px;
 		}
+
+	#resNum{
+		font-size: 25px;
+		text-align: center;
+		display: block;
+		margin: auto;
+		width: 50%;
+		margin-top: 0px;
+	}
 }
 
 .autocomplete-item {
