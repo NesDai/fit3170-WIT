@@ -3,6 +3,7 @@ let user_ids_arr;
 let current_user;
 let posts=[];
 let comments = [];
+let replies = [];
 
 // used for table display
 let liked_posts_id=[];
@@ -11,7 +12,7 @@ let comments_made=[];
 let created_posts = [];
 let favourite_posts = [];
 let liked_comments_id = [];
-
+let replies_made = [];
 
 window.onload = execute();
 
@@ -41,6 +42,7 @@ async function collectUsers() {
 function updateUserUI(user_id) {
     // update the comments array from the firebase
     collectComments();
+    collectReplies();
 
     collectPosts().then(() => {
                 collectUsers().then(() => {
@@ -220,6 +222,19 @@ function updateUserUI(user_id) {
     });
 }
 
+/**
+ * Function used to collect all the comments into an array from firebase
+ */
+ async function collectReplies(){
+    replies = []; // reset posts to 0 / initialize to a list
+    await firebase.database().ref('replies')
+    .once('value', x => {
+        x.forEach(data => {
+            replies.push(data.val()); //push the data to the list
+        })
+    });
+}
+
 function updateLikesDislikes(current_username){
     let likes_count=0;
     let dislikes_count=0;
@@ -252,22 +267,17 @@ function updateCommentsReplies(current_username){
       }
     }
 
-    firebase.database().ref('comments')
-    .once('value', x => {
-        x.forEach(data => {
+    replies_made = [];
+    for(let i=0; i< replies.length; i++){
+      if(replies[i].username== current_username){ // if the user performed an action on the post
+          comments_replies_count+=1;
+          replies_made.push(replies[i]);
+      }
+    }
 
-        })
-    }).then(() => {
-        firebase.database().ref('replies')
-        .once('value', x => {
-            x.forEach(data => {
-                if(data.val().username== current_username){ // if the user performed an action on the post
-                    comments_replies_count+=1;
-                }
-            })
-            $("#commentsReplies").html(`<h3>${comments_replies_count}</h3>`);
-        })
-    });
+    $("#commentsReplies").html(`<h3>${comments_replies_count}</h3>`);
+
+
 }
 
 function updatePosts(current_username){
@@ -473,6 +483,8 @@ function updateTable(){
     displayFavourtiePosts();
   } else if (checked_value == "likedComments"){
     retrieveLikedComments();
+  } else if(checked_value == "replies"){
+    displayReplies();
   }
 }
 
@@ -626,6 +638,7 @@ function retrieveLikedComments(){
   }
   displayLikedComments(liked_comments);
 }
+
 /**
 Function that displays the comments that were liked by the user
 @param liked_comments comments that were liked by the user
@@ -644,6 +657,44 @@ function displayLikedComments(liked_comments){
   output_rows += "</tbody></table>";
   display_table.innerHTML = output_rows;
 }
+
+/**
+Function that finds the comment or the reply using their id
+*/
+function find_comment_reply(id){
+  // search in the comment section
+  for (let i=0; i<comments.length; i++){
+    if(comments[i].id == id){
+      return comments[i];
+    }
+  }
+
+  // search in the reply section
+  for (let i=0; i<replies.length; i++){
+    if(replies[i].id == id){
+      return replies[i];
+    }
+  }
+}
+
+/**
+Function that displays the replies that were made by the user
+*/
+function displayReplies(){
+  //outputing the rows of posts
+  let display_table = document.getElementById("tableDisplayRow");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Reply content</th><th>Date made</th><th>Reply to comment/reply</th><th>Reply to user</th><th>Anonymous</th></thead><tbody>";
+
+  for(let i=0; i<replies_made.length; i++){
+    let reply = replies_made[i];
+    let parent = find_comment_reply(reply.reply_comment_parent);
+    output_rows += "<tr><td>" + reply.content + "</td><td> " + reply.created + " </td><td>" + parent.content + " </td><td>" + parent.username + " </td><td>" + reply.anonymous + " </td>";
+    output_rows += "</tr>";
+  }
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
+}
+
 /**
  Function that transfer the admin to the post analytics detial page
  * @param {*} post_id the post id of the post the admin wants to access
