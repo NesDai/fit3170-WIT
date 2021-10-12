@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
+    <title>User analytics</title>
 
     <!-- Fonts CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -76,23 +76,12 @@
                     <div class="card-body"><!-- SEARCH -->
                       <div id="userError"></div>
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Enter a Username">
+                          <input type="text" class="form-control" placeholder="Enter a Username or Number" id="searchValue">
                           <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="search-butt">Search</button>
+                            <button class="btn btn-primary" type="button" id="search-butt" onclick="selectedUser()">Search</button>
                           </div>
                         </div>
-                    </div> <!-- /.card-body -->
-                  </div> <!-- /.card -->
-                </div> <!-- /. col -->
-
-                <div class="col-md-6 mb-4">
-                  <div class="card shadow" style="height: 200px;">
-                    <div class="card-header">
-                      <strong class="card-title mb-0">User list</strong>
-
-                    </div>
-                    <div class="card-body" id="userListCard">
-                      <h5>username placeholder</h5>
+                        <t id="searchError" style="color:red;visibility: hidden;">Error: Username or number not listed</t>
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
@@ -101,12 +90,46 @@
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
 
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+
+                <div class="card shadow" id="userListCard">
+                  <div class="card-header">
+                    <strong class="card-title mb-0">User list</strong>
+                  </div>
+                  <div class="card-body">
+                    <div class="container-fluid">
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+
+                          <div class="row my-1" >
+                            <table class="pure-table" id="userListTable">
+                              <thead>
+                                  <tr>
+                                      <th>UserID</th>
+                                      <th>Phone</th>
+                                      <th>Username</th>
+                                      <th></th>
+                                  </tr>
+                              </thead>
+                              <tbody id="userListTableBody">
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> <!-- /.card-body -->
+                  </div>
+                </div><!--/justify content-->
+              </div><!--/container-->
+
         <!--USER DESCRIPTION-->
         <div class="container-fluid">
           <div class="card shadow">
             <div class="card-header">
                 <div id="userInfo">
-                  <h2>No User Selected</h2>
+                  <h2 id="selectedUserName">No User Selected</h2>
                 </div>
             </div>
           </div>
@@ -119,7 +142,7 @@
 
                 <div class="card shadow" id="historyCard">
                   <div class="card-header">
-                    <strong class="card-title mb-0">Video History of #Username</strong>
+                    <strong class="card-title mb-0" id="videoHistoryTitle">Video History of #Username</strong>
                   </div>
                   <div class="card-body">
                     <div class="container-fluid">
@@ -136,25 +159,7 @@
                                       <th></th>
                                   </tr>
                               </thead>
-                              <tbody>
-                                  <tr>
-                                      <td>1</td>
-                                      <td>2021-09-19</td>
-                                      <td>Email Management Virtual Assistant (BECOME THE BEST AT EMAIL MANAGEMENT!)</td>
-                                      <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
-                                  </tr>
-                                  <tr>
-                                      <td>2</td>
-                                      <td>2021-09-01</td>
-                                      <td>Health care and Well being; how to care for the elderly</td>
-                                      <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
-                                  </tr>
-                                  <tr>
-                                      <td>3</td>
-                                      <td>2021-08-22</td>
-                                      <td>Being a Professional Writer</td>
-                                      <td><button id="view-butt" class="pure-button pure-button-primary">View</button></td>
-                                  </tr>
+                              <tbody id="videoHistoryTableBody">
                               </tbody>
                             </table>
                           </div>
@@ -171,7 +176,7 @@
                 <div class="row justify-content-left">
                       <div class="card shadow" id="videoAnalyticCard">
                         <div class="card-header">
-                          <strong class="card-title mb-0">Video analytic of #Id</strong>
+                          <strong class="card-title mb-0" id="videoAnalyticTitle">Video analytic of #Id</strong>
                         </div>
                         <div class="card-body">
                           <div class="container-fluid">
@@ -181,7 +186,7 @@
                                   <table class="table table-bordered">
                                     <tr>
                                         <th>VIDEO TITLE</th>
-                                        <td> title placeholder </td>
+                                        <td id=videoAnalyticTableTitle> title placeholder </td>
                                     </tr>
 
                                     <tr>
@@ -250,6 +255,24 @@
                   </div> <!-- .wrapper -->
 
 
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+    <script src = "script/firebaseConfig.js"></script>
+    <!-- FIREBAS STUFF I GOT FROM YT-->
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href=
+    "http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
+
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
@@ -275,6 +298,9 @@
     <script src="js/apexcharts.min.js"></script>
     <script src="js/apexcharts.custom.js"></script>
     <script src="js/apps.js"></script>
+
+    <script src="script/recommender_user.js"></script>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>

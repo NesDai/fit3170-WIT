@@ -18,7 +18,7 @@ async function execute() {
     })
 }
 
-/* collect all skill favourite data from firebase */
+/* collect all skill selected data from firebase */
 async function collectData(){
   let favs = [];
 
