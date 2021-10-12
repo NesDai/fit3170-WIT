@@ -88,15 +88,15 @@
                <div class="tabs">
 
                   <!-- Recommended tab -->
-                  <input type="radio" id="radio-0" name="tabs" value="Recommended" onclick="printThread();"/>
+                  <input type="radio" id="radio-0" name="tabs" value="Recommended" onclick="printThread(); document.getElementById('autocomplete').innerHTML = '';"/>
                   <label class="tab" for="radio-0" id="tab0"><b>Recommended</b></label>
 
                   <!-- feed tab -->
-                  <input type="radio" id="radio-1" name="tabs" value="Feed" onclick="printUserPosts();" checked/>
+                  <input type="radio" id="radio-1" name="tabs" value="Feed" onclick="printUserPosts(); document.getElementById('autocomplete').innerHTML = '';" checked/>
                   <label class="tab" for="radio-1" id="tab1"><b>Feed</b></label>
 
                   <!-- create post tab -->
-                  <input type="radio" id="radio-2" name="tabs" value="create_post" onclick="printAllPosts();"/>
+                  <input type="radio" id="radio-2" name="tabs" value="create_post" onclick="printAllPosts(); document.getElementById('autocomplete').innerHTML = '';"/>
                   <label class="tab" for="radio-2" id="tab2"><b>Create post</b></label>
 
                   
@@ -109,13 +109,13 @@
                   <div id="icon-background">
                      <a id="search-icon"> <img src="./css/images/Icon_Interest-etc_14.png" class="nav_icon notranslate" id="search_ico"></a> 
                   </div>
-                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBoxFeed" onkeyup="test()">
-                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBoxRecommender" onkeyup="test()">
-                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBoxCreatePost" onkeyup="test()">
+                  <input type="text" class="search-input" placeholder="Search..." name="" id="searchBox" onkeyup="autoComplete(this.value);">
                   <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="searchButton" 
                      onclick="searchAllPosts(document.getElementById('searchBox').value)">Search</button>
                </div>
             </div>
+            
+            <div id="autocomplete"></div>
             <!--SEARCH ENDS-->
             <br>
             

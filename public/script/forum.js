@@ -1,5 +1,13 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-let post_names = [":'("];
+
+
+let postNamesCreatePost = [];
+let postNamesFeed = [];
+let postNamesRecommender = [];
+
+
+
+
 
 window.onload = execute()
 
@@ -11,6 +19,41 @@ function execute(){
     // printAllPosts();
 
 }
+
+/**
+ * The function displays a list of available options to autocomplete to the search query limited to 10 options
+ * @param {1} query: the query text inputed into the search field 
+ * returns void
+ */
+function autoComplete(query){
+
+    document.getElementById("autocomplete").innerHTML = ""; // empty autocomplete box
+
+    let tab = document.getElementsByName("tabs");
+
+    let inputarr;
+
+    if (tab[0].checked){ // recommender
+        inputarr = postNamesRecommender;
+    }
+    else if (tab[1].checked){ // feed
+        inputarr = postNamesFeed;
+    }
+    else{ // create Post
+        inputarr = postNamesCreatePost;
+    }
+
+	let output = [];
+    let count = 0;
+	for (let i = 0 ; i < inputarr.length ; i++){
+        if(query != "" && (inputarr[i].toLowerCase()).indexOf(query.toLowerCase()) != -1 && count<10){
+            //output.push(inputarr[i]);
+            document.getElementById("autocomplete").innerHTML += `<div class="autocomplete-item" onclick="document.getElementById('searchBox').value = '${inputarr[i]}'"><strong>${inputarr[i]}<strong/></div>`;
+            count++;
+        } 
+  }
+}
+
 
 //check id the user is signed in
 function checkUserExistence() {
@@ -172,15 +215,13 @@ function findAllPosts() {
 
 function printAllPosts(){
 
-    $('#searchBoxRecommender').hide();
-    $('#searchBoxFeed').hide();
-    $('#searchBoxCreatePost').show();
+
 
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
     
     $('#resNum').html(``);
-    document.getElementById("searchBoxCreatePost").value = ""; // clear search box
+    document.getElementById("searchBox").value = ""; // clear search box
 
     print_create_post();
     $('#postField').text(``); // emtpy the field of any previous posts
@@ -192,7 +233,7 @@ function printAllPosts(){
     let button_nums = []
     let posts = [];
 
-    post_names = [];
+    postNamesCreatePost = [];
 
     firebase.database().ref('likesDislikes')
     .once('value', x => {
@@ -221,7 +262,7 @@ function printAllPosts(){
                 }
                     button_nums.push(button_num);
                 posts.push(data.val());
-                post_names.push(data.val().title);
+                postNamesCreatePost.push(data.val().title);
         }
             });
         
@@ -240,9 +281,6 @@ function printAllPosts(){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
 
-            $('#searchBoxCreatePost').autocomplete({
-                source: post_names
-            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
             
     })
     })
@@ -259,15 +297,12 @@ function printThread(){
     $("#radio-1").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
-    $('#searchBoxRecommender').show();
-    $('#searchBoxFeed').hide();
-    $('#searchBoxCreatePost').hide();
 
-    post_names = [];
+    postNamesRecommender = [];
 
     console.log(document.getElementById(`radio-1`), document.getElementById(`radio-2`))
 
-    document.getElementById("searchBoxRecommender").value = ""; // clear search box
+    document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
     $('#postField').text(``); // clear post field from posts
     $('#resNum').html(``);
@@ -307,7 +342,7 @@ function printThread(){
                 }
                     button_nums.push(button_num);
                 posts.push(data.val());
-                post_names.push(data.val().title);
+                postNamesRecommender.push(data.val().title);
         }
             });
         }).then(()=>{
@@ -326,9 +361,7 @@ function printThread(){
             
             $('#searchBoxRecommender').autocomplete({
                 source: post_names
-            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;').on('focus', function() { 
-                $(this).keydown();
-            });
+            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
 
     });
     });
@@ -872,19 +905,15 @@ function printUserPosts(){
     $("#radio-0").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
-    $('#searchBoxRecommender').hide();
-    $('#searchBoxFeed').show();
-    $('#searchBoxCreatePost').hide();
 
-    post_names = [];
+    postNamesFeed = [];
 
   
 
     $('#resNum').html(``);   
 
-    document.getElementById("searchBoxFeed").value = ""; // clear search box
-    document.getElementById("searchBoxRecommender").value = ""; // clear search box
-    document.getElementById("searchBoxCreatePost").value = ""; // clear search box
+    document.getElementById("searchBox").value = ""; // clear search box
+
     $('#create_post').text(''); // clear create post ui area
 
     $('#postField').text(''); // emtpy the field of any previous posts
@@ -921,7 +950,7 @@ function printUserPosts(){
                             }
                             button_nums.push(button_num);
                             posts.push(data.val());
-                            post_names.push(data.val().title);
+                            postNamesFeed.push(data.val().title);
                         });
 
                     }).then(()=>{
@@ -939,10 +968,6 @@ function printUserPosts(){
                                 $('#postField').html('<h4>0 Posts in this section</h4>');
                             }
 
-                            
-                            $('#searchBoxFeed').autocomplete({
-                                source: post_names
-                            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
 
                         })
                     });
@@ -959,6 +984,8 @@ function printUserPosts(){
  * @returns Nothing. The function automatically updates the screen with relevant posts.
  */
  function searchAllPosts(param){
+
+    document.getElementById("autocomplete").innerHTML = ""; // empty autocomplete
 
     let printPostCount = 10; // start printing 10 posts first
     let printStartIndex;
