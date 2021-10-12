@@ -108,10 +108,9 @@ function buildVideoListTable(videoDetails, phoneNum){
             <td><a href="${videoDetails[i].videoUrl}" target="_blank">Link</a></td>
             <td>${videoDetails[i].totalWatchCount}</td>
             <td>Preference placeholder</td>
-            <td><button onclick="updateVideoAnalytics(${phoneNum}, ${i})" class="pure-button pure-button-primary">View</button></td>
+            <td><button onclick="updateVideoAnalyticsTable(${phoneNum}, ${i})" class="pure-button pure-button-primary">View</button></td>
             </tr>
             `;
-            console.log(videoDetails[i]);
         }
 
         videoListTableHtml += `</tbody>`;
@@ -120,15 +119,78 @@ function buildVideoListTable(videoDetails, phoneNum){
     
 }
 
-function updateVideoAnalytics(phoneNum, i){
-    $('#videoAnalyticContainer').show();
-    firebase.database().ref(`users/+${phoneNum}`).once("value", function(snapshot){
-
-    })
-    console.log(phoneNum,i)
+function convertSecToMin(totalSeconds){
+    let minutes = Math.floor(totalSeconds/60);
+    let seconds = totalSeconds- minutes*60;
+    let result = `${minutes}.${seconds}`;
+    return result
 }
 
+function updateVideoAnalyticsTable(phoneNum, i){
+    $('#videoAnalyticContainer').show();
 
+    let videoAnalyticsDetails = null;
+    firebase.database().ref(`users/+${phoneNum}/videoHistory/${i}/videoAnalytics`).once("value", function(snapshot){
+        if (snapshot.exists()){
+            snapshot.forEach((date)=>{
+                date.forEach((timestamp)=>{
+                    videoAnalyticsDetails = timestamp.val();
+                })
+            })
+
+            videoAnalyticsDetails.videoCurrentTime = convertSecToMin(videoAnalyticsDetails.videoCurrentTime);
+            videoAnalyticsDetails.videoDuration = convertSecToMin(videoAnalyticsDetails.videoDuration);
+            videoAnalyticsDetails.videoElapsedTime = convertSecToMin(videoAnalyticsDetails.videoElapsedTime);
+
+            let videoAnalyticsTableHtml = `
+            <table class="table table-bordered">
+                <tr>
+                    <th>Stopped Watching at</th>
+                    <td>${videoAnalyticsDetails.videoCurrentTime} minutes </td>
+                </tr>
+
+                <tr>
+                    <th>Video Duration</th>
+                    <td>${videoAnalyticsDetails.videoDuration} minutes </td>
+                </tr>
+
+                <tr>
+                    <th>Video Watchtime</th>
+                    <td>${videoAnalyticsDetails.videoElapsedTime} minutes</td>
+                </tr>
+
+                <tr>
+                    <th>Video Percentage Watched</th>
+                    <td>${videoAnalyticsDetails.videoPercent}% </td>
+                </tr>
+
+                <tr>
+                    <th>Video Watch Status</th>
+                    <td>${videoAnalyticsDetails.videoStatus} </td>
+                </tr>
+
+                <tr>
+                    <th>Video Visibility</th>
+                    <td>${videoAnalyticsDetails.videoVisible} </td>
+                </tr>   
+
+            </table>
+            `;
+            $("#videoAnalyticsTitle").html(`Video Analytics of #${i}`)
+            $("#videoAnalyticsTable").html(videoAnalyticsTableHtml);
+
+        } else {
+            //No data for table
+            $("#videoAnalyticsTable").html("No data available for selected video");
+            console.log("No data available");
+        }
+    })
+
+}
+
+//watch history genre chart
+//favourite genre chart
+//average watch time
 
 
 // let ChartOptionss = {
