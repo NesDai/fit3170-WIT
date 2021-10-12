@@ -23,9 +23,26 @@ function execute(){
 /**
  * Function used to check whether or not a post exists provided the post id. Function should be called before performing any action on the post.
  * @param {1} id: the post id
- * returns 0 if the post exists and 1 otherwise
+ * returns 1 if the post exists and 0 otherwise
  */
-function checkPostExists(id){
+async function checkPostExists(id){
+
+    let res = 0;
+
+    await firebase.database().ref(`posts/${id}`).once("value", snapshot => {
+        
+        if (snapshot.exists()){
+            console.log(1);
+
+            res = 1;
+        }
+     });
+
+
+     return new Promise(function(resolve, reject) {
+        resolve(res);
+      });
+
     
 }
 
@@ -1422,6 +1439,11 @@ function searchYourPosts(param){
  */
 async function likePost(post_id, i) {
 
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
@@ -1504,6 +1526,12 @@ async function likePost(post_id, i) {
  */
 async function dislikePost(post_id, i)
 {
+
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
@@ -1581,8 +1609,14 @@ async function dislikePost(post_id, i)
     }
 }
 
-function postDetail(id) {
-        window.location = "post.html" + "?post_id=" + id;
+async function postDetail(id) {
+
+        if(await checkPostExists(id)){
+            window.location = "post.html" + "?post_id=" + id;
+        }
+        else{
+            return; // give an alert that the post doesnt exist
+        }
 } 
 
 
