@@ -5,7 +5,7 @@ let posts=[];
 
 // used for table display
 let liked_posts_id=[];
-let disliked_posts =[];
+let disliked_posts_id =[];
 let comments_replies=[];
 let created_posts = [];
 
@@ -209,7 +209,7 @@ function updateLikesDislikes(current_username){
                   liked_posts_id.push(data.key);
                 } else {
                   dislikes_count+=1
-                  disliked_posts.push(data.key);
+                  disliked_posts_id.push(data.key);
             }
         }})
         $("#likesOnPosts").html(`<h3>${likes_count}</h3>`);
@@ -431,7 +431,7 @@ function updateTable(){
   } else if (checked_value == "likedPosts") {
     retrieveLikedPosts();
   } else if (checked_value == "dislikedPosts"){
-
+    retrieveDislikedPosts();
   } else if (checked_value == "comments"){
 
   } else if (checked_value == "favouritePosts") {
@@ -463,7 +463,6 @@ function displayCreatedPosts(){
 * Function that is used to collect a list of the liked posts based on their id
 */
 function retrieveLikedPosts(){
-  console.log("hi")
   let liked_posts = [];
   for(let i =0; i<liked_posts_id.length; i++){
     let j=0;
@@ -479,11 +478,11 @@ function retrieveLikedPosts(){
   displayLikedPosts(liked_posts);
 
 }
+
 /** Function that displays the Table that is used to display the user liked
 * @param {*} liked_posts the posts that the user liked
 */
 function displayLikedPosts(liked_posts){
-  console.log(liked_posts)
   //outputing the rows of posts
   let display_table = document.getElementById("tableDisplayRow");
   let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>Post link</th></thead><tbody>";
@@ -498,6 +497,44 @@ function displayLikedPosts(liked_posts){
   display_table.innerHTML = output_rows;
 }
 
+/**
+* Function that is used to collect a list of the disliked posts based on their id
+*/
+function retrieveDislikedPosts(){
+
+  let disliked_posts = [];
+  for(let i =0; i<disliked_posts_id.length; i++){
+    let j=0;
+    while (j < posts.length){
+      if(disliked_posts_id[i] == posts[j].id){
+        disliked_posts.push(posts[j]);
+        break;
+      } else {
+        j++;
+      }
+    }
+  }
+  displayDisikedPosts(disliked_posts);
+
+}
+
+/** Function that displays the Table that is used to display the user disliked
+* @param {*} disliked_posts the posts that the user disliked
+*/
+function displayDisikedPosts(disliked_posts){
+  //outputing the rows of posts
+  let display_table = document.getElementById("tableDisplayRow");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>Post link</th></thead><tbody>";
+
+  for(let i=0; i<disliked_posts.length; i++){
+    let post = disliked_posts[i];
+    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>";
+    output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
+    output_rows += "</td></tr>";
+  }
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
+}
 
 /**
  Function that transfer the admin to the post analytics detial page
