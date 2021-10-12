@@ -55,6 +55,8 @@ function getPostDetails() {
 
 function printPostDetails(post, button_num) {
 
+    let interestNum;
+
     if(post.username == undefined)
         post.username = "";
 
@@ -92,7 +94,8 @@ function printPostDetails(post, button_num) {
 
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
-        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
+        console.log(post.interest)
+        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'> #${post.interest[i]} </button>`
     }
     let users_post = false;
     if (current_user.username != post.username)
@@ -133,8 +136,7 @@ function printPostDetails(post, button_num) {
         ` + `
                 <br>
                 <div style='display: inline-block'>
-                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
-                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                    ${interest}
                 </div>
                 <br><br>
             </form>
