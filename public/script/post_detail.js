@@ -620,6 +620,7 @@ function printComment(button_num, comment, i ){
  * @param {integer} index an integer to indicate the section
  */
 function printReplies(comment_id, comment_index) {
+    console.log(comment_index);
     let reply_section = document.getElementById("reply_section" + comment_index.toString());
     let reply_list = [];
 
@@ -805,7 +806,6 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
  */
 function addReply(btn_num, comment_id) {
     if (checkUserExistence()) {
-        console.log(comment_id);
         const options = { // options for Date
             timeZone: "Africa/Accra",
             hour12: true,
@@ -846,7 +846,7 @@ function addReply(btn_num, comment_id) {
             };
 
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                window.location = "post.html" + "?post_id=" + post_id;
+                printReplies(comment_id, btn_num);
             });
 
         };
@@ -897,11 +897,9 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
                 username: current_user["username"],
             };
 
-            console.log(post_id);
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                window.location = "post.html" + "?post_id=" + post_id;
+                printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
             });
-
         };
     } else {
        // window.location = "forum.html";
