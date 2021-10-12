@@ -239,7 +239,7 @@ function updateLikesDislikes(current_username){
     let likes_count=0;
     let dislikes_count=0;
     liked_posts_id=[];
-    disliked_posts =[];
+    disliked_posts_id =[];
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
