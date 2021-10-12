@@ -4,10 +4,14 @@ let current_user;
 let posts=[];
 
 // used for table display
-let likes_dislikes=[];
+let liked_posts_id=[];
+let disliked_posts =[];
 let comments_replies=[];
 let created_posts = [];
+
+
 window.onload = execute();
+
 
 async function execute(){
     await collectUsers().then(() => {
@@ -194,16 +198,20 @@ function updateUserUI(user_id) {
 function updateLikesDislikes(current_username){
     let likes_count=0;
     let dislikes_count=0;
+    liked_posts_id=[];
+    disliked_posts =[];
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[current_username] != undefined){ // if the user performed an action on the post
-                if (data.val()[current_username].action==1)
-                    likes_count+=1;
-                else
-                    dislikes_count+=1
+                if (data.val()[current_username].action==1) {
+                  likes_count+=1;
+                  liked_posts_id.push(data.key);
+                } else {
+                  dislikes_count+=1
+                  disliked_posts.push(data.key);
             }
-        })
+        }})
         $("#likesOnPosts").html(`<h3>${likes_count}</h3>`);
         $("#dislikesOnPosts").html( `<h3>${dislikes_count}</h3>`);
     })
@@ -421,7 +429,7 @@ function updateTable(){
   if (checked_value == "createdPosts"){
     displayCreatedPosts();
   } else if (checked_value == "likedPosts") {
-
+    retrieveLikedPosts();
   } else if (checked_value == "dislikedPosts"){
 
   } else if (checked_value == "comments"){
@@ -433,11 +441,10 @@ function updateTable(){
   }
 }
 
-/* Table that is used to display the created posts by the user
+/* Function that displays the Table that is used to display the created posts by the user
 */
 function displayCreatedPosts(){
   //outputing the rows of posts
-  console.log(created_posts)
   let display_table = document.getElementById("tableDisplayRow");
   let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>Post link</th></thead><tbody>";
   for (let i = 0; i < created_posts.length; i++){
@@ -450,8 +457,45 @@ function displayCreatedPosts(){
 
   output_rows += "</tbody></table>";
   display_table.innerHTML = output_rows;
+}
 
+/**
+* Function that is used to collect a list of the liked posts based on their id
+*/
+function retrieveLikedPosts(){
+  console.log("hi")
+  let liked_posts = [];
+  for(let i =0; i<liked_posts_id.length; i++){
+    let j=0;
+    while (j < posts.length){
+      if(liked_posts_id[i] == posts[j].id){
+        liked_posts.push(posts[j]);
+        break;
+      } else {
+        j++;
+      }
+    }
+  }
+  displayLikedPosts(liked_posts);
 
+}
+/** Function that displays the Table that is used to display the user liked
+* @param {*} liked_posts the posts that the user liked
+*/
+function displayLikedPosts(liked_posts){
+  console.log(liked_posts)
+  //outputing the rows of posts
+  let display_table = document.getElementById("tableDisplayRow");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>Post link</th></thead><tbody>";
+
+  for(let i=0; i<liked_posts.length; i++){
+    let post = liked_posts[i];
+    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>";
+    output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
+    output_rows += "</td></tr>";
+  }
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
 }
 
 
