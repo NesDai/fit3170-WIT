@@ -232,7 +232,7 @@ function updateUI(postId){
 
 
                 let yValues = [likes, dislikes, comments, favourited]
-                var barColors = ["#006dae", "#00ac3e","#D2D2D2","#c00095"];
+                var barColors = ["#00ac3e", "#ff7c00","#006dae","#c00095"];
 
                 new Chart("myChart", {
                 type: "bar",
