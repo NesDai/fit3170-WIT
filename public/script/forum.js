@@ -13,6 +13,10 @@ function execute(){
 }
 
 //check id the user is signed in
+/**
+ * Function used to check if the user exist
+ * @returns a boolean indicating whether the user exist in the database or not
+ */
 function checkUserExistence() {
     // if a user is signed in then
     if (current_user["username"] && current_user["phone"]) {
@@ -43,6 +47,12 @@ function checkEmbeddingVideo(url) {
 
 
 //Making a new post
+/**
+ * Function used to make a new post on forum.
+ * If all required fields are filled, the dta will be written into the database and a post is created
+ * and shown on the forum.
+ * @returns none
+ */
 function makeNewPost() {
 
     const options = {  // options for Date
@@ -341,7 +351,10 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
 }
 
 
-
+/**
+ * Function used to display the layout of forum under "Create Post" tab
+ * @returns none
+ */
 function print_create_post()
 {
     $('#create_post').html(
@@ -552,7 +565,13 @@ function print_create_post()
     
 }
 
-
+/**
+ * Function which prints out posts on forum. Each post will display all the obtained information 
+ * and includes all the related functionalities such as the likes, dislike.
+ * @param {*} post the post object
+ * @param {*} button_num indicator for buttons for which post
+ * @param {*} i the button index
+ */
 function printPost(post, button_num, i )
 {
     let button = `
@@ -745,7 +764,7 @@ function printPost(post, button_num, i )
 /**
  * A function which prints an array of post that user has favourited
  * @param {*} current_user_posts a list of user's personal posts
- * @param {*} button_nums an indicator for like and dislike button
+ * @param {*} buttons_index an indicator for like and dislike button
  */
 async function printUserFavouritePosts(current_user_posts, buttons_index){
     let post_arr = [];
@@ -766,7 +785,6 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                 .orderByChild(`users_favourite`)
                     .once('value', x => {
                         x.forEach(data => {
-                            // console.log("data: " + data.key) // data.key = post id
                             let hasFavouriteAttribute = data.hasChild("users_favourite");
 
                             if (hasFavouriteAttribute){

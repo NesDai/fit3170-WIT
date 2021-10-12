@@ -17,7 +17,10 @@ function showReplyToReplyToReplyInput(comment_index, reply_index, reply_to_reply
     document.getElementById("add_reply_2_reply_section" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).style.display = "block";
 }
 
-//check id the user is signed in
+/**
+ * Function used to check the user existence in the database
+ * @returns a boolean indicating if the user is found in the database or not
+ */
 function checkUserExistence() {
     // if a user is signed in then
     if (current_user["username"] && current_user["phone"]) {
@@ -269,8 +272,9 @@ function printPostDetails(post, button_num) {
 }
 
 /**
- * Function which checks the button's nature before
- * performing the wanted functionality
+ * Function which checks the button's nature before performing the wanted functionality. 
+ * The functionality can be adding the post into favourites or removing them.
+ * @returns none
  */
 function checkButtonStatus() {
 
@@ -304,7 +308,8 @@ function checkButtonStatus() {
 }
 
 /**
- * Function which removes the current post from user's favourite
+ * Function which removes the current post from user's favourite.
+ * @returns none
  */
 function removePostFromFavourite() {
     let post_id = params.get('post_id');
@@ -326,7 +331,6 @@ function removePostFromFavourite() {
                 }
 
                 firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
-                    //alert("Successfully remove the post from your favourite");
                 })
                 let fav_button = document.getElementsByClassName("favourite")[0];
                 fav_button.innerHTML = "\n  <img src=\"./css/images/heart_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Add Favourite</span>\n  ";
@@ -337,7 +341,10 @@ function removePostFromFavourite() {
 }
 
 /**
- * Function which adds the current post into user's favourite
+ * Function which adds the current post into user's favourite.
+ * It will first check ifthe favourite attribute has been written or not in the database 
+ * before proceeding to add the following post into favourites.
+ * @returns none
  */
 function addPostToFavourite() {
     let post_id = params.get('post_id');
@@ -380,7 +387,11 @@ function addPostToFavourite() {
     }
 }
 
-// Creating comment
+/**
+ * Function that allows a new comment to be added into the database
+ * The comment will be added into database if input was not left empty
+ * @returns none
+ */
 function addComment() {
     let post_id = params.get('post_id');
 
@@ -396,8 +407,6 @@ function addComment() {
         // error handling if it is empty??
         let comment = document.getElementById("comment_input").value
         let stay_anonymous = document.getElementById("anonymous").checked
-
-
 
         // new data to upload in api
         if (comment) { // only adding comment if it's not empty
@@ -433,6 +442,12 @@ function addComment() {
     }
 }
 
+/**
+ * Function used which allows user to delete their post on the forum.
+ * It will first check if the user id who created the post is the same as the logged in user,
+ * before proceeding with deleting the post
+ * @returns none
+ */
 function removePost() {
     let post_id = params.get('post_id');
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
@@ -805,7 +820,6 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
  */
 function addReply(btn_num, comment_id) {
     if (checkUserExistence()) {
-        console.log(comment_id);
         const options = { // options for Date
             timeZone: "Africa/Accra",
             hour12: true,
@@ -814,12 +828,12 @@ function addReply(btn_num, comment_id) {
             second: "2-digit"
         }
 
-
         let post_id = params.get('post_id');
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + btn_num.toString()).value;
         let stay_anonymous = document.getElementById("anonymous" + btn_num.toString()).checked;
+
         // new data to upload in api
         if (reply_input) { // only adding reply if it's not empty
             // unique key for reply
@@ -871,7 +885,6 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + comment_index.toString() + "," + reply_index.toString()).value;
-        console.log(reply_input);
         let stay_anonymous = document.getElementById("anonymous" + comment_index.toString() + "," + reply_index.toString()).checked;
         // new data to upload in api
         if (reply_input) { // only adding reply if it's not empty
@@ -897,7 +910,6 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
                 username: current_user["username"],
             };
 
-            console.log(post_id);
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
                 window.location = "post.html" + "?post_id=" + post_id;
             });
@@ -920,12 +932,10 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
             second: "2-digit"
         }
 
-
         let post_id = params.get('post_id');
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).value;
-        console.log(reply_input);
         let stay_anonymous = document.getElementById("anonymous" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).checked;
         // new data to upload in api
         if (reply_input) { // only adding reply if it's not empty
@@ -968,10 +978,11 @@ function redirect(url, msg) {
     return msg;
 }
 
-/*
-A function that checks if the user has favourited the selected post and
-will output the correct text on button
-*/
+/**
+ * A function that checks if the user has favourited the selected post and
+ * will output the correct text on button.
+ * @returns none
+ */
 function checkUserFavouritedPost() {
     let post_id = params.get('post_id');
     let user_exist = false;
@@ -1055,7 +1066,11 @@ function checkForLikesComment(comment_id){
     });
 }
 
-
+/**
+ * Function which used to update the number of likes on comments
+ * @param {*} comment_id the unique id of the comment
+ * @param {*} number new number of likes added to the comment
+ */
 function updateCommentLikes(comment_id, number){
     firebase.database().ref(`comments/${comment_id}/likes`).once('value', (snapshot) => {
         let current_likes = snapshot.val();
