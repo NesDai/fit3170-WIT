@@ -313,7 +313,8 @@ transition: color 0.15s ease-in;
 		justify-content: center;
 	}
 	.search-container:hover {
-		/* transform: scale(1.1); */
+		margin-right: 5px;
+		transform: scale(1.05);
 		transition: 0.25s;
 	}
 	.forum-container {
@@ -569,8 +570,8 @@ transition: color 0.15s ease-in;
 		border-radius: 15px;
 	}
 	.search:hover #icon-background {
-		margin-right: 15px;
-		transform: scale(1.1);
+		margin-right: 5px;
+		transform: scale(1.05);
 		transition: 0.25s;
 	}
 
@@ -848,8 +849,8 @@ button.reply {
 		width: 600px;
 	}
 	.search:hover #icon-background {
-		margin-right: 15px;
-		transform: scale(1.1);
+		margin-right: 5px;
+		transform: scale(1.05);
 		transition: 0.25s;
 	}
 	#searchButton {
@@ -871,8 +872,8 @@ button.reply {
 		border-radius: 15px;
 	}
 	.search:hover #icon-background {
-		margin-right: 15px;
-		transform: scale(1.1);
+		margin-right: 5px;
+		transform: scale(1.05);
 		transition: 0.25s;
 	}
 }
@@ -909,8 +910,8 @@ a:link {
 }
 
 .search:hover #icon-background {
-	margin-right: 15px;
-	transform: scale(1.1);
+	margin-right: 5px;
+	transform: scale(1.05);
 	transition: 0.25s;
 }
 
@@ -992,7 +993,7 @@ input[type=text] {
 	width: 50%;
 	padding: 10px;
 	width: 600px;
-	margin-top: 0px;
+	margin-top: 2px;
 	}
 }
 @media all and (max-width: 541px) {
