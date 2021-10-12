@@ -1,3 +1,4 @@
+// Runs on page load to generate a table containing list of users
 firebase.database().ref('users').once("value", function (snapshot) {
     let tableHtml = "";
     if (snapshot.exists()){
@@ -11,7 +12,7 @@ firebase.database().ref('users').once("value", function (snapshot) {
                 <th>${i}</th>
                 <td>${child.val().phone}</td>
                 <td>Username not set</td>
-                <td><button onclick="updateSelectedUser(${child.val().phone})" class="pure-button pure-button-primary">View</button></td>
+                <td><button onclick="updateVideoList(${child.val().phone})" class="pure-button pure-button-primary">View</button></td>
                 </tr>
                 `;
                 i++;
@@ -29,25 +30,16 @@ firebase.database().ref('users').once("value", function (snapshot) {
             }
         })
         tableHtml += `</tbody>`;
+        // Updates the page using jquery
         $("#userListTable").append(tableHtml);
     } else {
         console.log("No users");
     }
 });
 
-// $('#search-butt').click(function(){
-//     let inputPhoneNum = $('#searchUsername').val();
-//     firebase.database().ref('users').once('value', function(snapshot){
-//         snapshot.forEach((child)=>{
-//             if (child.val().phone == inputPhoneNum){
-//                 updateSelectedUser(child.val());
-//             } else {
-//                 //Error
-//             }
-//         });
-//     })
-// })
 
+// Fires when a specific user has been selected
+// Shows the table containing the videos that the user selected had watched
 function updateVideoList(phoneNum){
     firebase.database().ref(`users/+${phoneNum}`).once("value", function(snapshot){
         if (snapshot.exists()){
@@ -59,12 +51,14 @@ function updateVideoList(phoneNum){
             } else {
                 buildVideoListTable(null)
             }
+            generatePieChart(phoneNum);
         } else {
             console.error("Unexpected error");
         }
     })
 }
 
+// Generates the html for the video list table
 function buildVideoListTable(videoDetails, phoneNum){
     if (videoDetails == null){
         $('#videoListBody').html("No data available");
@@ -107,7 +101,7 @@ function buildVideoListTable(videoDetails, phoneNum){
             <td>${videoDetails[i].videoTitle}</td>
             <td><a href="${videoDetails[i].videoUrl}" target="_blank">Link</a></td>
             <td>${videoDetails[i].totalWatchCount}</td>
-            <td>Preference placeholder</td>
+            <td>${videoDetails[i].interest}</td>
             <td><button onclick="updateVideoAnalyticsTable(${phoneNum}, ${i})" class="pure-button pure-button-primary">View</button></td>
             </tr>
             `;
@@ -119,6 +113,7 @@ function buildVideoListTable(videoDetails, phoneNum){
     
 }
 
+// Converts time in seconds only to minute and seconds
 function convertSecToMin(totalSeconds){
     let minutes = Math.floor(totalSeconds/60);
     let seconds = totalSeconds- minutes*60;
@@ -126,6 +121,7 @@ function convertSecToMin(totalSeconds){
     return result
 }
 
+// Generates video analytics table that contains specific analytics details on a specific video the user had watched before
 function updateVideoAnalyticsTable(phoneNum, i){
     $('#videoAnalyticContainer').show();
 
@@ -188,8 +184,116 @@ function updateVideoAnalyticsTable(phoneNum, i){
 
 }
 
-//watch history genre chart
-//favourite genre chart
+// Generates two pie charts
+function generatePieChart(phoneNum){
+    // $('#graphContainer').show();
+    //20 pre-generated colors
+    let backgroundColors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'];
+    
+    let labels = [];
+    let data = [];
+
+    firebase.database().ref(`users/+${phoneNum}/videoFavourite`).once("value", function(snapshot){
+        if (snapshot.exists()){
+            snapshot.forEach((video)=>{
+                let videoDetails = video.val();
+                if (!labels.includes(videoDetails.videoPreference)){
+                    labels.push(videoDetails.videoPreference);
+                    data.push(1);
+                } else {
+                    currentNum = data[labels.indexOf(videoDetails.videoPreference)];
+                    currentNum++;
+                    data[labels.indexOf(videoDetails.videoPreference)] = currentNum;
+                }
+            })
+
+            let backgroundColor = backgroundColors.splice(0, labels.length);
+
+            new Chart("chart2",{
+                type: "doughnut",
+                data: {
+                    labels,
+                    datasets: [{
+                      label: 'Count of favourited videos by interest',
+                      data,
+                      backgroundColor,
+                      hoverOffset: 4
+                    }]
+                }
+            })
+        }
+    });
+    
+    let labelsHist = [];
+    let dataHist = [];
+
+    firebase.database().ref(`users/+${phoneNum}/videoHistory`).once("value", function(snapshot){
+        if (snapshot.exists()){
+            snapshot.forEach((video)=>{
+                let videoDetails = video.val();
+                if (!labelsHist.includes(videoDetails.interest)){
+                    labelsHist.push(videoDetails.interest);
+                    dataHist.push(1);
+                } else {
+                    currentNum = dataHist[labelsHist.indexOf(videoDetails.interest)];
+                    currentNum++;
+                    dataHist[labelsHist.indexOf(videoDetails.interest)] = currentNum;
+                }
+            })
+
+            let backgroundColor = backgroundColors.splice(0, labelsHist.length);
+
+            new Chart("chart1",{
+                type: "doughnut",
+                data: {
+                    labels : labelsHist,
+                    datasets: [{
+                      label: 'Count of every video by interest',
+                      data: dataHist,
+                      backgroundColor,
+                      hoverOffset: 4
+                    }]
+                }
+            })
+        }
+    });
+
+
+
+}
+
+// let ChartDatas = {
+//     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+//     datasets: [{
+//         label: "Visitors",
+//         barThickness: 10,
+//         backgroundColor: base.primaryColor,
+//         borderColor: base.primaryColor,
+//         pointRadius: !1,
+//         pointColor: "#3b8bba",
+//         pointStrokeColor: "rgba(60,141,188,1)",
+//         pointHighlightFill: "#fff",
+//         pointHighlightStroke: "rgba(60,141,188,1)",
+//         data: [28, 48, 40, 19, 64, 27, 90, 85, 92],
+//         fill: "",
+//         lineTension: .1
+//     }, {
+//         label: "Orders",
+//         barThickness: 10,
+//         backgroundColor: "rgba(210, 214, 222, 1)",
+//         borderColor: "rgba(210, 214, 222, 1)",
+//         pointRadius: !1,
+//         pointColor: "rgba(210, 214, 222, 1)",
+//         pointStrokeColor: "#c1c7d1",
+//         pointHighlightFill: "#fff",
+//         pointHighlightStroke: "rgba(220,220,220,1)",
+//         data: [65, 59, 80, 42, 43, 55, 40, 36, 68],
+//         fill: "",
+//         borderWidth: 2,
+//         lineTension: .1
+//     }]
+// }
+
 //average watch time
 
 
