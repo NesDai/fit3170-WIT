@@ -36,7 +36,8 @@
     <!-- App Styling -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="./css/recommender_main.css">
-
+    
+    <!--History page styling-->
     <style>
       .goog-te-banner-frame.skiptranslate {
         display: none !important;
@@ -115,8 +116,8 @@
     (addEventListener,removeEventListener);
     </script>
   </head>
+  
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
     <!-- Header section -->
     <header class="mdl-layout__header">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
@@ -127,18 +128,10 @@
               <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon">
             </button>
           </div>
-          <div id="user-container">
-            <div hidden id="user-pic"></div>
-            <div hidden id="user-name"></div>
-            <button hidden id="sign-out" class="mdl-button mdl-js-button  mdl-color-text--white">
-              Sign-out
-            </button>
-            <button hidden id="sign-in" class="mdl-button mdl-js-button  mdl-color-text--white">
-              <i class="material-icons">account_circle</i>Sign-in with Google
-            </button>
-          </div>
         </div>
       </header>
+
+      <!--Navigation menu-->
       <div class="mdl-layout__drawer">
         <br>
         <img src = "./css/images/logo.png" width=90 height=90 class="img-centre">
@@ -152,106 +145,108 @@
           <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum Page</a>
        </nav>
       </div>
-  <body>
 
-    <main class="mdl-layout__content mdl-color--grey-100">
-      <div class="container">
-         <!-- Tab navigation -->
-         <div class="tabs">
-
-            <!-- Favourite tab -->
+    <body>
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="container">
+        <!-- Button navigation -->
+          <div class="tabs">
+            <!-- Favourite button -->
             <input type="checkbox" id="radio-0" name="tabs" value="Favourite" onclick='window.location.href = "fav_page_Ui.html"'/>
             <label class="tab" for="radio-0" id="tab0"><b><img src="./css/images/fav_icon.png" style="height:22px">Favourite</b></label>
 
-            <!-- Recommender tab -->
+            <!-- Recommender button -->
             <input type="checkbox" id="radio-1" name="tabs" value="Recommender" onclick='window.location.href = "recommender_Ui.html"' checked/>
-            <label class="tab" for="radio-1" id="tab1"><b><img src="./css/images/recommender_icon.png" style="height:22px">Recom-<br>mender</b></label>
+            <label class="tab" for="radio-1" id="tab1"><b><img src="./css/images/recommender_icon.png" style="height:22px">Recom&shy;mender</b></label>
 
-            <!-- Edit skill selection tab -->
+            <!-- Edit skill selection button -->
             <input type="checkbox" id="radio-2" name="tabs" value="Edit_skill" onclick='window.location.href = "recommender_select_skills.html"'/>
             <label class="tab" for="radio-2" id="tab2"><b><img src="./css/images/create_post_icon.png" style="height: 22px; width: 15%">Edit skill selection</b></label>
-
-
-            <span class="glider"></span>
          </div>
 
-      </div>
-      <br>
-      <div class="row" id="deleteHistoryButton">
-        <div class="col-9">
-          <a class="mdl-navigation__link" onclick="deleteAllHistory()">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Delete All History</button>
-          </a>
         </div>
-      </div>
-
-      <div class="mdl-grid" id="historyGrid"></div>
-      
-      <!--Translation-->
-      <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
-        <div id="google_translate_element" style="display: none;">
+        
+        <!--Delete history button-->
+        <br>
+        <div class="row" id="deleteHistoryButton">
+          <div class="col-9">
+            <a class="mdl-navigation__link" onclick="deleteAllHistory()">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Delete All History</button>
+            </a>
+          </div>
         </div>
-        <div class="modal-content">
-           <p style="margin-top: 10%;">
-              <b>Choose Language:
-              </b>
-           </p>
-           <hr style="margin: 0;">
+        
+        <!--Grid to display video history-->
+        <div class="mdl-grid" id="historyGrid"></div>
+        
+        <!--Translation-->
+        <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
+          <div id="google_translate_element" style="display: none;"></div>
+          <div class="modal-content">
+            <p style="margin-top: 10%;">
+                <b>Choose Language:
+                </b>
+            </p>
+            <hr style="margin: 0;">
+
+            <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="reset()"
+                value="English">
+            <label>
+            <span id="lang_text" style="color:white;">English</span>
+            </label>
+            </button>
+
+            <br>
+            <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
+                value="Chinese (Simplified)">
+            <label>
+            <span id="lang_text" style="color:white;">中文</span>
+            </label>
+            </button>
+
+            <br>
+            <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
+                value="Thai" >
+            <label>
+            <span id="lang_text" style="color:white;">ภาษาไทย</span>
+            </label>
+            </button>
+
+            <br>
+            <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
+                value="Malay">
+            <label>
+            <span id="lang_text" style="color:white;">Bahasa Melayu</span>
+            </label>
+            </button>
 
 
-           <button id ="lang_butt_id_e" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="reset()"
-              value="English">
-           <label>
-           <span id="lang_text" style="color:white;">English</span>
-           </label>
-           </button>
-
-           <br>
-           <button id ="lang_butt_id_c" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
-              value="Chinese (Simplified)">
-           <label>
-           <span id="lang_text" style="color:white;">中文</span>
-           </label>
-           </button>
-
-           <br>
-           <button id ="lang_butt_id_t" class = "mdl-button mdl-js-button mdl-button--raised  lang_butt notranslate" onclick="changeLang(this.value)"
-              value="Thai" >
-           <label>
-           <span id="lang_text" style="color:white;">ภาษาไทย</span>
-           </label>
-           </button>
-
-           <br>
-           <button id ="lang_butt_id_m" class = "mdl-button mdl-js-button mdl-button--raised lang_butt notranslate" onclick="changeLang(this.value)"
-              value="Malay">
-           <label>
-           <span id="lang_text" style="color:white;">Bahasa Melayu</span>
-           </label>
-           </button>
-
-
-           <br>
-           <br>
-           <div>
-              <button class="mdl-button mdl-js-button mdl-button--raised  button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
-              Back
-              </button>
-           </div>
+            <br>
+            <br>
+            <div>
+                <button class="mdl-button mdl-js-button mdl-button--raised  button-close-modal" id="button-close-modal" onclick="hideTranslationModal()">
+                Back
+                </button>
+            </div>
+          </div>
         </div>
-    </div>
 
-    </main>
-    
+      </main>
+
+    <!--JQuery script-->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!--Google Translate script-->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+    <!--Firebase scripts-->
     <script src="/__/firebase/7.18.0/firebase-app.js"></script>
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js?useEmulator=true"></script>
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
-    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    <!--Youtube script-->
     <script src="./script/Youtube.min.js"></script>
+    <!--Recommender script-->
     <script src="./script/recommender_history.js"></script>
+    <!--Translation script-->
     <script src="./script/translation.js"></script>
 
   </body>
