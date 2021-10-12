@@ -2,12 +2,15 @@ let users;
 let user_ids_arr;
 let current_user;
 let posts=[];
+let comments = [];
 
 // used for table display
 let liked_posts_id=[];
 let disliked_posts_id =[];
-let comments_replies=[];
+let comments_made=[];
 let created_posts = [];
+let favourite_posts = [];
+let liked_comments_id = [];
 
 
 window.onload = execute();
@@ -36,6 +39,9 @@ async function collectUsers() {
 }
 
 function updateUserUI(user_id) {
+    // update the comments array from the firebase
+    collectComments();
+
     collectPosts().then(() => {
                 collectUsers().then(() => {
 
@@ -76,6 +82,9 @@ function updateUserUI(user_id) {
                                 $("#username").html(user_info_intro);
                             }
                         });
+
+
+
 
                         //print the cards
                         let cards=
@@ -162,7 +171,10 @@ function updateUserUI(user_id) {
                             $("#postsCreated").html(loading_bar);
                             $("#favouritePosts").html( loading_bar);
                             $("#likesOnComments").html(loading_bar);
-                    }).then(() => {
+
+                    }
+
+                  ).then(() => {
                         //updates the total number of likes and dislikes for the chosen user
                         updateLikesDislikes(current_username)
                         //updates the number of replies and comments
@@ -195,6 +207,19 @@ function updateUserUI(user_id) {
     });
 }
 
+/**
+ * Function used to collect all the comments into an array from firebase
+ */
+ async function collectComments(){
+    comments = []; // reset posts to 0 / initialize to a list
+    await firebase.database().ref('comments')
+    .once('value', x => {
+        x.forEach(data => {
+            comments.push(data.val()); //push the data to the list
+        })
+    });
+}
+
 function updateLikesDislikes(current_username){
     let likes_count=0;
     let dislikes_count=0;
@@ -219,12 +244,18 @@ function updateLikesDislikes(current_username){
 
 function updateCommentsReplies(current_username){
     let comments_replies_count=0;
+    comments_made = [];
+    for(let i=0; i< comments.length; i++){
+      if(comments[i].username== current_username){ // if the user performed an action on the post
+          comments_replies_count+=1;
+          comments_made.push(comments[i]);
+      }
+    }
+
     firebase.database().ref('comments')
     .once('value', x => {
         x.forEach(data => {
-            if(data.val().username== current_username){ // if the user performed an action on the post
-                comments_replies_count+=1;
-            }
+
         })
     }).then(() => {
         firebase.database().ref('replies')
@@ -254,11 +285,13 @@ function updatePosts(current_username){
 
 function updateFavorites(current_user_phone){
     let favourites=0;
+    favourite_posts = [];
     for (let i=0; i<posts.length; i++) {
         if (posts[i].users_favourite!=undefined){
             for (let k=0; k<posts[i].users_favourite.length; k++){
                 if (posts[i].users_favourite[k]==current_user_phone){
                     favourites+=1;
+                    favourite_posts.push(posts[i]);
                 }
             }
         }
@@ -268,12 +301,14 @@ function updateFavorites(current_user_phone){
 
 function updateLikesComments(current_username){
     let likes_count=0;
+    liked_comments_id = [];
     firebase.database().ref('likesComments')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[current_username] != undefined){ // if the user performed an action on the post
                 if (data.val()[current_username].action==1)
                     likes_count+=1;
+                    liked_comments_id.push(data.key);
             }
         })
         $("#likesOnComments").html(`<h3>${likes_count}</h3>`);
@@ -433,11 +468,11 @@ function updateTable(){
   } else if (checked_value == "dislikedPosts"){
     retrieveDislikedPosts();
   } else if (checked_value == "comments"){
-
+    displayCommentsMade();
   } else if (checked_value == "favouritePosts") {
-
+    displayFavourtiePosts();
   } else if (checked_value == "likedComments"){
-
+    retrieveLikedComments();
   }
 }
 
@@ -536,6 +571,79 @@ function displayDisikedPosts(disliked_posts){
   display_table.innerHTML = output_rows;
 }
 
+/**
+  Funtion that displayes the table of comments made by the user
+*/
+
+function displayCommentsMade(){
+  //outputing the rows of posts
+  let display_table = document.getElementById("tableDisplayRow");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Comment content</th><th>Date made</th><th>No. of likes</th><th>Anonymous</th><th>Post link</th></thead><tbody>";
+
+  for(let i=0; i<comments_made.length; i++){
+    let comment = comments_made[i];
+    output_rows += "<tr><td>" + comment.content + "</td><td> " + comment.created + " </td><td>" + comment.likes + " </td><td>" + comment.anonymous + " </td><td>";
+    output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${comment.postID}');"> View More </button> </div>`;
+    output_rows += "</td></tr>";
+  }
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
+}
+/**
+  Function that displays the posts that were favourited by the user
+*/
+function displayFavourtiePosts(){
+  //outputing the rows of posts
+  let display_table = document.getElementById("tableDisplayRow");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>Post link</th></thead><tbody>";
+  for (let i = 0; i < favourite_posts.length; i++){
+    let post = favourite_posts[i];
+    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>";
+    output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
+    output_rows += "</td></tr>";
+
+  }
+
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
+}
+
+/**
+Function that creates a list of all the comments liked by the user using their ids
+*/
+function retrieveLikedComments(){
+  let liked_comments = [];
+  for(let i =0; i<liked_comments_id.length; i++){
+    let j=0;
+    while (j < comments.length){
+      if(liked_comments_id[i] == comments[j].id){
+        liked_comments.push(comments[j]);
+        break;
+      } else {
+        j++;
+      }
+    }
+  }
+  displayLikedComments(liked_comments);
+}
+/**
+Function that displays the comments that were liked by the user
+@param liked_comments comments that were liked by the user
+*/
+function displayLikedComments(liked_comments){
+  //outputing the rows of posts
+  let display_table = document.getElementById("tableDisplayRow");
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Comment content</th><th>Date made</th><th>No. of likes</th><th>Comment made by</th><th>Anonymous</th><th>Post link</th></thead><tbody>";
+
+  for(let i=0; i<liked_comments.length; i++){
+    let comment = liked_comments[i];
+    output_rows += "<tr><td>" + comment.content + "</td><td> " + comment.created + " </td><td>" + comment.likes + " </td><td>" + comment.username + " </td><td>" + comment.anonymous + " </td><td>";
+    output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${comment.postID}');"> View More </button> </div>`;
+    output_rows += "</td></tr>";
+  }
+  output_rows += "</tbody></table>";
+  display_table.innerHTML = output_rows;
+}
 /**
  Function that transfer the admin to the post analytics detial page
  * @param {*} post_id the post id of the post the admin wants to access
