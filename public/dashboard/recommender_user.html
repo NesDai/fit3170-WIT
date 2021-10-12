@@ -101,6 +101,37 @@
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
 
+        <!--Graphs -->
+        <div class="container-fluid" id="graphContainer" >
+            <div class="row justify-content-center">
+                <div class="col-12">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header">
+                            <strong class="card-title mb-0">Video history interest distribution</strong>
+                            </div>
+                            <div class="card-body">
+                            <canvas id="chart1" width="400" height="300"></canvas>
+                            </div> <!-- /.card-body -->
+                        </div> <!-- /.card -->
+                    </div> <!-- /. col -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header">
+                            <strong class="card-title mb-0">Favourited videos interest distribution</strong>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chart2" width="400" height="300"></canvas>
+                            </div> <!-- /.card-body -->
+                        </div> <!-- /.card -->
+                    </div> <!-- /. col -->
+                </div>
+                </div>
+            </div>
+        </div>
+
+
         <!--WATCHED VIDEO LISTS-->
         <div class="container-fluid" id="videoListContainer" style="display: none;">
             <div class="row justify-content-center">
@@ -210,50 +241,6 @@
                         </div>
                         </div>
                 </div>
-                    <div class="container-fluid" id="graphContainer">
-                        <div class="row justify-content-center">
-                            <div class="col-12">
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <div class="card shadow">
-                                        <div class="card-header">
-                                        <strong class="card-title mb-0">Total Favourited Videos</strong>
-                                        <div class="dropdown float-right">
-                                            <button class="btn btn-sm btn-link text-muted dropdown-toggle p-0" type="button" id="rangeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 7 days </button>
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="rangeDropdown">
-                                            <a class="dropdown-item small text-muted" href="#">30 days</a>
-                                            <a class="dropdown-item small active" href="#">90 days</a>
-                                            <a class="dropdown-item small text-muted" href="#">All</a>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="card-body">
-                                        <canvas id="chart1" width="400" height="300"></canvas>
-                                        </div> <!-- /.card-body -->
-                                    </div> <!-- /.card -->
-                                </div> <!-- /. col -->
-                                <div class="col-md-6 mb-4">
-                                    <div class="card shadow">
-                                        <div class="card-header">
-                                        <strong class="card-title mb-0">Total Favourited Videos</strong>
-                                        <div class="dropdown float-right">
-                                            <button class="btn btn-sm btn-link text-muted dropdown-toggle p-0" type="button" id="rangeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 7 days </button>
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="rangeDropdown">
-                                            <a class="dropdown-item small text-muted" href="#">30 days</a>
-                                            <a class="dropdown-item small active" href="#">90 days</a>
-                                            <a class="dropdown-item small text-muted" href="#">All</a>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="card-body">
-                                        <canvas id="chart2" width="400" height="300"></canvas>
-                                        </div> <!-- /.card-body -->
-                                    </div> <!-- /.card -->
-                                </div> <!-- /. col -->
-                            </div>
-                            </div>
-                        </div>
-                    </div>
                     </main> <!-- main -->
                   </div> <!-- .wrapper -->
 
