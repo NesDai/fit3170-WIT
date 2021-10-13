@@ -163,7 +163,7 @@ function getLikesAndDislikes(post){
 }
 
 /*
-* Function that displays the posts based on the selected option
+* Function that displays the posts table based on the selected interest option
 */
 function display_posts(){
 
