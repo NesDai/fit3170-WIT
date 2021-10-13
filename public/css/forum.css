@@ -940,6 +940,13 @@ input[type=text] {
 	font-family: 'Arial';
 }
 
+#video_btn {
+	float: left;
+	border-radius: 10px;
+	margin: 10px;
+	width: 100px;
+}
+
 #post_btn {
 	float: right;
 	border-radius: 10px;
