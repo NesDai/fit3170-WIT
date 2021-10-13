@@ -84,7 +84,7 @@ function showHistoryTable(){
               cardAction.className = "mdl-card__actions mdl-card--border";
               cardActionButton_1 = document.createElement("a");
               cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
-              cardActionButton_1.innerHTML = "VIEW";
+              cardActionButton_1.innerHTML = '<img src="./css/images/eye_icon.png" style="height:32px">'; // view
               cardActionButton_1.id = count;
               cardAction.appendChild(cardActionButton_1);
 
@@ -99,7 +99,7 @@ function showHistoryTable(){
 
               cardActionButton_2 = document.createElement("a");
               cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
-              cardActionButton_2.innerHTML = "DELETE";
+              cardActionButton_2.innerHTML = '<img src="./css/images/delete_icon.png" style="height:32px">'; //delete
               cardAction.appendChild(cardActionButton_2);
 
               cardActionButton_2.addEventListener('click', function(){

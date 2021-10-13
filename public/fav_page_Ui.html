@@ -343,6 +343,11 @@ body {
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
             <h3>Favourite</h3>
+            <div class="mdl-layout-spacer"></div>
+            <button class="mdl-button mdl-js-button mdl-button--raised" id="home_button" onclick="location.href='./main_page.html'">
+              <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon">
+            </button>
+
               <a class="mdl-navigation__link" href="recommender_Ui.html">
               <!-- <button class="mdl-button mdl-js-button mdl-button--raised">Return</button> -->
             </a>
@@ -426,6 +431,28 @@ body {
       <div class = favVideoPg id="favVideo">
         <div id="favVideoPlayer"></div>
       </div>
+      
+      <!-- Tab navigation -->
+      <div class="container">
+        <div class="tabs">
+        
+           <!-- Recommender tab -->
+           <input type="checkbox" id="radio-1" name="tabs" value="Recommender" onclick='window.location.href = "recommender_Ui.html"' checked/>
+           <label class="tab" for="radio-1" id="tab1"><b><img src="./css/images/recommender_icon.png" style="height:22px">Recom&shy;mender</b></label>
+
+           <!-- History tab -->
+           <input type="checkbox" id="radio-1" name="tabs" value="History" onclick='window.location.href = "recommender_history_Ui.html"' checked/>
+           <label class="tab" for="radio-1" id="tab1"><b><img src="./css/images/history_icon.png" style="height:22px">History</b></label>
+
+           <!-- Edit skill selection tab -->
+           <input type="checkbox" id="radio-2" name="tabs" value="Edit_skill" onclick='window.location.href = "recommender_select_skills.html"'/>
+           <label class="tab" for="radio-2" id="tab2"><b><img src="./css/images/create_post_icon.png" style="height: 22px; width: 15%">Edit skill selection</b></label>
+
+
+           <span class="glider"></span>
+        </div>
+      </div>
+      <br>
       
       <!-- return and delete -->
       <div class="row">
