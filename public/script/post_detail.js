@@ -4,15 +4,29 @@ const params = new URLSearchParams(window.location.search)
 
 getPostDetails();
 
-
+/**
+* Function that displays the input box to add a reply to a comment
+* @param button_num The index of the location thatthe reply input will be displayed
+*/
 function showReplyInput(button_num) {
     document.getElementById("add_reply_section" + button_num.toString()).style.display = "block";
 }
 
+/**
+* Function that displays the input box to add a reply to a reply
+* @param button_num part of the index of the location that the reply input will be displayed
+* @param comment_index part of the index of the location that the reply input will be displayed
+*/
 function showReplyToReplyInput(button_num, comment_index) {
     document.getElementById("add_reply_reply_section" + button_num.toString() + "," + comment_index.toString()).style.display = "block";
 }
 
+/**
+* Function that displays the input box to add a reply to a 2nd layer reply
+* @param comment_index part of the index of the location that the reply input will be displayed
+* @param reply_index part of the index of the location that the reply input will be displayed
+* @param reply_to_reply_index part of the index of the location that the reply input will be displayed
+*/
 function showReplyToReplyToReplyInput(comment_index, reply_index, reply_to_reply_index) {
     document.getElementById("add_reply_2_reply_section" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).style.display = "block";
 }
@@ -111,8 +125,8 @@ function printPostDetails(post, button_num) {
     if (post.username == "")
         post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'></h2>`;
     else
-        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>`;     
-    post_display += 
+        post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>`;
+    post_display +=
             `</div>
             <div>
                 <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
@@ -157,7 +171,7 @@ function printPostDetails(post, button_num) {
                 <div class="post_comments_header" style="margin:0 10px; ">
                     <h5 class="comment_header mdl-color-text--black">WRITE A COMMENT</h5>
                 </div>
-                    
+
                 <!-- COMMENT FORM -->
                 <form class="post_comment">
                     <!-- COMMENT INPUT -->
@@ -207,16 +221,16 @@ function printPostDetails(post, button_num) {
                         var $button=$(this);
                         if ($button.data('alreadyclicked')){
                             $button.data('alreadyclicked', false); // reset
-                            
+
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             dialog.showModal();
                         }else{
                             $button.data('alreadyclicked', true);
-                            
+
                             var alreadyclickedTimeout=setTimeout(function(){
                                 $button.data('alreadyclicked', false); // reset when it happens
                                 likePostDetailed('${post.id}')
@@ -231,17 +245,17 @@ function printPostDetails(post, button_num) {
                         var $button=$(this);
                         if ($button.data('alreadyclicked')){
                             $button.data('alreadyclicked', false); // reset
-                            
-                            
+
+
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             dialog.showModal();
                         }else{
                             $button.data('alreadyclicked', true);
-                            
+
                             var alreadyclickedTimeout=setTimeout(function(){
                                 $button.data('alreadyclicked', false); // reset when it happens
                                 dislikePostDetailed('${post.id}')
@@ -272,7 +286,7 @@ function printPostDetails(post, button_num) {
 }
 
 /**
- * Function which checks the button's nature before performing the wanted functionality. 
+ * Function which checks the button's nature before performing the wanted functionality.
  * The functionality can be adding the post into favourites or removing them.
  * @returns none
  */
@@ -342,7 +356,7 @@ function removePostFromFavourite() {
 
 /**
  * Function which adds the current post into user's favourite.
- * It will first check ifthe favourite attribute has been written or not in the database 
+ * It will first check ifthe favourite attribute has been written or not in the database
  * before proceeding to add the following post into favourites.
  * @returns none
  */
@@ -461,12 +475,18 @@ function removePost() {
     });
 }
 
+/**
+ * Function useed to initiate the print of all the comments that belong to the specified post
+ * @returns none
+ */
 function printComments() {
+    // getting the post id
     let id = params.get('post_id');
 
     let comment_section = document.getElementById("comment_section");
     comment_section.innerHTML = "";
     let data_list = [];
+    // getting the comments that belong to the post from firebase
     firebase.database().ref('comments')
         .orderByChild('postID')
             .equalTo(id)
@@ -520,7 +540,7 @@ function printComment(button_num, comment, i ){
         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
         </button>`
     }
-    
+
     $('#comment_section').append(
         `<div>
             <div style="margin:0 10px; background-color: white; width: 97%">
@@ -587,16 +607,16 @@ function printComment(button_num, comment, i ){
                     var $button=$(this);
                     if ($button.data('alreadyclicked')){
                         $button.data('alreadyclicked', false); // reset
-                        
+
                         if ($button.data('alreadyclickedTimeout')){
                             clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                         }
-                        
-                        // do what needs to happen on double click. 
+
+                        // do what needs to happen on double click.
                         dialog.showModal();
                     }else{
                         $button.data('alreadyclicked', true);
-                        
+
                         var alreadyclickedTimeout=setTimeout(function(){
                             $button.data('alreadyclicked', false); // reset when it happens
                             likeComment('${comment.id}', ${i})
@@ -638,7 +658,7 @@ function printReplies(comment_id, comment_index) {
     let reply_section = document.getElementById("reply_section" + comment_index.toString());
     let reply_list = [];
 
-    
+
     // print replies of a comment
     firebase.database().ref('replies')
         .orderByChild('reply_comment_parent')
@@ -712,21 +732,31 @@ function printReplies(comment_id, comment_index) {
                         else{
                           document.getElementById(`reply_input${comment_index},${i}`).setAttribute("style", "width:92%");
                         }
-                        
+
                     }
                 }
             }
         }).then(() => {
+          // calls the function that is used to print the 2nd layer replies (i.e. replies to the specific reply )
             for (let reply_index = reply_list.length - 1; reply_index >= 0; reply_index--) {
                 printRepliesToReplies(reply_list[reply_index].id, comment_index, reply_index, 0)
             }
         });
 }
 
+/**
+* Function that is used to print the 2nd layer replies (i.e replies to the specific reply)
+* @param {string} reply_id id of the 1st layer reply
+* @param {integer} comment_index The index that indicates the area of where to print (i.e. which comment does this reply belong to)
+* @param {integer} reply_index The index that indictaes the area of where to print (i.e. which 1st layer reply does this reply belong to)
+* @param {integer} start Index used to indicate the area of where to print - navigates the printing of the 2nd layer replies so that they don't replace each other in the HTML
+* @return None.
+*/
 function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
     let reply_section = document.getElementById("reply_reply_section" + comment_index.toString() + "," + reply_index.toString());
     let reply_list = [];
 
+    // get the 2nd layer replies from firebase
     firebase.database().ref('replies')
         .orderByChild('reply_comment_parent')
         .equalTo(reply_id)
@@ -734,6 +764,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
             x.forEach(data => {
                 reply_list.push(data.val())
             })
+    // print the replies using the indexes provided (comment_index, reply_index, start)
         }).then(() => {
             if (reply_list.length != 0) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
@@ -804,6 +835,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                     start = start + 1;
                 }
             }
+        // call the function again recursively to print the replies to the 2nd layer replies and so on.
         }).then(() => {
             for (let i = reply_list.length - 1; i >= 0; i--) {
                 printRepliesToReplies(reply_list[i].id, comment_index, reply_index, start)
@@ -839,7 +871,7 @@ function addReply(btn_num, comment_id) {
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-            
+
             let now = new Date();
             let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
             utc = utc.toString();
@@ -869,6 +901,12 @@ function addReply(btn_num, comment_id) {
     }
 }
 
+/**
+ * A function which add the new reply to an existing reply and writes into the database
+ * @param {integer} comment_index part of the index of reply button
+* @param {integer} reply_index part of the index of reply button
+ * @param {string} reply_id the id associated with the reply
+ */
 function addReplyToReply(comment_index, reply_index, reply_id) {
 
     if (checkUserExistence()) {
@@ -920,7 +958,13 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
     }
 }
 
-
+/**
+ * A function which add the new reply to an existing 2nd layer reply and writes into the database
+ * @param {integer} comment_index part of the index of reply button
+* @param {integer} reply_index part of the index of reply button
+* @param {integer}  reply_to_reply_index part of  the index of reply button
+ * @param {string} reply_id the id associated with the reply
+ */
 function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index, reply_id) {
 
     if (checkUserExistence()) {
@@ -1020,13 +1064,13 @@ async function likeComment(comment_id, i){
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
 
     username=current_user["username"]
-    
+
     if (!res) {
         // if there is no action at all, lilke
         firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).set({
             action: 1
         }).then(() => {
-            updateCommentLikes(comment_id, 1) // add 1 like 
+            updateCommentLikes(comment_id, 1) // add 1 like
         });
         // UI
         like_btn_addr.style.background='#2bbd7e';
@@ -1040,11 +1084,11 @@ async function likeComment(comment_id, i){
 
     } else {
         firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).remove();
-        updateCommentLikes(comment_id, -1)  // remove 1 like 
-        //UI 
+        updateCommentLikes(comment_id, -1)  // remove 1 like
+        //UI
         like_btn_addr.style.background='#dadada';
         like_btn_addr.style.color='black';
-        // change like number 
+        // change like number
         current_value=like_btn_addr.value
         new_value=parseInt(current_value)-1
         like_btn_addr.value=new_value
