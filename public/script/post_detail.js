@@ -353,7 +353,9 @@ function removePostFromFavourite() {
                 let newData = "";
                 let new_users_arr = [];
                 let users_arr = snapshot.val()["users_favourite"];
+                //get all the users favourited the post
                 for (let i = 0; i < users_arr.length; i++) {
+                    //find whether the logged in user has favourited the post
                     if (current_user["phone"] != users_arr[i]) {
                         new_users_arr.push(users_arr[i]);
                     }
@@ -374,15 +376,15 @@ function removePostFromFavourite() {
 
 /**
  * Function which adds the current post into user's favourite.
- * It will first check ifthe favourite attribute has been written or not in the database
+ * It will first check if the favourite attribute has been written or not in the database
  * before proceeding to add the following post into favourites.
  * @returns none
  */
 function addPostToFavourite() {
     let post_id = params.get('post_id');
 
+    //checks whether the user exists 
     if (checkUserExistence()) {
-
         let myRef = firebase.database().ref(`posts/${post_id}`);
         myRef.once("value")
             .then(function(snapshot) {
@@ -436,7 +438,7 @@ function addComment() {
             second: "2-digit"
         };
 
-        // error handling if it is empty??
+        //get the UI elements for stay anonymus and comment
         let comment = document.getElementById("comment_input").value
         let stay_anonymous = document.getElementById("anonymous").checked
 
@@ -465,7 +467,6 @@ function addComment() {
 
             firebase.database().ref(`comments/${key}`).set(newData).then(() => {
                 printComments();
-                // window.location = "post.html" + "?post_id=" + post_id;
             });
         };
 
@@ -484,6 +485,7 @@ function removePost() {
     let post_id = params.get('post_id');
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
         let post = snapshot.val();
+        //checks whether the user has created the post
         if (post["userID"] == current_user["phone"]) {
             firebase.database().ref(`posts/${post_id}`).remove();
             window.location = "forum.html";
@@ -517,6 +519,10 @@ function printComments() {
             })
 }
 
+/**
+ * Checks whether all the comments are liked or not
+ * @param comments_list list of all the comments
+ */
 async function checkCommentForLikes(comments_list){
     //looping throough all the comments for the post to check for likes
     for (let i =comments_list.length - 1; i >= 0; i--){
@@ -532,14 +538,20 @@ async function checkCommentForLikes(comments_list){
             printComment(0, comment, i);
         }
     }
+    //printing replies to comments
     for (let comment_index = comments_list.length - 1; comment_index >= 0; comment_index--) {
         printReplies(comments_list[comment_index].id, comment_index)
     }
 }
 
-
+/**
+* Printing comment to the UI
+* @param button_num if a comment is liked:1, if not then 0
+* @param comment JSON object will all the information about the comment
+* @param i comment index on the screen
+*/
 function printComment(button_num, comment, i ){
-
+    //checks whether the comment is anonymous
     let comment_username;
     if (comment.anonymous) {
         comment_username = "Anonymous";
@@ -750,12 +762,11 @@ function printReplies(comment_id, comment_index) {
                         else{
                           document.getElementById(`reply_input${comment_index},${i}`).setAttribute("style", "width:92%");
                         }
-
                     }
                 }
             }
         }).then(() => {
-          // calls the function that is used to print the 2nd layer replies (i.e. replies to the specific reply )
+            // calls the function that is used to print the 2nd layer replies (i.e. replies to the specific reply )
             for (let reply_index = reply_list.length - 1; reply_index >= 0; reply_index--) {
                 printRepliesToReplies(reply_list[reply_index].id, comment_index, reply_index, 0)
             }
@@ -782,8 +793,9 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
             x.forEach(data => {
                 reply_list.push(data.val())
             })
-    // print the replies using the indexes provided (comment_index, reply_index, start)
+        // print the replies using the indexes provided (comment_index, reply_index, start)
         }).then(() => {
+            //checks whether replies are anonymous 
             if (reply_list.length != 0) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
                     let reply = reply_list[i];
@@ -922,7 +934,7 @@ function addReply(btn_num, comment_id) {
 /**
  * A function which add the new reply to an existing reply and writes into the database
  * @param {integer} comment_index part of the index of reply button
-* @param {integer} reply_index part of the index of reply button
+ * @param {integer} reply_index part of the index of reply button
  * @param {string} reply_id the id associated with the reply
  */
 function addReplyToReply(comment_index, reply_index, reply_id) {
@@ -935,8 +947,6 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
             minute: "2-digit",
             second: "2-digit"
         }
-
-
         let post_id = params.get('post_id');
 
         // get reply value
@@ -971,20 +981,17 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
             });
 
         };
-    } else {
-       // window.location = "forum.html";
-    }
+    } 
 }
 
 /**
  * A function which add the new reply to an existing 2nd layer reply and writes into the database
  * @param {integer} comment_index part of the index of reply button
-* @param {integer} reply_index part of the index of reply button
-* @param {integer}  reply_to_reply_index part of  the index of reply button
+ * @param {integer} reply_index part of the index of reply button
+ * @param {integer}  reply_to_reply_index part of  the index of reply button
  * @param {string} reply_id the id associated with the reply
  */
 function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index, reply_id) {
-
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -1026,15 +1033,17 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
             firebase.database().ref(`replies/${key}`).set(newData).then(() => {
                 window.location = "post.html" + "?post_id=" + post_id;
             });
-
         };
     } else {
         window.location = "forum.html";
     }
 }
 
-
-
+/**
+ * Redirects the user to the page with url
+ * @param url where to redirect to
+ * @param msg 
+ */
 function redirect(url, msg) {
     window.location = url;
     return msg;
@@ -1062,6 +1071,7 @@ function checkUserFavouritedPost() {
                 }
             }
 
+            // prints the button according to the state: added to favourites or not
             let fav_button = document.getElementsByClassName("favourite")[0];
             if (user_exist) {
                 button.innerHTML = `<img src=\"./css/images/fav_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>`;
@@ -1076,6 +1086,11 @@ function checkUserFavouritedPost() {
     })
 }
 
+/**
+ * Function to like a comment (or remove like if it was liked initially)
+ * @param {*} comment_id the unique id of the comment
+ * @param {*} i the index of a comment on the ui
+ */
 async function likeComment(comment_id, i){
 
     let res = await checkForLikesComment(comment_id);
@@ -1114,7 +1129,11 @@ async function likeComment(comment_id, i){
     }
 }
 
-
+/**
+ * Function to check whether the comment was liked or not
+ * @param {*} comment_id the unique id of the comment
+ * @returns boolean: 1 if liked, 0 if not liked
+ */
 function checkForLikesComment(comment_id){
     return new Promise(resolve => {
             firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).once("value", snapshot => {
@@ -1129,9 +1148,9 @@ function checkForLikesComment(comment_id){
 }
 
 /**
- * Function which used to update the number of likes on comments
+ * Function which used to update the number of likes on comments in the database
  * @param {*} comment_id the unique id of the comment
- * @param {*} number new number of likes added to the comment
+ * @param {*} number new number of likes added to the comment: -1 or 1
  */
 function updateCommentLikes(comment_id, number){
     firebase.database().ref(`comments/${comment_id}/likes`).once('value', (snapshot) => {
