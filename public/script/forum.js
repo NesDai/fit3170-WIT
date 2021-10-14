@@ -1012,7 +1012,7 @@ function searchYourPosts(param){
     let data_list = [];
     let button_nums = []
     let posts = [];
-    let field = document.getElementById("#postField");
+    //let field = document.getElementById("#postField");
     let toPrint = [];
 
 
@@ -1023,7 +1023,7 @@ function searchYourPosts(param){
 
     $('#postField').html(""); // emtpy the field of any previous posts
 
-
+     //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
@@ -1037,7 +1037,6 @@ function searchYourPosts(param){
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
-
                     let userFav = [];
 
                     if(data.val().users_favourite != undefined){ // no favs on the post
@@ -1061,12 +1060,10 @@ function searchYourPosts(param){
                         button_nums.push(button_num);
                         posts.push(data.val());
                         toPrint.push(data.val().id);
-
                     }
                 })
             })
         //find interests in posts
-        
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
@@ -1097,7 +1094,6 @@ function searchYourPosts(param){
                             posts.push(data.val());
                             toPrint.push(data.val().id);
                         }
-   
                     }
                 })
             })
@@ -1112,7 +1108,6 @@ function searchYourPosts(param){
                         if(users_fav == undefined){
                             users_fav = [];
                         }
-
                         if(data.val().username == current_user["username"] || users_fav.includes(current_user["phone"])){
                             for (let i =0; i<data_list.length; i++) {
                                 if (data.val()['id']==data_list[i][0])
@@ -1135,20 +1130,12 @@ function searchYourPosts(param){
                         }
                     })
                 }).then(()=>{
+                    //printing posts
                     let i =0;
-
-                    
-
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
                     }
-
                     $('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
-
-                    // if(i == posts.length-1){
-                    //     $('#postField').append(`<h2>No results found<h2>`); // no results found
-                    // }
-
                 });
             })
 }
