@@ -119,7 +119,6 @@ function makeNewPost() {
     }
 }
 
-
 function updatePost(post_id) {
 
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
@@ -147,6 +146,7 @@ function updatePost(post_id) {
     });
 }
 
+
 function validatePostOwner(post_id) {
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
         let post = snapshot.val();
@@ -165,19 +165,17 @@ function findAllPosts() {
         for (let post_id in postsObj) {
             firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
                 let post = snapshot.val();
-                console.log(post["title"]);
-                console.log(post["description"]);
-                console.log(post["interest"]);
-                console.log(post["like"]);
-                console.log(post["dislike"]);
             });
         }
     });
 }
 
-
+/**
+ * Prints all the posts which are created by users from the firebase to the screen.
+ * @returns none
+ */
 function printAllPosts(){
-
+    //disables the tabs till all the posts are loaded
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
     
@@ -193,51 +191,45 @@ function printAllPosts(){
     let button_nums = []
     let posts = [];
 
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
+        //get all the posts from the firebase
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-
-                if(data.val().recommender == false || data.val().recommender == undefined){  //todo accept undefined for now but remove later
+                // if the post is not from recommender
+                if(data.val().recommender == false || data.val().recommender == undefined){
                     let button_num=0
                     for (let i =0; i<data_list.length; i++) {
                         if(data_list[i][0] == data.key){  // if an action was performed on this post
                             if(data_list[i][1] == 1) { // liked
                                 button_num=1
                             }
-                            else{
+                            else{ //disliked
                                 button_num=-1
                             }
                         }
-                }
+                    }
                     button_nums.push(button_num);
-                posts.push(data.val());
-        }
+                    posts.push(data.val());
+                }
             });
-        
-
         }).then(()=>{
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-            // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
         }).then(()=>{
-
-            // Reenable the other tabs
-        $("#radio-0").attr("disabled",false);
-        $("#radio-1").attr("disabled",false);
-    
+            // reanables the tabs since all the posts were loaded
+            $("#radio-0").attr("disabled",false);
+            $("#radio-1").attr("disabled",false);
+        })
     })
-    })
-
-
 }
 
 /**
