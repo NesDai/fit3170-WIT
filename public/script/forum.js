@@ -1023,7 +1023,7 @@ function searchYourPosts(param){
 
     $('#postField').html(""); // emtpy the field of any previous posts
 
-     //gets the posts with the like/dislike by the logged in user
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
@@ -1159,10 +1159,9 @@ function searchYourPosts(param){
         printThread();
         return // exit function
     }
-
     $('#postField').html(``); // emtpy the field of any previous posts
 
-
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
@@ -1176,11 +1175,9 @@ function searchYourPosts(param){
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
-
                     if(data.val().users_favourite != undefined){ // no favs on the post
                         userFav= data.val().users_favourite; //get all users favs
                     }
-
                     if(data.val().recommender == true){
                         for (let i =0; i<data_list.length; i++) {
                             if (data.val()['id']==data_list[i][0])
@@ -1202,13 +1199,12 @@ function searchYourPosts(param){
                 })
             })
         //find interests in posts
-        
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
 
-                    let users_fav = data.val().users_favourite // all the users who favourited the post
+                    //let users_fav = data.val().users_favourite // all the users who favourited the post
 
                     if(data.val().recommender == true){
                         for (let i =0; i<data_list.length; i++) {
@@ -1218,7 +1214,7 @@ function searchYourPosts(param){
                                     if(data_list[i][1] == 1) { // liked
                                         button_num=1
                                     }
-                                    else{
+                                    else{ //disliked
                                         button_num=-1
                                     }
                                 }
@@ -1248,7 +1244,7 @@ function searchYourPosts(param){
                                         if(data_list[i][1] == 1) { // liked
                                             button_num=1
                                         }
-                                        else{
+                                        else{ //disliked
                                             button_num=-1
                                         }
                                     }
@@ -1263,18 +1259,13 @@ function searchYourPosts(param){
                         }
                     })
                 }).then(()=>{
+                    //if no results found print 0 results found
                     printStartIndex = posts.length-1;
-                    
                     $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-                    // if(printStartIndex < 0){
-                    //     $('#postField').html(`<h2>No results found<h2>`);
-                    // }
                 });
             })
 }
-
-
 
 /**
  * Allows to like a post, updating the firebase and UI accordingly
@@ -1283,7 +1274,7 @@ function searchYourPosts(param){
  * @returns Nothing. The function automatically updates the screen with liked post
  */
 async function likePost(post_id, i) {
-
+    //gets the like button address on the screen
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
@@ -1305,10 +1296,6 @@ async function likePost(post_id, i) {
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
         $('#button_div'+i).find('.number_of_likes').html(new_value);
-
-
-
-
     } else {
         // if there is action
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
@@ -1339,9 +1326,8 @@ async function likePost(post_id, i) {
                 dislike_btn_addr.value=new_value
                 console.log(dislike_btn_addr.value)
                 $('#button_div'+i).find('.number_of_dislikes').html(new_value);
-
-
-            } else {
+            } 
+            else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
                 updateLikes(post_id, -1)  // remove 1 like
                 //UI
@@ -1352,7 +1338,6 @@ async function likePost(post_id, i) {
                 new_value=parseInt(current_value)-1
                 like_btn_addr.value=new_value
                 $('#button_div'+i).find('.number_of_likes').html(new_value);
-
             }
         })
     }
@@ -1366,6 +1351,7 @@ async function likePost(post_id, i) {
  */
 async function dislikePost(post_id, i)
 {
+     //gets the like button address on the screen
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
@@ -1373,11 +1359,11 @@ async function dislikePost(post_id, i)
 
     if (!res){
         // if there is no action at all
-                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
-                // add 1 dislike
-                updateDislikes(post_id, 1)
-            });
-
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
+            // add 1 dislike
+            updateDislikes(post_id, 1)
+        });
+        
         // UI
         dislike_btn_addr.style.background='#e53935';
         dislike_btn_addr.style.color='white';
@@ -1396,10 +1382,10 @@ async function dislikePost(post_id, i)
             if (current_state==1){
                 // if action is like
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{
-                // add 1 dislike and remove 1 like
-                updateDislikes(post_id, 1)
-                updateLikes(post_id,-1)
-                 });
+                    // add 1 dislike and remove 1 like
+                    updateDislikes(post_id, 1)
+                    updateLikes(post_id,-1)
+                });
                 // UI
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';
@@ -1418,9 +1404,6 @@ async function dislikePost(post_id, i)
                 like_btn_addr.value=new_value
 
                 $('#button_div'+i).find('.number_of_likes').html(new_value);
-
-
-
             }
             else{
                 // remove 1 dislike
@@ -1435,14 +1418,16 @@ async function dislikePost(post_id, i)
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
                 $('#button_div'+i).find('.number_of_dislikes').html(new_value);
-
-
             }
-        }
-        )
+        })
     }
 }
 
+/**
+ * Redirects the user to the post detailed information page by the post id
+ * @param {param} id id of the post to be redirected to
+ * @returns none
+ */
 function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
 } 
