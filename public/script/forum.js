@@ -783,6 +783,7 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                             }
                         })
                     }).then(()=>{
+                        //likes and dislikes
                         for (let k =0; k<post_arr.length; k++){
                             let button_num=0
                             for (let i =0; i<data_list.length; i++) {
@@ -797,52 +798,49 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                             }
                             button_nums.push(button_num);
                         }
-                        }).then(() => {
-                                for(let i=post_arr.length-1; i>=0 ; i--){
+                    }).then(() => {
+                        for(let i=post_arr.length-1; i>=0 ; i--){
+                            //printing posts
+                            printPost(post_arr[i], button_nums[i], buttons_index)
+                            buttons_index++;
+                        }
 
-                                    printPost(post_arr[i], button_nums[i], buttons_index)
-                                    buttons_index++;
-                                }
-
-                                const promise = new Promise((resolve, reject) => {
-
-                                    resolve(1);
-                                 });
+                        // return a promise with a value one to specify the function has completed
+                        const promise = new Promise((resolve, reject) => {
+                            resolve(1);
+                        });
                     })
         })
-
-
 }
 
+/**
+ * Prints the posts which are created the logged in user from the firebase to the screen.
+ * @returns none
+ */
 function printUserPosts(){
-
-    //disable other tabs
+    //disables the tabs till all the posts are loaded
     $("#radio-0").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
-  
-
     $('#resNum').html(``);   
-
     document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(''); // clear create post ui area
-
     $('#postField').text(''); // emtpy the field of any previous posts
 
     let data_list = [];
     let button_nums = [];
     let posts = [];
 
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
-
+        //get all the posts from the firebase
         firebase.database().ref('posts')
             .orderByChild('username')
                 .equalTo(current_user['username'])
@@ -854,7 +852,7 @@ function printUserPosts(){
                                     if(data_list[i][1] == 1) { // liked
                                         button_num=1
                                     }
-                                    else{
+                                    else{ //disliked
                                         button_num=-1
                                     }
                                 }
@@ -865,23 +863,19 @@ function printUserPosts(){
 
                     }).then(()=>{
                         for(let i=posts.length-1; i>=0 ; i--){
+                            //print posts 
                             printPost(posts[i], button_nums[i], i )
                         }
                     }).then(() => {
+                        //print user favourites
                         printUserFavouritePosts(posts,button_nums.length).then(()=>{
-
-                                                     // Reenable the other tabs
-                        $("#radio-0").attr("disabled",false);
-                        $("#radio-2").attr("disabled",false);
-
+                            // reanables the tabs since all the posts were loaded
+                            $("#radio-0").attr("disabled",false);
+                            $("#radio-2").attr("disabled",false);
                         })
                     });
-                });
-                                
-   
+    });
 }
-       
-
 
 /**
  * Function used to search forum posts in feed. A parameter is typed (interest or a name of the post)
@@ -900,19 +894,15 @@ function printUserPosts(){
 
     let tab = document.getElementsByName("tabs");
 
-
-    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
-
+    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function for user's posts 
         searchYourPosts(param);
         return
     }
-    else if(tab[0].checked){ // if the navigation tab is tending video
-  
+    else if(tab[0].checked){ // if the navigation tab is trending posts, delegate the work to the helper function for recommender posts
         searchTrendingPosts(param);
         return;
     }
 
-    console.log("all")
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printAllPosts();
         return // exit function
@@ -920,14 +910,13 @@ function printUserPosts(){
 
     $('#postField').html(''); // emtpy the field of any previous posts
 
-
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
         let button_num=0
@@ -942,7 +931,7 @@ function printUserPosts(){
                                 if(data_list[i][1] == 1) { // liked
                                     button_num=1
                                 }
-                                else{
+                                else{ //disliked
                                     button_num=-1
                                 }
                             }
@@ -979,7 +968,6 @@ function printUserPosts(){
                         posts.push(data.val());
                         toPrint.push(data.val().id);
                     }
-
                 })
             })
 
@@ -994,27 +982,22 @@ function printUserPosts(){
                                     if(data_list[i][1] == 1) { // liked
                                         button_num=1
                                     }
-                                    else{
+                                    else{ //disliked
                                         button_num=-1
                                     }
                                 }
                             }
                         }
                         button_nums.push(button_num);
-
                         if(!toPrint.includes(data.val().id) && data.val().username != undefined){ // push only if its not yet being printed
                             posts.push(data.val());
                             toPrint.push(data.val().id);
                         }
                     })
                 }).then(()=>{
-                    
                     printStartIndex = posts.length-1;
                     $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-                    // if(printStartIndex < 0){
-                    //     $('#postField').html(`<h2>No results found<h2>`);
-                    // }
                 });
     })
 }
