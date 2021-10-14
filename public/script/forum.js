@@ -738,6 +738,7 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
     let data_list = [];
     let button_nums = [];
 
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
         .once('value', x => {
             x.forEach(data => {
@@ -750,39 +751,37 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                 .orderByChild(`users_favourite`)
                     .once('value', x => {
                         x.forEach(data => {
+                            //check whether there is an attribute users favourite in teh database
                             let hasFavouriteAttribute = data.hasChild("users_favourite");
-
                             if (hasFavouriteAttribute){
-                                // if attribute is in db
                                 users_arr = data.val()["users_favourite"];
                                 let current_user_exist = false;
-
+                                //checks whether the current user is in list of users who favourited the post
                                 for(let i = 0; i < users_arr.length; i++){
                                     if (users_arr[i] == current_user["phone"]){
                                         current_user_exist = true
                                     }
                                 }
-
+                                // if found user favourite a post, push post into fav post arr
                                 if (current_user_exist){
-                                    // if found user favourite a post, oush post into fav post arr
                                     fav_post_arr.push(data.val());
                                 }
                             }
-                        })
-
+                        });
+                        //eliminates duplicates
                         fav_post_arr.forEach(fav_post => {
-                                let duplicate = false;
+                            let duplicate = false;
 
-                                for (let i = 0; i < current_user_posts.length; i++){
-                                    if (current_user_posts[i]["id"] == fav_post["id"]){
-                                        duplicate = true
-                                    }
+                            for (let i = 0; i < current_user_posts.length; i++){
+                                if (current_user_posts[i]["id"] == fav_post["id"]){
+                                    duplicate = true
                                 }
+                            }
 
-                                if (!duplicate){
-                                    post_arr.push(fav_post);
-                                }
-                            })
+                            if (!duplicate){
+                                post_arr.push(fav_post);
+                            }
+                        })
                     }).then(()=>{
                         for (let k =0; k<post_arr.length; k++){
                             let button_num=0
