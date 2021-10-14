@@ -233,16 +233,14 @@ function printAllPosts(){
 }
 
 /**
- * Function used to print thread videos from the recommended data 
+ * Function used to print videos from the recommended data 
  * it calls the function that holds html component in a loop and add it to the post field under thread tab. 
  * @returns null
  */
 function printThread(){
-    // thread is radio button index 0. Disable other tabs
+    //disables the tabs till all the posts are loaded
     $("#radio-1").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
-
-    console.log(document.getElementById(`radio-1`), document.getElementById(`radio-2`))
 
     document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
@@ -257,19 +255,19 @@ function printThread(){
     let button_nums = []
     let posts = [];
 
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-
+                // if the post is from recommender
                 if(data.val().recommender == true){ 
                     let button_num=0
                     for (let i =0; i<data_list.length; i++) {
@@ -277,29 +275,24 @@ function printThread(){
                             if(data_list[i][1] == 1) { // liked
                                 button_num=1
                             }
-                            else{
+                            else{ //disliked
                                 button_num=-1
                             }
                         }
-                }
+                    }
                     button_nums.push(button_num);
-                posts.push(data.val());
-        }
+                    posts.push(data.val());
+                }
             });
         }).then(()=>{
-
             printStartIndex = posts.length - 1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
         }).then(()=>{
-
-            // Reenable the other tabs
-    $("#radio-1").attr("disabled",false);
-    $("#radio-2").attr("disabled",false);
-
+            // reanables the tabs since all the posts were loaded
+            $("#radio-1").attr("disabled",false);
+            $("#radio-2").attr("disabled",false);
+        });
     });
-    });
-
-   
 }
 
 /**
