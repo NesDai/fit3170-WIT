@@ -181,7 +181,7 @@ function printAllPosts(){
     
     $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
-    print_create_post();
+    printCreatePost();
     $('#postField').text(``); // emtpy the field of any previous posts
 
     let printPostCount = 10; // start printing 10 posts first
@@ -332,7 +332,7 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
  * Function used to display the layout of forum under "Create Post" tab
  * @returns none
  */
-function print_create_post()
+function printCreatePost()
 {
     $('#create_post').html(
         `<div id="create_post">
@@ -526,11 +526,9 @@ function print_create_post()
               dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
                   dialog_vid.close();
               });
-              
            </script>
         </div>`
-    );
-    
+    );    
 }
 
 /**
@@ -573,6 +571,7 @@ function printPost(post, button_num, i )
          </button>`
     }
 
+    //checks whether the post has a username and date created
     let atchar = "@";
     if(post.username == undefined)
         post.username = "";
@@ -580,7 +579,6 @@ function printPost(post, button_num, i )
         post.username = atchar+post.username;
     if(post.created == undefined)
         post.created = "";
-
 
     $('#postField').append(
         `   <div style="padding-top: 20px;">
@@ -726,7 +724,6 @@ function printPost(post, button_num, i )
             </span>
      </div>`
     );
-
 }
 
 /**
