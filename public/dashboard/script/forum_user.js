@@ -39,7 +39,7 @@ async function collectUsers() {
     });
 }
 
-function updateUserUI(user_id) {
+async function updateUserUI(user_id) {
     // update the comments array from the firebase
     collectComments();
     collectReplies();
@@ -176,21 +176,22 @@ function updateUserUI(user_id) {
 
                     }
 
-                  ).then(() => {
+                  ).then(async function(){
                         //updates the total number of likes and dislikes for the chosen user
-                        updateLikesDislikes(current_username)
+                        await updateLikesDislikes(current_username)
                         //updates the number of replies and comments
-                        updateCommentsReplies(current_username)
+                        await updateCommentsReplies(current_username)
                         //updates the number of posts favorited by the user
-                        updateFavorites(current_user)
+                        await updateFavorites(current_user)
                         //updates the number of posts created by the user
-                        updatePosts(current_username)
+                        await updatePosts(current_username)
                         //updates the number of likes on comments
-                        updateLikesComments(current_username)
+                        await updateLikesComments(current_username)
                         //updates the pie chart
-                        updateChart(current_username,  current_user)
+                        await updateChart(current_username,  current_user)
                         //updates the table viewed
-                        updateTable();
+                        await updateTable();
+                        console.log("exiting");
                     });
                 });
             });
@@ -235,12 +236,12 @@ function updateUserUI(user_id) {
     });
 }
 
-function updateLikesDislikes(current_username){
+async function updateLikesDislikes(current_username){
     let likes_count=0;
     let dislikes_count=0;
     liked_posts_id=[];
     disliked_posts_id =[];
-    firebase.database().ref('likesDislikes')
+    await firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[current_username] != undefined){ // if the user performed an action on the post
@@ -257,7 +258,7 @@ function updateLikesDislikes(current_username){
     })
 }
 
-function updateCommentsReplies(current_username){
+async function updateCommentsReplies(current_username){
     let comments_replies_count=0;
     comments_made = [];
     for(let i=0; i< comments.length; i++){
@@ -280,7 +281,7 @@ function updateCommentsReplies(current_username){
 
 }
 
-function updatePosts(current_username){
+async function updatePosts(current_username){
     let posts_count=0;
     created_posts = [];
     for (let i=0; i<posts.length; i++) {
@@ -293,7 +294,7 @@ function updatePosts(current_username){
 
 }
 
-function updateFavorites(current_user_phone){
+async function updateFavorites(current_user_phone){
     let favourites=0;
     favourite_posts = [];
     for (let i=0; i<posts.length; i++) {
@@ -309,7 +310,7 @@ function updateFavorites(current_user_phone){
     $("#favouritePosts").html( `<h3>${favourites}</h3>`);
 }
 
-function updateLikesComments(current_username){
+async function updateLikesComments(current_username){
     let likes_count=0;
     liked_comments_id = [];
     firebase.database().ref('likesComments')
@@ -325,7 +326,7 @@ function updateLikesComments(current_username){
     })
 }
 
-function updateChart(current_username, current_user_phone){
+async function updateChart(current_username, current_user_phone){
     //print out the chart
     $("#chart_body").html( `<canvas id="pie-chart-interests" width="500" height="400"></canvas>`);
     //initialize arrays
@@ -415,9 +416,9 @@ function updateChart(current_username, current_user_phone){
                 {
                     for (let j=0; j<posts[i].users_favourite.length; j++)
                     {
-                        console.log(posts[i].users_favourite[j])
+                        
                         if (posts[i].users_favourite[j]==current_user_phone){
-                            console.log('hi')
+                        
                             for (let k=0; k<(posts[i].interest).length; k++){
                                 if ( interest_post[posts[i].interest[k]] == undefined){
                                     interest_post[posts[i].interest[k]] = 1
@@ -468,13 +469,13 @@ function updateChart(current_username, current_user_phone){
 /* Function that updates the table that is displayed for the user based on the value of the checked radio
 *
 */
-function updateTable(){
+async function updateTable(){
   let checked_value =  document.getElementById('tableDisplay').value;
 
   if (checked_value == "createdPosts"){
     displayCreatedPosts();
   } else if (checked_value == "likedPosts") {
-    retrieveLikedPosts();
+    await retrieveLikedPosts();
   } else if (checked_value == "dislikedPosts"){
     retrieveDislikedPosts();
   } else if (checked_value == "comments"){
@@ -509,8 +510,9 @@ function displayCreatedPosts(){
 /**
 * Function that is used to collect a list of the liked posts based on their id
 */
-function retrieveLikedPosts(){
+async function retrieveLikedPosts(){
   let liked_posts = [];
+  console.log(liked_posts_id.length);
   for(let i =0; i<liked_posts_id.length; i++){
     let j=0;
     while (j < posts.length){
@@ -522,15 +524,16 @@ function retrieveLikedPosts(){
       }
     }
   }
-  displayLikedPosts(liked_posts);
+  await displayLikedPosts(liked_posts);
 
 }
 
 /** Function that displays the Table that is used to display the user liked
 * @param {*} liked_posts the posts that the user liked
 */
-function displayLikedPosts(liked_posts){
+async function displayLikedPosts(liked_posts){
   //outputing the rows of posts
+  console.log("displaying post", liked_posts);
   let display_table = document.getElementById("tableDisplayRow");
   let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>Post link</th></thead><tbody>";
 
@@ -708,7 +711,8 @@ function transfer_admin_post(post_id){
 // update posts on an interval (10 sec) to mimic realtime dashboard
 setInterval(
     async function(){
-    collectUsers().then(()=>{
+     await collectUsers().then(()=>{
+
         if (current_user == undefined || current_user == null) {
             updateUserUI(null);
         } else {
