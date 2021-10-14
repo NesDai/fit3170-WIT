@@ -611,8 +611,8 @@ function printPost(post, button_num, i )
                      +
                      `
                      ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>` :
-                      `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
-                      <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>`}
+                      `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id" disabled>${post.interest[0]} </button>
+                      <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id" disabled>${post.interest[1]}</button>`}
                      `
                      +
                      `

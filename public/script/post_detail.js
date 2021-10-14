@@ -1,12 +1,11 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-
 const params = new URLSearchParams(window.location.search)
 
 getPostDetails();
 
 /**
 * Function that displays the input box to add a reply to a comment
-* @param button_num The index of the location thatthe reply input will be displayed
+* @param button_num The index of the location that the reply input will be displayed
 */
 function showReplyInput(button_num) {
     document.getElementById("add_reply_section" + button_num.toString()).style.display = "block";
@@ -44,11 +43,16 @@ function checkUserExistence() {
     }
 }
 
+/**
+ * Gets all the details related to one post and calls printing post function
+ * @returns none
+ */
 function getPostDetails() {
     let posts = [];
     let id = params.get('post_id');
     let action = 0;
 
+    //checks whether the post was liked or not
     firebase.database().ref(`likesDislikes/${id}/${current_user["username"]}`)
         .once('value', x => {
             x.forEach(data => {
@@ -57,28 +61,35 @@ function getPostDetails() {
         }).then(() => {
             firebase.database().ref('posts')
                 .orderByChild('id')
-                .equalTo(id)
-                .once('value', x => {
-                    x.forEach(data => {
-                        let post = data.val();
-                        posts.push(post)
+                    .equalTo(id)
+                        .once('value', x => {
+                            x.forEach(data => {
+                                //get post details looking for it by id
+                                let post = data.val();
+                                posts.push(post)
                     });
                 }).then(() => {
+                    //calling printing post function
                     printPostDetails(posts[0], action)
                 })
         })
 }
 
-
+/**
+* Function that prints out all the information about the post to the UI
+* @param post JS object, which contains all the information about the post
+* @param button_num contains 1: if the post is likes, 0: if no action, -1: if the post was disliked
+*/
 function printPostDetails(post, button_num) {
-
+    //checks whether it has username
     if(post.username == undefined)
         post.username = "";
-
-
+    
+    //checks whether it has the date created 
     if(post.created == undefined)
         post.created = "";
-
+    
+    //choosing appropriate like-dislike buttons UI
     let button = `
     <button class="like mdl-button mdl-js-button" id="btn_like" value="${post.likes}">
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
@@ -107,25 +118,29 @@ function printPostDetails(post, button_num) {
          </button>`
     }
 
+    //get interests for this post and print them
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
-        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id"> #${post.interest[i]} </button>`
+        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id" disabled> #${post.interest[i]} </button>`
     }
-    let users_post = false;
-    if (current_user.username != post.username)
-        users_post = true;
+
+    // // check whether this post was created by the user logged in
+    // let users_post = false;
+    // if (current_user.username != post.username)
+    //     users_post = true;
 
     post_display = "";
-    post_display +=
-        `
+    post_display +=`
         <div class="demo-card-wide mdl-card mdl-shadow--2dp">
             <!-- POST HEADER -->
             <br>
             <div class="f">`;
+    // get the username
     if (post.username == "")
         post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'></h2>`;
     else
         post_display += `<h2 class="mdl-card__title-text mdl-color-text--black notranslate" style="text-align: left; float: left; position: relative; left: 10px" id='poster_id'>@${post.username}</h2>`;
+    //printing the delete button if the post was created by the user logged in
     post_display +=
             `</div>
             <div>
@@ -150,8 +165,8 @@ function printPostDetails(post, button_num) {
         ` + `
                 <br>
                 <div style='display: inline-block'>
-                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]}</button>
-                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>
+                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id" disabled>${post.interest[0]}</button>
+                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id" disabled>${post.interest[1]}</button>
                 </div>
                 <br><br>
             </form>
@@ -279,7 +294,9 @@ function printPostDetails(post, button_num) {
 
             </div>`
     $('#post_details').append(post_display);
+    //check whether the user has favourited the post 
     checkUserFavouritedPost();
+    //printing comments
     printComments();
     if (current_user.username != post.username) // remove the delete button if not the poster of the post
         document.getElementById("delete_post_btn").remove();
@@ -297,13 +314,13 @@ function checkButtonStatus() {
     let myRef = firebase.database().ref(`posts/${post_id}`);
     myRef.once("value")
         .then(function(snapshot) {
-
             let hasFavouriteData = snapshot.hasChild("users_favourite");
             let user_found = false;
-            // checking the favourite data has been written ebfore
+            // checking the favourite data has been written before
             if (hasFavouriteData == false) {
                 addPostToFavourite();
-            } else {
+            } 
+            else {
                 let users_arr = snapshot.val()["users_favourite"];
 
                 for (let i = 0; i < users_arr.length; i++) {
@@ -314,7 +331,8 @@ function checkButtonStatus() {
 
                 if (user_found) {
                     removePostFromFavourite();
-                } else {
+                } 
+                else {
                     addPostToFavourite();
                 }
             }
@@ -327,7 +345,7 @@ function checkButtonStatus() {
  */
 function removePostFromFavourite() {
     let post_id = params.get('post_id');
-
+    //checks if the user exists
     if (checkUserExistence()) {
         let myRef = firebase.database().ref(`posts/${post_id}`);
         myRef.once("value")
