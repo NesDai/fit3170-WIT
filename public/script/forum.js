@@ -1,10 +1,11 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-
-
 window.onload = execute()
 
+/**
+ * Calls the printing User posts function
+ * @returns none
+ */
 function execute(){
-    // check which tab is ticked
     printUserPosts();
 }
 
