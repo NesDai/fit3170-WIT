@@ -5,14 +5,9 @@ window.onload = execute()
 
 function execute(){
     // check which tab is ticked
-
-        
     printUserPosts();
-    // printAllPosts();
-
 }
 
-//check id the user is signed in
 /**
  * Function used to check if the user exist
  * @returns a boolean indicating whether the user exist in the database or not
@@ -38,6 +33,7 @@ function checkEmbeddingVideo(url) {
     let match = url.match(regExp);
     let youtube_url = 'https://www.youtube.com/embed/';
 
+    //check whether the link is valid
     if (match && match[2].length == 11) {
         return youtube_url + match[2];
     } else {
@@ -46,23 +42,21 @@ function checkEmbeddingVideo(url) {
 }
 
 
-//Making a new post
 /**
  * Function used to make a new post on forum.
- * If all required fields are filled, the dta will be written into the database and a post is created
+ * If all required fields are filled, the data will be written into the database and a post is created
  * and shown on the forum.
  * @returns none
  */
 function makeNewPost() {
 
-    const options = {  // options for Date
-        timeZone:"Africa/Accra",
-        hour12 : true,
-        hour:  "2-digit",
-        minute: "2-digit",
-       second: "2-digit"
-     };
-
+    // const options = {  // options for Date
+    //     timeZone:"Africa/Accra",
+    //     hour12 : true,
+    //     hour:  "2-digit",
+    //     minute: "2-digit",
+    //    second: "2-digit"
+    //  };
 
     if (checkUserExistence()) {
         interest_arr = [];
@@ -70,35 +64,37 @@ function makeNewPost() {
             interest_arr.push($(this).val());
         });
 
+        //alert if the interests are not chosen
         if (!interest_arr.length){
             dialog_int.showModal();
             return
         }
 
-        // error handling if it is empty??
+        // gets all the information from the create post UI 
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
         let video_url = document.getElementById("video_url").value
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
-        // let key = myRef.key; // generate a key for post id
 
         let embedding_video_url = 0
         if (video_url !== "") {
             embedding_video_url = checkEmbeddingVideo(video_url);
+            //alert if an invalid link is provided for the video
             if (embedding_video_url == 0) {
                 dialog_vid.showModal();
                 return;
             }
-
         }
 
+        // format the time of the post
         let now = new Date();
         let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
         utc = utc.toString();
         utc = utc.substring(0,25);
         utc+="(UTC TIME)";
 
+        // create a new object of the post
         let newData = {
             id: key,
             description: description,
@@ -113,13 +109,14 @@ function makeNewPost() {
             recommender: false
         }
 
+        //upload the post to the firebase
         firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
-            //alert("Posted successfully. Redirecting back to forum")
             window.location = "forum.html";
         });
-     } else{
-            window.location = "forum.html";
-        }
+    } 
+    else{
+        window.location = "forum.html";
+    }
 }
 
 
