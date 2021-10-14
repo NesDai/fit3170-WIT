@@ -14,6 +14,7 @@ let otherChosen = false;
 let MCQOptionIDs = [];
 let possibleAnswersMCQ = [];
 let othersAnswers = [];
+let question_bubble_no = 0;
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -559,9 +560,11 @@ function showMessageSender(message) {
         "<div class='space'>" +
         "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
+        "<button class=\"text-to-speech\" id=\"text-to-speech-" + question_bubble_no + "\"></button>" +
         "</div>" +
         "</div>";
     // showHints();
+    question_bubble_no++;
 }
 
 /**
@@ -767,7 +770,7 @@ function showNumeric(questionObject) {
     }
 
     // display the question and enable the textbox
-    showShortQuestionMessage(questionObject.question);
+    showMessageSender(questionObject.question);
     enableTextInput();
 }
 
@@ -801,8 +804,9 @@ function repromptQuestion() {
         showMultipleChoice(currentQuestionObject);
     }else{
       // print out the question again onto chat
-      showShortQuestionMessage(question);
+      showMessageSender(question);
     }
+
     showHints();
     updateProgress();
     scrollToBottom();
@@ -1064,7 +1068,7 @@ function showShortText(questionObject) {
 
     }
 
-    showShortQuestionMessage(questionObject.question);
+    showMessageSender(questionObject.question);
     enableTextInput();
 }
 
