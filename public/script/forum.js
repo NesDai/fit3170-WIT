@@ -234,7 +234,7 @@ function printAllPosts(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-    
+        })
     })
 }
 
@@ -301,7 +301,7 @@ function printThread(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-
+        })
     });
 }
 
