@@ -4,7 +4,7 @@ let current_user = JSON.parse(localStorage.getItem("USER"));
 let postNamesCreatePost = [];
 let postNamesFeed = [];
 let postNamesRecommender = [];
-
+let post_names = [];
 
 
 
@@ -29,7 +29,7 @@ async function checkPostExists(id){
     let res = 0;
 
     await firebase.database().ref(`posts/${id}`).once("value", snapshot => {
-        
+
         if (snapshot.exists()){
             console.log(1);
 
@@ -42,12 +42,12 @@ async function checkPostExists(id){
         resolve(res);
       });
 
-    
+
 }
 
 /**
  * The function displays a list of available options to autocomplete to the search query limited to 10 options
- * @param {1} query: the query text inputed into the search field 
+ * @param {1} query: the query text inputed into the search field
  * returns void
  */
 function autoComplete(query){
@@ -75,7 +75,7 @@ function autoComplete(query){
             //output.push(inputarr[i]);
             document.getElementById("autocomplete").innerHTML += `<div class="autocomplete-item" onclick="document.getElementById('searchBox').value = '${inputarr[i]}'"><strong>${inputarr[i]}<strong/></div>`;
             count++;
-        } 
+        }
   }
 }
 
@@ -140,7 +140,7 @@ function makeNewPost() {
             return
         }
 
-        // gets all the information from the create post UI 
+        // gets all the information from the create post UI
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
         let video_url = document.getElementById("video_url").value
@@ -173,7 +173,7 @@ function makeNewPost() {
             userID: current_user["phone"],
             username: current_user["username"],
             videoURL: embedding_video_url,
-            created: utc, 
+            created: utc,
             likes:0,
             dislikes:0,
             recommender: false
@@ -183,7 +183,7 @@ function makeNewPost() {
         firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
             window.location = "forum.html";
         });
-    } 
+    }
     else{
         window.location = "forum.html";
     }
@@ -250,7 +250,7 @@ function printAllPosts(){
 
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
-    
+
     $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
 
@@ -309,15 +309,15 @@ function printAllPosts(){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
 
-            
+
     })
     })
 
 }
 
 /**
- * Function used to print videos from the recommended data 
- * it calls the function that holds html component in a loop and add it to the post field under thread tab. 
+ * Function used to print videos from the recommended data
+ * it calls the function that holds html component in a loop and add it to the post field under thread tab.
  * @returns null
  */
 function printThread(){
@@ -356,7 +356,7 @@ function printThread(){
         .once('value', x => {
             x.forEach(data => {
                 // if the post is from recommender
-                if(data.val().recommender == true){ 
+                if(data.val().recommender == true){
                     let button_num=0
                     for (let i =0; i<data_list.length; i++) {
                         if(data_list[i][0] == data.key){  // if an action was performed on this post
@@ -375,7 +375,7 @@ function printThread(){
             });
         }).then(()=>{
             printStartIndex = posts.length - 1;
-            printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
+            printPostQuan(printStartIndex, printPostCount, posts, button_nums);
         }).then(()=>{
 
             // Reenable the other tabs
@@ -384,8 +384,8 @@ function printThread(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-            
-            
+
+
             $('#searchBoxRecommender').autocomplete({
                 source: post_names
             }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
@@ -419,11 +419,11 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         >Load More</button>`);
 
         let moreBut = document.getElementById("moreBut");
-        moreBut.onclick = function(){ 
+        moreBut.onclick = function(){
             moreBut.remove();
             printPostQuan(startIndex-numberOfPosts,numberOfPosts,postsList,buttonNums);
         };
-    } 
+    }
 }
 
 
@@ -431,7 +431,7 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
  * Function used to display the layout of forum under "Create Post" tab
  * @returns none
  */
-function printCreatePost()
+function print_create_post()
 {
     $('#create_post').html(
         `<div id="create_post">
@@ -539,7 +539,7 @@ function printCreatePost()
                  <span class="label success">
                  <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
                  </span>
-                 <div class="box"> 
+                 <div class="box">
                     <label class="checkbox-inline">
                     <input type="checkbox" name="interests" value="Active listening" /> Active Listening
                     </label>
@@ -561,11 +561,11 @@ function printCreatePost()
                     </label>
                  </div>
                  <br>
-                 <!-- Complementary skills --> 
+                 <!-- Complementary skills -->
                  <span class="label success">
                  <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
                  </span>
-                 <div class="box"> 
+                 <div class="box">
                     <label class="checkbox-inline">
                     <input type="checkbox" name="interests" value="Art" /> Art
                     </label>
@@ -587,11 +587,11 @@ function printCreatePost()
                     </label>
                  </div>
                  <br>
-                 <!-- Work-related Skills --> 
+                 <!-- Work-related Skills -->
                  <span class="label success">
                  <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
                  </span>
-                 <div class="box"> 
+                 <div class="box">
                     <label class="checkbox-inline">
                     <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
                     </label>
@@ -668,7 +668,7 @@ function printCreatePost()
               dialog_int.querySelector('.close_btn').addEventListener('click', function() {
                   dialog_int.close();
               });
-              
+
               var dialog_vid=document.querySelector('.mdl-dialog-vid')
               if (! dialog_vid.showModal) {
                   dialogPolyfill.registerDialog(dialog_vid);
@@ -678,11 +678,11 @@ function printCreatePost()
               });
            </script>
         </div>`
-    );    
+    );
 }
 
 /**
- * Function which prints out posts on forum. Each post will display all the obtained information 
+ * Function which prints out posts on forum. Each post will display all the obtained information
  * and includes all the related functionalities such as the likes, dislike.
  * @param {*} post the post object
  * @param {*} button_num indicator for buttons for which post
@@ -765,7 +765,7 @@ function printPost(post, button_num, i )
                      `
                      +
                      `
-                        
+
                      </div>
                      <br><br>
                   </form>
@@ -805,21 +805,21 @@ function printPost(post, button_num, i )
                         var $button=$(this);
                         if ($button.data('alreadyclicked')){
                             $button.data('alreadyclicked', false); // reset
-                            
-                            
+
+
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             dialog_like.showModal();
                             //document.getElementById("like_alert").style.display="block";
                         }else{
                             $button.data('alreadyclicked', true);
-                            
+
                             var alreadyclickedTimeout=setTimeout(function(){
                                 $button.data('alreadyclicked', false); // reset when it happens
-                                
+
                                 $('#action').val('Was single clicked');
                                 likePost('${post.id}', ${i});
                             },300); // <-- dblclick tolerance here
@@ -833,22 +833,22 @@ function printPost(post, button_num, i )
                         var $button=$(this);
                         if ($button.data('alreadyclicked')){
                             $button.data('alreadyclicked', false); // reset
-                            
-                            
+
+
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             dialog_like.showModal();
                             //document.getElementById("like_alert").style.display="block";
 
                         }else{
                             $button.data('alreadyclicked', true);
-                            
+
                             var alreadyclickedTimeout=setTimeout(function(){
                                 $button.data('alreadyclicked', false); // reset when it happens
-                                
+
                                 $('#action').val('Was single clicked');
                                 dislikePost('${post.id}', ${i});
                             },300); // <-- dblclick tolerance here
@@ -977,9 +977,9 @@ function printUserPosts(){
 
     postNamesFeed = [];
 
-  
 
-    $('#resNum').html(``);   
+
+    $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
 
     $('#create_post').text(''); // clear create post ui area
@@ -1022,7 +1022,7 @@ function printUserPosts(){
 
                     }).then(()=>{
                         for(let i=posts.length-1; i>=0 ; i--){
-                            //print posts 
+                            //print posts
                             printPost(posts[i], button_nums[i], i )
                         }
                     }).then(() => {
@@ -1061,7 +1061,7 @@ function printUserPosts(){
 
     let tab = document.getElementsByName("tabs");
 
-    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function for user's posts 
+    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function for user's posts
         searchYourPosts(param);
         return
     }
@@ -1271,7 +1271,7 @@ function searchYourPosts(param){
                     x.forEach(data => {
 
                         let users_fav = data.val().users_favourite // all the users who favourited the post
-                        
+
                         if(users_fav == undefined){
                             users_fav = [];
                         }
@@ -1423,7 +1423,7 @@ function searchYourPosts(param){
                                 }
                             }
                             button_nums.push(button_num);
-                            
+
                             if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
                                 posts.push(data.val());
                                 post_names.push(data.val().title);
@@ -1434,7 +1434,7 @@ function searchYourPosts(param){
                 }).then(()=>{
                     //if no results found print 0 results found
                     printStartIndex = posts.length-1;
-                    
+
                     document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                 });
@@ -1505,7 +1505,7 @@ async function likePost(post_id, i) {
                 dislike_btn_addr.value=new_value
                 console.log(dislike_btn_addr.value)
                 $('#button_div'+i).find('.number_of_dislikes').html(new_value);
-            } 
+            }
             else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
                 updateLikes(post_id, -1)  // remove 1 like
@@ -1547,7 +1547,7 @@ async function dislikePost(post_id, i)
             // add 1 dislike
             updateDislikes(post_id, 1)
         });
-        
+
         // UI
         dislike_btn_addr.style.background='#e53935';
         dislike_btn_addr.style.color='white';
@@ -1615,11 +1615,9 @@ async function postDetail(id) {
         else{
             return; // give an alert that the post doesnt exist
         }
-} 
+}
 
 
 function test(){
     console.log(post_names);
 }
-
-
