@@ -11,13 +11,12 @@ let postNamesRecommender = [];
 
 window.onload = execute()
 
+/**
+ * Calls the printing User posts function
+ * @returns none
+ */
 function execute(){
-    // check which tab is ticked
-
-        
     printUserPosts();
-    // printAllPosts();
-
 }
 
 /**
@@ -104,6 +103,7 @@ function checkEmbeddingVideo(url) {
     let match = url.match(regExp);
     let youtube_url = 'https://www.youtube.com/embed/';
 
+    //check whether the link is valid
     if (match && match[2].length == 11) {
         return youtube_url + match[2];
     } else {
@@ -112,17 +112,21 @@ function checkEmbeddingVideo(url) {
 }
 
 
-//Making a new post
+/**
+ * Function used to make a new post on forum.
+ * If all required fields are filled, the data will be written into the database and a post is created
+ * and shown on the forum.
+ * @returns none
+ */
 function makeNewPost() {
 
-    const options = {  // options for Date
-        timeZone:"Africa/Accra",
-        hour12 : true,
-        hour:  "2-digit",
-        minute: "2-digit",
-       second: "2-digit"
-     };
-
+    // const options = {  // options for Date
+    //     timeZone:"Africa/Accra",
+    //     hour12 : true,
+    //     hour:  "2-digit",
+    //     minute: "2-digit",
+    //    second: "2-digit"
+    //  };
 
     if (checkUserExistence()) {
         interest_arr = [];
@@ -130,35 +134,37 @@ function makeNewPost() {
             interest_arr.push($(this).val());
         });
 
+        //alert if the interests are not chosen
         if (!interest_arr.length){
             dialog_int.showModal();
             return
         }
 
-        // error handling if it is empty??
+        // gets all the information from the create post UI 
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
         let video_url = document.getElementById("video_url").value
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
-        // let key = myRef.key; // generate a key for post id
 
         let embedding_video_url = 0
         if (video_url !== "") {
             embedding_video_url = checkEmbeddingVideo(video_url);
+            //alert if an invalid link is provided for the video
             if (embedding_video_url == 0) {
                 dialog_vid.showModal();
                 return;
             }
-
         }
 
+        // format the time of the post
         let now = new Date();
         let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
         utc = utc.toString();
         utc = utc.substring(0,25);
         utc+="(UTC TIME)";
 
+        // create a new object of the post
         let newData = {
             id: key,
             description: description,
@@ -173,15 +179,15 @@ function makeNewPost() {
             recommender: false
         }
 
+        //upload the post to the firebase
         firebase.database().ref(`posts/${key}`).set(newData).then(()=>{
-            //alert("Posted successfully. Redirecting back to forum")
             window.location = "forum.html";
         });
-     } else{
-            window.location = "forum.html";
-        }
+    } 
+    else{
+        window.location = "forum.html";
+    }
 }
-
 
 function updatePost(post_id) {
 
@@ -210,6 +216,7 @@ function updatePost(post_id) {
     });
 }
 
+
 function validatePostOwner(post_id) {
     firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
         let post = snapshot.val();
@@ -228,17 +235,15 @@ function findAllPosts() {
         for (let post_id in postsObj) {
             firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
                 let post = snapshot.val();
-                console.log(post["title"]);
-                console.log(post["description"]);
-                console.log(post["interest"]);
-                console.log(post["like"]);
-                console.log(post["dislike"]);
             });
         }
     });
 }
 
-
+/**
+ * Prints all the posts which are created by users from the firebase to the screen.
+ * @returns none
+ */
 function printAllPosts(){
 
 
@@ -267,36 +272,33 @@ function printAllPosts(){
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
+        //get all the posts from the firebase
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-
-                if(data.val().recommender == false || data.val().recommender == undefined){  //todo accept undefined for now but remove later
+                // if the post is not from recommender
+                if(data.val().recommender == false || data.val().recommender == undefined){
                     let button_num=0
                     for (let i =0; i<data_list.length; i++) {
                         if(data_list[i][0] == data.key){  // if an action was performed on this post
                             if(data_list[i][1] == 1) { // liked
                                 button_num=1
                             }
-                            else{
+                            else{ //disliked
                                 button_num=-1
                             }
                         }
-                }
+                    }
                     button_nums.push(button_num);
                 posts.push(data.val());
                 postNamesCreatePost.push(data.val().title);
         }
             });
-        
-
         }).then(()=>{
             printStartIndex = posts.length-1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-            // $('#resNum').html(`<h3>${printStartIndex+1} Results</h3>`);
         }).then(()=>{
 
             // Reenable the other tabs
@@ -314,12 +316,12 @@ function printAllPosts(){
 }
 
 /**
- * Function used to print thread videos from the recommended data 
+ * Function used to print videos from the recommended data 
  * it calls the function that holds html component in a loop and add it to the post field under thread tab. 
  * @returns null
  */
 function printThread(){
-    // thread is radio button index 0. Disable other tabs
+    //disables the tabs till all the posts are loaded
     $("#radio-1").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
@@ -341,19 +343,19 @@ function printThread(){
     let button_nums = []
     let posts = [];
 
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
         firebase.database().ref('posts')
         .once('value', x => {
             x.forEach(data => {
-
+                // if the post is from recommender
                 if(data.val().recommender == true){ 
                     let button_num=0
                     for (let i =0; i<data_list.length; i++) {
@@ -361,18 +363,17 @@ function printThread(){
                             if(data_list[i][1] == 1) { // liked
                                 button_num=1
                             }
-                            else{
+                            else{ //disliked
                                 button_num=-1
                             }
                         }
-                }
+                    }
                     button_nums.push(button_num);
                 posts.push(data.val());
                 postNamesRecommender.push(data.val().title);
         }
             });
         }).then(()=>{
-
             printStartIndex = posts.length - 1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
         }).then(()=>{
@@ -391,8 +392,6 @@ function printThread(){
 
     });
     });
-
-   
 }
 
 /**
@@ -403,38 +402,36 @@ function printThread(){
  * @param {4} buttonNums list of the like and dislike button numbers for each post
  */
 function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
-
-        if(startIndex-numberOfPosts >= 0){ // if have at least 10 posts to print
-            for(let i=startIndex; i>startIndex-numberOfPosts ; i--){ // print specific number of posts
-                printPost(postsList[i], buttonNums[i], i);
-            }
+    if(startIndex-numberOfPosts >= 0){ // if have at least 10 posts to print
+        for(let i=startIndex; i>startIndex-numberOfPosts ; i--){ // print specific number of posts
+            printPost(postsList[i], buttonNums[i], i);
         }
-        else{
-            for(let i=startIndex; i>=0 ; i--){// print ot 0 otherwise
-                printPost(postsList[i], buttonNums[i], i);
-            }
+    }
+    else{
+        for(let i=startIndex; i>=0 ; i--){ // print out 0 otherwise
+            printPost(postsList[i], buttonNums[i], i);
         }
+    }
 
-        // add a print more button
+    // add a print more button
+    if(startIndex-numberOfPosts>=0){ // only if more posts to load
+        $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised' style='color:white; background-color:#006dae'
+        >Load More</button>`);
 
-        if(startIndex-numberOfPosts>=0){ // only if more posts to load
-            $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised' style='color:white; background-color:#006dae'
-            >Load More</button>`);
-
-         let moreBut = document.getElementById("moreBut");
-         moreBut.onclick = function(){ 
+        let moreBut = document.getElementById("moreBut");
+        moreBut.onclick = function(){ 
             moreBut.remove();
             printPostQuan(startIndex-numberOfPosts,numberOfPosts,postsList,buttonNums);
-     
-            };
-        }
-
-    
+        };
+    } 
 }
 
 
-
-function print_create_post()
+/**
+ * Function used to display the layout of forum under "Create Post" tab
+ * @returns none
+ */
+function printCreatePost()
 {
     $('#create_post').html(
         `<div id="create_post">
@@ -490,163 +487,207 @@ function print_create_post()
           </label>
         </div>
         <br>
-        <!-- Social Communication Skills -->
-        <span class="label success">
-            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
-        </span>
-
-        <div class="box"> 
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Active listening" /> Active Listening
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Effective communication" /> Effective Communication
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Negotiation skill" /> Negotiation Skill
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Persuasion" /> Persuasion
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Relationship management" /> Relationship Management
-          </label>
-        </div>
-        <br>
-
-        <!-- Complementary skills --> 
-        <span class="label success">
-            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
-        </span>
-
-        <div class="box"> 
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Art" /> Art
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Caregiving" /> Caregiving
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Cooking" /> Cooking
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Exercise" /> Exercise
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Professional writing" /> Professional Writing
-          </label>
-        </div>
-        <br>
-        
-        <!-- Work-related Skills --> 
-        <span class="label success">
-            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
-        </span>
-        <div class="box"> 
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Critical thinking" /> Critical Thinking
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="People and Leadership" /> People and Leadership
-          </label>
-          <br class="mobile-br">
-          <label class="checkbox-inline">
-          <input type="checkbox" name="interests" value="Personal selling" /> Personal Selling
-          </label>
-        </div>
-        <br>
-
-       </div>
-       <script type="text/javascript">
-          $(document).ready(function () {
-             $("input[name='interests']").change(function () {
-                 var maxAllowed = 2;
-                 var cnt = $("input[name='interests']:checked").length;
-                 if (cnt > maxAllowed) {
-                     $(this).prop("checked", "");
-                     dialog_int.showModal();
-                 }
-             });
-          });
-       </script>
-       <br>
-       <!-- POST BUTTON -->
-       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="post_btn"
-          style="background-color:#006DAE; border: white;" onclick="makeNewPost()">
-       POST
-       </button>
-    </div>
-
-    <!-- Alert UI -->
-    <dialog class="mdl-dialog mdl-dialog-int">
-        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-        <hr style="margin: 0;">
-        <div class="mdl-dialog__content">
-            <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
-            <br>
-            <br>
-            <div class="mdl-dialog__actions">
-                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-            </div>
-        </div>
-    </dialog>
-    
-    <!-- Alert for wrong video link UI-->
-    <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
-        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-        <hr style="margin: 0;">
-        <div class="mdl-dialog__content">
-            <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
-            <br>
-            <br>
-            <div class="mdl-dialog__actions">
-                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Alert control-->
-    <script>
-        var dialog_int = document.querySelector('.mdl-dialog-int');
-        if (! dialog_int.showModal) {
-            dialogPolyfill.registerDialog(dialog_int);
-        }
-        dialog_int.querySelector('.close_btn').addEventListener('click', function() {
-            dialog_int.close();
-        });
-
-        var dialog_vid=document.querySelector('.mdl-dialog-vid')
-        if (! dialog_vid.showModal) {
-            dialogPolyfill.registerDialog(dialog_vid);
-        }
-        dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
-            dialog_vid.close();
-        });
-
-    </script>
- </div>`
-    );
-    
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="create_post">
+           <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text mdl-color-text--black" style="font-weight: bold;">New Forum Post</h2>
+           </div>
+           <hr style="margin: 0;">
+           <div class="new_post_form">
+              <!-- POST TITLE -->
+              <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
+              <input class="input" type="text" id="post_title" name="post_title" placeholder=" Share your thoughts with the community!" required></input><br>
+              <!-- POST DESCRIPTION -->
+              <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
+              <br>
+              <br>
+              <!-- VIDEO URL  -->
+              <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
+              <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
+              <br>
+              <br>
+              <!-- INTEREST  -->
+              <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Choose 2 interests for your post</b></label> </span>
+              <br>
+              <!-- INTEREST BUTTON -->
+              <div id="interests_box">
+                 <br>
+                 <!-- ICT/TECHNOLOGY SKILLS -->
+                 <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label> </span>
+                 <div class="box">
+                    <label class="checkbox-inline" id="interest1" >
+                    <input type="checkbox" name="interests" value="Browser search" /> Browser Search
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline" >
+                    <input type="checkbox" name="interests" value="Device use" /> Device Use
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline" >
+                    <input type="checkbox" name="interests" value="Email" /> E-mail
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline" >
+                    <input type="checkbox" name="interests" value="Online collaboration" /> Online Collaboration
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline" >
+                    <input type="checkbox" name="interests" value="Social media use" /> Social Media Use
+                    </label>
+                 </div>
+                 <br>
+                 <!-- Social Communication Skills -->
+                 <span class="label success">
+                 <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
+                 </span>
+                 <div class="box"> 
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Active listening" /> Active Listening
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Effective communication" /> Effective Communication
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Negotiation skill" /> Negotiation Skill
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Persuasion" /> Persuasion
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Relationship management" /> Relationship Management
+                    </label>
+                 </div>
+                 <br>
+                 <!-- Complementary skills --> 
+                 <span class="label success">
+                 <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
+                 </span>
+                 <div class="box"> 
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Art" /> Art
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Caregiving" /> Caregiving
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Cooking" /> Cooking
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Exercise" /> Exercise
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Professional writing" /> Professional Writing
+                    </label>
+                 </div>
+                 <br>
+                 <!-- Work-related Skills --> 
+                 <span class="label success">
+                 <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
+                 </span>
+                 <div class="box"> 
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Critical thinking" /> Critical Thinking
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="People and Leadership" /> People and Leadership
+                    </label>
+                    <br class="mobile-br">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" name="interests" value="Personal selling" /> Personal Selling
+                    </label>
+                 </div>
+                 <br>
+              </div>
+              <script type="text/javascript">
+                 $(document).ready(function () {
+                    $("input[name='interests']").change(function () {
+                        var maxAllowed = 2;
+                        var cnt = $("input[name='interests']:checked").length;
+                        if (cnt > maxAllowed) {
+                            $(this).prop("checked", "");
+                            dialog_int.showModal();
+                        }
+                    });
+                 });
+              </script>
+              <br>
+              <!-- POST BUTTON -->
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="post_btn"
+                 style="background-color:#006DAE; border: white;" onclick="makeNewPost()">
+              POST
+              </button>
+           </div>
+           <!-- Alert UI -->
+           <dialog class="mdl-dialog mdl-dialog-int">
+              <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+              <hr style="margin: 0;">
+              <div class="mdl-dialog__content">
+                 <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
+                 <br>
+                 <br>
+                 <div class="mdl-dialog__actions">
+                    <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+                 </div>
+              </div>
+           </dialog>
+           <!-- Alert for wrong video link UI-->
+           <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
+              <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+              <hr style="margin: 0;">
+              <div class="mdl-dialog__content">
+                 <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
+                 <br>
+                 <br>
+                 <div class="mdl-dialog__actions">
+                    <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+                 </div>
+              </div>
+           </dialog>
+           <!-- Alert control-->
+           <script>
+              var dialog_int = document.querySelector('.mdl-dialog-int');
+              if (! dialog_int.showModal) {
+                  dialogPolyfill.registerDialog(dialog_int);
+              }
+              dialog_int.querySelector('.close_btn').addEventListener('click', function() {
+                  dialog_int.close();
+              });
+              
+              var dialog_vid=document.querySelector('.mdl-dialog-vid')
+              if (! dialog_vid.showModal) {
+                  dialogPolyfill.registerDialog(dialog_vid);
+              }
+              dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
+                  dialog_vid.close();
+              });
+           </script>
+        </div>`
+    );    
 }
 
-
+/**
+ * Function which prints out posts on forum. Each post will display all the obtained information 
+ * and includes all the related functionalities such as the likes, dislike.
+ * @param {*} post the post object
+ * @param {*} button_num indicator for buttons for which post
+ * @param {*} i the button index
+ */
 function printPost(post, button_num, i )
 {
     let button = `
@@ -680,6 +721,7 @@ function printPost(post, button_num, i )
          </button>`
     }
 
+    //checks whether the post has a username and date created
     let atchar = "@";
     if(post.username == undefined)
         post.username = "";
@@ -687,7 +729,6 @@ function printPost(post, button_num, i )
         post.username = atchar+post.username;
     if(post.created == undefined)
         post.created = "";
-
 
     $('#postField').append(
         `   <div style="padding-top: 20px;">
@@ -719,8 +760,8 @@ function printPost(post, button_num, i )
                      +
                      `
                      ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>` :
-                      `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>
-                      <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id">${post.interest[1]}</button>`}
+                      `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id" disabled>${post.interest[0]} </button>
+                      <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id" disabled>${post.interest[1]}</button>`}
                      `
                      +
                      `
@@ -834,13 +875,12 @@ function printPost(post, button_num, i )
             </span>
      </div>`
     );
-
 }
 
 /**
  * A function which prints an array of post that user has favourited
  * @param {*} current_user_posts a list of user's personal posts
- * @param {*} button_nums an indicator for like and dislike button
+ * @param {*} buttons_index an indicator for like and dislike button
  */
 async function printUserFavouritePosts(current_user_posts, buttons_index){
     let post_arr = [];
@@ -849,6 +889,7 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
     let data_list = [];
     let button_nums = [];
 
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
         .once('value', x => {
             x.forEach(data => {
@@ -861,35 +902,32 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                 .orderByChild(`users_favourite`)
                     .once('value', x => {
                         x.forEach(data => {
-                            // console.log("data: " + data.key) // data.key = post id
+                            //check whether there is an attribute users favourite in teh database
                             let hasFavouriteAttribute = data.hasChild("users_favourite");
-
                             if (hasFavouriteAttribute){
-                                // if attribute is in db
                                 users_arr = data.val()["users_favourite"];
                                 let current_user_exist = false;
-
+                                //checks whether the current user is in list of users who favourited the post
                                 for(let i = 0; i < users_arr.length; i++){
                                     if (users_arr[i] == current_user["phone"]){
                                         current_user_exist = true
                                     }
                                 }
-
+                                // if found user favourite a post, push post into fav post arr
                                 if (current_user_exist){
-                                    // if found user favourite a post, oush post into fav post arr
                                     fav_post_arr.push(data.val());
                                 }
                             }
-                        })
-
+                        });
+                        //eliminates duplicates
                         fav_post_arr.forEach(fav_post => {
-                                let duplicate = false;
+                            let duplicate = false;
 
-                                for (let i = 0; i < current_user_posts.length; i++){
-                                    if (current_user_posts[i]["id"] == fav_post["id"]){
-                                        duplicate = true
-                                    }
+                            for (let i = 0; i < current_user_posts.length; i++){
+                                if (current_user_posts[i]["id"] == fav_post["id"]){
+                                    duplicate = true
                                 }
+                            }
 
                                 if (!duplicate){
                                     post_arr.push(fav_post);
@@ -897,6 +935,7 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                                 }
                             })
                     }).then(()=>{
+                        //likes and dislikes
                         for (let k =0; k<post_arr.length; k++){
                             let button_num=0
                             for (let i =0; i<data_list.length; i++) {
@@ -911,26 +950,27 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                             }
                             button_nums.push(button_num);
                         }
-                        }).then(() => {
-                                for(let i=post_arr.length-1; i>=0 ; i--){
+                    }).then(() => {
+                        for(let i=post_arr.length-1; i>=0 ; i--){
+                            //printing posts
+                            printPost(post_arr[i], button_nums[i], buttons_index)
+                            buttons_index++;
+                        }
 
-                                    printPost(post_arr[i], button_nums[i], buttons_index)
-                                    buttons_index++;
-                                }
-
-                                const promise = new Promise((resolve, reject) => {
-
-                                    resolve(1);
-                                 });
+                        // return a promise with a value one to specify the function has completed
+                        const promise = new Promise((resolve, reject) => {
+                            resolve(1);
+                        });
                     })
         })
-
-
 }
 
+/**
+ * Prints the posts which are created the logged in user from the firebase to the screen.
+ * @returns none
+ */
 function printUserPosts(){
-
-    //disable other tabs
+    //disables the tabs till all the posts are loaded
     $("#radio-0").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
@@ -940,27 +980,25 @@ function printUserPosts(){
   
 
     $('#resNum').html(``);   
-
     document.getElementById("searchBox").value = ""; // clear search box
 
     $('#create_post').text(''); // clear create post ui area
-
     $('#postField').text(''); // emtpy the field of any previous posts
 
     let data_list = [];
     let button_nums = [];
     let posts = [];
 
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
-
+        //get all the posts from the firebase
         firebase.database().ref('posts')
             .orderByChild('username')
                 .equalTo(current_user['username'])
@@ -972,7 +1010,7 @@ function printUserPosts(){
                                     if(data_list[i][1] == 1) { // liked
                                         button_num=1
                                     }
-                                    else{
+                                    else{ //disliked
                                         button_num=-1
                                     }
                                 }
@@ -984,9 +1022,11 @@ function printUserPosts(){
 
                     }).then(()=>{
                         for(let i=posts.length-1; i>=0 ; i--){
+                            //print posts 
                             printPost(posts[i], button_nums[i], i )
                         }
                     }).then(() => {
+                        //print user favourites
                         printUserFavouritePosts(posts,button_nums.length).then(()=>{
 
                              // Reenable the other tabs
@@ -1000,12 +1040,8 @@ function printUserPosts(){
 
                         })
                     });
-                });
-                                
-   
+    });
 }
-       
-
 
 /**
  * Function used to search forum posts in feed. A parameter is typed (interest or a name of the post)
@@ -1025,19 +1061,15 @@ function printUserPosts(){
 
     let tab = document.getElementsByName("tabs");
 
-
-    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function
-
+    if(tab[1].checked){  // if the navigated tab is "Your feed", delegate the work to the helper function for user's posts 
         searchYourPosts(param);
         return
     }
-    else if(tab[0].checked){ // if the navigation tab is tending video
-  
+    else if(tab[0].checked){ // if the navigation tab is trending posts, delegate the work to the helper function for recommender posts
         searchTrendingPosts(param);
         return;
     }
 
-    console.log("all")
     if(!param.replace(/\s/g, '').length){  //check if only contains white spaces
         printAllPosts();
         return // exit function
@@ -1045,14 +1077,13 @@ function printUserPosts(){
 
     $('#postField').html(''); // emtpy the field of any previous posts
 
-
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
             if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                 data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
             }
-
         })
     }).then(()=>{
         let button_num=0
@@ -1067,7 +1098,7 @@ function printUserPosts(){
                                 if(data_list[i][1] == 1) { // liked
                                     button_num=1
                                 }
-                                else{
+                                else{ //disliked
                                     button_num=-1
                                 }
                             }
@@ -1104,7 +1135,6 @@ function printUserPosts(){
                         posts.push(data.val());
                         toPrint.push(data.val().id);
                     }
-
                 })
             })
 
@@ -1119,27 +1149,22 @@ function printUserPosts(){
                                     if(data_list[i][1] == 1) { // liked
                                         button_num=1
                                     }
-                                    else{
+                                    else{ //disliked
                                         button_num=-1
                                     }
                                 }
                             }
                         }
                         button_nums.push(button_num);
-
                         if(!toPrint.includes(data.val().id) && data.val().username != undefined){ // push only if its not yet being printed
                             posts.push(data.val());
                             toPrint.push(data.val().id);
                         }
                     })
                 }).then(()=>{
-                    
                     printStartIndex = posts.length-1;
                     document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-                    // if(printStartIndex < 0){
-                    //     $('#postField').html(`<h2>No results found<h2>`);
-                    // }
                 });
     })
 }
@@ -1154,7 +1179,7 @@ function searchYourPosts(param){
     let data_list = [];
     let button_nums = []
     let posts = [];
-    let field = document.getElementById("#postField");
+    //let field = document.getElementById("#postField");
     let toPrint = [];
 
 
@@ -1165,7 +1190,7 @@ function searchYourPosts(param){
 
     $('#postField').html(""); // emtpy the field of any previous posts
 
-
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
@@ -1179,7 +1204,6 @@ function searchYourPosts(param){
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
-
                     let userFav = [];
 
                     if(data.val().users_favourite != undefined){ // no favs on the post
@@ -1203,12 +1227,10 @@ function searchYourPosts(param){
                         button_nums.push(button_num);
                         posts.push(data.val());
                         toPrint.push(data.val().id);
-
                     }
                 })
             })
         //find interests in posts
-        
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
@@ -1239,7 +1261,6 @@ function searchYourPosts(param){
                             posts.push(data.val());
                             toPrint.push(data.val().id);
                         }
-   
                     }
                 })
             })
@@ -1254,7 +1275,6 @@ function searchYourPosts(param){
                         if(users_fav == undefined){
                             users_fav = [];
                         }
-
                         if(data.val().username == current_user["username"] || users_fav.includes(current_user["phone"])){
                             for (let i =0; i<data_list.length; i++) {
                                 if (data.val()['id']==data_list[i][0])
@@ -1277,10 +1297,8 @@ function searchYourPosts(param){
                         }
                     })
                 }).then(()=>{
+                    //printing posts
                     let i =0;
-
-                    
-
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
                     }
@@ -1313,10 +1331,9 @@ function searchYourPosts(param){
         printThread();
         return // exit function
     }
-
     $('#postField').html(``); // emtpy the field of any previous posts
 
-
+    //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
@@ -1330,11 +1347,9 @@ function searchYourPosts(param){
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
-
                     if(data.val().users_favourite != undefined){ // no favs on the post
                         userFav= data.val().users_favourite; //get all users favs
                     }
-
                     if(data.val().recommender == true){
                         for (let i =0; i<data_list.length; i++) {
                             if (data.val()['id']==data_list[i][0])
@@ -1356,13 +1371,12 @@ function searchYourPosts(param){
                 })
             })
         //find interests in posts
-        
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
 
-                    let users_fav = data.val().users_favourite // all the users who favourited the post
+                    //let users_fav = data.val().users_favourite // all the users who favourited the post
 
                     if(data.val().recommender == true){
                         for (let i =0; i<data_list.length; i++) {
@@ -1372,7 +1386,7 @@ function searchYourPosts(param){
                                     if(data_list[i][1] == 1) { // liked
                                         button_num=1
                                     }
-                                    else{
+                                    else{ //disliked
                                         button_num=-1
                                     }
                                 }
@@ -1402,7 +1416,7 @@ function searchYourPosts(param){
                                         if(data_list[i][1] == 1) { // liked
                                             button_num=1
                                         }
-                                        else{
+                                        else{ //disliked
                                             button_num=-1
                                         }
                                     }
@@ -1418,18 +1432,14 @@ function searchYourPosts(param){
                         }
                     })
                 }).then(()=>{
+                    //if no results found print 0 results found
                     printStartIndex = posts.length-1;
                     
                     document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
-                    // if(printStartIndex < 0){
-                    //     $('#postField').html(`<h2>No results found<h2>`);
-                    // }
                 });
             })
 }
-
-
 
 /**
  * Allows to like a post, updating the firebase and UI accordingly
@@ -1465,10 +1475,6 @@ async function likePost(post_id, i) {
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
         $('#button_div'+i).find('.number_of_likes').html(new_value);
-
-
-
-
     } else {
         // if there is action
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
@@ -1499,9 +1505,8 @@ async function likePost(post_id, i) {
                 dislike_btn_addr.value=new_value
                 console.log(dislike_btn_addr.value)
                 $('#button_div'+i).find('.number_of_dislikes').html(new_value);
-
-
-            } else {
+            } 
+            else {
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).remove();
                 updateLikes(post_id, -1)  // remove 1 like
                 //UI
@@ -1512,7 +1517,6 @@ async function likePost(post_id, i) {
                 new_value=parseInt(current_value)-1
                 like_btn_addr.value=new_value
                 $('#button_div'+i).find('.number_of_likes').html(new_value);
-
             }
         })
     }
@@ -1539,11 +1543,11 @@ async function dislikePost(post_id, i)
 
     if (!res){
         // if there is no action at all
-                firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
-                // add 1 dislike
-                updateDislikes(post_id, 1)
-            });
-
+        firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({ action: -1}).then(()=>{
+            // add 1 dislike
+            updateDislikes(post_id, 1)
+        });
+        
         // UI
         dislike_btn_addr.style.background='#e53935';
         dislike_btn_addr.style.color='white';
@@ -1562,10 +1566,10 @@ async function dislikePost(post_id, i)
             if (current_state==1){
                 // if action is like
                 firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}`).set({action: -1}).then(()=>{
-                // add 1 dislike and remove 1 like
-                updateDislikes(post_id, 1)
-                updateLikes(post_id,-1)
-                 });
+                    // add 1 dislike and remove 1 like
+                    updateDislikes(post_id, 1)
+                    updateLikes(post_id,-1)
+                });
                 // UI
                 like_btn_addr.style.background='#dadada';
                 like_btn_addr.style.color='black';
@@ -1584,9 +1588,6 @@ async function dislikePost(post_id, i)
                 like_btn_addr.value=new_value
 
                 $('#button_div'+i).find('.number_of_likes').html(new_value);
-
-
-
             }
             else{
                 // remove 1 dislike
@@ -1601,11 +1602,8 @@ async function dislikePost(post_id, i)
                 new_value=parseInt(current_value)-1
                 dislike_btn_addr.value=new_value
                 $('#button_div'+i).find('.number_of_dislikes').html(new_value);
-
-
             }
-        }
-        )
+        })
     }
 }
 
