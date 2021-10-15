@@ -1,4 +1,14 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
+
+
+let postNamesCreatePost = [];
+let postNamesFeed = [];
+let postNamesRecommender = [];
+
+
+
+
+
 window.onload = execute()
 
 /**
@@ -10,9 +20,67 @@ function execute(){
 }
 
 /**
- * Function used to check if the user exist
- * @returns a boolean indicating whether the user exist in the database or not
+ * Function used to check whether or not a post exists provided the post id. Function should be called before performing any action on the post.
+ * @param {1} id: the post id
+ * returns 1 if the post exists and 0 otherwise
  */
+async function checkPostExists(id){
+
+    let res = 0;
+
+    await firebase.database().ref(`posts/${id}`).once("value", snapshot => {
+        
+        if (snapshot.exists()){
+            console.log(1);
+
+            res = 1;
+        }
+     });
+
+
+     return new Promise(function(resolve, reject) {
+        resolve(res);
+      });
+
+    
+}
+
+/**
+ * The function displays a list of available options to autocomplete to the search query limited to 10 options
+ * @param {1} query: the query text inputed into the search field 
+ * returns void
+ */
+function autoComplete(query){
+
+    document.getElementById("autocomplete").innerHTML = ""; // empty autocomplete box
+
+    let tab = document.getElementsByName("tabs");
+
+    let inputarr;
+
+    if (tab[0].checked){ // recommender
+        inputarr = postNamesRecommender;
+    }
+    else if (tab[1].checked){ // feed
+        inputarr = postNamesFeed;
+    }
+    else{ // create Post
+        inputarr = postNamesCreatePost;
+    }
+
+	let output = [];
+    let count = 0;
+	for (let i = 0 ; i < inputarr.length ; i++){
+        if(query != "" && (inputarr[i].toLowerCase()).indexOf(query.toLowerCase()) != -1 && count<10){
+            //output.push(inputarr[i]);
+            document.getElementById("autocomplete").innerHTML += `<div class="autocomplete-item" onclick="document.getElementById('searchBox').value = '${inputarr[i]}'"><strong>${inputarr[i]}<strong/></div>`;
+            count++;
+        } 
+  }
+}
+
+
+//check id the user is signed in
 function checkUserExistence() {
     // if a user is signed in then
     if (current_user["username"] && current_user["phone"]) {
@@ -21,6 +89,7 @@ function checkUserExistence() {
         return false;
     }
 }
+
 
 
 /**
@@ -176,13 +245,16 @@ function findAllPosts() {
  * @returns none
  */
 function printAllPosts(){
-    //disables the tabs till all the posts are loaded
+
+
+
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
     
     $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
-    printCreatePost();
+
+    print_create_post();
     $('#postField').text(``); // emtpy the field of any previous posts
 
     let printPostCount = 10; // start printing 10 posts first
@@ -192,7 +264,8 @@ function printAllPosts(){
     let button_nums = []
     let posts = [];
 
-    //gets the posts with the like/dislike by the logged in user
+    postNamesCreatePost = [];
+
     firebase.database().ref('likesDislikes')
     .once('value', x => {
         x.forEach(data => {
@@ -219,8 +292,9 @@ function printAllPosts(){
                         }
                     }
                     button_nums.push(button_num);
-                    posts.push(data.val());
-                }
+                posts.push(data.val());
+                postNamesCreatePost.push(data.val().title);
+        }
             });
         }).then(()=>{
             printStartIndex = posts.length-1;
@@ -234,8 +308,11 @@ function printAllPosts(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-        })
+
+            
     })
+    })
+
 }
 
 /**
@@ -247,6 +324,11 @@ function printThread(){
     //disables the tabs till all the posts are loaded
     $("#radio-1").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
+
+
+    postNamesRecommender = [];
+
+    console.log(document.getElementById(`radio-1`), document.getElementById(`radio-2`))
 
     document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(``);  // remove create post ui
@@ -287,8 +369,9 @@ function printThread(){
                         }
                     }
                     button_nums.push(button_num);
-                    posts.push(data.val());
-                }
+                posts.push(data.val());
+                postNamesRecommender.push(data.val().title);
+        }
             });
         }).then(()=>{
             printStartIndex = posts.length - 1;
@@ -301,7 +384,13 @@ function printThread(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-        })
+            
+            
+            $('#searchBoxRecommender').autocomplete({
+                source: post_names
+            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+
+    });
     });
 }
 
@@ -346,6 +435,57 @@ function printCreatePost()
 {
     $('#create_post').html(
         `<div id="create_post">
+    <br>
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="create_post">
+    <div class="mdl-card__title">
+       <h2 class="mdl-card__title-text mdl-color-text--black" style="font-weight: bold;">New Forum Post</h2>
+    </div>
+    <hr style="margin: 0;">
+    <div class="new_post_form">
+       <!-- POST TITLE -->
+       <div>
+       <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
+       </div>
+       <input class="input" type="text" id="post_title" name="post_title" placeholder=" Share your thoughts with the community!" required></input><br>
+       <!-- POST DESCRIPTION -->
+       <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
+       <br>
+       <br>
+
+       <!-- VIDEO URL  -->
+       <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
+       <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
+       <br>
+       <br>
+       <!-- INTEREST  -->
+       <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Choose 2 interests for your post</b></label> </span>
+       <br>
+       <!-- INTEREST BUTTON -->
+       <div id="interests_box">
+       <br>
+        <!-- ICT/TECHNOLOGY SKILLS -->
+        <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label> </span>
+        <div class="box">
+          <label class="checkbox-inline" id="interest1" >
+          <input type="checkbox" name="interests" value="Browser search" /> Browser Search
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Device use" /> Device Use
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Email" /> E-mail
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Online collaboration" /> Online Collaboration
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline" >
+          <input type="checkbox" name="interests" value="Social media use" /> Social Media Use
+          </label>
+        </div>
         <br>
         <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="create_post">
            <div class="mdl-card__title">
@@ -789,10 +929,11 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                                 }
                             }
 
-                            if (!duplicate){
-                                post_arr.push(fav_post);
-                            }
-                        })
+                                if (!duplicate){
+                                    post_arr.push(fav_post);
+                                    postNamesFeed.push(fav_post.title);
+                                }
+                            })
                     }).then(()=>{
                         //likes and dislikes
                         for (let k =0; k<post_arr.length; k++){
@@ -833,8 +974,14 @@ function printUserPosts(){
     $("#radio-0").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
+
+    postNamesFeed = [];
+
+  
+
     $('#resNum').html(``);   
     document.getElementById("searchBox").value = ""; // clear search box
+
     $('#create_post').text(''); // clear create post ui area
     $('#postField').text(''); // emtpy the field of any previous posts
 
@@ -870,6 +1017,7 @@ function printUserPosts(){
                             }
                             button_nums.push(button_num);
                             posts.push(data.val());
+                            postNamesFeed.push(data.val().title);
                         });
 
                     }).then(()=>{
@@ -889,6 +1037,7 @@ function printUserPosts(){
                                 $('#postField').html('<h4>0 Posts in this section</h4>');
                             }
 
+
                         })
                     });
     });
@@ -901,9 +1050,10 @@ function printUserPosts(){
  */
  function searchAllPosts(param){
 
+    document.getElementById("autocomplete").innerHTML = ""; // empty autocomplete
+
     let printPostCount = 10; // start printing 10 posts first
     let printStartIndex;
-
     let data_list = [];
     let toPrint =[];
     let button_nums = []
@@ -1013,7 +1163,7 @@ function printUserPosts(){
                     })
                 }).then(()=>{
                     printStartIndex = posts.length-1;
-                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                 });
     })
@@ -1152,7 +1302,12 @@ function searchYourPosts(param){
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
                     }
-                    $('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
+                    document.getElementById('resNum').innerHTML = `${posts.length-1-i} Results Found`;
+
+                    // if(i == posts.length-1){
+                    //     $('#postField').append(`<h2>No results found<h2>`); // no results found
+                    // }
+
                 });
             })
 }
@@ -1271,6 +1426,7 @@ function searchYourPosts(param){
                             
                             if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
                                 posts.push(data.val());
+                                post_names.push(data.val().title);
                                 toPrint.push(data.val().id);
                             }
                         }
@@ -1278,7 +1434,8 @@ function searchYourPosts(param){
                 }).then(()=>{
                     //if no results found print 0 results found
                     printStartIndex = posts.length-1;
-                    $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+                    
+                    document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                 });
             })
@@ -1291,7 +1448,12 @@ function searchYourPosts(param){
  * @returns Nothing. The function automatically updates the screen with liked post
  */
 async function likePost(post_id, i) {
-    //gets the like button address on the screen
+
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
@@ -1368,7 +1530,12 @@ async function likePost(post_id, i) {
  */
 async function dislikePost(post_id, i)
 {
-     //gets the like button address on the screen
+
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("dislike")[0]
 
@@ -1440,13 +1607,19 @@ async function dislikePost(post_id, i)
     }
 }
 
-/**
- * Redirects the user to the post detailed information page by the post id
- * @param {param} id id of the post to be redirected to
- * @returns none
- */
-function postDetail(id) {
-        window.location = "post.html" + "?post_id=" + id;
+async function postDetail(id) {
+
+        if(await checkPostExists(id)){
+            window.location = "post.html" + "?post_id=" + id;
+        }
+        else{
+            return; // give an alert that the post doesnt exist
+        }
 } 
+
+
+function test(){
+    console.log(post_names);
+}
 
 

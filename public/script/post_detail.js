@@ -81,7 +81,9 @@ function getPostDetails() {
 * @param button_num contains 1: if the post is likes, 0: if no action, -1: if the post was disliked
 */
 function printPostDetails(post, button_num) {
-    //checks whether it has username
+
+    let interestNum;
+
     if(post.username == undefined)
         post.username = "";
     
@@ -121,7 +123,8 @@ function printPostDetails(post, button_num) {
     //get interests for this post and print them
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
-        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--black" id="interest${i+1}_id" disabled> #${post.interest[i]} </button>`
+        console.log(post.interest)
+        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'> #${post.interest[i]} </button>`
     }
 
     // // check whether this post was created by the user logged in
@@ -165,8 +168,7 @@ function printPostDetails(post, button_num) {
         ` + `
                 <br>
                 <div style='display: inline-block'>
-                    <button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id" disabled>${post.interest[0]}</button>
-                    <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id" disabled>${post.interest[1]}</button>
+                    ${interest}
                 </div>
                 <br><br>
             </form>
