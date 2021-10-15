@@ -305,9 +305,9 @@ function printAllPosts(){
             $("#radio-0").attr("disabled",false);
             $("#radio-1").attr("disabled",false);
 
-            if(posts.length == 0 ){
-                $('#postField').html('<h4>0 Posts in this section</h4>');
-            }
+            // if(posts.length == 0 ){
+            //     $('#postField').html('<h4>0 Posts in this section</h4>');
+            // }
 
 
     })
@@ -381,9 +381,9 @@ function printThread(){
             // Reenable the other tabs
             $("#radio-1").attr("disabled",false);
             $("#radio-2").attr("disabled",false);
-            if(posts.length == 0 ){
-                $('#postField').html('<h4>0 Posts in this section</h4>');
-            }
+            // if(posts.length == 0 ){
+            //     $('#postField').html('<h4>0 Posts in this section</h4>');
+            // }
 
 
             $('#searchBoxRecommender').autocomplete({
@@ -492,7 +492,7 @@ function print_create_post()
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
         </span>
 
-        <div class="box"> 
+        <div class="box">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Active listening" /> Active Listening
           </label>
@@ -515,12 +515,12 @@ function print_create_post()
         </div>
         <br>
 
-        <!-- Complementary skills --> 
+        <!-- Complementary skills -->
         <span class="label success">
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
         </span>
 
-        <div class="box"> 
+        <div class="box">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Art" /> Art
           </label>
@@ -542,12 +542,12 @@ function print_create_post()
           </label>
         </div>
         <br>
-        
-        <!-- Work-related Skills --> 
+
+        <!-- Work-related Skills -->
         <span class="label success">
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
         </span>
-        <div class="box"> 
+        <div class="box">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
           </label>
@@ -704,20 +704,20 @@ function printPost(post, button_num, i )
                             var $button=$(this);
                             if ($button.data('alreadyclicked')){
                                 $button.data('alreadyclicked', false); // reset
-                                
-                                
+
+
                                 if ($button.data('alreadyclickedTimeout')){
                                     clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                                 }
-                                
+
                                 // do what needs to happen on double click
                                 document.getElementById("like-Modal").style.display = "block";
                             }else{
                                 $button.data('alreadyclicked', true);
-                                
+
                                 var alreadyclickedTimeout=setTimeout(function(){
                                     $button.data('alreadyclicked', false); // reset when it happens
-                                    
+
                                     $('#action').val('Was single clicked');
                                     likePost('${post.id}', ${i});
                                 },300); // <-- dblclick tolerance here
@@ -731,21 +731,21 @@ function printPost(post, button_num, i )
                             var $button=$(this);
                             if ($button.data('alreadyclicked')){
                                 $button.data('alreadyclicked', false); // reset
-                                
-                                
+
+
                                 if ($button.data('alreadyclickedTimeout')){
                                     clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                                 }
-                                
-                                // do what needs to happen on double click. 
+
+                                // do what needs to happen on double click.
                                 document.getElementById("like-Modal").style.display = "block";
 
                             }else{
                                 $button.data('alreadyclicked', true);
-                                
+
                                 var alreadyclickedTimeout=setTimeout(function(){
                                     $button.data('alreadyclicked', false); // reset when it happens
-                                    
+
                                     $('#action').val('Was single clicked');
                                     dislikePost('${post.id}', ${i});
                                 },300); // <-- dblclick tolerance here
@@ -855,10 +855,10 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                                     buttons_index++;
                                 }
 
-                                if(post_arr.length == 0 ){
-                                    document.getElementById("postField").innerHTML = '<h4>0 Posts in this section</h4>';
-                                    //$('#postField').html('<h4>0 Posts in this section</h4>');
-                                }
+                                // if(post_arr.length == 0 ){
+                                //     document.getElementById("postField").innerHTML = '<h4>0 Posts in this section</h4>';
+                                //     //$('#postField').html('<h4>0 Posts in this section</h4>');
+                                // }
 
                                 const promise = new Promise((resolve, reject) => {
 
@@ -868,6 +868,7 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                         });
                     })
         })
+      })
 }
 
 /**
@@ -940,7 +941,7 @@ function printUserPosts(){
                             document.getElementById("radio-0").disabled = false;
                             document.getElementById("radio-2").disabled = false;
 
-                            
+
 
 
                         })
@@ -1397,7 +1398,7 @@ async function likePost(post_id, i) {
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
         $('#button_div'+i).find('.number_of_likes').html(new_value);
-        
+
 
 
 
