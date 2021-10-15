@@ -296,6 +296,11 @@ transition: color 0.15s ease-in;
 		position: relative;
 		right: 100px
 	}
+	#post_title {
+		width: 95%;
+		border-radius: 10px;
+	}
+
 	#post_description {
 		width: 95%;
 		resize: none;
@@ -320,10 +325,12 @@ transition: color 0.15s ease-in;
 		left: 25px;
 		display: flex;
 		justify-content: center;
+		transition: 0.25s;
 	}
 	.search-container:hover {
-		transform: scale(1.1);
-		transition: 0.25s;
+		margin-right: 5px;
+		transform: scale(1.05);
+		
 	}
 	.forum-container {
 		position: relative;
@@ -570,21 +577,24 @@ transition: color 0.15s ease-in;
 		margin-top: 20px;
 		height: 65px;
 		background-color: #fff;
-		box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+		border:1px solid#e9e9e9;
+		/* box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada; */
 		padding: 0.75rem;
 		border-radius: 15px;
 		width: 325px;
+		transition: 0.25s;
 	}
 	#searchButton {
+		text-align: center;
 		background-color: #006DAE;
 		padding-right: 50px;
 		margin-top: 5px;
 		border-radius: 15px;
 	}
 	.search:hover #icon-background {
-		margin-right: 15px;
-		transform: scale(1.1);
-		transition: 0.25s;
+		margin-right: 5px;
+		transform: scale(1.05);
+		
 	}
 
 
@@ -606,15 +616,19 @@ transition: color 0.15s ease-in;
 		padding: 10px 15px;
 		border-radius: 10px;
 	}
+	#post_title {
+		width: 91%;
+		border-radius: 10px;
+	}
 
     .mobileHide {
 		display: none;
 	}
 	#back_btn {
 		border-radius: 20px;
-		background-color: #00507e;
-		color: white;
 		position: relative;
+		text-align: center;
+		padding: 0px 35%;
 		left: 25px;
 		top: 5px
 	}
@@ -860,18 +874,21 @@ button.reply {
 		margin-bottom: auto;
 		margin-top: 20px;
 		background-color: #fff;
-		box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+		border:1px solid#e9e9e9;
+		/* box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada; */
 		right: 29px;
 		padding: 0.75rem;
 		border-radius: 15px;
 		width: 600px;
-	}
-	.search:hover #icon-background {
-		margin-right: 15px;
-		transform: scale(1.1);
 		transition: 0.25s;
 	}
+	.search:hover #icon-background {
+		margin-right: 5px;
+		transform: scale(1.05);
+		
+	}
 	#searchButton {
+		text-align: center;
 		background-color: #006DAE;
 		padding-right: 50px;
 		margin-top: 3px;
@@ -882,17 +899,19 @@ button.reply {
 @media only screen and (max-device-width: 541px) {
 	.search {
 		height: 70px;
+		transition: 0.25s;
 	}
 	#searchButton {
+		text-align: center;
 		background-color: #006DAE;
 		padding-right: 50px;
 		margin-top: 5px;
 		border-radius: 15px;
 	}
 	.search:hover #icon-background {
-		margin-right: 15px;
-		transform: scale(1.1);
-		transition: 0.25s;
+		margin-right: 5px;
+		transform: scale(1.05);
+		
 	}
 }
 
@@ -915,7 +934,8 @@ button.reply {
 	font-size: 19px;
 	font-weight: 300;
 	color: black;
-	transition: width 0.4s linear
+	transition: width 0.4s linear;
+	
 }
 
 a:link {
@@ -928,8 +948,8 @@ a:link {
 }
 
 .search:hover #icon-background {
-	margin-right: 15px;
-	transform: scale(1.1);
+	margin-right: 5px;
+	transform: scale(1.05);
 	transition: 0.25s;
 }
 
@@ -942,9 +962,7 @@ input[type=text] {
 	margin: 10px 0;
 }
 
-#post_title {
-	border-radius: 10px;
-}
+
 
 .new_post_form {
 	padding: 16px 10px;
@@ -1002,9 +1020,67 @@ input[type=text] {
     border-radius: 10px;
 }
 
+@media all and (min-width:551px) {
+	#autocomplete{
+	/*the container must be positioned relative:*/
+	text-align: center;
+	display: block;
+	margin: auto;
+	width: 50%;
+	padding: 10px;
+	width: 600px;
+	margin-top: 2px;
+	}
+	#resNum{
+		font-size: 30px;
+		text-align: center;
+		display: block;
+		margin: auto;
+		width: 50%;
+		padding: 10px;
+		width: 600px;
+		margin-top: 2px;
+	}
+}
+@media all and (max-width: 541px) {
+	#autocomplete{
+		/*the container must be positioned relative:*/
+		text-align: center;
+		display: block;
+		margin: auto;
+		width: 50%;
+		padding: 10px;
+		width: 325px;
+		margin-top: 0px;
+		}
 
+	#resNum{
+		font-size: 25px;
+		text-align: center;
+		display: block;
+		margin: auto;
+		width: 50%;
+		margin-top: 0px;
+	}
+}
 
+.autocomplete-item {
+	text-align: center;
+	background-color: white;
+	border:1px solid#e9e9e9;
+	
 
+  }
+
+.autocomplete-item:hover {
+	background-color:  #e9e9e9;
+	cursor: pointer;
+}
+
+.mdl-layout__header .mdl-layout__drawer-button i {
+	
+	background-image: url(css/images/smallerhome.png);
+  }
 
  
   

@@ -51,7 +51,7 @@
           </p>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item w-100">
-              <a class="nav-link" href="https://youtu.be/dQw4w9WgXcQ">
+              <a class="nav-link" href="http://localhost:5000/dashboard/admin_dashboard_landing.html">
                 <img src="../css/images/home_page_icon.png" width = "35" height = "30">
                 <!-- <i class="fe fe-help-circle fe-16"></i> -->
                 <span class="ml-3 item-text">Admin Home Page</span>
@@ -76,9 +76,15 @@
                     <div class="card-body"><!-- SEARCH -->
                       <div id="skillError"></div>
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Enter a Skill">
+                          <!--<input type="text" class="form-control" placeholder="Search Skill">-->
+                          <select name="skills" id="skills">
+                            <option value="ICT/Tech­nology Skills">ICT/Tech­nology Skills</option>
+                            <option value="Social Communi­cation Skills">Social Communi­cation Skills</option>
+                            <option value="Comple­mentary Skills">Comple­mentary Skills</option>
+                            <option value="Work-related Skills">Work-related Skills</option>
+                          </select>
                           <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="search-butt">Search</button>
+                            <button class="btn btn-primary" type="button" id="search-butt" onclick = "selectedSkill()">Search</button>
                           </div>
                         </div>
                     </div> <!-- /.card-body -->
@@ -93,7 +99,7 @@
 
                     </div>
                     <div class="card-body" id="skillSelectedCard">
-                      <h4>No Skill Selected</h4>
+                      <h1><span id="selected">No skill selected </span></h1>
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
@@ -112,25 +118,17 @@
                         <strong class="card-title mb-0">Total Favourited Skills</strong>
                       </div>
                       <div class="card-body">
-                        <canvas id="pieChartjs" width="400" height="300"></canvas>
+                        <canvas id="pieChart" width="400" height="300"></canvas>
                       </div> <!-- /.card-body -->
                     </div> <!-- /.card -->
                   </div> <!-- /. col -->
                   <div class="col-md-6 mb-4">
                     <div class="card shadow">
                       <div class="card-header">
-                        <strong class="card-title mb-0">Skill 1</strong>
-                        <div class="dropdown float-right">
-                          <button class="btn btn-sm btn-link text-muted dropdown-toggle p-0" type="button" id="rangeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 7 days </button>
-                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="rangeDropdown">
-                            <a class="dropdown-item small text-muted" href="#">30 days</a>
-                            <a class="dropdown-item small active" href="#">90 days</a>
-                            <a class="dropdown-item small text-muted" href="#">All</a>
-                          </div>
-                        </div>
+                        <strong class="card-title mb-0"><span id="selectedBarChart">No skill selected </span></strong>
                       </div>
                       <div class="card-body">
-                        <canvas id="barChartjs" width="400" height="300"></canvas>
+                        <canvas id="skillChart" width="400" height="300"></canvas>
                       </div> <!-- /.card-body -->
                     </div> <!-- /.card -->
                   </div> <!-- /. col -->
@@ -142,52 +140,64 @@
       </div> <!-- .wrapper -->
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/simplebar.min.js"></script>
-    <script src='js/daterangepicker.js'></script>
-    <script src='js/jquery.stickOnScroll.js'></script>
-    <script src="js/tinycolor-min.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/d3.min.js"></script>
-    <script src="js/topojson.min.js"></script>
-    <script src="js/datamaps.all.min.js"></script>
-    <script src="js/datamaps-zoomto.js"></script>
-    <script src="js/datamaps.custom.js"></script>
-    <script src="js/Chart.min.js"></script>
-    <script>
-      /* defind global options */
-      Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
-      Chart.defaults.global.defaultFontColor = colors.mutedColor;
-    </script>
-    <script src="js/gauge.min.js"></script>
-    <script src="js/jquery.sparkline.min.js"></script>
-    <script src="js/apexcharts.min.js"></script>
-    <script src="js/apexcharts.custom.js"></script>
-    <script src="js/apps.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag()
-      {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'UA-56159088-1');
-    </script>
-        <script>
-          document.getElementById("search-butt").addEventListener("click", function(event){
-                event.preventDefault();
-            });
-
-          localStorage.setItem("mode", "light")
-          modeSwitch();
+      <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+      <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+      <script src = "script/firebaseConfig.js"></script>
+      <!-- FIREBAS STUFF I GOT FROM YT-->
+      <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+      <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+      <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+      <script src="/__/firebase/init.js?useEmulator=true"></script>
 
 
-        </script>
-  </body>
+      <script src="js/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+      <link rel="stylesheet" href=
+      "http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
+
+      <script src="js/popper.min.js"></script>
+      <script src="js/moment.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/simplebar.min.js"></script>
+      <script src='js/daterangepicker.js'></script>
+      <script src='js/jquery.stickOnScroll.js'></script>
+      <script src="js/tinycolor-min.js"></script>
+      <script src="js/config.js"></script>
+      <script src="js/d3.min.js"></script>
+      <script src="js/topojson.min.js"></script>
+      <script src="js/datamaps.all.min.js"></script>
+      <script src="js/datamaps-zoomto.js"></script>
+      <script src="js/datamaps.custom.js"></script>
+      <script src="js/Chart.min.js"></script>
+
+      <script src="script/recommender_fav.js"></script>
+      <script>
+         /* defind global options */
+         Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+         Chart.defaults.global.defaultFontColor = colors.mutedColor;
+      </script>
+      <script src="js/gauge.min.js"></script>
+      <script src="js/jquery.sparkline.min.js"></script>
+      <script src="js/apexcharts.min.js"></script>
+      <script src="js/apexcharts.custom.js"></script>
+      <script src="js/apps.js"></script>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+
+
+      <script>
+         window.dataLayer = window.dataLayer || [];
+
+         function gtag()
+         {
+           dataLayer.push(arguments);
+         }
+         gtag('js', new Date());
+         gtag('config', 'UA-56159088-1');
+      </script>
+
+   </body>
 </html>
