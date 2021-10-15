@@ -216,22 +216,6 @@ function printPostDetails(post, button_num) {
                     <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
                 </div>
 
-                <!-- Alert UI -->
-                    <dialog class="mdl-dialog">
-                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-                        <hr style="margin: 0;">
-                        <div class="mdl-dialog__content">
-                            <h8>
-                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
-                            </h8>
-                            <br>
-                            <br>
-                            <div class="mdl-dialog__actions">
-                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-                            </div>
-                        </div>
-                    </dialog>
-
                 <script>
                     //checks for double click on like button
                     $('#btn_like').on('click',function(){
@@ -242,9 +226,9 @@ function printPostDetails(post, button_num) {
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-
-                            // do what needs to happen on double click.
-                            dialog.showModal();
+                            
+                            // do what needs to happen on double click. 
+                            document.getElementById("like-Modal").style.display = "block";
                         }else{
                             $button.data('alreadyclicked', true);
 
@@ -267,9 +251,9 @@ function printPostDetails(post, button_num) {
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-
-                            // do what needs to happen on double click.
-                            dialog.showModal();
+                            
+                            // do what needs to happen on double click. 
+                            document.getElementById("like-Modal").style.display = "block";
                         }else{
                             $button.data('alreadyclicked', true);
 
@@ -282,18 +266,6 @@ function printPostDetails(post, button_num) {
                         return false;
                     });
                 </script>
-
-                <!-- Alert control-->
-                    <script>
-                        var dialog = document.querySelector('dialog');
-                        if (! dialog.showModal) {
-                            dialogPolyfill.registerDialog(dialog);
-                        }
-                        dialog.querySelector('.close_btn').addEventListener('click', function() {
-                            dialog.close();
-                        });
-                    </script>
-
             </div>`
     $('#post_details').append(post_display);
     //check whether the user has favourited the post 
@@ -617,21 +589,7 @@ function printComment(button_num, comment, i ){
                  </div>
             </div>
 
-            <!-- Alert UI -->
-                    <dialog class="mdl-dialog">
-                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-                        <hr style="margin: 0;">
-                        <div class="mdl-dialog__content">
-                            <h8>
-                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
-                            </h8>
-                            <br>
-                            <br>
-                            <div class="mdl-dialog__actions">
-                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-                            </div>
-                        </div>
-                    </dialog>
+            
 
             <script>
                 //checks for double click on like button
@@ -643,9 +601,9 @@ function printComment(button_num, comment, i ){
                         if ($button.data('alreadyclickedTimeout')){
                             clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                         }
-
-                        // do what needs to happen on double click.
-                        dialog.showModal();
+                        
+                        // do what needs to happen on double click. 
+                        document.getElementById("like-Modal").style.display = "block";
                     }else{
                         $button.data('alreadyclicked', true);
 
@@ -659,17 +617,6 @@ function printComment(button_num, comment, i ){
                 });
             </script>
 
-            <!-- Alert control-->
-                    <script>
-                        var dialog = document.querySelector('dialog');
-                        if (! dialog.showModal) {
-                            dialogPolyfill.registerDialog(dialog);
-                        }
-                        dialog.querySelector('.close_btn').addEventListener('click', function() {
-                            dialog.close();
-                        });
-                    </script>
-
             <br>
             <div id= "reply_section${i}" style="margin-bottom:10px">
             </div>
@@ -679,6 +626,12 @@ function printComment(button_num, comment, i ){
     );
     document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
 }
+
+
+function hideLikeAlert(){
+    document.getElementById("like-Modal").style.display =  "none";
+}
+
 
 
 /**

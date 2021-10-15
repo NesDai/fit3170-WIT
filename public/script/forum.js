@@ -136,7 +136,7 @@ function makeNewPost() {
 
         //alert if the interests are not chosen
         if (!interest_arr.length){
-            dialog_int.showModal();
+            document.getElementById("interest-Modal").style.display = "block";
             return
         }
 
@@ -152,7 +152,7 @@ function makeNewPost() {
             embedding_video_url = checkEmbeddingVideo(video_url);
             //alert if an invalid link is provided for the video
             if (embedding_video_url == 0) {
-                dialog_vid.showModal();
+                document.getElementById("video-Modal").style.display = "block";
                 return;
             }
         }
@@ -487,197 +487,112 @@ function print_create_post()
           </label>
         </div>
         <br>
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="create_post">
-           <div class="mdl-card__title">
-              <h2 class="mdl-card__title-text mdl-color-text--black" style="font-weight: bold;">New Forum Post</h2>
-           </div>
-           <hr style="margin: 0;">
-           <div class="new_post_form">
-              <!-- POST TITLE -->
-              <label for="post_title" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>TITLE:  </b></label>
-              <input class="input" type="text" id="post_title" name="post_title" placeholder=" Share your thoughts with the community!" required></input><br>
-              <!-- POST DESCRIPTION -->
-              <textarea class="input"  id="post_description" name="post_description" placeholder="Description" cols="30" required></textarea>
-              <br>
-              <br>
-              <!-- VIDEO URL  -->
-              <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
-              <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
-              <br>
-              <br>
-              <!-- INTEREST  -->
-              <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Choose 2 interests for your post</b></label> </span>
-              <br>
-              <!-- INTEREST BUTTON -->
-              <div id="interests_box">
-                 <br>
-                 <!-- ICT/TECHNOLOGY SKILLS -->
-                 <span class="label success"><label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>ICT/Technology Skills</b></label> </span>
-                 <div class="box">
-                    <label class="checkbox-inline" id="interest1" >
-                    <input type="checkbox" name="interests" value="Browser search" /> Browser Search
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline" >
-                    <input type="checkbox" name="interests" value="Device use" /> Device Use
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline" >
-                    <input type="checkbox" name="interests" value="Email" /> E-mail
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline" >
-                    <input type="checkbox" name="interests" value="Online collaboration" /> Online Collaboration
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline" >
-                    <input type="checkbox" name="interests" value="Social media use" /> Social Media Use
-                    </label>
-                 </div>
-                 <br>
-                 <!-- Social Communication Skills -->
-                 <span class="label success">
-                 <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
-                 </span>
-                 <div class="box">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Active listening" /> Active Listening
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Effective communication" /> Effective Communication
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Negotiation skill" /> Negotiation Skill
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Persuasion" /> Persuasion
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Relationship management" /> Relationship Management
-                    </label>
-                 </div>
-                 <br>
-                 <!-- Complementary skills -->
-                 <span class="label success">
-                 <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
-                 </span>
-                 <div class="box">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Art" /> Art
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Caregiving" /> Caregiving
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Cooking" /> Cooking
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Exercise" /> Exercise
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Professional writing" /> Professional Writing
-                    </label>
-                 </div>
-                 <br>
-                 <!-- Work-related Skills -->
-                 <span class="label success">
-                 <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
-                 </span>
-                 <div class="box">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Critical thinking" /> Critical Thinking
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="People and Leadership" /> People and Leadership
-                    </label>
-                    <br class="mobile-br">
-                    <label class="checkbox-inline">
-                    <input type="checkbox" name="interests" value="Personal selling" /> Personal Selling
-                    </label>
-                 </div>
-                 <br>
-              </div>
-              <script type="text/javascript">
-                 $(document).ready(function () {
-                    $("input[name='interests']").change(function () {
-                        var maxAllowed = 2;
-                        var cnt = $("input[name='interests']:checked").length;
-                        if (cnt > maxAllowed) {
-                            $(this).prop("checked", "");
-                            dialog_int.showModal();
-                        }
-                    });
-                 });
-              </script>
-              <br>
-              <!-- POST BUTTON -->
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="post_btn"
-                 style="background-color:#006DAE; border: white;" onclick="makeNewPost()">
-              POST
-              </button>
-           </div>
-           <!-- Alert UI -->
-           <dialog class="mdl-dialog mdl-dialog-int">
-              <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-              <hr style="margin: 0;">
-              <div class="mdl-dialog__content">
-                 <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
-                 <br>
-                 <br>
-                 <div class="mdl-dialog__actions">
-                    <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-                 </div>
-              </div>
-           </dialog>
-           <!-- Alert for wrong video link UI-->
-           <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
-              <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-              <hr style="margin: 0;">
-              <div class="mdl-dialog__content">
-                 <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
-                 <br>
-                 <br>
-                 <div class="mdl-dialog__actions">
-                    <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-                 </div>
-              </div>
-           </dialog>
-           <!-- Alert control-->
-           <script>
-              var dialog_int = document.querySelector('.mdl-dialog-int');
-              if (! dialog_int.showModal) {
-                  dialogPolyfill.registerDialog(dialog_int);
-              }
-              dialog_int.querySelector('.close_btn').addEventListener('click', function() {
-                  dialog_int.close();
-              });
+        <!-- Social Communication Skills -->
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
+        </span>
 
-              var dialog_vid=document.querySelector('.mdl-dialog-vid')
-              if (! dialog_vid.showModal) {
-                  dialogPolyfill.registerDialog(dialog_vid);
-              }
-              dialog_vid.querySelector('.close_btn').addEventListener('click', function() {
-                  dialog_vid.close();
-              });
-           </script>
-        </div>`
+        <div class="box"> 
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Active listening" /> Active Listening
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Effective communication" /> Effective Communication
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Negotiation skill" /> Negotiation Skill
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Persuasion" /> Persuasion
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Relationship management" /> Relationship Management
+          </label>
+        </div>
+        <br>
+
+        <!-- Complementary skills --> 
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
+        </span>
+
+        <div class="box"> 
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Art" /> Art
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Caregiving" /> Caregiving
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Cooking" /> Cooking
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Exercise" /> Exercise
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Professional writing" /> Professional Writing
+          </label>
+        </div>
+        <br>
+        
+        <!-- Work-related Skills --> 
+        <span class="label success">
+            <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
+        </span>
+        <div class="box"> 
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Critical thinking" /> Critical Thinking
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Entrepreneurship" /> Entrepreneurship
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="People and Leadership" /> People and Leadership
+          </label>
+          <br class="mobile-br">
+          <label class="checkbox-inline">
+          <input type="checkbox" name="interests" value="Personal selling" /> Personal Selling
+          </label>
+        </div>
+        <br>
+
+       </div>
+       <script type="text/javascript">
+          $(document).ready(function () {
+             $("input[name='interests']").change(function () {
+                 var maxAllowed = 2;
+                 var cnt = $("input[name='interests']:checked").length;
+                 if (cnt > maxAllowed) {
+                     $(this).prop("checked", "");
+                     document.getElementById("interest-Modal").style.display = "block";
+                 }
+             });
+          });
+       </script>
+       <br>
+       <!-- POST BUTTON -->
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="post_btn"
+          style="background-color:#006DAE; border: white;" onclick="makeNewPost()">
+       POST
+       </button>
+    </div>
+
+
+ </div>`
     );
 }
 
@@ -782,99 +697,82 @@ function printPost(post, button_num, i )
                     </button>
                     </div>
 
-                    <!-- Alert UI -->
-                    <dialog class="mdl-dialog mdl-dialog-like">
-                        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-                        <hr style="margin: 0;">
-                        <div class="mdl-dialog__content">
-                            <h8>
-                                Please do not click like or dislike button too fast. It may cause erroneous behaviour.
-                            </h8>
-                            <br>
-                            <br>
-                            <div class="mdl-dialog__actions">
-                                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto; cursor: pointer;">OK</button>
-                            </div>
-                        </div>
-                    </dialog>
-
                     <!-- Like dislike double click -->
                     <script>
-                    //checks for double click on like button
-                    $("#btn_like"+${i}).on('click',function(){
-                        var $button=$(this);
-                        if ($button.data('alreadyclicked')){
-                            $button.data('alreadyclicked', false); // reset
-
-
-                            if ($button.data('alreadyclickedTimeout')){
-                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                        //checks for double click on like button
+                        $("#btn_like"+${i}).on('click',function(){
+                            var $button=$(this);
+                            if ($button.data('alreadyclicked')){
+                                $button.data('alreadyclicked', false); // reset
+                                
+                                
+                                if ($button.data('alreadyclickedTimeout')){
+                                    clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                                }
+                                
+                                // do what needs to happen on double click
+                                document.getElementById("like-Modal").style.display = "block";
+                            }else{
+                                $button.data('alreadyclicked', true);
+                                
+                                var alreadyclickedTimeout=setTimeout(function(){
+                                    $button.data('alreadyclicked', false); // reset when it happens
+                                    
+                                    $('#action').val('Was single clicked');
+                                    likePost('${post.id}', ${i});
+                                },300); // <-- dblclick tolerance here
+                                $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
                             }
+                            return false;
+                        });
 
-                            // do what needs to happen on double click.
-                            dialog_like.showModal();
-                            //document.getElementById("like_alert").style.display="block";
-                        }else{
-                            $button.data('alreadyclicked', true);
+                        //checks for double click on dislike button
+                        $("#btn_dislike"+${i}).on('click',function(){
+                            var $button=$(this);
+                            if ($button.data('alreadyclicked')){
+                                $button.data('alreadyclicked', false); // reset
+                                
+                                
+                                if ($button.data('alreadyclickedTimeout')){
+                                    clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                                }
+                                
+                                // do what needs to happen on double click. 
+                                document.getElementById("like-Modal").style.display = "block";
 
-                            var alreadyclickedTimeout=setTimeout(function(){
-                                $button.data('alreadyclicked', false); // reset when it happens
-
-                                $('#action').val('Was single clicked');
-                                likePost('${post.id}', ${i});
-                            },300); // <-- dblclick tolerance here
-                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
-                        }
-                        return false;
-                    });
-
-                    //checks for double click on dislike button
-                    $("#btn_dislike"+${i}).on('click',function(){
-                        var $button=$(this);
-                        if ($button.data('alreadyclicked')){
-                            $button.data('alreadyclicked', false); // reset
-
-
-                            if ($button.data('alreadyclickedTimeout')){
-                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
+                            }else{
+                                $button.data('alreadyclicked', true);
+                                
+                                var alreadyclickedTimeout=setTimeout(function(){
+                                    $button.data('alreadyclicked', false); // reset when it happens
+                                    
+                                    $('#action').val('Was single clicked');
+                                    dislikePost('${post.id}', ${i});
+                                },300); // <-- dblclick tolerance here
+                                $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
                             }
-
-                            // do what needs to happen on double click.
-                            dialog_like.showModal();
-                            //document.getElementById("like_alert").style.display="block";
-
-                        }else{
-                            $button.data('alreadyclicked', true);
-
-                            var alreadyclickedTimeout=setTimeout(function(){
-                                $button.data('alreadyclicked', false); // reset when it happens
-
-                                $('#action').val('Was single clicked');
-                                dislikePost('${post.id}', ${i});
-                            },300); // <-- dblclick tolerance here
-                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
-                        }
-                        return false;
-                    });
-                    </script>
-
-                    <!-- Alert control-->
-                    <script>
-                        var dialog_like = document.querySelector('.mdl-dialog-like');
-                        if (! dialog_like.showModal) {
-                            dialogPolyfill.registerDialog(dialog_like);
-                        }
-                        dialog_like.querySelector('.close_btn').addEventListener('click', function() {
-                            dialog_like.close();
+                            return false;
                         });
                     </script>
-
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
                     <script type="text/javascript"></script>
                   <br>
             </span>
      </div>`
     );
+}
+
+
+function hideLikeAlert(){
+    document.getElementById("like-Modal").style.display =  "none";
+}
+
+function hideVideoAlert(){
+    document.getElementById("video-Modal").style.display =  "none";
+}
+
+function hideInterestAlert(){
+    document.getElementById("interest-Modal").style.display =  "none";
 }
 
 /**
@@ -950,12 +848,19 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                             }
                             button_nums.push(button_num);
                         }
-                    }).then(() => {
-                        for(let i=post_arr.length-1; i>=0 ; i--){
-                            //printing posts
-                            printPost(post_arr[i], button_nums[i], buttons_index)
-                            buttons_index++;
-                        }
+                        }).then(() => {
+                                for(let i=post_arr.length-1; i>=0 ; i--){
+
+                                    printPost(post_arr[i], button_nums[i], buttons_index)
+                                    buttons_index++;
+                                }
+
+                                if(post_arr.length == 0 ){
+                                    document.getElementById("postField").innerHTML = '<h4>0 Posts in this section</h4>';
+                                    //$('#postField').html('<h4>0 Posts in this section</h4>');
+                                }
+
+                                const promise = new Promise((resolve, reject) => {
 
                         // return a promise with a value one to specify the function has completed
                         const promise = new Promise((resolve, reject) => {
@@ -1030,12 +935,12 @@ function printUserPosts(){
                         printUserFavouritePosts(posts,button_nums.length).then(()=>{
 
                              // Reenable the other tabs
-                            $("#radio-0").attr("disabled",false);
-                            $("#radio-2").attr("disabled",false);
+                           // $("#radio-0").attr("disabled",false);
+                            //$("#radio-2").attr("disabled",false);
+                            document.getElementById("radio-0").disabled = false;
+                            document.getElementById("radio-2").disabled = false;
 
-                            if(posts.length == 0 ){
-                                $('#postField').html('<h4>0 Posts in this section</h4>');
-                            }
+                            
 
 
                         })
@@ -1075,7 +980,10 @@ function printUserPosts(){
         return // exit function
     }
 
-    $('#postField').html(''); // emtpy the field of any previous posts
+    //$('#postField').html(''); // emtpy the field of any previous posts
+
+    document.getElementById("postField").innerHTML = '';
+
 
     //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
@@ -1163,7 +1071,11 @@ function printUserPosts(){
                     })
                 }).then(()=>{
                     printStartIndex = posts.length-1;
-                    document.getElementById('resNum').innerHTML = `${printStartIndex+1} Results Found`;
+
+                    //$('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
+
+                    document.getElementById("resNum").innerHTML = '<h4>0 Posts in this section</h4>';
+
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                 });
     })
@@ -1188,7 +1100,9 @@ function searchYourPosts(param){
         return // exit function
     }
 
-    $('#postField').html(""); // emtpy the field of any previous posts
+    //$('#postField').html(""); // emtpy the field of any previous posts
+
+    document.getElementById("postField").innerHTML = '';
 
     //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
@@ -1302,7 +1216,11 @@ function searchYourPosts(param){
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
                     }
-                    document.getElementById('resNum').innerHTML = `${posts.length-1-i} Results Found`;
+
+                    //$('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
+
+                    document.getElementById("resNum").innerHTML =`<h3>${posts.length-1-i} Results Found</h3>`;
+
 
                     // if(i == posts.length-1){
                     //     $('#postField').append(`<h2>No results found<h2>`); // no results found
@@ -1331,7 +1249,11 @@ function searchYourPosts(param){
         printThread();
         return // exit function
     }
-    $('#postField').html(``); // emtpy the field of any previous posts
+
+    //$('#postField').html(``); // emtpy the field of any previous posts
+
+    document.getElementById("postField").innerHTML = '';
+
 
     //gets the posts with the like/dislike by the logged in user
     firebase.database().ref('likesDislikes')
@@ -1475,6 +1397,11 @@ async function likePost(post_id, i) {
         new_value=parseInt(current_value)+1
         like_btn_addr.value=new_value
         $('#button_div'+i).find('.number_of_likes').html(new_value);
+        
+
+
+
+
     } else {
         // if there is action
         firebase.database().ref(`likesDislikes/${post_id}/${current_user["username"]}/action`).once('value', (snapshot) => {
