@@ -103,20 +103,23 @@
             (addEventListener,removeEventListener);
         </script>
     </head>
-
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <!-- Header section -->
-      <header class="mdl-layout__header" id="defaultHeader">
+    
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <!-- Header section -->
+        <header class="mdl-layout__header mdl-color-text--white notranslate" id='topheader'>
           <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-            <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+             <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
               <div class="box">Recommender - <br>Learning Interests</div>
-              <div class="mdl-layout-spacer"></div>
-              <button class="mdl-button mdl-js-button mdl-button--raised" id="home_button" onclick="location.href='./main_page.html'">
-                <img src="./css/images/home_page_icon.png" class="nav_icon" id="home_page_icon">
-              </button>
-            </div>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation" style="position: relative;">
+                   <a class="mdl-navigation__link" href="main_page.html">
+                       <img src="./css/images/smaller_home.png" style="width: 110px;
+                       height: 100px;">
+                   </a>
+                 </nav>
+             </div>
           </div>
-      </header>
+       </header>
       
       <!--Navigation menu-->
       <div class="mdl-layout__drawer">

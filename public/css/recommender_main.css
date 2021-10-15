@@ -306,6 +306,12 @@ transition: color 0.15s ease-in;
         margin-left: 55px;
     }
 
+    h3 {
+		position: relative;
+		left: 25px;
+	}
+
+
 }
 
 @media screen and (max-width: 600px) and (max-height: 1100px){
@@ -364,5 +370,11 @@ transition: color 0.15s ease-in;
     #home_button{
         margin-left: 35px;
     }
+
+    h3 {
+		position: relative;
+		left: 25px;
+	}
+
 
 }

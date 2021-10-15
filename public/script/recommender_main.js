@@ -1,4 +1,10 @@
 // Activated when "Rate" is pressed, transitioning the users to the screen where they will rate their last recommendation
+/**
+ * Function used to check if a video link is from youtube.
+ * If it is, then it manipulates the url to be able to display a video on the app.
+ * @param {1} url: input url of a video from create_post.html
+ * @returns youtube_url: the url with embed param added if the condition is satisfied. Or else, it returns 0
+ */
 function transitionRatePage() {
     // Adjust header to mention to Rate
     var upperSectionHeader = document.getElementById("upperSectionHeader");
@@ -117,23 +123,6 @@ function favoriteRating() {
         let btn = document.getElementById("favoriteIcon");
         btn.innerHTML = `<img src="./css/images/button-designs_28.png" style="height:80%"></img>`
     }
-}
-
-// From the selected preferences, randomly select a video ID for the player
-// This would be replaced with code for the content library + details from user account, currently just for show
-function getTopic() {
-    var preferenceList = ["Cooking", "Sports", "Music", "Travel"];
-    var i = Math.floor(Math.random() * preferenceList.length);
-    var chosen = preferenceList[i];
-
-    var topicDictionary = {};
-    topicDictionary['Cooking'] = "7EnWiGYT1g4";
-    topicDictionary['Sports'] = "p3c6L81HLAQ";
-    topicDictionary['Music'] = "v=oHg5SJYRHA0";
-    topicDictionary['Travel'] = "ODuEl4oNae0";
-
-    return topicDictionary[chosen]
-
 }
 
 // Function to add video to favourites

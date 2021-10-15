@@ -361,6 +361,11 @@ table {
         margin-left: 15px;
     }
 
+    .box {
+		position: relative;
+		left: 20px;
+	}
+
 }
 
 @media screen and (max-width: 540px) and (max-height: 720px){
@@ -407,6 +412,11 @@ table {
     #home_button{
         margin-left: 15px;
     }
+
+    .box {
+		position: relative;
+		left: 20px;
+	}
 
 }
 
@@ -460,6 +470,11 @@ table {
     #home_button{
         margin-left: 35px;
     }
+
+    .box {
+		position: relative;
+		left: 20px;
+	}
 
 }
 
@@ -518,6 +533,11 @@ table {
     #home_button{
         margin-left: 35px;
     }
+
+    .box {
+		position: relative;
+		left: -5px;
+	}
 
 
 }
