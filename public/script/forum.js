@@ -305,9 +305,9 @@ function printAllPosts(){
             $("#radio-0").attr("disabled",false);
             $("#radio-1").attr("disabled",false);
 
-            // if(posts.length == 0 ){
-            //     $('#postField').html('<h4>0 Posts in this section</h4>');
-            // }
+            if(posts.length == 0 ){
+                $('#postField').html('<h4>0 Posts in this section</h4>');
+            }
 
 
     })
@@ -1075,7 +1075,7 @@ function printUserPosts(){
 
                     //$('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
 
-                    document.getElementById("resNum").innerHTML = '<h4>0 Posts in this section</h4>';
+                    document.getElementById("resNum").innerHTML = `${printStartIndex+1} Results Found`;
 
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                 });
@@ -1220,7 +1220,7 @@ function searchYourPosts(param){
 
                     //$('#resNum').html(`<h3>${posts.length-1-i} Results Found<h3>`);
 
-                    document.getElementById("resNum").innerHTML =`<h3>${posts.length-1-i} Results Found</h3>`;
+                    document.getElementById("resNum").innerHTML =`${posts.length-1-i} Results Found`;
 
 
                     // if(i == posts.length-1){
