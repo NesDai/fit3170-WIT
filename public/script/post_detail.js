@@ -345,7 +345,7 @@ function checkButtonStatus() {
  * Function which removes the current post from user's favourite.
  * @returns none
  */
-function removePostFromFavourite() {
+async function removePostFromFavourite() {
 
 
 
@@ -391,7 +391,7 @@ function removePostFromFavourite() {
  * before proceeding to add the following post into favourites.
  * @returns none
  */
-function addPostToFavourite() {
+async function addPostToFavourite() {
 
 
     let post_id = params.get('post_id');
