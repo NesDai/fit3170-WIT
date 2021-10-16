@@ -625,6 +625,8 @@ transition: color 0.15s ease-in;
 		display: none;
 	}
 	#back_btn {
+		color: #ffffff;
+		background-color: #006dae;
 		border-radius: 20px;
 		position: relative;
 		text-align: center;
@@ -633,7 +635,7 @@ transition: color 0.15s ease-in;
 		top: 5px
 	}
 	#back_btn:hover {
-		background-color: #006098;
+		background-color: #006dae;
 	}
 	#back_btn_icon {
 		font-size: 20px;
