@@ -347,13 +347,15 @@ function checkButtonStatus() {
  */
 function removePostFromFavourite() {
 
+
+
+    let post_id = params.get('post_id');
+
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
         // give an alert
         return;
     }
 
-    
-    let post_id = params.get('post_id');
     //checks if the user exists
     if (checkUserExistence()) {
         let myRef = firebase.database().ref(`posts/${post_id}`);
@@ -391,12 +393,13 @@ function removePostFromFavourite() {
  */
 function addPostToFavourite() {
 
+
+    let post_id = params.get('post_id');
+
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
         // give an alert
         return;
     }
-
-    let post_id = params.get('post_id');
 
     //checks whether the user exists 
     if (checkUserExistence()) {
