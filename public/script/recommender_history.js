@@ -98,7 +98,7 @@ function showHistoryTable(){
               }, false);
 
               cardActionButton_2 = document.createElement("a");
-              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
+              cardActionButton_2.className = "mdl-button mdl-button--colored mdl-js-button";
               cardActionButton_2.innerHTML = '<img src="./css/images/delete_icon.png" style="height:32px">'; //delete
               cardAction.appendChild(cardActionButton_2);
 
