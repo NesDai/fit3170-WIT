@@ -5,6 +5,11 @@
  */
 async function likePostDetailed(post_id) {
 
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+
     like_btn_addr=document.getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementsByClassName("dislike")[0]
 
@@ -80,6 +85,12 @@ async function likePostDetailed(post_id) {
  */
 async function dislikePostDetailed(post_id)
 {
+
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+    
     like_btn_addr=document.getElementsByClassName("like")[0]
     dislike_btn_addr=document.getElementsByClassName("dislike")[0]
 

@@ -3,6 +3,34 @@ const params = new URLSearchParams(window.location.search)
 
 getPostDetails();
 
+
+/**
+ * Function used to check whether or not a post exists provided the post id. Function should be called before performing any action on the post.
+ * @param {1} id: the post id
+ * returns 1 if the post exists and 0 otherwise
+ */
+ async function checkPostExists(id){
+
+    let res = 0;
+
+    await firebase.database().ref(`posts/${id}`).once("value", snapshot => {
+
+        if (snapshot.exists()){
+            console.log(1);
+
+            res = 1;
+        }
+     });
+
+
+     return new Promise(function(resolve, reject) {
+        resolve(res);
+      });
+
+
+}
+
+
 /**
 * Function that displays the input box to add a reply to a comment
 * @param button_num The index of the location that the reply input will be displayed
@@ -318,6 +346,13 @@ function checkButtonStatus() {
  * @returns none
  */
 function removePostFromFavourite() {
+
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+
+    
     let post_id = params.get('post_id');
     //checks if the user exists
     if (checkUserExistence()) {
@@ -355,6 +390,12 @@ function removePostFromFavourite() {
  * @returns none
  */
 function addPostToFavourite() {
+
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        // give an alert
+        return;
+    }
+
     let post_id = params.get('post_id');
 
     //checks whether the user exists 
