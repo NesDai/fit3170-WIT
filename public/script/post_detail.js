@@ -123,8 +123,8 @@ function printPostDetails(post, button_num) {
     //get interests for this post and print them
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
-        console.log(post.interest)
-        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'> #${post.interest[i]} </button>`
+ 
+        interest += `<button class="mdl-button mdl-js-button mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'disabled> #${post.interest[i]} </button>`
     }
 
     // // check whether this post was created by the user logged in
