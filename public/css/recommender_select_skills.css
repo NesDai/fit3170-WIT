@@ -312,11 +312,6 @@ table {
 }
 
 @media screen and (max-width: 500px) and (max-height: 900px){
-    header {
-        height: 113px;
-        padding-bottom: 80px !important;
-    }
-  
     h4 {
         word-wrap: break-word;
         width: 100%;
@@ -369,11 +364,6 @@ table {
 }
 
 @media screen and (max-width: 540px) and (max-height: 720px){
-    header {
-        height: 113px;
-        padding-bottom: 80px !important;
-    }
-  
     .mdl-card {
         width: 100%;
     }
@@ -422,11 +412,6 @@ table {
 
 
 @media screen and (max-width: 400px) and (max-height: 690px){
-    header {
-      height: 113px;
-      padding-bottom: 80px !important;
-    }
-
     h4 {
         word-wrap: break-word;
         width: 100%;
@@ -480,11 +465,6 @@ table {
 
 /* Media query for mobile screens */
 @media screen and (max-width: 320px) {
-    header {
-        height: 100px;
-        padding-bottom: 80px !important;
-    }
-
     h4 {
         word-wrap: break-word;
         font-size: 16pt;
