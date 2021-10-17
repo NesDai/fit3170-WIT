@@ -124,7 +124,7 @@ function printPostDetails(post, button_num) {
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
  
-        interest += `<button class="mdl-button mdl-js-button mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'disabled> #${post.interest[i]} </button>`
+        interest += `<button class="mdl-button mdl-js-button mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'disabled> ${post.interest[i]} </button>`
     }
 
     // // check whether this post was created by the user logged in
@@ -164,7 +164,7 @@ function printPostDetails(post, button_num) {
                 <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description}</h6>
                 <br>
         ` + `
-        ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+        ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" allow="fullscreen" src="${post.videoURL}"></iframe>` : ``}
         ` + `
                 <br>
                 <div style='display: inline-block'>
