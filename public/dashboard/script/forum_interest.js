@@ -71,6 +71,7 @@ function updateChart() {
     }
 
     var ChartOptions = {
+        indexAxis: 'y',
         legend: {
             display: true
         },
@@ -89,16 +90,14 @@ function updateChart() {
         datasets: [{
             // for number of likes
             label: "Likes",
-            barThickness: 10,
-            backgroundColor: "rgba(210, 214, 222, 1)",
-            borderColor: "rgba(210, 214, 222, 1)",
+            backgroundColor: "rgba(46, 204, 113, 1)",
+            borderColor: "rgba(46, 204, 113, 1)",
             data: likes_arr,
             fill: "",
             lineTension: .1
         }, {
             // for number of post posted
             label: "Number of Post Posted",
-            barThickness: 10,
             backgroundColor: base.primaryColor,
             borderColor: base.primaryColor,
             data: yValues,
@@ -107,9 +106,8 @@ function updateChart() {
         }, {
             // for number of dislikes
             label: "Dislikes",
-            barThickness: 10,
-            backgroundColor: "rgba(150, 214, 222, 1)",
-            borderColor: "rgba(150, 214, 222, 1)",
+            backgroundColor: "rgba(242, 38, 19, 1)",
+            borderColor: "rgba(242, 38, 19, 1)",
             data: dislikes_arr,
             fill: "",
             lineTension: .1
@@ -117,7 +115,7 @@ function updateChart() {
     }
     var barChartjs = document.getElementById("myInterestChart");
     barChartjs && new Chart(barChartjs, {
-        type: "bar",
+        type: "horizontalBar",
         data: ChartData,
         options: ChartOptions
 });
