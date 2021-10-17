@@ -10,7 +10,9 @@ html, body {
 }
 
 h4 {
-    font-size: 19pt;
+    margin-top: auto;
+    font-size: 22pt;
+    position: relative;
 }
 
 .material-icons {
@@ -258,6 +260,7 @@ transition: color 0.15s ease-in;
 /*Media query*/
 @media all and (min-width:551px){
     /* hi-res laptops and desktops */
+    
     #option_buttons{
         display: flex;
         align-items: center;
@@ -316,11 +319,6 @@ transition: color 0.15s ease-in;
 
 @media screen and (max-width: 600px) and (max-height: 1100px){
     /* for mobile */
-    header {
-      height: 113px;
-      padding-bottom: 80px !important;
-    }
-
     .mdl-card {
       width: 100%;
     }
@@ -342,7 +340,7 @@ transition: color 0.15s ease-in;
     .container {
   		margin-top: 12px;
   		justify-content: center;
-        margin-left: 10px;
+        margin-left: 12px;
   	}
 
       /* for glider */
