@@ -15,6 +15,8 @@ let MCQOptionIDs = [];
 let possibleAnswersMCQ = [];
 let othersAnswers = [];
 let question_bubble_no = 0;
+var speechSynth = window.speechSynthesis;
+var voices = [];
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -560,12 +562,27 @@ function showMessageSender(message) {
         "<div class='space'>" +
         "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
-        "<button class=\"text-to-speech\" id=\"text-to-speech-" + question_bubble_no + "\"></button>" +
+        "<button  onclick = \"bindingFunc()\" class=\"text-to-speech\" id=\"text-to-speech-" + question_bubble_no + "\"></button>" +
         "</div>" +
         "</div>";
     // showHints();
     question_bubble_no++;
 }
+
+function bindingFunc(){
+    var toSpeak = new SpeechSynthesisUtterance(currentQuestionObject.question.replace( /(<([^>]+)>)/ig, ''));
+    // Adjusts the rate of the speaker
+    toSpeak.rate = 0.9;
+
+    voices = speechSynth.getVoices();
+    voices.forEach((voice)=>{
+        if(voice.name === 'Google UK English Female'){
+            toSpeak.voice = voice;
+        }
+    });
+    speechSynth.speak(toSpeak);
+}
+
 
 /**
  * display a question from chatbot without any hint
