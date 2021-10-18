@@ -98,7 +98,15 @@ function getPostDetails() {
                     });
                 }).then(() => {
                     //calling printing post function
-                    printPostDetails(posts[0], action)
+                    if (posts.length == 0){
+                        
+                        window.location = "forum.html";
+                    }
+                    else{
+                        printPostDetails(posts[0], action)
+                        
+                    }
+                    
                 })
         })
 }
