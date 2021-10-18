@@ -41,6 +41,9 @@ firebase.database().ref('users').once("value", function (snapshot) {
 // Fires when a specific user has been selected
 // Shows the table containing the videos that the user selected had watched
 function updateVideoList(phoneNum){
+    $('#pieChart1').show();
+    $('#pieChart2').show();
+
     firebase.database().ref(`users/+${phoneNum}`).once("value", function(snapshot){
         if (snapshot.exists()){
             console.log(snapshot.val())
