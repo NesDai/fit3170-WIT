@@ -12,6 +12,7 @@ let skippedToEnd = null;
 let otherChosen = false;
 let MCQOptionIDs = [];
 let possibleAnswersMCQ = [];
+let listening = false;
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -1192,7 +1193,16 @@ function likertSelect(number)
 
 
 function listen() {
-    document.getElementById('listening').style.display = "block";
-    document.getElementById('textfield').style.display = "none";
-    document.getElementById('submit').style.display = "none";
+    if (listening) {
+        document.getElementById('listening').style.display = "none";
+        document.getElementById('textfield').style.display = "block";
+        document.getElementById('submit').style.display = "block";
+        listening = false;
+    }
+    else {
+        document.getElementById('listening').style.display = "block";
+        document.getElementById('textfield').style.display = "none";
+        document.getElementById('submit').style.display = "none";
+        listening = true;
+    }
 }
