@@ -22,7 +22,36 @@ function transitionRatePage() {
 
 // Run after new video is displayed, check all icon (fav, like, dislike...)
 function checkIcon() {
+    console.log("...")
     // TODO like and dislike btn check
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+        let likeBtn = document.getElementById("positiveRating")
+        let dislikeBtn = document.getElementById("negativeRating")
+
+        let ss = snapshot.val();
+        let title = document.getElementById("videoDescription");
+
+        for (let i = 0; i < ss.length; i++) {
+            // console.log(i)
+            // console.log(title.innerHTML);
+            // console.log(ss[i]["videoTitle"]);
+            if (title.innerHTML === ss[i]["videoTitle"]) {
+                if(ss[i]["like"] === true){
+                    likeBtn.innerHTML = `<img src="./css/images/button-designs_17.png" style="height:80%"></img>`
+                }
+                else if(ss[i]["dislike"] === true){
+                    dislikeBtn.innerHTML = `<img src="./css/images/button-designs_18.png" style="height:80%"></img>`
+                }
+                else{
+                    likeBtn.innerHTML = `<img src="./css/images/button-designs_23.png" style="height:80%"></img>`
+                    dislikeBtn.innerHTML = `<img src="./css/images/button-designs_24.png" style="height:80%"></img>`
+                }
+
+            }
+        }
+
+
+    })
 
     // For some reason this dont work
     // let current_color = document.getElementById("favoriteIcon").style.color;
@@ -429,7 +458,7 @@ function playVideo() {
     // Updates the page's description with the video title
     updateDescription(playlist[currentVideoNumber].title);
 
-    // checkIcon();
+    checkIcon();
 }
 
 // Fires when the move to forum button is clicked
