@@ -6,7 +6,7 @@ window.onload = execute()
 function execute(){
     // check which tab is ticked
 
-        
+
     printUserPosts();
     // printAllPosts();
 
@@ -97,7 +97,7 @@ function makeNewPost() {
             userID: current_user["phone"],
             username: current_user["username"],
             videoURL: embedding_video_url,
-            created: utc, 
+            created: utc,
             likes:0,
             dislikes:0,
             recommender: false
@@ -170,10 +170,10 @@ function findAllPosts() {
 
 
 function printAllPosts(){
-
+  ///
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
-    
+
     $('#resNum').html(``);
     document.getElementById("searchBox").value = ""; // clear search box
     print_create_post();
@@ -215,7 +215,7 @@ function printAllPosts(){
                 posts.push(data.val());
         }
             });
-        
+
 
         }).then(()=>{
             printStartIndex = posts.length-1;
@@ -230,7 +230,7 @@ function printAllPosts(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-    
+
     })
     })
 
@@ -238,8 +238,8 @@ function printAllPosts(){
 }
 
 /**
- * Function used to print thread videos from the recommended data 
- * it calls the function that holds html component in a loop and add it to the post field under thread tab. 
+ * Function used to print thread videos from the recommended data
+ * it calls the function that holds html component in a loop and add it to the post field under thread tab.
  * @returns null
  */
 function printThread(){
@@ -275,7 +275,7 @@ function printThread(){
         .once('value', x => {
             x.forEach(data => {
 
-                if(data.val().recommender == true){ 
+                if(data.val().recommender == true){
                     let button_num=0
                     for (let i =0; i<data_list.length; i++) {
                         if(data_list[i][0] == data.key){  // if an action was performed on this post
@@ -294,7 +294,7 @@ function printThread(){
         }).then(()=>{
 
             printStartIndex = posts.length - 1;
-            printPostQuan(printStartIndex, printPostCount, posts, button_nums);            
+            printPostQuan(printStartIndex, printPostCount, posts, button_nums);
         }).then(()=>{
 
             // Reenable the other tabs
@@ -307,7 +307,7 @@ function printThread(){
     });
     });
 
-   
+
 }
 
 /**
@@ -337,18 +337,18 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
             >Load More</button>`);
 
          let moreBut = document.getElementById("moreBut");
-         moreBut.onclick = function(){ 
+         moreBut.onclick = function(){
             moreBut.remove();
             printPostQuan(startIndex-numberOfPosts,numberOfPosts,postsList,buttonNums);
-     
+
             };
         }
 
-    
+
 }
 
 function showVideoUrl() {
-   
+
     let video_button = document.getElementById("post_video");
     if (video_url_track == 1) {
 
@@ -358,7 +358,7 @@ function showVideoUrl() {
 
         video_button.innerHTML = video_url_appear;
 
-        video_url_track = 0; // make the track number 0 
+        video_url_track = 0; // make the track number 0
 
         video_button.animate([
             { // from
@@ -371,7 +371,7 @@ function showVideoUrl() {
         ], 500);
 
     } else {
-        video_button.style = "visibility: hidden"; // hide the element 
+        video_button.style = "visibility: hidden"; // hide the element
         video_url_track = 1; // make the track number 1
     }
 }
@@ -441,7 +441,7 @@ function print_create_post()
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Social Communication Skills</b></label>
         </span>
 
-        <div class="box"> 
+        <div class="box">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Active listening" /> Active Listening
           </label>
@@ -464,12 +464,12 @@ function print_create_post()
         </div>
         <br>
 
-        <!-- Complementary skills --> 
+        <!-- Complementary skills -->
         <span class="label success">
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Complementary Skills</b></label>
         </span>
 
-        <div class="box"> 
+        <div class="box">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Art" /> Art
           </label>
@@ -491,12 +491,12 @@ function print_create_post()
           </label>
         </div>
         <br>
-        
-        <!-- Work-related Skills --> 
+
+        <!-- Work-related Skills -->
         <span class="label success">
             <label style="margin: 0; font-family: 'Helvetica', 'Arial', sans-serif"><b>Work-related Skills</b></label>
         </span>
-        <div class="box"> 
+        <div class="box">
           <label class="checkbox-inline">
           <input type="checkbox" name="interests" value="Collaboration and teamwork" /> Collaboration and Teamwork
           </label>
@@ -553,7 +553,7 @@ function print_create_post()
             </div>
         </div>
     </dialog>
-    
+
     <!-- Alert for wrong video link UI-->
     <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
         <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
@@ -589,7 +589,7 @@ function print_create_post()
     </script>
  </div>`
     );
-    
+
 }
 
 
@@ -670,7 +670,7 @@ function printPost(post, button_num, i )
                      `
                      +
                      `
-                        
+
                      </div>
                      <br><br>
                   </form>
@@ -710,21 +710,21 @@ function printPost(post, button_num, i )
                         var $button=$(this);
                         if ($button.data('alreadyclicked')){
                             $button.data('alreadyclicked', false); // reset
-                            
-                            
+
+
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             dialog_like.showModal();
                             //document.getElementById("like_alert").style.display="block";
                         }else{
                             $button.data('alreadyclicked', true);
-                            
+
                             var alreadyclickedTimeout=setTimeout(function(){
                                 $button.data('alreadyclicked', false); // reset when it happens
-                                
+
                                 $('#action').val('Was single clicked');
                                 likePost('${post.id}', ${i});
                             },300); // <-- dblclick tolerance here
@@ -738,22 +738,22 @@ function printPost(post, button_num, i )
                         var $button=$(this);
                         if ($button.data('alreadyclicked')){
                             $button.data('alreadyclicked', false); // reset
-                            
-                            
+
+
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             dialog_like.showModal();
                             //document.getElementById("like_alert").style.display="block";
 
                         }else{
                             $button.data('alreadyclicked', true);
-                            
+
                             var alreadyclickedTimeout=setTimeout(function(){
                                 $button.data('alreadyclicked', false); // reset when it happens
-                                
+
                                 $('#action').val('Was single clicked');
                                 dislikePost('${post.id}', ${i});
                             },300); // <-- dblclick tolerance here
@@ -879,9 +879,9 @@ function printUserPosts(){
     $("#radio-0").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
 
-  
 
-    $('#resNum').html(``);   
+
+    $('#resNum').html(``);
 
     document.getElementById("searchBox").value = ""; // clear search box
     $('#create_post').text(''); // clear create post ui area
@@ -940,10 +940,10 @@ function printUserPosts(){
                         })
                     });
                 });
-                                
-   
+
+
 }
-       
+
 
 
 /**
@@ -970,7 +970,7 @@ function printUserPosts(){
         return
     }
     else if(tab[0].checked){ // if the navigation tab is tending video
-  
+
         searchTrendingPosts(param);
         return;
     }
@@ -1071,7 +1071,7 @@ function printUserPosts(){
                         }
                     })
                 }).then(()=>{
-                    
+
                     printStartIndex = posts.length-1;
                     $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
@@ -1146,7 +1146,7 @@ function searchYourPosts(param){
                 })
             })
         //find interests in posts
-        
+
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
@@ -1177,7 +1177,7 @@ function searchYourPosts(param){
                             posts.push(data.val());
                             toPrint.push(data.val().id);
                         }
-   
+
                     }
                 })
             })
@@ -1188,7 +1188,7 @@ function searchYourPosts(param){
                     x.forEach(data => {
 
                         let users_fav = data.val().users_favourite // all the users who favourited the post
-                        
+
                         if(users_fav == undefined){
                             users_fav = [];
                         }
@@ -1217,7 +1217,7 @@ function searchYourPosts(param){
                 }).then(()=>{
                     let i =0;
 
-                    
+
 
                     for(i=posts.length-1; i>=0 ; i--){
                         printPost(posts[i], button_nums[i], i )
@@ -1295,7 +1295,7 @@ function searchYourPosts(param){
                 })
             })
         //find interests in posts
-        
+
         firebase.database().ref(`posts`).orderByChild('interest/0')
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
@@ -1348,7 +1348,7 @@ function searchYourPosts(param){
                                 }
                             }
                             button_nums.push(button_num);
-                            
+
                             if(!toPrint.includes(data.val().id)){ // push only if its not yet being printed
                                 posts.push(data.val());
                                 toPrint.push(data.val().id);
@@ -1357,7 +1357,7 @@ function searchYourPosts(param){
                     })
                 }).then(()=>{
                     printStartIndex = posts.length-1;
-                    
+
                     $('#resNum').html(`<h3>${printStartIndex+1} Results Found<h3>`);
                     printPostQuan(printStartIndex, printPostCount, posts, button_nums);
                     // if(printStartIndex < 0){
@@ -1538,6 +1538,4 @@ async function dislikePost(post_id, i)
 
 function postDetail(id) {
         window.location = "post.html" + "?post_id=" + id;
-} 
-
-
+}
