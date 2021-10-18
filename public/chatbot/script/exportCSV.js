@@ -32,10 +32,6 @@ async function exportQues() {
                                                 querySnapshot.forEach(response => {
                                                     let responseObj = response.data();
                                                     compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\""]);
-
-                                                    // if (questionObjectTemp.question_number == "4.5m") {
-                                                    //     download_csv_file(compiledData);
-                                                    // }
                                                 });
                                             });
                                     });
@@ -48,7 +44,18 @@ async function exportQues() {
                                 .then((querySnapshot) => {
                                     querySnapshot.forEach(response => {
                                         let responseObj = response.data();
-                                        compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\""]);
+                                        switch(questionType){
+                                            case TYPE_MULTIPLE_CHOICE:
+                                            case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                            case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\""]);
+                                                break;
+
+                                            default:
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\""]);
+                                                break;
+                                        }
+
                                     });
                                 });
                             break;
@@ -62,8 +69,12 @@ async function exportQues() {
 function download_csv_file(csvFileData) {
 
     //define the heading for each row of the data
-    let csv = 'Question Number,Question,Response\n';
-
+    let csv = 'For Likert Scales The following convention is used: \n';
+    csv += 'Agreeableness: [1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree\n';
+    csv += 'Satisfaction: [0] Not Applicable (N/A) [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied\n';
+    csv += 'Confidence: [0] Not Applicable (N/A) [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident\n';
+    csv += 'Interest: [1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested\n';
+    csv += 'Question Number,Question,Response,Options\n';
 
     //merge the data with CSV
     csvFileData.forEach(function(row) {
@@ -78,4 +89,13 @@ function download_csv_file(csvFileData) {
     //provide the name for the CSV file to be downloaded
     hiddenElement.download = 'responses.csv';
     hiddenElement.click();
+}
+
+function array_to_str(array){
+    let returnStr = ""
+    for (let i=0; i < array.length; i ++){
+        let j = i +1;
+        returnStr += "[" + j + "] " + array[i] + " "
+    }
+    return returnStr;
 }
