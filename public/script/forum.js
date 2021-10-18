@@ -1,5 +1,5 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-let video_url_track = 1;
+
 
 let postNamesCreatePost = [];
 let postNamesFeed = [];
@@ -426,35 +426,6 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
     }
 }
 
-function showVideoUrl() {
-   
-    let video_button = document.getElementById("post_video");
-    if (video_url_track == 1) {
-
-        video_button.style = "visibility: visible"; // make the element visible
-
-        let video_url_appear = `<br><input class="input" type="text" id="video_url" name="video_url" placeholder="Add a video link here"></input>`;
-
-        video_button.innerHTML = video_url_appear;
-
-        video_url_track = 0; // make the track number 0 
-
-        video_button.animate([
-            { // from
-                opacity: 0,
-                color: "#fff"
-            },
-            { // to
-                opacity: 1,
-            }
-        ], 500);
-
-    } else {
-        video_button.style = "visibility: hidden"; // hide the element 
-        video_url_track = 1; // make the track number 1
-    }
-}
-
 
 /**
  * Function used to display the layout of forum under "Create Post" tab
@@ -482,12 +453,8 @@ function print_create_post()
        <br>
 
        <!-- VIDEO URL  -->
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="video_btn" style="background-color:#006DAE; border: white;" onclick="showVideoUrl()">
-        Video Link
-        </button>
-        <br>
-        <div id="post_video">
-        </div>
+       <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
+       <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
        <br>
        <br>
        <!-- INTEREST  -->
