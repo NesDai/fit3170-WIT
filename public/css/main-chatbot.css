@@ -199,8 +199,29 @@ main {
   height: 45px;
   margin: 10px 13px 0px 15px;
 }
+#context {
+  border-radius: 25px 25px 25px 25px;
+  background-color: #006DAE;
+  border-color: white;
+  border-width: 0.1rem;
+  border-style: solid;
+  color: white;
+  width: calc(100% - 120px);
+  padding: 0px 10px 0px 10px;
+  margin-top: 15px;
+  height: 2rem;
+  line-height: 2rem;
+  display: none;
+}
+#message-form {
+  padding: 15px 0;
+}
+#input-box {
+  padding: 15px 0;
+}
 #message-form .mdl-textfield {
   width: calc(100% - 200px);
+  padding: 0px !important;
 }
 #message-form button {
   width: 100px;
