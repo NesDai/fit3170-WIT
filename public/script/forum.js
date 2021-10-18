@@ -775,6 +775,10 @@ function hideInterestAlert(){
     document.getElementById("interest-Modal").style.display =  "none";
 }
 
+function hideDeletedPostAlert(){
+    document.getElementById("deletedPost-Modal").style.display =  "none";
+}
+
 /**
  * A function which prints an array of post that user has favourited
  * @param {*} current_user_posts a list of user's personal posts
@@ -1374,6 +1378,7 @@ async function likePost(post_id, i) {
 
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
         // give an alert
+        document.getElementById("deletedPost-Modal").style.display = "block";
         return;
     }
 
@@ -1461,6 +1466,7 @@ async function dislikePost(post_id, i)
 
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
         // give an alert
+        document.getElementById("deletedPost-Modal").style.display = "block";
         return;
     }
 
@@ -1541,6 +1547,7 @@ async function postDetail(id) {
             window.location = "post.html" + "?post_id=" + id;
         }
         else{
+            document.getElementById("deletedPost-Modal").style.display = "block";
             return; // give an alert that the post doesnt exist
         }
 }

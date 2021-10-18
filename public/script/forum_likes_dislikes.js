@@ -7,6 +7,7 @@ async function likePostDetailed(post_id) {
 
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
         // give an alert
+        document.getElementById("deletedPost-Modal").style.display = "block";
         return;
     }
 
@@ -88,6 +89,7 @@ async function dislikePostDetailed(post_id)
 
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
         // give an alert
+        document.getElementById("deletedPost-Modal").style.display = "block";
         return;
     }
     

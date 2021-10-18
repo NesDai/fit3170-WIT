@@ -352,6 +352,7 @@ async function removePostFromFavourite() {
     let post_id = params.get('post_id');
 
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        document.getElementById("deletedPost-Modal").style.display = "block";
         // give an alert
         return;
     }
@@ -397,6 +398,7 @@ async function addPostToFavourite() {
     let post_id = params.get('post_id');
 
     if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        document.getElementById("deletedPost-Modal").style.display = "block";
         // give an alert
         return;
     }
@@ -676,7 +678,9 @@ function hideLikeAlert(){
     document.getElementById("like-Modal").style.display =  "none";
 }
 
-
+function hideDeletedPostAlert(){
+    document.getElementById("deletedPost-Modal").style.display =  "none";
+}
 
 /**
  * A function which prints out the replies of a comment
@@ -1159,3 +1163,5 @@ function updateCommentLikes(comment_id, number){
         firebase.database().ref().update(updates);
     })
 }
+
+
