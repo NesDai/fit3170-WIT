@@ -187,7 +187,7 @@ async function updateUserUI(user_id) {
                         await updatePosts(current_username)
                         //updates the number of likes on comments
                         await updateLikesComments(current_username)
-                        //updates the pie chart
+                        //updates the bar chart
                         await updateChart(current_username,  current_user)
                         //updates the table viewed
                         await updateTable();
@@ -328,7 +328,7 @@ async function updateLikesComments(current_username){
 
 async function updateChart(current_username, current_user_phone){
     //print out the chart
-    $("#chart_body").html( `<canvas id="pie-chart-interests" width="500" height="400"></canvas>`);
+    $("#chart_body").html( `<canvas id="bar-chart-interests" width="500" height="400"></canvas>`);
     //initialize arrays
     let interest_post={};
     let labels_arr=[];
@@ -446,16 +446,27 @@ async function updateChart(current_username, current_user_phone){
             }
 
             if (labels_arr.length>0){
-                new Chart(document.getElementById("pie-chart-interests"), {
-                    type: 'pie',
+                new Chart(document.getElementById("bar-chart-interests"), {
+                    type: 'bar',
                     data: {
-                    labels: labels_arr,
-                    datasets: [{
-                        //label: "Population (millions)",
-                        backgroundColor: colors_arr,
-                        data: data_arr
-                    }]
+                        labels: labels_arr,
+                        datasets: [{
+                            backgroundColor: colors_arr,
+                            data: data_arr
+                        }]
                     },
+                    options: {
+                        legend: {
+                            display : false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
                 });
             }
             else{
