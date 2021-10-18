@@ -105,16 +105,16 @@
      <!-- Simple header with fixed tabs. -->
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
                   mdl-layout--fixed-tabs">
-        <header class="mdl-layout__header">
+        <header class="mdl-layout__header" id="topheader">
           <div class="mdl-layout__header-row">
             <!-- Title -->
             <span class="mdl-layout-title">Admin Dashboard</span>
           </div>
           <!-- Tabs -->
-          <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#fixed-chatbot" class="mdl-layout__tab is-active">Chatbot</a>
-            <a href="#fixed-recommender" class="mdl-layout__tab">Recommender</a>
-            <a href="#fixed-forum" class="mdl-layout__tab">Forum</a>
+          <div class="mdl-layout__tab-bar">
+            <a href="#fixed-chatbot" class="mdl-layout__tab is-active" style='background-color: #006DAE;'>Chatbot</a>
+            <a href="#fixed-recommender" class="mdl-layout__tab" style='background-color: #006DAE;'>Recommender</a>
+            <a href="#fixed-forum" class="mdl-layout__tab" style='background-color: #006DAE;'>Forum</a>
           </div>
         </header>
 
@@ -178,7 +178,7 @@
           </section>
           <section class="mdl-layout__tab-panel" id="fixed-forum">
             <br class="desktop-br"> 
-            <button id ="csv_forum_export" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="csvExportForumData()">CSV Export (Forum)</button>
+            <button id ="csv_forum_export" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="csvExportForumData()" style='background-color: #006DAE;'>CSV Export (Forum)</button>
             <br class="desktop-br"><br class="desktop-br"> 
             <div class="page-content">
               <!-- Your content goes here -->
