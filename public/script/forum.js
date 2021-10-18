@@ -176,7 +176,8 @@ function makeNewPost() {
             created: utc,
             likes:0,
             dislikes:0,
-            recommender: false
+            recommender: false,
+            anonymous: 0
         }
 
         //upload the post to the firebase
