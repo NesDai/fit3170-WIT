@@ -60,6 +60,11 @@ const QUESTIONS_BRANCHES = [
     "chatbot/survey_questions/questions_th/"
 ]; // english, chinese, malay, thai
 
+//Response branch
+const RESPONSE_BRANCH = "chatbot/survey_responses";
+
+
+
 // Index for access of each language branches
 const EN_INDEX = 0;
 const ZH_CN_INDEX = 1;

@@ -108,7 +108,7 @@ function getScaleString(language, scaleIndex, options) {
     let fontSize = "";
     switch (language) {
         case EN_INDEX:
-            fontSize = "calc(70% + 0.05vw)"
+            fontSize = "calc(65% + 0.05vw)"
             break;
         case ZH_CN_INDEX:
             fontSize = "calc(85% + 0.08vw)"
