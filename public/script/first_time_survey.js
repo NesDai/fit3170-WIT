@@ -1189,3 +1189,10 @@ function likertSelect(number)
     setTimeout(() => nextQuestion(), delay);
     scrollToBottom();
 }
+
+
+function listen() {
+    document.getElementById('listening').style.display = "block";
+    document.getElementById('textfield').style.display = "none";
+    document.getElementById('submit').style.display = "none";
+}
