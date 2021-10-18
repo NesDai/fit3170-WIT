@@ -511,6 +511,7 @@ function skipToPreviousVideo() {
     localStorage.setItem("currentVideoNumber", currentVideoNum);
     
     player.loadVideoById(playlist[currentVideoNum].videoId);
+    location.reload()
     updateDescription(playlist[currentVideoNum].title);
     changeShareDetails();  // from share_video.js
 }
@@ -536,6 +537,7 @@ function skipToNextVideo() {
     localStorage.setItem("currentVideoNumber", currentVideoNum);
 
     player.loadVideoById(playlist[currentVideoNum].videoId);
+    location.reload()
     updateDescription(playlist[currentVideoNum].title);
     changeShareDetails();  // from share_video.js
 }
