@@ -208,9 +208,9 @@ main {
   color: white;
   width: calc(100% - 120px);
   padding: 0px 10px 0px 10px;
-  margin-top: 15px;
-  height: 2rem;
-  line-height: 2rem;
+  margin-top: 10px;
+  height: 2.5rem;
+  line-height: 2.5rem;
   display: none;
 }
 #message-form {
@@ -238,6 +238,38 @@ main {
   top: -1px;
   margin-right: 5px;
 }
+#speech {
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  background: #FF3D7F;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  top: -1.5px;
+  margin: 0px 10px 0px 10px;
+}
+.pulse-ring {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #FF3D7F;
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  animation: pulsate infinite 2s;
+}
+  
+  @-webkit-keyframes pulsate {
+      0% {
+          -webkit-transform: scale(1, 1);
+          opacity: 1;
+      }
+      100% {
+          -webkit-transform: scale(1.4, 1.4);
+          opacity: 0;
+      }
+  }
 
 
 /* SCROLLBAR CSS */
