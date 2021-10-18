@@ -10,6 +10,7 @@ let likes_arr;
 let dislikes_arr;
 let  choosen_interest= document.getElementById("interest");
 choosen_interest.addEventListener('change', display_posts); //runs the function when there is a change made to the value choosen from the drop list
+let comments = []; 
 
 window.onload = execute();
 display_posts(); //runs it when the page is first loaded
@@ -167,7 +168,7 @@ function display_posts(){
 
   let  choosen_interest= document.getElementById("interest").value;
   let displayed_posts = [];
-
+  let number_comments = [];
   //getting the rows based on the interest choosen
   for (let i = 0; i < posts.length; i++){
     let post = posts[i];
@@ -179,6 +180,13 @@ function display_posts(){
         }
       }
   }
+
+  //getting the no. of comments based on each post
+  for (let j = 0; j <displayed_posts; j++){
+
+  }
+
+
 
   //outputing the rows of posts
   let display_table = document.getElementById("posts-rows");
@@ -195,6 +203,8 @@ function display_posts(){
   display_table.innerHTML = output_rows;
 
 }
+
+
 
 /**
  Function that transfer the admin to the post analytics detial page
