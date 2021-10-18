@@ -385,6 +385,7 @@ function updateChart(current_username, current_user_phone){
                 colors_arr.push(colors[i])
             }
 
+            console.log(data_arr);
             if (labels_arr.length>0){
                 new Chart(document.getElementById("pie-chart-interests"), {
                     type: 'pie',

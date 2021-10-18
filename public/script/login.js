@@ -15,6 +15,10 @@ const USER_KEY = "USER";
 // To apply the default browser preference instead of explicitly setting it.
 // firebase.auth().useDeviceLanguage();
 
+/**
+ * Function used to set the auth language
+ * @returns none
+ */
 function setAuthLanguage(){
 
     let language = localStorage.getItem(LANGUAGE_KEY);
@@ -38,7 +42,11 @@ function setAuthLanguage(){
 }
 
 
-// Used to change language of the captcha
+/**  Function used to change language of the captcha
+ * @param newLanguage the language of choice chosen by user
+ * @returns none
+*/
+
 function changeLanguage(newLanguage){
     if (newLanguage == "Malay")
         language = "ms";
@@ -71,6 +79,7 @@ window.onload = function(){
 
 /**
  * Function renders a recaptcha
+ * @returns none
  */
 function render(){
 
@@ -90,8 +99,10 @@ function render(){
 
 let credentials;
 let persisted = false; //true if the logged in user does not need to sign in again. And instead if has persisted from other session
+
 /**
- * function used to authenticate the user's phone number by sending them an OTP
+ * Function used to authenticate the user's phone number by sending them an OTP
+ * @returns none
  */
  function phoneAuth() {
     //get the number
@@ -111,13 +122,13 @@ let persisted = false; //true if the logged in user does not need to sign in aga
         //s is in lowercase
         window.confirmationResult=confirmationResult;
         coderesult=confirmationResult;
-        document.getElementById("input-pin").innerHTML = "It might take a minute to send the SMS to your phone.\n Once the SMS with the PIN has been sent to your phone. Please insert the pin below."
+        document.getElementById("input-pin").innerHTML = "It might take a minute to send the SMS to your phone.\n Once the SMS with the PIN has been sent to your phone. Please insert the pin below.";
         document.getElementById("input-pin").style.color = "green";
 
         // alert("Message sent");
     }).catch(function (error) {
         alert(error.message);
-        document.getElementById("input-pin").innerHTML = ""
+        document.getElementById("input-pin").innerHTML = "";
 
     })
     )
@@ -155,7 +166,8 @@ function phoneValidation() {
 
 
 /**
- * function checks the verification pin the user entered
+ * Function which checks the verification pin the user entered
+ * @returns none
  */
 function codeverify() {
     var code=document.getElementById('verificationCode').value;
@@ -167,12 +179,8 @@ function codeverify() {
         const user = result.user
         document.getElementById("registeredMessage").innerHTML="<h3>You are all set. You will be redirectered shortly<h3>";
 
-
         //check if this user is already registered
         // checkUserExistence(document.getElementById("number").value);
-
-
-
 
     }).catch(function (error) {
         alert(error.message);
@@ -259,41 +267,37 @@ firebase.auth().onAuthStateChanged(function(user){
     else {
       // User is signed out.
     }
-  })
+})
 
 
 
-  // CODE RELATED TO REGISTRATION
 
-    function register(username,phone){
+// CODE RELATED TO REGISTRATION
+
+/**
+ * Function used to register a new user into the database
+ * @param {*} username the username input by user
+ * @param {*} phone the user's phone number
+ */
+function register(username,phone){
     //retrieve phone from local storage
-
-        makeNewUser(phone, username);
+    makeNewUser(phone, username);
     
-        //set logged in user into local storage
-        let user = {
-            username: username,
-            phone: phone
-        };
+    //set logged in user into local storage
+    let user = {
+        username: username,
+        phone: phone
+    };
 
-        firebase.database().ref('users').orderByChild('phone')
-        .equalTo(phone).once('value', data => {
+    firebase.database().ref('users').orderByChild('phone')
+    .equalTo(phone).once('value', data => {
 
-            // If username exists, output an error
-            user = data.val();
-    
-
-            localStorage.setItem(USER_KEY,JSON.stringify(user));
-
-        
-
-            
-  
-
-        })
+        // If username exists, output an error
+        user = data.val();
+        localStorage.setItem(USER_KEY,JSON.stringify(user));
+    })
  
-        codeverify();
-
+    codeverify();
 }
 
 /**
@@ -336,7 +340,6 @@ function checkUsernameValidity(){
     let username = document.getElementById("username").value;
     let valid = usernameValidation();
 
-
     //search the username in db. similar to phone number search
     firebase.database().ref('users').orderByChild('username')
     .equalTo(username).once('value', data => {
@@ -344,18 +347,12 @@ function checkUsernameValidity(){
             // If username exists, output an error
             document.getElementById("error_username").innerHTML = "<p>Username exists. Please choose another username</p>";
             valid = false;
-
         });
     }).then(() => {
         if (valid) {
             document.getElementById("error_username").innerHTML = "";
             //if valid, register the user
-
             register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
         }
-
-
     });
-
-
 }

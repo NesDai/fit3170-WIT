@@ -440,6 +440,7 @@ function skipToPreviousVideo() {
     localStorage.setItem("currentVideoNumber", currentVideoNum);
     
     player.loadVideoById(playlist[currentVideoNum].videoId);
+    player.stopVideo();
     updateDescription(playlist[currentVideoNum].title);
     changeShareDetails();
 }
@@ -459,6 +460,7 @@ function skipToNextVideo() {
     localStorage.setItem("currentVideoNumber", currentVideoNum);
 
     player.loadVideoById(playlist[currentVideoNum].videoId);
+    player.stopVideo();
     updateDescription(playlist[currentVideoNum].title);
     changeShareDetails();
 }
@@ -483,6 +485,7 @@ function onPlayerReady(){
 function updateHistory(currentVideoInfo) {
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
+        interest: currentVideoInfo.interest,
         videoUrl: currentVideoInfo.videoUrl,
         videoThumbnail: currentVideoInfo.videoThumbnail,
         videoTitle: currentVideoInfo.title,
@@ -506,7 +509,7 @@ function updateHistory(currentVideoInfo) {
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true) {
-            currentVideo.totalWatchCount = 0;
+            currentVideo.totalWatchCount = 1;
             currentHistory.push(currentVideo)
             updateFirebase(currentHistory, current_user, 'videoHistory');
         }
@@ -515,7 +518,6 @@ function updateHistory(currentVideoInfo) {
 
 function updateWatchCount(currentVideoInfo){
     let current_user = JSON.parse(localStorage.getItem("USER"));
-
     // Retrieves the currently stored watch history
     firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
         let currentHistory = []
