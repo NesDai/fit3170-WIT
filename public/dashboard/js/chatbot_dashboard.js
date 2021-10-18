@@ -182,7 +182,7 @@ window.onload = function () {
     // questions list
     questions = [];
     for (let i = 0; i < QUESTION_IDS_EN.length; i++) {
-        let branch = QUESTIONS_BRANCH + QUESTION_IDS_EN[i];
+        // let branch = QUESTIONS_ES + QUESTION_IDS_EN[i];
 
         firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
             .doc(QUESTION_IDS_EN[i])
