@@ -368,14 +368,18 @@ function addPostToFavourite() {
 
                 // checking the favourite data has been written ebfore
                 if (hasFavouriteData == false) {
+
                     //if the data has not been written before
                     users_favourite_arr = [];
                     users_favourite_arr.push(current_user["phone"]); //push current user id to post dets to indicate they have favourite this post
 
+                    // create new data to be added to database
                     newData = {
                         users_favourite: users_favourite_arr
                     }
                 } else {
+
+                    //add user into the list and update
                     let users_arr = snapshot.val()["users_favourite"];
 
                     users_arr.push(current_user["phone"]);
@@ -387,6 +391,7 @@ function addPostToFavourite() {
                 firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
                 })
 
+                // change the UI of favourite button
                 let fav_button = document.getElementsByClassName("favourite")[0];
                 fav_button.innerHTML = "\n  <img src=\"./css/images/fav_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
                 fav_button.style.background='#006dae';

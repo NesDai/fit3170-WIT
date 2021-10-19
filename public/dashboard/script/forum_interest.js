@@ -70,6 +70,7 @@ function updateChart() {
         getLikesAndDislikes(posts[i]);
     }
 
+    // set chart option
     var ChartOptions = {
         indexAxis: 'y',
         legend: {
@@ -85,6 +86,8 @@ function updateChart() {
             }]
         },
     },
+
+    // set chart data
     ChartData = {
         labels: xValues,
         datasets: [{
