@@ -101,8 +101,8 @@ html, body {
 }
 
 .lang_butt {
-    margin: 2%; 
-    width: 30%; 
+    margin: 2%;
+    width: 30%;
     background-color: #006DAE;
 }
 
@@ -205,19 +205,96 @@ i.icon-teal{
     padding-left: 20px;
 }
 
+/* All below is for the tab navigation */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+:root {
+--primary-color: #006DAE;
+--secondary-color: #E4E4E4;
+}
+*, *:after, *:before {
+box-sizing: border-box;
+}
+
+
+.tabs * {
+z-index: 2;
+}
+input[type="checkbox"] {
+display: none;
+position: relative;
+bottom: 10px
+}
+.tab {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 45px;
+width: 200px;
+font-size: 1.25rem;
+font-weight: 500;
+border-radius: 25px;
+cursor: pointer;
+transition: color 0.15s ease-in;
+}
+
+#tab0, #tab1, #tab2{
+  font-size:20px ;
+}
+
+/* ends */
+
+
 /*Media query*/
-@media (min-width:1281px) { 
-    /* hi-res laptops and desktops */ 
+@media all and (min-width:551px){
+    /* hi-res laptops and desktops */
     #option_buttons{
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
+    .container {
+  		position: relative;
+  		top: 12px;
+  		left: 25px;
+  		display: flex;
+  		justify-content: center;
+  	}
+
+      .tabs {
+  		display: flex;
+  		position: relative;
+  		right: 29px;
+  		background-color: #fff;
+  		box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+  		padding: 0.75rem;
+  		border-radius: 15px;
+  		height: 50px;
+  		width: 724px;
+          color:rgb(0, 0, 0);
+  	}
+
+  	#tab0 {
+  		position: relative;
+  		bottom: 10px;
+  		left: 0px;
+  	}
+
+  	#tab1 {
+  		position: relative;
+  		bottom: 10px;
+  		left: 40px;
+  	}
+  	#tab2 {
+  		position: relative;
+  		bottom: 10px;
+  		left: 100px
+  	}
+
 }
 
 @media screen and (max-width: 600px) and (max-height: 1100px){
-    /* for mobile */ 
+    /* for mobile */
     header {
       height: 113px;
       padding-bottom: 80px !important;
@@ -240,5 +317,32 @@ i.icon-teal{
     #skipNext{
         margin-right:20%;
     }
+
+    .container {
+  		margin-top: 12px;
+  		justify-content: center;
+  	}
+
+      /* for glider */
+  	.tabs {
+  		display: flex;
+  		position: relative;
+  		background-color: #fff;
+  		box-shadow: 0 0 1px 0 #dadada, 0 6px 12px 0 #dadada;
+  		padding: 0.75rem;
+  		border-radius: 15px;
+  		height: 70px;
+  		width: 350px;
+  	}
+
+    #tab2 {
+      position: relative;
+      left: 15px
+    }
+
+
+    #tab0, #tab1, #tab2{
+  		font-size:18px ;
+  	}
 
 }

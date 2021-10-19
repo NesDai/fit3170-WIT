@@ -10,14 +10,14 @@ function syncProgress() {
     // Storing questionIndex to the cloud
     firebase.firestore().collection(USERS_BRANCH).doc(getUserID())
         .set({
-            questionIndex: questionIndex + 1,
+            questionIndex: questionIndex,
             currentSubQuestionIds: currentSubQuestionIds,
             subQuestionIndex: subQuestionIndex
         })
         .then(() => {
             console.log(
                 `Synchronizing with cloud... (at 'users/${getUserID()}')\n` +
-                `\tquestionIndex = ${questionIndex + 1}\n` +
+                `\tquestionIndex = ${questionIndex}\n` +
                 `\tcurrentSubQuestionIds = [${currentSubQuestionIds}]\n` +
                 `\tsubQuestionIndex = ${subQuestionIndex}\n`
             );
@@ -77,7 +77,7 @@ function saveResponse(answer) {
                 answer: answer,
                 timestamp: timestamp
             };
-            let responsesBranch = `chatbot/survey_responses/${currentQuestionId}`;
+            let responsesBranch = `chatbot/survey_responses/${responseObject.question_id}`;
 
             firebase.firestore().collection(responsesBranch)
                 .doc(docRef.id)

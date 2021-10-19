@@ -11,7 +11,7 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Web Application Manifest -->
-    <link rel="manifest" href="manifest.json">
+    <!--<link rel="manifest" href="manifest.json">-->
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -132,18 +132,42 @@
        </nav>
       </div>
   <body>
-    <div class="row">
-      <div class="col-9">
-        <a class="mdl-navigation__link" href="recommender_Ui.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised">Return</button>
-        </a>
-        <a class="mdl-navigation__link" onclick="deleteAllHistory()">
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Delete All History</button>
-        </a>
-      </div>
-    </div>
 
-    <div class="mdl-grid" id="historyGrid"></div>
+    <main class="mdl-layout__content mdl-color--grey-100">
+      <div class="container">
+         <!-- Tab navigation -->
+         <div class="tabs">
+
+            <!-- Favourite tab -->
+            <input type="checkbox" id="radio-0" name="tabs" value="Favourite" onclick='window.location.href = "fav_page_Ui.html"'/>
+            <label class="tab" for="radio-0" id="tab0"><b><img src="./css/images/fav_icon.png" style="height:22px">Favourite</b></label>
+
+            <!-- History tab -->
+            <input type="checkbox" id="radio-1" name="tabs" value="Recommender" onclick='window.location.href = "recommender_Ui.html"' checked/>
+            <label class="tab" for="radio-1" id="tab1"><b>Recommender</b></label>
+
+            <!-- Edit skill selection tab -->
+            <input type="checkbox" id="radio-2" name="tabs" value="Edit_skill" onclick='window.location.href = "recommender_select_skills.html"'/>
+            <label class="tab" for="radio-2" id="tab2"><b><img src="./css/images/create_post_icon.png" style="height: 22px; width: 15%">Edit skill selection</b></label>
+
+
+            <span class="glider"></span>
+         </div>
+
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-9">
+          <a class="mdl-navigation__link" onclick="deleteAllHistory()">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Delete All History</button>
+          </a>
+        </div>
+      </div>
+
+      <div class="mdl-grid" id="historyGrid"></div>
+    </main>
+
+
 
 
 
@@ -152,7 +176,7 @@
     <script src="/__/firebase/7.18.0/firebase-database.js"></script>
     <script src="/__/firebase/init.js?useEmulator=true"></script>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
     <script src="./script/Youtube.min.js"></script>

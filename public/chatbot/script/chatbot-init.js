@@ -143,14 +143,16 @@ function resumeGreeting() {
         "<button id='resume-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
-        "onclick=\"resumeSurvey(this)\">" +
+        "onclick=\"resumeSurvey(this)\" " +
+        "value=\"Resume\">" +
         "Resume" +
         "</button>" +
 
         "<button id='restart-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
-        "onclick=\"startSurvey(this)\">" +
+        "onclick=\"startSurvey(this)\" " +
+        "value=\"Restart\">" +
         "Restart" +
         "</button>" +
         "</div>";
@@ -171,7 +173,7 @@ function greeting() {
         "<div class='message-container sender blue'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>To get started, I would like to get to know " +
-        "you better by asking a few questions. Are you ready?</p>" +
+        "you better by asking a few questions. You only have one attempt in completing the survey. You are allowed to restart the survey any number of times if it is still incomplete. Are you ready?</p>" +
         "</div>" +
         "</div>";
 
@@ -200,7 +202,7 @@ function startSurvey(button) {
     let choice = button.textContent.trim();
     showMessageReceiver(choice);
 
-    if (choice === "Restart") {
+    if (button.value === "Restart") {
         // Reset local progress data and sync with the cloud
         questionIndex = 0;
         subQuestionIndex = 0;
@@ -250,9 +252,10 @@ function resumeSurvey(button) {
                 let titleQuestion = responseObject.titleQuestion;
                 let question = responseObject.question;
                 let answer = responseObject.answer;
+                let questionChoices = responseObject.restrictions.choices;
 
-                if (titleQuestion !== undefined) {
-                    // If this is a sub-question
+                if (titleQuestion !== null && titleQuestion !== undefined) {
+                    // If this is the first sub-question of a long question type
                     if (lastTitleQuestion !== titleQuestion) {
                         lastTitleQuestion = titleQuestion;
                         showShortQuestionMessage(titleQuestion);
@@ -260,7 +263,16 @@ function resumeSurvey(button) {
                 }
 
                 showShortQuestionMessage(question);
-                showMessageReceiver(answer);
+
+                if (questionChoices == null){
+                    showMessageReceiver(answer);
+                } else {
+                    if (typeof answer == "string") {
+                        showMessageReceiver(answer.substr(3))
+                    } else {
+                        showMessageReceiver(questionChoices[answer]);
+                    }
+                }
             });
 
         })

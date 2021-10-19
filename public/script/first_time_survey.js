@@ -9,6 +9,10 @@ let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let messageHistoryColour = 'white';
 let skippedToEnd = null;
+let otherChosen = false;
+let MCQOptionIDs = [];
+let possibleAnswersMCQ = [];
+let othersAnswers = [];
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -67,12 +71,15 @@ changeLang(select_language);
  * @param button The option button
  */
 function select(button, index) {
+    // clear any error message
+    errorText.innerHTML = "";
+
     // get selected button's text
     let choice = currentQuestionObject.restrictions.choices[index-1];
 
     // format choice html text bubble
     let ansTemplate = '<div class="space">\
-                            <div class="message-container receiver">\
+                            <div class="message-container receiver notranslate">\
                                 <p>' + choice + '</p>\
                             </div>\
                         </div>';
@@ -86,9 +93,6 @@ function select(button, index) {
     // display user's choice on chat
     messages.innerHTML += ansTemplate;
 
-    // save choice onto firebase
-    saveResponse(choice);
-
     // extract skip target and skip choices from currentQuestionObject
     let skipTarget = currentQuestionObject.restrictions.skipTarget;
     let skipChoices = currentQuestionObject.restrictions.skipChoices;
@@ -97,33 +101,47 @@ function select(button, index) {
     if (skipTarget === SKIP_NOT_ALLOWED) {
         // Don't skip next question
         let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-        setTimeout(() => nextQuestion(), delay);
+        setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
     } else if (skipTarget === SKIP_END_SURVEY) {
         // check if one of the skipChoices were selected. If so, end survey
         if (skipChoices.includes(choice)) {
-            endSurvey();
+            endSurvey(index-1);
         } else { // else move onto the next question
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => nextQuestion(), delay);
+            setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
         }
     } else {
         // Skip to a question ID if the selected answer is in skipChoices
         if (skipChoices.includes(choice)) {
-            // set currentQuestionObject to skipTarget
-            currentQuestionObject = skipTarget;
+            // display the next question after a small delay
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
 
-            // Set the current question index to the question before the
-            // skip target since nextQuestion increments
-            // the question index by 1
-            questionIndex = QUESTION_IDS[branch_id].indexOf(skipTarget) - 1;
+            setTimeout(() => {
+                // save index of choice onto firebase
+                saveResponse(index-1);
 
-            // In case the user was answering a long question,
-            // reset params related to long questions
-            currentSubQuestionIds = null;
+                // set currentQuestionObject to skipTarget
+                currentQuestionObject = skipTarget;
+
+                // Set the current question index to the question before the
+                // skip target since nextQuestion increments
+                // the question index by 1
+                questionIndex = QUESTION_IDS[branch_id].indexOf(skipTarget) - 1;
+
+                // In case the user was answering a long question,
+                // reset params related to long questions
+                currentSubQuestionIds = null;
+
+                nextQuestion();
+
+                // call sync progress to update currentSubQuestionIds and questionID after nextQuestion
+                syncProgress();
+                }, delay);
+        } else {
+            // display the next question after a small delay
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
         }
-        // display the next question after a small delay
-        let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-        setTimeout(() => nextQuestion(), delay);
     }
 
     // scroll to bottom of chat log
@@ -140,28 +158,89 @@ function addMessage() {
     // check if the input is valid
     if (message.length > 0) {
         if (type ===TYPE_MULTIPLE_CHOICE ||
-            type === TYPE_MULTIPLE_CHOICE_OTHERS ||
             type === TYPE_MULTIPLE_CHOICE_SUB_QUESTION){
-            let selection = currentQuestionObject.restrictions.choices[message-1];
-            saveResponse(selection);
-            message = selection;
+            message = message.trim();
+
+            // getting which index does message correspond to in currentQuestionObject.restrictions.choices based on possibleAnswersMCQ
+            for (let i = 0; i < possibleAnswersMCQ.length; i++) {
+                if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                    select(document.getElementById(MCQOptionIDs[i]), i+1);
+                    break;
+                }
+            }
         }
-        else{
+        else if (type === TYPE_MULTIPLE_CHOICE_OTHERS) {
+            message = message.trim();
+
+            // check if others option was chosen
+            if (otherChosen) {
+                // resets otherChosen
+                otherChosen = false;
+
+                // display input
+                showMessageReceiver(message);
+
+                // display next question after time delay and scroll to bottom of screen
+                let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+                setTimeout(() => {nextQuestion(); saveResponse((currentQuestionObject.restrictions.choices.length - 1) + ". " + message);}, delay);
+                scrollToBottom();
+            }
+            else {
+                // getting which index does message correspond to in currentQuestionObject.restrictions.choices based on possibleAnswersMCQ
+                for (let i = 0; i < possibleAnswersMCQ.length; i++) {
+                    if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                        select(document.getElementById(MCQOptionIDs[i]), i+1);
+                        break;
+                    }
+                }
+            }
+        }
+        else if(type === TYPE_NUMERIC || type === TYPE_NUMERIC_SUB_QUESTION){
             // Saving the response before clearing the input box
-            saveResponse(input.value);
-        }
+            let numInput = input.value;
 
-        // display input and clear textbox
-        showMessageReceiver(message);
-        input.value = "";
+            // display input
+            showMessageReceiver(message);
 
-            // Prevent users from using text box
-            disableTextInput();
+            if (currentQuestionObject.restrictions.skipIfInvalid) {
+                if (currentQuestionObject.restrictions.skipTarget !== SKIP_END_SURVEY) {
+                    if (currentQuestionObject.restrictions.skipTarget !== SKIP_NOT_ALLOWED) {
+                        // Set the current question index to the question before the skip target since nextQuestion increments
+                        // the question index by 1
+                        questionIndex = QUESTION_IDS[branch_id].indexOf(currentQuestionObject.restrictions.skipTarget) - 1;
+
+                        // In case the user was answering a long question, reset params related to long questions
+                        currentSubQuestionIds = null;
+
+                        // call sync progress to update currentSubQuestionIds and questionID after nextQuestion
+                        syncProgress();
+                    }
+                }
+            }
 
             // display next question after time delay and scroll to bottom of screen
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => nextQuestion(), delay);
+            setTimeout(() => {nextQuestion(); saveResponse(parseInt(numInput));}, delay);
             scrollToBottom();
+        }
+        else {
+            // Saving the response before clearing the input box
+            let textInput = input.value;
+
+            // display input
+            showMessageReceiver(message);
+
+            // display next question after time delay and scroll to bottom of screen
+            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+            setTimeout(() => {nextQuestion(); saveResponse(textInput);}, delay);
+            scrollToBottom();
+        }
+
+        // clear textbox
+        input.value = "";
+
+        // Prevent users from using text box
+        disableTextInput();
     }
     else{
       errorText.style.visibility = "visible";
@@ -199,8 +278,9 @@ function nextQuestion() {
         // The user is answering a normal question
         questionIndex++;
         showQuestion(false);
+    } else if (skippedToEnd){
+        showEndingMessage();
     } else { //  else end the survey
-        saveResponse(input.value);
         showEndingMessage();
     }
 }
@@ -459,7 +539,7 @@ function showMessageSender(message) {
     // display a message in html format below
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
@@ -473,7 +553,7 @@ function showMessageSender(message) {
 function showMessageSenderWithoutHints(message) {
     messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
         "</div>" +
         "</div>";
@@ -488,7 +568,7 @@ function showMessageSenderWithoutHints(message) {
 function showShortQuestionMessage(questionString) {
     document.getElementById("messages").innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current notranslate'>" +
         `<p>${questionString}</p>` +
         "</div>" +
         "</div>";
@@ -514,7 +594,7 @@ function showQuestion(isSubQuestion) {
 
     // Get the ID of the current question
     let question_id = "";
-    
+
     // check if the current question is a sub-question
     if (isSubQuestion) {
         // get the firebase ID of the sub-question
@@ -600,54 +680,72 @@ function showNumeric(questionObject) {
         // get range of the expected answer
         let lowerRange = questionObject.restrictions.lowerRange;
         let upperRange = questionObject.restrictions.upperRange;
-        // get user's input
-        let message = parseInt(input.value);
 
-        // If it's a number
-        if (!isNaN(message)) {
-            // If there is no upper/lower range specified set either to infinity and negative infinity respectively
-            if (lowerRange != null && upperRange == null){
-                upperRange = Number.POSITIVE_INFINITY;
-            } else if (lowerRange == null && upperRange != null){
-                lowerRange = Number.NEGATIVE_INFINITY;
+        if (input.value != ""){
+            // get user's input
+            let message = parseInt(input.value);
+
+            // If it's a number
+            if (!isNaN(message)) {
+                // If there is no upper/lower range specified set either to infinity and negative infinity respectively
+                if (lowerRange != null && upperRange == null){
+                    upperRange = Number.POSITIVE_INFINITY;
+                } else if (lowerRange == null && upperRange != null){
+                    lowerRange = Number.NEGATIVE_INFINITY;
+                }
+
+                // if number is in normal range
+                if ((message >= lowerRange) && (message <= upperRange)) {
+                    // If it's within range
+                    errorText.innerHTML = "";
+                    errorText.style.visibility = "hidden";
+                    submit.onclick = addMessage;
+                } else if(message < 0){
+                    // If the number is negative
+                    errorText.style.visibility = "visible";
+                    errorText.innerHTML = "the number can not be less than 0";
+                    submit.onclick = null;
+                } else if(message > upperRange){
+                    // If the number is larger than
+                    errorText.style.visibility = "visible";
+                    errorText.innerHTML = "the number can not be larger than " + upperRange;
+                    submit.onclick = null;
+                } else {
+                    // If it's out of range, display error messages
+                    /*errorText.style.visibility = "visible";
+                    if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
+                    }
+
+                    else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not greater than " + lowerRange;
+                    }
+
+                    else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
+                        errorText.innerHTML = "number is not lesser than " + upperRange;
+                    }*/
+
+                    // check if question requires use to end the survey if an invalid response is given
+                    if (questionObject.restrictions.skipIfInvalid) {
+                        if (questionObject.restrictions.skipTarget === SKIP_END_SURVEY) {
+                            submit.onclick = endSurveyText;
+                        } else {
+                            submit.onclick = addMessage;
+                        }
+                    }
+                }
             }
-
-            // if number is in normal range
-            if ((message >= lowerRange) && (message <= upperRange)) {
-                // If it's within range
-                errorText.style.visibility = "hidden";
-                submit.onclick = addMessage;
-            } else {
-                // If it's out of range, display error messages
-                errorText.style.visibility = "visible";
-                if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
-                    errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
-                }
-
-                else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
-                    errorText.innerHTML = "number is not greater than " + lowerRange;
-                }
-
-                else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
-                    errorText.innerHTML = "number is not lesser than " + upperRange;
-                }
-
-                // check if question requires use to end the survey if an invalid response is given
-                if (questionObject.restrictions.skipIfInvalid) {
-                    submit.onclick = endSurveyText;
-                }
-                /*else {
-                    // re prompt the question
-                    submit.onclick = repromptQuestion;
-                }*/
-            }
-        }
-        /*else {
+            else {
                 // If it's not a number
                 errorText.style.visibility = "visible";
                 errorText.innerHTML = "the answer needs to be a number.";
-                submit.onclick = repromptQuestion;
-        }*/
+                submit.onclick = null;
+            }
+        } else {
+            // clear error text area
+            errorText.innerHTML = "";
+            errorText.style.visibility = "hidden";
+        }
     }
 
     // display the question and enable the textbox
@@ -712,26 +810,63 @@ function showMultipleChoice(questionObject) {
         hint: "select an option"
     };
 
+        // reset possibleAnswersMCQ back to an empty array
+        possibleAnswersMCQ = [];
+
+        // for loop to add possible answer string for each MCQ option
+        for (let i=0; i < questionObject.restrictions.choices.length; i++) {
+            possibleAnswersMCQ.push([]); // add empty array to store answer strings for choice i
+            possibleAnswersMCQ[i].push((i+1).toString()); // MCQ option number
+            possibleAnswersMCQ[i].push(i+1 + "."); // MCQ option number + .
+            possibleAnswersMCQ[i].push(questionObject.restrictions.choices[i].toLowerCase()); // MCQ option word
+            // MCQ option number + . + MCQ option word (no space before and after .)
+            possibleAnswersMCQ[i].push((i+1) + "." + questionObject.restrictions.choices[i].toLowerCase());
+            // MCQ option number + . + MCQ option word (with space after . only)
+            possibleAnswersMCQ[i].push((i+1) + ". " + questionObject.restrictions.choices[i].toLowerCase());
+        }
 
     input.onkeyup = () => {
-        let message = parseInt(input.value);
-        if (message > 0 && message < (questionObject.restrictions.choices.length + 1)) {
-            errorText.innerHTML = "";
-            // errorText.style.visibility = "hidden";
-            submit.onclick = addMessage;
-        } else {
-            errorText.innerHTML = "";
-            // errorText.style.visibility = "visible";
-            // errorText.innerHTML = "Please enter a valid choice index.";
-            submit.onclick = null;
-        }
+      // set submit.onclick appropriately based on found
+      submit.disabled = false;
+      submit.onclick = checkMCQInput;
     }
+
     enableTextInput();
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
     showMessageSender(question);
-    showOptions(choices);
+    showOptions(choices, false);
+}
+
+/**
+* Function to check the text input from user to answer an MCQ.
+*/
+function checkMCQInput(){
+    // get answer from textbox and remove spaces before the first non-space character and remove spaces after last non-space cahracters
+    let message = (input.value).trim();
+    // set found as false
+    let found = false;
+
+    // for loop to check if message is in possibleAnswersMCQ
+    for (let i=0; i < possibleAnswersMCQ.length; i++){
+        // if message is found to be in possibleAnswers
+        if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+            found = true;
+            break;
+          }
+    }
+
+    // set submit.onclick appropriately based on found
+    if (found) {
+        errorText.innerHTML = "";
+        addMessage();
+    } else {
+        errorText.innerHTML = "";
+        errorText.style.visibility = "visible";
+        errorText.innerHTML = "Please enter a number from (1 to " + (currentQuestionObject.restrictions.choices.length) + ") or enter the option word(s)";
+        submit.onclick = null;
+    }
 }
 
 /**
@@ -739,22 +874,37 @@ function showMultipleChoice(questionObject) {
  * @param questionObject- an Object from firebase which contain the question, it's multiple choice answers and skip logic.
  */
 function showMultipleChoiceOthers(questionObject) {
-    let message = input.value;
-    input.onkeyup = () => {
-        if (message.length <= SHORT_TEXT_LENGTH) {
-            // If it's not too long
-            errorText.innerHTML = "";
-            // TODO Spellcheck here
 
-            errorText.style.visibility = "hidden";
-            submit.onclick = addMessage;
-        } else {
-            // If it's super long
-            errorText.style.visibility = "visible";
-            errorText.innerHTML = "character limit exceeded";
-            //submit.onclick = repromptQuestion;
+        // reset possibleAnswersMCQ back to an empty array
+        possibleAnswersMCQ = [];
+        // initialise othersAnswers
+        othersAnswers = [];
+
+        // for loop to add possible answer string for each MCQ option
+        for (let i=0; i < questionObject.restrictions.choices.length-1; i++) {
+            possibleAnswersMCQ.push([]); // add empty array to store answer strings for choice i
+            possibleAnswersMCQ[i].push((i+1).toString()); // MCQ option number
+            possibleAnswersMCQ[i].push(i+1 + "."); // MCQ option number + .
+            possibleAnswersMCQ[i].push(questionObject.restrictions.choices[i].toLowerCase()); // MCQ option word
+            // MCQ option number + . + MCQ option word (no space before and after .)
+            possibleAnswersMCQ[i].push((i+1) + "." + questionObject.restrictions.choices[i].toLowerCase());
+            // MCQ option number + . + MCQ option word (with space after . only)
+            possibleAnswersMCQ[i].push((i+1) + ". " + questionObject.restrictions.choices[i].toLowerCase());
         }
 
+        // add possible answer string for each others option
+        othersAnswers.push((questionObject.restrictions.choices.length).toString());// MCQ option number
+        othersAnswers.push(questionObject.restrictions.choices.length + "."); // MCQ option number + .
+        othersAnswers.push(questionObject.restrictions.choices[questionObject.restrictions.choices.length-1].toLowerCase()); // MCQ option word
+        // MCQ option number + . + MCQ option word (no space before and after .)
+        othersAnswers.push(questionObject.restrictions.choices.length + "." + questionObject.restrictions.choices[questionObject.restrictions.choices.length-1].toLowerCase());
+        // MCQ option number + . + MCQ option word (with space after . only)
+        othersAnswers.push(questionObject.restrictions.choices.length + ". " + questionObject.restrictions.choices[questionObject.restrictions.choices.length-1].toLowerCase());
+
+    input.onkeyup = () => {
+      // set submit.onclick appropriately based on found
+      submit.disabled = false;
+      submit.onclick = checkMCQInputOthers;
     }
 
     // allow users to use textbox
@@ -764,7 +914,78 @@ function showMultipleChoiceOthers(questionObject) {
     let choices = questionObject.restrictions.choices;
 
     showMessageSender(question);
-    showOptions(choices);
+    showOptions(choices, true);
+}
+
+/**
+ * function to check textbox input for MCQ with others option
+ * */
+function checkMCQInputOthers(){
+    // get answer from textbox and remove spaces before the first non-space character and remove spaces after last non-space cahracters
+    let message = (input.value).trim();
+
+    // check if text input is for "others" option
+    if (othersAnswers.includes(message.toLowerCase())){
+        // remove last error message and call othersOptionInput()
+        errorText.innerHTML = "";
+        othersOptionInput();
+    } else {
+        // initialise found as false
+        let found = false;
+
+        // for loop to check if message is in possibleAnswersMCQ
+        for (let i=0; i < possibleAnswersMCQ.length; i++){
+            // if message is found to be in possibleAnswers
+            if (possibleAnswersMCQ[i].includes(message.toLowerCase())) {
+                found = true;
+                break;
+            }
+        }
+
+        // set submit.onclick appropriately based on found
+        if (found) {
+            // remove last error message and call addMessage()
+            errorText.innerHTML = "";
+            addMessage();
+        } else {
+            // clear old error message and display a new one. Set the send button to null
+            errorText.innerHTML = "";
+            errorText.style.visibility = "visible";
+            errorText.innerHTML = "Please enter a number from (1 to " + (currentQuestionObject.restrictions.choices.length) + ") or enter the option word(s)";
+            submit.onclick = null;
+        }
+    }
+}
+
+/**
+ * function that let the users enter their "others" option for MCQs in the textbox
+ */
+function othersOptionInput(){
+    // reset textbox and scroll chat log to bottom
+    scrollToBottom();
+    input.value = "";
+    otherChosen = true;
+
+    showMessageSender(currentQuestionObject.restrictions.choices[currentQuestionObject.restrictions.choices.length-1] + ":");
+    document.getElementById('hint_area').innerHTML = OTHERS_OPTION_HINTS[branch_id];
+
+    input.onkeyup = () => {
+        let message = input.value;
+        if (message.length <= SHORT_TEXT_LENGTH) {
+            // If it's not too long
+            errorText.innerHTML = "";
+
+            errorText.style.visibility = "hidden";
+            submit.onclick = addMessage;
+        } else {
+            // If it's super long
+            errorText.style.visibility = "visible";
+            errorText.innerHTML = "character limit exceeded";
+        }
+    }
+
+    // allow users to use textbox
+    enableTextInput();
 }
 
 /**
@@ -818,7 +1039,8 @@ function showShortText(questionObject) {
         } else {
             // If it's super long
             errorText.style.visibility = "visible";
-
+            errorText.innerHTML = "The answer is too long";
+            submit.onclick = null;
             //submit.onclick = repromptQuestion;
         }
 
@@ -839,17 +1061,33 @@ function showLongText(questionObject) {
 
 /**
  * function to create MCQ answer buttons on screen for users to select to answer the MCQs
- * @param choices
+ * @param choices an array of string representing the options of an MCQ
  */
-function showOptions(choices) {
+function showOptions(choices, hasOther) {
     let mcqOptions = "<div class=\"space\">"
     let numberOption = 1;
     let index = 1;
-    for (let choice of choices) {
-        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised \" onclick=\"(this, "+index+")\">" + numberOption + ". " + choice + "</button>";
-        numberOption ++;
-        index++;
+
+    MCQOptionIDs = [];
+
+    if(!hasOther) {
+        for (let i = 0; i < choices.length; i++){
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
+            numberOption ++;
+            index++;
+            MCQOptionIDs.push(currentQuestionObject.question_number + i);
+        }
+    } else {
+        for (let i = 0; i < choices.length -1; i++){
+            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
+            numberOption ++;
+            index++;
+            MCQOptionIDs.push(currentQuestionObject.question_number + i);
+        }
+        mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"othersOptionInput()\" id=\"" + currentQuestionObject.question_number + (choices.length-1) + "\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
+        MCQOptionIDs.push(currentQuestionObject.question_number + (choices.length-1));
     }
+
     mcqOptions += "</div>";
     messages.innerHTML += mcqOptions;
 }
@@ -899,9 +1137,10 @@ function isAnsweringSubQuestions() {
 /**
  * Ends the survey
  */
-function endSurvey() {
-    questionIndex = QUESTION_IDS[branch_id].length-1;
+function endSurvey(endingAns) {
+    questionIndex = QUESTION_IDS[branch_id].length;
     skippedToEnd = true;
+    saveResponse(endingAns);
 
     nextQuestion();
 }
@@ -913,10 +1152,15 @@ function endSurvey() {
  * To be used by text-based survey questions ONLY
  */
 function endSurveyText() {
+    // show answer given
     showMessageReceiver(input.value);
-    questionIndex = QUESTION_IDS[branch_id].length-1;
+
+    // set question index to end, set skippedToEnd to true and save the answer
+    questionIndex = QUESTION_IDS[branch_id].length;
+    saveResponse(input.value);
     skippedToEnd = true;
 
+    // hide errorText and call next question
     errorText.style.visibility = "hidden";
     nextQuestion();
 }

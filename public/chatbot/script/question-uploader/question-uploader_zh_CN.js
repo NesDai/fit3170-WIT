@@ -343,6 +343,8 @@ const HINTS_PART5 = [
 
 // TODO 2.6 and 2.7 - Likert Scale
 
+let question_1_10_id = "";
+let question_1_8_id = "";
 let question_2_1_id = "";
 let question_2_3_id = "";
 
@@ -352,7 +354,7 @@ function pushPart1Questions() {
     setPartNumber(1);
 
     // Question 1.1
-    pushNumeric("1.1", PART1[1], 50, 100, true, HINTS_PART1[1]);
+    pushNumeric("1.1", PART1[1], 50, 100, true, SKIP_END_SURVEY, HINTS_PART1[1]);
 
     // Question 1.2
     let choices_1_2 = ["男性", "女性"]
@@ -381,16 +383,16 @@ function pushPart1Questions() {
     pushMultipleChoiceOthers("1.7", PART1[7], choices_1_7, [], SKIP_NOT_ALLOWED, HINTS_PART1[7]);
 
     // Question 1.8
-    pushNumeric("1.8", PART1[8], 0, 999, false, HINTS_PART1[8]);
+    pushNumeric("1.8", PART1[8], 1, 999, true, "insert question 1.10 id here", HINTS_PART1[8]);
 
     // Question 1.9
-    pushNumeric("1.9", PART1[9], 0, 999, false, HINTS_PART1[9]);
+    pushNumeric("1.9", PART1[9], 0, 999, false, SKIP_NOT_ALLOWED, HINTS_PART1[9]);
 
     // Question 1.10
-    pushNumeric("1.10", PART1[10], 0, 999, false, HINTS_PART1[10]);
+    pushNumeric("1.10", PART1[10], 0, 999, false, SKIP_NOT_ALLOWED, HINTS_PART1[10]);
 
     // Question 1.11
-    pushNumeric("1.11", PART1[11], 0, 999, false, HINTS_PART1[11]);
+    pushNumeric("1.11", PART1[11], 0, 999, false, SKIP_NOT_ALLOWED, HINTS_PART1[11]);
 
     // Question 1.13
     pushLongQuestion("1.13", PART1[13]).then((q13docRef) => {
@@ -497,7 +499,7 @@ function pushPart2Questions() {
     pushShortText("2.2", PART2[2], HINTS_PART2[2]);
 
     // Question 2.3
-    pushNumeric("2.3", PART2[3], 0, 5, false, HINTS_PART2[3]);
+    pushNumeric("2.3", PART2[3], 0, 5, false, SKIP_NOT_ALLOWED, HINTS_PART2[3]);
 
     // Question 2.4
     let choices_2_4 = ["是", "否", "不适用"];
@@ -513,11 +515,11 @@ function pushPart2Questions() {
 
     // Question 2.6
     let choices_2_6 = ["不适用", "极度不自信", "有点不自信", "适度自信", "有点自信", "极度自信"];
-    pushNumeric("2.6", PART2[6], 0, 5, false, HINTS_PART2[6]);
+    pushNumeric("2.6", PART2[6], 0, 5, false, SKIP_NOT_ALLOWED, HINTS_PART2[6]);
 
     // Question 2.7
     let choices_2_7 = ["不适用", "极度不自信", "有点不自信", "适度自信", "有点自信", "极度自信"];
-    pushNumeric("2.7", PART2[7], 0, 5, false, HINTS_PART2[7]);
+    pushNumeric("2.7", PART2[7], 0, 5, false, SKIP_NOT_ALLOWED, HINTS_PART2[7]);
 }
 
 function pushPart3Questions() {
@@ -563,11 +565,11 @@ function pushPart4Questions() {
     setPartNumber(4);
 
     // Question 4.1
-    pushNumeric("4.1", PART4[1], 1, 7, false,
+    pushNumeric("4.1", PART4[1], 1, 7, false, SKIP_NOT_ALLOWED,
         HINTS_PART4[1]);
 
     // Question 4.2
-    pushNumeric("4.2", PART4[2], 0, 168, false,
+    pushNumeric("4.2", PART4[2], 0, 168, false, SKIP_NOT_ALLOWED,
         HINTS_PART4[2]);
 
     // Question 4.3
@@ -632,20 +634,21 @@ function pushPart5Questions() {
     pushLongText("5.4", PART5[4], HINTS_PART5[4]);
 }
 
-function pushNumeric(questionNumber, questionText, lowerRange, upperRange, skipIfInvalid, hint) {
+function pushNumeric(questionNumber, questionText, lowerRange, upperRange, skipIfInvalid, skipTarget, hint) {
     // Leaving this here as a reference to numeric
     // question objects.
     let reference = {
         question_number: "1.1",
         category: "Part I: About yourself",
         type: "numeric",
-        question: "What is your age in years? (enter a number)",
+        question: "What is your age in years?",
         restrictions: {
             lowerRange: 50,
             upperRange: 100,
-            skipIfInvalid: true
+            skipIfInvalid: true,
+            skipTarget: "end_survey"
         },
-        hint: "placeholder"
+        hint: "Enter a Number"
     };
 
     let questionObject = {
@@ -656,7 +659,8 @@ function pushNumeric(questionNumber, questionText, lowerRange, upperRange, skipI
         restrictions: {
             lowerRange: lowerRange,
             upperRange: upperRange,
-            skipIfInvalid: skipIfInvalid
+            skipIfInvalid: skipIfInvalid,
+            skipTarget: skipTarget
         },
         hint: hint
     };
@@ -978,6 +982,10 @@ function recordQuestionPush(questionObject, docRef) {
         question_2_3_id = docRef.id;
     } else if (questionObject.question_number === "2.1") {
         question_2_1_id = docRef.id;
+    } else if (questionObject.question_number === "1.8"){
+        question_1_8_id = docRef.id;
+    } else if (questionObject.question_number === "1.10"){
+        question_1_10_id = docRef.id;
     }
 
     // Print some logs, maybe even display the questions via HTML
@@ -1125,6 +1133,17 @@ function housekeeping_zh_CN() {
         .then(() => {
             let info = "Question 2.1 has been updated with Question 2.3 ID: " +
                 question_2_3_id;
+            console.log(info);
+        });
+
+    // Update question 1.8's skipTarget with 1.10's ID
+    firebase.firestore().collection(QUESTIONS_BRANCHES[ZH_CN_INDEX]).doc(question_1_8_id)
+        .update({
+            "restrictions.skipTarget": question_1_10_id
+        })
+        .then(() => {
+            let info = "Question 1.8 has been updated with Question 1.10 ID: " +
+                question_1_10_id;
             console.log(info);
         });
 }
