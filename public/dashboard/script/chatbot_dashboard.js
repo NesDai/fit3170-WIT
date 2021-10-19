@@ -89,21 +89,23 @@ function changeQuestion(index) {
 
     let list = null;
     let buttonString = "";
+    let phone = false;
 
     // If on phone, set responsesList = questionsList
-    if ($(window).width() <= 479) {
-        list = questionsList;
+    if ($(window).width() <= 575) {
+        phone = true;
         buttonString = '<div style="text-align: center;"> \
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"\
-                            onclick="addQuestionsList()" style="width: 45%; margin: auto;"> \
+                            <button type="button" class="btn btn-secondary" \
+                            onclick="addQuestionsList()" style="width: 40%;"> \
                             Back \
-                            </button></div>'
+                        </button></div>'
+        questionsList.innerHTML = "";
     }
     // Else, use responsesList
-    else {
-        list = responsesList;
-    }
-    list.innerHTML = "";
+    // else {
+    //     list = responsesList;
+    // }
+    responsesList.innerHTML = "";
     responsesHeader.innerHTML = header;
 
     let responses_branch = "";
@@ -123,11 +125,20 @@ function changeQuestion(index) {
         .then(() => {
             // Populate HTML elements to display responses
             let listString = "";
+            if (phone) {
+                questionsList.innerHTML += 
+                '<div class="card-header"> \
+                  <strong class="h2 card-title" id="responses-header">' + header + '</strong> \
+                </div>';
+            }
             for (let i = 0; i < responses.length; i++) {
                 listString += '<li class="list-group-item">' + responses[i].answer + '</li>'
             }
-            list.innerHTML += listString + '<br>';
-            list.innerHTML += buttonString;
+            if (phone) {
+                questionsList.innerHTML += listString + '<br>';
+                questionsList.innerHTML += buttonString;
+            }
+            responsesList.innerHTML += listString + '<br>';
 
             responsesSpinner.classList.remove("d-flex");
         });
