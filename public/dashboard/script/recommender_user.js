@@ -134,7 +134,7 @@ function selectedUser(manualInput=false){
   $("#videoHistoryTableBody").empty();
   let videoHistoryTableBody = document.getElementById("videoHistoryTableBody");
 
-  let newRow,number,date,name,buttonCell, button;
+  let newRow,number,date,name,buttonCell, button, rating;
   for (let i=0; i<user_list[userNumber][4].length; i++){
     // Add row elements and their data
     newRow = document.createElement("tr");
@@ -161,10 +161,28 @@ function selectedUser(manualInput=false){
     });
     buttonCell.appendChild(button);
 
+    rating = document.createElement("td");
+    rating.innerHTML = " = ";
+    if (user_list[userNumber][4][i].dislike == true){
+      rating.innerHTML = `<img src="/css/images/button-designs_18.png" style="height:20px;">`;
+    }
+    
+    else if (user_list[userNumber][4][i].like == true){
+      rating.innerHTML = `<img src="/css/images/button-designs_17.png" style="height:20px;">`;
+    }
+    else{
+      rating.innerHTML = " - ";
+    }
+    console.log(user_list[userNumber][4][i].like);
+    
+    
+
     newRow.appendChild(number);
     newRow.appendChild(date);
     newRow.appendChild(name);
     newRow.appendChild(buttonCell);
+    newRow.appendChild(buttonCell);
+    newRow.appendChild(rating);
 
     videoHistoryTableBody.appendChild(newRow);
   }
