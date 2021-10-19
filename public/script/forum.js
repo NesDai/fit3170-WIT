@@ -1553,6 +1553,3 @@ async function postDetail(id) {
 }
 
 
-function test(){
-    console.log(post_names);
-}

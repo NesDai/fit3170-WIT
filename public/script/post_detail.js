@@ -454,8 +454,13 @@ async function addPostToFavourite() {
  * The comment will be added into database if input was not left empty
  * @returns none
  */
-function addComment() {
+async function addComment() {
     let post_id = params.get('post_id');
+
+    if(await checkPostExists(post_id) == 0){
+        document.getElementById("deletedPost-Modal").style.display = "block";
+        return; // give an alert that the post doesnt exist
+    }
 
     if (checkUserExistence()) {
         const options = { // options for Date
@@ -892,7 +897,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
  * @param {integer} btn_num the index of reply button
  * @param {string} comment_id the id associated with the comment
  */
-function addReply(btn_num, comment_id) {
+async function addReply(btn_num, comment_id) {
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -903,6 +908,11 @@ function addReply(btn_num, comment_id) {
         }
 
         let post_id = params.get('post_id');
+
+        if(await checkPostExists(post_id) == 0){
+            document.getElementById("deletedPost-Modal").style.display = "block";
+            return; // give an alert that the post doesnt exist
+        }
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + btn_num.toString()).value;
@@ -949,7 +959,7 @@ function addReply(btn_num, comment_id) {
  * @param {integer} reply_index part of the index of reply button
  * @param {string} reply_id the id associated with the reply
  */
-function addReplyToReply(comment_index, reply_index, reply_id) {
+async function addReplyToReply(comment_index, reply_index, reply_id) {
 
     if (checkUserExistence()) {
         const options = { // options for Date
@@ -960,6 +970,11 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
             second: "2-digit"
         }
         let post_id = params.get('post_id');
+
+        if(await checkPostExists(post_id) == 0){
+            document.getElementById("deletedPost-Modal").style.display = "block";
+            return; // give an alert that the post doesnt exist
+        }
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + comment_index.toString() + "," + reply_index.toString()).value;
@@ -1103,6 +1118,12 @@ function checkUserFavouritedPost() {
  * @param {*} i the index of a comment on the ui
  */
 async function likeComment(comment_id, i){
+
+    let post_id = params.get('post_id');
+    if(await checkPostExists(post_id) == 0){
+        document.getElementById("deletedPost-Modal").style.display = "block";
+        return; // give an alert that the post doesnt exist
+    }
 
     let res = await checkForLikesComment(comment_id);
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
