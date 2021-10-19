@@ -21,6 +21,10 @@
     height: 10px;
 }
 
+#language-dropdown {
+    width: 150px;
+}
+
 /* SCROLLBAR CSS */
 ::-webkit-scrollbar {
     width: 2.5px;

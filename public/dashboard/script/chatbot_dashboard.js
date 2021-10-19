@@ -1,6 +1,6 @@
 
 let branch = "";
-let languageIndex = -1;
+let languageIndex = 0;
 
 // Initialising variables
 let selected = null;
@@ -11,6 +11,7 @@ let responsesHeader = document.getElementById("responses-header");
 let questionsList = document.getElementById("questions-list");
 let questionsSpinner = document.getElementById("questions-spinner");
 let responsesSpinner = document.getElementById("responses-spinner");
+let languageDropdown = document.getElementById("language-dropdown");
 
 // A list of sub-question IDs of the currently in view
 // long question
@@ -41,7 +42,7 @@ let subquestions = [{question_number: "1.2.1", question: "What is your name?", t
 function addQuestionsList() {
     viewingSubQuestions = false;
     let questionsListString = "";
-    console.log(questions);
+
     for (let i = 0; i < questions.length; i++) {
         let innerFunction = "changeQuestion(" + i + ")";
         if (questions[i].type === TYPE_LONG_QUESTION) {
@@ -107,7 +108,7 @@ function changeQuestion(index) {
 
     let responses_branch = "";
     if (!viewingSubQuestions) {
-        responses_branch = `chatbot/survey_responses/${QUESTION_IDS_EN[index]}`
+        responses_branch = `chatbot/survey_responses/${QUESTION_IDS[languageIndex][index]}`
     } else {
         responses_branch = `chatbot/survey_responses/${subQuestionIds[index]}`
     }
@@ -141,7 +142,7 @@ function changeSubQuestion(index) {
     subQuestionIds = questions[index].arrangement;
     
     for (let i = 0; i < subQuestionIds.length; i++) {
-        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
+        firebase.firestore().collection(QUESTIONS_BRANCHES[languageIndex])
             .doc(subQuestionIds[i])
             .get()
             .then((document) => {
@@ -186,24 +187,7 @@ function changeSubQuestion(index) {
 window.onload = function () {
     // On load, get the list of questions, then populate
     // questions list
-    questions = [];
-    for (let i = 0; i < QUESTION_IDS_EN.length; i++) {
-        // let branch = QUESTIONS_ES + QUESTION_IDS_EN[i];
-
-        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
-            .doc(QUESTION_IDS_EN[i])
-            .get()
-            .then((document) => {
-                questions.push(document.data());
-            })
-            .then(() => {
-                // After the last question is fetched, populate the HTML
-                // question elements
-                if (i === QUESTION_IDS_EN.length - 1) {
-                    addQuestionsList();
-                }
-            })
-    }
+    addQuestions(languageIndex);
 };
 
 // Checks everytime the window is resized to prevent two response tabs
@@ -216,10 +200,14 @@ $(window).resize(function () {
 function loadQuestions(languageSelection) {
     // After language selection, get the list of questions, then populate
     // questions list
-
     languageIndex = languageSelection.value;
-    branch = QUESTIONS_BRANCHES[languageIndex];
+    languageDropdown.innerHTML = languageSelection.innerHTML;
 
+    addQuestions(languageIndex);
+}
+
+function addQuestions(languageIndex) {
+    branch = QUESTIONS_BRANCHES[languageIndex];
     questions = [];
 
     questionsList.innerHTML = "";
@@ -240,8 +228,6 @@ function loadQuestions(languageSelection) {
                 }
 
                 // and clear the left/right pane labels
-                // document.getElementById("left-pane-label").innerText = "";
-                // responsesList.innerHTML = "<h3>Select a question</h3>";
                 questionsSpinner.classList.remove("d-flex");
             })
     }
