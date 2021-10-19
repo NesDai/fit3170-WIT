@@ -1,5 +1,5 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-
+let video_url_track = 1;
 
 let postNamesCreatePost = [];
 let postNamesFeed = [];
@@ -487,8 +487,12 @@ function print_create_post()
        <br>
 
        <!-- VIDEO URL  -->
-       <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
-       <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="video_btn" style="background-color:#006DAE; border: white;" onclick="showVideoUrl()">
+        Video Link
+        </button>
+        <br>
+        <div id="post_video">
+        </div>
        <br>
        <br>
        <!-- INTEREST  -->
