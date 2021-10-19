@@ -60,15 +60,33 @@
                             <h2 class="h3 page-title">Chatbot Admin Dashboard</h2>
                           </div>
                         </div>
+                        <div class="dropdown">
+                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             Language
+                           </button>
+                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                              <h6 class="dropdown-header">Language</h6>
+                             <button class="dropdown-item" type="button" onclick="loadQuestions(this)" value=0>English</button>
+                             <button class="dropdown-item" type="button" onclick="loadQuestions(this)" value=1>Chinese</button>
+                             <button class="dropdown-item" type="button" onclick="loadQuestions(this)" value=2>Malay</button>
+                             <button class="dropdown-item" type="button" onclick="loadQuestions(this)" value=3>Thai</button>
+                           </div>
+                         </div>
+                         <br>
                         <div class="mb-2 align-items-center">
                             <div class="card shadow mb-4" id="card">
                                 <div class="card-body scrollable">
-                                    <div class="row">
+                                    <div class="row" id="card-row">
                                         <div class="col-4 col-lg-4 text-left pl-2">
                                             <div id="questions-list-div">
                                                 <div class="list-group list-group-flush" id="questions-list">
                                                 </div>
                                             </div>
+                                            <div id="questions-spinner" class="justify-content-center align-items-center h-100 d-flex" style="display:none; top:100px;">
+                                                <div class="spinner-border" role="status">
+                                                  <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div> 
                                         </div>
                                         <div class="col-6 col-lg-8" id="responses-area">
                                             <div class="card-header">
@@ -78,7 +96,7 @@
                                                 <ul class="list-group list-group-flush" id="responses-list">
                                                 </ul>
                                             </div>
-                                            <div id="spinner" class="justify-content-center align-items-center h-75" style="display:none;">
+                                            <div id="responses-spinner" class="justify-content-center align-items-center h-75" style="display:none;">
                                                 <div class="spinner-border" role="status">
                                                   <span class="sr-only">Loading...</span>
                                                 </div>

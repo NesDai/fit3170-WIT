@@ -1,4 +1,7 @@
 
+let branch = "";
+let languageIndex = -1;
+
 // Initialising variables
 let selected = null;
 let viewingSubQuestions = false;
@@ -6,6 +9,8 @@ let clicked = false;
 let responsesList = document.getElementById("responses-list");
 let responsesHeader = document.getElementById("responses-header");
 let questionsList = document.getElementById("questions-list");
+let questionsSpinner = document.getElementById("questions-spinner");
+let responsesSpinner = document.getElementById("responses-spinner");
 
 // A list of sub-question IDs of the currently in view
 // long question
@@ -36,6 +41,7 @@ let subquestions = [{question_number: "1.2.1", question: "What is your name?", t
 function addQuestionsList() {
     viewingSubQuestions = false;
     let questionsListString = "";
+    console.log(questions);
     for (let i = 0; i < questions.length; i++) {
         let innerFunction = "changeQuestion(" + i + ")";
         if (questions[i].type === TYPE_LONG_QUESTION) {
@@ -66,7 +72,7 @@ function changeQuestion(index) {
         selected.style.backgroundColor = "";
     }
     
-    document.getElementById('spinner').className += " d-flex"
+    responsesSpinner.className += " d-flex"
 
     let q = "q" + index;
 
@@ -122,7 +128,7 @@ function changeQuestion(index) {
             list.innerHTML += listString + '<br>';
             list.innerHTML += buttonString;
 
-            spinner.classList.remove("d-flex");
+            responsesSpinner.classList.remove("d-flex");
         });
 }
 
@@ -206,3 +212,37 @@ $(window).resize(function () {
         addQuestionsList();
     }
 });
+
+function loadQuestions(languageSelection) {
+    // After language selection, get the list of questions, then populate
+    // questions list
+
+    languageIndex = languageSelection.value;
+    branch = QUESTIONS_BRANCHES[languageIndex];
+
+    questions = [];
+
+    questionsList.innerHTML = "";
+    questionsSpinner.className += " d-flex"
+
+    for (let i = 0; i < QUESTION_IDS[languageIndex].length; i++) {
+        firebase.firestore().collection(branch)
+            .doc(QUESTION_IDS[languageIndex][i])
+            .get()
+            .then((document) => {
+                questions.push(document.data());
+            })
+            .then(() => {
+                // After the last question is fetched, populate the HTML
+                // question elements
+                if (i === QUESTION_IDS[languageIndex].length - 1) {
+                    addQuestionsList();
+                }
+
+                // and clear the left/right pane labels
+                // document.getElementById("left-pane-label").innerText = "";
+                // responsesList.innerHTML = "<h3>Select a question</h3>";
+                questionsSpinner.classList.remove("d-flex");
+            })
+    }
+}

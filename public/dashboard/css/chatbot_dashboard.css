@@ -13,6 +13,14 @@
     overflow-y: scroll;
 }
 
+#card-row {
+    height: 100%;
+}
+
+.card-body {
+    height: 10px;
+}
+
 /* SCROLLBAR CSS */
 ::-webkit-scrollbar {
     width: 2.5px;
