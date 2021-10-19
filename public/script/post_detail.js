@@ -3,6 +3,34 @@ const params = new URLSearchParams(window.location.search)
 
 getPostDetails();
 
+
+/**
+ * Function used to check whether or not a post exists provided the post id. Function should be called before performing any action on the post.
+ * @param {1} id: the post id
+ * returns 1 if the post exists and 0 otherwise
+ */
+ async function checkPostExists(id){
+
+    let res = 0;
+
+    await firebase.database().ref(`posts/${id}`).once("value", snapshot => {
+
+        if (snapshot.exists()){
+            console.log(1);
+
+            res = 1;
+        }
+     });
+
+
+     return new Promise(function(resolve, reject) {
+        resolve(res);
+      });
+
+
+}
+
+
 /**
 * Function that displays the input box to add a reply to a comment
 * @param button_num The index of the location that the reply input will be displayed
@@ -70,7 +98,15 @@ function getPostDetails() {
                     });
                 }).then(() => {
                     //calling printing post function
-                    printPostDetails(posts[0], action)
+                    if (posts.length == 0){
+                        
+                        window.location = "forum.html";
+                    }
+                    else{
+                        printPostDetails(posts[0], action)
+                        
+                    }
+                    
                 })
         })
 }
@@ -317,8 +353,18 @@ function checkButtonStatus() {
  * Function which removes the current post from user's favourite.
  * @returns none
  */
-function removePostFromFavourite() {
+async function removePostFromFavourite() {
+
+
+
     let post_id = params.get('post_id');
+
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        document.getElementById("deletedPost-Modal").style.display = "block";
+        // give an alert
+        return;
+    }
+
     //checks if the user exists
     if (checkUserExistence()) {
         let myRef = firebase.database().ref(`posts/${post_id}`);
@@ -354,10 +400,18 @@ function removePostFromFavourite() {
  * before proceeding to add the following post into favourites.
  * @returns none
  */
-function addPostToFavourite() {
+async function addPostToFavourite() {
+
+
     let post_id = params.get('post_id');
 
-    //checks whether the user exists
+    if (await checkPostExists(post_id) == 0){ // if doesnt exist
+        document.getElementById("deletedPost-Modal").style.display = "block";
+        // give an alert
+        return;
+    }
+
+    //checks whether the user exists 
     if (checkUserExistence()) {
         let myRef = firebase.database().ref(`posts/${post_id}`);
         myRef.once("value")
@@ -405,8 +459,13 @@ function addPostToFavourite() {
  * The comment will be added into database if input was not left empty
  * @returns none
  */
-function addComment() {
+async function addComment() {
     let post_id = params.get('post_id');
+
+    if(await checkPostExists(post_id) == 0){
+        document.getElementById("deletedPost-Modal").style.display = "block";
+        return; // give an alert that the post doesnt exist
+    }
 
     if (checkUserExistence()) {
         const options = { // options for Date
@@ -672,7 +731,9 @@ function hideLikeAlert(){
     document.getElementById("like-Modal").style.display =  "none";
 }
 
-
+function hideDeletedPostAlert(){
+    document.getElementById("deletedPost-Modal").style.display =  "none";
+}
 
 /**
  * A function which prints out the replies of a comment
@@ -876,7 +937,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
  * @param {integer} btn_num the index of reply button
  * @param {string} comment_id the id associated with the comment
  */
-function addReply(btn_num, comment_id) {
+async function addReply(btn_num, comment_id) {
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -887,6 +948,11 @@ function addReply(btn_num, comment_id) {
         }
 
         let post_id = params.get('post_id');
+
+        if(await checkPostExists(post_id) == 0){
+            document.getElementById("deletedPost-Modal").style.display = "block";
+            return; // give an alert that the post doesnt exist
+        }
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + btn_num.toString()).value;
@@ -971,7 +1037,7 @@ function addReply(btn_num, comment_id) {
  * @param {integer} reply_index part of the index of reply button
  * @param {string} reply_id the id associated with the reply
  */
-function addReplyToReply(comment_index, reply_index, reply_id) {
+async function addReplyToReply(comment_index, reply_index, reply_id) {
 
     if (checkUserExistence()) {
         const options = { // options for Date
@@ -982,6 +1048,11 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
             second: "2-digit"
         }
         let post_id = params.get('post_id');
+
+        if(await checkPostExists(post_id) == 0){
+            document.getElementById("deletedPost-Modal").style.display = "block";
+            return; // give an alert that the post doesnt exist
+        }
 
         // get reply value
         let reply_input = document.getElementById("reply_input" + comment_index.toString() + "," + reply_index.toString()).value;
@@ -1201,6 +1272,12 @@ function checkUserFavouritedPost() {
  */
 async function likeComment(comment_id, i){
 
+    let post_id = params.get('post_id');
+    if(await checkPostExists(post_id) == 0){
+        document.getElementById("deletedPost-Modal").style.display = "block";
+        return; // give an alert that the post doesnt exist
+    }
+
     let res = await checkForLikesComment(comment_id);
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
 
@@ -1268,3 +1345,5 @@ function updateCommentLikes(comment_id, number){
         firebase.database().ref().update(updates);
     })
 }
+
+
