@@ -38,6 +38,7 @@ and user ID.
 let currentUser = null;
 let currentQuestionId = null;
 let currentQuestionObject = null;
+let currentLongQuestionObject = null;
 
 /*
 Stores the index of the current question object.
@@ -117,11 +118,14 @@ function select(button, index) {
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
 
             setTimeout(() => {
+                // increment subQuestionIndex to be like nextQuestion call
+                subQuestionIndex++;
+
                 // save index of choice onto firebase
                 saveResponse(index-1);
 
-                // set currentQuestionObject to skipTarget
-                currentQuestionObject = skipTarget;
+                // set currentQuestionId to skipTarget
+                currentQuestionId = skipTarget;
 
                 // Set the current question index to the question before the
                 // skip target since nextQuestion increments
@@ -204,7 +208,7 @@ function addMessage() {
 
             if (currentQuestionObject.restrictions.skipIfInvalid) {
                 if (currentQuestionObject.restrictions.skipTarget !== SKIP_END_SURVEY) {
-                    if (currentQuestionObject.restrictions.skipTarget !== SKIP_NOT_ALLOWED) {
+                    if (currentQuestionObject.restrictions.skipTarget !== SKIP_NOT_ALLOWED && (parseInt(numInput) < currentQuestionObject.restrictions.lowerRange || parseInt(numInput) > currentQuestionObject.restrictions.upperRange)) {
                         // Set the current question index to the question before the skip target since nextQuestion increments
                         // the question index by 1
                         questionIndex = QUESTION_IDS[branch_id].indexOf(currentQuestionObject.restrictions.skipTarget) - 1;
@@ -671,6 +675,7 @@ function showQuestion(isSubQuestion) {
                     break;
 
                 case TYPE_LONG_QUESTION:
+                    currentLongQuestionObject = questionObject;
                     showLongQuestion(questionObject);
                     break;
 
@@ -1242,14 +1247,12 @@ function likertSelect(number)
     // display user's choice on chat
     messages.innerHTML += ansTemp;
 
-    // save choice onto firebase
-    saveResponse(number);
 
     // Prevent users from using text box
     disableTextInput();
 
-    // display next question after time delay and scroll to bottom of screen
+    // display next question and save user response after time delay and scroll to bottom of screen
     let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-    setTimeout(() => nextQuestion(), delay);
+    setTimeout(() => {nextQuestion(); saveResponse(number);}, delay);
     scrollToBottom();
 }

@@ -173,8 +173,8 @@ function greeting() {
         "<div class='message-container sender blue'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>To get started, can you please fill up this survey." +
-        "You only have one attempt in completing the survey. " +
-        "You are allowed to restart the survey any number of times if it is still incomplete. " +
+        " You only have one attempt in completing the survey." +
+        " You are allowed to restart the survey any number of times if it is still incomplete. " +
         "Are you ready?</p>" +
         "</div>" +
         "</div>";
