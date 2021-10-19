@@ -202,6 +202,8 @@ function loadQuestions(languageSelection) {
     // questions list
     languageIndex = languageSelection.value;
     languageDropdown.innerHTML = languageSelection.innerHTML;
+    responsesHeader.innerHTML = "Select a Question to view Responses!";
+    responsesList.innerHTML = "";
 
     addQuestions(languageIndex);
 }
