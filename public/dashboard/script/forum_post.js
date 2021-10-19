@@ -50,6 +50,8 @@ async function execute(){
 
 }
 
+
+
 /**
  * Function used to collect all the posts into an array from firebase
  */
@@ -182,7 +184,7 @@ function updateUI(postId){
                 </tr>
 
             </table>
-            <a href="http://localhost:5000/post.html?post_id=${postId}">
+            <a href="http://localhost:5000/post_view.html?post_id=${postId}">
                 <div> <button class='btn btn-primary'> Go to Post </button> </div>
             </a>
             `);
@@ -251,7 +253,9 @@ function updateUI(postId){
 
             })
         })
-    }
+
+  
+}
 
 
 
