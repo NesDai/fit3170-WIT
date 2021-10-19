@@ -122,11 +122,11 @@ function printPostDetails(post, button_num) {
 
     if(post.username == undefined)
         post.username = "";
-    
-    //checks whether it has the date created 
+
+    //checks whether it has the date created
     if(post.created == undefined)
         post.created = "";
-    
+
     //choosing appropriate like-dislike buttons UI
     let button = `
     <button class="like mdl-button mdl-js-button" id="btn_like" value="${post.likes}">
@@ -159,8 +159,8 @@ function printPostDetails(post, button_num) {
     //get interests for this post and print them
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
-        console.log(post.interest)
-        interest += `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'> #${post.interest[i]} </button>`
+
+        interest += `<button class="mdl-button mdl-js-button mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'disabled> ${post.interest[i]} </button>`
     }
 
     // // check whether this post was created by the user logged in
@@ -200,7 +200,7 @@ function printPostDetails(post, button_num) {
                 <h6 class="post_content mdl-color-text--black" style="margin:0 10px; background-color: white; padding-left:10px; font-size: 20px" >${post.description}</h6>
                 <br>
         ` + `
-        ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" src="${post.videoURL}"></iframe>` : ``}
+        ${post.videoURL !== 0 && post.videoURL !== undefined ? `<iframe width="420" height="315" allow="fullscreen" src="${post.videoURL}"></iframe>` : ``}
         ` + `
                 <br>
                 <div style='display: inline-block'>
@@ -262,8 +262,8 @@ function printPostDetails(post, button_num) {
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             document.getElementById("like-Modal").style.display = "block";
                         }else{
                             $button.data('alreadyclicked', true);
@@ -287,8 +287,8 @@ function printPostDetails(post, button_num) {
                             if ($button.data('alreadyclickedTimeout')){
                                 clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                             }
-                            
-                            // do what needs to happen on double click. 
+
+                            // do what needs to happen on double click.
                             document.getElementById("like-Modal").style.display = "block";
                         }else{
                             $button.data('alreadyclicked', true);
@@ -304,7 +304,7 @@ function printPostDetails(post, button_num) {
                 </script>
             </div>`
     $('#post_details').append(post_display);
-    //check whether the user has favourited the post 
+    //check whether the user has favourited the post
     checkUserFavouritedPost();
     //printing comments
     printComments();
@@ -329,7 +329,7 @@ function checkButtonStatus() {
             // checking the favourite data has been written before
             if (hasFavouriteData == false) {
                 addPostToFavourite();
-            } 
+            }
             else {
                 let users_arr = snapshot.val()["users_favourite"];
 
@@ -341,7 +341,7 @@ function checkButtonStatus() {
 
                 if (user_found) {
                     removePostFromFavourite();
-                } 
+                }
                 else {
                     addPostToFavourite();
                 }
@@ -422,14 +422,18 @@ async function addPostToFavourite() {
 
                 // checking the favourite data has been written ebfore
                 if (hasFavouriteData == false) {
+
                     //if the data has not been written before
                     users_favourite_arr = [];
                     users_favourite_arr.push(current_user["phone"]); //push current user id to post dets to indicate they have favourite this post
 
+                    // create new data to be added to database
                     newData = {
                         users_favourite: users_favourite_arr
                     }
                 } else {
+
+                    //add user into the list and update
                     let users_arr = snapshot.val()["users_favourite"];
 
                     users_arr.push(current_user["phone"]);
@@ -441,6 +445,7 @@ async function addPostToFavourite() {
                 firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
                 })
 
+                // change the UI of favourite button
                 let fav_button = document.getElementsByClassName("favourite")[0];
                 fav_button.innerHTML = "\n  <img src=\"./css/images/fav_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
                 fav_button.style.background='#006dae';
@@ -487,20 +492,55 @@ async function addComment() {
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
 
-            let newData = {
-                anonymous: stay_anonymous,
-                commenterID: current_user["phone"],
-                content: comment,
-                id: key,
-                likes: 0,
-                postID: post_id,
-                username: current_user["username"],
-                created: utc
+            let anonymous_value = 0;
+            //getting the number of anonymous in the page
+            // updating  the number
+            if(stay_anonymous){
+              let myRef = firebase.database().ref(`posts/${post_id}`);
+              myRef.once("value")
+                  .then(function(snapshot) {
+                        let currentAnonymous = snapshot.val()["anonymous"];
+                        currentAnonymous += 1
+                        let newData = {
+                            anonymous: currentAnonymous
+                        }
+
+                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+                      })
+                      anonymous_value = currentAnonymous;
+
+                      newData = {
+                          anonymous: anonymous_value,
+                          commenterID: current_user["phone"],
+                          content: comment,
+                          id: key,
+                          likes: 0,
+                          postID: post_id,
+                          username: current_user["username"],
+                          created: utc
+                      }
+                      firebase.database().ref(`comments/${key}`).set(newData).then(() => {
+                          printComments();
+                      });
+                  });
+            } else{
+              let newData = {
+                  anonymous: 0,
+                  commenterID: current_user["phone"],
+                  content: comment,
+                  id: key,
+                  likes: 0,
+                  postID: post_id,
+                  username: current_user["username"],
+                  created: utc
+              }
+              firebase.database().ref(`comments/${key}`).set(newData).then(() => {
+                  printComments();
+              });
+
             }
 
-            firebase.database().ref(`comments/${key}`).set(newData).then(() => {
-                printComments();
-            });
+
         };
 
     } else {
@@ -586,8 +626,8 @@ async function checkCommentForLikes(comments_list){
 function printComment(button_num, comment, i ){
     //checks whether the comment is anonymous
     let comment_username;
-    if (comment.anonymous) {
-        comment_username = "Anonymous";
+    if (comment.anonymous != 0) {
+        comment_username = "Anonymous " + comment.anonymous;
     } else {
         comment_username = comment.username;
     };
@@ -648,7 +688,7 @@ function printComment(button_num, comment, i ){
                  </div>
             </div>
 
-            
+
 
             <script>
                 //checks for double click on like button
@@ -660,8 +700,8 @@ function printComment(button_num, comment, i ){
                         if ($button.data('alreadyclickedTimeout')){
                             clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                         }
-                        
-                        // do what needs to happen on double click. 
+
+                        // do what needs to happen on double click.
                         document.getElementById("like-Modal").style.display = "block";
                     }else{
                         $button.data('alreadyclicked', true);
@@ -719,8 +759,8 @@ function printReplies(comment_id, comment_index) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
                     let reply = reply_list[i];
                     let reply_username;
-                    if (reply.anonymous) {
-                        reply_username = "Anonymous";
+                    if (reply.anonymous != 0) {
+                        reply_username = "Anonymous " + reply.anonymous;
                     } else {
                         reply_username = reply.username;
                     }
@@ -812,13 +852,13 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
             })
         // print the replies using the indexes provided (comment_index, reply_index, start)
         }).then(() => {
-            //checks whether replies are anonymous 
+            //checks whether replies are anonymous
             if (reply_list.length != 0) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
                     let reply = reply_list[i];
                     let reply_username;
-                    if (reply.anonymous) {
-                        reply_username = "Anonymous";
+                    if (reply.anonymous != 0) {
+                        reply_username = "Anonymous " + reply.anonymous;
                     } else {
                         reply_username = reply.username;
                     }
@@ -918,34 +958,72 @@ async function addReply(btn_num, comment_id) {
         let reply_input = document.getElementById("reply_input" + btn_num.toString()).value;
         let stay_anonymous = document.getElementById("anonymous" + btn_num.toString()).checked;
 
+
+
         // new data to upload in api
         if (reply_input) { // only adding reply if it's not empty
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-
+            let anonymous_value = 0;
             let now = new Date();
             let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
             utc = utc.toString();
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
+            //updating the number of anonymus commenters on the post
+            if(stay_anonymous){
+              let myRef = firebase.database().ref(`posts/${post_id}`);
+              myRef.once("value")
+                  .then(function(snapshot) {
+                        let currentAnonymous = snapshot.val()["anonymous"];
+                        currentAnonymous += 1
+                        let newData = {
+                            anonymous: currentAnonymous
+                        }
 
-            // new data to upload in api
-            let newData = {
-                anonymous: stay_anonymous,
-                content: reply_input,
-                created: utc,
-                dislike: 0,
-                id: key,
-                like: 0,
-                replierId: current_user["phone"],
-                reply_comment_parent: comment_id,
-                username: current_user["username"],
-            };
+                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+                      });
+                      anonymous_value = currentAnonymous;
+                      // new data to upload in api
+                      newData = {
+                          anonymous: anonymous_value,
+                          content: reply_input,
+                          created: utc,
+                          dislike: 0,
+                          id: key,
+                          like: 0,
+                          replierId: current_user["phone"],
+                          reply_comment_parent: comment_id,
+                          username: current_user["username"],
+                      };
+                      firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                          printReplies(comment_id, btn_num);
+                      });
+                  });
 
-            firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                printReplies(comment_id, btn_num);
-            });
+            } else {
+              // new data to upload in api
+              let newData = {
+                  anonymous: 0,
+                  content: reply_input,
+                  created: utc,
+                  dislike: 0,
+                  id: key,
+                  like: 0,
+                  replierId: current_user["phone"],
+                  reply_comment_parent: comment_id,
+                  username: current_user["username"],
+              };
+              firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                  printReplies(comment_id, btn_num);
+              });
+            }
+
+
+
+
+
 
         };
     } else {
@@ -984,30 +1062,68 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-
+            let anonymous_value = 0;
             let now = new Date();
             let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
             utc = utc.toString();
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
-            // new data to upload in api
-            let newData = {
-                anonymous: stay_anonymous,
-                content: reply_input,
-                created: utc,
-                dislike: 0,
-                id: key,
-                like: 0,
-                replierId: current_user["phone"],
-                reply_comment_parent: reply_id,
-                username: current_user["username"],
-            };
+            //updating the number of anonymus commenters on the post
+            if(stay_anonymous){
+              let myRef = firebase.database().ref(`posts/${post_id}`);
+              myRef.once("value")
+                  .then(function(snapshot) {
+                        let currentAnonymous = snapshot.val()["anonymous"];
+                        currentAnonymous += 1
+                        let newData = {
+                            anonymous: currentAnonymous
+                        }
 
-            firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
-            });
+                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+                      })
+                      anonymous_value = currentAnonymous;
+
+                      // new data to upload in api
+                      newData = {
+                          anonymous: anonymous_value,
+                          content: reply_input,
+                          created: utc,
+                          dislike: 0,
+                          id: key,
+                          like: 0,
+                          replierId: current_user["phone"],
+                          reply_comment_parent: reply_id,
+                          username: current_user["username"],
+                      };
+                      firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                          printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
+                      });
+                  });
+
+
+            } else {
+              // new data to upload in api
+              let newData = {
+                  anonymous: 0,
+                  content: reply_input,
+                  created: utc,
+                  dislike: 0,
+                  id: key,
+                  like: 0,
+                  replierId: current_user["phone"],
+                  reply_comment_parent: reply_id,
+                  username: current_user["username"],
+              };
+              firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                  printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
+              });
+            }
+
+
+
+
         };
-    } 
+    }
 }
 
 /**
@@ -1037,28 +1153,65 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-
+            let anonymous_value = 0;
             let now = new Date();
             let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
             utc = utc.toString();
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
 
-            // new data to upload in api
-            let newData = {
-                anonymous: stay_anonymous,
-                content: reply_input,
-                created: utc,
-                dislike: 0,
-                id: key,
-                like: 0,
-                replierId: current_user["phone"],
-                reply_comment_parent: reply_id,
-                username: current_user["username"],
-            };
-            firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                window.location = "post.html" + "?post_id=" + post_id;
-            });
+            //updating the number of anonymus commenters on the post
+            if(stay_anonymous){
+              let myRef = firebase.database().ref(`posts/${post_id}`);
+              myRef.once("value")
+                  .then(function(snapshot) {
+                        let currentAnonymous = snapshot.val()["anonymous"];
+                        currentAnonymous += 1
+                        let newData = {
+                            anonymous: currentAnonymous
+                        }
+
+                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
+                      })
+                      anonymous_value = currentAnonymous;
+                      // new data to upload in api
+                      newData = {
+                          anonymous: anonymous_value,
+                          content: reply_input,
+                          created: utc,
+                          dislike: 0,
+                          id: key,
+                          like: 0,
+                          replierId: current_user["phone"],
+                          reply_comment_parent: reply_id,
+                          username: current_user["username"],
+                      };
+                      firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                          window.location = "post.html" + "?post_id=" + post_id;
+                      });
+                  });
+
+            } else {
+              // new data to upload in api
+              let newData = {
+                  anonymous:0,
+                  content: reply_input,
+                  created: utc,
+                  dislike: 0,
+                  id: key,
+                  like: 0,
+                  replierId: current_user["phone"],
+                  reply_comment_parent: reply_id,
+                  username: current_user["username"],
+              };
+              firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                  window.location = "post.html" + "?post_id=" + post_id;
+              });
+
+            }
+
+
+
         };
     } else {
         window.location = "forum.html";
@@ -1068,7 +1221,7 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
 /**
  * Redirects the user to the page with url
  * @param url where to redirect to
- * @param msg 
+ * @param msg
  */
 function redirect(url, msg) {
     window.location = url;

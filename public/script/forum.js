@@ -1,6 +1,5 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-
-
+let video_url_track = 1;
 let postNamesCreatePost = [];
 let postNamesFeed = [];
 let postNamesRecommender = [];
@@ -90,8 +89,6 @@ function checkUserExistence() {
     }
 }
 
-
-
 /**
  * Function used to check if a video link is from youtube.
  * If it is, then it manipulates the url to be able to display a video on the app.
@@ -143,19 +140,23 @@ function makeNewPost() {
         // gets all the information from the create post UI
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
-        let video_url = document.getElementById("video_url").value
+
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
 
         let embedding_video_url = 0
-        if (video_url !== "") {
-            embedding_video_url = checkEmbeddingVideo(video_url);
-            //alert if an invalid link is provided for the video
-            if (embedding_video_url == 0) {
-                document.getElementById("video-Modal").style.display = "block";
-                return;
-            }
+        if(document.getElementById("video_url") != null){
+          let video_url = document.getElementById("video_url").value
+          if (video_url !== "") {
+              embedding_video_url = checkEmbeddingVideo(video_url);
+              //alert if an invalid link is provided for the video
+              if (embedding_video_url == 0) {
+                  document.getElementById("video-Modal").style.display = "block";
+                  return;
+              }
+          }
         }
+        
 
         // format the time of the post
         let now = new Date();
@@ -176,7 +177,8 @@ function makeNewPost() {
             created: utc,
             likes:0,
             dislikes:0,
-            recommender: false
+            recommender: false,
+            anonymous: 0
         }
 
         //upload the post to the firebase
@@ -246,8 +248,6 @@ function findAllPosts() {
  */
 function printAllPosts(){
 
-
-
     $("#radio-0").attr("disabled",true);
     $("#radio-1").attr("disabled",true);
 
@@ -308,11 +308,8 @@ function printAllPosts(){
             if(posts.length == 0 ){
                 $('#postField').html('<h4>0 Posts in this section</h4>');
             }
-
-
+        })
     })
-    })
-
 }
 
 /**
@@ -324,7 +321,6 @@ function printThread(){
     //disables the tabs till all the posts are loaded
     $("#radio-1").attr("disabled",true);
     $("#radio-2").attr("disabled",true);
-
 
     postNamesRecommender = [];
 
@@ -389,8 +385,7 @@ function printThread(){
             $('#searchBoxRecommender').autocomplete({
                 source: post_names
             }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
-
-    });
+        });
     });
 }
 
@@ -426,6 +421,40 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
     }
 }
 
+/**
+ * Function which outputs the video url textbox
+ * which users can paste their valid Youtube link to be posted along in the forum
+ */
+function showVideoUrl() {
+
+    let video_button = document.getElementById("post_video");
+
+    if (video_url_track == 1) {
+
+        video_button.style = "visibility: visible"; // make the element visible
+
+        let video_url_appear = `<br><input class="input" type="text" id="video_url" name="video_url" placeholder="Add a video link here"></input>`;
+
+        video_button.innerHTML = video_url_appear;
+
+        video_url_track = 0; // make the track number 0
+
+        video_button.animate([
+            { // from
+                opacity: 0,
+                color: "#fff"
+            },
+            { // to
+                opacity: 1,
+            }
+        ], 500);
+
+    } else {
+        video_button.style = "visibility: hidden"; // hide the element
+        video_url_track = 1; // make the track number 1
+    }
+}
+
 
 /**
  * Function used to display the layout of forum under "Create Post" tab
@@ -453,8 +482,12 @@ function print_create_post()
        <br>
 
        <!-- VIDEO URL  -->
-       <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
-       <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="video_btn" style="background-color:#006DAE; border: white;" onclick="showVideoUrl()">
+        Video Link
+        </button>
+        <br>
+        <div id="post_video">
+        </div>
        <br>
        <br>
        <!-- INTEREST  -->
@@ -591,7 +624,6 @@ function print_create_post()
        </button>
     </div>
 
-
  </div>`
     );
 }
@@ -674,7 +706,7 @@ function printPost(post, button_num, i )
                      `
                      +
                      `
-                     ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id">${post.interest[0]} </button>` :
+                     ${post.interest[1] == undefined? `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id" disabled>${post.interest[0]} </button>` :
                       `<button class="mdl-button mdl-js-button  mdl-color-text--white" id="interest1_id" disabled>${post.interest[0]} </button>
                       <button class="mdl-button mdl-js-button mdl-color-text--white" id="interest2_id" disabled>${post.interest[1]}</button>`}
                      `
@@ -762,15 +794,23 @@ function printPost(post, button_num, i )
     );
 }
 
-
+/**
+ * Function which hides the Like alert
+ */
 function hideLikeAlert(){
     document.getElementById("like-Modal").style.display =  "none";
 }
 
+/**
+ * Function which hides the Video alert
+ */
 function hideVideoAlert(){
     document.getElementById("video-Modal").style.display =  "none";
 }
 
+/**
+ * Function which hides the Interest alert
+ */
 function hideInterestAlert(){
     document.getElementById("interest-Modal").style.display =  "none";
 }
@@ -831,11 +871,12 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                                 }
                             }
 
-                                if (!duplicate){
-                                    post_arr.push(fav_post);
-                                    postNamesFeed.push(fav_post.title);
-                                }
-                            })
+                            //if not duplicates found
+                            if (!duplicate){
+                                post_arr.push(fav_post);
+                                postNamesFeed.push(fav_post.title);
+                            }
+                        })
                     }).then(()=>{
                         //likes and dislikes
                         for (let k =0; k<post_arr.length; k++){
@@ -1302,8 +1343,6 @@ function searchYourPosts(param){
         .startAt(param)
             .endAt(param+"\uf8ff").once("value", x=> {
                 x.forEach(data => {
-
-                    //let users_fav = data.val().users_favourite // all the users who favourited the post
 
                     if(data.val().recommender == true){
                         for (let i =0; i<data_list.length; i++) {
