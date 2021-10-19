@@ -1,5 +1,6 @@
 compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUESTION_IDS_TH];
 branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
+let language = ["English", "Chinese", "Malay", "Thai"];
 
 async function exportQues() {
     let compiledData = [];
@@ -14,9 +15,6 @@ async function exportQues() {
                     let questionObject = docRef.data();
                     let questionType = questionObject.type;
                     switch (questionType) {
-                        //case TYPE_MULTIPLE_CHOICE:
-                        //case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                        //case TYPE_MULTIPLE_CHOICE_OTHERS:
                         // question object
                         case TYPE_LONG_QUESTION:
                             for (let i = 0; i < (questionObject.arrangement).length; i++) {
@@ -31,7 +29,7 @@ async function exportQues() {
                                             .then((querySnapshot) => {
                                                 querySnapshot.forEach(response => {
                                                     let responseObj = response.data();
-                                                    compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\""]);
+                                                    compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"", , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
                                                 });
                                             });
                                     });
@@ -48,11 +46,11 @@ async function exportQues() {
                                             case TYPE_MULTIPLE_CHOICE:
                                             case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                             case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
                                                 break;
 
                                             default:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + responseObj.phone + "\"" , "\"" + language[a] + "\""]);
                                                 break;
                                         }
 
@@ -74,7 +72,7 @@ function download_csv_file(csvFileData) {
     csv += 'Satisfaction: [0] Not Applicable (N/A) [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied\n';
     csv += 'Confidence: [0] Not Applicable (N/A) [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident\n';
     csv += 'Interest: [1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested\n';
-    csv += 'Question Number,Question,Response,Options\n';
+    csv += 'Question Number,Question,Response,Options,User,Language\n';
 
     //merge the data with CSV
     csvFileData.forEach(function(row) {
