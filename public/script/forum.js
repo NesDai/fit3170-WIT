@@ -376,6 +376,11 @@ function printThread(){
         }).then(()=>{
             printStartIndex = posts.length - 1;
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
+
+            if(posts.length == 0 ){
+                $('#postField').html('<h4>0 Posts in this section</h4>');
+            }
+
         }).then(()=>{
 
             // Reenable the other tabs
@@ -930,6 +935,10 @@ function printUserPosts(){
                         for(let i=posts.length-1; i>=0 ; i--){
                             //print posts
                             printPost(posts[i], button_nums[i], i )
+                        }
+
+                        if(posts.length == 0 ){
+                            $('#postField').html('<h4>0 Posts in this section</h4>');
                         }
                     }).then(() => {
                         //print user favourites
