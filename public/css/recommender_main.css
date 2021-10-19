@@ -340,7 +340,7 @@ transition: color 0.15s ease-in;
     .container {
   		margin-top: 12px;
   		justify-content: center;
-        margin-left: 12px;
+        margin-left: 28px;
   	}
 
       /* for glider */
@@ -373,6 +373,10 @@ transition: color 0.15s ease-in;
 		position: relative;
 		left: 25px;
 	}
+
+    .mdl-snackbar--active {
+        transform: translate(0, -110%); 
+    }
 
 
 }
