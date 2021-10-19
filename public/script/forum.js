@@ -140,19 +140,23 @@ function makeNewPost() {
         // gets all the information from the create post UI
         let title = document.getElementById("post_title").value
         let description = document.getElementById("post_description").value
-        let video_url = document.getElementById("video_url").value
+
         let myRef = firebase.database().ref(`posts`);
         let key = myRef.push().key;
 
         let embedding_video_url = 0
-        if (video_url !== "") {
-            embedding_video_url = checkEmbeddingVideo(video_url);
-            //alert if an invalid link is provided for the video
-            if (embedding_video_url == 0) {
-                document.getElementById("video-Modal").style.display = "block";
-                return;
-            }
+        if(document.getElementById("video_url") != null){
+          let video_url = document.getElementById("video_url").value
+          if (video_url !== "") {
+              embedding_video_url = checkEmbeddingVideo(video_url);
+              //alert if an invalid link is provided for the video
+              if (embedding_video_url == 0) {
+                  document.getElementById("video-Modal").style.display = "block";
+                  return;
+              }
+          }
         }
+        
 
         // format the time of the post
         let now = new Date();
@@ -861,7 +865,7 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                                     duplicate = true
                                 }
                             }
-                            
+
                             //if not duplicates found
                             if (!duplicate){
                                 post_arr.push(fav_post);
