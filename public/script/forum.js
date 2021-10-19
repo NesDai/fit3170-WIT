@@ -619,34 +619,6 @@ function print_create_post()
        </button>
     </div>
 
-    <!-- Alert UI -->
-    <dialog class="mdl-dialog mdl-dialog-int">
-        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-        <hr style="margin: 0;">
-        <div class="mdl-dialog__content">
-            <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
-            <br>
-            <br>
-            <div class="mdl-dialog__actions">
-                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Alert for wrong video link UI-->
-    <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
-        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
-        <hr style="margin: 0;">
-        <div class="mdl-dialog__content">
-            <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
-            <br>
-            <br>
-            <div class="mdl-dialog__actions">
-                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
-            </div>
-        </div>
-    </dialog>
-
  </div>`
     );
 }
