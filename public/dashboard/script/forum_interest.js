@@ -10,12 +10,13 @@ let likes_arr;
 let dislikes_arr;
 let  choosen_interest= document.getElementById("interest");
 choosen_interest.addEventListener('change', display_posts); //runs the function when there is a change made to the value choosen from the drop list
+let comments = [];
 
 window.onload = execute();
 display_posts(); //runs it when the page is first loaded
 
 async function execute() {
-
+    collectComments();
     collectPosts().then(() => {
 
         updateChart();
@@ -23,6 +24,18 @@ async function execute() {
     })
 }
 
+/**
+ * Function used to collect all the comments into an array from firebase
+ */
+ async function collectComments(){
+    comments = []; // reset posts to 0 / initialize to a list
+    await firebase.database().ref('comments')
+    .once('value', x => {
+        x.forEach(data => {
+            comments.push(data.val()); //push the data to the list
+        })
+    });
+}
 /**
  * This function purposes to collect all the post from the database
  * and also to obtain data of the number of post posted per interest.
@@ -170,7 +183,7 @@ function display_posts(){
 
   let  choosen_interest= document.getElementById("interest").value;
   let displayed_posts = [];
-
+  let number_comments = [];
   //getting the rows based on the interest choosen
   for (let i = 0; i < posts.length; i++){
     let post = posts[i];
@@ -183,12 +196,29 @@ function display_posts(){
       }
   }
 
+  //getting the no. of comments based on each post
+  for (let j = 0; j <displayed_posts.length; j++){
+    let count = 0;
+    for(let i = 0; i < comments.length; i++){
+      if(comments[i].postID == displayed_posts[j].id){
+        count += 1;
+      }
+    }
+    number_comments.push([count, j]);
+  }
+
+  // sorting the array
+  number_comments.sort();
+  number_comments.reverse();
+  console.log(number_comments);
+
+
   //outputing the rows of posts
   let display_table = document.getElementById("posts-rows");
-  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>No. of likes</th><th>No. of dislikes</th><th>Post link</th></thead><tbody>";
-  for (let i = 0; i < displayed_posts.length; i++){
-    let post = displayed_posts[i];
-    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>" + post.likes + "</td><td>" + post.dislikes + "</td><td>";
+  let output_rows = "<table class='pure-table' id='historyTable'><thead><th>Post Id</th><th>Post Title</th><th>No. of likes</th><th>No. of dislikes</th><th>No. of comments</th><th>Post link</th></thead><tbody>";
+  for (let i = 0; i < number_comments.length; i++){
+    let post = displayed_posts[number_comments[i][1]];
+    output_rows += "<tr><td>" + post.id + "</td><td> " + post.title + " </td><td>" + post.likes + "</td><td>" + post.dislikes + "</td><td>" + number_comments[i][0] + "</td><td>";
     output_rows += `<div> <button class='btn btn-primary'  id='more_btn' onclick="transfer_admin_post('${post.id}');"> View More </button> </div>`;
     output_rows += "</td></tr>";
 
@@ -198,6 +228,8 @@ function display_posts(){
   display_table.innerHTML = output_rows;
 
 }
+
+
 
 /**
  Function that transfer the admin to the post analytics detial page
