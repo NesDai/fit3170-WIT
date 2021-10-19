@@ -29,7 +29,17 @@ async function exportQues() {
                                             .then((querySnapshot) => {
                                                 querySnapshot.forEach(response => {
                                                     let responseObj = response.data();
-                                                    compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"", , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
+                                                    let subQuestionType = questionObjectTemp.type;
+                                                    switch(subQuestionType) {
+                                                        case TYPE_MULTIPLE_CHOICE:
+                                                        case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                                        case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
+                                                            break;
+                                                        default:
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
+                                                            break;
+                                                    }
                                                 });
                                             });
                                     });
@@ -46,11 +56,11 @@ async function exportQues() {
                                             case TYPE_MULTIPLE_CHOICE:
                                             case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                             case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
                                                 break;
 
                                             default:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replace('<b>','').replace('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + responseObj.phone + "\"" , "\"" + language[a] + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + responseObj.phone + "\"" , "\"" + language[a] + "\""]);
                                                 break;
                                         }
 
@@ -92,8 +102,7 @@ function download_csv_file(csvFileData) {
 function array_to_str(array){
     let returnStr = ""
     for (let i=0; i < array.length; i ++){
-        let j = i +1;
-        returnStr += "[" + j + "] " + array[i] + " "
+        returnStr += "[" + i + "] " + array[i] + " "
     }
     return returnStr;
 }
