@@ -1,5 +1,5 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
-
+let video_url_track = 1;
 
 let postNamesCreatePost = [];
 let postNamesFeed = [];
@@ -392,6 +392,8 @@ function printThread(){
 
     });
     });
+
+
 }
 
 /**
@@ -418,11 +420,43 @@ function printPostQuan(startIndex, numberOfPosts, postsList, buttonNums){
         $('#postField').append(`<button id='moreBut' class='mdl-button mdl-js-button mdl-button--raised' style='color:white; background-color:#006dae'
         >Load More</button>`);
 
-        let moreBut = document.getElementById("moreBut");
-        moreBut.onclick = function(){
+         let moreBut = document.getElementById("moreBut");
+         moreBut.onclick = function(){
             moreBut.remove();
             printPostQuan(startIndex-numberOfPosts,numberOfPosts,postsList,buttonNums);
-        };
+
+            };
+        }
+
+
+}
+
+function showVideoUrl() {
+
+    let video_button = document.getElementById("post_video");
+    if (video_url_track == 1) {
+
+        video_button.style = "visibility: visible"; // make the element visible
+
+        let video_url_appear = `<br><input class="input" type="text" id="video_url" name="video_url" placeholder="Add a video link here"></input>`;
+
+        video_button.innerHTML = video_url_appear;
+
+        video_url_track = 0; // make the track number 0
+
+        video_button.animate([
+            { // from
+                opacity: 0,
+                color: "#fff"
+            },
+            { // to
+                opacity: 1,
+            }
+        ], 500);
+
+    } else {
+        video_button.style = "visibility: hidden"; // hide the element
+        video_url_track = 1; // make the track number 1
     }
 }
 
@@ -453,8 +487,12 @@ function print_create_post()
        <br>
 
        <!-- VIDEO URL  -->
-       <label for="video_url" style="font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif"><b>Video URL:  </b></label>
-       <input class="input" type="text" id="video_url" name="video_url" placeholder="Embed a video URL here"></input>
+       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="video_btn" style="background-color:#006DAE; border: white;" onclick="showVideoUrl()">
+        Video Link
+        </button>
+        <br>
+        <div id="post_video">
+        </div>
        <br>
        <br>
        <!-- INTEREST  -->
@@ -591,6 +629,33 @@ function print_create_post()
        </button>
     </div>
 
+    <!-- Alert UI -->
+    <dialog class="mdl-dialog mdl-dialog-int">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>Your post should have 1 or 2 interests. Please choose the proper number of interests.</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Alert for wrong video link UI-->
+    <dialog class="mdl-dialog mdl-dialog-vid" id="#alert_vid">
+        <h4 class="mdl-dialog__title" id="alert_title" style="color: #006DAE; text-align: center;">Alert</h4>
+        <hr style="margin: 0;">
+        <div class="mdl-dialog__content">
+            <h8>A video with the following link does not exist. Please input the proper link for the  YouTube video</h8>
+            <br>
+            <br>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button mdl-color-text--white mdl-shadow--2dp close_btn" style="width: 100%; background-color:#006DAE; border-radius: 7px; margin: auto;">OK</button>
+            </div>
+        </div>
+    </dialog>
 
  </div>`
     );
