@@ -51,8 +51,7 @@ firebase.database().ref('users').once("value", function (snapshot) {
  * @return: none
  */
 function updateVideoList(phoneNum){
-    $('#pieChart1').show();
-    $('#pieChart2').show();
+
 
     firebase.database().ref(`users/+${phoneNum}`).once("value", function(snapshot){
         if (snapshot.exists()){
@@ -171,7 +170,7 @@ function updateVideoAnalyticsTable(phoneNum, i){
 
             //Builds html for the page using the video analytics information
             let videoAnalyticsTableHtml = `
-            <table class="table table-bordered">
+            <table class="pure-table pure-table-horizontal" style="width:100%">
                 <tr>
                     <th>Stopped Watching at</th>
                     <td>${videoAnalyticsDetails.videoCurrentTime}</td>
@@ -188,7 +187,7 @@ function updateVideoAnalyticsTable(phoneNum, i){
                 </tr>
 
                 <tr>
-                    <th>Video Percentage Watched</th>
+                    <th>Video Percentage Passed</th>
                     <td>${videoAnalyticsDetails.videoPercent}% </td>
                 </tr>
 
@@ -234,6 +233,7 @@ function generatePieChart(phoneNum){
     // Generate the first pie chart for favourites of the user
     firebase.database().ref(`users/+${phoneNum}/videoFavourite`).once("value", function(snapshot){
         if (snapshot.exists()){
+            $('#pieChart2').show();
             snapshot.forEach((video)=>{
                 let videoDetails = video.val();
                 if (!labels.includes(videoDetails.videoPreference)){
@@ -261,6 +261,8 @@ function generatePieChart(phoneNum){
                     }]
                 }
             })
+        } else {
+            $('#pieChart2').hide();
         }
     });
     
@@ -270,6 +272,7 @@ function generatePieChart(phoneNum){
     // Generates the second pie chart for the watch history of the user
     firebase.database().ref(`users/+${phoneNum}/videoHistory`).once("value", function(snapshot){
         if (snapshot.exists()){
+            $('#pieChart1').show();
             snapshot.forEach((video)=>{
                 let videoDetails = video.val();
                 if (!labelsHist.includes(videoDetails.interest)){
@@ -297,6 +300,8 @@ function generatePieChart(phoneNum){
                     }]
                 }
             })
+        } else {
+            $('#pieChart1').hide();
         }
     });
 }
