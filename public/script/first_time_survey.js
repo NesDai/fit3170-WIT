@@ -535,18 +535,24 @@ function showOnlineTransactionOptions(){
  */
 function showMoveToDifferentPages(){
     // message
+
     messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
-        `<p>Thank you so much for your participation in this survey. Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!</p>` +
+        "<p>Thank you so much for your participation in this survey." +
+        // uncomment line below when app is no longer in trial phase
+        //" Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!
+        "</p>" +
         "</div>" +
         "</div>";
     document.getElementById('hint_area').innerHTML = "";
 
     // display the options to got to recommender, forum and main page respectively
     let options = "<div class=\"space\">"
-    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'recommender_Ui.html\'\">Recommender</button>";
-    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'forum.html\'\">Forum</button>";
+
+    // uncomment the below 2 line when app is no longer in trial phase. these are to allow users to use recommender and forum page
+    //options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'recommender_Ui.html\'\">Recommender</button>";
+    //options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'forum.html\'\">Forum</button>";
     options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Main Page</button>";
     options += "</div>";
     messages.innerHTML += options;
