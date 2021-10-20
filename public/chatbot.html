@@ -73,87 +73,93 @@
 </head>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header"></div>
 
-    <!-- Header section containing logo -->
-    <header class="mdl-layout__header mdl-color-text--white topheader">
-        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-            <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                <h3><i class="material-icons">chat_bubble_outline</i> Chatbot</h3>
+<!-- Header section containing logo -->
+<header class="mdl-layout__header mdl-color-text--white topheader">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+        <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+            <h3><i class="material-icons">chat_bubble_outline</i> Chatbot</h3>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="main_page.html">
+                    <img src="css/images/smaller_home.png">
+                </a>
+            </nav>
+        </div>
+    </div>
+</header>
 
+<body>
+
+<main id = "Live" class= "tabcontent" class="mdl-layout__content mdl-color--grey-100">
+    <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid ">
+        <div id="percentage">
+            0.00%
+        </div>
+        <div id="progress-bar" class="mdl-progress mdl-js-progress"></div>
+        <div id="messages-card" class="mdl-card mdl-shadow--2dp">
+            <div id="messages">
+            </div>
+            <div id="error-bar">
+                <p id="error-text" style="text-align: center; color: red"></p>
+            </div>
+            <div id="hint_area" style="text-align: center; color: limegreen;"></div>
+            <div id="likert_scale" style="text-align: center"></div>
+            <div id="message-form">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
+                    <label class="mdl-textfield__label" for="message">Message...</label>
+                </div>
+                <!-- <button id="submit" type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="respondToOpen()"> -->
+                <button id="submit" disabled class="mdl-button mdl-js-button mdl-button--raised" disabled onclick="addMessage()">
+                    Send
+                </button>
             </div>
         </div>
-    </header>
+    </div>
+</main>
 
-    <body>
+<!-- USING JQUERY TO ANIMATE SCROLL -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <main id = "Live" class= "tabcontent" class="mdl-layout__content mdl-color--grey-100">
-        <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid ">
-            <div id="percentage">
-                0.00%
-            </div>
-            <div id="progress-bar" class="mdl-progress mdl-js-progress"></div>
-            <div id="messages-card" class="mdl-card mdl-shadow--2dp">
-                <div id="messages">
-                </div>
-                <div id="error-bar">
-                    <p id="error-text" style="text-align: center; color: red"></p>
-                </div>
-                <div id="hint_area" style="text-align: center; color: limegreen;"></div>
-                <div id="likert_scale" style="text-align: center"></div>
-                <div id="message-form">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input id="input-box" class="mdl-textfield__input" type="text" id="message" disabled autocomplete="off">
-                        <label class="mdl-textfield__label" for="message">Message...</label>
-                    </div>
-                    <!-- <button id="submit" type="submit" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="respondToOpen()"> -->
-                    <button id="submit" disabled class="mdl-button mdl-js-button mdl-button--raised" disabled onclick="addMessage()">
-                        Send
-                    </button>
-                </div>
-            </div>
-        </div>
-    </main>
+<script>
+    $(document).ready(function () {
+        $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+    })
+</script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/8.1.1/firebase-app.js"></script>
+<script src="/__/firebase/8.1.1/firebase-analytics.js"></script>
+<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+<script src="/__/firebase/7.18.0/firebase-database.js"></script>
+<script src="/__/firebase/8.3.3/firebase-firestore.js"></script>
 
-    <!-- USING JQUERY TO ANIMATE SCROLL -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+<script src = "script/tabdisplay.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 1000);
-        })
-    </script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/8.1.1/firebase-app.js"></script>
-    <script src="/__/firebase/8.1.1/firebase-analytics.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
-    <script src="/__/firebase/8.3.3/firebase-firestore.js"></script>
+<!-- These scripts don't run on themselves when initialized,
+so they can be placed in front -->
+<script src="script/constants.js"></script>
+<script src="chatbot/script/chatbot-ui.js"></script>
+<script src="chatbot/script/likert-scale.js"></script>
+<script src="chatbot/script/history-tab.js"></script>
+<script src="chatbot/script/response-storage.js"></script>
+<script src="script/first_time_survey.js"></script>
+<script src="script/translation.js"></script>
+<script src="chatbot/script/exportCSV.js"></script>
 
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
-    <script src = "script/tabdisplay.js"></script>
+<!-- These scripts run their own thing on startup, so they should
+be placed at the back -->
+<script src="chatbot/script/chatbot-init.js"></script>
 
-    <!-- These scripts don't run on themselves when initialized,
-    so they can be placed in front -->
-    <script src="script/constants.js"></script>
-    <script src="chatbot/script/chatbot-ui.js"></script>
-    <script src="chatbot/script/likert-scale.js"></script>
-    <script src="chatbot/script/history-tab.js"></script>
-    <script src="chatbot/script/response-storage.js"></script>
-    <script src="script/first_time_survey.js"></script>
-    <script src="script/translation.js"></script>
+<!-- Translations -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
 
-    <!-- These scripts run their own thing on startup, so they should
-    be placed at the back -->
-    <script src="chatbot/script/chatbot-init.js"></script>
-
-    <!-- Translations -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js" type="text/javascript"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
-
-    </body>
+</body>
 </html>

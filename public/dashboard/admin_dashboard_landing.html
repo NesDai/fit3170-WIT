@@ -120,7 +120,24 @@
 
         <main class="mdl-layout__content">
           <section class="mdl-layout__tab-panel is-active" id="fixed-chatbot">
-            <div class="page-content"><!-- Your content goes here --></div>
+            <div class="page-content">
+              <div class = "mdl-grid">
+               <div class = "mdl-cell mdl-cell--4-col" id="usercard">
+                  <div class = "user-card mdl-card mdl-shadow--4dp ">
+                     <div class = "mdl-card__title ">
+                        <img src="css/images/chatbot_icon.png">
+                        <h2 class = "mdl-card__title-text ">Questions & Responses</h2>
+                     </div>
+                     <div class = "mdl-card__supporting-text">
+                        Get responses by questions from users, download data as a CSV file
+                     </div>
+                     <br class="desktop-br"> <br class="desktop-br">
+                     <div class = "mdl-card__actions mdl-card--border">
+                        <a class = "mdl-button mdl-button--colored mdl-js-button"  onclick='window.location.href = "chatbot_dashboard.html"'>view more</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
           </section>
           <section class="mdl-layout__tab-panel" id="fixed-recommender">
             <div class="page-content">
