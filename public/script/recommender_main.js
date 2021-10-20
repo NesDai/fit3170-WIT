@@ -726,7 +726,7 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
 
 
 /**
- * Function for YouTube player state chane event
+ * Function for YouTube player state change event
  * 
  * @param event: current video event
  * @return: none
@@ -778,6 +778,7 @@ setTimeout(()=>{
 // Fetch the analytics and store it every 10s
 let pauseCounter = 0; 
 let intervalTime = 10000;
+let watchCountFlag = false;  // flag to avoid updating watch count when duplicate records with start status are found in the data layer array
 
 let interval = setInterval(function (){
     let currentDataLayerEntry = dataLayer[dataLayer.length-1]  // From Google Tag Manager
@@ -794,12 +795,14 @@ let interval = setInterval(function (){
         }
 
         if(currentVideoAnalytics.videoStatus === 'start'){
-            updateWatchCount(playlist[currentVideoNumber])  // update watch count if user tapped play on video
-               
+            if(watchCountFlag === false){
+                updateWatchCount(playlist[currentVideoNumber]);  // update watch count if user tapped play on video
+                watchCountFlag = true;
+            }   
             pauseCounter = 0;  // reset pause counter
             saveAnalytics(currentVideoAnalytics, currentGTMUrl);
         }
-        else if(currentVideoAnalytics.videoStatus === 'pause' || currentVideoAnalytics.videoStatus === 'complete'){
+        else if(currentVideoAnalytics.videoStatus === 'pause'){
             pauseCounter += 1;
             if(pauseCounter < 13) {
                 saveAnalytics(currentVideoAnalytics, currentGTMUrl);
@@ -810,6 +813,13 @@ let interval = setInterval(function (){
         else if(currentVideoAnalytics.videoStatus === 'progress' || currentVideoAnalytics.videoStatus === 'seek'){
             pauseCounter = 0;  // reset pause counter 
             saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+        }
+        else if(currentVideoAnalytics.videoStatus === 'complete'){
+            watchCountFlag = false;
+            pauseCounter += 1;
+            if(pauseCounter < 13) {
+                saveAnalytics(currentVideoAnalytics, currentGTMUrl);
+            }
         }
     }
 }, intervalTime)
