@@ -148,4 +148,45 @@ function purgeUserResponses() {
         });
 
     });
+    delete_user_responses_in_response_branch()
+}
+
+function delete_user_responses_in_response_branch(){
+    let db = firebase.firestore();
+    let compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUESTION_IDS_TH];
+    let branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
+
+
+    for (let a = 0; a < branch_ids.length; a++) {
+        for (let b = 0; b < compiledQuestionIDs[a].length; b++) {
+            firebase.firestore().collection(QUESTIONS_BRANCHES[branch_ids[a]])
+                .doc(compiledQuestionIDs[a][b])
+                .get()
+                .then((docRef) => {
+                    let questionObject = docRef.data();
+                    let questionType = questionObject.type;
+                    switch (questionType) {
+                        // question object
+                        case TYPE_LONG_QUESTION:
+                            for (let i = 0; i < (questionObject.arrangement).length; i++) {
+                                let user_responses_query = db.collection(RESPONSE_BRANCH + '/' + questionObject.arrangement[i]).where('phone', '==', getUserID());
+                                user_responses_query.get().then(function (querySnapshot) {
+                                    querySnapshot.forEach(function (doc) {
+                                        doc.ref.delete();
+                                    });
+                                });
+                            }
+                            break;
+                        default:
+                            let user_responses_query = db.collection(RESPONSE_BRANCH + '/' + compiledQuestionIDs[a][b]).where('phone', '==', getUserID());
+                            user_responses_query.get().then(function (querySnapshot) {
+                                querySnapshot.forEach(function (doc) {
+                                    doc.ref.delete();
+                                });
+                            });
+                            break;
+                    }
+                });
+        }
+    }
 }
