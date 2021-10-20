@@ -1,12 +1,16 @@
-
-
-// Runs on page load to generate a table containing list of users
+/**
+ * Runs on page load to generate a table containing list of users
+ * 
+ * @param: none
+ * @return: none
+ */
 firebase.database().ref('users').once("value", function (snapshot) {
     let tableHtml = "";
     if (snapshot.exists()){
         tableHtml += `<tbody>`;
         let i = 0;
         snapshot.forEach((child)=>{
+            // If username is not available display preset username
             if (child.val().username == undefined){
                 tableHtml += 
                 `
@@ -39,9 +43,13 @@ firebase.database().ref('users').once("value", function (snapshot) {
     }
 });
 
-
-// Fires when a specific user has been selected
-// Shows the table containing the videos that the user selected had watched
+/**
+ * Fires when a specific user has been selected
+ * Shows the table containing the ideos that the user selected had watched
+ * 
+ * @param phoneNum: Phone number of the user selected 
+ * @return: none
+ */
 function updateVideoList(phoneNum){
     $('#pieChart1').show();
     $('#pieChart2').show();
@@ -63,7 +71,13 @@ function updateVideoList(phoneNum){
     })
 }
 
-// Generates the html for the video list table
+/**
+ * Generates the html for the video list table
+ * 
+ * @param videoDetails: Details of the video
+ * @param phoneNum: Phone number of the user selected
+ * @return: none
+ */
 function buildVideoListTable(videoDetails, phoneNum){
     if (videoDetails == null){
         $('#videoListBody').html("No data available");
@@ -113,20 +127,33 @@ function buildVideoListTable(videoDetails, phoneNum){
         }
 
         videoListTableHtml += `</tbody>`;
+        // Updates the page with the video lists with jquery
         $('#videoListTable').html(videoListTableHtml);
     }
     
 }
 
+/**
+ * Converts time in seconds (e.g 300 seconds) to minutes (e.g. 2.39 minutes)
+ * 
+ * @param totalSeconds The time in seconds to be converted
+ * @return The converted time in minutes as a string
+ */
 // Converts time in seconds only to minute and seconds
 function convertSecToMin(totalSeconds){
     let minutes = Math.floor(totalSeconds/60);
-    let seconds = totalSeconds- minutes*60;
+    let seconds = (totalSeconds- minutes*60)/60;
     let result = `${minutes}.${seconds}`;
     return result
 }
 
-// Generates video analytics table that contains specific analytics details on a specific video the user had watched before
+/**
+ * Generates video analytics table that contains specific analytics details on a specific video the user had watched before
+ * 
+ * @param phoneNum Phone number of user that the video analytics is about
+ * @return none
+ */
+
 function updateVideoAnalyticsTable(phoneNum, i){
     $('#videoAnalyticContainer').show();
 
@@ -143,6 +170,7 @@ function updateVideoAnalyticsTable(phoneNum, i){
             videoAnalyticsDetails.videoDuration = convertSecToMin(videoAnalyticsDetails.videoDuration);
             videoAnalyticsDetails.videoElapsedTime = convertSecToMin(videoAnalyticsDetails.videoElapsedTime);
 
+            //Builds html for the page using the video analytics information
             let videoAnalyticsTableHtml = `
             <table class="table table-bordered">
                 <tr>
@@ -177,6 +205,7 @@ function updateVideoAnalyticsTable(phoneNum, i){
 
             </table>
             `;
+            // Updates page with jquery
             $("#videoAnalyticsTitle").html(`Video Analytics of #${i}`)
             $("#videoAnalyticsTable").html(videoAnalyticsTableHtml);
 
@@ -189,15 +218,21 @@ function updateVideoAnalyticsTable(phoneNum, i){
 
 }
 
-// Generates two pie charts
+/**
+ * Generates two pie charts for the dashboard
+ * 
+ * @param phoneNum Phone number of the user
+ * @return none
+ */
 function generatePieChart(phoneNum){
-    // $('#graphContainer').show();
+
     //20 pre-generated colors
     let backgroundColors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'];
     
     let labels = [];
     let data = [];
 
+    // Generate the first pie chart for favourites of the user
     firebase.database().ref(`users/+${phoneNum}/videoFavourite`).once("value", function(snapshot){
         if (snapshot.exists()){
             snapshot.forEach((video)=>{
@@ -214,6 +249,7 @@ function generatePieChart(phoneNum){
 
             let backgroundColor = backgroundColors.splice(0, labels.length);
 
+            // Generating pie chart
             new Chart("chart2",{
                 type: "doughnut",
                 data: {
@@ -232,6 +268,7 @@ function generatePieChart(phoneNum){
     let labelsHist = [];
     let dataHist = [];
 
+    // Generates the second pie chart for the watch history of the user
     firebase.database().ref(`users/+${phoneNum}/videoHistory`).once("value", function(snapshot){
         if (snapshot.exists()){
             snapshot.forEach((video)=>{
@@ -248,6 +285,7 @@ function generatePieChart(phoneNum){
 
             let backgroundColor = backgroundColors.splice(0, labelsHist.length);
 
+            // Generating pie chart
             new Chart("chart1",{
                 type: "doughnut",
                 data: {
@@ -262,7 +300,4 @@ function generatePieChart(phoneNum){
             })
         }
     });
-
-
-
 }
