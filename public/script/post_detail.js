@@ -560,8 +560,23 @@ function removePost() {
         let post = snapshot.val();
         //checks whether the user has created the post
         if (post["userID"] == current_user["phone"]) {
-            firebase.database().ref(`posts/${post_id}`).remove();
-            window.location = "forum.html";
+            firebase.database().ref('comments').orderByChild('postID').equalTo(post_id).once("value").then(comments => {
+                comments.forEach(comment => {
+                    comment_id = comment.key;
+                    firebase.database().ref(`likesComments/${comment_id}`).remove();
+                    firebase.database().ref(`comments/${comment_id}`).remove();
+                    firebase.database().ref('replies').orderByChild('reply_comment_parent').equalTo(comment_id).once("value").then(replies => {
+                        replies.forEach(reply => {
+                            firebase.database().ref(`replies/${reply.key}`).remove();
+                        })
+                    });
+
+                });
+            }).then(() => {
+                firebase.database().ref(`likesDislikes/${post_id}`).remove();
+                firebase.database().ref(`posts/${post_id}`).remove();
+                window.location = "forum.html";
+            });
         } else {
             alert("Only this post's owner can delete this post");
         }
