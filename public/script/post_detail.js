@@ -554,33 +554,39 @@ async function addComment() {
  * before proceeding with deleting the post
  * @returns none
  */
-function removePost() {
+async function removePost() {
+    let creator = false;
     let post_id = params.get('post_id');
-    firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
+    await firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
         let post = snapshot.val();
         //checks whether the user has created the post
         if (post["userID"] == current_user["phone"]) {
-            firebase.database().ref('comments').orderByChild('postID').equalTo(post_id).once("value").then(comments => {
-                comments.forEach(comment => {
-                    comment_id = comment.key;
-                    firebase.database().ref(`likesComments/${comment_id}`).remove();
-                    firebase.database().ref(`comments/${comment_id}`).remove();
-                    firebase.database().ref('replies').orderByChild('reply_comment_parent').equalTo(comment_id).once("value").then(replies => {
-                        replies.forEach(reply => {
-                            firebase.database().ref(`replies/${reply.key}`).remove();
-                        })
-                    });
-
-                });
-            }).then(() => {
-                firebase.database().ref(`likesDislikes/${post_id}`).remove();
-                firebase.database().ref(`posts/${post_id}`).remove();
-                window.location = "forum.html";
-            });
-        } else {
-            alert("Only this post's owner can delete this post");
+            creator = true;
         }
     });
+    if (!creator){
+        alert("Only this post's owner can delete this post");
+    }
+    await firebase.database().ref('comments').orderByChild('postID').equalTo(post_id).once("value").then(comments => {
+        comments.forEach(comment => {
+            comment_id = comment.key;
+            firebase.database().ref(`likesComments/${comment_id}`).remove();
+            firebase.database().ref(`comments/${comment_id}`).remove();
+            firebase.database().ref('replies').orderByChild('reply_comment_parent').equalTo(comment_id).once("value").then(replies => {
+                replies.forEach(reply => {
+                firebase.database().ref(`replies/${reply.key}`).remove();
+                })
+            });
+        });
+        }).then(() => {
+             // remove the replies
+             // remove comment upvotes
+            firebase.database().ref(`likesDislikes/${post_id}`).remove(); // remove likes and dislikes on this post
+            firebase.database().ref(`posts/${post_id}`).remove().then(()=>{
+                    window.location = "forum.html";
+             }); // remove the post
+              
+            });
 }
 
 /**
