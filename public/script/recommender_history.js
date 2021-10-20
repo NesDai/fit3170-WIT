@@ -1,8 +1,14 @@
 document.addEventListener('DOMContentLoaded', showHistoryTable(), false);
 
 
-// From the selected preferences, randomly select a video ID for the player
-// This would be replaced with code for the content library + details from user account, currently just for show
+/**
+Description:
+From the selected preferences, randomly select a video ID for the player
+This would be replaced with code for the content library + details from user account, currently just for show
+
+@params: none
+@returns: A set selected topics dictionary
+**/
 function getTopic(){
   var preferenceList = ["Cooking", "Sports", "Music", "Travel"];
   var i = Math.floor(Math.random() * preferenceList.length);
@@ -18,8 +24,13 @@ function getTopic(){
 
 }
 
+/**
+Description:
+Function to populate history page table, recovering data from firebase and presenting it via MDL grid
 
-// Function to populate history page table
+@params: none
+@returns: none
+**/
 function showHistoryTable(){
   console.log("Show history grid ran.");
   let current_user = JSON.parse(localStorage.getItem("USER"));
@@ -134,7 +145,13 @@ function showHistoryTable(){
   })
 }
 
+/**
+Description:
+Deletes the user's entire watch history from the screen and from firebase
 
+@params: none
+@returns: none
+**/
 function deleteAllHistory(){
   if(confirm("Are you sure you want to delete your entire watch history?")){
     console.log("All history deleted.");
@@ -146,7 +163,14 @@ function deleteAllHistory(){
   }
 }
 
-// Function to remove a video from history
+/**
+Description:
+Removes a specific video from the user's watch history
+
+@params:
+  - currentVideoUrl: The URL of the video being deleted
+@returns: none
+**/
 function removeFromHistory(currentVideoUrl){
     let current_user = JSON.parse(localStorage.getItem("USER"));
 
@@ -164,7 +188,16 @@ function removeFromHistory(currentVideoUrl){
     })
 }
 
-// Function to update watch history of specific user in database
+/**
+Description:
+Function to update watch history of a specific user on firebase
+
+@params:
+  - video_list: The modified list of videos which will replace the one currently present on firebase
+  - current_user: The current logged in user
+  - child_name: The child section of the 'users' parent on firebase where the data will be replaced
+@returns: none
+**/
 function updateFirebase(video_list, current_user, child_name){
     firebase.database().ref('users').child(`${current_user.phone}`).child(child_name).set(
         video_list
@@ -175,6 +208,16 @@ function updateFirebase(video_list, current_user, child_name){
     })
 }
 
+/**
+Description:
+Checks to see whether the given url is in the given list and returns the index
+
+@params:
+  - url: The URL being searched for
+  - urlList: The URL list which is being searched
+@returns:
+  - i: The index at which the URL being searched for was found
+**/
 function compareUrl(url, urlList){
   // check if first arg is in the second arg list
   // return index in urlList if found else -1
@@ -182,23 +225,39 @@ function compareUrl(url, urlList){
   for (let i = 0; i < urlList.length; i++){
     if (url == urlList[i]){
       return i;
-    } 
+    }
   }
   return -1;
 }
 
+/**
+Description:
+Gets the videoID of the given video URL
+
+@params:
+  - videoURL: The URL being searched for
+@returns:
+  - videoId: The videoID of the URL given
+**/
 function getVideoId(videoURL){
   var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
 
   videoId = videoURL.match(rx);
-  
+
   return videoId[1];
 }
 
+/**
+Description:
+Convert urls from firebase history list and convert them into standard object
+to use in recomemder main page for redirected videos
+from history page to reco main page filling in infomation from post
+
+@params: none
+@returns: none
+**/
 function updateHistoryList(){
-  // Convert urls from firebase history list and convert them into standard object 
-  // to use in recomemder main page for redirected videos
-  // from history page to reco main page filling in infomation from post
+
   firebase.database().ref("posts").once('value').then((snapshot) => {
     let urlList = JSON.parse(localStorage.getItem("historyList"));
     if (snapshot.exists()) {
@@ -206,7 +265,7 @@ function updateHistoryList(){
       for (let i = 0; i<urlList.length; i++){
         lst.push(null);
       }
-      // localStorage.setItem("temp", JSON.stringify(lst));    
+      // localStorage.setItem("temp", JSON.stringify(lst));
       // lst = JSON.parse(localStorage.getItem("temp"));
       let check = null;
         snapshot.forEach(function(childSnap){
@@ -233,28 +292,35 @@ function updateHistoryList(){
   })
 }
 
+/**
+Description:
+add the video from history to show history video,
+and when redirected the next will still recommend from current playlist
+while the back still shows last video played.
+
+@params:
+  - id: the id of the video being shifted
+@returns: none
+**/
 function shiftPlaylist (id){
   // alert(id)
-  // add the video from history to show history video, 
-  // and when redirected the next will still recommend from current playlist 
-  // while the back still shows last video played.
+
   let playlist = JSON.parse(localStorage.getItem("playlist"));
   let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
   let temp = JSON.parse(localStorage.getItem("temp"));
-  
+
   let tempLst = [];
   let atVideo = currentVideoNumber;
   for (let i = 0; i < playlist.length; i++){
     tempLst.push(playlist[i]);
     if (i == atVideo) {
-      
-      
+
+
 
       tempLst.push(temp[id]);
       currentVideoNumber+=1;
     }
   }
   localStorage.setItem("playlist", JSON.stringify(tempLst));
-  localStorage.setItem("currentVideoNumber", JSON.stringify(currentVideoNumber)); 
+  localStorage.setItem("currentVideoNumber", JSON.stringify(currentVideoNumber));
 }
-
