@@ -63,6 +63,7 @@ body {
         display:inline-block;
         border: solid black 3px;
         border-radius: 25px;
+        font-weight: bold;
 
         /* position: relative; */
       }
@@ -111,10 +112,11 @@ body {
 
       .workspaceheader {
         /* border: 5px solid black; */
-        margin-top: 10px;
+        /* margin-top: 10px; */
         position: relative;
         /* height: 100%; */
-        width: 98%;
+        width: 100%;
+        margin: auto; /*center align */
         display: none;
       }
 
@@ -336,29 +338,22 @@ body {
 
     <!-- TODO: Enable First Input Delay polyfill library. -->
   </head>
-  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-    <!-- Header section -->
-    <header class="mdl-layout__header">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <!-- Header section -->
+      <header class="mdl-layout__header mdl-color-text--white notranslate" id='topheader'>
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-          <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-            <h3>Favourite</h3>
-              <a class="mdl-navigation__link" href="recommender_Ui.html">
-              <!-- <button class="mdl-button mdl-js-button mdl-button--raised">Return</button> -->
-            </a>
-          </div>
-          <div id="user-container">
-            <div hidden id="user-pic"></div>
-            <div hidden id="user-name"></div>
-            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-              Sign-out
-            </button>
-            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-              <i class="material-icons">account_circle</i>Sign-in with Google
-            </button>
-          </div>
+           <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+            <h3> Favourite </h3>
+              <div class="mdl-layout-spacer"></div>
+              <nav class="mdl-navigation" style="left: 45px; position: relative;">
+                 <a class="mdl-navigation__link" href="main_page.html">
+                     <img src="./css/images/smaller_home.png" style="width: 110px;
+                     height: 100px;">
+                 </a>
+               </nav>
+           </div>
         </div>
-      </header>
+     </header>
 
       <div class="mdl-layout__drawer">
         <br>
@@ -420,21 +415,40 @@ body {
     </div>
   </div>
 
-  <body>
+  <body style="background-color: #f5f5f5;">
     
     <div class = workspace >
       <div class = favVideoPg id="favVideo">
         <div id="favVideoPlayer"></div>
       </div>
       
+      <!-- Tab navigation -->
+      <div class="container">
+        <div class="tabs">
+        
+           <!-- Recommender tab -->
+           <input type="checkbox" id="radio-0" name="tabs" value="Recommender" onclick='window.location.href = "recommender_Ui.html"' checked/>
+           <label class="tab" for="radio-0" id="tab1"><b><img src="./css/images/recommender_icon.png" style="height:22px">Recom&shy;mender</b></label>
+
+           <!-- History tab -->
+           <input type="checkbox" id="radio-1" name="tabs" value="History" onclick='window.location.href = "recommender_history_Ui.html"' checked/>
+           <label class="tab" for="radio-1" id="tab1"><b><img src="./css/images/history_icon.png" style="height:22px">History</b></label>
+
+           <!-- Edit skill selection tab -->
+           <input type="checkbox" id="radio-2" name="tabs" value="Edit_skill" onclick='window.location.href = "recommender_select_skills.html"'/>
+           <label class="tab" for="radio-2" id="tab2"><b><img src="./css/images/create_post_icon.png" style="height: 22px; width: 15%">Edit skill selection</b></label>
+
+
+           <span class="glider"></span>
+        </div>
+      </div>
+      <br>
+      
       <!-- return and delete -->
       <div class="row">
         <div class="col-9">
-          <a class="mdl-navigation__link" href="recommender_Ui.html">
-            <button class="mdl-button mdl-js-button mdl-button--raised">Return</button>
-          </a>
           <a class="mdl-navigation__link"> <!-- onclick goes here -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="deleteAllFav()">Delete All Favourite</button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onclick="deleteAllFav()" style="margin-left: 30px;">Delete All Favourite</button>
           </a>
         </div>
       </div>
@@ -446,11 +460,13 @@ body {
        -->
 
       <!-- Sort -->
-      <button id="favSortBtn" class="mdl-button mdl-js-button mdl-button--raised" onclick="show_sort()">Sort by interest</button>
+      <button id="favSortBtn" class="mdl-button mdl-js-button mdl-button--raised" onclick="show_sort()" style="margin-left: 30px; margin-top: 10px;background-color: #006dae; color: white;">Sort by interest</button>
 
       <!-- <button id="favSortBtn" onclick="show_sort()">Sort by interest</button> -->
       <div id="sortingArea" class="workspaceheader" style="overflow: scroll; display: none;">
-        <button class="mdl-button mdl-js-button mdl-button--raised" onclick="filter()">Filter</button>
+        <div>
+          <button class="mdl-button mdl-js-button mdl-button--raised" onclick="filter()" style="left: 30px; margin-top: 10px;background-color: #006dae; color: white;">Filter</button>
+        </div>
       </div>
 
       <!-- <button id="favSortBtn" onclick="show_sort()">Sort by interest</button> -->

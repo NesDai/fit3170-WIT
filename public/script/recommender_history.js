@@ -41,86 +41,88 @@ function showHistoryTable(){
           let count = -1;
 
           for (i in currentHistory){
-            count += 1;
-            currentVideo = currentHistory[i];
-            historyList.push(currentVideo.videoUrl);
-            localStorage.setItem("historyList", JSON.stringify(historyList));
+            if(currentHistory[i].totalWatchCount !== 0){
+              count += 1;
+              currentVideo = currentHistory[i];
+              historyList.push(currentVideo.videoUrl);
+              localStorage.setItem("historyList", JSON.stringify(historyList));
 
-            $(document).ready(function() {
+              $(document).ready(function() {
 
-              console.log("second success callback");
-              title = currentVideo.videoTitle;
+                console.log("second success callback");
+                title = currentVideo.videoTitle;
 
-              // Grid implementation
+                // Grid implementation
 
-              cell = document.createElement("div");
-              cell.className = "mdl-cell mdl-cell--6-col";
+                cell = document.createElement("div");
+                cell.className = "mdl-cell mdl-cell--6-col";
 
-              card = document.createElement("div");
-              card.className = "demo-card-wide mdl-card mdl-shadow--2dp";
-              card.style.height = "400px";
+                card = document.createElement("div");
+                card.className = "demo-card-wide mdl-card mdl-shadow--2dp";
+                card.style.height = "400px";
 
-              cardTitle = document.createElement("div");
-              cardTitle.className = "mdl-card__title";
-              cardTitle.style.background = "url(" + currentVideo.videoThumbnail + ") center / cover";
-              cardTitle.style.height = "300px";
-              console.log(currentVideo.videoThumbnail);
+                cardTitle = document.createElement("div");
+                cardTitle.className = "mdl-card__title";
+                cardTitle.style.background = "url(" + currentVideo.videoThumbnail + ") center / cover";
+                cardTitle.style.height = "300px";
+                console.log(currentVideo.videoThumbnail);
 
-              card.appendChild(cardTitle);
+                card.appendChild(cardTitle);
 
-              cardSupport_1 = document.createElement("div");
-              cardSupport_1.className = "mdl-card__supporting-text";
-              cardSupport_1.innerHTML = currentVideo.videoUrl;
-              cardSupport_1.style.display = "none";
-              cardSupport_1.style.height = "1px";
-              card.appendChild(cardSupport_1);
+                cardSupport_1 = document.createElement("div");
+                cardSupport_1.className = "mdl-card__supporting-text";
+                cardSupport_1.innerHTML = currentVideo.videoUrl;
+                cardSupport_1.style.display = "none";
+                cardSupport_1.style.height = "1px";
+                card.appendChild(cardSupport_1);
 
-              cardSupport_2 = document.createElement("div");
-              cardSupport_2.className = "mdl-card__supporting-text";
-              cardSupport_2.innerHTML = title;
-              card.appendChild(cardSupport_2);
+                cardSupport_2 = document.createElement("div");
+                cardSupport_2.className = "mdl-card__supporting-text";
+                cardSupport_2.innerHTML = title;
+                card.appendChild(cardSupport_2);
 
-              cardAction = document.createElement("div");
-              cardAction.className = "mdl-card__actions mdl-card--border";
-              cardActionButton_1 = document.createElement("a");
-              cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
-              cardActionButton_1.innerHTML = "VIEW";
-              cardActionButton_1.id = count;
-              cardAction.appendChild(cardActionButton_1);
+                cardAction = document.createElement("div");
+                cardAction.className = "mdl-card__actions mdl-card--border";
+                cardActionButton_1 = document.createElement("a");
+                cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
+                cardActionButton_1.innerHTML = '<img src="./css/images/eye_icon.png" style="height:32px">'; // view
+                cardActionButton_1.id = count;
+                cardAction.appendChild(cardActionButton_1);
 
-              cardActionButton_1.addEventListener('click', function(){
-                // var row = this.parentElement.parentElement;
-                // var url = row.getElementsByTagName("div")[1].innerHTML;
-                // console.log(url);
-                // window.open(url, '_blank').focus();
-                shiftPlaylist(this.id);
-                window.location.replace("recommender_Ui.html");
-              }, false);
+                cardActionButton_1.addEventListener('click', function(){
+                  // var row = this.parentElement.parentElement;
+                  // var url = row.getElementsByTagName("div")[1].innerHTML;
+                  // console.log(url);
+                  // window.open(url, '_blank').focus();
+                  shiftPlaylist(this.id);
+                  window.location.replace("recommender_Ui.html");
+                }, false);
 
-              cardActionButton_2 = document.createElement("a");
-              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
-              cardActionButton_2.innerHTML = "DELETE";
-              cardAction.appendChild(cardActionButton_2);
+                cardActionButton_2 = document.createElement("a");
+                cardActionButton_2.className = "mdl-button mdl-button--colored mdl-js-button";
+                cardActionButton_2.innerHTML = '<img src="./css/images/delete_icon.png" style="height:32px">'; //delete
+                cardAction.appendChild(cardActionButton_2);
 
-              cardActionButton_2.addEventListener('click', function(){
-                if(confirm("Are you sure you want to delete this entry?")){
-                  console.log("Deleted an entry.");
-                  var row = this.parentElement.parentElement;
-                  console.log("Row index: " + row.rowIndex);
-                  var url = row.getElementsByTagName("div")[1].innerHTML;
-                  console.log(url);
-                  var cell = this.parentElement.parentElement.parentElement;
-                  console.log(cell);
-                  removeFromHistory(url);
-                  cell.remove();
-                };
-              }, false);
+                cardActionButton_2.addEventListener('click', function(){
+                  if(confirm("Are you sure you want to delete this entry?")){
+                    console.log("Deleted an entry.");
+                    var row = this.parentElement.parentElement;
+                    console.log("Row index: " + row.rowIndex);
+                    var url = row.getElementsByTagName("div")[1].innerHTML;
+                    console.log(url);
+                    var cell = this.parentElement.parentElement.parentElement;
+                    console.log(cell);
+                    removeFromHistory(url);
+                    cell.remove();
+                  };
+                }, false);
 
-              card.appendChild(cardAction);
+                card.appendChild(cardAction);
 
-              cell.appendChild(card);
-              grid.appendChild(cell);
-            })
+                cell.appendChild(card);
+                grid.appendChild(cell);
+              })
+            }
           }
       }
 

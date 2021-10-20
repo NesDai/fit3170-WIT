@@ -1,97 +1,109 @@
-// Activated when "Rate" is pressed, transitioning the users to the screen where they will rate their last recommendation
-function transitionRatePage() {
-    // Adjust header to mention to Rate
-    var upperSectionHeader = document.getElementById("upperSectionHeader");
-    upperSectionHeader.innerHTML = "Did you like our recommendation?";
-
-    //var upperSectionSubHeader = document.getElementById("upperSectionSubHeader");
-    //upperSectionSubHeader.innerHTML = "Please let us know";
-
-    // Adjust middle to display rate positive/negative symbols
-    document.getElementById("videoOutput").style = "display: none";
-    document.getElementById("videoDescription").style = "display: none";
-
-    document.getElementById("positiveImage").style = "height: 5%; width: 5%; display: inline";
-    document.getElementById("negativeImage").style = "height: 5%; width: 5%; display: inline";
-
-    // Add buttons which transition either back or to the next video
-    document.getElementById("rateButton").style = "display: none";
-    document.getElementById("nextButton").style = "display: inline";
-    document.getElementById("backButton").style = "display: inline";
-}
-
-// Run after new video is displayed, check all icon (fav, like, dislike...)
-function checkIcon() {
-    // TODO like and dislike btn check
-
-    // For some reason this dont work
-    // let current_color = document.getElementById("favoriteIcon").style.color;
-    // console.log(current_color)
-
-    // load fav list from db and compare title with current vid
-    firebase.database().ref('users').child(`${current_user.phone}/videoFavourite`).once("value", function (snapshot) {
-        // console.log(snapshot.val().length);
-        let title = document.getElementById("videoDescription");
-        let btn = document.getElementById("favoriteIcon");
-        // console.log(title.innerHTML);
-
-        let ss = snapshot.val();
-
-        let found = false;
-        for (let i = 0; i < ss.length; i++) {
-            // console.log(i)
-            // console.log(title.innerHTML);
-            // console.log(ss[i]["videoTitle"]);
-            if (title.innerHTML == ss[i]["videoTitle"]) {
-                btn.innerHTML = `<img src="./css/images/button-designs_28.png" style="height:80%"></img>`
-                found = true
-                break
-            }
-        }
-
-        if (found == false) {
-            btn.innerHTML = `<img src="./css/images/button-designs_25.png" style="height:80%"></img>`
-        }
-    })
-}
-
-// Executes when the user gives a positive rating
+/**
+ * Function that executes when the user selects the like button
+ * 
+ * @param: none
+ * @return: none
+ */
 function positiveRating() {
-    //TODO add recomender update here
-
+    // Get like/dislike buttons
     let likeBtn = document.getElementById("positiveRating")
     let dislikeBtn = document.getElementById("negativeRating")
 
-    // Remove Like
+    let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
+
+    // Remove the selection of the like button
     if (likeBtn.innerHTML == `<img src="./css/images/button-designs_17.png" style="height:80%">`) {
         likeBtn.innerHTML = `<img src="./css/images/button-designs_23.png" style="height:80%">`
+
+        updateLikeDislike(playlist[currentVideoNum], 'none')
     }
-    // Like
+    // Change colour of the like button
     else {
         likeBtn.innerHTML = `<img src="./css/images/button-designs_17.png" style="height:80%">`
         dislikeBtn.innerHTML = `<img src="./css/images/button-designs_24.png" style="height:80%">`
+
+        updateLikeDislike(playlist[currentVideoNum], 'like')
     }
+    
 }
 
-// Executes when the user gives a negative rating
-function negativeRating() {
-    //TODO add recomender update here
 
+/**
+ * Function that executes when the user selects the dislike button
+ * 
+ * @param: none
+ * @return: none
+ */
+function negativeRating() {
+    // Get like/dislike buttons
     let likeBtn = document.getElementById("positiveRating")
     let dislikeBtn = document.getElementById("negativeRating")
 
-    // Remove dislike
+    let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
+
+    // Remove selection of the dislike button
     if (dislikeBtn.innerHTML == `<img src="./css/images/button-designs_18.png" style="height:80%">`) {
         dislikeBtn.innerHTML = `<img src="./css/images/button-designs_24.png" style="height:80%">`
+
+        console.log("Remove dislike")
+        updateLikeDislike(playlist[currentVideoNum], 'none')
     }
-    // Dislike
+    // Change colour of the dislike button
     else {
         dislikeBtn.innerHTML = `<img src="./css/images/button-designs_18.png" style="height:80%">`
         likeBtn.innerHTML = `<img src="./css/images/button-designs_23.png" style="height:80%">`
+
+        console.log("Dislike")
+        updateLikeDislike(playlist[currentVideoNum], 'dislike')
     }
+    
 }
 
-// Executes when the user clicks the favourite button (for adding a video to their favourites list)
+
+/**
+ * Function that runs after a new video is displayed to check if favourite, like and dislike icons 
+ * should be already selected
+ * If it is, the corresponding icon should be coloured to indicate the user has liked/disliked/added to favourites
+ * 
+ * @param: none
+ * @return: none
+ */
+ function checkLikeDislikeStatus() {
+    /* Like and dislike icons check */
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+        let likeBtn = document.getElementById("positiveRating")
+        let dislikeBtn = document.getElementById("negativeRating")
+
+        let ss = snapshot.val();
+        let title = document.getElementById("videoDescription");
+
+        for (let i = 0; i < ss.length; i++) {
+            if (title.innerHTML === ss[i]["videoTitle"]) {
+                if(ss[i]["like"] === true){
+                    likeBtn.innerHTML = `<img src="./css/images/button-designs_17.png" style="height:80%"></img>`
+                }
+                else if(ss[i]["dislike"] === true){
+                    dislikeBtn.innerHTML = `<img src="./css/images/button-designs_18.png" style="height:80%"></img>`
+                }
+                else{
+                    likeBtn.innerHTML = `<img src="./css/images/button-designs_23.png" style="height:80%"></img>`
+                    dislikeBtn.innerHTML = `<img src="./css/images/button-designs_24.png" style="height:80%"></img>`
+                }
+
+            }
+        }
+
+
+    })
+
+}
+
+/**
+ * Function that executes when the user clicks the favourite button (for adding a video to their favourites list)
+ * 
+ * @param: none
+ * @return: none
+ */
 function favoriteRating() {
     let current_color = document.getElementById("favoriteIcon").style.color;
     let snackbarContainer = document.querySelector('#messagePopUp');
@@ -119,45 +131,35 @@ function favoriteRating() {
     }
 }
 
-// From the selected preferences, randomly select a video ID for the player
-// This would be replaced with code for the content library + details from user account, currently just for show
-function getTopic() {
-    var preferenceList = ["Cooking", "Sports", "Music", "Travel"];
-    var i = Math.floor(Math.random() * preferenceList.length);
-    var chosen = preferenceList[i];
-
-    var topicDictionary = {};
-    topicDictionary['Cooking'] = "7EnWiGYT1g4";
-    topicDictionary['Sports'] = "p3c6L81HLAQ";
-    topicDictionary['Music'] = "v=oHg5SJYRHA0";
-    topicDictionary['Travel'] = "ODuEl4oNae0";
-
-    return topicDictionary[chosen]
-
-}
-
-// Function to add video to favourites
+/**
+ * Function to add a video to favourites and storing data on how many times each video has 
+ * been favourited cumulatively into Firebase
+ * 
+ * @param currentVideoInfo: data of the video that is currently shown
+ * @return: none
+ */
 function addToFavourite(currentVideoInfo) {
-    let current_user = JSON.parse(localStorage.getItem("USER"));
+    let current_user = JSON.parse(localStorage.getItem("USER"));  // get user details from local storage
     let currentVideo = {
         videoUrl: currentVideoInfo.videoUrl,
         videoThumbnail: currentVideoInfo.videoThumbnail,
         videoTitle: currentVideoInfo.title,
         videoPreference: currentVideoInfo.interest
     }
-
+    
+    // Get video id from the embed url
     let videoUrlEnd = currentVideo.videoUrl.split("https://www.youtube.com/embed/");
     videoUrlEnd = videoUrlEnd[1];
     console.log(videoUrlEnd);
 
     let time = Date.now();
 
-    // Retrieves the currently stored watch history
+    // Retrieves the currently list of favourites
     firebase.database().ref('users').child(`${current_user.phone}/videoFavourite/`).once("value", function (snapshot) {
         let currentFavourites = []
         let videoExist = false
 
-        // If favourite is not empty and video already exists in history, set videoExist to true
+        // If favourite is not empty and video already exists, set videoExist to true
         if (snapshot.exists()) {
             currentFavourites = snapshot.val();
             for (i in currentFavourites) {
@@ -167,15 +169,15 @@ function addToFavourite(currentVideoInfo) {
             }
         }
 
-        // Add video url to history only if video doesn't exist
+        // Add video url to favourite only if video doesn't exist
         if (videoExist != true) {
             currentFavourites.push(currentVideo);
             updateFirebase(currentFavourites, current_user, 'videoFavourite');
         }
     })
-
+    
+    // Storing data on how many times each video has been favourited, cumulatively into Firebase
     current_user["time"] = time;
-    //Storing data on how many times each video has been favourited, cumulatively
     firebase.database().ref('recommenderData').child(`favourite/`).once("value", function (snapshot) {
         if (snapshot.exists()) {
             currentFavourites = snapshot.val();
@@ -183,7 +185,7 @@ function addToFavourite(currentVideoInfo) {
             if (currentFavourites[videoUrlEnd] != undefined){
                 // If the user has not previously favourited this video
                 if (currentFavourites[videoUrlEnd].favouritedUsers[current_user.phone] == undefined){
-                    currentFavourites[videoUrlEnd].favouritedAmmount += 1;
+                    currentFavourites[videoUrlEnd].favouritedAmount += 1;
                     currentFavourites[videoUrlEnd].favouritedUsers[current_user.phone] = current_user;
                 }
             }
@@ -193,7 +195,7 @@ function addToFavourite(currentVideoInfo) {
                 let user = {}
                 user[current_user.phone] = current_user;
                 let newFavourite = {
-                    favouritedAmmount: 1,
+                    favouritedAmount: 1,
                     preferenceType: currentVideo.videoPreference,
                     favouritedUsers: user
                 }
@@ -201,7 +203,7 @@ function addToFavourite(currentVideoInfo) {
                 currentFavourites[videoUrlEnd] = newFavourite;
             }
 
-            // Setting changes on firebase
+            // Setting changes on Firebase
             console.log(currentFavourites);
             firebase.database().ref('recommenderData/favourite').set(
                 currentFavourites
@@ -256,8 +258,15 @@ function addToFavourite(currentVideoInfo) {
     })
 }
 
+
+/**
+ * Function to check if a video has been favourited before and display the correct icon
+ * 
+ * @param currentVideoUrl: the embed url of the current video
+ * @return: none
+ */
 function checkFavoriteStatus(currentVideoUrl) {
-    let current_user = JSON.parse(localStorage.getItem("USER"));
+    let current_user = JSON.parse(localStorage.getItem("USER"));  // get user details from local storage
 
     firebase.database().ref('users').child(`${current_user.phone}/videoFavourite/`).once('value', function (snapshot) {
         if (snapshot.exists()) {
@@ -278,7 +287,14 @@ function checkFavoriteStatus(currentVideoUrl) {
     })
 }
 
-// Function to remove a video from favourites
+
+
+/**
+ * Function to remove a video from favourites
+ * 
+ * @param currentVideoUrl: the embed url of the current video
+ * @return: none
+ */
 function removeFromFavourite(currentVideoUrl) {
     let current_user = JSON.parse(localStorage.getItem("USER"));
 
@@ -296,7 +312,15 @@ function removeFromFavourite(currentVideoUrl) {
 
 }
 
-// Function to update watch history of specific user in database
+
+/**
+ * Function to update data of a child path in Firebase
+ * 
+ * @param video_list: the list of videos based on the current category/skill/preference/etc chosen by the user
+ * @param current_user: the current active/logged in user
+ * @param child_name: the relative path used in Firebase (e.g. videoHistory)
+ * @return: none
+ */
 function updateFirebase(video_list, current_user, child_name) {
     firebase.database().ref('users').child(`${current_user.phone}`).child(child_name).set(
         video_list
@@ -307,20 +331,28 @@ function updateFirebase(video_list, current_user, child_name) {
         })
 }
 
-// Function to update description based on current video
+
+/**
+ * Function to update description based on current video
+ * 
+ * @param description: the title/description of the video
+ * @return: none
+ */
 function updateDescription(description) {
     document.getElementById('videoDescription').innerHTML = description;
 }
 
-// Function to check whether user completed survey or not
-function checkForPreference() {
-    let phoneNum = "";
-    let current_user = JSON.parse(localStorage.getItem("USER"));
-    phoneNum = current_user['phone'];
-    let stringPath = "users/" + phoneNum;
-    let userRef = firebase.database().ref(stringPath);
-    let db = firebase.firestore();
 
+/**
+ * Function to check if the user has selected a skill/preference prior to going to the recommender_Ui (video player)
+ * 
+ * @param: none
+ * @return: none
+ */
+function checkForPreference() {
+    let current_user = JSON.parse(localStorage.getItem("USER"));  // get user details from local storage 
+    let phoneNum = current_user['phone'];
+    let stringPath = "users/" + phoneNum;
 
     firebase.database().ref(stringPath + "/preferences").once('value').then((snapshot) => {
         if (snapshot.exists()) {
@@ -338,12 +370,18 @@ function checkForPreference() {
 }
 
 
+/**
+ * Function to query a playlist of videos based on the chosen skill/preference the user would like to watch
+ * 
+ * @param: none
+ * @return: none
+ */
 function queryVideosOnPreferences() {
-    let current_user = JSON.parse(localStorage.getItem("USER"));
-    phoneNum = current_user['phone'];
+    let current_user = JSON.parse(localStorage.getItem("USER"));   // get user details from local storage 
+    let phoneNum = current_user['phone'];
     let stringPath = "users/" + phoneNum;
     let userRef = firebase.database().ref(stringPath);
-    let pref = JSON.parse(localStorage.getItem("preference"));
+    let pref = JSON.parse(localStorage.getItem("preference"));  // store the chosen skill/preference in local storage
     userRef.update({preferences: pref});
     
     if (localStorage.getItem("playlist") == null) {
@@ -351,6 +389,13 @@ function queryVideosOnPreferences() {
     }
 }
 
+
+/**
+ * Function to check if a YouTube link is an embed
+ * 
+ * @param videoURL: YouTube video url
+ * @return: none
+ */
 function getVideoId(videoURL){
     var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
 
@@ -359,12 +404,18 @@ function getVideoId(videoURL){
     return videoId[1];
 }
 
-// Gets all the video that fits the preference and stores them in localstorage
+
+/**
+ * Function to get all the videos that fit the selected skill/preference and stores them in local storage
+ * 
+ * @param preference: the skill/preference chosen by the user at recommender_select_skills.html page
+ * @return: none
+ */
 function makeRequest(preference) {
 
     firebase.database().ref("posts").once('value').then((snapshot) => {
         if (snapshot.exists()) {
-            snapshot.forEach(function(childSnap){
+            snapshot.forEach(function(childSnap){  // retrieve each video and its information
                 if (childSnap.val().interest[0] == preference && childSnap.val().recommender){
                     let value = childSnap.val();
                     let videoObj = {
@@ -382,8 +433,8 @@ function makeRequest(preference) {
                     }
                 }
             })
-            localStorage.setItem("playlist", JSON.stringify(playlist));
-            localStorage.setItem("currentVideoNumber", 0);
+            localStorage.setItem("playlist", JSON.stringify(playlist));  // save the list of videos into local storage
+            localStorage.setItem("currentVideoNumber", 0);  // set the initial video to be shown
             playVideo();
         }
         else {
@@ -394,15 +445,24 @@ function makeRequest(preference) {
     });
 }
 
+
+/**
+ * Function to start the YouTube player
+ * 
+ * @param: none
+ * @return: none
+ */
 function playVideo() {
-    changeShareDetails();
+    changeShareDetails();  // from share_video.js
 
-    playlist = JSON.parse(localStorage.getItem("playlist"));
-    currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+    playlist = JSON.parse(localStorage.getItem("playlist"));  // retrieve playlist
+    currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));  // get the current video the user is at
 
-    //Checks favourite status
+    // Checks the video's favourite status
     checkFavoriteStatus(playlist[currentVideoNumber].videoUrl);
 
+    // Checks the video's like/dislikes status
+    checkLikeDislikeStatus();
 
     // Loads a new video
     player.loadVideoById(playlist[currentVideoNumber].videoId);
@@ -411,25 +471,36 @@ function playVideo() {
     // Updates the page's description with the video title
     updateDescription(playlist[currentVideoNumber].title);
 
-    // checkIcon();
 }
 
-// Fires when the move to forum button is clicked
+
+/**
+ * Function that takes the user to the forum page containing the video and comment thread
+ * 
+ * @param: none
+ * @return: none
+ */
 function moveToForum(){
     const baseurl = "/post.html?post_id=";
 
     playlist = JSON.parse(localStorage.getItem("playlist"));
     let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
 
-    let destinationUrl = baseurl.concat(playlist[currentVideoNum].postId);
+    let destinationUrl = baseurl.concat(playlist[currentVideoNum].postId);  // concat the post id of the video
     window.location = destinationUrl;
 }
 
-// Fires when the skip previous button is clicked
+
+/**
+ * Function that takes the user to the previous video in the playlist if they tapped the playback button
+ * 
+ * @param: none
+ * @return: none
+ */
 function skipToPreviousVideo() {
     playlist = JSON.parse(localStorage.getItem("playlist"));
-
     let currentVideoNum = JSON.parse(localStorage.getItem("currentVideoNumber"));
+   
     currentVideoNum -= 1;
     
     if (currentVideoNum < 0){
@@ -441,11 +512,18 @@ function skipToPreviousVideo() {
     
     player.loadVideoById(playlist[currentVideoNum].videoId);
     player.stopVideo();
+    location.reload()
     updateDescription(playlist[currentVideoNum].title);
-    changeShareDetails();
+    changeShareDetails();  // from share_video.js
 }
 
-// Fires when the skip next button is clicked
+
+/**
+ * Function that takes the user to the next video in the playlist if they tapped the skip button
+ * 
+ * @param: none
+ * @return: none
+ */
 function skipToNextVideo() {
     playlist = JSON.parse(localStorage.getItem("playlist"));
 
@@ -461,13 +539,20 @@ function skipToNextVideo() {
 
     player.loadVideoById(playlist[currentVideoNum].videoId);
     player.stopVideo();
+    location.reload()
     updateDescription(playlist[currentVideoNum].title);
-    changeShareDetails();
+    changeShareDetails();  // from share_video.js
 }
 
+
+/**
+ * Function that adds an event listener to the state change of the player (play, pause, etc.)
+ * 
+ * @param: none
+ * @return: none
+ */
 function onPlayerReady(){
     console.log("ready")
-    // Adds listener to the state change of the player (play,pause, etc.)
 
     if (localStorage.getItem('playlist') != null) {
         playlist = JSON.parse(localStorage.getItem('playlist'));
@@ -480,8 +565,12 @@ function onPlayerReady(){
 }
 
 
-
-// Function to update watch history
+/**
+ * Function that updates the user's current watch history
+ * 
+ * @param currentVideoInfo: the data of the current video being watched
+ * @return: none
+ */
 function updateHistory(currentVideoInfo) {
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let currentVideo = {
@@ -509,27 +598,35 @@ function updateHistory(currentVideoInfo) {
 
         // Add video url to history only if video doesn't exist
         if (videoExist != true) {
-            currentVideo.totalWatchCount = 1;
+            currentVideo.totalWatchCount = 0;  // initialise number of times the user played the video
+            currentVideo.like = false;
+            currentVideo.dislike = false;
             currentHistory.push(currentVideo)
             updateFirebase(currentHistory, current_user, 'videoHistory');
         }
     })
 }
 
+
+/**
+ * Function that updates the number of times the user has watched a video
+ * 
+ * @param currentVideoInfo: the data of the current video being watched
+ * @return: none
+ */
 function updateWatchCount(currentVideoInfo){
     let current_user = JSON.parse(localStorage.getItem("USER"));
     // Retrieves the currently stored watch history
     firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
         let currentHistory = []
 
-        // If history is not empty and video already exists in history, set videoExist to true
+        // If history is not empty and video already exists in history, increment watch count
         if (snapshot.exists()) {
             currentHistory = snapshot.val();
             for (i in currentHistory) {
                 if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
                     let updateCount = parseInt(currentHistory[i].totalWatchCount)
                     updateCount += 1;
-                    console.log("Update count", updateCount)
                     firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({totalWatchCount: updateCount});
 
                 }
@@ -539,22 +636,69 @@ function updateWatchCount(currentVideoInfo){
     })
 }
 
-// Function to get video analytics and store it to Firebase
+
+/**
+ * Function that updates the status of the like/dislike on a video
+ * 
+ * @param currentVideoInfo: the data of the current video being watched
+ * @param actionType: the action of tapping the like/dislike button
+ * @return: none
+ */
+function updateLikeDislike(currentVideoInfo, actionType){
+    let current_user = JSON.parse(localStorage.getItem("USER"));
+
+    // Retrieves the currently stored watch history
+    firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
+        let currentHistory = []
+
+        // If history is not empty and video already exists in history, set videoExist to true
+        if (snapshot.exists()) {
+            currentHistory = snapshot.val();
+            for (i in currentHistory) {
+                if (currentHistory[i].videoUrl == currentVideoInfo.videoUrl) {
+                    if(actionType === 'like'){
+                        firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({like: true});
+                        firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({dislike: false});
+                    }
+                    else if(actionType === 'dislike'){
+                        firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({dislike: true});
+                        firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({like: false});
+                    }
+                    else if(actionType === 'none'){
+                        firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({like: false});
+                        firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${i}`).update({dislike: false});
+                    }
+                }
+            }
+        }
+
+    })
+}
+
+
+/**
+ * Function to get video analytics and store it to Firebase
+ * 
+ * @param currentVideoAnalytics: the analytics data of the current video being watched
+ * @param currentGTMUrl: the url that Google Tag Manager has tracked and recorded
+ * @return: none
+ */
 function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
     let current_user = JSON.parse(localStorage.getItem("USER"));
     let todaysDate = new Date()
     const offset = todaysDate.getTimezoneOffset()
     todaysDate = new Date(todaysDate.getTime() - (offset*60*1000))
     todaysDate = todaysDate.toISOString().split('T')[0];
-    //let currentUnixTimestamp = Date.now();
+    //let currentUnixTimestamp = Date.now(); 
     let currentTimestamp = new Date().toISOString().substr(11, 8);
 
     let videoIndex = -1;
-
+    
+    // Retrieves the currently stored watch history
     firebase.database().ref('users').child(`${current_user.phone}/videoHistory`).once("value", function (snapshot) {
         let currentHistory = []
 
-        // If history is not empty and video already exists in history, set videoExist to true
+        // If history is not empty and video already exists in history, get the index of the video in history
         if (snapshot.exists()) {
             currentHistory = snapshot.val();
             for (i in currentHistory) {
@@ -563,51 +707,58 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
                 let index = currentGTMUrl.indexOf(currentHistoryUrlStrip)
                 let currentGTMUrlStrip = currentGTMUrl.substring(index, currentGTMUrl.length);
                 
-                console.log(currentHistoryUrlStrip)
-                console.log(currentGTMUrlStrip)
+                //console.log(currentHistoryUrlStrip)
+                //console.log(currentGTMUrlStrip)
 
                 if (currentHistoryUrlStrip === currentGTMUrlStrip) {
                     videoIndex = i;
                 }
-                else{
-                console.log("Not" + i);
-                }
             }
         }
 
-        if(videoIndex !== -1){
+        if(videoIndex !== -1){  // if the video is found in history, save the analytics to Firebase
             firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentTimestamp}`).set(currentVideoAnalytics).then(() => {
-                console.log(videoIndex);
+                //console.log(videoIndex);
                 console.log(currentTimestamp);
             });
         }
         else{
-        console.log("Something is not right")
+            console.log("Something went wrong with the analytics")
         }
         
     })
 }
 
+
+/**
+ * Function for YouTube player state chane event
+ * 
+ * @param event: current video event
+ * @return: none
+ */
 function onPlayerStateChange(event){
     console.log(event.data)
-    // Fires if the video is playing
+
+    updateHistory(playlist[currentVideoNumber]);  // fires if the video is playing
     if (event.data == YT.PlayerState.PLAYING) {
-        //Do something
-        let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
+        //let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
         playlist = JSON.parse(localStorage.getItem("playlist"));
-        console.log("Fire")
-        updateHistory(playlist[currentVideoNumber]);
+        //console.log("Fire")
+        //updateHistory(playlist[currentVideoNumber]);
     }
 }
 
-// Runs on page load
+
+/**
+ * Following code runs on page load
+ */
+
 // Initializing variables
 var current_user = JSON.parse(localStorage.getItem("USER"));
 var playlist = [];
 var player = null;
 
-
-// Loads youtube iframe api
+// Loads the YouTube iframe API
 setTimeout(()=>{
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -633,17 +784,16 @@ setTimeout(()=>{
     })
 }, 500);
 
-// Fetch the analytics and store every 10s
+// Fetch the analytics and store it every 10s
 let pauseCounter = 0; 
 let intervalTime = 10000;
 
 let interval = setInterval(function (){
-    let currentDataLayerEntry = dataLayer[dataLayer.length-1]
+    let currentDataLayerEntry = dataLayer[dataLayer.length-1]  // From Google Tag Manager
 
     if(currentDataLayerEntry['event'] === 'gtm.video'){
         let currentGTMUrl = currentDataLayerEntry['gtm.videoUrl']
-        let currentVideoAnalytics = {
-            //currentWatchCount: 
+        let currentVideoAnalytics = { 
             videoCurrentTime: currentDataLayerEntry['gtm.videoCurrentTime'],
             videoDuration: currentDataLayerEntry['gtm.videoDuration'],
             videoElapsedTime: currentDataLayerEntry['gtm.videoElapsedTime'],
@@ -652,11 +802,10 @@ let interval = setInterval(function (){
             videoVisible: currentDataLayerEntry['gtm.videoVisible']
         }
 
-    
         if(currentVideoAnalytics.videoStatus === 'start'){
-            updateWatchCount(playlist[currentVideoNumber])
+            updateWatchCount(playlist[currentVideoNumber])  // update watch count if user tapped play on video
                
-            pauseCounter = 0;
+            pauseCounter = 0;  // reset pause counter
             saveAnalytics(currentVideoAnalytics, currentGTMUrl);
         }
         else if(currentVideoAnalytics.videoStatus === 'pause' || currentVideoAnalytics.videoStatus === 'complete'){
@@ -665,10 +814,10 @@ let interval = setInterval(function (){
                 saveAnalytics(currentVideoAnalytics, currentGTMUrl);
             }
 
-            // if video is paused / not replayed for some time (2 mins), stop saving to database
+            // if video is paused / not replayed for some time (2 mins), stop saving to Firebase
         }
-        else if(currentVideoAnalytics.videoStatus === 'progress'){
-            pauseCounter = 0;
+        else if(currentVideoAnalytics.videoStatus === 'progress' || currentVideoAnalytics.videoStatus === 'seek'){
+            pauseCounter = 0;  // reset pause counter 
             saveAnalytics(currentVideoAnalytics, currentGTMUrl);
         }
     }

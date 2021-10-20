@@ -10,6 +10,10 @@ html, body {
     background-color: #006dae;
 }
 
+.box {
+    font-size: 18pt;
+}
+
 .material-icons {
 	font-size: 36px;
 	top: 8px;
@@ -111,10 +115,6 @@ html, body {
     display: inline;
 }
 
-i.icon-teal{
-    color:#006DAE;
-}
-
 .mdl-navigation__link{
     font-size: 16px;
     text-align: left;
@@ -136,6 +136,13 @@ p {
     margin-left: 10px;
 }
 
+#home_button{
+    background-color: white;
+    height: 50px;
+	width: 35px;
+    margin-left: 80px;
+}
+
 /* Vertical tab menu and content */
 .row::after{
     content: "";
@@ -147,7 +154,7 @@ p {
     float: left;
     border: 1px solid #ccc;
     width: 30%;
-    height: 750px;
+    height: 450px;
     margin-left: 10px;
 }
 
@@ -180,7 +187,7 @@ p {
     border: 1px solid #ccc;
     width: 65%;
     border-left: none;
-    height: 750px;
+    height: 450px;
     display: flex;
 }
 
@@ -278,18 +285,6 @@ table {
     width: 150px;
 }
 
-.col-1 {
-    float: left;
-    padding: 15px;
-}
-
-#buttons {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 
 @media (min-width:1281px) { 
     .tab {
@@ -310,14 +305,13 @@ table {
     .tabcontent {
         height: 900px;
     }
+
+    #home_button{
+        margin-left: 55px;
+    }
 }
 
 @media screen and (max-width: 500px) and (max-height: 900px){
-    header {
-        height: 113px;
-        padding-bottom: 80px !important;
-    }
-  
     h4 {
         word-wrap: break-word;
         width: 100%;
@@ -334,12 +328,12 @@ table {
     }
   
     .tab {
-        height: 800px;
+        height: 670px;
         width: 30%;
     }
   
     .tabcontent {
-        height: 800px;
+        height: 670px;
     }
   
     div.tab {
@@ -358,19 +352,18 @@ table {
         top: -5px; left: 75%;
     }
 
+    #home_button{
+        margin-left: 15px;
+    }
+
+    .box {
+		position: relative;
+		left: 20px;
+	}
+
 }
 
 @media screen and (max-width: 540px) and (max-height: 720px){
-    header {
-        height: 113px;
-        padding-bottom: 80px !important;
-    }
-  
-    h4 {
-        word-wrap: break-word;
-        width: 100%;
-    }
-  
     .mdl-card {
         width: 100%;
     }
@@ -406,15 +399,19 @@ table {
         top: -5px; left: 125%;
     }
 
+    #home_button{
+        margin-left: 15px;
+    }
+
+    .box {
+		position: relative;
+		left: 20px;
+	}
+
 }
 
 
 @media screen and (max-width: 400px) and (max-height: 690px){
-    header {
-      height: 113px;
-      padding-bottom: 80px !important;
-    }
-
     h4 {
         word-wrap: break-word;
         width: 100%;
@@ -455,15 +452,19 @@ table {
         top: -10px; left: 85%;
     }
 
+    #home_button{
+        margin-left: 35px;
+    }
+
+    .box {
+		position: relative;
+		left: 20px;
+	}
+
 }
 
 /* Media query for mobile screens */
 @media screen and (max-width: 320px) {
-    header {
-        height: 100px;
-        padding-bottom: 80px !important;
-    }
-
     h4 {
         word-wrap: break-word;
         font-size: 16pt;
@@ -508,6 +509,15 @@ table {
         position: absolute;
         top: -5px; left: 125%;
     }
+
+    #home_button{
+        margin-left: 35px;
+    }
+
+    .box {
+		position: relative;
+		left: -5px;
+	}
 
 
 }
