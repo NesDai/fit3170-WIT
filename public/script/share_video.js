@@ -1,6 +1,12 @@
-
-// Changes the url, title, media and description to fit the video that is to be shared
+/**
+ * Changes the url, title, media and description to fit the video that is to be shared
+ * 
+ * @param: none
+ * @return: none
+ */
 function changeShareDetails(){
+    
+    // Retrieves the information from local storage
     let playlist = JSON.parse(localStorage.getItem("playlist"));
     let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
     
@@ -16,7 +22,12 @@ function changeShareDetails(){
     }
 }
 
-// Adds the share buttons to the page on load
+/**
+ * Adds the share buttons to the page on load
+ * 
+ * @param: none
+ * @return: none
+ */
 function addShareButtons(){
     
     // Loads the script for the share buttons
@@ -28,6 +39,7 @@ function addShareButtons(){
     document.body.appendChild(script);
 
 }
+
 
 // Variable to initialize the details when user shares a video
 var addthis_share = {
