@@ -116,14 +116,6 @@ function checkEmbeddingVideo(url) {
  */
 function makeNewPost() {
 
-    // const options = {  // options for Date
-    //     timeZone:"Africa/Accra",
-    //     hour12 : true,
-    //     hour:  "2-digit",
-    //     minute: "2-digit",
-    //    second: "2-digit"
-    //  };
-
     if (checkUserExistence()) {
         interest_arr = [];
         $("input:checkbox[name=interests]:checked").each(function(){
