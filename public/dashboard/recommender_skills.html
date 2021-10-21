@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Favourites analytics</title>
+    <title>Skills analytics</title>
 
     <!-- Fonts CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -74,7 +74,7 @@
                       <strong class="card-title mb-0">Total Selected Skills</strong>
                     </div>
                     <div class="card-body">
-                      <canvas id="pieChartjs" width="400" height="300"></canvas>
+                      <canvas id="skillPieChartjs" width="400" height="300"></canvas>
                     </div> <!-- /.card-body -->
                   </div> <!-- /.card -->
                 </div> <!-- /. col -->
@@ -87,9 +87,15 @@
                     <div class="card-body"><!-- SEARCH -->
                       <div id="skillError"></div>
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Enter a Skill">
+                          <!--<input type="text" class="form-control" placeholder="Search Skill">-->
+                          <select name="skills" id="skills">
+                            <option value="ICT/Tech­nology Skills">ICT/Tech­nology Skills</option>
+                            <option value="Social Communi­cation Skills">Social Communi­cation Skills</option>
+                            <option value="Comple­mentary Skills">Comple­mentary Skills</option>
+                            <option value="Work-related Skills">Work-related Skills</option>
+                          </select>
                           <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="search-butt">Search</button>
+                            <button class="btn btn-primary" type="button" id="search-butt" onclick = "selectedSkill()">Search</button>
                           </div>
                         </div>
                     </div> <!-- /.card-body -->
@@ -106,7 +112,7 @@
           <div class="card shadow" id="selectedCard">
             <div class="card-header">
                 <div id="skillInfo">
-                  <h2>ICT/Technology Skill Selected</h2>
+                  <h1><span id="selected">No skill selected </span></h1>
                 </div>
             </div>
           </div>
@@ -116,6 +122,18 @@
           <div class="container-fluid">
             <div class="row justify-content-center">
               <div class="col-12">
+                <div class="row my-1">
+                  <div class="col-md-6 mb-4">
+                    <div class="card shadow">
+                      <div class="card-header">
+                        <strong class="card-title mb-0"><span id="selectedBarChart">No skill selected </span></strong>
+                      </div>
+                      <div class="card-body">
+                        <canvas id="skillChart" width="400" height="300"></canvas>
+                      </div> <!-- /.card-body -->
+                    </div> <!-- /.card -->
+                  </div> <!-- /. col -->
+                </div>
                 <div class="row my-1">
 
                   <div class="col-md-6 mb-4">
@@ -253,6 +271,24 @@
 </div> <!-- .wrapper -->
 
 
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+    <script src = "script/firebaseConfig.js"></script>
+    <!-- FIREBAS STUFF I GOT FROM YT-->
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-database.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href=
+    "http://code.jquery.com/ui/1.11.3/themes/ui-lightness/jquery-ui.css"/>
+
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
@@ -280,6 +316,7 @@
     <script src="js/apps.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script src="script/recommender_skills.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
