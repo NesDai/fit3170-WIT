@@ -13,7 +13,7 @@ getPostDetails();
 
     let res = 0;
 
-    await firebase.database().ref(`posts/${id}`).once("value", snapshot => {
+    await firebase.database().ref(`posts`).orderByChild("id").equalTo(id).once("value", snapshot => {
 
         if (snapshot.exists()){
             console.log(1);
@@ -22,7 +22,7 @@ getPostDetails();
         }
      });
 
-
+     alert("returning from exist func");
      return new Promise(function(resolve, reject) {
         resolve(res);
       });

@@ -27,7 +27,7 @@ async function checkPostExists(id){
 
     let res = 0;
 
-    await firebase.database().ref(`posts/${id}`).once("value", snapshot => {
+    await firebase.database().ref(`posts`).orderByChild("id").equalTo(id).once("value", snapshot => {
 
         if (snapshot.exists()){
             console.log(1);
@@ -36,7 +36,7 @@ async function checkPostExists(id){
         }
      });
 
-
+     alert("returning from exist func");
      return new Promise(function(resolve, reject) {
         resolve(res);
       });
@@ -1590,8 +1590,10 @@ async function dislikePost(post_id, i)
 }
 
 async function postDetail(id) {
-
-        if(await checkPostExists(id)){
+        let exist = ":"
+        exist = await checkPostExists(id);
+        alert( `'${id}' ${typeof(id)} ${exist}`);
+        if(exist == 1){
             window.location = "post.html" + "?post_id=" + id;
         }
         else{
