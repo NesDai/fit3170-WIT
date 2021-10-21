@@ -1,5 +1,5 @@
 // fixed list of 20 main interests
-const interest_list = [ ["Email", 0] , ["Online collaboration",0], ["Browser search",0], ["Device use",0], ["Social media use",0],
+let interest_list = [ ["Email", 0] , ["Online collaboration",0], ["Browser search",0], ["Device use",0], ["Social media use",0],
 ["Active listening",0], ["Effective communication",0], ["Negotiation skill",0], ["Persuasion",0], ["Relationship management",0],
 ["Art",0], ["Caregiving",0], ["Cooking",0], ["Exercise",0], ["Professional writing",0], ["Collaboration and teamwork",0], ["Critical thinking",0],
 ["Entrepreneurship",0], ["People and Leadership",0], ["Personal selling",0]];
@@ -17,7 +17,7 @@ display_posts(); //runs it when the page is first loaded
 
 async function execute() {
     collectComments();
-    collectPosts().then(() => {
+    await collectPosts().then(() => {
 
         updateChart();
         display_posts();
@@ -52,7 +52,6 @@ async function collectPosts(){
             checkInterest(data.val().interest);
         })
     })
-
 }
 
 /**
@@ -240,3 +239,23 @@ function transfer_admin_post(post_id){
   window.location = "./forum_post.html";
 
 }
+
+// update posts on an interval (10 sec) to mimic realtime dashboard
+setInterval(
+    async function(){
+
+        // reset interest list
+    interest_list = [ ["Email", 0] , ["Online collaboration",0], ["Browser search",0], ["Device use",0], ["Social media use",0],
+        ["Active listening",0], ["Effective communication",0], ["Negotiation skill",0], ["Persuasion",0], ["Relationship management",0],
+        ["Art",0], ["Caregiving",0], ["Cooking",0], ["Exercise",0], ["Professional writing",0], ["Collaboration and teamwork",0], ["Critical thinking",0],
+        ["Entrepreneurship",0], ["People and Leadership",0], ["Personal selling",0]];
+
+    collectComments();
+    collectPosts().then(()=>{
+        //call function to update all the ui fields
+        updateChart();
+        display_posts();
+    });
+
+
+}, 30000);
