@@ -59,23 +59,23 @@ function storeCurrentSkill(id){
             currentSkills = snapshot.val();
 
             // Check if the skill has previously been selected on the database, update if so
-            if (currentSkills[id] != undefined){
-                currentSkills[id].selectedAmmount += 1;
-                currentSkills[id].selectedTime[time] = time;
+            if (currentSkills[skill.value] != undefined){
+                currentSkills[skill.value].selectedAmount += 1;
+                currentSkills[skill.value].selectedTime[time] = time;
             }
             
             // Else if this is the first time skill is being selected
             else {
-                let selectedTime = {}
-                selectedTime[time] = time;
+                //let selectedTime = {}
+                //selectedTime[time] = time;
                 
                 let newSkillCombine = {
-                    favouritedAmmount: 0,
-                    selectedAmmount: 1,
-                    selectedTime: selectedTime
+                    favouritedAmount: 0,
+                    selectedAmount: 1,
+                    //selectedTime: selectedTime
                 }
 
-                currentSkills[id] = newSkillCombine;
+                currentSkills[skill.value] = newSkillCombine;
             }
 
             // Update the firebase skills data section with changes

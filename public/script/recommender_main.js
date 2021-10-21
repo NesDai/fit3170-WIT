@@ -177,7 +177,7 @@ function addToFavourite(currentVideoInfo) {
     })
     
     // Storing data on how many times each video has been favourited, cumulatively into Firebase
-    current_user["time"] = time;
+    //current_user["time"] = time;
     firebase.database().ref('recommenderData').child(`favourite/`).once("value", function (snapshot) {
         if (snapshot.exists()) {
             currentFavourites = snapshot.val();
@@ -222,24 +222,24 @@ function addToFavourite(currentVideoInfo) {
 
             // Check if the skill has previously selected/favourited on the database, update if so
             if (currentSkills[id] != undefined){
-                if(currentSkills[id].favouritedAmmount != undefined){
-                    currentSkills[id].favouritedAmmount += 1;
+                if(currentSkills[id].favouritedAmount != undefined){
+                    currentSkills[id].favouritedAmount += 1;
                 }
                 else{
-                    currentSkills[id].favouritedAmmount = 1;
+                    currentSkills[id].favouritedAmount = 1;
                 }
                 
             }
             
             // Else if this is the first time skill is being selected/favourited
             else {
-                let selectedTime = {}
-                selectedTime[time] = time;
+                //let selectedTime = {}
+                //selectedTime[time] = time;
                 
                 let newSkillCombine = {
-                    selectedAmmount: 0,
-                    favouritedAmmount: 1,
-                    selectedTime: selectedTime
+                    selectedAmount: 0,
+                    favouritedAmount: 1,
+                    //selectedTime: selectedTime
                 }
 
                 currentSkills[id] = newSkillCombine;
