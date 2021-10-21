@@ -306,7 +306,7 @@ function printAllPosts(){
             $("#radio-1").attr("disabled",false);
 
             if(posts.length == 0 ){
-                $('#postField').html('<h4>0 Posts in this section</h4>');
+                $('#resNum').html('<h4>0 Posts in this section</h4>');
             }
         })
     })
@@ -374,7 +374,7 @@ function printThread(){
             printPostQuan(printStartIndex, printPostCount, posts, button_nums);
 
             if(posts.length == 0 ){
-                $('#postField').html('<h4>0 Posts in this section</h4>');
+                $('#resNum').html('<h4>0 Posts in this section</h4>');
             }
 
         }).then(()=>{
@@ -983,7 +983,7 @@ function printUserPosts(){
                         }
 
                         if(posts.length == 0 ){
-                            $('#postField').html('<h4>0 Posts in this section</h4>');
+                            $('#resNum').html('<h4>0 Posts in this section</h4>');
                         }
                     }).then(() => {
                         //print user favourites
