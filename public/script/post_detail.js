@@ -754,11 +754,11 @@ function printComment(button_num, comment, i ){
     document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
 }
 
-
+//COMMENT
 function hideLikeAlert(){
     document.getElementById("like-Modal").style.display =  "none";
 }
-
+//COMMENT
 function hideDeletedPostAlert(){
     document.getElementById("deletedPost-Modal").style.display =  "none";
 }
