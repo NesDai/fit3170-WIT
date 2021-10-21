@@ -480,6 +480,8 @@ async function addComment() {
         let comment = document.getElementById("comment_input").value
         let stay_anonymous = document.getElementById("anonymous").checked
 
+        $(`#comment_input`).val(''); // clear input
+
         // new data to upload in api
         if (comment) { // only adding comment if it's not empty
             //generating a key for the comment
@@ -959,6 +961,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
  * @param {string} comment_id the id associated with the comment
  */
 async function addReply(btn_num, comment_id) {
+    
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -979,7 +982,7 @@ async function addReply(btn_num, comment_id) {
         let reply_input = document.getElementById("reply_input" + btn_num.toString()).value;
         let stay_anonymous = document.getElementById("anonymous" + btn_num.toString()).checked;
 
-
+        $(`#reply_input${btn_num.toString()}`).val(''); // clear input
 
         // new data to upload in api
         if (reply_input) { // only adding reply if it's not empty
