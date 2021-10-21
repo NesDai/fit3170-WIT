@@ -22,7 +22,6 @@ getPostDetails();
         }
      });
 
-     alert("returning from exist func");
      return new Promise(function(resolve, reject) {
         resolve(res);
       });
