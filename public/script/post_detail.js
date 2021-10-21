@@ -99,14 +99,14 @@ function getPostDetails() {
                 }).then(() => {
                     //calling printing post function
                     if (posts.length == 0){
-                        
+
                         window.location = "forum.html";
                     }
                     else{
                         printPostDetails(posts[0], action)
-                        
+
                     }
-                    
+
                 })
         })
 }
@@ -411,7 +411,7 @@ async function addPostToFavourite() {
         return;
     }
 
-    //checks whether the user exists 
+    //checks whether the user exists
     if (checkUserExistence()) {
         let myRef = firebase.database().ref(`posts/${post_id}`);
         myRef.once("value")
@@ -539,6 +539,7 @@ async function addComment() {
               });
 
             }
+            $(`#comment_input`).val('');
 
 
         };
@@ -585,7 +586,7 @@ async function removePost() {
             firebase.database().ref(`posts/${post_id}`).remove().then(()=>{
                     window.location = "forum.html";
              }); // remove the post
-              
+
             });
 }
 
@@ -764,6 +765,7 @@ function hideDeletedPostAlert(){
 function printReplies(comment_id, comment_index) {
     console.log(comment_index);
     let reply_section = document.getElementById("reply_section" + comment_index.toString());
+    reply_section.innerHTML = "";
     let reply_list = [];
 
 
@@ -860,6 +862,7 @@ function printReplies(comment_id, comment_index) {
 * @return None.
 */
 function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
+    console.log('yes')
     let reply_section = document.getElementById("reply_reply_section" + comment_index.toString() + "," + reply_index.toString());
     let reply_list = [];
 
@@ -1040,6 +1043,7 @@ async function addReply(btn_num, comment_id) {
                   printReplies(comment_id, btn_num);
               });
             }
+            $(`#reply_input${btn_num.toString()}`).val('');
 
 
 
@@ -1091,6 +1095,7 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
             utc+="(UTC TIME)";
             //updating the number of anonymus commenters on the post
             if(stay_anonymous){
+
               let myRef = firebase.database().ref(`posts/${post_id}`);
               myRef.once("value")
                   .then(function(snapshot) {
@@ -1116,6 +1121,7 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
                           reply_comment_parent: reply_id,
                           username: current_user["username"],
                       };
+                      $(`#reply_input${comment_index.toString()},${reply_index.toString()}`).val('');
                       firebase.database().ref(`replies/${key}`).set(newData).then(() => {
                           printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
                       });
@@ -1123,6 +1129,7 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
 
 
             } else {
+              console.log("hi")
               // new data to upload in api
               let newData = {
                   anonymous: 0,
@@ -1135,7 +1142,9 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
                   reply_comment_parent: reply_id,
                   username: current_user["username"],
               };
+              $(`#reply_input${comment_index.toString()},${reply_index.toString()}`).val('');
               firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                console.log("hello")
                   printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
               });
             }
@@ -1208,7 +1217,7 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
                           username: current_user["username"],
                       };
                       firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                          window.location = "post.html" + "?post_id=" + post_id;
+                          printRepliesToReplies(reply_id, comment_index, reply_index, reply_to_reply_index + 1);
                       });
                   });
 
@@ -1226,11 +1235,11 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
                   username: current_user["username"],
               };
               firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                  window.location = "post.html" + "?post_id=" + post_id;
+                printRepliesToReplies(reply_id, comment_index, reply_index, reply_to_reply_index + 1);
               });
 
             }
-
+            $(`#reply_input${comment_index.toString()},${reply_index.toString()},${reply_to_reply_index.toString()}`).val('');
 
 
         };
@@ -1366,5 +1375,3 @@ function updateCommentLikes(comment_id, number){
         firebase.database().ref().update(updates);
     })
 }
-
-
