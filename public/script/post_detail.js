@@ -1022,7 +1022,7 @@ async function addReply(btn_num, comment_id) {
                           username: current_user["username"],
                       };
                       firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                          printReplies(comment_id, btn_num);
+                          printComments();
                       });
                   });
 
@@ -1040,7 +1040,7 @@ async function addReply(btn_num, comment_id) {
                   username: current_user["username"],
               };
               firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                  printReplies(comment_id, btn_num);
+                  printComments();
               });
             }
             $(`#reply_input${btn_num.toString()}`).val('');
@@ -1063,7 +1063,10 @@ async function addReply(btn_num, comment_id) {
  * @param {string} reply_id the id associated with the reply
  */
 async function addReplyToReply(comment_index, reply_index, reply_id) {
-
+    console.log('comment_index')
+    console.log(comment_index)
+    console.log('reply_index')
+    console.log(reply_index)
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -1121,15 +1124,13 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
                           reply_comment_parent: reply_id,
                           username: current_user["username"],
                       };
-                      $(`#reply_input${comment_index.toString()},${reply_index.toString()}`).val('');
                       firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                          printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
+                          printComments();
                       });
                   });
 
 
             } else {
-              console.log("hi")
               // new data to upload in api
               let newData = {
                   anonymous: 0,
@@ -1142,12 +1143,12 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
                   reply_comment_parent: reply_id,
                   username: current_user["username"],
               };
-              $(`#reply_input${comment_index.toString()},${reply_index.toString()}`).val('');
+
               firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                console.log("hello")
-                  printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
+                  printComments();
               });
             }
+            $(`#reply_input${comment_index.toString()},${reply_index.toString()}`).val('');
 
 
 
@@ -1164,6 +1165,12 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
  * @param {string} reply_id the id associated with the reply
  */
 function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index, reply_id) {
+    console.log('comment_index')
+    console.log(comment_index)
+    console.log('reply_index')
+    console.log(reply_index)
+    console.log('reply_to_reply_index')
+    console.log(reply_to_reply_index)
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -1217,7 +1224,7 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
                           username: current_user["username"],
                       };
                       firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                          printRepliesToReplies(reply_id, comment_index, reply_index, reply_to_reply_index + 1);
+                          printComments();
                       });
                   });
 
@@ -1235,7 +1242,7 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
                   username: current_user["username"],
               };
               firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                printRepliesToReplies(reply_id, comment_index, reply_index, reply_to_reply_index + 1);
+                printComments();
               });
 
             }
