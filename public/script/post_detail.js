@@ -1,6 +1,7 @@
 let current_user = JSON.parse(localStorage.getItem("USER"));
 const params = new URLSearchParams(window.location.search)
-
+let reply_to_reply_vis = []; //stands for the visibility of input field of reply to reply
+let reply_to_reply_to_reply_vis = []; //stands for the visibility of input field of reply to reply to reply
 getPostDetails();
 
 
@@ -36,6 +37,8 @@ getPostDetails();
 * @param button_num The index of the location that the reply input will be displayed
 */
 function showReplyInput(button_num) {
+    document.getElementById('comment_reply_btn'+ button_num.toString()).style = "visibility: hidden";
+
     document.getElementById("add_reply_section" + button_num.toString()).style.display = "block";
 }
 
@@ -45,6 +48,7 @@ function showReplyInput(button_num) {
 * @param comment_index part of the index of the location that the reply input will be displayed
 */
 function showReplyToReplyInput(button_num, comment_index) {
+    document.getElementById("reply_reply_btn" + button_num.toString() + "," + comment_index.toString()).style = "visibility: hidden";
     document.getElementById("add_reply_reply_section" + button_num.toString() + "," + comment_index.toString()).style.display = "block";
 }
 
@@ -55,6 +59,7 @@ function showReplyToReplyInput(button_num, comment_index) {
 * @param reply_to_reply_index part of the index of the location that the reply input will be displayed
 */
 function showReplyToReplyToReplyInput(comment_index, reply_index, reply_to_reply_index) {
+    document.getElementById("reply_reply_reply_btn" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).style = "visibility: hidden";
     document.getElementById("add_reply_2_reply_section" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).style.display = "block";
 }
 
@@ -680,20 +685,20 @@ function printComment(button_num, comment, i ){
                 ${button}
 
                 <!-- ADD REPLY BUTTON FOR COMMENT -->
+                <div  id='comment_reply_btn${i}'; style='display: inline';>
                 <span>
                     <button class="reply mdl-button mdl-js-button mdl-button--raised" id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
                     <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                 </span>
-                <br>
+                </div>
+
             </div>
 
             <!-- REPLY SECTION -->
             <div id = "add_reply_section${i}" style="display:none">
-                <br>
                 <div class="post_reply">
                     <!-- REPLY INPUT -->
                     <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
-                    <br>
 
                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                     <div>
@@ -780,6 +785,7 @@ function printReplies(comment_id, comment_index) {
                 }).then(() => {
             if (reply_list.length != 0) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
+
                     let reply = reply_list[i];
                     let reply_username;
                     if (reply.anonymous != 0) {
@@ -801,14 +807,15 @@ function printReplies(comment_id, comment_index) {
                             </div>
 
                             <!-- ADD REPLY BUTTON FOR COMMENT -->
+                            <div  id='reply_reply_btn${comment_index},${i}'; style='display: inline';>
                             <span>
                             <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${comment_index},${i})">
                             <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                             </span>
+                            </div>
 
                             <!-- REPLY SECTION -->
                             <div id = "add_reply_reply_section${comment_index},${i}"" style="display:none">
-                                <br>
                                 <div class="post_reply">
 
                                     <!-- REPLY INPUT -->
@@ -900,14 +907,15 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                             </div>
 
                             <!-- ADD REPLY BUTTON FOR COMMENT -->
+                            <div id='reply_reply_reply_btn${comment_index},${reply_index},${start}';  style='display: inline';>
                             <span>
                             <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyToReplyInput(${comment_index},${reply_index},${start})">
                             <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
                             </span>
+                            </div>
 
                             <!-- REPLY SECTION -->
                             <div id = "add_reply_2_reply_section${comment_index},${reply_index},${start}" style="display:none">
-                                <br>
                                 <div class="post_reply">
 
                                     <!-- REPLY INPUT -->
