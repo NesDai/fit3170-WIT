@@ -36,7 +36,6 @@ async function checkPostExists(id){
         }
      });
 
-     alert("returning from exist func");
      return new Promise(function(resolve, reject) {
         resolve(res);
       });
@@ -1592,7 +1591,6 @@ async function dislikePost(post_id, i)
 async function postDetail(id) {
         let exist = ":"
         exist = await checkPostExists(id);
-        alert( `'${id}' ${typeof(id)} ${exist}`);
         if(exist == 1){
             window.location = "post.html" + "?post_id=" + id;
         }
