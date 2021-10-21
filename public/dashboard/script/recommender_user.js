@@ -51,12 +51,10 @@ firebase.database().ref('users').once("value", function (snapshot) {
  * @return: none
  */
 function updateVideoList(phoneNum){
-    $('#pieChart1').show();
-    $('#pieChart2').show();
+
 
     firebase.database().ref(`users/+${phoneNum}`).once("value", function(snapshot){
         if (snapshot.exists()){
-            console.log(snapshot.val())
             $('#videoListContainer').show();
             if (snapshot.val().videoHistory != null){
                 let videoHistory = snapshot.val().videoHistory;
@@ -142,8 +140,8 @@ function buildVideoListTable(videoDetails, phoneNum){
 // Converts time in seconds only to minute and seconds
 function convertSecToMin(totalSeconds){
     let minutes = Math.floor(totalSeconds/60);
-    let seconds = (totalSeconds- minutes*60)/60;
-    let result = `${minutes}.${seconds}`;
+    let seconds = (totalSeconds- minutes*60);
+    let result = `${minutes} minutes ${seconds} seconds`;
     return result
 }
 
@@ -172,24 +170,24 @@ function updateVideoAnalyticsTable(phoneNum, i){
 
             //Builds html for the page using the video analytics information
             let videoAnalyticsTableHtml = `
-            <table class="table table-bordered">
+            <table class="pure-table pure-table-horizontal" style="width:100%">
                 <tr>
                     <th>Stopped Watching at</th>
-                    <td>${videoAnalyticsDetails.videoCurrentTime} minutes </td>
+                    <td>${videoAnalyticsDetails.videoCurrentTime}</td>
                 </tr>
 
                 <tr>
                     <th>Video Duration</th>
-                    <td>${videoAnalyticsDetails.videoDuration} minutes </td>
+                    <td>${videoAnalyticsDetails.videoDuration}</td>
                 </tr>
 
                 <tr>
                     <th>Video Watchtime</th>
-                    <td>${videoAnalyticsDetails.videoElapsedTime} minutes</td>
+                    <td>${videoAnalyticsDetails.videoElapsedTime}</td>
                 </tr>
 
                 <tr>
-                    <th>Video Percentage Watched</th>
+                    <th>Video Percentage Passed</th>
                     <td>${videoAnalyticsDetails.videoPercent}% </td>
                 </tr>
 
@@ -235,6 +233,7 @@ function generatePieChart(phoneNum){
     // Generate the first pie chart for favourites of the user
     firebase.database().ref(`users/+${phoneNum}/videoFavourite`).once("value", function(snapshot){
         if (snapshot.exists()){
+            $('#pieChart2').show();
             snapshot.forEach((video)=>{
                 let videoDetails = video.val();
                 if (!labels.includes(videoDetails.videoPreference)){
@@ -262,6 +261,8 @@ function generatePieChart(phoneNum){
                     }]
                 }
             })
+        } else {
+            $('#pieChart2').hide();
         }
     });
     
@@ -271,6 +272,7 @@ function generatePieChart(phoneNum){
     // Generates the second pie chart for the watch history of the user
     firebase.database().ref(`users/+${phoneNum}/videoHistory`).once("value", function(snapshot){
         if (snapshot.exists()){
+            $('#pieChart1').show();
             snapshot.forEach((video)=>{
                 let videoDetails = video.val();
                 if (!labelsHist.includes(videoDetails.interest)){
@@ -298,6 +300,8 @@ function generatePieChart(phoneNum){
                     }]
                 }
             })
+        } else {
+            $('#pieChart1').hide();
         }
     });
 }

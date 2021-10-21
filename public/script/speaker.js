@@ -1,5 +1,10 @@
 
-// Fires when the speak button is clicked and reads the description of the video
+/**
+ * Fires when the speak button is clicked and reads the description of the video
+ * 
+ * @param: none
+ * @return: none
+ */
 function speakButtonOnClick(){
     var toSpeak = new SpeechSynthesisUtterance(videoDescription.innerHTML);
     

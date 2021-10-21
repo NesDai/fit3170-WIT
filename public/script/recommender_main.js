@@ -150,7 +150,7 @@ function addToFavourite(currentVideoInfo) {
     // Get video id from the embed url
     let videoUrlEnd = currentVideo.videoUrl.split("https://www.youtube.com/embed/");
     videoUrlEnd = videoUrlEnd[1];
-    console.log(videoUrlEnd);
+
 
     let time = Date.now();
 
@@ -204,7 +204,6 @@ function addToFavourite(currentVideoInfo) {
             }
 
             // Setting changes on Firebase
-            console.log(currentFavourites);
             firebase.database().ref('recommenderData/favourite').set(
                 currentFavourites
                 , function (error) {
@@ -356,7 +355,6 @@ function checkForPreference() {
 
     firebase.database().ref(stringPath + "/preferences").once('value').then((snapshot) => {
         if (snapshot.exists()) {
-            console.log(snapshot.val());
             location.href = "recommender_Ui.html"; // redirect to recommender
         }
         else {
@@ -552,7 +550,7 @@ function skipToNextVideo() {
  * @return: none
  */
 function onPlayerReady(){
-    console.log("ready")
+    console.log("Ready");
 
     if (localStorage.getItem('playlist') != null) {
         playlist = JSON.parse(localStorage.getItem('playlist'));
@@ -707,8 +705,6 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
                 let index = currentGTMUrl.indexOf(currentHistoryUrlStrip)
                 let currentGTMUrlStrip = currentGTMUrl.substring(index, currentGTMUrl.length);
                 
-                //console.log(currentHistoryUrlStrip)
-                //console.log(currentGTMUrlStrip)
 
                 if (currentHistoryUrlStrip === currentGTMUrlStrip) {
                     videoIndex = i;
@@ -718,7 +714,6 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
 
         if(videoIndex !== -1){  // if the video is found in history, save the analytics to Firebase
             firebase.database().ref('users').child(`${current_user.phone}/videoHistory/${videoIndex}/videoAnalytics/${todaysDate}/${currentTimestamp}`).set(currentVideoAnalytics).then(() => {
-                //console.log(videoIndex);
                 console.log(currentTimestamp);
             });
         }
@@ -737,14 +732,10 @@ function saveAnalytics(currentVideoAnalytics, currentGTMUrl){
  * @return: none
  */
 function onPlayerStateChange(event){
-    console.log(event.data)
 
     updateHistory(playlist[currentVideoNumber]);  // fires if the video is playing
     if (event.data == YT.PlayerState.PLAYING) {
-        //let currentVideoNumber = JSON.parse(localStorage.getItem("currentVideoNumber"));
         playlist = JSON.parse(localStorage.getItem("playlist"));
-        //console.log("Fire")
-        //updateHistory(playlist[currentVideoNumber]);
     }
 }
 

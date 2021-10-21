@@ -24,3 +24,9 @@
     max-height: auto;
     overflow-y: auto;
 }
+
+.pure-table.pure-table-horizontal tbody tr th {
+    background-color: #696969;
+    color: #FFFFFF;
+    width: fit-content;
+}
