@@ -69,7 +69,7 @@ function csvExportVideoHistory() {
 }
 
 /**
- * Function that exports user video analytics data to csv
+ * Function that exports user video analytics data to csv. The latest video analytics data and timestamp will be taken
  * 
  * @param: none
  * @return: none
@@ -96,7 +96,7 @@ function csvExportVideoAnalytics(){
                                 phone: user_array[id]['phone'],
                                 post_id: user_array[id]['videoHistory'][i]['postId'],
                                 video_watch_date: j,
-                                video_last_watched_time: k,
+                                video_last_watched_time: k,  // timestamp
                                 video_duration_seconds: videoAnalytics[j][k]['videoDuration'],
                                 video_current_time_seconds: videoAnalytics[j][k]['videoCurrentTime'],
                                 video_elapsed_time_seconds: videoAnalytics[j][k]['videoElapsedTime'],
@@ -119,6 +119,55 @@ function csvExportVideoAnalytics(){
         csv_data = convertObjectToCSV(data_array); 
     }).then(() => {
         csvDownload(csv_data, "recommender_user_video_analytics");
+    });
+}
+
+
+/**
+ * Function that exports data on users' favourited videos to csv
+ * 
+ * @param: none
+ * @return: none
+ */
+function csvExportFavouritedVideos(){
+    var data_array = [];
+    var csv_data;
+    firebase.database().ref('users').once("value", function(snapshot){
+        let user_array = snapshot.val()
+        let data;
+        let videoFavourites;
+
+        for(id in user_array){
+            for(i in user_array[id]['videoFavourite']){
+    
+                if(user_array[id]['videoFavourite'] !== undefined){
+                    videoFavourites = user_array[id]['videoFavourite']
+                
+                    data = {
+                        user_id: user_array[id]['phone'],
+                        username: user_array[id]['username'],
+                        phone: user_array[id]['phone'],
+                        post_id: user_array[id]['videoFavourite'][i]['postId'],
+                        video_title: user_array[id]['videoFavourite'][i]['videoTitle'],
+                        video_url: user_array[id]['videoFavourite'][i]['videoUrl'],
+                        video_interest: user_array[id]['videoFavourite'][i]['interest'],
+                        post_id: user_array[id]['videoFavourite'][i]['postId']
+
+                    } 
+                    
+
+                    data_array.push(data)
+                    
+  
+                }
+            }
+            
+        }
+
+    }).then(() => {
+        csv_data = convertObjectToCSV(data_array); 
+    }).then(() => {
+        csvDownload(csv_data, "recommender_user_favourited_videos");
     });
 }
 
@@ -225,6 +274,7 @@ function removeSpecialChar(str) {
 function csvExportRecommenderData() {
     csvExportUser()
     csvExportVideoHistory()
-    csvExportSkillsSelectedFreq()
     csvExportVideoAnalytics()
+    csvExportFavouritedVideos()
+    csvExportSkillsSelectedFreq()
 }

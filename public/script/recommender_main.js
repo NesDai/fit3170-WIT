@@ -144,7 +144,8 @@ function addToFavourite(currentVideoInfo) {
         videoUrl: currentVideoInfo.videoUrl,
         videoThumbnail: currentVideoInfo.videoThumbnail,
         videoTitle: currentVideoInfo.title,
-        videoPreference: currentVideoInfo.interest
+        interest: currentVideoInfo.interest,
+        postId: currentVideoInfo.postId
     }
     
     // Get video id from the embed url
