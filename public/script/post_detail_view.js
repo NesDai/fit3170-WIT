@@ -68,11 +68,11 @@ function printPostDetails(post, button_num) {
 
     if(post.username == undefined)
         post.username = "";
-    
-    //checks whether it has the date created 
+
+    //checks whether it has the date created
     if(post.created == undefined)
         post.created = "";
-    
+
     //choosing appropriate like-dislike buttons UI
     let button = `
     <button class="like mdl-button mdl-js-button" id="btn_like" value="${post.likes}" disabled>
@@ -105,7 +105,7 @@ function printPostDetails(post, button_num) {
     //get interests for this post and print them
     let interest = "";
     for (let i = 0; i < post.interest.length; i++) {
- 
+
         interest += `<button class="mdl-button mdl-js-button mdl-color-text--white" id="interest${i+1}_id" style='margin-left:3px;'disabled> ${post.interest[i]} </button>`
     }
 
@@ -198,7 +198,7 @@ function printPostDetails(post, button_num) {
                 </div>
             </div>`
     $('#post_details').append(post_display);
-    //check whether the user has favourited the post 
+    //check whether the user has favourited the post
     checkUserFavouritedPost();
     //printing comments
     printComments();
@@ -223,7 +223,7 @@ function checkButtonStatus() {
             // checking the favourite data has been written before
             if (hasFavouriteData == false) {
                 addPostToFavourite();
-            } 
+            }
             else {
                 let users_arr = snapshot.val()["users_favourite"];
 
@@ -235,7 +235,7 @@ function checkButtonStatus() {
 
                 if (user_found) {
                     removePostFromFavourite();
-                } 
+                }
                 else {
                     addPostToFavourite();
                 }
@@ -287,7 +287,7 @@ function removePostFromFavourite() {
 function addPostToFavourite() {
     let post_id = params.get('post_id');
 
-    //checks whether the user exists 
+    //checks whether the user exists
     if (checkUserExistence()) {
         let myRef = firebase.database().ref(`posts/${post_id}`);
         myRef.once("value")
@@ -513,7 +513,7 @@ function printComment(button_num, comment, i ){
                  </div>
             </div>
 
-            
+
 
             <script>
                 //checks for double click on like button
@@ -525,8 +525,8 @@ function printComment(button_num, comment, i ){
                         if ($button.data('alreadyclickedTimeout')){
                             clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
                         }
-                        
-                        // do what needs to happen on double click. 
+
+                        // do what needs to happen on double click.
                         document.getElementById("like-Modal").style.display = "block";
                     }else{
                         $button.data('alreadyclicked', true);
@@ -669,7 +669,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
             })
         // print the replies using the indexes provided (comment_index, reply_index, start)
         }).then(() => {
-            //checks whether replies are anonymous 
+            //checks whether replies are anonymous
             if (reply_list.length != 0) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
                     let reply = reply_list[i];
@@ -845,7 +845,7 @@ function addReplyToReply(comment_index, reply_index, reply_id) {
                 printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
             });
         };
-    } 
+    }
 }
 
 /**
@@ -906,7 +906,7 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
 /**
  * Redirects the user to the page with url
  * @param url where to redirect to
- * @param msg 
+ * @param msg
  */
 function redirect(url, msg) {
     window.location = url;
