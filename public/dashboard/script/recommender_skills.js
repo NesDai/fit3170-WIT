@@ -1,12 +1,14 @@
 // fixed list of skills
-const skill_list = [["Email", 0] , ["Online collaboration",0], ["Search for information",0], ["Smartphone/tablet/computer use",0], ["Social media use",0],
-["Active listening",0], ["Effective communication",0], ["Negotiation skill",0], ["Persuasion",0], ["Relationship management",0],
-["Art",0], ["Caregiving",0], ["Cooking",0], ["Exercise",0], ["Professional writing",0], ["Collaboration and teamwork",0], ["Critical thinking",0],
-["Entrepreneurship",0], ["People and Leadership",0], ["Personal selling",0]];
+const skill_list = [["Email", 0, 0, 0] , ["Online collaboration",0, 0, 0], ["Search for information",0, 0, 0], ["Smartphone/tablet/computer use",0, 0, 0], ["Social media use",0, 0, 0],
+["Active listening",0, 0, 0], ["Effective communication",0, 0, 0], ["Negotiation skill",0, 0, 0], ["Persuasion",0, 0, 0], ["Relationship management",0, 0, 0],
+["Art",0, 0, 0], ["Caregiving",0, 0, 0], ["Cooking",0, 0, 0], ["Exercise",0, 0, 0], ["Professional writing",0, 0, 0], ["Collaboration and teamwork",0, 0, 0], ["Critical thinking",0, 0, 0],
+["Entrepreneurship",0, 0, 0], ["People and Leadership",0, 0, 0], ["Personal selling",0, 0, 0]];
 
 const total_list = [["ICT/Tech­nology Skills", 0], ["Social Communi­cation Skills", 0], ["Comple­mentary Skills", 0], ["Work-related Skills", 0]];
 
 let myChart;
+
+let selectedPreference = "";
 
 window.onload = execute();
 
@@ -15,6 +17,9 @@ async function execute() {
     collectData().then(() => {
 
         updatePieChart();
+
+        checkSkillLikeDislike();
+
     })
 }
 
@@ -26,7 +31,7 @@ async function collectData(){
   .once('value', x => {
       x.forEach(data => {
           favs.push(data.val());
-          checkSkill(data.key, data.val().selectedAmmount);
+          checkSkill(data.key, data.val().selectedAmount);
       })
   })
 }
@@ -42,12 +47,50 @@ function selectedSkill(){
   // generate bar chart based on selected skill
   updateBarChart(option.value);
 
+
+
+}
+
+// Function for updating likes/dislikes for each skill
+function checkSkillLikeDislike(){
+  firebase.database().ref('users').once("value", function(snapshot){
+    console.log(snapshot.val());
+    userData = snapshot.val();
+    console.log(userData.length);
+    console.log(typeof userData);
+    // For each user
+    for (key1 in userData){
+      if (userData[key1].videoHistory != undefined){
+        // User has videohistory
+        for (key in userData[key1].videoHistory){
+          if(userData[key1].videoHistory[key].dislike != undefined){
+            // Iterate through and update values
+            for(let k=0; k<skill_list.length; k++){
+              if(skill_list[k][0] == userData[key1].videoHistory[key].interest){
+                // If user liked video
+                if(userData[key1].videoHistory[key].like){
+                  skill_list[k][2]++;
+                }
+                // If user dsiliked vid
+                if(userData[key1].videoHistory[key].dislike){
+                  skill_list[k][3]++;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Update data
+  })
 }
 
 /* Function to determine the number of favourites for each skill and interest */
 function checkSkill(preference, amount){
   for (let i = 0; i < skill_list.length; i++) {
     if (preference == skill_list[i][0]) {
+      selectedPreferenceID = i;
       let current_num = skill_list[i][1];
       skill_list[i][1] = current_num + amount;
       // ict skill
@@ -74,8 +117,12 @@ function checkSkill(preference, amount){
   }
 }
 
+
+
 /* generate bar chart based on selected skill */
 function updateBarChart(skill) {
+
+    console.log(skill_list);
 
     // variable
     let xValues = [];
@@ -96,6 +143,33 @@ function updateBarChart(skill) {
         yValues.push(skill_list[i][1]);
 
     }
+
+    // Update like/dislike section
+    document.getElementById("likeSkill1").innerHTML = skill_list[low][0];
+    document.getElementById("likeSkill2").innerHTML = skill_list[low+1][0];
+    document.getElementById("likeSkill3").innerHTML = skill_list[low+2][0];
+    document.getElementById("likeSkill4").innerHTML = skill_list[low+3][0];
+    document.getElementById("likeSkill5").innerHTML = skill_list[low+4][0];
+
+    document.getElementById("dislikeSkill1").innerHTML = skill_list[low][0];
+    document.getElementById("dislikeSkill2").innerHTML = skill_list[low+1][0];
+    document.getElementById("dislikeSkill3").innerHTML = skill_list[low+2][0];
+    document.getElementById("dislikeSkill4").innerHTML = skill_list[low+3][0];
+    document.getElementById("dislikeSkill5").innerHTML = skill_list[low+4][0];
+
+    document.getElementById("like1").innerHTML = skill_list[low][2];
+    document.getElementById("like2").innerHTML = skill_list[low+1][2];
+    document.getElementById("like3").innerHTML = skill_list[low+2][2];
+    document.getElementById("like4").innerHTML = skill_list[low+3][2];
+    document.getElementById("like5").innerHTML = skill_list[low+4][2];
+
+    document.getElementById("dislike1").innerHTML = skill_list[low][3];
+    document.getElementById("dislike2").innerHTML = skill_list[low+1][3];
+    document.getElementById("dislike3").innerHTML = skill_list[low+2][3];
+    document.getElementById("dislike4").innerHTML = skill_list[low+3][3];
+    document.getElementById("dislike5").innerHTML = skill_list[low+4][3];
+
+
 
     var ChartOptions = {
         legend: {
