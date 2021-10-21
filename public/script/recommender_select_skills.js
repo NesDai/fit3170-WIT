@@ -61,7 +61,7 @@ function storeCurrentSkill(id){
             // Check if the skill has previously been selected on the database, update if so
             if (currentSkills[skill.value] != undefined){
                 currentSkills[skill.value].selectedAmount += 1;
-                currentSkills[skill.value].selectedTime[time] = time;
+                //currentSkills[skill.value].selectedTime[time] = time;
             }
             
             // Else if this is the first time skill is being selected
