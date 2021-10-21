@@ -61,6 +61,8 @@ async function collectPosts(){
  */
 function updateChart() {
 
+    $("#mychart").html(`<canvas id="myInterestChart"></canvas>`);
+
     // variable
     let xValues = [];
     let yValues = [];
@@ -81,7 +83,7 @@ function updateChart() {
     for (let i = 0; i < posts.length; i++){
         getLikesAndDislikes(posts[i]);
     }
-
+    
     // set chart option
     var ChartOptions = {
         indexAxis: 'y',
@@ -108,32 +110,26 @@ function updateChart() {
             backgroundColor: "rgba(46, 204, 113, 1)",
             borderColor: "rgba(46, 204, 113, 1)",
             data: likes_arr,
-            fill: "",
-            lineTension: .1
         }, {
             // for number of post posted
             label: "Number of Post Posted",
             backgroundColor: base.primaryColor,
             borderColor: base.primaryColor,
             data: yValues,
-            fill: "",
-            lineTension: .1
         }, {
             // for number of dislikes
             label: "Dislikes",
             backgroundColor: "rgba(242, 38, 19, 1)",
             borderColor: "rgba(242, 38, 19, 1)",
             data: dislikes_arr,
-            fill: "",
-            lineTension: .1
         }]
     }
-    var barChartjs = document.getElementById("myInterestChart");
-    barChartjs && new Chart(barChartjs, {
+
+    new Chart("myInterestChart", {
         type: "horizontalBar",
         data: ChartData,
         options: ChartOptions
-});
+    })
 
 
 }
