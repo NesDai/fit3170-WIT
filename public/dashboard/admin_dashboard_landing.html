@@ -132,15 +132,21 @@
 
         <main class="mdl-layout__content">
           <section class="mdl-layout__tab-panel is-active" id="fixed-chatbot">
+            <br class="desktop-br"> 
+            <button id ="csv_chatbot_export" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportQues()" 
+            style='background-color: #006DAE; position: relative; float: right; top: 10px; right: 270px;'>CSV Export (Chatbot)</button>
+            <br class="desktop-br"><br class="desktop-br">
             <div class="page-content">
               <div class = "mdl-grid">
-               <div class = "mdl-cell mdl-cell--4-col" id="usercard">
+               <div class = "mdl-cell mdl-cell--4-col">
+               </div>
+               <div class = "mdl-cell mdl-cell--4-col">
                   <div class = "user-card mdl-card mdl-shadow--4dp ">
                      <div class = "mdl-card__title ">
                         <h2 class = "mdl-card__title-text ">Questions & Responses</h2>
                      </div>
                      <div class = "mdl-card__supporting-text">
-                        Get responses by questions from users, download data as a CSV file
+                        Get user responses ordered by questions 
                      </div>
                      <br class="desktop-br"> <br class="desktop-br">
                      <div class = "mdl-card__actions mdl-card--border">
@@ -286,6 +292,8 @@
       <script src="script/forum_csv_export.js" type="module"></script>
       <script src="script/forum_csv_export.js"></script>
       <script src="script/recommender_csv.js"></script>
+      <script src="../script/constants.js"></script>
+      <script src="script/chatbot_csv_export.js"></script>
       <script src="script/translation.js"></script>
       <script src="script/translatePage.js"></script>
    </body>
