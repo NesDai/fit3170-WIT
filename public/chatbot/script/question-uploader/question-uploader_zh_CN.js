@@ -100,20 +100,20 @@ const HINTS_PART1 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "请输入数字",
+    "请输入数字 (例如 1, 2, 3)",
     "选择一个选项", // Select an Option (needs translation confirmation)
     "选择一个选项",
     "选择一个选项",
     "选择一个选项",
     "选择一个选项",
     "选择一个选项", // Select an Option (needs translation confirmation)
-    "请输入数字",
-    "请输入数字",
+    "请输入数字 (例如 1, 2, 3)",
+    "请输入数字 (例如 1, 2, 3)",
 
     // The question above this line is question 1.10
 
 
-    "请输入数字",
+    "请输入数字 (例如 1, 2, 3)",
     "选择一个选项",// Select an Option (needs translation confirmation)
     "选择一个选项",
     // The question above this line is a long question (1.14)
@@ -310,8 +310,8 @@ const HINTS_PART4 = [
     "",
     // The above question is a placeholder to allow 1-indexing
 
-    "请输入数字",
-    "请输入数字",
+    "请输入数字 (例如 1, 2, 3)",
+    "请输入数字 (例如 1, 2, 3)",
     // The question above this line is question 4.2
 
     "选择一个选项",

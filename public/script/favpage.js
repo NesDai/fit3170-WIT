@@ -156,9 +156,10 @@ function show_sort(){
   // generate sort checkboxes for all skill
   if (sortGenerated == false){
     sortGenerated = true;
-    sortArea.innerHTML+=`<br><br>`;
+    sortArea.innerHTML+=`<br>`;
     for (let i = 0; i<listInterest.length; i++){
-      sortArea.innerHTML+=`<div class="sortInterestBox"><input type="checkbox" name="interest" style="margin-left: 15px;margin-top: 10px;" value="`+listInterest[i]+`"><label class="labelSort">`+listInterest[i]+"&nbsp"+`</label></div>`
+      //sortArea.innerHTML+=`<div class="sortInterestBox"><input type="checkbox" name="interest" style="margin-left: 15px;margin-top: 10px;" value="`+listInterest[i]+`"><label class="labelSort">`+"&nbsp"+listInterest[i]+"&nbsp"+`</label></div>`
+      sortArea.innerHTML+=`<div class="sortInterestBox" id=sort${i} value="${listInterest[i]}" onclick="sortClick(${i})"><label class="labelSort" style="padding: 5px;">`+listInterest[i]+"&nbsp"+`</label></div>`
     }
   }
 }
@@ -166,8 +167,8 @@ function show_sort(){
 function inList(value, list){
   // Determine to hide or show favCard when user sort
 
-  console.log(value)
-  console.log(list)
+  //console.log(value)
+  //console.log(list)
 
   if (list.length == 0){
     // if none of the filter option is selected show all
@@ -183,19 +184,35 @@ function inList(value, list){
   return false;
 }
 
+function sortClick(id){
+  let sortBox = document.getElementById("sort"+id);
+  if (sortBox.style.background == "rgb(210, 210, 210)"){
+    sortBox.style.background = "none";
+  }
+  else{
+    sortBox.style.background = "#d2d2d2";
+  }
+}
+
 function filter() {
   // Refresh display of favCard, only shows the checked interest, by default show all.
-  let checkboxes = document.getElementsByName("interest");
-  console.log(checkboxes);
+  let checkboxes = [];
+  let currentInterest;
+  for (let i = 0; i<listInterest.length; i++){
+    currentInterest = document.getElementById("sort"+i);
+    if (currentInterest.style.background == "rgb(210, 210, 210)"){
+      checkboxes.push(i); // index of listInterest
+    }
+  }
+
+  //alert(checkboxes);
+
   let values = [];
   for (let i = 0; i < checkboxes.length; i++){  
-    if(checkboxes[i].checked){
-      values.push(checkboxes[i].value);
-    } 
+    values.push(listInterest[checkboxes[i]]);
   }
   console.log(values, myFavList, favCount);
   
-
   let cards = "";
   for (let j = 0; j < myFavList.length; j++){
     // this does not work
@@ -346,7 +363,7 @@ function showFavTable(){
               cardAction.className = "mdl-card__actions mdl-card--border";
               cardActionButton_1 = document.createElement("a");
               cardActionButton_1.className = "mdl-button mdl-button--colored mdl-js-button";
-              cardActionButton_1.innerHTML = "VIEW";
+              cardActionButton_1.innerHTML = '<img src="./css/images/eye_icon.png" style="height:32px">'; //"VIEW";
               cardActionButton_1.id = count; 
               cardAction.appendChild(cardActionButton_1);
 
@@ -371,8 +388,8 @@ function showFavTable(){
               }, false);
 
               cardActionButton_2 = document.createElement("a");
-              cardActionButton_2.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent";
-              cardActionButton_2.innerHTML = "DELETE";
+              cardActionButton_2.className = "mdl-button mdl-button--colored mdl-js-button";
+              cardActionButton_2.innerHTML = '<img src="./css/images/delete_icon.png" style="height:32px">'; //"DELETE";
               cardActionButton_2.id = i;
               cardAction.appendChild(cardActionButton_2);
 

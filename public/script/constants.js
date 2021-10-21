@@ -60,6 +60,11 @@ const QUESTIONS_BRANCHES = [
     "chatbot/survey_questions/questions_th/"
 ]; // english, chinese, malay, thai
 
+//Response branch
+const RESPONSE_BRANCH = "chatbot/survey_responses";
+
+
+
 // Index for access of each language branches
 const EN_INDEX = 0;
 const ZH_CN_INDEX = 1;
@@ -77,178 +82,178 @@ const SHORT_TEXT_LENGTH = 50;
 // list of Questions IDs for each language translation
 const QUESTION_IDS_EN = [
     // Part 1
-    '97CZlwR9i5LAOGoDA0eU',
-    'UI87LYHm2t48pDP33b3W',
-    't6IdJmJl86GptX3wceqx',
-    'Ttg5Gaj7LhfcFkAVeYil',
-    'FJ6h87xxovaT4gHJNqdR',
-    'qCURrsJ78pw8KmsSLxOn',
-    'JU4CUokiarx4VezKU4V4',
-    'xYmWMQzvcekUkvlRFJkF',
-    'rQCttvYOlGRd3SaCXzv2',
-    '48I5h7d3OSCK3eU0fbqB',
-    'XmLMzVlK0xJleP2lfOp1',
-    'jqYwvwrJpdAQOgYwGDja',
-    'uvdZ4DRXcgyMJNPa8Irq',
-    'fZzBLQn07Slft3mLtzgt',
+    'xNbHpzuOiq9JtrH9MQWW',
+    '3mby5I63jyQhCgyLQGdb',
+    '3fPP86mMH0zMD0hLMHDQ',
+    'Xp0ljiv9FOBVvpj4QF68',
+    'zSXT73zpgQw09nJyueAQ',
+    '3TenbSQR56yvJbjRO71i',
+    'ZkdK3RRnb1cfPKliz1RO',
+    '3bSljCrfuQlgCMHLCXA0',
+    'Qk3PwN4FLwKnNb2ivVF9',
+    'X9ENUSjr5j6xp7OVdrCv',
+    'ZJ0US6Rpal9462GuvTp0',
+    '7TlIpoJ3ruB3H2br7LdB',
+    'fvKP4pr5ozuHMzWK6odL',
+    'MoAeCjAXr0MQxDx7gX9R',
 
     // Part 2
-    '55i88aywrPXUpZQHOhNB',
-    'XntBkc8ucAS0RpdsmXrU',
-    'eyBkfq8X7vFTrX6Nfo8r',
-    'W8MSIRlxs7fcOln2OXgS',
-    'qv49aN7bddR4Z7WCuX2b',
-    '7an0h0SbtFzwNSdQvKrk',
-    'Kb2OAGkMNAjy7kzxSwKa',
+    'hy2T0J3XgLoXtK50RgTS',
+    'OGjgyFN1JQ4Wgwjjz4rl',
+    'gHla3Qmq5ib968GokRSq',
+    'dIXiu4PlHl2tqXJJ6eEu',
+    '1iRmA9X5YAXhYdckjFlv',
+    '5Q0sRn9HJ0tbxjDdrjTH',
+    '8sZSjGqtrkIHXzTI544n',
 
     // Part 3
-    'Z5JqsrL17Kcn8gE7pBtQ',
-    '76CqJj4uWlOzdLpeZvzV',
+    'N6y7oDz00MovhV2kwBWr',
+    'CyMaHOD5GHzkwe3eGkUW',
 
     // Part 4
-    '3UjWRM7J6ykqzaQo3pvp',
-    '7MnMgfXVkJyucVUOT2Ap',
-    'M16oBJ94sCqQWl2kvPQ0',
-    'q02KCLUHrzbcOCtGTvVe',
-    'wS3YFYkLSg5acQYda7Sx',
+    'TesH7zFZqxzBSpKovaY8',
+    'ibjh0729HWpPZtbuTDIv',
+    'NbNvSZeYZjxHSezpTqkf',
+    'CyNgQPsfaQ8OK92fi03L',
+    'MYtkpqNIE4VRWdFtiAhL',
 
     // Part 5
-    'JCjP9diQVuN4sJwbR0Zv',
-    'tgU2XIaLjuLeLJj0DsQX',
-    'LK3hfoPfwOMAjFWANLc8',
-    'MtpfX0thgfZXVH917lFP'
+    'vCVBMcUohJuVInR6fCzp',
+    '4u9BS9AVNe0pjGMuPw7q',
+    'E5TcRtGZ8FYwjlLVMGuh',
+    'S82wXg2bCwvuEpEuzAV7'
 ];
 
 const QUESTION_IDS_ZH_CN = [
     // Part 1
-    'YFEBSPKjmcLaJOBZaYjQ',
-    'V86AF5rcSIQCAlUEDFBq',
-    '12dA4pCjud0ubZ5c8bSk',
-    '5Cd7n5f6MQRXCYOjWI8O',
-    'D4Ci4VTeDlIzuyuVG6jG',
-    'KnZhqNR2vqjE6JZ3Lawz',
-    'd049xMTwl1nu7srt4pZx',
-    'XudiWHxAUkDU4vdzCp52',
-    'WymsOphqooOzdx40claG',
-    '9XtE4t0AELWRdaU6C02H',
-    '4syTgpXHDAxSFsKr8T0K',
-    'hIW1HqAt19uuYOvvQqNs',
-    'SObgEqkKmLjhoJvRn9Xj',
-    'e8JbtaeuXZnKwF51d17s',
+    'tYvfVKDwwC5TSFa16k5l',
+    'wZ3AFRx4ZolVWZ2d1OcM',
+    'AHG0bUjhdcyITuzlBXZo',
+    'x4jWNkPO6WbYjqjaw5d0',
+    'zXeKf0JckZQ6I3iZxOsq',
+    'zKdkHSGHd4Vb50XodZgJ',
+    '6a0pSY2PiC6rwOkksDMS',
+    'TWHHvxeGElOO3mnUWDyv',
+    'gdRRNaicHUKmoNiIj8Dj',
+    'fqnYOX1QaImLLwfFK8xb',
+    'IXZLTDzbjS2J9Au8xkRd',
+    'gMA2hqFcXZqJHgxXCssd',
+    'o2aX0jLdT9lVitD1EhYc',
+    'XGpKvzcQZNVzM06vpNXD',
 
     // Part 2
-    'PEse3mrEeSTbvaAvO99T',
-    'lSJ91kDErq2gUB1Hl2Qo',
-    'piHtQ0u6FPhgzObW2ZQh',
-    'M1Lzw2Ee6tcOdretsrq6',
-    'wzclKG9eDUK39OFYWk7s',
-    'sLKbe8FBUx5ruwdVKhoL',
-    '1afxR3DNaY3g9aFeZjYJ',
+    'OG2NXtG3UMRZE5wuHUzs',
+    'de07DdFXlVBJj4lgnpGs',
+    'EoxGLVsXPEWaojgC4AdR',
+    'LRmZhNhIRPGlQsuM41zR',
+    'u0w7NbSAg3ja60i16dPj',
+    'CTBLrD2HNOrP6PZY4PVh',
+    'LmO7EPReiQL1u8o9SNNn',
 
     // Part 3
-    'K39SNQjQxYt9TC7SGu00',
-    'pU8V8WC9eT23sGVueVMl',
+    'hJuDTXq7ChQdPn3yr70y',
+    'DD2n1YS0WFckpfiUbQrI',
 
     // Part 4
-    'xGHBGIg9qILAGFlXdk0E',
-    'KpZJNT5N4tivOSo7BTIe',
-    '5p8KJTn7nr65VhUTA0cC',
-    'mHQni51q8Ga3nxrHNANZ',
-    'qzz06dGR8iCqDYgO41oa',
+    'rGTw88jnK8ah2op2b1BV',
+    'NyRlUuhkATl0gD2Ei3GN',
+    'm5eNDljy3g6ErnE7bEIu',
+    'DC6krUccz1MzIxUBj5Ze',
+    'ZmQoHCJ5EhKJg56mtrCC',
 
     // Part 5
-    'CoLP3cCf4DOpm4ropWpN',
-    '3LgyXl9EIUQ9nQENgHHM',
-    'PRrwOpdgC7NGb2YMuqCI',
-    '4UvW3Bvg0P6IiHy1TEUW'
+    'FLuojTxj86floqSxPr2t',
+    'Qb7tTutaGGPqwFgHitaj',
+    'gTS6wseAUgX4khguk2Cn',
+    'k0LzppjIAEWfdKuyP5kY'
 ];
 
 const QUESTION_IDS_MS = [
     // Part 1
-    '1CWOrR8SnpVE6QLuBm8g',
-    'aRkv2Tie5GhbnuNFgQOb',
-    '8l0CjOE424tVyerCscFZ',
-    'OHCq9Mg6hI7dXukqUWMj',
-    'kD75U3vFXRvYssKXW9hP',
-    '4rjh8c2zrLxKV3frOKQc',
-    'Ij6JvJ3uVgQFiUe7TT9y',
-    'aSJORMKbELimkjVceFA5',
-    'IF2oVUOiuENhpxwAkjlk',
-    'f7us3JoI9zzrHgYC0ylL',
-    'zAyW5SHDXXpoZPxb14tu',
-    'Q8eJyTrw2l9DL7L7DbKc',
-    'trp1QlT8Cxz03RxtpsOs',
-    'nDrUbQdQsPH5stp7QMnL',
+    '7qW2s4kMLsoH49q7pf6q',
+    'efIrLOvtuD45pVphsaQR',
+    '5sY7o6j9c0afLvMeVv2i',
+    '6oTgF7aNfnaYBcpDUwZl',
+    'Qkm7uFhzXI4z6QO9TI9w',
+    'SAgUaAVhXj3rNUC8ItZC',
+    'APtlA7CQBcUv33HQtz7i',
+    'CUfFxs8DHzfMf4m8Uii8',
+    '3GEfJ5iAitv9DzxMidLT',
+    '84L3btG9RFqb7J4cHArh',
+    'BbugNwPdNfVSSxvoBKtR',
+    '4b9Y8QzNnM2WQwqfMnD2',
+    'sCJOyC8IJPhUqV2a1CNg',
+    'DoKon2wEEOFvDay6cIBE',
 
     // Part 2
-    'aiPiDE8NFiiQu2j68Nk6',
-    'o5yTI0qLbA3BuGRhRCNW',
-    'XyynFSbhay8bqTjsbrlL',
-    'GJL6Vrw70oMPEwedjCSy',
-    'Drra4GdWYZbfSdptc1W1',
-    'jvd0m4PfyTlBUZgNRFHj',
-    'ZBtR02CEvoTMffrrxMth',
+    'i8eCqvhP7SIkbTu61kAD',
+    'mKNWK5VPegu5uqH8hAEL',
+    'qWpFnM7xYfvSx0qVTyV9',
+    'Z09Nwy3zjr4IwEs7MdOE',
+    'UAJcpkvmDqkepJ8mR1cJ',
+    'oj5HLo7kvR1YgmepnIbn',
+    'YkxOM6aKtaqQwj8Hfscb',
 
     // Part 3
-    '4ewieerHxUqn1GlmiWSR',
-    'MPxdUPYSURgqHukARjoe',
+    'Ok1PgTXZmPRkuVtpYHXA',
+    'dAhK06xif0YlfvjAmOOX',
 
     // Part 4
-    'IctVliFqifjZhZK6pUBR',
-    'L163XAIG5wcl22JidNBa',
-    'y9nc4hRXDlGLFRxb6hZP',
-    'YqP2ohRMGTUsC9MI3CRn',
-    'GLerc6NKNPFzFybfWZYX',
+    'fl4NOgvvp8XOxQKZIR3z',
+    'GUDT1XpPdXYaV8gwNscW',
+    'FNCZ9GBEwqH4zPGxAICW',
+    'XHCYARvyVYvcEGcckXBA',
+    'kHiTBbV4C93umcrM0lcw',
 
     // Part 5
-    'mK8YeG4abJ2UUMv2s27n',
-    'MxbWCenwBm706TvlHBVz',
-    'BN9CSX0dTJVyW3jNcPPW',
-    'wSx9hFb3bUfj4uLCX0qR'
+    'P1pu56aRMyn1Pysln9Jj',
+    'POKBzejlzXC57LQl36zS',
+    'KKShMP5huIXTn5gQHYwU',
+    'GVBVFw0hR8zUMoc2AQe8'
 ];
 
 const QUESTION_IDS_TH = [
     // Part 1
-    'EkrbBJcNXZaf992YiHEz',
-    'g3aaHbUdnpOFOS3C7Kuw',
-    '42BPDbNUNmSAeqSswQIt',
-    'xWhgX7Pv6Qc6zStj5M0e',
-    'TnTPLxdAU65mDVxtbn5u',
-    'xcJ0siWFZKBZoJbjNEsu',
-    'EElt6QyKTJfG4IZs1APb',
-    'gBsz1uJirHGvCVPQjeDp',
-    'Tr93jiFtAAxVIULHy2ob',
-    'L5837fXAdB2ZsJPqPkKo',
-    'ppKw9T6O6zmo0MPHwvmM',
-    'l3S525EUyCma1ddm3N6C',
-    '6Ljxvl8Xd5paaOHfjYxt',
-    '29o1QUyVx8LbUe8ksszM',
+    'TcBaR4sTcOcGXPXY5b6L',
+    'cikkMITeFfXTLAvP0669',
+    'd5TlN1r4b1VgusoeWpiw',
+    'jDTtSaROweodWdSYYkjs',
+    '1fk878cWt31OzyuRNhLN',
+    'DVSnri8Rp2UatG8JzvHr',
+    '0GZ6FVx8JxTw8PfLL2Cm',
+    'OAF1mdsQOeF2mPtSHX7X',
+    'TcYfMWuWRxowyt3d6AcK',
+    'Sh133s3YmDvxuNJNRw89',
+    'uLtwBcwuRh2KdzkyKNHw',
+    'uZfHY9gjKZ3EVke2oVMx',
+    '6MqxdxlgmfC1IAmI8FkD',
+    'z3dUAKF8itdKPAVDUXkE',
 
     // Part 2
-    'cNExFyfKj2H2MhyPEKXC',
-    'ExbbxHjr1pJ8jXMtYI2r',
-    '6hr6g1Nsf23XF2igWr4I',
-    'OqWJduwDWnDxHH3oefJ4',
-    '8oEGnDYXXEzKsITZnVV5',
-    'de9MCppPjPsSKAhCM8qV',
-    'BnGffx22Yl4sqEGaIZLX',
+    'ZvVATOepzC3rWrupeQOt',
+    'I8sg2rPYX1f9JtwbTD6U',
+    'jW3cCqx2RPczBcmxXCx9',
+    'WL0L0eYc00Ue3vStiJue',
+    'feiRX3lcrxEmC8JbXiwO',
+    'erPg2fCzLgpcLlx9MCC2',
+    '7CskfZ2KOfhMYh9TCZ9w',
 
     // Part 3
-    'OLNiTOfsFE8aaRTkeh6r',
-    'BZ5l4xvVbpVhbCEzxmrL',
+    'TXRN8vYY0SRuAzsaklwK',
+    'ZnsJ1dgbmfO3rseByRMh',
 
     // Part 4
-    'QW77LSrlvT6n4j0w1fMs',
-    'juYynqJVRlokY5qa0YGf',
-    '1tJvF5eG1pKvEN7ZlKFo',
-    '71TSaty5wdD514tDDLE9',
-    'hQ0ArGLZXfdP52FdTswW',
+    'oGENILnDhXjVbhr589ly',
+    'Kw0t6EKVvOSmTpylTPnr',
+    'IZwqrQfCnpJ86m2MBedq',
+    'fhX2JsZUCH1WI6YTa1RM',
+    'pdX7WC2iFaJFH439kujO',
 
     // Part 5
-    'bcGS7ZLXMcY8y4AOfkEU',
-    'Yj0Zn2P1BNvXakYfVuXh',
-    'BH4BB2S3qpDf54O2hlGj',
-    'qdTVgCzANxKdu3YqczoC'
+    'XiqgMIhdgLoQxMMVbPLr',
+    'Rs2a57sMJq8wYQqw7DPe',
+    'EhIfrhrtBenAeKewjKmU',
+    '8p6yCvYRutU4NCbzTSE3'
 ];
 
 // A list of arrays of IDs of question objects of each supported language that are stored in the Firestore Database

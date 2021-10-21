@@ -13,6 +13,18 @@
     overflow-y: scroll;
 }
 
+#card-row {
+    height: 100%;
+}
+
+.card-body {
+    height: 10px;
+}
+
+#language-dropdown {
+    width: 150px;
+}
+
 /* SCROLLBAR CSS */
 ::-webkit-scrollbar {
     width: 2.5px;
@@ -49,5 +61,11 @@
     }
     .mdl-card {
     width: 100%;
+    }
+}
+
+@media (max-width: 575px) {
+    #responses-area {
+        display: none;
     }
 }

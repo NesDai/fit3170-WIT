@@ -1,13 +1,12 @@
 /*
-* This file is dedicated to uploading the long english version of the terms and conditions onto the firestore
+* This file is dedicated to uploading the long english version of the explanatory statement onto the firestore
 * */
 
-function uploadTermsAndConditions_en_long(){
-    // "<center><h3>EXPLANATORY STATEMENT</h3></center><br>" +
+function uploadExplanatoryStatement_en_long(){
     let contents = "<center><b>(Survey Participant Group)</b></center><br>" +
         "<b>Project ID: 29459</b><br>" +
-        "<b>Project title: Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand:</b><br>" +
-        "<b>Integrating Action Research and Design Science Approach</b><br><br>" +
+        "<b>Project title: Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand: " +
+        "Integrating Action Research and Design Science Approach</b><br><br>" +
         "<center><b>Project email:</b> womenintech@monash.edu</center><br>" +
         "<b>Professor Teh Pei Lee</b><br>" +
         "School of Business<br>" +
@@ -50,8 +49,8 @@ function uploadTermsAndConditions_en_long(){
         "in any other parts of the study. The additional information will be stored separately and will not be linked to " +
         "your chatbot survey responses. After the cash reimbursement, all payment data will be permanently deleted from " +
         "the Qualtrics platform. Please see the " +
-        "<a href='https://www.qualtrics.com/privacy-statement/' target='_blank'>Qualtrics Privacy Statement</a> " +
-        "for further information.<br><br>" +
+        "<a href='https://www.qualtrics.com/privacy-statement/' target='_blank'>Qualtrics Privacy Statement</a>" +
+        " for further information.<br><br>" +
         "<b>Research Procedure</b><br><br>" +
         "The chatbot survey requires you to access the survey on a web browser using your mobile phone. As such, your " +
         "mobile phone number will be required as a unique identifier to start the chatbot survey. Once you have " +

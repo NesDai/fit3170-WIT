@@ -19,7 +19,7 @@ async function execute(){
     if (post_id != "null" && post_id != null){
       // onload function
 
-      collectPosts().then(()=>{
+      await collectPosts().then(()=>{
 
           updateUI(post_id);
           $("#searchInput").val(`${post_id}`);
@@ -29,26 +29,28 @@ async function execute(){
         }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
 
 
-        })
+        });
     } else if(post_id == "null" || post_id == null){
-      // onload function
-      collectPosts().then(()=>{
+        // onload function
+        await collectPosts().then(()=>{
 
-          updateUI(null);
-          // autocomplete(document.getElementById("searchInput"), postid);
-
-
-          $('#searchInput').autocomplete({
-
-              source : postid,
-          }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+            updateUI(null);
+            // autocomplete(document.getElementById("searchInput"), postid);
 
 
-  })
-    }
+            $('#searchInput').autocomplete({
+
+                source : postid,
+            }).attr('style', 'max-height: 40px; overflow-y: auto; overflow-x: hidden;');
+
+
+            });
+        }
       localStorage.removeItem("POST_ID");
 
 }
+
+
 
 /**
  * Function used to collect all the posts into an array from firebase
@@ -182,7 +184,7 @@ function updateUI(postId){
                 </tr>
 
             </table>
-            <a href="http://localhost:5000/post.html?post_id=${postId}">
+            <a href="http://localhost:5000/post_view.html?post_id=${postId}">
                 <div> <button class='btn btn-primary'> Go to Post </button> </div>
             </a>
             `);
@@ -232,7 +234,7 @@ function updateUI(postId){
 
 
                 let yValues = [likes, dislikes, comments, favourited]
-                var barColors = ["#006dae", "#00ac3e","#D2D2D2","#c00095"];
+                var barColors = ["#00ac3e", "#ff7c00","#006dae","#c00095"];
 
                 new Chart("myChart", {
                 type: "bar",
@@ -251,7 +253,9 @@ function updateUI(postId){
 
             })
         })
-    }
+
+  
+}
 
 
 

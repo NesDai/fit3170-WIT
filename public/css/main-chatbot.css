@@ -8,7 +8,6 @@ body {
 }
 
 /* HEADER CSS */
-
 @media screen and (max-width: 1024px) {
   .mdl-layout__header {
     display: block;
@@ -210,7 +209,14 @@ main {
   top: -1px;
   margin-right: 5px;
 }
-
+.text-to-speech {
+  height: 40px;
+  width: 40px;
+  background: url("../css/images/text-to_speech.png");
+  background-size: 100%;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
 
 /* SCROLLBAR CSS */
 ::-webkit-scrollbar {

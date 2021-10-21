@@ -9,6 +9,12 @@ html, body {
     background-color: #006dae;
 }
 
+h4 {
+    margin-top: auto;
+    font-size: 22pt;
+    position: relative;
+}
+
 .material-icons {
 	font-size: 36px;
 	top: 8px;
@@ -166,6 +172,13 @@ i.icon-teal{
     background-color: #d2d2d2;
 }
 
+#home_button{
+    background-color: white;
+    height: 50px;
+	width: 35px;
+    margin-left: 80px;
+}
+
 #option_buttons{
     background-color: #006dae;
 }
@@ -247,6 +260,7 @@ transition: color 0.15s ease-in;
 /*Media query*/
 @media all and (min-width:551px){
     /* hi-res laptops and desktops */
+    
     #option_buttons{
         display: flex;
         align-items: center;
@@ -291,15 +305,20 @@ transition: color 0.15s ease-in;
   		left: 100px
   	}
 
+    #home_button{
+        margin-left: 55px;
+    }
+
+    h3 {
+		position: relative;
+		left: 25px;
+	}
+
+
 }
 
 @media screen and (max-width: 600px) and (max-height: 1100px){
     /* for mobile */
-    header {
-      height: 113px;
-      padding-bottom: 80px !important;
-    }
-
     .mdl-card {
       width: 100%;
     }
@@ -321,6 +340,7 @@ transition: color 0.15s ease-in;
     .container {
   		margin-top: 12px;
   		justify-content: center;
+        margin-left: 28px;
   	}
 
       /* for glider */
@@ -344,5 +364,19 @@ transition: color 0.15s ease-in;
     #tab0, #tab1, #tab2{
   		font-size:18px ;
   	}
+
+    #home_button{
+        margin-left: 35px;
+    }
+
+    h3 {
+		position: relative;
+		left: 25px;
+	}
+
+    .mdl-snackbar--active {
+        transform: translate(0, -110%); 
+    }
+
 
 }

@@ -9,10 +9,14 @@ let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
 let messageHistoryColour = 'white';
 let skippedToEnd = null;
+let joinFutureResearchExist = null;
 let otherChosen = false;
 let MCQOptionIDs = [];
 let possibleAnswersMCQ = [];
 let othersAnswers = [];
+let question_bubble_no = 0;
+var speechSynth = window.speechSynthesis;
+var voices = [];
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -29,18 +33,19 @@ if (select_language == "English") {
 }
 
 /*
-The user object of the currently logged in user
-<br>
+The user object of the currently logged in user.
+
 Can be used to retrieve details such as phone number
 and user ID.
  */
 let currentUser = null;
 let currentQuestionId = null;
 let currentQuestionObject = null;
+let currentLongQuestionObject = null;
 
 /*
-Stores the index of the current question object
-<br>
+Stores the index of the current question object.
+
 Used to retrieve the current question object's ID from
 QUESTION_IDS
  */
@@ -54,8 +59,7 @@ let subQuestionIndex = 0;
 let currentSubQuestionIds = null;
 
 /*
-Used for likert scale idexes of questions stored in firebase
-"very nice" - Yong Peng
+Used for likert scale indexes of questions stored in firebase
  */
 let agreeLikertQues = [13, 27]; //[1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree
 let satisfyLikertQues = [16]; //[0] Not Applicable [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
@@ -117,11 +121,14 @@ function select(button, index) {
             let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
 
             setTimeout(() => {
+                // increment subQuestionIndex to be like nextQuestion call
+                subQuestionIndex++;
+
                 // save index of choice onto firebase
                 saveResponse(index-1);
 
-                // set currentQuestionObject to skipTarget
-                currentQuestionObject = skipTarget;
+                // set currentQuestionId to skipTarget
+                currentQuestionId = skipTarget;
 
                 // Set the current question index to the question before the
                 // skip target since nextQuestion increments
@@ -204,7 +211,7 @@ function addMessage() {
 
             if (currentQuestionObject.restrictions.skipIfInvalid) {
                 if (currentQuestionObject.restrictions.skipTarget !== SKIP_END_SURVEY) {
-                    if (currentQuestionObject.restrictions.skipTarget !== SKIP_NOT_ALLOWED) {
+                    if (currentQuestionObject.restrictions.skipTarget !== SKIP_NOT_ALLOWED && (parseInt(numInput) < currentQuestionObject.restrictions.lowerRange || parseInt(numInput) > currentQuestionObject.restrictions.upperRange)) {
                         // Set the current question index to the question before the skip target since nextQuestion increments
                         // the question index by 1
                         questionIndex = QUESTION_IDS[branch_id].indexOf(currentQuestionObject.restrictions.skipTarget) - 1;
@@ -317,11 +324,15 @@ function showEndingMessage() {
             // check if the first closing message has been answered before by user and that if
             // skippedToEnd exists in user's branch
             let closedSurvey = document.data().closedSurvey;
+            joinFutureResearchExist = (document.data().joinFutureResearch != null);
             skippedToEnd = (document.data().skippedToEnd != null);
 
             if (closedSurvey == null) {
                 // asks if the user is ready to end the survey
                 showReadyClosingMessage();
+            } else if (closedSurvey != null && joinFutureResearchExist == false && skippedToEnd == false) {
+                // show future research question if user has not finished answering it
+                showFutureResearchQuestion();
             } else {
                 // Show option to move to different pages of the app
                 showMoveToDifferentPages();
@@ -366,7 +377,7 @@ function showFutureResearchQuestion(){
     messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
-        `<p>Are you willing to opt-in for future related research projects that have obtained ethical approval?</p>` +
+        `<p>We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study(interview)? </p>` +
         "</div>" +
         "</div>";
     document.getElementById('hint_area').innerHTML = "";
@@ -375,6 +386,7 @@ function showFutureResearchQuestion(){
     let questionOptions = "<div class=\"space\">"
     questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectClosingQuestionOption(this, 1, 1)\">1. Yes</button>";
     questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectClosingQuestionOption(this, 2, 1)\">2. No</button>";
+    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchMaybe\" onclick=\"selectClosingQuestionOption(this, 3, 1)\">3. Maybe</button>";
     questionOptions += "</div>";
     messages.innerHTML += questionOptions;
 
@@ -404,6 +416,8 @@ function selectClosingQuestionOption(button, index, closingQsID){
         choice = "Yes";
     } else if (index == 2) {
         choice = "No";
+    } else if (index == 3) {
+        choice = "Maybe";
     }
 
     // update user's branch in firestore with data based on which closingQsID was answered
@@ -464,12 +478,21 @@ function selectClosingQuestionOption(button, index, closingQsID){
  */
 function textInputClosingQuestion(closingQsID){
     // initialise yesOptions and noOptions
-    let yesOptions = ["yes", "1", "1. yes"];
-    let noOptions = ["no", "2", "2. No"];
+    let yesOptions = ["yes", "1", "1. yes", "1.yes"];
+    let noOptions = ["no", "2", "2. No", "2.No"];
+    let maybeOptions = ["maybe", "3", "3. maybe", "3.maybe"];
 
+    // check if the text input from textbox is one of the options in maybeOptions after converting all
+    // alphabetic characters to lowercase
+    if (maybeOptions.includes(input.value.toLowerCase())) {
+        if (closingQsID == 1) {
+            // activate selectClosingQuestionOption with respective chosen option value and closingQsID
+            selectClosingQuestionOption(document.getElementById("futureResearchMaybe"), 3, closingQsID);
+        }
+    }
     // check if the text input from textbox is one of the options in yesOptions after converting all
     // alphabetic characters to lowercase
-    if (yesOptions.includes(input.value.toLowerCase())) {
+    else if (yesOptions.includes(input.value.toLowerCase())) {
         if (closingQsID == 0) {
             // activate selectClosingQuestionOption with respective chosen option value and closingQsID
             selectClosingQuestionOption(document.getElementById("endSurveyYes"), 1, closingQsID);
@@ -481,8 +504,10 @@ function textInputClosingQuestion(closingQsID){
     // check if the text input from textbox is one of the options in noOptions after converting all
     // alphabetic characters to lowercase
     else if (noOptions.includes(input.value.toLowerCase())){
-        // activate selectClosingQuestionOption with respective chosen option value and closingQsID
-        selectClosingQuestionOption(document.getElementById("futureResearchNo"), 2, closingQsID);
+         if (closingQsID == 1) {
+            // activate selectClosingQuestionOption with respective chosen option value and closingQsID
+            selectClosingQuestionOption(document.getElementById("futureResearchNo"), 2, closingQsID);
+        }
     }
 }
 
@@ -513,18 +538,24 @@ function showOnlineTransactionOptions(){
  */
 function showMoveToDifferentPages(){
     // message
+
     messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
-        `<p>Thank you so much for your participation in this survey. Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!</p>` +
+        "<p>Thank you so much for your participation in this survey." +
+        // uncomment line below when app is no longer in trial phase
+        //" Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!
+        "</p>" +
         "</div>" +
         "</div>";
     document.getElementById('hint_area').innerHTML = "";
 
     // display the options to got to recommender, forum and main page respectively
     let options = "<div class=\"space\">"
-    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'recommender_Ui.html\'\">Recommender</button>";
-    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'forum.html\'\">Forum</button>";
+
+    // uncomment the below 2 line when app is no longer in trial phase. these are to allow users to use recommender and forum page
+    //options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'recommender_Ui.html\'\">Recommender</button>";
+    //options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'forum.html\'\">Forum</button>";
     options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Main Page</button>";
     options += "</div>";
     messages.innerHTML += options;
@@ -541,10 +572,27 @@ function showMessageSender(message) {
         "<div class='space'>" +
         "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
+        "<button  onclick = \"bindingFunc()\" class=\"text-to-speech\" id=\"text-to-speech-" + question_bubble_no + "\"></button>" +
         "</div>" +
         "</div>";
     // showHints();
+    question_bubble_no++;
 }
+
+function bindingFunc(){
+    var toSpeak = new SpeechSynthesisUtterance(currentQuestionObject.question.replace( /(<([^>]+)>)/ig, ''));
+    // Adjusts the rate of the speaker
+    toSpeak.rate = 0.9;
+
+    voices = speechSynth.getVoices();
+    voices.forEach((voice)=>{
+        if(voice.name === 'Google UK English Female'){
+            toSpeak.voice = voice;
+        }
+    });
+    speechSynth.speak(toSpeak);
+}
+
 
 /**
  * display a question from chatbot without any hint
@@ -653,6 +701,7 @@ function showQuestion(isSubQuestion) {
                     break;
 
                 case TYPE_LONG_QUESTION:
+                    currentLongQuestionObject = questionObject;
                     showLongQuestion(questionObject);
                     break;
 
@@ -749,7 +798,7 @@ function showNumeric(questionObject) {
     }
 
     // display the question and enable the textbox
-    showShortQuestionMessage(questionObject.question);
+    showMessageSender(questionObject.question);
     enableTextInput();
 }
 
@@ -783,8 +832,9 @@ function repromptQuestion() {
         showMultipleChoice(currentQuestionObject);
     }else{
       // print out the question again onto chat
-      showShortQuestionMessage(question);
+      showMessageSender(question);
     }
+
     showHints();
     updateProgress();
     scrollToBottom();
@@ -1046,7 +1096,7 @@ function showShortText(questionObject) {
 
     }
 
-    showShortQuestionMessage(questionObject.question);
+    showMessageSender(questionObject.question);
     enableTextInput();
 }
 
@@ -1224,14 +1274,12 @@ function likertSelect(number)
     // display user's choice on chat
     messages.innerHTML += ansTemp;
 
-    // save choice onto firebase
-    saveResponse(number);
 
     // Prevent users from using text box
     disableTextInput();
 
-    // display next question after time delay and scroll to bottom of screen
+    // display next question and save user response after time delay and scroll to bottom of screen
     let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-    setTimeout(() => nextQuestion(), delay);
+    setTimeout(() => {nextQuestion(); saveResponse(number);}, delay);
     scrollToBottom();
 }

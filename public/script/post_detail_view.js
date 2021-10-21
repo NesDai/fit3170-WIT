@@ -1,34 +1,7 @@
-let current_user = JSON.parse(localStorage.getItem("USER"));
+
 const params = new URLSearchParams(window.location.search)
 
 getPostDetails();
-
-
-/**
- * Function used to check whether or not a post exists provided the post id. Function should be called before performing any action on the post.
- * @param {1} id: the post id
- * returns 1 if the post exists and 0 otherwise
- */
- async function checkPostExists(id){
-
-    let res = 0;
-
-    await firebase.database().ref(`posts`).orderByChild("id").equalTo(id).once("value", snapshot => {
-
-        if (snapshot.exists()){
-            console.log(1);
-
-            res = 1;
-        }
-     });
-
-     return new Promise(function(resolve, reject) {
-        resolve(res);
-      });
-
-
-}
-
 
 /**
 * Function that displays the input box to add a reply to a comment
@@ -57,18 +30,6 @@ function showReplyToReplyToReplyInput(comment_index, reply_index, reply_to_reply
     document.getElementById("add_reply_2_reply_section" + comment_index.toString() + "," + reply_index.toString() + "," + reply_to_reply_index.toString()).style.display = "block";
 }
 
-/**
- * Function used to check the user existence in the database
- * @returns a boolean indicating if the user is found in the database or not
- */
-function checkUserExistence() {
-    // if a user is signed in then
-    if (current_user["username"] && current_user["phone"]) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 /**
  * Gets all the details related to one post and calls printing post function
@@ -79,36 +40,22 @@ function getPostDetails() {
     let id = params.get('post_id');
     let action = 0;
 
-    //checks whether the post was liked or not
-    firebase.database().ref(`likesDislikes/${id}/${current_user["username"]}`)
-        .once('value', x => {
-            x.forEach(data => {
-                action = data.val()
-            })
-        }).then(() => {
-            firebase.database().ref('posts')
-                .orderByChild('id')
-                    .equalTo(id)
-                        .once('value', x => {
-                            x.forEach(data => {
-                                //get post details looking for it by id
-                                let post = data.val();
-                                posts.push(post)
-                    });
+
+    firebase.database().ref('posts')
+        .orderByChild('id')
+            .equalTo(id)
+                .once('value', x => {
+                    x.forEach(data => {
+                        //get post details looking for it by id
+                        let post = data.val();
+                        posts.push(post)
+            });
                 }).then(() => {
                     //calling printing post function
-                    if (posts.length == 0){
-
-                        window.location = "forum.html";
-                    }
-                    else{
-                        printPostDetails(posts[0], action)
-
-                    }
-
+                    printPostDetails(posts[0], action)
                 })
-        })
 }
+
 
 /**
 * Function that prints out all the information about the post to the UI
@@ -128,29 +75,29 @@ function printPostDetails(post, button_num) {
 
     //choosing appropriate like-dislike buttons UI
     let button = `
-    <button class="like mdl-button mdl-js-button" id="btn_like" value="${post.likes}">
+    <button class="like mdl-button mdl-js-button" id="btn_like" value="${post.likes}" disabled>
     <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
     </button>
-    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike">
+    <button class="dislike mdl-button mdl-js-button"  value="${post.dislikes}" id="btn_dislike" disabled>
     <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
     </button>
     `
     if (button_num == 1) {
         // liked
         button = `<button
-         class="like mdl-button mdl-js-button"  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}"  id="btn_like">
+         class="like mdl-button mdl-js-button"  style="color: white !important; background-color:#2bbd7e !important;"  value="${post.likes}"  id="btn_like" disabled>
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button " value="${post.dislikes}" id="btn_dislike">
+         <button class="dislike mdl-button mdl-js-button " value="${post.dislikes}" id="btn_dislike" disabled>
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>
          `
     } else if (button_num == -1) {
         // disliked
-        button = `<button class="like mdl-button mdl-js-button" value="${post.likes}"  id="btn_like">
+        button = `<button class="like mdl-button mdl-js-button" value="${post.likes}"  id="btn_like" disabled>
          <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes"> ${post.likes}</span>
          </button>
-         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;"  value="${post.dislikes}" id="btn_dislike">
+         <button class="dislike mdl-button mdl-js-button"  style="background-color:#e53935; color: white;"  value="${post.dislikes}" id="btn_dislike" disabled>
          <img src="./css/images/button-designs_24.png"  id="dislike_post_icon"></img><span class="number_of_dislikes"> ${post.dislikes}</span>
          </button>`
     }
@@ -182,11 +129,10 @@ function printPostDetails(post, button_num) {
     post_display +=
             `</div>
             <div>
-                <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()">
+                <button class="mdl-button mdl-js-button" id="delete_post_btn" onclick="removePost()" disabled>
                     <img src="./css/images/delete_icon.png"  id="delete_post_icon"></img>
                 </button>
             </div>`;
-    if (current_user.username != post.username)
         post_display += `<br>`
 
     post_display +=
@@ -214,7 +160,7 @@ function printPostDetails(post, button_num) {
                     <!--  LIKE DISLIKE FOR POST -->
                     <br>
                     ${button}
-                    <button class="favourite mdl-button mdl-js-button mdl-button--raised" id="favourite_post_btn" onclick="checkButtonStatus()">
+                    <button class="favourite mdl-button mdl-js-button mdl-button--raised" id="favourite_post_btn" onclick="checkButtonStatus()" disabled>
                         <img src="./css/images/heart_icon.png"  id="favourite_post_icon"></img><span id="favourite_btn"> Add Favourite</span>
                     </button>
                 </div>
@@ -227,20 +173,20 @@ function printPostDetails(post, button_num) {
                 <!-- COMMENT FORM -->
                 <form class="post_comment">
                     <!-- COMMENT INPUT -->
-                    <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment...">
+                    <input class="comment_input" type="text" id="comment_input" name="comment_input" placeholder="Write a comment..." disabled>
                     <br>
                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                     <form>
                         <div>
                             <label class="mdl-checkbox mdl-js-checkbox" >
-                                <input type="checkbox" id="anonymous" class="mdl-checkbox__input" >
+                                <input type="checkbox" id="anonymous" class="mdl-checkbox__input" disabled>
                                 <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                             </label>
                           </div>
                     </form>
                     <!-- SEND BUTTON -->
                     <div>
-                        <button class="mdl-button mdl-js-button mdl-button--raised" id="send_comment_btn" type="submit" onclick="addComment()">
+                        <button class="mdl-button mdl-js-button mdl-button--raised" id="send_comment_btn" type="submit" onclick="addComment()" disabled>
                             <i class="material-icons notranslate" id="send_reply_icon">send</i> SEND
                         </button>
                     </div>
@@ -250,65 +196,14 @@ function printPostDetails(post, button_num) {
                 <div id="comment_section">
                     <h5 class="comment_section_header mdl-color-text--black" style="margin-top: 5px; margin-left: 15px; font-size: 18px">COMMENTS</h5>
                 </div>
-
-                <script>
-                    //checks for double click on like button
-                    $('#btn_like').on('click',function(){
-                        var $button=$(this);
-                        if ($button.data('alreadyclicked')){
-                            $button.data('alreadyclicked', false); // reset
-
-                            if ($button.data('alreadyclickedTimeout')){
-                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
-                            }
-
-                            // do what needs to happen on double click.
-                            document.getElementById("like-Modal").style.display = "block";
-                        }else{
-                            $button.data('alreadyclicked', true);
-
-                            var alreadyclickedTimeout=setTimeout(function(){
-                                $button.data('alreadyclicked', false); // reset when it happens
-                                likePostDetailed('${post.id}')
-                            },300); // <-- dblclick tolerance here
-                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
-                        }
-                        return false;
-                    });
-
-                    //checks for double click on dislike button
-                    $("#btn_dislike").on('click',function(){
-                        var $button=$(this);
-                        if ($button.data('alreadyclicked')){
-                            $button.data('alreadyclicked', false); // reset
-
-
-                            if ($button.data('alreadyclickedTimeout')){
-                                clearTimeout($button.data('alreadyclickedTimeout')); // prevent this from happening
-                            }
-
-                            // do what needs to happen on double click.
-                            document.getElementById("like-Modal").style.display = "block";
-                        }else{
-                            $button.data('alreadyclicked', true);
-
-                            var alreadyclickedTimeout=setTimeout(function(){
-                                $button.data('alreadyclicked', false); // reset when it happens
-                                dislikePostDetailed('${post.id}')
-                            },300); // <-- dblclick tolerance here
-                            $button.data('alreadyclickedTimeout', alreadyclickedTimeout); // store this id to clear if necessary
-                        }
-                        return false;
-                    });
-                </script>
             </div>`
     $('#post_details').append(post_display);
     //check whether the user has favourited the post
     checkUserFavouritedPost();
     //printing comments
     printComments();
-    if (current_user.username != post.username) // remove the delete button if not the poster of the post
-        document.getElementById("delete_post_btn").remove();
+
+    document.getElementById("delete_post_btn").remove();
 }
 
 /**
@@ -352,18 +247,8 @@ function checkButtonStatus() {
  * Function which removes the current post from user's favourite.
  * @returns none
  */
-async function removePostFromFavourite() {
-
-
-
+function removePostFromFavourite() {
     let post_id = params.get('post_id');
-
-    if (await checkPostExists(post_id) == 0){ // if doesnt exist
-        document.getElementById("deletedPost-Modal").style.display = "block";
-        // give an alert
-        return;
-    }
-
     //checks if the user exists
     if (checkUserExistence()) {
         let myRef = firebase.database().ref(`posts/${post_id}`);
@@ -399,16 +284,8 @@ async function removePostFromFavourite() {
  * before proceeding to add the following post into favourites.
  * @returns none
  */
-async function addPostToFavourite() {
-
-
+function addPostToFavourite() {
     let post_id = params.get('post_id');
-
-    if (await checkPostExists(post_id) == 0){ // if doesnt exist
-        document.getElementById("deletedPost-Modal").style.display = "block";
-        // give an alert
-        return;
-    }
 
     //checks whether the user exists
     if (checkUserExistence()) {
@@ -421,18 +298,14 @@ async function addPostToFavourite() {
 
                 // checking the favourite data has been written ebfore
                 if (hasFavouriteData == false) {
-
                     //if the data has not been written before
                     users_favourite_arr = [];
                     users_favourite_arr.push(current_user["phone"]); //push current user id to post dets to indicate they have favourite this post
 
-                    // create new data to be added to database
                     newData = {
                         users_favourite: users_favourite_arr
                     }
                 } else {
-
-                    //add user into the list and update
                     let users_arr = snapshot.val()["users_favourite"];
 
                     users_arr.push(current_user["phone"]);
@@ -444,7 +317,6 @@ async function addPostToFavourite() {
                 firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
                 })
 
-                // change the UI of favourite button
                 let fav_button = document.getElementsByClassName("favourite")[0];
                 fav_button.innerHTML = "\n  <img src=\"./css/images/fav_icon.png\" id=\"favourite_post_icon\"><span id=\"favourite_btn\"> Remove Favourite</span>\n  ";
                 fav_button.style.background='#006dae';
@@ -458,13 +330,8 @@ async function addPostToFavourite() {
  * The comment will be added into database if input was not left empty
  * @returns none
  */
-async function addComment() {
+function addComment() {
     let post_id = params.get('post_id');
-
-    if(await checkPostExists(post_id) == 0){
-        document.getElementById("deletedPost-Modal").style.display = "block";
-        return; // give an alert that the post doesnt exist
-    }
 
     if (checkUserExistence()) {
         const options = { // options for Date
@@ -479,8 +346,6 @@ async function addComment() {
         let comment = document.getElementById("comment_input").value
         let stay_anonymous = document.getElementById("anonymous").checked
 
-        $(`#comment_input`).val(''); // clear input
-
         // new data to upload in api
         if (comment) { // only adding comment if it's not empty
             //generating a key for the comment
@@ -493,56 +358,20 @@ async function addComment() {
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
 
-            let anonymous_value = 0;
-            //getting the number of anonymous in the page
-            // updating  the number
-            if(stay_anonymous){
-              let myRef = firebase.database().ref(`posts/${post_id}`);
-              myRef.once("value")
-                  .then(function(snapshot) {
-                        let currentAnonymous = snapshot.val()["anonymous"];
-                        currentAnonymous += 1
-                        let newData = {
-                            anonymous: currentAnonymous
-                        }
-
-                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
-                      })
-                      anonymous_value = currentAnonymous;
-
-                      newData = {
-                          anonymous: anonymous_value,
-                          commenterID: current_user["phone"],
-                          content: comment,
-                          id: key,
-                          likes: 0,
-                          postID: post_id,
-                          username: current_user["username"],
-                          created: utc
-                      }
-                      firebase.database().ref(`comments/${key}`).set(newData).then(() => {
-                          printComments();
-                      });
-                  });
-            } else{
-              let newData = {
-                  anonymous: 0,
-                  commenterID: current_user["phone"],
-                  content: comment,
-                  id: key,
-                  likes: 0,
-                  postID: post_id,
-                  username: current_user["username"],
-                  created: utc
-              }
-              firebase.database().ref(`comments/${key}`).set(newData).then(() => {
-                  printComments();
-              });
-
+            let newData = {
+                anonymous: stay_anonymous,
+                commenterID: current_user["phone"],
+                content: comment,
+                id: key,
+                likes: 0,
+                postID: post_id,
+                username: current_user["username"],
+                created: utc
             }
-            $(`#comment_input`).val('');
 
-
+            firebase.database().ref(`comments/${key}`).set(newData).then(() => {
+                printComments();
+            });
         };
 
     } else {
@@ -556,39 +385,18 @@ async function addComment() {
  * before proceeding with deleting the post
  * @returns none
  */
-async function removePost() {
-    let creator = false;
+function removePost() {
     let post_id = params.get('post_id');
-    await firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
+    firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
         let post = snapshot.val();
         //checks whether the user has created the post
         if (post["userID"] == current_user["phone"]) {
-            creator = true;
+            firebase.database().ref(`posts/${post_id}`).remove();
+            window.location = "forum.html";
+        } else {
+            alert("Only this post's owner can delete this post");
         }
     });
-    if (!creator){
-        alert("Only this post's owner can delete this post");
-    }
-    await firebase.database().ref('comments').orderByChild('postID').equalTo(post_id).once("value").then(comments => {
-        comments.forEach(comment => {
-            comment_id = comment.key;
-            firebase.database().ref(`likesComments/${comment_id}`).remove();
-            firebase.database().ref(`comments/${comment_id}`).remove();
-            firebase.database().ref('replies').orderByChild('reply_comment_parent').equalTo(comment_id).once("value").then(replies => {
-                replies.forEach(reply => {
-                firebase.database().ref(`replies/${reply.key}`).remove();
-                })
-            });
-        });
-        }).then(() => {
-             // remove the replies
-             // remove comment upvotes
-            firebase.database().ref(`likesDislikes/${post_id}`).remove(); // remove likes and dislikes on this post
-            firebase.database().ref(`posts/${post_id}`).remove().then(()=>{
-                    window.location = "forum.html";
-             }); // remove the post
-
-            });
 }
 
 /**
@@ -649,20 +457,20 @@ async function checkCommentForLikes(comments_list){
 function printComment(button_num, comment, i ){
     //checks whether the comment is anonymous
     let comment_username;
-    if (comment.anonymous != 0) {
-        comment_username = "Anonymous " + comment.anonymous;
+    if (comment.anonymous) {
+        comment_username = "Anonymous";
     } else {
         comment_username = comment.username;
     };
 
     //choosing the proper color for the button
     if (button_num==1){
-        button=`<button class="like mdl-button mdl-js-button" style="color: white !important; background-color:#2bbd7e !important;"   value="${comment.likes}" id="btn_cmnt_like${i}">
+        button=`<button class="like mdl-button mdl-js-button" style="color: white !important; background-color:#2bbd7e !important;"   value="${comment.likes}" id="btn_cmnt_like${i}" disabled>
         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
         </button>`
     }
     else{
-        button=`<button class="like mdl-button mdl-js-button"  value="${comment.likes}" id="btn_cmnt_like${i}">
+        button=`<button class="like mdl-button mdl-js-button"  value="${comment.likes}" id="btn_cmnt_like${i}" disabled>
         <img src="./css/images/button-designs_23.png"  id="like_post_icon"></img><span class="number_of_likes">  ${comment.likes}</span>
         </button>`
     }
@@ -680,12 +488,6 @@ function printComment(button_num, comment, i ){
                 <!--  LIKE FOR COMMENT -->
                 ${button}
 
-                <!-- ADD REPLY BUTTON FOR COMMENT -->
-                <span>
-                    <button class="reply mdl-button mdl-js-button mdl-button--raised" id="add_reply_btn${i}" style="background-color: #006DAE; color: white;"onclick="showReplyInput(${i})">
-                    <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                </span>
-                <br>
             </div>
 
             <!-- REPLY SECTION -->
@@ -693,18 +495,18 @@ function printComment(button_num, comment, i ){
                 <br>
                 <div class="post_reply">
                     <!-- REPLY INPUT -->
-                    <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply...">
+                    <input class="reply_input" type="text" id="reply_input${i}" placeholder="Write a reply..." disabled>
                     <br>
 
                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                     <div>
                         <label class="mdl-checkbox mdl-js-checkbox" >
-                            <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" >
+                            <input type="checkbox" id="anonymous${i}" class="mdl-checkbox__input" disabled>
                             <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                         </label>
 
                         <!-- SEND BUTTON -->
-                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')">
+                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReply(${i}, '${comment.id}')" disabled>
                             <i class="material-icons notranslate" id="send_reply_icon">send</i>SEND
                         </button>
                     </div>
@@ -754,9 +556,7 @@ function hideLikeAlert(){
     document.getElementById("like-Modal").style.display =  "none";
 }
 
-function hideDeletedPostAlert(){
-    document.getElementById("deletedPost-Modal").style.display =  "none";
-}
+
 
 /**
  * A function which prints out the replies of a comment
@@ -766,7 +566,6 @@ function hideDeletedPostAlert(){
 function printReplies(comment_id, comment_index) {
     console.log(comment_index);
     let reply_section = document.getElementById("reply_section" + comment_index.toString());
-    reply_section.innerHTML = "";
     let reply_list = [];
 
 
@@ -783,8 +582,8 @@ function printReplies(comment_id, comment_index) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
                     let reply = reply_list[i];
                     let reply_username;
-                    if (reply.anonymous != 0) {
-                        reply_username = "Anonymous " + reply.anonymous;
+                    if (reply.anonymous) {
+                        reply_username = "Anonymous";
                     } else {
                         reply_username = reply.username;
                     }
@@ -801,30 +600,24 @@ function printReplies(comment_id, comment_index) {
                               </p>
                             </div>
 
-                            <!-- ADD REPLY BUTTON FOR COMMENT -->
-                            <span>
-                            <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyInput(${comment_index},${i})">
-                            <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                            </span>
-
                             <!-- REPLY SECTION -->
                             <div id = "add_reply_reply_section${comment_index},${i}"" style="display:none">
                                 <br>
                                 <div class="post_reply">
 
                                     <!-- REPLY INPUT -->
-                                    <input class="reply_input" type="text" id="reply_input${comment_index},${i}"" placeholder="Write a reply..." value="@${reply_username}  ">
+                                    <input class="reply_input" type="text" id="reply_input${comment_index},${i}"" placeholder="Write a reply..." value="@${reply_username}  " disabled>
                                     <br>
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                                     <div>
                                       <label class="mdl-checkbox mdl-js-checkbox" >
-                                        <input type="checkbox" id="anonymous${comment_index},${i}"" class="mdl-checkbox__input" >
+                                        <input type="checkbox" id="anonymous${comment_index},${i}"" class="mdl-checkbox__input" disabled>
                                         <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                                       </label>
 
                                       <!-- SEND BUTTON -->
-                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReplyToReply('${comment_index}', '${i}', '${reply.id}')">
+                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn" onclick="addReplyToReply('${comment_index}', '${i}', '${reply.id}')" disabled>
                                         <i class="material-icons notranslate" id="send_reply_icon">send</i>
                                         SEND
                                         </button>
@@ -863,7 +656,6 @@ function printReplies(comment_id, comment_index) {
 * @return None.
 */
 function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
-    console.log('yes')
     let reply_section = document.getElementById("reply_reply_section" + comment_index.toString() + "," + reply_index.toString());
     let reply_list = [];
 
@@ -882,8 +674,8 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                 for (let i = reply_list.length - 1; i >= 0; i--) {
                     let reply = reply_list[i];
                     let reply_username;
-                    if (reply.anonymous != 0) {
-                        reply_username = "Anonymous " + reply.anonymous;
+                    if (reply.anonymous) {
+                        reply_username = "Anonymous";
                     } else {
                         reply_username = reply.username;
                     }
@@ -900,11 +692,6 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                               </p>
                             </div>
 
-                            <!-- ADD REPLY BUTTON FOR COMMENT -->
-                            <span>
-                            <button class="reply mdl-button mdl-js-button mdl-button--raised" style="background-color: #006DAE; color: white;"onclick="showReplyToReplyToReplyInput(${comment_index},${reply_index},${start})">
-                            <i class="material-icons notranslate" id="reply_comment_icon">reply</i>ADD REPLY</button>
-                            </span>
 
                             <!-- REPLY SECTION -->
                             <div id = "add_reply_2_reply_section${comment_index},${reply_index},${start}" style="display:none">
@@ -912,21 +699,17 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
                                 <div class="post_reply">
 
                                     <!-- REPLY INPUT -->
-                                    <input class="reply_input" type="text" id="reply_input${comment_index},${reply_index},${start}" placeholder="Write a reply..." value="@${reply_username}"  >
+                                    <input class="reply_input" type="text" id="reply_input${comment_index},${reply_index},${start}" placeholder="Write a reply..." value="@${reply_username}"  disabled>
                                     <br>
 
                                     <!-- ANONYMOUS CHECKBOX BUTTON -->
                                     <div>
                                       <label class="mdl-checkbox mdl-js-checkbox" >
-                                        <input type="checkbox" id="anonymous${comment_index},${reply_index},${start}" class="mdl-checkbox__input" >
+                                        <input type="checkbox" id="anonymous${comment_index},${reply_index},${start}" class="mdl-checkbox__input" disabled>
                                         <span class="mdl-checkbox__label mdl-color-text--black">Stay Anonymous</span>
                                       </label>
 
-                                      <!-- SEND BUTTON -->
-                                        <button class="send_reply_btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" " id="send_reply_btn"  onclick=" addReplyToReplyToReply('${comment_index}', '${reply_index}','${start}', '${reply.id}')">
-                                        <i class="material-icons notranslate" id="send_reply_icon">send</i>
-                                        SEND
-                                        </button>
+
                                     </div>
 
                                 </div>
@@ -962,8 +745,7 @@ function printRepliesToReplies(reply_id, comment_index, reply_index, start) {
  * @param {integer} btn_num the index of reply button
  * @param {string} comment_id the id associated with the comment
  */
-async function addReply(btn_num, comment_id) {
-    
+function addReply(btn_num, comment_id) {
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -975,82 +757,38 @@ async function addReply(btn_num, comment_id) {
 
         let post_id = params.get('post_id');
 
-        if(await checkPostExists(post_id) == 0){
-            document.getElementById("deletedPost-Modal").style.display = "block";
-            return; // give an alert that the post doesnt exist
-        }
-
         // get reply value
         let reply_input = document.getElementById("reply_input" + btn_num.toString()).value;
         let stay_anonymous = document.getElementById("anonymous" + btn_num.toString()).checked;
-
-        $(`#reply_input${btn_num.toString()}`).val(''); // clear input
 
         // new data to upload in api
         if (reply_input) { // only adding reply if it's not empty
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-            let anonymous_value = 0;
+
             let now = new Date();
             let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
             utc = utc.toString();
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
-            //updating the number of anonymus commenters on the post
-            if(stay_anonymous){
-              let myRef = firebase.database().ref(`posts/${post_id}`);
-              myRef.once("value")
-                  .then(function(snapshot) {
-                        let currentAnonymous = snapshot.val()["anonymous"];
-                        currentAnonymous += 1
-                        let newData = {
-                            anonymous: currentAnonymous
-                        }
 
-                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
-                      });
-                      anonymous_value = currentAnonymous;
-                      // new data to upload in api
-                      newData = {
-                          anonymous: anonymous_value,
-                          content: reply_input,
-                          created: utc,
-                          dislike: 0,
-                          id: key,
-                          like: 0,
-                          replierId: current_user["phone"],
-                          reply_comment_parent: comment_id,
-                          username: current_user["username"],
-                      };
-                      firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                          printComments();
-                      });
-                  });
+            // new data to upload in api
+            let newData = {
+                anonymous: stay_anonymous,
+                content: reply_input,
+                created: utc,
+                dislike: 0,
+                id: key,
+                like: 0,
+                replierId: current_user["phone"],
+                reply_comment_parent: comment_id,
+                username: current_user["username"],
+            };
 
-            } else {
-              // new data to upload in api
-              let newData = {
-                  anonymous: 0,
-                  content: reply_input,
-                  created: utc,
-                  dislike: 0,
-                  id: key,
-                  like: 0,
-                  replierId: current_user["phone"],
-                  reply_comment_parent: comment_id,
-                  username: current_user["username"],
-              };
-              firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                  printComments();
-              });
-            }
-            $(`#reply_input${btn_num.toString()}`).val('');
-
-
-
-
-
+            firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                printReplies(comment_id, btn_num);
+            });
 
         };
     } else {
@@ -1064,11 +802,8 @@ async function addReply(btn_num, comment_id) {
  * @param {integer} reply_index part of the index of reply button
  * @param {string} reply_id the id associated with the reply
  */
-async function addReplyToReply(comment_index, reply_index, reply_id) {
-    console.log('comment_index')
-    console.log(comment_index)
-    console.log('reply_index')
-    console.log(reply_index)
+function addReplyToReply(comment_index, reply_index, reply_id) {
+
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -1079,11 +814,6 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
         }
         let post_id = params.get('post_id');
 
-        if(await checkPostExists(post_id) == 0){
-            document.getElementById("deletedPost-Modal").style.display = "block";
-            return; // give an alert that the post doesnt exist
-        }
-
         // get reply value
         let reply_input = document.getElementById("reply_input" + comment_index.toString() + "," + reply_index.toString()).value;
         let stay_anonymous = document.getElementById("anonymous" + comment_index.toString() + "," + reply_index.toString()).checked;
@@ -1092,69 +822,28 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-            let anonymous_value = 0;
+
             let now = new Date();
             let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
             utc = utc.toString();
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
-            //updating the number of anonymus commenters on the post
-            if(stay_anonymous){
+            // new data to upload in api
+            let newData = {
+                anonymous: stay_anonymous,
+                content: reply_input,
+                created: utc,
+                dislike: 0,
+                id: key,
+                like: 0,
+                replierId: current_user["phone"],
+                reply_comment_parent: reply_id,
+                username: current_user["username"],
+            };
 
-              let myRef = firebase.database().ref(`posts/${post_id}`);
-              myRef.once("value")
-                  .then(function(snapshot) {
-                        let currentAnonymous = snapshot.val()["anonymous"];
-                        currentAnonymous += 1
-                        let newData = {
-                            anonymous: currentAnonymous
-                        }
-
-                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
-                      })
-                      anonymous_value = currentAnonymous;
-
-                      // new data to upload in api
-                      newData = {
-                          anonymous: anonymous_value,
-                          content: reply_input,
-                          created: utc,
-                          dislike: 0,
-                          id: key,
-                          like: 0,
-                          replierId: current_user["phone"],
-                          reply_comment_parent: reply_id,
-                          username: current_user["username"],
-                      };
-                      firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                          printComments();
-                      });
-                  });
-
-
-            } else {
-              // new data to upload in api
-              let newData = {
-                  anonymous: 0,
-                  content: reply_input,
-                  created: utc,
-                  dislike: 0,
-                  id: key,
-                  like: 0,
-                  replierId: current_user["phone"],
-                  reply_comment_parent: reply_id,
-                  username: current_user["username"],
-              };
-
-              firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                  printComments();
-              });
-            }
-            $(`#reply_input${comment_index.toString()},${reply_index.toString()}`).val('');
-
-
-
-
+            firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                printRepliesToReplies(reply_id, comment_index, reply_index, 0); // have yet to put the arguments reply_id, comment_index, reply_index, start
+            });
         };
     }
 }
@@ -1167,12 +856,6 @@ async function addReplyToReply(comment_index, reply_index, reply_id) {
  * @param {string} reply_id the id associated with the reply
  */
 function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index, reply_id) {
-    console.log('comment_index')
-    console.log(comment_index)
-    console.log('reply_index')
-    console.log(reply_index)
-    console.log('reply_to_reply_index')
-    console.log(reply_to_reply_index)
     if (checkUserExistence()) {
         const options = { // options for Date
             timeZone: "Africa/Accra",
@@ -1192,65 +875,28 @@ function addReplyToReplyToReply(comment_index, reply_index, reply_to_reply_index
             // unique key for reply
             let myRef = firebase.database().ref(`replies`);
             let key = myRef.push().key;
-            let anonymous_value = 0;
+
             let now = new Date();
             let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
             utc = utc.toString();
             utc = utc.substring(0,25);
             utc+="(UTC TIME)";
 
-            //updating the number of anonymus commenters on the post
-            if(stay_anonymous){
-              let myRef = firebase.database().ref(`posts/${post_id}`);
-              myRef.once("value")
-                  .then(function(snapshot) {
-                        let currentAnonymous = snapshot.val()["anonymous"];
-                        currentAnonymous += 1
-                        let newData = {
-                            anonymous: currentAnonymous
-                        }
-
-                      firebase.database().ref(`posts/${post_id}`).update(newData).then(() => {
-                      })
-                      anonymous_value = currentAnonymous;
-                      // new data to upload in api
-                      newData = {
-                          anonymous: anonymous_value,
-                          content: reply_input,
-                          created: utc,
-                          dislike: 0,
-                          id: key,
-                          like: 0,
-                          replierId: current_user["phone"],
-                          reply_comment_parent: reply_id,
-                          username: current_user["username"],
-                      };
-                      firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                          printComments();
-                      });
-                  });
-
-            } else {
-              // new data to upload in api
-              let newData = {
-                  anonymous:0,
-                  content: reply_input,
-                  created: utc,
-                  dislike: 0,
-                  id: key,
-                  like: 0,
-                  replierId: current_user["phone"],
-                  reply_comment_parent: reply_id,
-                  username: current_user["username"],
-              };
-              firebase.database().ref(`replies/${key}`).set(newData).then(() => {
-                printComments();
-              });
-
-            }
-            $(`#reply_input${comment_index.toString()},${reply_index.toString()},${reply_to_reply_index.toString()}`).val('');
-
-
+            // new data to upload in api
+            let newData = {
+                anonymous: stay_anonymous,
+                content: reply_input,
+                created: utc,
+                dislike: 0,
+                id: key,
+                like: 0,
+                replierId: current_user["phone"],
+                reply_comment_parent: reply_id,
+                username: current_user["username"],
+            };
+            firebase.database().ref(`replies/${key}`).set(newData).then(() => {
+                window.location = "post.html" + "?post_id=" + post_id;
+            });
         };
     } else {
         window.location = "forum.html";
@@ -1311,12 +957,6 @@ function checkUserFavouritedPost() {
  */
 async function likeComment(comment_id, i){
 
-    let post_id = params.get('post_id');
-    if(await checkPostExists(post_id) == 0){
-        document.getElementById("deletedPost-Modal").style.display = "block";
-        return; // give an alert that the post doesnt exist
-    }
-
     let res = await checkForLikesComment(comment_id);
     like_btn_addr=document.getElementById("button_div"+i).getElementsByClassName("like")[0]
 
@@ -1360,14 +1000,7 @@ async function likeComment(comment_id, i){
  */
 function checkForLikesComment(comment_id){
     return new Promise(resolve => {
-            firebase.database().ref(`likesComments/${comment_id}/${current_user["username"]}`).once("value", snapshot => {
-                if (snapshot.exists()){
-                    resolve(true);
-                }
-                else{
                     resolve(false);
-                }
-            });
     });
 }
 

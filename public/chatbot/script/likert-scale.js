@@ -45,16 +45,16 @@ hash[ZH_CN_INDEX] =
 hash[MS_INDEX] =
     [
         // Agree
-        ["Sangat <br> tidak <br>  setuju", "Tidak <br> setuju", "Berkecuali", "Setuju", "Sangat <br> setuju"],
+        ["Sangat <br> Tidak <br>  Setuju", "Tidak <br> Setuju", "Berkecuali", "Setuju", "Sangat <br> Setuju"],
 
         // Satisfy
-        ["Tidak <br> berkenaan", "Sangat tidak<br> berpuas<br> hati", "Tidak <br> berpuas <br>hati", "Berkecuali", "Berpuas <br> hati", "Sangat <br> berpuas hati"],
+        ["Tidak <br> Berkenaan", "Sangat Tidak<br> Berpuas<br> Hati", "Tidak <br> Berpuas <br>Hati", "Berkecuali", "Berpuas <br> Hati", "Sangat <br> Berpuas Hati"],
 
         // Confident
-        ["Tidak <br> berkenaan", "Tidak yakin <br> sama sekali", "Agak <br> tidak yakin", "Cukup <br> yakin" , "Agak <br> yakin", "Sangat <br> yakin"],
+        ["Tidak <br> Berkenaan", "Tidak Yakin <br> Sama Sekali", "Agak <br> Tidak Yakin", "Cukup <br> Yakin" , "Agak <br> Yakin", "Sangat <br> Yakin"],
 
         // Interested
-        ["Sangat <br> tidak <br> berminat", "Tidak <br> berminat", "Berkecuali", "Berminat", "Sangat <br> berminat"]
+        ["Sangat <br> Tidak <br> Berminat", "Tidak <br> Berminat", "Berkecuali", "Berminat", "Sangat <br> Berminat"]
 
     ];
 
@@ -111,13 +111,13 @@ function getScaleString(language, scaleIndex, options) {
             fontSize = "calc(65% + 0.05vw)"
             break;
         case ZH_CN_INDEX:
-            fontSize = "calc(80% + 0.08vw)"
+            fontSize = "calc(85% + 0.08vw)"
             break;
         case MS_INDEX:
-            fontSize = "calc(65% + 0.08vw)"
+            fontSize = "calc(70% + 0.08vw)"
             break;
         case TH_INDEX:
-            fontSize = "calc(75% + 0.08vw)"
+            fontSize = "calc(80% + 0.08vw)"
             break;
     }
 

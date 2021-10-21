@@ -1,4 +1,7 @@
 
+let branch = "";
+let languageIndex = 0;
+
 // Initialising variables
 let selected = null;
 let viewingSubQuestions = false;
@@ -6,6 +9,9 @@ let clicked = false;
 let responsesList = document.getElementById("responses-list");
 let responsesHeader = document.getElementById("responses-header");
 let questionsList = document.getElementById("questions-list");
+let questionsSpinner = document.getElementById("questions-spinner");
+let responsesSpinner = document.getElementById("responses-spinner");
+let languageDropdown = document.getElementById("language-dropdown");
 
 // A list of sub-question IDs of the currently in view
 // long question
@@ -36,6 +42,7 @@ let subquestions = [{question_number: "1.2.1", question: "What is your name?", t
 function addQuestionsList() {
     viewingSubQuestions = false;
     let questionsListString = "";
+
     for (let i = 0; i < questions.length; i++) {
         let innerFunction = "changeQuestion(" + i + ")";
         if (questions[i].type === TYPE_LONG_QUESTION) {
@@ -66,7 +73,7 @@ function changeQuestion(index) {
         selected.style.backgroundColor = "";
     }
     
-    document.getElementById('spinner').className += " d-flex"
+    responsesSpinner.className += " d-flex"
 
     let q = "q" + index;
 
@@ -82,26 +89,28 @@ function changeQuestion(index) {
 
     let list = null;
     let buttonString = "";
+    let phone = false;
 
     // If on phone, set responsesList = questionsList
-    if ($(window).width() <= 479) {
-        list = questionsList;
+    if ($(window).width() <= 575) {
+        phone = true;
         buttonString = '<div style="text-align: center;"> \
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"\
-                            onclick="addQuestionsList()" style="width: 45%; margin: auto;"> \
+                            <button type="button" class="btn btn-secondary" \
+                            onclick="addQuestionsList()" style="width: 40%;"> \
                             Back \
-                            </button></div>'
+                        </button></div>'
+        questionsList.innerHTML = "";
     }
     // Else, use responsesList
-    else {
-        list = responsesList;
-    }
-    list.innerHTML = "";
+    // else {
+    //     list = responsesList;
+    // }
+    responsesList.innerHTML = "";
     responsesHeader.innerHTML = header;
 
     let responses_branch = "";
     if (!viewingSubQuestions) {
-        responses_branch = `chatbot/survey_responses/${QUESTION_IDS_EN[index]}`
+        responses_branch = `chatbot/survey_responses/${QUESTION_IDS[languageIndex][index]}`
     } else {
         responses_branch = `chatbot/survey_responses/${subQuestionIds[index]}`
     }
@@ -116,13 +125,22 @@ function changeQuestion(index) {
         .then(() => {
             // Populate HTML elements to display responses
             let listString = "";
+            if (phone) {
+                questionsList.innerHTML += 
+                '<div class="card-header"> \
+                  <strong class="h2 card-title" id="responses-header">' + header + '</strong> \
+                </div>';
+            }
             for (let i = 0; i < responses.length; i++) {
                 listString += '<li class="list-group-item">' + responses[i].answer + '</li>'
             }
-            list.innerHTML += listString + '<br>';
-            list.innerHTML += buttonString;
+            if (phone) {
+                questionsList.innerHTML += listString + '<br>';
+                questionsList.innerHTML += buttonString;
+            }
+            responsesList.innerHTML += listString + '<br>';
 
-            spinner.classList.remove("d-flex");
+            responsesSpinner.classList.remove("d-flex");
         });
 }
 
@@ -135,7 +153,7 @@ function changeSubQuestion(index) {
     subQuestionIds = questions[index].arrangement;
     
     for (let i = 0; i < subQuestionIds.length; i++) {
-        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
+        firebase.firestore().collection(QUESTIONS_BRANCHES[languageIndex])
             .doc(subQuestionIds[i])
             .get()
             .then((document) => {
@@ -180,24 +198,7 @@ function changeSubQuestion(index) {
 window.onload = function () {
     // On load, get the list of questions, then populate
     // questions list
-    questions = [];
-    for (let i = 0; i < QUESTION_IDS_EN.length; i++) {
-        let branch = QUESTIONS_BRANCH + QUESTION_IDS_EN[i];
-
-        firebase.firestore().collection(QUESTIONS_BRANCHES[EN_INDEX])
-            .doc(QUESTION_IDS_EN[i])
-            .get()
-            .then((document) => {
-                questions.push(document.data());
-            })
-            .then(() => {
-                // After the last question is fetched, populate the HTML
-                // question elements
-                if (i === QUESTION_IDS_EN.length - 1) {
-                    addQuestionsList();
-                }
-            })
-    }
+    addQuestions(languageIndex);
 };
 
 // Checks everytime the window is resized to prevent two response tabs
@@ -206,3 +207,41 @@ $(window).resize(function () {
         addQuestionsList();
     }
 });
+
+function loadQuestions(languageSelection) {
+    // After language selection, get the list of questions, then populate
+    // questions list
+    languageIndex = languageSelection.value;
+    languageDropdown.innerHTML = languageSelection.innerHTML;
+    responsesHeader.innerHTML = "Select a Question to view Responses!";
+    responsesList.innerHTML = "";
+
+    addQuestions(languageIndex);
+}
+
+function addQuestions(languageIndex) {
+    branch = QUESTIONS_BRANCHES[languageIndex];
+    questions = [];
+
+    questionsList.innerHTML = "";
+    questionsSpinner.className += " d-flex"
+
+    for (let i = 0; i < QUESTION_IDS[languageIndex].length; i++) {
+        firebase.firestore().collection(branch)
+            .doc(QUESTION_IDS[languageIndex][i])
+            .get()
+            .then((document) => {
+                questions.push(document.data());
+            })
+            .then(() => {
+                // After the last question is fetched, populate the HTML
+                // question elements
+                if (i === QUESTION_IDS[languageIndex].length - 1) {
+                    addQuestionsList();
+                }
+
+                // and clear the left/right pane labels
+                questionsSpinner.classList.remove("d-flex");
+            })
+    }
+}

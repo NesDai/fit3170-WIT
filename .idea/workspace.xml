@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="completed  question-uploader_th.js and completed question ids in constants.js.">
+    <list default="true" id="cc22312d-3749-4511-8284-e03f98766dea" name="Default Changelist" comment="Adjust error message display for showNumeric and showShort/Long">
+      <change afterPath="$PROJECT_DIR$/public/css/images/smaller_home.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/images/chatbot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/images/forum.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/images/recommender.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/chatbot.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/chatbot.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/main-chatbot.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main-chatbot.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="team404_pretrial_2" />
+  </component>
   <component name="Git.Settings">
     <favorite-branches>
       <branch-storage>
         <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="team404_PI4_text_to_speech" />
+              </list>
+            </value>
+          </entry>
           <entry type="REMOTE">
             <value>
               <list>
                 <branch-info repo="$PROJECT_DIR$" source="origin/404_chatbot" />
+                <branch-info repo="$PROJECT_DIR$" source="origin/team404_PI4" />
               </list>
             </value>
           </entry>
@@ -29,7 +39,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="team404_PI4_text_to_speech" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,6 +58,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -56,6 +67,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/script" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/public/chatbot/script/likert-scale.js" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -66,6 +78,7 @@
       <recent name="C:\Users\tjyaooo\Desktop\womenintech\public\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/css" />
       <recent name="$PROJECT_DIR$/public/chatbot/script" />
     </key>
   </component>
@@ -116,6 +129,43 @@
       <workItem from="1630423805626" duration="3089000" />
       <workItem from="1630468869720" duration="2330000" />
       <workItem from="1630502387640" duration="8165000" />
+      <workItem from="1631288694884" duration="4109000" />
+      <workItem from="1631326662980" duration="2774000" />
+      <workItem from="1631892198309" duration="605000" />
+      <workItem from="1631893399156" duration="30000" />
+      <workItem from="1631893450462" duration="196000" />
+      <workItem from="1631893668044" duration="171000" />
+      <workItem from="1631941843888" duration="14404000" />
+      <workItem from="1632044597972" duration="10940000" />
+      <workItem from="1632076854506" duration="3000" />
+      <workItem from="1632113547877" duration="2558000" />
+      <workItem from="1632143329880" duration="1682000" />
+      <workItem from="1632215237904" duration="10096000" />
+      <workItem from="1632321985832" duration="924000" />
+      <workItem from="1632394447110" duration="9254000" />
+      <workItem from="1632451469400" duration="5017000" />
+      <workItem from="1632480413732" duration="8000" />
+      <workItem from="1632480643243" duration="23000" />
+      <workItem from="1632673974156" duration="3057000" />
+      <workItem from="1632809900545" duration="455000" />
+      <workItem from="1632810407202" duration="3335000" />
+      <workItem from="1632839272227" duration="1457000" />
+      <workItem from="1632843708140" duration="1073000" />
+      <workItem from="1632844824207" duration="499000" />
+      <workItem from="1632917867704" duration="32000" />
+      <workItem from="1632919328855" duration="3533000" />
+      <workItem from="1633023414430" duration="522000" />
+      <workItem from="1633069741718" duration="432000" />
+      <workItem from="1633439123482" duration="465000" />
+      <workItem from="1633704956890" duration="434000" />
+      <workItem from="1633799180532" duration="938000" />
+      <workItem from="1633881251258" duration="493000" />
+      <workItem from="1633924140559" duration="16091000" />
+      <workItem from="1633957551659" duration="8923000" />
+      <workItem from="1633977938166" duration="1066000" />
+      <workItem from="1634044072684" duration="379000" />
+      <workItem from="1634129917766" duration="297000" />
+      <workItem from="1634130338803" duration="6072000" />
     </task>
     <task id="LOCAL-00001" summary="update question IDs and update questions in question-uploader.js">
       <created>1621666660881</created>
@@ -341,7 +391,119 @@
       <option name="project" value="LOCAL" />
       <updated>1630506367484</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="fixed name of explanatory statement html files (inititally was &quot;Explanatory storage&quot;). Created css for explnanatory statement html pages to better fit html elements for mobile phone view.">
+      <created>1631330343496</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1631330343496</updated>
+    </task>
+    <task id="LOCAL-00034" summary="fixed click MCQ option to select it. added back select() function is added back into onclick part of mcqOption string in showOption() function.">
+      <created>1631943950775</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1631943950775</updated>
+    </task>
+    <task id="LOCAL-00035" summary="MCQ responses are now stored as the chosen option's index in question object's restriction's choices.&#10;&#10;added option to use &quot;others&quot; option for MCQs. This is includes storage of the text response with the index of the &quot;others&quot; option in question object's restriction's choices as a sting string.&#10;&#10;Adjust resumeSurvey for the new way of storage of MCQ inputs.">
+      <created>1631957488286</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1631957488286</updated>
+    </task>
+    <task id="LOCAL-00036" summary="fixed issue with showNumric() allowing non numbers to be taken as inputs">
+      <created>1632046299171</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1632046299171</updated>
+    </task>
+    <task id="LOCAL-00037" summary="fixed text box input for MCQs and implemented feature to allow chatbot to accept MCQ option's word itself and MCQ option number + MCQ option's word itself as input.">
+      <created>1632076720532</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1632076720532</updated>
+    </task>
+    <task id="LOCAL-00038" summary="fixed problem when showing numeric subquestions and now text inputs for numeric questions are now stored as numbers in the firebase rather than as a string.">
+      <created>1632116063977</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1632116063977</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Fixed bug with resume function for sub questions. Now the code saves the response first before calling next question.">
+      <created>1632246319598</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1632246319598</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Added skip logic for question 1.8 for english questions. updated english question IDs and changed first time survey's addMessage() to handle skip logic for numeric questions.">
+      <created>1632423025844</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1632423025844</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Added skip logic for question 1.8 for malay, chinese and thai questions. updated malay, chinese and thai question IDs and changed first time survey's addMessage() to handle skip logic for numeric questions.">
+      <created>1632479828812</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1632479828813</updated>
+    </task>
+    <task id="LOCAL-00042" summary="moved question_branch constant to questions_responses.js because that is the only file that uses it.">
+      <created>1632480066594</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1632480066594</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Change the name of functions &quot;checkChoiceInput&quot; and &quot;checkChoiceInputOthers&quot; to &quot;checkMCQInput&quot; and &quot;checkMCQInputOthers&quot; respectively. Added documentation to these function and changed the error message to instruct user on what is a valid input.">
+      <created>1632677714379</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1632677714379</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Adjust error message display for showNumeric and showShort/Long Text functions.">
+      <created>1632817145133</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1632817145133</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Adjust error message display for showNumeric and showShort/Long">
+      <created>1632921775696</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1632921775696</updated>
+    </task>
+    <task id="LOCAL-00046" summary="fixed bug with google translate on questions and answer bubble. Fixed bug: restart and resume feature does not work for translated version of chatbot.">
+      <created>1632922770136</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1632922770136</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Added uploader files for translations for the explanatory statement short and long versions for Thai, Malay and Chinese.&#10;&#10;Adjusted Explanatory statement and explanatory statement long js and html file to switch between translatations based on selected languages.">
+      <created>1633957106246</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1633957106246</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Updated hints for numeric questions, reupload questions onto firebase and update question IDs and updated closing message to the one given by clients in 30/9/21 meeting.&#10;&#10;Added continue function if users did not answer future research question.">
+      <created>1633978844907</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1633978844908</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,22 +551,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix mainpage's colour inconsistencies" />
-    <MESSAGE value="fix chatbot bugs" />
-    <MESSAGE value="temporarily added a new file for Kelvin to easily host the website locally. will be removed at end of PI.&#10;&#10;fixed spelling mistake on main page and first time survey js.&#10;&#10;added a terms and conditions html page." />
-    <MESSAGE value="incorparated terms and conditions page with main page.&#10;&#10;Terms and Conditions page now requires user to tick checkbox to proceed to chatbot. (updating user's data on firebase whether they have accepted it or not is still NOT DONE)" />
-    <MESSAGE value="add linkert scale design" />
-    <MESSAGE value="Completed Terms and Conditions Page. Now main page can check if the user already accepted the terms and conditions. Terms and Conditions page now update user's data in realtime database with their acceptance of the terms and conditions." />
-    <MESSAGE value="Created Terms of Use page for user registration step and empty contents of Terms and conditions page in preparation of terms and conditions from the clients.&#10;&#10;TODO: Get info of which pages the terms of use page will go to if back button is clicked. Also, work with Vlad to put in the Terms of Use page for user registration.&#10;&#10;The terms of Use files will be deleted because i will pass them to Vlad and his team to plug it in to make the merge easier." />
-    <MESSAGE value="Completed terms and conditions page (last &quot;terms and conditions&quot; page was the terms of use page)" />
-    <MESSAGE value="Update question uploader questions and place some TODO to mark questions that needs to be deleted and have their numbers updated&#10;(section 1 is done by Kelvin while section 2,3,4 and 5 is done by Daniel)" />
-    <MESSAGE value="updated the questions for part 1. (this includes the removal of the old qs 1.10 and 1.11 from V3 of the questionnaire and updating the number of the questions after the removal)" />
-    <MESSAGE value="added question 4.5 into the question uploader and corrected qs 4.3's rating number range." />
-    <MESSAGE value="merge with last commit" />
-    <MESSAGE value="Fixed chatbot questions uploader and finalised the updated questions.&#10;fixed if statement in chatbot-init.js.&#10;updated constants.js with current questions' ids" />
-    <MESSAGE value="Update the terms of use page with the feature to update it's elements according to the selected language. (need to get proper translation of the elements from the clients)&#10;&#10;Created uploaders for the terms of use chinese and malay translation. (still awaiting the thai translation - if thai is selected, the terms of use defaults to english)&#10;&#10;implemented language switch for the page based on the selected language" />
-    <MESSAGE value="commented Kelvin-login script from termsOfUsePage.html" />
-    <MESSAGE value="remove translation based TODOs and fixed the wording of Qs 4.5.&#10;Created empty templates for the question uploaders for the other supported languages." />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Implemented a language switching system based on LANGUAGE variable stored in local storage.&#10;uploaded english version translation onto firebase english question branch&#10;added new constants to help in the language switching system.&#10;Renamed question-uploader.js to question-uploader_en.js.&#10;change name of the uploadQuestion() and housekeeping() functions in the question uploader files to specify the language of the questions they are uploading." />
     <MESSAGE value="updated the language uploader templates&#10;changed question 4.4 to a long text question&#10;And the chinese uploader questions are in place. (left to add in the chinese translation of the answer options)" />
     <MESSAGE value="update Question 1_12 hints for all question uploaders" />
@@ -414,6 +561,22 @@
     <MESSAGE value="integrate the lastest version of the translation.js and main_page.html into our branch to test translation functions.&#10;&#10;added some &quot;notranslate&quot; into some of the html element's classes to get it ready for auto translate function.&#10;&#10;changed first_time_survey.js's language strings to accomodate the new language string chosen by team redcow" />
     <MESSAGE value="merge" />
     <MESSAGE value="removed kelvin-login.js script tag from our html files" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed kelvin-login.js script tag from our html files" />
+    <MESSAGE value="fixed name of explanatory statement html files (inititally was &quot;Explanatory storage&quot;). Created css for explnanatory statement html pages to better fit html elements for mobile phone view." />
+    <MESSAGE value="fixed click MCQ option to select it. added back select() function is added back into onclick part of mcqOption string in showOption() function." />
+    <MESSAGE value="MCQ responses are now stored as the chosen option's index in question object's restriction's choices.&#10;&#10;added option to use &quot;others&quot; option for MCQs. This is includes storage of the text response with the index of the &quot;others&quot; option in question object's restriction's choices as a sting string.&#10;&#10;Adjust resumeSurvey for the new way of storage of MCQ inputs." />
+    <MESSAGE value="fixed issue with showNumric() allowing non numbers to be taken as inputs" />
+    <MESSAGE value="fixed text box input for MCQs and implemented feature to allow chatbot to accept MCQ option's word itself and MCQ option number + MCQ option's word itself as input." />
+    <MESSAGE value="fixed problem when showing numeric subquestions and now text inputs for numeric questions are now stored as numbers in the firebase rather than as a string." />
+    <MESSAGE value="Fixed bug with resume function for sub questions. Now the code saves the response first before calling next question." />
+    <MESSAGE value="Added skip logic for question 1.8 for english questions. updated english question IDs and changed first time survey's addMessage() to handle skip logic for numeric questions." />
+    <MESSAGE value="Added skip logic for question 1.8 for malay, chinese and thai questions. updated malay, chinese and thai question IDs and changed first time survey's addMessage() to handle skip logic for numeric questions." />
+    <MESSAGE value="moved question_branch constant to questions_responses.js because that is the only file that uses it." />
+    <MESSAGE value="Change the name of functions &quot;checkChoiceInput&quot; and &quot;checkChoiceInputOthers&quot; to &quot;checkMCQInput&quot; and &quot;checkMCQInputOthers&quot; respectively. Added documentation to these function and changed the error message to instruct user on what is a valid input." />
+    <MESSAGE value="Adjust error message display for showNumeric and showShort/Long Text functions." />
+    <MESSAGE value="Adjust error message display for showNumeric and showShort/Long" />
+    <MESSAGE value="fixed bug with google translate on questions and answer bubble. Fixed bug: restart and resume feature does not work for translated version of chatbot." />
+    <MESSAGE value="Added uploader files for translations for the explanatory statement short and long versions for Thai, Malay and Chinese.&#10;&#10;Adjusted Explanatory statement and explanatory statement long js and html file to switch between translatations based on selected languages." />
+    <MESSAGE value="Updated hints for numeric questions, reupload questions onto firebase and update question IDs and updated closing message to the one given by clients in 30/9/21 meeting.&#10;&#10;Added continue function if users did not answer future research question." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated hints for numeric questions, reupload questions onto firebase and update question IDs and updated closing message to the one given by clients in 30/9/21 meeting.&#10;&#10;Added continue function if users did not answer future research question." />
   </component>
 </project>

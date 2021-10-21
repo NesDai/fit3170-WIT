@@ -133,7 +133,7 @@ function resumeGreeting() {
         "<div class='message-container sender blue'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>Please select \"Resume\" to resume your " +
-        "previous survey instance or \"Restart\" to start over.</p>" +
+        "previous survey or \"Restart\" to start again if you want change your previous answers.</p>" +
         "</div>" +
         "</div>";
 
@@ -172,8 +172,10 @@ function greeting() {
         "<div class='space'>" +
         "<div class='message-container sender blue'>" +
         "<p>Hi! I am the chatbot for this App.</p>" +
-        "<p>To get started, I would like to get to know " +
-        "you better by asking a few questions. You only have one attempt in completing the survey. You are allowed to restart the survey any number of times if it is still incomplete. Are you ready?</p>" +
+        "<p>To get started, can you please fill up this survey." +
+        " You only have one attempt in completing the survey." +
+        " You are allowed to restart the survey any number of times if it is still incomplete. " +
+        "Are you ready?</p>" +
         "</div>" +
         "</div>";
 
