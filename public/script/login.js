@@ -309,8 +309,6 @@ function register(username,phone){
  */
 function usernameValidation() {
 
-    //var username_regex = /^\+[0-9]{11,15}$/;
-    // var username_regex =/^[a-zA-Z0-9_ ]*$/  ///^(?=.*[a-zA-Z"_\d].*)[a-zA-Z_\d]{5,15}$/
     var username_regex =/^(?=.*[a-zA-Z\d ].*)[a-zA-Z\d ]{5,15}$/
     var username = document.getElementById("username").value
 

@@ -46,7 +46,7 @@ async function checkPostExists(id){
 /**
  * The function displays a list of available options to autocomplete to the search query limited to 10 options
  * @param {1} query: the query text inputed into the search field
- * returns void
+ * @returns void
  */
 function autoComplete(query){
 
@@ -66,7 +66,6 @@ function autoComplete(query){
         inputarr = postNamesCreatePost;
     }
 
-	let output = [];
     let count = 0;
 	for (let i = 0 ; i < inputarr.length ; i++){
         if(query != "" && (inputarr[i].toLowerCase()).indexOf(query.toLowerCase()) != -1 && count<10){
@@ -78,7 +77,10 @@ function autoComplete(query){
 }
 
 
-//check id the user is signed in
+/**
+ * Checks whether the user currently looking at the page is logged.
+ * @returns true if logged in, false otherwise
+ */
 function checkUserExistence() {
     // if a user is signed in then
     if (current_user["username"] && current_user["phone"]) {
@@ -115,14 +117,6 @@ function checkEmbeddingVideo(url) {
  * @returns none
  */
 function makeNewPost() {
-
-    // const options = {  // options for Date
-    //     timeZone:"Africa/Accra",
-    //     hour12 : true,
-    //     hour:  "2-digit",
-    //     minute: "2-digit",
-    //    second: "2-digit"
-    //  };
 
     if (checkUserExistence()) {
         interest_arr = [];
@@ -190,56 +184,6 @@ function makeNewPost() {
     }
 }
 
-function updatePost(post_id) {
-
-    firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
-        let post = snapshot.val();
-        if (post.userID == current_user["phone"]) {
-
-            let title = document.getElementById("post_title").value
-            let description = document.getElementById("post_description").value
-            interest_arr = [];
-            $("input:checkbox[name=interests]:checked").each(function(){
-                interest_arr.push($(this).val());
-            });
-
-            // if either of the inputs are empty then it should store the already stored one
-            let update_data = {
-                title: title,
-                description: description,
-                interest: interest_arr
-            };
-
-            firebase.database().ref(`posts/${post_id}`).update(update_data);
-        } else {
-            console.log("Nope");
-        }
-    });
-}
-
-
-function validatePostOwner(post_id) {
-    firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
-        let post = snapshot.val();
-        if (post["userID"] == current_user["phone"]) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-}
-
-
-function findAllPosts() {
-    firebase.database().ref("posts").once("value").then(snapshot => {
-        let postsObj = snapshot.val();
-        for (let post_id in postsObj) {
-            firebase.database().ref(`posts/${post_id}`).once("value").then(snapshot => {
-                let post = snapshot.val();
-            });
-        }
-    });
-}
 
 /**
  * Prints all the posts which are created by users from the firebase to the screen.
@@ -819,6 +763,9 @@ function hideInterestAlert(){
     document.getElementById("interest-Modal").style.display =  "none";
 }
 
+/**
+ * Function which hides the deleted post alert
+ */
 function hideDeletedPostAlert(){
     document.getElementById("deletedPost-Modal").style.display =  "none";
 }
@@ -1588,6 +1535,10 @@ async function dislikePost(post_id, i)
     }
 }
 
+/**
+ * Redirects the user to more detailed post information page.
+ * @param {string} id the id of the post to be redirected to
+ */
 async function postDetail(id) {
         let exist = ":"
         exist = await checkPostExists(id);
@@ -1595,8 +1546,9 @@ async function postDetail(id) {
             window.location = "post.html" + "?post_id=" + id;
         }
         else{
+            // give an alert that the post doesnt exist
             document.getElementById("deletedPost-Modal").style.display = "block";
-            return; // give an alert that the post doesnt exist
+            return; 
         }
 }
 
