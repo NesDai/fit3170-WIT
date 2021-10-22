@@ -367,7 +367,7 @@ function pushPart1Questions() {
     pushMultipleChoiceOthers("1.3", PART1[3], choices_1_3, [], SKIP_NOT_ALLOWED, HINTS_PART1[3]);
 
     // Question 1.4
-    let choices_1_4 = ["市区", "农村"];
+    let choices_1_4 = ["市区", "郊外"];
     pushMultipleChoice("1.4", PART1[4], choices_1_4, [], SKIP_NOT_ALLOWED, HINTS_PART1[4]);
 
     // Question 1.5
