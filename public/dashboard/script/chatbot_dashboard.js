@@ -1,8 +1,6 @@
-
+// Initialising variables
 let branch = "";
 let languageIndex = 0;
-
-// Initialising variables
 let selected = null;
 let viewingSubQuestions = false;
 let clicked = false;
@@ -73,6 +71,7 @@ function changeQuestion(index) {
         selected.style.backgroundColor = "";
     }
     
+    // Showing the loading spinner 
     responsesSpinner.className += " d-flex"
 
     let q = "q" + index;
@@ -87,7 +86,6 @@ function changeQuestion(index) {
         header = "Question " + subquestions[index].question_number + " Responses"
     }
 
-    let list = null;
     let buttonString = "";
     let phone = false;
 
@@ -101,10 +99,6 @@ function changeQuestion(index) {
                         </button></div>'
         questionsList.innerHTML = "";
     }
-    // Else, use responsesList
-    // else {
-    //     list = responsesList;
-    // }
     responsesList.innerHTML = "";
     responsesHeader.innerHTML = header;
 
@@ -134,18 +128,22 @@ function changeQuestion(index) {
             for (let i = 0; i < responses.length; i++) {
                 listString += '<li class="list-group-item">' + responses[i].answer + '</li>'
             }
+            // Add back button if on phone
             if (phone) {
                 questionsList.innerHTML += listString + '<br>';
                 questionsList.innerHTML += buttonString;
             }
             responsesList.innerHTML += listString + '<br>';
 
+            // Remove loading spinner from display
             responsesSpinner.classList.remove("d-flex");
         });
 }
 
 /**
  * Changes the question list to list out the subquestions of a question.
+ * 
+ * @param index Number representing the index of the question in the list.
  */
 function changeSubQuestion(index) {
     // Some long question is selected, populate the sub-questions list
@@ -208,6 +206,11 @@ $(window).resize(function () {
     }
 });
 
+/**
+ * Loads questions into the list after changing languages.
+ * 
+ * @param languageSelection Dropdown element of language selected.
+ */
 function loadQuestions(languageSelection) {
     // After language selection, get the list of questions, then populate
     // questions list
@@ -219,11 +222,17 @@ function loadQuestions(languageSelection) {
     addQuestions(languageIndex);
 }
 
+/**
+ * Adds questions into the questions list.
+ * 
+ * @param languageIndex Index of the language selected in the questions branch.
+ */
 function addQuestions(languageIndex) {
     branch = QUESTIONS_BRANCHES[languageIndex];
     questions = [];
 
     questionsList.innerHTML = "";
+    // Displays the loading spinner
     questionsSpinner.className += " d-flex"
 
     for (let i = 0; i < QUESTION_IDS[languageIndex].length; i++) {
@@ -239,8 +248,7 @@ function addQuestions(languageIndex) {
                 if (i === QUESTION_IDS[languageIndex].length - 1) {
                     addQuestionsList();
                 }
-
-                // and clear the left/right pane labels
+                // Removing the loading spinner
                 questionsSpinner.classList.remove("d-flex");
             })
     }
