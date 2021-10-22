@@ -258,8 +258,30 @@ transition: color 0.15s ease-in;
         top: 50%;
         transform: translate(-50%, -50%);
 	}
-    #back_btn {
-		display: none
+	#back_btn {
+		color: #ffffff;
+		background-color: #006dae;
+		border-radius: 20px;
+		position: relative;
+		text-align: center;
+
+		width: 20%;
+		margin: 5px;
+		left: 40%;
+
+	}
+	#back_btn:hover {
+		background-color: #006dae;
+	}
+	#back_btn_icon {
+		font-size: 20px;
+	}
+	#back_icon {
+		width:32px; 
+		height:32px;	
+	}
+	.mobileHide {
+		display: none;
 	}
 	#send_comment_btn {
 		color: white;
