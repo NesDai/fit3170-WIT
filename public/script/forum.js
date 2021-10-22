@@ -66,7 +66,6 @@ function autoComplete(query){
         inputarr = postNamesCreatePost;
     }
 
-	//let output = [];
     let count = 0;
 	for (let i = 0 ; i < inputarr.length ; i++){
         if(query != "" && (inputarr[i].toLowerCase()).indexOf(query.toLowerCase()) != -1 && count<10){
