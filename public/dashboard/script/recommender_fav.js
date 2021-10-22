@@ -14,7 +14,7 @@ async function execute() {
 
     collectData().then(() => {
 
-        updatePieChart();
+        updateTotalBarChart();
     })
 }
 
@@ -31,7 +31,7 @@ async function collectData(){
   .once('value', x => {
       x.forEach(data => {
           favs.push(data.val());
-          checkSkill(data.val().preferenceType, data.val().favouritedAmmount);
+          checkSkill(data.val().preferenceType, data.val().favouritedAmount);
       })
   })
 }
@@ -137,7 +137,7 @@ function updateBarChart(skill) {
         datasets: [
           {
             // for number of facourites
-            label: "Number of favourites",
+            label: "Number of favourites per interest",
             barThickness: 50,
             backgroundColor: base.primaryColor,
             borderColor: base.primaryColor,
@@ -164,12 +164,12 @@ function updateBarChart(skill) {
 }
 
 /**
- * Generate pie chart to display total favourites number for each skill
+ * Generate bar chart to display total favourites number for each skill
  *
  * @param: none
  * @return: none
  */
-function updatePieChart() {
+function updateTotalBarChart() {
 
     // variable
     let xValues = [];
@@ -179,26 +179,39 @@ function updatePieChart() {
     for (let i = 0; i < total_list.length; i++){
         xValues.push(total_list[i][0]);
         yValues.push(total_list[i][1]);
-
     }
 
     var ChartOptions = {
-      title: {
-        display: true
-      }
+        legend: { display: false },
+        title: {
+            display: true,
+            text: 'Number of favourites per skill'
+        },
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true,
+                    min: 0
+                }
+            }]
+        },
     },
     ChartData = {
         labels: xValues,
         datasets: [
           {
             data: yValues,
+            barThickness: 50,
             backgroundColor: chartColors,
-            borderColor: colors.borderColor
-        }]
+            borderColor: colors.borderColor,
+            fill: "",
+            lineTension: .1
+        }],
     }
-    var pieChartjs = document.getElementById("pieChart");
-    pieChartjs && new Chart(pieChartjs, {
-        type: "pie",
+    var barChartjs2 = document.getElementById("totalChart");
+    barChartjs2 && new Chart(barChartjs2, {
+        type: "bar",
         data: ChartData,
         options: ChartOptions
 });
