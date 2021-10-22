@@ -1,5 +1,5 @@
 // fixed list of skills
-const skill_list = [["Email", 0] , ["Online collaboration",0], ["Search for information",0], ["Smartphone/tablet/computer use",0], ["Social media use",0],
+const skill_list = [["Email", 0] , ["Online collaboration",0], ["Browser search",0], ["Device use",0], ["Social media use",0],
 ["Active listening",0], ["Effective communication",0], ["Negotiation skill",0], ["Persuasion",0], ["Relationship management",0],
 ["Art",0], ["Caregiving",0], ["Cooking",0], ["Exercise",0], ["Professional writing",0], ["Collaboration and teamwork",0], ["Critical thinking",0],
 ["Entrepreneurship",0], ["People and Leadership",0], ["Personal selling",0]];
@@ -18,7 +18,12 @@ async function execute() {
     })
 }
 
-/* collect all skill favourite data from firebase */
+/**
+ * Runs on page load to collect all skill favourites data from firebase
+ *
+ * @param : none
+ * @return: none
+ */
 async function collectData(){
   let favs = [];
 
@@ -31,7 +36,12 @@ async function collectData(){
   })
 }
 
-/* function to display selected skill */
+/**
+ * Display selected skill and generate bar chart
+ *
+ * @param : none
+ * @return: none
+ */
 function selectedSkill(){
   let select = document.getElementById("skills");
   let option = select.options[select.selectedIndex];
@@ -44,10 +54,16 @@ function selectedSkill(){
 
 }
 
-/* Function to determine the number of favourites for each skill and interest */
+/**
+ * Determine the number of favourites for each skill and interest
+ *
+ * @param preference: Interest name obtained from firebase
+ * @param amount: Number of favourites obtained from firebase
+ * @return: none
+ */
 function checkSkill(preference, amount){
   for (let i = 0; i < skill_list.length; i++) {
-    if (preference == skill_list[i][0]) {
+    if (preference == skill_list[i][0] && amount != undefined) {
       let current_num = skill_list[i][1];
       skill_list[i][1] = current_num + amount;
       // ict skill
@@ -74,7 +90,12 @@ function checkSkill(preference, amount){
   }
 }
 
-/* generate bar chart based on selected skill */
+/**
+ * Generate bar chart based on selected skill
+ *
+ * @param skill: Skill selected from option list
+ * @return: none
+ */
 function updateBarChart(skill) {
 
     // variable
@@ -142,7 +163,12 @@ function updateBarChart(skill) {
 
 }
 
-/* generate pie chart to display total favourties number for each skill */
+/**
+ * Generate pie chart to display total favourites number for each skill
+ *
+ * @param: none
+ * @return: none
+ */
 function updatePieChart() {
 
     // variable
