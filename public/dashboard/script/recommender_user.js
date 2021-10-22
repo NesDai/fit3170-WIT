@@ -51,7 +51,7 @@ firebase.database().ref('users').once("value", function (snapshot) {
  * @return: none
  */
 function updateVideoList(phoneNum){
-
+    $('#videoAnalyticContainer').hide();
 
     firebase.database().ref(`users/+${phoneNum}`).once("value", function(snapshot){
         if (snapshot.exists()){
@@ -226,14 +226,14 @@ function generatePieChart(phoneNum){
 
     //20 pre-generated colors
     let backgroundColors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'];
-    
+    let backgroundColors2 = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'];
     let labels = [];
     let data = [];
 
     // Generate the first pie chart for favourites of the user
     firebase.database().ref(`users/+${phoneNum}/videoFavourite`).once("value", function(snapshot){
         if (snapshot.exists()){
-            $('#pieChart2').show();
+            $('#barChart2').show();
             snapshot.forEach((video)=>{
                 let videoDetails = video.val();
                 if (!labels.includes(videoDetails.videoPreference)){
@@ -250,19 +250,34 @@ function generatePieChart(phoneNum){
 
             // Generating pie chart
             new Chart("chart2",{
-                type: "doughnut",
+                type: "bar",
                 data: {
                     labels,
                     datasets: [{
-                      label: 'Count of favourited videos by interest',
                       data,
                       backgroundColor,
                       hoverOffset: 4
                     }]
+                },
+                options: {
+                    scales: {
+                        yAxes:[{
+                            display: true,
+                            ticks: {
+                                suggestedMin: 0,
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Number of videos favourited by interest'
+                    }
                 }
             })
         } else {
-            $('#pieChart2').hide();
+            $('#barChart2').hide();
         }
     });
     
@@ -272,7 +287,7 @@ function generatePieChart(phoneNum){
     // Generates the second pie chart for the watch history of the user
     firebase.database().ref(`users/+${phoneNum}/videoHistory`).once("value", function(snapshot){
         if (snapshot.exists()){
-            $('#pieChart1').show();
+            $('#barChart1').show();
             snapshot.forEach((video)=>{
                 let videoDetails = video.val();
                 if (!labelsHist.includes(videoDetails.interest)){
@@ -285,23 +300,40 @@ function generatePieChart(phoneNum){
                 }
             })
 
-            let backgroundColor = backgroundColors.splice(0, labelsHist.length);
+            let backgroundColor = backgroundColors2.splice(0, labelsHist.length);
 
             // Generating pie chart
             new Chart("chart1",{
-                type: "doughnut",
+                type: "bar",
                 data: {
                     labels : labelsHist,
                     datasets: [{
-                      label: 'Count of every video by interest',
-                      data: dataHist,
-                      backgroundColor,
-                      hoverOffset: 4
+                        label: 'Count: ',
+                        data: dataHist,
+                        backgroundColor,
+                        hoverOffset: 4,
+                        max: 10
                     }]
+                },
+                options: {
+                    scales: {
+                        yAxes:[{
+                            display: true,
+                            ticks: {
+                                suggestedMin: 0,
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Number of videos watched by interest'
+                    }
                 }
             })
         } else {
-            $('#pieChart1').hide();
+            $('#barChart1').hide();
         }
     });
 }
