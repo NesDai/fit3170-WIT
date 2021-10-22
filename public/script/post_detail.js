@@ -754,11 +754,16 @@ function printComment(button_num, comment, i ){
     document.getElementById(`reply_input${i}`).setAttribute("style", "width:95%");
 }
 
-//COMMENT
+/**
+ * Function which hides the Like alert
+ */
 function hideLikeAlert(){
     document.getElementById("like-Modal").style.display =  "none";
 }
-//COMMENT
+
+/**
+ * Function which hides the deleted post alert
+ */
 function hideDeletedPostAlert(){
     document.getElementById("deletedPost-Modal").style.display =  "none";
 }
