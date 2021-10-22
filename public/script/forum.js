@@ -783,15 +783,15 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
     let button_nums = [];
 
     //gets the posts with the like/dislike by the logged in user
-    firebase.database().ref('likesDislikes')
+    await firebase.database().ref('likesDislikes')
         .once('value', x => {
             x.forEach(data => {
                 if(data.val()[`${current_user["username"]}`] != undefined){ // if the user performed an action on the post
                     data_list.push( [data.key , data.val()[`${current_user["username"]}`].action]  )  // push the post key into list
                 }
             })
-        }).then(()=>{
-            firebase.database().ref(`posts`)
+        }).then(async ()=>{
+            await firebase.database().ref(`posts`)
                 .orderByChild(`users_favourite`)
                     .once('value', x => {
                         x.forEach(data => {
@@ -844,27 +844,24 @@ async function printUserFavouritePosts(current_user_posts, buttons_index){
                             }
                             button_nums.push(button_num);
                         }
-                        }).then(() => {
+                        
                                 for(let i=post_arr.length-1; i>=0 ; i--){
 
                                     printPost(post_arr[i], button_nums[i], buttons_index)
                                     buttons_index++;
                                 }
 
-                                // if(post_arr.length == 0 ){
-                                //     document.getElementById("postField").innerHTML = '<h4>0 Posts in this section</h4>';
-                                //     //$('#postField').html('<h4>0 Posts in this section</h4>');
-                                // }
-
-                                const promise = new Promise((resolve, reject) => {
-
-                        // return a promise with a value one to specify the function has completed
-                        const promise = new Promise((resolve, reject) => {
-                            resolve(1);
-                        });
-                    })
         })
       })
+
+      // return a value one to specify the function has completed
+      if(post_arr.length == 0){
+          return true; // return true to specify its empty
+      }
+      else{
+        return false; // specifies the list favs is not empty
+      }
+      
 }
 
 /**
@@ -928,12 +925,10 @@ function printUserPosts(){
                             printPost(posts[i], button_nums[i], i )
                         }
 
-                        if(posts.length == 0 ){
-                            $('#resNum').html('<h4>0 Posts in this section</h4>');
-                        }
-                    }).then(() => {
+
+                    }).then(async function(){
                         //print user favourites
-                        printUserFavouritePosts(posts,button_nums.length).then(()=>{
+                        let favouritePostEmpty = await printUserFavouritePosts(posts,button_nums.length);
 
                              // Reenable the other tabs
                            // $("#radio-0").attr("disabled",false);
@@ -941,10 +936,10 @@ function printUserPosts(){
                             document.getElementById("radio-0").disabled = false;
                             document.getElementById("radio-2").disabled = false;
 
+                            if(posts.length == 0 && favouritePostEmpty){
+                                $('#resNum').html('<h4>0 Posts in this section</h4>');
+                            }
 
-
-
-                        })
                     });
     });
 }
