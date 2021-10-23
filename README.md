@@ -74,7 +74,7 @@ Alternatively, to deploy the application, run the following command:
 - firebase deploy
 
 #
-#3. #Key Features
+# 3. Key Features
 
 Below are the main features for each submodules: 
 ## 3.1 Chatbot
@@ -246,7 +246,7 @@ A CSV file can also be downloaded if admins wish to do further data analysis.
 A CSV file can also be downloaded if admins wish to do further data analysis.
 
 #
-#4. #Summary of Information 
+# 4. Summary of Information 
 This section touches on a brief summary of all the major frameworks/libraries used throughout the project. 
 ## 4.1 JavaScript 
 
@@ -262,7 +262,7 @@ Bootstrap is an open-source CSS framework that has assisted us in improving the 
 MDL is a library, which follows Material Design concepts. Most of the components in the Forum, including cards, buttons, text fields, and other interface components tightly rely on MDL, which makes the website more portable and usable. MDL was chosen over other libraries, because of its familiar appearance, since it is used by Google.
 
 #
-#5. #Required Third-Party Software
+# 5. Required Third-Party Software
 
 ## 5.1 Firebase
 ### 5.1.1 Chatbot
@@ -547,7 +547,7 @@ If developers wish to strengthen the security for login, then they could include
 
 
 #
-#6. #Pull Request Strategy
+# 6. Pull Request Strategy
 
 When developing the application, it is likely that multiple branches would be stemmed out from the master branch, for ease of development. As such, a pull request strategy is needed when features of a sub-branch have been completed, and is ready to be merged back into the master branch. There are a few strategies that are viable for this. Animations of the strategies discussed below can be found in: https://techmunching.com/git-merge-vs-git-rebase/
 
@@ -590,7 +590,7 @@ After evaluating the various strategies listed above, it is suggested that futur
 
 
 #
-#7. #Versioning Strategy
+# 7. Versioning Strategy
 
 V1.0.0 - 2021.10
 
