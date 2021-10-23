@@ -4,13 +4,13 @@ Handover Documents
 Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand: Integrating Action Research and Design Science Approach
 
 #
-#1. #Introduction
+# 1. Introduction
 
 This document outlines the third party dependencies that are required to start using the application, along with steps to set it up. These will be discussed in the sections below. Furthermore, the data structure that we have used in Firebase will be clarified to allow new developers familiarise with the data structure being applied. Additionally, a versioning strategy to be used for future releases will be discussed appropriately.
 
 It is worth noting that this document is targeted towards developers and not users. For a general overview of the application, refer to the user guide.
 #
-#2. #Quick Startup Guide
+# 2. Quick Startup Guide
 
 The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
