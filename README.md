@@ -8,7 +8,7 @@ Sustainable Work through Women-in-tech Application for Older Women in Malaysia a
 This document outlines the third party dependencies that are required to start using the application, along with steps to set it up. These will be discussed in the sections below. Furthermore, the data structure that we have used in Firebase will be clarified to allow new developers familiarise with the data structure being applied. Additionally, a versioning strategy to be used for future releases will be discussed appropriately.
 
 It is worth noting that this document is targeted towards developers and not users. For a general overview of the application, refer to the user guide.
-1. # Quick Startup Guide
+2. # Quick Startup Guide
 The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 ## 2.1 Prerequisites
 Prior to the project, you will need to install npm locally and the latest version of Node.js on your computer. 
@@ -29,8 +29,7 @@ Clone the following repository
   - Do ensure the following options are selected
     - Enter a sensible name for easy tracking of the project’s access token
     - It is preferable to add the expiry date of the token so that it is automatically deletes once you are done working with the project
-
-![](Aspose.Words.8b41bb89-d67e-44bf-92b6-eb133fcc720f.001.png)
+    - Select “api” under Scopes, which enables you to read and write access to the API
 
 Install Firebase CLI and login into your Google account
 
@@ -70,12 +69,14 @@ Alternatively, to deploy the application, run the following command:
 
 - firebase deploy
 
-1. # Key Features
+3. # Key Features
 Below are the main features for each submodules: 
 ## 3.1 Chatbot
 ### 3.1.1 Questions and Responses
 
 Currently, questions and responses are stored in the FIrebase. Their details will be outlined in the Firebase section below. All question ids are auto generated, they are not based on question numbers. Such IDs will then be pasted to the file constants.js found in the path public/script/constants.js. They are pasted when questions are uploaded to the cloud.
+
+
 ### 3.1.2 Translation
 
 In the current implementation, questions and terms of use instructions, along with their translated variants, use hardcoded strings stored in Firebase. However, Google Translate is used for the button descriptions and is not ideal as they occupy screen real-estate. It is suggested that future developers use hard coded strings for these as well.
@@ -100,13 +101,12 @@ To re-upload questions with a new set of auto-generated IDs, The following steps
 \4. Call housekeeping() in the terminal.
 
 
-\5. Copy the IDs being displayed in the console log. And paste them inside constants.js, under the appropriate variable. Eg: for english questions, paste them to the variable QUESTION\_IDS\_EN, for malay, QUESTION\_IDS\_MS, etc. - This would link the correct question IDs to the chatbot
+\5. Copy the IDs being displayed in the console log. And paste them inside constants.js, under the appropriate variable. Eg: for english questions, paste them to the variable QUESTION\_IDS\_EN, for malay, QUESTION\_IDS\_MS, etc. - This would link the correct question IDs to the chatbot.
 
 
 \6. Your new set of questions will then be correctly referenced by the application.
 ### 3.1.4 User Interaction Logic
 User interaction logic is found in the first\_time\_survey.js file located under filepath public/script/
-
 ## 3.2 Web-based Recommender System
 ### 3.2.1 Learning Interests / Skills selection functionality 
 The logic for this functionality can be found under the filepath:
@@ -237,7 +237,7 @@ A CSV file can also be downloaded if admins wish to do further data analysis.
 `	`The Skill dashboard shows the total number of times users have selected a skill from a particular learning interest. The admin can use the dropdown menu to select the category (learning interest) they want to view the chart for. At the bottom of the page shows the total number of video likes and dislikes for each skill under that learning interest. 
 
 A CSV file can also be downloaded if admins wish to do further data analysis.
-1. # Summary of Information 
+4. # Summary of Information 
 This section touches on a brief summary of all the major frameworks/libraries used throughout the project. 
 ## 4.1 JavaScript 
 
@@ -263,20 +263,20 @@ The chatbot section of the application uses the Firestore database for storage o
 This branch consists of the terms of use for the chatbot. It is stored in a field called “contents” and contains the html text, along with formatting identifiers. There are multiple variants of sub-branches that exist within this branch, there are all translated variants of the default terms of use English text. Currently there is: TermsOfUse\_en, TermsOfUse\_ms, TermsOfUse\_th, TermsOfUse\_zn\_CN, where en is english, ms malay, th thai, zn\_CN, mandarin.
 
 
-|<p>{</p><p>`    `contents:</p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `contents:</p><p>}</p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |contents|String: Html text + formatting identifiers for this specific version of the terms of use|
 
 
 
-1. chatbot/survey\_questions
+2. chatbot/survey\_questions
 
 This branch consists of all of the chatbot’s questions, including translated variants. The questions are stored in their language’s sub-branch. Please note that the IDs that are used for each question are auto-generated. This is to allow for ease of uploading questions, without having the need to delete question ids frequently. The IDs are referenced inside the constants.js file, under directory public/script/constants.js
 
 
-|<p>{</p><p>`    `category: </p><p>`    `hint: </p><p>`    `longQuestionId: </p><p>`    `question: </p><p>`    `question\_number: </p><p>`    `restrictions: </p><p>`    `type: </p><p>} </p>|
-| :- |
+|<p>{</p><p>`    `category: </p><p>`    `hint: </p><p>`    `longQuestionId: </p><p>`    `question: </p><p>`    `question\_number: </p><p>`    `restrictions: </p><p>`    `type: </p><p>} </p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |Category|String: Category of questions,with reference to the original word document from clients|
 |hint|String: Hint for users to answer question|
@@ -288,27 +288,27 @@ This branch consists of all of the chatbot’s questions, including translated v
 
 
 
-1. chatbot/survey\_responses
+3. chatbot/survey\_responses
 
 This branch consists of all the chatbot’s responses. In this branch, all translated variants are stored under chatbot/survey\_responses and not further categorised into sub-branches.
 
 Within this branch, the ids used correspond to the question\_id, where it stores all responses to a specific question\_id. Please take note that each user can only record one set of responses in a question. Additional responses when users restart the survey will delete all their previous responses
 
-|<p>{</p><p>`    `Answer:</p><p>`    `Phone:</p><p>`   `timestamp:</p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `Answer:</p><p>`    `Phone:</p><p>`   `timestamp:</p><p>}</p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |answer|Number: Answer as responded by users|
 |phone|String: Phone number of user|
 |timestamp|Timestamp: Time in which response was submitted|
 
 
-1. users
+4. users
 
 This branch stores the user's progress of the survey. For example, the question number that they have reached. It also stores some additional information, clarified below.
 
 
-|<p>{</p><p>`    `currentSubQuestionIds:</p><p>`    `questionIndex:</p><p>`    `subQuestionIndex:</p><p>`    `closedSurvey:</p><p>`    `skippedToEnd:</p><p>`    `joinFutureResearch:</p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `currentSubQuestionIds:</p><p>`    `questionIndex:</p><p>`    `subQuestionIndex:</p><p>`    `closedSurvey:</p><p>`    `skippedToEnd:</p><p>`    `joinFutureResearch:</p><p>}</p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |currentSubQuestionIds|<p>Array: a set of Ids that corresponds to a long question. For example, a user is in the process of answering a long question and exited the survey, this attribute is to conveniently retrieve the question\_ids of the long question. This is necessary as subquestion IDs are not stored in constants.js - Its question\_ids are stored in Firebase, under its long\_question ID’s “arrangement” field.</p><p></p>|
 |questionIndex|Number: Index of question that the user has most recently answered|
@@ -331,19 +331,19 @@ Child objects under users store data about the users that are currently using th
 
 
 
-|<p>{</p><p>`    `phone: </p><p>`    `username: </p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `phone: </p><p>`    `username: </p><p>}</p>||
+| :- | :- |
 |**Attribute**|**Meaning** |
 |phone|String: User’s phone number|
 |username|String: User’s username |
 
-1. fit3170-49455-default-rtdb/posts
+2. fit3170-49455-default-rtdb/posts
 
 `	`Child objects under posts store data that contains all the posts available in the forum regardless of whether they were made by the users themselves or whether it was added from the recommender system. A random unique key is used to differentiate between each post. Each JSON object stored under this section has the following format: 
 
 
-|<p>{</p><p>`    `anonymous: </p><p>`    `created: </p><p>`    `description: </p><p>`    `dislikes: </p><p>`    `id: </p><p>`    `interest: </p><p>`    `likes: </p><p>`    `recommender:  </p><p>`    `title: </p><p>`    `username: </p><p>`    `users\_faviourte:</p><p>`    `videoURL: </p><p>} </p>|
-| :- |
+|<p>{</p><p>`    `anonymous: </p><p>`    `created: </p><p>`    `description: </p><p>`    `dislikes: </p><p>`    `id: </p><p>`    `interest: </p><p>`    `likes: </p><p>`    `recommender:  </p><p>`    `title: </p><p>`    `username: </p><p>`    `users\_faviourte:</p><p>`    `videoURL: </p><p>} </p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |anonymous|Number: the number of anonymous comments and replies present under the post |
 |created|String: the date and time the post was created|
@@ -358,12 +358,12 @@ Child objects under users store data about the users that are currently using th
 |users\_faviourte|Array: The elements represent the number of the user who has added the post to their favourite posts.|
 |videoURL|<p>0 - if the user have not inputted a video url to include in their post </p><p>String - if the user included a video url to include in their post. The string is the video url </p>|
 
-1. fit3170-49455-default-rtdb/comments
+3. fit3170-49455-default-rtdb/comments
 
 Child objects under comments store data that contains all the comments available in the forum. A random unique key is used to differentiate between each comment. Each JSON object stored under this section has the following format: 
 
-|<p>{</p><p>`    `anonymous: </p><p>`    `commenterID:</p><p>`    `content:</p><p>`    `created:  </p><p>`    `id: </p><p>`    `likes: </p><p>`    `postID: </p><p>`    `username: </p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `anonymous: </p><p>`    `commenterID:</p><p>`    `content:</p><p>`    `created:  </p><p>`    `id: </p><p>`    `likes: </p><p>`    `postID: </p><p>`    `username: </p><p>}</p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |anonymous |<p>0 - if the comment is not anonymous </p><p>> 1: If the comment is anonymous. Where the number represents the display of the username. For instance, if the number is 1 then the comment will be presented as made by “Anonymous 1”.</p>|
 |commenterID|String: the unique Id used to identify the user who made the post (i.e. their phone number)|
@@ -376,12 +376,12 @@ Child objects under comments store data that contains all the comments available
 
 
 
-1. fit3170-49455-default-rtdb/replies
+4. fit3170-49455-default-rtdb/replies
 
 Child objects under replies store data that contains all the comments available in the forum. A random unique key is used to differentiate between each reply. Each JSON object stored under this section has the following format: 
 
-|<p>{</p><p>`    `anonymous: </p><p>`    `replierId: </p><p>`    `content:</p><p>`    `created:  </p><p>`    `id: </p><p>`    `like: </p><p>`    `dislike:</p><p>`    `reply\_comment\_parent: </p><p>`    `username: </p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `anonymous: </p><p>`    `replierId: </p><p>`    `content:</p><p>`    `created:  </p><p>`    `id: </p><p>`    `like: </p><p>`    `dislike:</p><p>`    `reply\_comment\_parent: </p><p>`    `username: </p><p>}</p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |anonymous |<p>0 - if the reply is not anonymous </p><p>> 1: If the comment is anonymous. Where the number represents the display of the username. For instance, if the number is 1 then the reply will be presented as made by “Anonymous 1”.</p>|
 |replierId|String: the unique Id used to identify the user who made the post (i.e. their phone number)|
@@ -393,23 +393,23 @@ Child objects under replies store data that contains all the comments available 
 |reply\_comment\_parent|String: the unique Id used to identify the parent reply/comment this reply belongs under. |
 |username|String: the username of the user who made the reply. |
 
-1. fit3170-49455-default-rtdb/likesDislikes
+5. fit3170-49455-default-rtdb/likesDislikes
 
 Child objects under likesDislikes store data that contains all the likes and dislikes made by the users on all the posts available in the forum. The key used is the post ID of the post which the like/dislike belong to. Under each post ID a child JSON object exists with the keys being the username of the users that liked/disliked the post. Each JSON object stored under the username has the following format: 
 
 
-|<p>{</p><p>`    `action:</p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `action:</p><p>}</p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |action|<p>1- if the user liked the post</p><p>-1 - if the user disliked the post </p>|
 
-1. fit3170-49455-default-rtdb/likesComments
+6. fit3170-49455-default-rtdb/likesComments
 
 Child objects under likesComments store data that contains all the likes made by the users on all the comments available in the forum. The key used is the comment ID of the comment which the like belongs to. Under each comment ID a child JSON object exists with the keys being the username of the users that liked the comment. Each JSON object stored under the username has the following format: 
 
 
-|<p>{</p><p>`    `action:</p><p>}</p>|
-| :- |
+|<p>{</p><p>`    `action:</p><p>}</p>||
+| :- | :- |
 |**Attributes**|**Meaning** |
 |action|1- if the user liked the comment|
 
@@ -424,8 +424,8 @@ Child objects under users store data about the users that are currently using th
 In the case of the recommender, the child objects used are preferences, videoFavourite and videoHistory. 
 
 
-|<p>{</p><p>`    `phone: </p><p>`    `preferences:</p><p>`    `username: </p><p>`    `videoFavourite:</p><p>`    `videoHistory: </p><p>} </p>|
-| :- |
+|<p>{</p><p>`    `phone: </p><p>`    `preferences:</p><p>`    `username: </p><p>`    `videoFavourite:</p><p>`    `videoHistory: </p><p>} </p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |phone|String: User’s phone number|
 |preferences|Array: Maximum length of 1 - stores the current skill selected from the learning interests page|
@@ -439,8 +439,8 @@ In the case of the recommender, the child objects used are preferences, videoFav
 `	`Below are the child objects under each index in the videoFavourite attribute from 1.
 
 
-|<p>{</p><p>`     `interest:</p><p>`     `postId:</p><p>`     `videoThumbnail:</p><p>`     `videoTitle:</p><p>`     `videoUrl:</p><p>} </p>|
-| :- |
+|<p>{</p><p>`     `interest:</p><p>`     `postId:</p><p>`     `videoThumbnail:</p><p>`     `videoTitle:</p><p>`     `videoUrl:</p><p>} </p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |interest|String: The learning interest skill associated with the video|
 |postId|String: The id used to identify the video under fit3170-49455-default-rtdb/posts|
@@ -448,13 +448,13 @@ In the case of the recommender, the child objects used are preferences, videoFav
 |videoTitle|String: The name of the video|
 |videoUrl|String: The YouTube link to the video in embed format|
 
-1. fit3170-49455-default-rtdb/users/videoHistory/{index}
+3. fit3170-49455-default-rtdb/users/videoHistory/{index}
 
 `	`Below are the child objects under each index in the videoHistory attribute from 
 
 
-|<p>{</p><p>`     `dislike:</p><p>`     `interest:</p><p>`     `like:</p><p>`     `postId:</p><p>`     `totalWatchCount:</p><p>`     `videoAnalytics:</p><p>`     `videoThumbnail:</p><p>`     `videoTitle:</p><p>`     `videoUrl:</p><p>} </p>|
-| :- |
+|<p>{</p><p>`     `dislike:</p><p>`     `interest:</p><p>`     `like:</p><p>`     `postId:</p><p>`     `totalWatchCount:</p><p>`     `videoAnalytics:</p><p>`     `videoThumbnail:</p><p>`     `videoTitle:</p><p>`     `videoUrl:</p><p>} </p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |dislike|Boolean: Default value is false - if the user clicks on the dislike button for a video value is set to true. It is changed to false if like is true|
 |interest|String: The learning interest skill associated with the video|
@@ -466,13 +466,13 @@ In the case of the recommender, the child objects used are preferences, videoFav
 |videoTitle|String: The name of the video|
 |videoUrl|String: The YouTube link to the video in embed format|
 
-1. fit3170-49455-default-rtdb/users/videoHistory/videoAnalytics/{date}/{timestamp}
+4. fit3170-49455-default-rtdb/users/videoHistory/videoAnalytics/{date}/{timestamp}
 
 `	`Child objects stored here measure the time and status of a video being watched by the user.
 
 
-|<p>{</p><p>`     `videoCurrentTime:</p><p>`     `videoDuration:</p><p>`     `videoElapsedTime:</p><p>`     `videoPercent:</p><p>`     `videoStatus:</p><p>`     `videoVisible:</p><p>} </p><p></p><p></p>|
-| :- |
+|<p>{</p><p>`     `videoCurrentTime:</p><p>`     `videoDuration:</p><p>`     `videoElapsedTime:</p><p>`     `videoPercent:</p><p>`     `videoStatus:</p><p>`     `videoVisible:</p><p>} </p><p></p><p></p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |videoCurrentTime|Number: The current timestamp of the video where the viewer is at (in seconds)|
 |videoDuration|Number: The duration of the video in seconds|
@@ -481,36 +481,38 @@ In the case of the recommender, the child objects used are preferences, videoFav
 |videoStatus|<p>String: The current state of the video - can be one of the following</p><p></p><p>start - when the user plays the video the first time</p><p>progress - the video is continuously being played</p><p>paused - the user has stopped the video</p><p>seek - part of the video has been skipped forward or back by the user</p><p>complete - the video has finished playing</p>|
 |videoVisible|Boolean: Value is true if the player is visible on the screen while the video engagement was tracked and false otherwise|
 
-1. fit3170-49455-default-rtdb/recommenderData
+5. fit3170-49455-default-rtdb/recommenderData
 
 `	`Below are the child objects stored for recommenderData. This is mainly used for the admin dashboard.
 
 
-|<p>{</p><p>`     `favourites:</p><p>`     `skills:</p><p>} </p><p></p><p></p>|
-| :- |
+|<p>{</p><p>`     `favourites:</p><p>`     `skills:</p><p>} </p><p></p><p></p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |favourites|Array: Stores a list containing the number of times a video associated with a skill has been added to a user’s favourites. Each entry is accessed using a unique ID. More details are covered in fit3170-49455-default-rtdb/recommenderData/favourites|
 |skills|Array: Stores a list of learning interest skills. Each entry is accessed by using the name of the skill. More details are covered in fit3170-49455-default-rtdb/recommenderData/skills|
 
 
-1. fit3170-49455-default-rtdb/recommenderData/favourites/{id}
+6. fit3170-49455-default-rtdb/recommenderData/favourites/{id}
 
 
 
-|<p>{</p><p>`     `favouriteAmount:</p><p>`     `favouritedUsers:</p><p>`     `preferenceType:</p><p>} </p><p></p><p></p>|
-| :- |
+
+
+|<p>{</p><p>`     `favouriteAmount:</p><p>`     `favouritedUsers:</p><p>`     `preferenceType:</p><p>} </p><p></p><p></p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |favouriteAmount|The number of times a video associated with a skill has been added to a user’s favourites|
 |favouritedUsers|Array: List of users who have at least one video associated with the skill in their favourites |
 |preferenceType|String: The name of the learning interest skill|
 
 
-1. fit3170-49455-default-rtdb/recommenderData/skills/{skill name}
+7. fit3170-49455-default-rtdb/recommenderData/skills/{skill name}
 
 
 
-|<p>{</p><p>`     `favouriteAmount:</p><p>`     `selectedAmount:</p><p>`     `skill: </p><p>} </p><p></p><p></p>|
-| :- |
+|<p>{</p><p>`     `favouriteAmount:</p><p>`     `selectedAmount:</p><p>`     `skill: </p><p>} </p><p></p><p></p>||
+| :- | :- |
 |**Attributes** |**Meaning** |
 |favouriteAmount|Number: The number of times a video associated with a skill has been added to a user’s favourites|
 |selectedSkill|Number: The number of times a user has chose this skill on the learning interests page|
@@ -527,7 +529,15 @@ When a user attempts to login, a user has to input a phone number that is alread
 If a user enters a phone number that does not exist in the realtime database, then we redirect to the signup page after the user agrees with the terms and conditions in the terms of use page. In the signup page, a user has to enter an username and phone number. It checks if the username and phone number are valid or not. For example, if the phone number includes any character, then it shows that the user has to enter a valid phone number. After the user succeeds in entering the phone number and username without facing any error message then the user is asked to click the “Send Pin” button that sends a 6-digut pin number to the entered phone number. Once the user successfully enters the pin code received from the phone number, then the users’ information including username and phone number is stored in the local storage and realtime database. 
 
 If developers wish to strengthen the security for login, then they could include a password section to include password made upon registration. Also, if developers wish to include logout functionality, they could include a logout functionality that deletes the information stored in the local storage. Moreover, if developers wish to restrict pages that an unauthorized user can go to, then they could add code that checks if user information exists in the local storage because currently an unauthorized user can go to any pages they wish to go to. 
-1. # Pull Request Strategy
+
+
+
+
+
+
+
+
+6. # Pull Request Strategy
 
 When developing the application, it is likely that multiple branches would be stemmed out from the master branch, for ease of development. As such, a pull request strategy is needed when features of a sub-branch have been completed, and is ready to be merged back into the master branch. There are a few strategies that are viable for this. Animations of the strategies discussed below can be found in: https://techmunching.com/git-merge-vs-git-rebase/
 
@@ -571,14 +581,7 @@ After evaluating the various strategies listed above, it is suggested that futur
 
 
 
-
-
-
-
-
-
-
-1. # Versioning Strategy
+7. # Versioning Strategy
 V1.0.0 - 2021.10
 
 Added Features
@@ -588,6 +591,7 @@ Added Features
 | :- |
 |<p>Recommender System</p><p>- Admin Dashboard Recommender Home Page</p><p>- Admin Dashboard Recommender User Page</p><p>- Admin Dashboard Recommender Favourite Page</p><p>- Admin Dashboard Recommender Skill Page</p><p>- Learning Interests Page</p><p>- Video Player Page</p><p>- Favourite Videos Page</p><p>- Watched History Page</p><p>- Video Analytics Feature</p><p>- CSV Export Feature</p>|
 |<p>Forum</p><p>- Admin Dashboard Forum Home Page</p><p>- Admin Dashboard Login Page</p><p>- Admin Dashboard Forum User Page</p><p>- Admin Dashboard Forum Interest Page</p><p>- Admin Dashboard Forum Post Page</p><p>- Forum Page</p><p>- Main Page</p><p>- Post Detail Page</p><p>- Forum Login Page</p><p>- Admin Dashboard Login Page</p><p>- Translation Feature</p><p>- CSV Export Feature</p>|
+
 
 
 V1.1.0 - 2022.2
@@ -610,6 +614,3 @@ Proposed Changed Features
 | :- |
 |<p>Recommender System</p><p>- Improve on video analytics functionality</p><p>- Rename attributes and improve structure/consistency under fit3170-49455-default-rtdb/recommenderData</p><p>&emsp;- Remove either favourites or skill </p>|
 |<p>Forum</p><p>- Polish the layout under Feed tab to be able to differentiate between user favourite post and personal post</p><p>- Improve on the likes and dislikes functionality</p><p>- Improve on the reply functionality</p>|
-
-
-
