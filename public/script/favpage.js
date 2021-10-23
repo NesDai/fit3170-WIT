@@ -313,7 +313,7 @@ function showFavTable(){
           for (i in currentHistory){
             favCount += 1;
             count += 1;
-            myFavList.push(currentHistory[i].videoPreference);
+            myFavList.push(currentHistory[i].interest);
 
             currentVideo = currentHistory[i];
 
@@ -324,7 +324,7 @@ function showFavTable(){
 
               console.log("second success callback");
               title = currentVideo.videoTitle;
-              let skill = currentVideo.videoPreference;
+              let skill = currentVideo.interest;
               let card_url = currentVideo.videoUrl;
 
               // Grid implementation
