@@ -258,7 +258,7 @@ Bootstrap is an open-source CSS framework that has assisted us in improving the 
 ## 4.4 MDL
 MDL is a library, which follows Material Design concepts. Most of the components in the Forum, including cards, buttons, text fields, and other interface components tightly rely on MDL, which makes the website more portable and usable. MDL was chosen over other libraries, because of its familiar appearance, since it is used by Google.
 
-1. # Required Third-Party Software
+5. # Required Third-Party Software
 ## 5.1 Firebase
 ### 5.1.1 Chatbot
 
