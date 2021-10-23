@@ -618,6 +618,6 @@ Proposed Changed Features
 
 |<p>Chatbot</p><p>- Implement speech-to-text </p>|
 | :- |
-|<p>Recommender System</p><p>- Improve on video analytics functionality</p><p>- Rename attributes and improve structure/consistency under fit3170-49455-default-rtdb/recommenderData</p><p>&emsp;- Remove either favourites or skill </p>|
+|<p>Recommender System</p><p>- Improve on video analytics functionality</p><p>- Rename attributes and improve structure/consistency under fit3170-49455-default-rtdb/recommenderData</p><p>- Remove either favourites or skill </p>|
 |<p>Forum</p><p>- Polish the layout under Feed tab to be able to differentiate between user favourite post and personal post</p><p>- Improve on the likes and dislikes functionality</p><p>- Improve on the reply functionality</p>|
 
