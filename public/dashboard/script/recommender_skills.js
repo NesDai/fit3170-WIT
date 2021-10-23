@@ -16,7 +16,7 @@ async function execute() {
 
     collectData().then(() => {
 
-        updatePieChart();
+        updateMainBarChart();
 
         checkSkillLikeDislike();
 
@@ -216,14 +216,15 @@ function updateBarChart(skill) {
 
 }
 
-/* generate pie chart to display total favourties number for each skill */
-function updatePieChart() {
+/* generate pie chart to display total selection number for each skill */
+function updateMainBarChart() {
+    console.log("Bar chart started");
 
     // variable
     let xValues = [];
     let yValues = [];
 
-    // to get total number of favourites for each skill for x-axis and y-axis values
+    // to get total number of selections for each skill for x-axis and y-axis values
     for (let i = 0; i < total_list.length; i++){
         xValues.push(total_list[i][0]);
         yValues.push(total_list[i][1]);
@@ -239,15 +240,16 @@ function updatePieChart() {
         labels: xValues,
         datasets: [
           {
+            label: "Number of selections",
             data: yValues,
             backgroundColor: chartColors,
             borderColor: colors.borderColor
         }]
     }
-    var pieChartjs = document.getElementById("skillPieChartjs");
-    pieChartjs && new Chart(pieChartjs, {
-        type: "pie",
+    var barChartjs = document.getElementById("skillBarChartjs");
+    barChartjs && new Chart(barChartjs, {
+        type: "bar",
         data: ChartData,
         options: ChartOptions
-});
+      });
 }
