@@ -94,8 +94,12 @@ Question uploader logic is located in the various js files under public/chatbot/
 
 To re-upload questions with a new set of auto-generated IDs, The following steps shall be performed:
 
-\1. Link the question-uploader javascript file of the desired language in chatbot.html under filepath public/. For example, for uploading of English questions, use 
-`<script src="chatbot/script/question-uploader/question-uploader\_en.js"></script>`, For uploading of Chinese questions, use 
+\1. Link the question-uploader javascript file of the desired language in chatbot.html under filepath public/. 
+
+For example, for uploading of English questions, use 
+`<script src="chatbot/script/question-uploader/question-uploader\_en.js"></script>`, 
+
+For uploading of Chinese questions, use 
 `<script src="chatbot/script/question-uploader/question-uploader\_zh\_CN.js"></script>`
 
 \2. Call uploadQuestions() in the terminal, this would upload the questions to Firebase. It will also output a lot of logs in the console.
