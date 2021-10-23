@@ -2,15 +2,18 @@
 Handover Documents
 
 Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand: Integrating Action Research and Design Science Approach
-###
+#
 1. # Introduction
 
 This document outlines the third party dependencies that are required to start using the application, along with steps to set it up. These will be discussed in the sections below. Furthermore, the data structure that we have used in Firebase will be clarified to allow new developers familiarise with the data structure being applied. Additionally, a versioning strategy to be used for future releases will be discussed appropriately.
 
 It is worth noting that this document is targeted towards developers and not users. For a general overview of the application, refer to the user guide.
+
+#
 2. # Quick Startup Guide
 
 The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+
 ## 2.1 Prerequisites
 Prior to the project, you will need to install npm locally and the latest version of Node.js on your computer. 
 
@@ -69,7 +72,7 @@ Deploy Project
 Alternatively, to deploy the application, run the following command:
 
 - firebase deploy
-
+#
 3. # Key Features
 Below are the main features for each submodules: 
 ## 3.1 Chatbot
@@ -228,6 +231,7 @@ In the users dashboard, the admin can view the total number of users that are cu
 In the interest dashboard, the admin can view a summary of the total number of interactions made of every single interest as a bar chart as well as a table summary of all the posts that were made under specific interest. 
 
 A CSV file can also be downloaded if admins wish to do further data analysis.
+
 ### 3.4.3 Recommender
 `	`In the recommender admin dashboard, there are currently 3 main submodules that show the statistics for User (video analytics), Favourites and Skill. Each page shows an overview of interactions and activity that have occurred in the recommender.
 
@@ -238,6 +242,7 @@ A CSV file can also be downloaded if admins wish to do further data analysis.
 `	`The Skill dashboard shows the total number of times users have selected a skill from a particular learning interest. The admin can use the dropdown menu to select the category (learning interest) they want to view the chart for. At the bottom of the page shows the total number of video likes and dislikes for each skill under that learning interest. 
 
 A CSV file can also be downloaded if admins wish to do further data analysis.
+#
 4. # Summary of Information 
 This section touches on a brief summary of all the major frameworks/libraries used throughout the project. 
 ## 4.1 JavaScript 
@@ -537,7 +542,7 @@ If developers wish to strengthen the security for login, then they could include
 
 
 
-
+#
 6. # Pull Request Strategy
 
 When developing the application, it is likely that multiple branches would be stemmed out from the master branch, for ease of development. As such, a pull request strategy is needed when features of a sub-branch have been completed, and is ready to be merged back into the master branch. There are a few strategies that are viable for this. Animations of the strategies discussed below can be found in: https://techmunching.com/git-merge-vs-git-rebase/
@@ -581,7 +586,7 @@ After evaluating the various strategies listed above, it is suggested that futur
 
 
 
-
+#
 7. # Versioning Strategy
 V1.0.0 - 2021.10
 
@@ -615,3 +620,4 @@ Proposed Changed Features
 | :- |
 |<p>Recommender System</p><p>- Improve on video analytics functionality</p><p>- Rename attributes and improve structure/consistency under fit3170-49455-default-rtdb/recommenderData</p><p>&emsp;- Remove either favourites or skill </p>|
 |<p>Forum</p><p>- Polish the layout under Feed tab to be able to differentiate between user favourite post and personal post</p><p>- Improve on the likes and dislikes functionality</p><p>- Improve on the reply functionality</p>|
+
