@@ -9,6 +9,7 @@ This document outlines the third party dependencies that are required to start u
 
 It is worth noting that this document is targeted towards developers and not users. For a general overview of the application, refer to the user guide.
 2. # Quick Startup Guide
+
 The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 ## 2.1 Prerequisites
 Prior to the project, you will need to install npm locally and the latest version of Node.js on your computer. 
