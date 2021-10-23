@@ -184,7 +184,7 @@ function updateUI(postId){
                 </tr>
 
             </table>
-            <a href="http://localhost:5000/post_view.html?post_id=${postId}">
+            <a href="https://fit3170-49455.web.app/post_view.html?post_id=${postId}">
                 <div> <button class='btn btn-primary'> Go to Post </button> </div>
             </a>
             `);
