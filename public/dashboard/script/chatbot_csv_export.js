@@ -2,6 +2,10 @@ compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUES
 branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
 let language = ["English", "Chinese", "Malay", "Thai"];
 
+/**
+ * Compiles data from firebase to compiledData[] Array
+ */
+
 async function exportQues() {
     let compiledData = [];
 
@@ -73,6 +77,10 @@ async function exportQues() {
     }
     download_csv_file(compiledData);
 }
+
+/**
+ * Compiles csv file from the data, adds meta data and headers.
+ */
 
 function download_csv_file(csvFileData) {
 

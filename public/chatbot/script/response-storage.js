@@ -125,6 +125,9 @@ function getUserID() {
     return user["phone"]; //=== null ? currentUser.email : phone;
 }
 
+/**
+ * Branch path for the current user
+ */
 function getUserResponsesBranch() {
     // User responses are stored in
     // users/ [phone number/email] /responses
@@ -132,7 +135,7 @@ function getUserResponsesBranch() {
 }
 
 /**
- * Deletes all survey responses of the current user
+ * Deletes all survey responses of the current user, in the user branch
  */
 function purgeUserResponses() {
     let db = firebase.firestore();
@@ -151,6 +154,9 @@ function purgeUserResponses() {
     delete_user_responses_in_response_branch()
 }
 
+/**
+ * Deletes all survey responses of the current user in response branch
+ */
 function delete_user_responses_in_response_branch(){
     let db = firebase.firestore();
     let compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUESTION_IDS_TH];

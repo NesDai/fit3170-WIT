@@ -346,6 +346,13 @@ function showEndingMessage() {
     scrollToBottom();
 }
 
+/**
+ * Function to ask a question to user whether they are ready to end the survey.
+ * (Can be implemented: can add a restart button here in case user wants to restart the survey after completing it)
+ *
+ * It only has a Yes option. After it is selected, selectClosingQuestionOption() is run with closing Id of 1.
+ * The Closing ID 1 represent the option is for this question.
+ */
 function showReadyClosingMessage(){
     // display a question asking if the user wants to participate in future research
     messages.innerHTML +=
@@ -356,7 +363,7 @@ function showReadyClosingMessage(){
         "</div>";
     document.getElementById('hint_area').innerHTML = "";
 
-    // display the options
+    // display the option
     let questionOptions = "<div class=\"space\">"
     questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"endSurveyYes\" onclick=\"selectClosingQuestionOption(this, 1, 0)\">1. Yes</button>";
     questionOptions += "</div>";
@@ -371,6 +378,10 @@ function showReadyClosingMessage(){
 /**
  * function to display the first closing message of the survey.
  * To ask if the user would want to participate in future research.
+ *
+ * It has 3 option; yes, no and maybe.
+ * Selecting the options will call selectClosingQuestionOption() function with Closing ID 2.
+ * The Closing ID 1 represent the option is for this question.
  */
 function showFutureResearchQuestion(){
     // display a question asking if the user wants to participate in future research
@@ -400,9 +411,12 @@ function showFutureResearchQuestion(){
  * function to store response from user on future research participation and move on to next closing message.
  * @param button - the html element of the button that was clicked
  * @param index - the index of the option chosen
+ * @param closingQsID - the ID of the closing question. which can be either:
+ *                      1 - question from showReadyClosingMessage() funtion
+ *                      2 - question from showFutureResearchQuestion() function
  */
 function selectClosingQuestionOption(button, index, closingQsID){
-    // disable the textbox and send button and empty textbox
+    // disable the textbox and send button and empty the textbox
     input.value = "";
     input.disabled = true;
     submit.disabled = true;
@@ -453,6 +467,14 @@ function selectClosingQuestionOption(button, index, closingQsID){
     // display the next parts of the closing message depending on which the closingQsID
     if (closingQsID == 0) {
         if (skippedToEnd == true) { // scenario where user causes the end survey immediately logic
+            // display a message to thank the participant for their time
+            messages.innerHTML +=
+                "<div class='space'>" +
+                "<div class='message-container sender blue current'>" +
+                `<p>Thank you for your time.</p>` +
+                "</div>" +
+                "</div>";
+
             // Show online transaction options
             showOnlineTransactionOptions();
             // Show option to move to different pages of the app
@@ -475,9 +497,12 @@ function selectClosingQuestionOption(button, index, closingQsID){
 
 /**
  * function to check user input from textbox for answering the 2 closing questions of the chatbot
+ * @param closingQsID - the ID of the closing question. which can be either:
+ *                      1 - question from showReadyClosingMessage() funtion
+ *                      2 - question from showFutureResearchQuestion() function
  */
 function textInputClosingQuestion(closingQsID){
-    // initialise yesOptions and noOptions
+    // initialise yesOptions, noOptions and maybeOptions
     let yesOptions = ["yes", "1", "1. yes", "1.yes"];
     let noOptions = ["no", "2", "2. No", "2.No"];
     let maybeOptions = ["maybe", "3", "3. maybe", "3.maybe"];
@@ -490,6 +515,7 @@ function textInputClosingQuestion(closingQsID){
             selectClosingQuestionOption(document.getElementById("futureResearchMaybe"), 3, closingQsID);
         }
     }
+
     // check if the text input from textbox is one of the options in yesOptions after converting all
     // alphabetic characters to lowercase
     else if (yesOptions.includes(input.value.toLowerCase())) {
@@ -501,6 +527,7 @@ function textInputClosingQuestion(closingQsID){
             selectClosingQuestionOption(document.getElementById("futureResearchYes"), 1, closingQsID);
         }
     }
+
     // check if the text input from textbox is one of the options in noOptions after converting all
     // alphabetic characters to lowercase
     else if (noOptions.includes(input.value.toLowerCase())){
@@ -538,7 +565,6 @@ function showOnlineTransactionOptions(){
  */
 function showMoveToDifferentPages(){
     // message
-
     messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
@@ -564,7 +590,7 @@ function showMoveToDifferentPages(){
 /**
  * Appends a message bubble to the chat bot containing the specified message string.
  * This function is only used by the chatbot.
- * @param message A message string
+ * @param message - A message string
  */
 function showMessageSender(message) {
     // display a message in html format below
@@ -575,10 +601,13 @@ function showMessageSender(message) {
         "<button  onclick = \"bindingFunc()\" class=\"text-to-speech\" id=\"text-to-speech-" + question_bubble_no + "\"></button>" +
         "</div>" +
         "</div>";
-    // showHints();
+
     question_bubble_no++;
 }
 
+/**
+ * The function used to convert the question to speech. Used to implement the text-to-speech functionality
+ */
 function bindingFunc(){
     var toSpeak = new SpeechSynthesisUtterance(currentQuestionObject.question.replace( /(<([^>]+)>)/ig, ''));
     // Adjusts the rate of the speaker
@@ -721,7 +750,7 @@ function showQuestion(isSubQuestion) {
 
 /**
  * function to set up and display questions that require numeric inputs
- * @param questionObject
+ * @param questionObject - an object that contains the details of a numeric question
  */
 function showNumeric(questionObject) {
     // anonymous function to check user input in textbox is valid or not
@@ -760,20 +789,6 @@ function showNumeric(questionObject) {
                     errorText.innerHTML = "the number can not be larger than " + upperRange;
                     submit.onclick = null;
                 } else {
-                    // If it's out of range, display error messages
-                    /*errorText.style.visibility = "visible";
-                    if (lowerRange !== Number.NEGATIVE_INFINITY && upperRange !== Number.POSITIVE_INFINITY) {
-                        errorText.innerHTML = "number is not within the range of " + lowerRange + " - " + upperRange;
-                    }
-
-                    else if (lowerRange !==  Number.NEGATIVE_INFINITY && upperRange === Number.POSITIVE_INFINITY) {
-                        errorText.innerHTML = "number is not greater than " + lowerRange;
-                    }
-
-                    else if (lowerRange === Number.NEGATIVE_INFINITY && lowerRange !== Number.POSITIVE_INFINITY) {
-                        errorText.innerHTML = "number is not lesser than " + upperRange;
-                    }*/
-
                     // check if question requires use to end the survey if an invalid response is given
                     if (questionObject.restrictions.skipIfInvalid) {
                         if (questionObject.restrictions.skipTarget === SKIP_END_SURVEY) {
@@ -803,7 +818,8 @@ function showNumeric(questionObject) {
 }
 
 /**
- * function to display the last answered item from user and re-display the current question again on the chat log
+ * function to display the last answered item from user and re-display the current question again on the chat log.
+ * NOT IN USE (it is because it make the chat cluttered)
  */
 function repromptQuestion() {
     // print error message onto chat
