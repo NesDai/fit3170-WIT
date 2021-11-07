@@ -475,8 +475,6 @@ function selectClosingQuestionOption(button, index, closingQsID){
                 "</div>" +
                 "</div>";
 
-            // Show online transaction options
-            showOnlineTransactionOptions();
             // Show option to move to different pages of the app
             showMoveToDifferentPages();
         } else if (skippedToEnd == false) { // when user finishes the survey normally
