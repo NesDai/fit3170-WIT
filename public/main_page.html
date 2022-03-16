@@ -113,7 +113,7 @@
          <header class="mdl-layout__header mdl-color-text--white notranslate" id='topheader'>
             <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
                <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                  <h3 translate="yes"> Home Page</h3>
+                  <h3 translate="yes" id="homeBanner"> Home Page</h3>
                   <div class="mdl-layout-spacer"></div>
                </div>
             </div>
@@ -124,7 +124,7 @@
             <br>
             <nav class="mdl-navigation">
                <a class="mdl-navigation__link" id="translate_btn" onclick="showTranslationModal();"> <img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img> Translate</a>
-               <a class="mdl-navigation__link" href="./chatbot.html"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
+               <a class="mdl-navigation__link" href="./chatbot.html" id="chatbox_btn"> <img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"> Chat Bot</a>
                <!-- <a class="mdl-navigation__link" onclick="checkForPreference()"> <img src="./css/images/recommender_icon.png" class="nav_icon" id="recommender_icon"> Recommender</a>
                <a class="mdl-navigation__link" href="./forum.html"> <img src="./css/images/forum_icon.png" class="nav_icon" id="forum_icon"> Forum </a> -->
 
@@ -134,7 +134,7 @@
          <div class="modal" id="myModal" style="text-align:center; position: absolute;z-index:1000; height:120%;">
             <div class="modal-content">
                <p style="margin-top: 10%;">
-                  <b>Choose Language:
+                  <b id="chooseLang">Choose Language:
                   </b>
                </p>
                <hr style="margin: 0;">
@@ -178,21 +178,21 @@
          <main class="mdl-layout__content">
             <div class="page-content">
                <h3 style="text-align: center; color: #006DAE" id="username"></h3>
-               <h5 style="text-align: center  " > Choose one of the following:</h5>
+               <h5 style="text-align: center  " id="selectOne" > Choose one of the following:</h5>
                <div class = "mdl-grid">
                   <div class = "mdl-cell mdl-cell--4-col" id="chatbotcard">
                      <!-- This is a chatbot card-->
                      <div class = "chatbot-card mdl-card mdl-shadow--4dp ">
                         <div class = "mdl-card__title ">
                            <img src="css/images/chatbot_icon.png">
-                           <h2 class = "mdl-card__title-text ">Chat Bot</h2>
+                           <h2 class = "mdl-card__title-text " id="chatBoxHeader">Chat Bot</h2>
                         </div>
-                        <div class = "mdl-card__supporting-text">
+                        <div class = "mdl-card__supporting-text" id="chatBoxText">
                            Answer simple questions and get the recommendations according to your interests
                         </div>
                         <br class="desktop-br"> <br class="desktop-br">
                         <div class = "mdl-card__actions mdl-card--border">
-                           <a class = "mdl-button mdl-button--colored mdl-js-button " onclick='window.location.href = "explanatoryStatementPage.html"'> Open Chat bot</a>
+                           <a class = "mdl-button mdl-button--colored mdl-js-button " onclick='window.location.href = "explanatoryStatementPage.html"' id="chatBoxLink"> Open Chat bot</a>
                         </div>
                      </div>
                   </div>
@@ -201,9 +201,9 @@
                      <div class = "recommender-card mdl-card mdl-shadow--4dp">
                         <div class = "mdl-card__title">
                            <img src="css/images/recommender_icon.png">
-                           <h2 class = "mdl-card__title-text">Recommender</h2>
+                           <h2 class = "mdl-card__title-text" id="recommendHeader">Recommender</h2>
                         </div>
-                        <div class = "mdl-card__supporting-text">
+                        <div class = "mdl-card__supporting-text" id="recommendText">
                            Get recommendations of the videos and articles that suit your interests
                         </div>
                         <br class="desktop-br"><br><br class="desktop-br">
@@ -219,9 +219,9 @@
                      <div class = "forum-card mdl-card mdl-shadow--4dp">
                         <div class = "mdl-card__title">
                            <img src="css/images/forum_icon.png">
-                           <h2 class = "mdl-card__title-text">Forum</h2>
+                           <h2 class = "mdl-card__title-text"id="forumHeader">Forum</h2>
                         </div>
-                        <div class = "mdl-card__supporting-text">
+                        <div class = "mdl-card__supporting-text" id="forumText">
                            Interact with other users by liking and commenting their posts and post your own thoughts and questions
                         </div>
                         <br class="desktop-br"><br class="desktop-br">
