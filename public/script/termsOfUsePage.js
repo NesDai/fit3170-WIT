@@ -6,7 +6,7 @@ let content_box = document.getElementById("content-box");
 let confirmButtonRef = document.getElementById("confirmButton");
 let titleRef = document.getElementById("title");
 let checkbox_textRef = document.getElementById("checkbox_text");
-let backButtonRef = document.getElementById("backButton");
+let backButtonRef = document.getElementById("back_btn_tc");
 
 // add event listener for when confirm button is clicked
 confirmButtonRef.addEventListener("click", checkAccepted);
@@ -27,19 +27,19 @@ if (select_language == "Chinese (Simplified)") {
     //titleRef.innerHTML = titles[0];
     checkbox_textRef.innerHTML = checkbox_texts[0];
     tick_warningRef.innerHTML = tick_warnings[0];
-    //backButtonRef.innerHTML = backButtonTexts[0];
+    backButtonRef.innerHTML = backButtonTexts[0];
     confirmButtonRef.innerHTML = confirmButtonTexts[0];
 } else if (select_language == "Malay") {
     //titleRef.innerHTML = titles[1];
     checkbox_textRef.innerHTML = checkbox_texts[1];
     tick_warningRef.innerHTML = tick_warnings[1];
-    //backButtonRef.innerHTML = backButtonTexts[1];
+    backButtonRef.innerHTML = backButtonTexts[1];
     confirmButtonRef.innerHTML = confirmButtonTexts[1];
 } else if (select_language == "Thai") {
     //titleRef.innerHTML = titles[2];
     checkbox_textRef.innerHTML = checkbox_texts[2];
     tick_warningRef.innerHTML = tick_warnings[2];
-    //backButtonRef.innerHTML = backButtonTexts[2];
+    backButtonRef.innerHTML = backButtonTexts[2];
     confirmButtonRef.innerHTML = confirmButtonTexts[2];
 }
 
