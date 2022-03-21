@@ -8,24 +8,35 @@
 // <!-- Initialize Firebase -->
 // <script src="/__/firebase/init.js"></script>
 
+// References of elements in login.html
+let title_login = document.getElementById("title_login");
+let login_button = document.getElementById("login-button");
+
 // References of elements in signup.html
-let title_signup = document.getElementsByClassName("title")[0];
+let title_signup = document.getElementById("title_signup");
 let step1_des = document.getElementById("step1_des");
 let step1_placeholder = document.getElementById("username");
 let step2_des = document.getElementById("step2_des");
-let step2_placeholder = document.getElementById("number");
+let phoneNum_placeholder = document.getElementById("number");
 let instruct_send_pin = document.getElementById("instruct_send_pin");
 let send_pin_btn = document.getElementById("send-button");
 let enter_pin_placeholder = document.getElementById("verificationCode");
-let login_button = document.getElementById("login-button");
+// let signup_button = document.getElementById("signup-button");
 let back_button = document.getElementById("back_btn");
 
-// References of elements that show error or message in signup.html
+// References of elements that show error or message in login.html or signup.html
 let phone_space_error = document.getElementById("error");
 let pin_message = document.getElementById("input-pin");
 let phone_char_error = document.getElementById("input-error");
 let register_message = document.getElementById("registeredMessage");
 let username_error = document.getElementById("error_username");
+
+
+// Translated words that will display in login page in each languages
+
+// login
+let login_txt = ["登录", "log masuk", "เข้าสู่ระบบ"];
+
 
 // Translated words that will display in sign up page in each language
 
@@ -112,40 +123,75 @@ const USER_KEY = "USER";
 // get selected language
 let select_language = localStorage.getItem("LANGUAGE");
 
+// get current page name
+let page_path = window.location.pathname;
+let current_page = page_path.split("/").pop();
+
+
 // change signup.html elements according to selected language
 if (select_language == "Chinese (Simplified)") {
-    title_signup.innerHTML = sign_up_txt[0];
-    step1_des.innerHTML = choose_username_txt[0];
-    step1_placeholder.placeholder = choose_username_placeholder_txt[0];
-    step2_des.innerHTML = enter_phone_txt[0];
-    step2_placeholder.placeholder = enter_phone_placeholder_txt[0];
-    instruct_send_pin.innerHTML = ask_send_pin_txt[0];
-    send_pin_btn.innerHTML = send_pin_txt[0];
-    enter_pin_placeholder.placeholder = pin_placeholder_txt[0];
-    login_button.innerHTML = sign_up_txt[0];
-    back_button.innerHTML = back_txt[0];
+    if (current_page == "login.html") {
+        // elements for login.html
+        title_login.innerHTML = login_txt[0];
+        phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[0];
+        login_button.innerHTML = login_txt[0];
+        back_button.innerHTML = back_txt[0];
+    }
+    else if (current_page == "signup.html") {
+        // elements for signup.html
+        title_signup.innerHTML = sign_up_txt[0];
+        step1_des.innerHTML = choose_username_txt[0];
+        step1_placeholder.placeholder = choose_username_placeholder_txt[0];
+        step2_des.innerHTML = enter_phone_txt[0];
+        phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[0];
+        instruct_send_pin.innerHTML = ask_send_pin_txt[0];
+        send_pin_btn.innerHTML = send_pin_txt[0];
+        enter_pin_placeholder.placeholder = pin_placeholder_txt[0];
+        login_button.innerHTML = sign_up_txt[0];
+        back_button.innerHTML = back_txt[0];
+    }
 } else if (select_language == "Malay") {
-    title_signup.innerHTML = sign_up_txt[1];
-    step1_des.innerHTML = choose_username_txt[1];
-    step1_placeholder.placeholder = choose_username_placeholder_txt[1];
-    step2_des.innerHTML = enter_phone_txt[1];
-    step2_placeholder.placeholder = enter_phone_placeholder_txt[1];
-    instruct_send_pin.innerHTML = ask_send_pin_txt[1];
-    send_pin_btn.innerHTML = send_pin_txt[1];
-    enter_pin_placeholder.placeholder = pin_placeholder_txt[1];
-    login_button.innerHTML = sign_up_txt[1];
-    back_button.innerHTML = back_txt[1];
+    if (current_page == "login.html") {
+        // elements for login.html
+        title_login.innerHTML = login_txt[1];
+        phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[1];
+        login_button.innerHTML = login_txt[1];
+        back_button.innerHTML = back_txt[1];
+    }
+    else if (current_page == "signup.html") {
+        // elements for signup.html
+        title_signup.innerHTML = sign_up_txt[1];
+        step1_des.innerHTML = choose_username_txt[1];
+        step1_placeholder.placeholder = choose_username_placeholder_txt[1];
+        step2_des.innerHTML = enter_phone_txt[1];
+        phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[1];
+        instruct_send_pin.innerHTML = ask_send_pin_txt[1];
+        send_pin_btn.innerHTML = send_pin_txt[1];
+        enter_pin_placeholder.placeholder = pin_placeholder_txt[1];
+        login_button.innerHTML = sign_up_txt[1];
+        back_button.innerHTML = back_txt[1];
+    }
 } else if (select_language == "Thai") {
-    title_signup.innerHTML = sign_up_txt[2];
-    step1_des.innerHTML = choose_username_txt[2];
-    step1_placeholder.placeholder = choose_username_placeholder_txt[2];
-    step2_des.innerHTML = enter_phone_txt[2];
-    step2_placeholder.placeholder = enter_phone_placeholder_txt[2];
-    instruct_send_pin.innerHTML = ask_send_pin_txt[2];
-    send_pin_btn.innerHTML = send_pin_txt[2];
-    enter_pin_placeholder.placeholder = pin_placeholder_txt[2];
-    login_button.innerHTML = sign_up_txt[2];
-    back_button.innerHTML = back_txt[2];
+    if (current_page == "login.html") {
+        // elements for login.html
+        title_login.innerHTML = login_txt[2];
+        phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[2];
+        login_button.innerHTML = login_txt[2];
+        back_button.innerHTML = back_txt[2];
+    }
+    else if (current_page == "signup.html") {
+        // elements for signup.html
+        title_signup.innerHTML = sign_up_txt[2];
+        step1_des.innerHTML = choose_username_txt[2];
+        step1_placeholder.placeholder = choose_username_placeholder_txt[2];
+        step2_des.innerHTML = enter_phone_txt[2];
+        phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[2];
+        instruct_send_pin.innerHTML = ask_send_pin_txt[2];
+        send_pin_btn.innerHTML = send_pin_txt[2];
+        enter_pin_placeholder.placeholder = pin_placeholder_txt[2];
+        login_button.innerHTML = sign_up_txt[2];
+        back_button.innerHTML = back_txt[2];
+    }
 }
 
 // To apply the default browser preference instead of explicitly setting it.

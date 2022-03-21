@@ -45,25 +45,40 @@ function disableTranslateButton(){
         document.getElementById("lang_butt_id_c").disabled = false;
         document.getElementById("lang_butt_id_t").disabled = false;
         document.getElementById("lang_butt_id_e").disabled = false;
+        // change the title
+        document.getElementById("select_language").innerHTML = "Pilih Bahasa";
+        // change the button text
+        document.getElementById("continue_btn").innerHTML = "teruskan";
     }
-
     else if (lang == "Chinese (Simplified)"){
         document.getElementById("lang_butt_id_c").disabled = true;
         document.getElementById("lang_butt_id_m").disabled = false;
         document.getElementById("lang_butt_id_t").disabled = false;
         document.getElementById("lang_butt_id_e").disabled = false;
+        // change the title
+        document.getElementById("select_language").innerHTML = "选择语言";
+        // change the button text
+        document.getElementById("continue_btn").innerHTML = "继续";
     }
     else if (lang == "Thai"){
         document.getElementById("lang_butt_id_t").disabled = true;
         document.getElementById("lang_butt_id_c").disabled = false;
         document.getElementById("lang_butt_id_m").disabled = false;
         document.getElementById("lang_butt_id_e").disabled = false;
+        // change the title
+        document.getElementById("select_language").innerHTML = "เลือกภาษา";
+        // change the button text
+        document.getElementById("continue_btn").innerHTML = "ดำเนินต่อ";
     }
     else{
         document.getElementById("lang_butt_id_e").disabled = true;
         document.getElementById("lang_butt_id_c").disabled = false;
         document.getElementById("lang_butt_id_m").disabled = false;
         document.getElementById("lang_butt_id_t").disabled = false;
+        // change the title
+        document.getElementById("select_language").innerHTML = "Select Language";
+        // change the button text
+        document.getElementById("continue_btn").innerHTML = "Continue";
     }
 
 
@@ -152,10 +167,10 @@ function changeLang(lang){
         document.getElementById("recommendHeader").innerHTML = "ผู้แนะนำ";
         document.getElementById("recommendText").innerHTML = "รับคำแนะนำของวิดีโอและบทความที่เหมาะกับความสนใจของคุณ";
         document.getElementById("forumHeader").innerHTML = "ฟอรั่ม";
-        document.getElementById("forumText").innerHTML = "โต้ตอบกับผู้ใช้รายอื่นด้วยการกดไลค์และแสดงความคิดเห็นโพสต์ของพวกเขาและโพสต์ความคิดและคำถามของคุณเอง"; 
+        document.getElementById("forumText").innerHTML = "โต้ตอบกับผู้ใช้รายอื่นด้วยการกดไลค์และแสดงความคิดเห็นโพสต์ของพวกเขาและโพสต์ความคิดและคำถามของคุณเอง";
     }
 
-}  
+}
 
 
 
