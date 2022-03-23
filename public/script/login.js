@@ -20,9 +20,10 @@ let step2_des = document.getElementById("step2_des");
 let phoneNum_placeholder = document.getElementById("number");
 let instruct_send_pin = document.getElementById("instruct_send_pin");
 let send_pin_btn = document.getElementById("send-button");
-let enter_pin_placeholder = document.getElementById("verificationCode");
-// let signup_button = document.getElementById("signup-button");
+// let enter_pin_placeholder = document.getElementById("verificationCode");
+let ask_pin = document.getElementById("ask_pin");
 let back_button = document.getElementById("back_btn");
+let pin_digits = document.getElementsByClassName("digit");
 
 // References of elements that show error or message in login.html or signup.html
 let phone_space_error = document.getElementById("error");
@@ -44,17 +45,17 @@ let login_txt = ["登录", "log masuk", "เข้าสู่ระบบ"];
 let sign_up_txt = ["注册", "Daftar", "ลงชื่อ"];
 
 // Step 1: Please choose the username
-let choose_username_txt = ["第一步： 请选择用户名",
-                           "Langkah 1: Sila pilih nama pengguna",
-                           "ขั้นตอนที่ 1: โปรดเลือกชื่อผู้ใช้"];
+let choose_username_txt = ["第一步： 请选择用户名".bold(),
+                           "Langkah 1: Sila pilih nama pengguna".bold(),
+                           "ขั้นตอนที่ 1: โปรดเลือกชื่อผู้ใช้".bold()];
 
 // Enter a username...
 let choose_username_placeholder_txt = ["输入用户名...", "Masukkan nama pengguna...", "ใส่ชื่อผู้ใช้..."];
 
 // Step 2: Please enter your phone number
-let enter_phone_txt = ["第二步： 请输入您的电话号码",
-                       "Langkah 2: Sila masukkan nombor telefon anda",
-                       "ขั้นตอนที่ 2: โปรดป้อนหมายเลขโทรศัพท์ของคุณ"];
+let enter_phone_txt = ["第二步： 请输入您的电话号码".bold(),
+                       "Langkah 2: Sila masukkan nombor telefon anda".bold(),
+                       "ขั้นตอนที่ 2: โปรดป้อนหมายเลขโทรศัพท์ของคุณ".bold()];
 
 // Enter e.g., +60129356770 or +668190677822
 let enter_phone_placeholder_txt = ["输入例如 +60129356770 或 +668190677822",
@@ -62,25 +63,25 @@ let enter_phone_placeholder_txt = ["输入例如 +60129356770 或 +668190677822"
                                    "ป้อน เช่น +60129356770 หรือ +668190677822"];
 
 // Please click the SEND PIN button after you complete step 1 and 2
-let ask_send_pin_txt = ["完成第 1 步和第 2 步后，请单击发送 PIN 按钮",
-                        "Sila klik butang HANTAR PIN selepas anda melengkapkan langkah 1 dan 2",
-                        "โปรดคลิกปุ่มส่ง PIN หลังจากเสร็จสิ้นขั้นตอนที่ 1 และ 2"];
+let ask_send_pin_txt = ["完成第 1 步和第 2 步后，请单击发送 PIN 按钮".bold(),
+                        "Sila klik butang HANTAR PIN selepas anda melengkapkan langkah 1 dan 2".bold(),
+                        "โปรดคลิกปุ่มส่ง PIN หลังจากเสร็จสิ้นขั้นตอนที่ 1 และ 2".bold()];
 
 // Send Pin
 let send_pin_txt = ["发送密码", "Hantar Pin", "ส่งพิน"];
 
 // Enter 6-digit pin E.g. 123456
-let pin_placeholder_txt = ["输入 6 位密码 例如 123456",
-                           "Masukkan pin 6 digit Cth 123456",
-                           "ใส่พิน 6 หลัก เช่น 123456"];
+let pin_placeholder_txt = ["输入 6 位密码 例如 123456".bold(),
+                           "Masukkan pin 6 digit Cth 123456".bold(),
+                           "ใส่พิน 6 หลัก เช่น 123456".bold()];
 
 // Go Back
 let back_txt = ["回去", "Pargi balik", "กลับไป"];
 
-// Username should be 5 to 15 characters long and not have any special characters like !@#$%^&*. Please try again.
-let username_error_txt = ["<p>用户名的长度应为 5 到 15 个字符，并且不能包含任何特殊字符，例如 !@#$%^&*。请再试一次<p>",
-                          "<p>Nama pengguna hendaklah 5 hingga 15 aksara panjang dan tidak mempunyai sebarang aksara khas seperti !@#$%^&*. Sila cuba lagi.<p>",
-                          "<p>ชื่อผู้ใช้ควรมีความยาว 5 ถึง 15 อักขระ และไม่มีอักขระพิเศษใดๆ เช่น !@#$%^&* กรุณาลองอีกครั้ง.<p>"];
+// Username should be at least 2 characters long and not have any special characters like !@#$%^&*. Please try again.
+let username_error_txt = ["<p>用户名至少应包含 2 个字符，并且不能包含任何特殊字符，例如 !@#$%^&*。请再试一次。<p>",
+                          "<p>Nama pengguna hendaklah sekurang-kurangnya 2 aksara panjang dan tidak mempunyai sebarang aksara khas seperti !@#$%^&*. Sila cuba lagi.<p>",
+                          "<p>ชชื่อผู้ใช้ควรมีความยาวอย่างน้อย 2 อักขระ และไม่มีอักขระพิเศษ เช่น !@#$%^&* กรุณาลองอีกครั้ง.<p>"];
 
 // Invalid phone number. Do avoid any letters, special characters and spaces. Please try again.
 let phone_char_error_txt = ["无效的电话号码。请避免使用任何字母、特殊字符和空格。请再试一次。",
@@ -113,9 +114,16 @@ let username_exist_txt = ["<p>用户名存在。请选择其他用户名</p>",
                           "<p>มีชื่อผู้ใช้แล้ว โปรดเลือกชื่อผู้ใช้อื่น</p>"];
 
 // alert message when user enter wrong pin number after clicking sign up
+// The SMS verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.
 let pin_alert = ["用于创建手机身份验证凭据的短信验证码无效。请重新发送验证码短信，并确保使用用户提供的验证码。",
                  "Kod pengesahan SMS yang digunakan untuk membuat bukti kelayakan pengesahan telefon adalah tidak sah. Sila hantar semula sms kod pengesahan dan pastikan menggunakan kod pengesahan yang diberikan oleh pengguna.",
                  "รหัสยืนยันทาง SMS ที่ใช้สร้างข้อมูลรับรองการตรวจสอบสิทธิ์โทรศัพท์ไม่ถูกต้อง โปรดส่ง SMS รหัสยืนยันอีกครั้ง และต้องแน่ใจว่าใช้รหัสยืนยันที่ผู้ใช้ให้มา"];
+
+// Something went wrong. Please close and reopen the page.
+let nav_reopen_page = ["有些不对劲。请关闭并重新打开页面。",
+                       "Sesuatu telah berlaku. Sila tutup dan buka semula halaman.",
+                       "อะไรบางอย่างผิดปกติ. กรุณาปิดและเปิดหน้าใหม่อีกครั้ง"];
+
 
 const USER_KEY = "USER";
 
@@ -126,6 +134,22 @@ let select_language = localStorage.getItem("LANGUAGE");
 // get current page name
 let page_path = window.location.pathname;
 let current_page = page_path.split("/").pop();
+
+
+// move to next input element of digit after enter digit in pin input field
+Array.from(pin_digits).forEach(function(pin_digit) {
+    pin_digit.addEventListener("input", function(event) {
+        // avoid input e,+,-,etc.
+        if (pin_digit.value.length == 0) {
+            pin_digit.value = '';
+        }
+        else if (pin_digit.value.length >= pin_digit.maxLength) {
+            pin_digit.value = event.target.value % 10;
+            pin_digit.nextElementSibling.focus();
+        }
+    })
+});
+
 
 
 // change signup.html elements according to selected language
@@ -146,7 +170,7 @@ if (select_language == "Chinese (Simplified)") {
         phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[0];
         instruct_send_pin.innerHTML = ask_send_pin_txt[0];
         send_pin_btn.innerHTML = send_pin_txt[0];
-        enter_pin_placeholder.placeholder = pin_placeholder_txt[0];
+        ask_pin.innerHTML = pin_placeholder_txt[0];
         login_button.innerHTML = sign_up_txt[0];
         back_button.innerHTML = back_txt[0];
     }
@@ -167,7 +191,7 @@ if (select_language == "Chinese (Simplified)") {
         phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[1];
         instruct_send_pin.innerHTML = ask_send_pin_txt[1];
         send_pin_btn.innerHTML = send_pin_txt[1];
-        enter_pin_placeholder.placeholder = pin_placeholder_txt[1];
+        ask_pin.innerHTML = pin_placeholder_txt[1];
         login_button.innerHTML = sign_up_txt[1];
         back_button.innerHTML = back_txt[1];
     }
@@ -188,7 +212,7 @@ if (select_language == "Chinese (Simplified)") {
         phoneNum_placeholder.placeholder = enter_phone_placeholder_txt[2];
         instruct_send_pin.innerHTML = ask_send_pin_txt[2];
         send_pin_btn.innerHTML = send_pin_txt[2];
-        enter_pin_placeholder.placeholder = pin_placeholder_txt[2];
+        ask_pin.innerHTML = pin_placeholder_txt[2];
         login_button.innerHTML = sign_up_txt[2];
         back_button.innerHTML = back_txt[2];
     }
@@ -385,60 +409,86 @@ function phoneValidation() {
  * @returns none
  */
 function codeverify() {
-    var code=document.getElementById('verificationCode').value;
+    let code = '';
+    Array.from(pin_digits).forEach(function(pin_digit) {
+        code += pin_digit.value.toString();
+    });
+
+    // console.log(test);
+
+    // var code=document.getElementById('verificationCode').value;
 
     // var credential = firebase.auth.PhoneAuthProvider.credential(confirmationResult.verificationId, code);
     // firebase.auth().signInWithCredential(credential);
 
-    coderesult.confirm(code).then((result)=> {
-        const user = result.user
-        if (select_language == "Chinese (Simplified)") {
-            register_message.innerHTML = redirect_txt[0];
-        }
-        else if (select_language == "Malay") {
-            register_message.innerHTML = redirect_txt[1];
-        }
-        else if (select_language == "Thai") {
-            register_message.innerHTML = redirect_txt[2];
-        }
-        else {
-            register_message.innerHTML="<h3>You are all set. You will be redirected shortly<h3>";
-        }
-
-        //check if this user is already registered
-        // checkUserExistence(document.getElementById("number").value);
-
-    }).catch(function (error) {
-        if (select_language == "Chinese (Simplified)") {
-            alert(pin_alert[0]);
-        }
-        else if (select_language == "Malay") {
-            alert(pin_alert[1]);
-        }
-        else if (select_language == "Thai") {
-            alert(pin_alert[2]);
-        }
-        else {
-            alert(error.message);
-        }
-        recaptchaVerifier.reset();
-        if (select_language == "Chinese (Simplified)") {
-            pin_message.innerHTML = invalid_pin_txt[0];
-        }
-        else if (select_language == "Malay") {
-            pin_message.innerHTML = invalid_pin_txt[1];
-        }
-        else if (select_language == "Thai") {
-            pin_message.innerHTML = invalid_pin_txt[2];
-        }
-        else {
-            pin_message.innerHTML = "Invalid PIN entered. Please resend a new pin and retry.";
-        }
-        pin_message.style.color = "red";
-        //delete created user
-
+    // if the user never send the pin and click 'signup' button
+    // or unable to send the pin
+    if (coderesult === undefined || coderesult === null) {
         firebase.database().ref(`users/${document.getElementById("number").value}`).remove();
-    });
+        if (select_language == "Chinese (Simplified)") {
+            alert(nav_reopen_page[0]);
+        }
+        else if (select_language == "Malay") {
+            alert(nav_reopen_page[1]);
+        }
+        else if (select_language == "Thai") {
+            alert(nav_reopen_page[2]);
+        }
+        else {
+            alert("Something went wrong. Please close and reopen the page.");
+        }
+    }
+    else {
+        coderesult.confirm(code).then((result)=> {
+            const user = result.user
+            if (select_language == "Chinese (Simplified)") {
+                register_message.innerHTML = redirect_txt[0];
+            }
+            else if (select_language == "Malay") {
+                register_message.innerHTML = redirect_txt[1];
+            }
+            else if (select_language == "Thai") {
+                register_message.innerHTML = redirect_txt[2];
+            }
+            else {
+                register_message.innerHTML="<h3>You are all set. You will be redirected shortly<h3>";
+            }
+
+            //check if this user is already registered
+            // checkUserExistence(document.getElementById("number").value);
+
+        }).catch(function (error) {
+            if (select_language == "Chinese (Simplified)") {
+                alert(pin_alert[0]);
+            }
+            else if (select_language == "Malay") {
+                alert(pin_alert[1]);
+            }
+            else if (select_language == "Thai") {
+                alert(pin_alert[2]);
+            }
+            else {
+                alert(error.message);
+            }
+            recaptchaVerifier.reset();
+            if (select_language == "Chinese (Simplified)") {
+                pin_message.innerHTML = invalid_pin_txt[0];
+            }
+            else if (select_language == "Malay") {
+                pin_message.innerHTML = invalid_pin_txt[1];
+            }
+            else if (select_language == "Thai") {
+                pin_message.innerHTML = invalid_pin_txt[2];
+            }
+            else {
+                pin_message.innerHTML = "Invalid PIN entered. Please resend a new pin and retry.";
+            }
+            pin_message.style.color = "red";
+            //delete created user
+
+            firebase.database().ref(`users/${document.getElementById("number").value}`).remove();
+        });
+    }
 }
 
 
@@ -458,7 +508,7 @@ function checkUserExistence(phone){
 
             let user = snapshot.val(); // get the user
 
-
+            console.log("set");
             localStorage.setItem(USER_KEY,JSON.stringify(user));
             window.location = "main_page.html"
         }
@@ -473,6 +523,7 @@ function checkUserExistence(phone){
                 phone: phone
 
             }
+            console.log("not set");
             localStorage.setItem(USER_KEY,JSON.stringify(user));
             window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
 
@@ -553,11 +604,11 @@ function register(username,phone){
  * RegEx pattern given in the function.
  * @returns a boolean indicating whether the input username follows the criteria of
  *          only having alphanumeric usernames; no special characters are allowed with
- *          length between 5 to 15 characters
+ *          length of minimum 2 characters
  */
 function usernameValidation() {
 
-    var username_regex =/^(?=.*[a-zA-Z\d ].*)[a-zA-Z\d ]{5,15}$/
+    var username_regex =/^(?=.*[a-zA-Z\d ].*)[a-zA-Z\d ]{2,}$/
     var username = document.getElementById("username").value
 
     // test the input number based on the RegEx pattern stated
@@ -578,7 +629,7 @@ function usernameValidation() {
             username_error.innerHTML = username_error_txt[2];
         }
         else {
-            username_error.innerHTML = "<p>Username should be 5 to 15 characters long and not have any special characters like !@#$%^&*. Please try again.<p>";
+            username_error.innerHTML = "<p>Username should be at least 2 characters long and not have any special characters like !@#$%^&*. Please try again.<p>";
         }
         document.getElementById("username").style.visibility="visible";
         document.getElementById("username").style.color="red";
@@ -620,7 +671,35 @@ function checkUsernameValidity(){
         if (valid) {
             username_error.innerHTML = "";
             //if valid, register the user
-            register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
+            // alert(JSON.parse(localStorage.getItem(USER_KEY)).phone);
+
+            var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
+            // Value in local storage (key=USER) will be removed after the user failed to enter pin several times
+            // Ask the user to close and reopen the page
+            if (user_obj === undefined || user_obj === null) {
+                if (select_language == "Chinese (Simplified)") {
+                    alert(nav_reopen_page[0]);
+                }
+                else if (select_language == "Malay") {
+                    alert(nav_reopen_page[1]);
+                }
+                else if (select_language == "Thai") {
+                    alert(nav_reopen_page[2]);
+                }
+                else {
+                    alert("Something went wrong. Please close and reopen the page.");
+                }
+            }
+            var phone_num = user_obj["phone"];
+
+            if (phone_num === undefined) {
+                for (var key in user_obj) {
+                    phone_num = user_obj[key].phone;
+                }
+            }
+
+            // register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
+            register(document.getElementById("username").value, phone_num);
         }
     });
 }
