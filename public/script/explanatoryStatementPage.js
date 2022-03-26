@@ -18,7 +18,7 @@ let backButtonTexts = ["回页", "Kembali", "กลับมา"];
 let confirmButtonTexts = ["确认", "mengesahkan", "ยืนยัน"];
 
 // get selected language
-let select_language = localStorage.getItem("LANGUAGE");
+let select_language = localStorage.getItem(LANGUAGE_KEY);
 
 // checking if all translations for Explanatory Statement are on the firebase. If not , upload them.
 // initialise string array of language branches
