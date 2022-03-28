@@ -19,7 +19,7 @@ var speechSynth = window.speechSynthesis;
 var voices = [];
 
 // get user's selected language and set the questions branches id to the corresponding index for that language
-let select_language = localStorage.getItem("LANGUAGE");
+let select_language = localStorage.getItem(LANGUAGE_KEY);
 
 let branch_id;
 if (select_language == "English") {
@@ -67,7 +67,7 @@ let confidentLikertQues = [19,20,22]; //[0] Not Applicable [1] Not Confident At 
 let interestedLikertQues = [25] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
 
 //translation
-changeLang(select_language);
+// changeLang(select_language);
 
 /**
  * onclick function for option buttons.
@@ -354,18 +354,56 @@ function showEndingMessage() {
  * The Closing ID 1 represent the option is for this question.
  */
 function showReadyClosingMessage(){
+
+    let select_language = localStorage.getItem(LANGUAGE_KEY);
+
     // display a question asking if the user wants to participate in future research
-    messages.innerHTML +=
+    
+    if(select_language=="Malay"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Adakah anda bersedia untuk menyelesaikan tinjauan?</p>` +
+        "</div>" +
+        "</div>";
+    }else if(select_language=="Chinese (Simplified)"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>你准备好完成调查了吗？</p>` +
+        "</div>" +
+        "</div>";
+    }else if(select_language=="Thai"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>คุณพร้อมจะทำแบบสำรวจให้เสร็จหรือไม่?</p>` +
+        "</div>" +
+        "</div>";
+    }
+    else {
+        messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>Are you ready to finish the survey?</p>` +
         "</div>" +
         "</div>";
+    }
     document.getElementById('hint_area').innerHTML = "";
 
     // display the option
     let questionOptions = "<div class=\"space\">"
-    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"endSurveyYes\" onclick=\"selectClosingQuestionOption(this, 1, 0)\">1. Yes</button>";
+    if(select_language =="Malay"){
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"endSurveyYes\" onclick=\"selectClosingQuestionOption(this, 1, 0)\">1. Ya</button>";
+    }else if(select_language=="Chinese (Simplified)"){
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"endSurveyYes\" onclick=\"selectClosingQuestionOption(this, 1, 0)\">1. 是的</button>";
+    }
+    else if(select_language=="Thai"){
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"endSurveyYes\" onclick=\"selectClosingQuestionOption(this, 1, 0)\">1. ใช่</button>";
+    }
+    else{
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"endSurveyYes\" onclick=\"selectClosingQuestionOption(this, 1, 0)\">1. Yes</button>";
+    }
     questionOptions += "</div>";
     messages.innerHTML += questionOptions;
 
@@ -385,19 +423,56 @@ function showReadyClosingMessage(){
  */
 function showFutureResearchQuestion(){
     // display a question asking if the user wants to participate in future research
-    messages.innerHTML +=
+    if (select_language =="Malay"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Kami ingin mendengar daripada anda sekali lagi dalam masa beberapa bulan. Adakah anda ingin mengambil bahagian dalam kajian kualitatif(temu bual)?</p>` +
+        "</div>" +
+        "</div>";
+    }else if(select_language=="Chinese (Simplified)"){
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>我们希望在几个月后再次收到您的来信。您想参加定性研究（面试）吗？</p>` +
+        "</div>" +
+        "</div>";
+    }
+    else if(select_language=="Thai"){
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ(สัมภาษณ์)?</p>` +
+        "</div>" +
+        "</div>";
+    }
+    else{
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study(interview)? </p>` +
         "</div>" +
         "</div>";
+    }
     document.getElementById('hint_area').innerHTML = "";
 
     // display the options
     let questionOptions = "<div class=\"space\">"
-    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectClosingQuestionOption(this, 1, 1)\">1. Yes</button>";
-    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectClosingQuestionOption(this, 2, 1)\">2. No</button>";
-    questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchMaybe\" onclick=\"selectClosingQuestionOption(this, 3, 1)\">3. Maybe</button>";
+    if(select_language=="Malay"){
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectClosingQuestionOption(this, 1, 1)\">1. Ya</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectClosingQuestionOption(this, 2, 1)\">2. Tidak</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchMaybe\" onclick=\"selectClosingQuestionOption(this, 3, 1)\">3. Mungkin</button>";
+    }else if(select_language=="Chinese (Simplified)"){
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectClosingQuestionOption(this, 1, 1)\">1. 是的</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectClosingQuestionOption(this, 2, 1)\">2. 不</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchMaybe\" onclick=\"selectClosingQuestionOption(this, 3, 1)\">3. 说不定</button>";
+    }else if(select_language=="Thai"){
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectClosingQuestionOption(this, 1, 1)\">1. ใช่</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectClosingQuestionOption(this, 2, 1)\">2. ไม่</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchMaybe\" onclick=\"selectClosingQuestionOption(this, 3, 1)\">3. อาจจะ</button>";
+    }
+    else{
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchYes\" onclick=\"selectClosingQuestionOption(this, 1, 1)\">1. Yes</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchNo\" onclick=\"selectClosingQuestionOption(this, 2, 1)\">2. No</button>";
+        questionOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" id=\"futureResearchMaybe\" onclick=\"selectClosingQuestionOption(this, 3, 1)\">3. Maybe</button>";
+    }
     questionOptions += "</div>";
     messages.innerHTML += questionOptions;
 
@@ -468,12 +543,32 @@ function selectClosingQuestionOption(button, index, closingQsID){
     if (closingQsID == 0) {
         if (skippedToEnd == true) { // scenario where user causes the end survey immediately logic
             // display a message to thank the participant for their time
-            messages.innerHTML +=
+            if (select_language=="Malay"){
+                messages.innerHTML +=
                 "<div class='space'>" +
                 "<div class='message-container sender blue current'>" +
-                `<p>Thank you for your time.</p>` +
+                `<p>Terima kasih atas masa anda.</p>` +
                 "</div>" +
                 "</div>";
+            }else if (select_language=="Chinese (Simplified)"){
+                messages.innerHTML +=
+                "<div class='space'>" +
+                "<div class='message-container sender blue current'>" +`<p>感谢您的时间。</p>` +
+                "</div>" +
+                "</div>";
+            }else if (select_language=="Thai"){
+                messages.innerHTML +=
+                "<div class='space'>" +
+                "<div class='message-container sender blue current'>" +`<p>ขอขอบคุณสำหรับเวลาของคุณ.</p>` +
+                "</div>" +
+                "</div>";
+            }else{
+                messages.innerHTML +=
+                "<div class='space'>" +
+                "<div class='message-container sender blue current'>" +`<p>Thank you for your time.</p>` +
+                "</div>" +
+                "</div>";
+            }
 
             // Show option to move to different pages of the app
             showMoveToDifferentPages();
@@ -542,18 +637,52 @@ function textInputClosingQuestion(closingQsID){
  */
 function showOnlineTransactionOptions(){
     // message
-    messages.innerHTML +=
+    if(select_language=="Thai"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>ขอบคุณที่ทำแบบสำรวจให้เสร็จ! โทเค็นของการเข้าร่วมจะได้รับผ่านการทำธุรกรรมออนไลน์</p>` +
+        "</div>" +
+        "</div>";
+    }else if(select_language=="Malay"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Terima kasih kerana melengkapkan tinjauan! Token penyertaan akan diberikan melalui transaksi dalam talian.</p>` +
+        "</div>" +
+        "</div>";
+    }else if(select_language=="Chinese (Simplified)"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>感谢您完成调查！将通过在线交易授予参与令牌。</p>` +
+        "</div>" +
+        "</div>";
+    }else{
+        messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>Thank you for completing the survey! A token of participation will be granted via online transaction.</p>` +
         "</div>" +
         "</div>";
+    }
     document.getElementById('hint_area').innerHTML = "";
 
     // display the options
     let options = "<div class=\"space\">"
-    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">Banking</button>";
-    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">e-Wallet</button>";
+    if(select_language=="Malay"){
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_2otWWj5OEYaGTLo','_blank')\">Perbankan</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">e-Wallet</button>";
+    }else if(select_language=="Chinese (Simplified)"){
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_6tlMCzO3HSKg8FU','_blank')\">银行业</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">电子钱包</button>";
+    }else if(select_language=="Chinese (Simplified)"){
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">การธนาคาร</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">กระเป๋าเงินอิเล็กทรอนิกส์</button>";
+    }else{
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">Perbankan</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">e-wallet</button>";
+    }
     options += "</div>";
     messages.innerHTML += options;
 }
@@ -563,15 +692,47 @@ function showOnlineTransactionOptions(){
  */
 function showMoveToDifferentPages(){
     // message
-    messages.innerHTML +=
+    if (select_language=="Chinese (Simplified)"){
+        messages.innerHTML +=
         "<div class='space'>" +
-        "<div class='message-container sender blue current'>" +
+        "<div class='message-container sender blue current'>"+
+        "<p>非常感谢您参与本次调查。" +
+        // uncomment line below when app is no longer in trial phase
+        //" Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!
+        "</p>" +
+        "</div>" +
+        "</div>";
+    }else if (select_language=="Malay"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>"+
+        "<p>Terima kasih banyak atas penyertaan anda dalam tinjauan ini." +
+        // uncomment line below when app is no longer in trial phase
+        //" Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!
+        "</p>" +
+        "</div>" +
+        "</div>";
+    }else if (select_language=="Thai"){
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>"+
+        "<p>ขอบคุณมากสำหรับการเข้าร่วมในแบบสำรวจนี้" +
+        // uncomment line below when app is no longer in trial phase
+        //" Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!
+        "</p>" +
+        "</div>" +
+        "</div>";
+    }else{
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>"+
         "<p>Thank you so much for your participation in this survey." +
         // uncomment line below when app is no longer in trial phase
         //" Now, feel free to browse on the <b>Recommender</b>, where you'll find interesting videos to broaden your skillsets. Or the <b>Forum</b>, where you get to know more friends!
         "</p>" +
         "</div>" +
         "</div>";
+    }
     document.getElementById('hint_area').innerHTML = "";
 
     // display the options to got to recommender, forum and main page respectively
@@ -580,7 +741,15 @@ function showMoveToDifferentPages(){
     // uncomment the below 2 line when app is no longer in trial phase. these are to allow users to use recommender and forum page
     //options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'recommender_Ui.html\'\">Recommender</button>";
     //options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'forum.html\'\">Forum</button>";
-    options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Main Page</button>";
+    if(select_language=="Malay"){
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Muka surat utama</button>";
+    }else if(select_language=="Chinese (Simplified)"){
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">主页</button>";
+    }else if(select_language=="Chinese (Simplified)"){
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">หน้าหลัก</button>";
+    }else{
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Main Page</button>";
+    }
     options += "</div>";
     messages.innerHTML += options;
 }
@@ -596,7 +765,7 @@ function showMessageSender(message) {
         "<div class='space'>" +
         "<div class='message-container sender blue current notranslate'>" +
         `<p>${message}</p>` +
-        "<button  onclick = \"bindingFunc()\" class=\"text-to-speech\" id=\"text-to-speech-" + question_bubble_no + "\"></button>" +
+        //"<button  onclick = \"bindingFunc()\" class=\"text-to-speech\" id=\"text-to-speech-" + question_bubble_no + "\"></button>" +
         "</div>" +
         "</div>";
 

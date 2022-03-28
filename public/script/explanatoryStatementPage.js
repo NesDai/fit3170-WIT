@@ -151,6 +151,6 @@ function checkAccepted(){
         window.location.href = "./chatbot.html"
     } else {
         // if the tickbox is not ticked, display error message
-        tick_warning.hidden = false
+        tick_warningRef.hidden = false
     }
 }
