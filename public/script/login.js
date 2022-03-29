@@ -103,10 +103,10 @@ let redirect_txt = ["<h3>你都准备好了。您将很快被重定向<h3>",
                     "<h3>Anda sudah bersedia. Anda akan diubah hala sebentar lagi<h3>",
                     "<h3>คุณพร้อมแล้ว คุณจะถูกเปลี่ยนเส้นทางในไม่ช้า<h3>"];
 
-// Invalid PIN entered. Please resend a new pin and retry.
-let invalid_pin_txt = ["输入的 PIN 无效。请重新发送新密码并重试。",
-                       "PIN tidak sah dimasukkan. Sila hantar semula pin baharu dan cuba semula.",
-                       "ป้อน PIN ไม่ถูกต้อง โปรดส่งพินใหม่และลองอีกครั้ง"];
+// Invalid PIN entered. Please enter the correct PIN.
+let invalid_pin_txt = ["输入的 PIN 无效。请输入正确的 PIN。",
+                       "PIN tidak sah dimasukkan. Sila masukkan PIN yang betul.",
+                       "ป้อน PIN ไม่ถูกต้อง โปรดป้อน PIN ที่ถูกต้อง"];
 
 // Username exists. Please choose another username
 let username_exist_txt = ["<p>用户名存在。请选择其他用户名</p>",
@@ -150,6 +150,22 @@ Array.from(pin_digits).forEach(function(pin_digit) {
     })
 });
 
+
+// Display the phone number in sign up page input field
+if (current_page == "signup.html") {
+    var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
+    var phone_num = user_obj["phone"];
+
+    if (phone_num === undefined) {
+        for (var key in user_obj) {
+            phone_num = user_obj[key].phone;
+        }
+    }
+    if (phone_num.includes("-")) {
+        phone_num = phone_num.substring(0, phone_num.length - 4);
+    }
+    phoneNum_placeholder.value = phone_num;
+}
 
 
 // change signup.html elements according to selected language
@@ -268,7 +284,8 @@ function changeLanguage(newLanguage){
 
     setAuthLanguage();
 
-    recaptchaVerifier.reset()
+    // recaptchaVerifier.reset()
+    this.window.recaptchaVerifier.reset();
     // window.location = window.location  // refresh the page to reinitialize captcha
 }
 
@@ -313,6 +330,7 @@ let persisted = false; //true if the logged in user does not need to sign in aga
  function phoneAuth() {
     //get the number
     var number=document.getElementById('number').value;
+
     //phone number authentication function of firebase
 
     //check invalid characters (space)
@@ -332,10 +350,14 @@ let persisted = false; //true if the logged in user does not need to sign in aga
         }
     }
     //it takes two parameter first one is number,,,second one is recaptcha
+    // var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    // var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
 
+    this.window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    // alert(this.window.recaptchaVerifier);
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
     //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
-    firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
+    firebase.auth().signInWithPhoneNumber(number,this.window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
         window.confirmationResult=confirmationResult;
         coderesult=confirmationResult;
@@ -423,7 +445,7 @@ function codeverify() {
 
     // if the user never send the pin and click 'signup' button
     // or unable to send the pin
-    if (coderesult === undefined || coderesult === null) {
+    if ((coderesult === undefined) || (coderesult == "undefined") || (coderesult === null)) {
         firebase.database().ref(`users/${document.getElementById("number").value}`).remove();
         if (select_language == "Chinese (Simplified)") {
             alert(nav_reopen_page[0]);
@@ -440,6 +462,31 @@ function codeverify() {
     }
     else {
         coderesult.confirm(code).then((result)=> {
+
+            // increment ID if the admin phone number's user successfully sign up
+            var phone = document.getElementById("number").value;
+            var is_admin = false;
+
+            firebase.database().ref('adminPhone').orderByChild('phone')
+            .equalTo(phone).once('value', data => {
+                  data.forEach(() => {
+                      is_admin = true;
+                  })
+            }).then((data) => {
+                if (is_admin) {
+                  // increment unique ID
+                  var id = data.val()[phone].id;
+                  id = (parseInt(id) + 1).toString();
+                  while (id.length < 3) {
+                      id = "0" + id;
+                  }
+                  // store incremented ID into firebase
+                  firebase.database().ref(`adminPhone/${phone}`).update({
+                      id: id
+                  })
+                }
+            });
+
             const user = result.user
             if (select_language == "Chinese (Simplified)") {
                 register_message.innerHTML = redirect_txt[0];
@@ -470,7 +517,8 @@ function codeverify() {
             else {
                 alert(error.message);
             }
-            recaptchaVerifier.reset();
+            // recaptchaVerifier.reset();
+            this.window.recaptchaVerifier.reset();
             if (select_language == "Chinese (Simplified)") {
                 pin_message.innerHTML = invalid_pin_txt[0];
             }
@@ -481,12 +529,26 @@ function codeverify() {
                 pin_message.innerHTML = invalid_pin_txt[2];
             }
             else {
-                pin_message.innerHTML = "Invalid PIN entered. Please resend a new pin and retry.";
+                pin_message.innerHTML = "Invalid PIN entered. Please enter the correct PIN.";
             }
             pin_message.style.color = "red";
-            //delete created user
 
-            firebase.database().ref(`users/${document.getElementById("number").value}`).remove();
+            // obtain phone number to delete from database
+            var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
+            var phone_num = user_obj["phone"];
+
+            if (phone_num === undefined) {
+                for (var key in user_obj) {
+                    phone_num = user_obj[key].phone;
+                }
+            }
+            // obtain ID if it's admin phone number
+            if (phone_num.includes("-")) {
+                phone_num = phone_num.substring(phone_num.length - 3);
+            }
+
+            //delete created user
+            firebase.database().ref(`users/${phone_num}`).remove();
         });
     }
 }
@@ -501,36 +563,103 @@ function codeverify() {
 function checkUserExistence(phone){
 
     let proceed = phoneValidation();
+    let is_admin = false;
+    let admin_id = "";
 
-    firebase.database().ref(`users/${phone}`).once("value", snapshot => {
+    // If the user enter admin phone number
+    firebase.database().ref('adminPhone').orderByChild('phone')
+    .equalTo(phone).once('value', data => {
+          data.forEach(() => {
+              is_admin = true;
+              admin_id = data.val()[phone].id;
+          })
+    }).then((data) => {
+        if (is_admin && current_page == "login.html") {
+          // combine the admin phone number with unique ID
+          var id = data.val()[phone].id;
+          phone = phone + "-" + id;
 
-        if (snapshot.exists() && proceed){
-
-            let user = snapshot.val(); // get the user
-
-            console.log("set");
-            localStorage.setItem(USER_KEY,JSON.stringify(user));
-            window.location = "main_page.html"
+          let user = {
+              username: "notset",
+              phone: phone
+          }
+          console.log("not set");
+          localStorage.setItem(USER_KEY,JSON.stringify(user));
+          window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
         }
-        else if(!proceed){
-            return; // do not proceed
+        else {
+          if (is_admin) {
+              phone = admin_id;
+          }
+          firebase.database().ref(`users/${phone}`).once("value", snapshot => {
+
+              if (snapshot.exists() && proceed){
+                  let user = snapshot.val(); // get the user
+
+                  // if it is admin login
+                  if (is_admin) {
+                      let username = user.username;
+                      user = {
+                          username: username,
+                          phone: admin_id
+                      }
+                  }
+
+                  console.log("set");
+                  localStorage.setItem(USER_KEY,JSON.stringify(user));
+                  window.location = "main_page.html"
+              }
+              else if(!proceed){
+                  return; // do not proceed
+              }
+              else{  // keep as else if so as to not redirect if not proceed
+                  //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
+                  // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
+                  let user = {
+                      username: "notset",
+                      phone: phone
+
+                  }
+                  console.log("not set");
+                  localStorage.setItem(USER_KEY,JSON.stringify(user));
+                  window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
+
+              }
+
+           })
         }
-        else{  // keep as else if so as to not redirect if not proceed
-            //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
-            // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-            let user = {
-                username: "notset",
-                phone: phone
+    });
 
-            }
-            console.log("not set");
-            localStorage.setItem(USER_KEY,JSON.stringify(user));
-            window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
 
-        }
 
-     })
-
+    // firebase.database().ref(`users/${phone}`).once("value", snapshot => {
+    //
+    //     if (snapshot.exists() && proceed){
+    //
+    //         let user = snapshot.val(); // get the user
+    //
+    //         console.log("set");
+    //         localStorage.setItem(USER_KEY,JSON.stringify(user));
+    //         window.location = "main_page.html"
+    //     }
+    //     else if(!proceed){
+    //         return; // do not proceed
+    //     }
+    //     else{  // keep as else if so as to not redirect if not proceed
+    //         //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
+    //         // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
+    //         let user = {
+    //             username: "notset",
+    //             phone: phone
+    //
+    //         }
+    //         console.log("not set");
+    //         localStorage.setItem(USER_KEY,JSON.stringify(user));
+    //         window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
+    //
+    //     }
+    //
+    //  })
 }
 
 
@@ -541,10 +670,21 @@ function checkUserExistence(phone){
  * @param {2} username: the new users username
  */
 function makeNewUser(phone,username){
+    var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
+    var phone_num = user_obj["phone"];
 
+    if (phone_num === undefined) {
+        for (var key in user_obj) {
+            phone_num = user_obj[key].phone;
+        }
+    }
+    // store admin phone number under ID
+    if (phone_num.includes("-")) {
+        phone_num = phone_num.substring(0, phone_num.length - 4);
+    }
     firebase.database().ref(`users/${phone}`).set({
         username: username,
-        phone: phone
+        phone: phone_num
       });
 }
 
@@ -582,6 +722,14 @@ function register(username,phone){
     //retrieve phone from local storage
     makeNewUser(phone, username);
 
+    var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
+    var phone_num = user_obj["phone"];
+
+    if (phone_num === undefined) {
+        for (var key in user_obj) {
+            phone_num = user_obj[key].phone;
+        }
+    }
     //set logged in user into local storage
     let user = {
         username: username,
@@ -592,7 +740,7 @@ function register(username,phone){
     .equalTo(phone).once('value', data => {
 
         // If username exists, output an error
-        user = data.val();
+        // user = data.val();
         localStorage.setItem(USER_KEY,JSON.stringify(user));
     })
 
@@ -642,64 +790,67 @@ function usernameValidation() {
  /**
   *  Function checks the validity of the chosen username based on the existing users in the database
   * @param {*} username the chosen username of the user to be registered
-  * @returns true if the username is available and false if there is another username who possesses the chosen username
+  * @returns true if the username is valid and false if invalid
   */
 function checkUsernameValidity(){
     let username = document.getElementById("username").value;
     let valid = usernameValidation();
 
-    //search the username in db. similar to phone number search
-    firebase.database().ref('users').orderByChild('username')
-    .equalTo(username).once('value', data => {
-        data.forEach(() => {
-            // If username exists, output an error
+    // //search the username in db. similar to phone number search
+    // firebase.database().ref('users').orderByChild('username')
+    // .equalTo(username).once('value', data => {
+    //     data.forEach(() => {
+    //         // If username exists, output an error
+    //         if (select_language == "Chinese (Simplified)") {
+    //             username_error.innerHTML = username_exist_txt[0];
+    //         }
+    //         else if (select_language == "Malay") {
+    //             username_error.innerHTML = username_exist_txt[1];
+    //         }
+    //         else if (select_language == "Thai") {
+    //             username_error.innerHTML = username_exist_txt[2];
+    //         }
+    //         else {
+    //             username_error.innerHTML = "<p>Username exists. Please choose another username</p>";
+    //         }
+    //         valid = false;
+    //     });
+    // }).then(() => {
+    if (valid) {
+        username_error.innerHTML = "";
+        //if valid, register the user
+        // alert(JSON.parse(localStorage.getItem(USER_KEY)).phone);
+
+        var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
+        // Value in local storage (key=USER) will be removed after the user failed to enter pin several times
+        // Ask the user to close and reopen the page
+        if (user_obj === undefined || user_obj === null) {
             if (select_language == "Chinese (Simplified)") {
-                username_error.innerHTML = username_exist_txt[0];
+                alert(nav_reopen_page[0]);
             }
             else if (select_language == "Malay") {
-                username_error.innerHTML = username_exist_txt[1];
+                alert(nav_reopen_page[1]);
             }
             else if (select_language == "Thai") {
-                username_error.innerHTML = username_exist_txt[2];
+                alert(nav_reopen_page[2]);
             }
             else {
-                username_error.innerHTML = "<p>Username exists. Please choose another username</p>";
+                alert("Something went wrong. Please close and reopen the page.");
             }
-            valid = false;
-        });
-    }).then(() => {
-        if (valid) {
-            username_error.innerHTML = "";
-            //if valid, register the user
-            // alert(JSON.parse(localStorage.getItem(USER_KEY)).phone);
-
-            var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
-            // Value in local storage (key=USER) will be removed after the user failed to enter pin several times
-            // Ask the user to close and reopen the page
-            if (user_obj === undefined || user_obj === null) {
-                if (select_language == "Chinese (Simplified)") {
-                    alert(nav_reopen_page[0]);
-                }
-                else if (select_language == "Malay") {
-                    alert(nav_reopen_page[1]);
-                }
-                else if (select_language == "Thai") {
-                    alert(nav_reopen_page[2]);
-                }
-                else {
-                    alert("Something went wrong. Please close and reopen the page.");
-                }
-            }
-            var phone_num = user_obj["phone"];
-
-            if (phone_num === undefined) {
-                for (var key in user_obj) {
-                    phone_num = user_obj[key].phone;
-                }
-            }
-
-            // register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
-            register(document.getElementById("username").value, phone_num);
         }
-    });
+        var phone_num = user_obj["phone"];
+
+        if (phone_num === undefined) {
+            for (var key in user_obj) {
+                phone_num = user_obj[key].phone;
+            }
+        }
+        // store only ID if it is admin phone number
+        if (phone_num.includes("-")) {
+            phone_num = phone_num.substring(phone_num.length - 3);
+        }
+        // register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
+        register(document.getElementById("username").value, phone_num);
+    }
+    // });
 }
