@@ -280,3 +280,76 @@ const LAST_QUESTION_DONE = QUESTION_IDS[0].length;
 // The users branch in the Firestore Database, currently stores
 // user responses
 const USERS_BRANCH = "users";
+
+// let hash = new Object();
+// hash[EN_INDEX] =
+//     [
+//         // Agree
+//         ["Strongly <br> Disagree", "Disagree", "Neutral", "Agree", "Strongly<br> Agree"],
+
+//         // Satisfy
+//         ["Not <br> Applicable", "Very <br>Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very<br> Satisfied"],
+
+//         // Confident
+//         ["Not <br> Applicable", "Not Confident <br> At All", "Somewhat <br> Not Confident", "Moderately <br>Confident" , "Somewhat <br>Confident", "Extremely <br>Confident"],
+
+//         // Interested
+//         ["Extremely <br>Not<br> Interested", "Not<br>Interested", "Neutral", "Interested", "Extremely<br> Interested"]
+
+//         // Often
+//         ["Never","Once a month","Few times a month","Once a week","Few times a week","Once a day","Many times a day"]
+//     ];
+
+// hash[ZH_CN_INDEX] =
+//     [
+//         // Agree
+//         ["非常不同意", "不同意", "中立", "同意", "非常同意"],
+
+//         // Satisfy
+//         ["不适用(N/A）", "非常不满意", "不满意", "中立", "满意", "非常满意"],
+
+//         // Confident
+//         ["不适用(N/A)", "极度不自信", "有点不自信", "适度自信" , "有点自信", "极度自信"],
+
+//         // Interested
+//         ["非常不感兴趣", "没兴趣", "中立", "感兴趣", "非常感兴趣"]
+
+//         // Often
+//         ["Never","Once a month","Few times a month","Once a week","Few times a week","Once a day","Many times a day"]
+//     ];
+
+// hash[MS_INDEX] =
+//     [
+//         // Agree
+//         ["Sangat <br> Tidak <br>  Setuju", "Tidak <br> Setuju", "Berkecuali", "Setuju", "Sangat <br> Setuju"],
+
+//         // Satisfy
+//         ["Tidak <br> Berkenaan", "Sangat Tidak<br> Berpuas<br> Hati", "Tidak <br> Berpuas <br>Hati", "Berkecuali", "Berpuas <br> Hati", "Sangat <br> Berpuas Hati"],
+
+//         // Confident
+//         ["Tidak <br> Berkenaan", "Tidak Yakin <br> Sama Sekali", "Agak <br> Tidak Yakin", "Cukup <br> Yakin" , "Agak <br> Yakin", "Sangat <br> Yakin"],
+
+//         // Interested
+//         ["Sangat <br> Tidak <br> Berminat", "Tidak <br> Berminat", "Berkecuali", "Berminat", "Sangat <br> Berminat"]
+
+//         // Often
+//         ["Never","Once a month","Few times a month","Once a week","Few times a week","Once a day","Many times a day"]
+//     ];
+
+// hash[TH_INDEX] =
+//     [
+//         // Agree
+//         ["ไม่เห็นด้วยอย่างมาก", "ไม่เห็นด้วย ", "กลางๆ", "เห็นด้วย ", "เห็นด้วยอย่างมาก"],
+
+//         // Satisfy
+//         ["ไม่เกี่ยวข้อง/ <br> ฉันไม่ได้ทำงาน", "ไม่พึงพอใจอย่างมาก", "ไม่พึงพอใจ ", "กลางๆ", "พอใจ", "พอใจมาก"],
+
+//         // Confident
+//         ["ไม่เกี่ยวข้อง ", "ไม่มีความมั่นใจเลย", "ไม่ค่อยมั่นใจ", "มั่นใจเล็กน้อย" , "ค่อนข้างมั่นใจ", "มั่นใจมาก"],
+
+//         // Interested
+//         ["ไม่มีความสนใจเป็นอย่างมาก", "ไม่สนใจ", "เฉยๆ", "สนใจ", "สนใจอย่างมาก"]
+
+//         // Often
+//         ["Never","Once a month","Few times a month","Once a week","Few times a week","Once a day","Many times a day"]
+//     ];

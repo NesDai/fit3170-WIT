@@ -4,6 +4,8 @@ let titleQuestionString = null;
 // Initializing variables
 let messages = document.getElementById("messages");
 let textBoxInput = document.getElementById("message");
+let messageLabel = document.getElementById("messageLabel");
+let textInput = document.getElementById("message-form");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
@@ -23,14 +25,20 @@ let select_language = localStorage.getItem(LANGUAGE_KEY);
 
 let branch_id;
 if (select_language == "English") {
+    messageLabel.innerHTML="message..."
     branch_id = EN_INDEX;
 } else if (select_language == "Chinese (Simplified)") {
+    messageLabel.innerHTML="消息。。。"
     branch_id = ZH_CN_INDEX;
 } else if (select_language == "Malay") {
+    messageLabel.innerHTML="Mesej..."
     branch_id = MS_INDEX;
 } else if (select_language == "Thai") {
+    messageLabel.innerHTML="ข้อความ"
     branch_id = TH_INDEX;
 }
+
+disableInput();
 
 /*
 The user object of the currently logged in user.
@@ -65,6 +73,7 @@ let agreeLikertQues = [13, 27]; //[1] Strongly Disagree [2] Disagree [3] Neutral
 let satisfyLikertQues = [16]; //[0] Not Applicable [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied
 let confidentLikertQues = [19,20,22]; //[0] Not Applicable [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident
 let interestedLikertQues = [25] //[1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested
+let oftenLikertQues = [23];
 
 //translation
 // changeLang(select_language);
@@ -94,8 +103,40 @@ function select(button, index) {
         space.childNodes[i].disabled = true;
     }
 
+    
+
     // display user's choice on chat
     messages.innerHTML += ansTemplate;
+
+
+    if(questionIndex==1 & choice=="Male"){
+        if(select_language=="Thai"){
+            let ansTemplate = '<div class="space">\
+            <div class="message-container sender blue current notranslate">\
+            <p>แบบสำรวจนี้สำหรับผู้หญิงเท่านั้น</p>\
+            </div>\
+            </div>';
+        }else if(select_language=="Malay"){
+            let ansTemplate = '<div class="space">\
+            <div class="message-container sender blue current notranslate">\
+            <p>Tinjauan ini untuk wanita sahaja</p>\
+            </div>\
+            </div>';
+        }else if(select_language=="Chinese (Simplified)"){
+            let ansTemplate = '<div class="space">\
+            <div class="message-container sender blue current notranslate">\
+            <p>此调查仅针对女性</p>\
+            </div>\
+            </div>';
+        }else{
+            let ansTemplate = '<div class="space">\
+                <div class="message-container sender blue current notranslate">\
+                <p>This survey is for women only</p>\
+                </div>\
+                </div>';
+        }
+        messages.innerHTML+=ansTemplate
+    }
 
     // extract skip target and skip choices from currentQuestionObject
     let skipTarget = currentQuestionObject.restrictions.skipTarget;
@@ -215,9 +256,12 @@ function addMessage() {
                         // Set the current question index to the question before the skip target since nextQuestion increments
                         // the question index by 1
                         questionIndex = QUESTION_IDS[branch_id].indexOf(currentQuestionObject.restrictions.skipTarget) - 1;
+                        
 
                         // In case the user was answering a long question, reset params related to long questions
                         currentSubQuestionIds = null;
+                        
+                        
 
                         // call sync progress to update currentSubQuestionIds and questionID after nextQuestion
                         syncProgress();
@@ -247,7 +291,7 @@ function addMessage() {
         input.value = "";
 
         // Prevent users from using text box
-        disableTextInput();
+        //disableInput();
     }
     else{
       errorText.style.visibility = "visible";
@@ -356,7 +400,7 @@ function showEndingMessage() {
 function showReadyClosingMessage(){
 
     let select_language = localStorage.getItem(LANGUAGE_KEY);
-
+    
     // display a question asking if the user wants to participate in future research
     
     if(select_language=="Malay"){
@@ -868,14 +912,24 @@ function showQuestion(isSubQuestion) {
                 case TYPE_NUMERIC:
                 case TYPE_NUMERIC_SUB_QUESTION:
                     showNumeric(questionObject);
+                    
                     if (agreeLikertQues.includes(questionIndex)) {
+                        disableInput();
                         makeLikertScale(branch_id, "agree");
                     } else if (satisfyLikertQues.includes(questionIndex)){
+                        disableInput();
                         makeLikertScale(branch_id, "satisfy");
                     } else if (confidentLikertQues.includes(questionIndex)){
+                        disableInput();
                         makeLikertScale(branch_id, "confident");
                     } else if (interestedLikertQues.includes(questionIndex)){
+                        disableInput();
                         makeLikertScale(branch_id, "interested");
+                    }else if(oftenLikertQues.includes(questionIndex)){
+                        disableInput()
+                        makeLikertScale(branch_id, "often");
+                    }else{
+                        enableInput();
                     }
                     break;
 
@@ -959,6 +1013,15 @@ function showNumeric(questionObject) {
                     // check if question requires use to end the survey if an invalid response is given
                     if (questionObject.restrictions.skipIfInvalid) {
                         if (questionObject.restrictions.skipTarget === SKIP_END_SURVEY) {
+                            if(questionIndex==1){
+                                let ansTemplate = '<div class="space">\
+                                    <div class="message-container sender blue current notranslate">\
+                                    <p>The age should be between 60 to 100</p>\
+                                    </div>\
+                                    </div>';
+    
+                                messages.innerHTML+=ansTemplate
+                            }
                             submit.onclick = endSurveyText;
                         } else {
                             submit.onclick = addMessage;
@@ -981,7 +1044,8 @@ function showNumeric(questionObject) {
 
     // display the question and enable the textbox
     showMessageSender(questionObject.question);
-    enableTextInput();
+    //enableInput();
+    disableInput();
 }
 
 /**
@@ -1064,7 +1128,8 @@ function showMultipleChoice(questionObject) {
       submit.onclick = checkMCQInput;
     }
 
-    enableTextInput();
+    //enableInput();
+    disableInput();
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
 
@@ -1094,6 +1159,7 @@ function checkMCQInput(){
     if (found) {
         errorText.innerHTML = "";
         addMessage();
+        
     } else {
         errorText.innerHTML = "";
         errorText.style.visibility = "visible";
@@ -1141,7 +1207,8 @@ function showMultipleChoiceOthers(questionObject) {
     }
 
     // allow users to use textbox
-    enableTextInput();
+    //enableInput();
+    disableInput();
 
     let question = questionObject.question;
     let choices = questionObject.restrictions.choices;
@@ -1218,7 +1285,7 @@ function othersOptionInput(){
     }
 
     // allow users to use textbox
-    enableTextInput();
+    enableInput();
 }
 
 /**
@@ -1280,7 +1347,7 @@ function showShortText(questionObject) {
     }
 
     showMessageSender(questionObject.question);
-    enableTextInput();
+    enableInput();
 }
 
 /**
@@ -1387,7 +1454,35 @@ function endSurvey(endingAns) {
 function endSurveyText() {
     // show answer given
     showMessageReceiver(input.value);
-
+    console.log("GUQ "+questionIndex);
+    if(questionIndex==0){
+        if(select_language=="Chinese (Simplified)"){
+            let ansTemplate = '<div class="space">\
+                <div class="message-container sender blue current notranslate">\
+                <p>此调查仅适用于年龄在 50 至 100 岁之间的人</p>\
+                </div>\
+                </div>';
+        }else if(select_language=="Malay"){
+            let ansTemplate = '<div class="space">\
+                <div class="message-container sender blue current notranslate">\
+                <p>Survey ini hanya untuk mereka yang berumur antara 50 hingga 100 tahun</p>\
+                </div>\
+                </div>';
+        }else if(select_language=="Thai"){
+            let ansTemplate = '<div class="space">\
+                <div class="message-container sender blue current notranslate">\
+                <p>การสำรวจนี้สำหรับผู้ที่มีอายุระหว่าง 50 ถึง 100 ปีเท่านั้น</p>\
+                </div>\
+                </div>';
+        }else{
+            let ansTemplate = '<div class="space">\
+                <div class="message-container sender blue current notranslate">\
+                <p>This survery are only for people who are age between 50 to 100 years old</p>\
+                </div>\
+                </div>';
+        }
+        messages.innerHTML+=ansTemplate
+    }
     // set question index to end, set skippedToEnd to true and save the answer
     questionIndex = QUESTION_IDS[branch_id].length;
     saveResponse(input.value);
@@ -1444,25 +1539,57 @@ function changeColour() {
     })
 }
 
+function hashString(scaleIndex,number){
+    switch (scaleIndex){
+        case 0:
+            scaleString = hash[branch_id][scaleIndex][number-1];
+            break;
+        case 1:
+            scaleString = hash[branch_id][scaleIndex][number];
+            break;
+        case 2:
+            scaleString = hash[branch_id][scaleIndex][number];
+            break;
+        case 3:
+            scaleString = hash[branch_id][scaleIndex][number-1];
+            break;
+        case 4:
+            scaleString = hash[branch_id][scaleIndex][number-1];
+            break;
+    }
+    return scaleString;
+}
+
 /** Function of selecting likert options **/
-function likertSelect(number)
-{
+function likertSelect(number,scaleIndex)
+{   
+    document.getElementById('likert_scale').innerHTML='';
     // format choice html text bubble
     let ansTemp = '<div class="space">\
                             <div class="message-container receiver">\
-                                <p>' + number + '</p>\
+                                <p>' + hashString(scaleIndex,number) + '</p>\
                             </div>\
                         </div>';
 
     // display user's choice on chat
     messages.innerHTML += ansTemp;
-
+    
 
     // Prevent users from using text box
-    disableTextInput();
+    disableInput();
 
     // display next question and save user response after time delay and scroll to bottom of screen
     let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
     setTimeout(() => {nextQuestion(); saveResponse(number);}, delay);
     scrollToBottom();
+}
+
+function enableInput(){
+    enableTextInput()
+    textInput.style.display = "initial";
+}
+
+function disableInput(){
+    textInput.style.display="none";
+    document.getElementById('hint_area').innerHTML = "";
 }

@@ -128,25 +128,23 @@ function resumeGreeting() {
     let contents = "";
     let select_language = localStorage.getItem(LANGUAGE_KEY);
     // Welcome message
-    contents +=
-        "<div class='space'>" +
-        "<div class='message-container sender blue'>" 
     if(select_language=="Malay"){
-        contents+="<p>Hai! Saya adalah bot sembang untuk Apl ini.</p>" +
+        contents +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue'>" +
+        "<p>Hai! Saya adalah bot sembang untuk Apl ini.</p>" +
         "<p>Sila pilih \"Sambung semula\" untuk menyambung semula anda " +
         "tinjauan sebelumnya atau \"Mula semula\" untuk memulakan semula jika anda ingin menukar jawapan anda yang terdahulu.</p>" +
         "</div>" +
-        "</div>";
-
+        "</div>"+
         "<div class=\"space\">" +
         "<button id='resume-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
         "onclick=\"resumeSurvey(this)\" " +
-        "value=\"Resume\">" 
+        "value=\"Resume\">" +
         "Sambung semula" +
         "</button>" +
-
         "<button id='restart-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
@@ -154,23 +152,24 @@ function resumeGreeting() {
         "value=\"Restart\">" +
         "Mula semula" +
         "</button>" +
-        "</div>";
+        "</div>"
     }else if(select_language=="Chinese (Simplified)"){
-        contents+="<p>你好！我是这个应用程序的聊天机器人。</p>" +
+        contents +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue'>" +
+        "<p>你好！我是这个应用程序的聊天机器人。</p>" +
         "<p>请选择 \"恢复\" 恢复你的 " +
         "以前的调查或 \"续借\" 如果您想更改以前的答案，请重新开始。</p>" +
         "</div>" +
-        "</div>";
-
+        "</div>"+
         "<div class=\"space\">" +
         "<button id='resume-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
         "onclick=\"resumeSurvey(this)\" " +
-        "value=\"Resume\">" 
+        "value=\"Resume\">" +
         "恢复" +
         "</button>" +
-
         "<button id='restart-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
@@ -178,23 +177,24 @@ function resumeGreeting() {
         "value=\"Restart\">" +
         "续借" +
         "</button>" +
-        "</div>";
+        "</div>"
     }else if(select_language=="Thai"){
-        contents+="<p>สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอพนี้</p>" +
+        contents +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue'>" +
+        "<p>สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอพนี้</p>" +
         "<p>โปรดเลือก \"ประวัติย่อ\" เพื่อดำเนินการต่อของคุณ " +
         "แบบสำรวจก่อนหน้าหรือ \"c\" เพื่อเริ่มต้นใหม่อีกครั้งหากคุณต้องการเปลี่ยนคำตอบก่อนหน้าของคุณ</p>" +
         "</div>" +
-        "</div>";
-
+        "</div>"+
         "<div class=\"space\">" +
         "<button id='resume-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
         "onclick=\"resumeSurvey(this)\" " +
-        "value=\"Resume\">" 
+        "value=\"Resume\">" +
         "ประวัติย่อ" +
         "</button>" +
-
         "<button id='restart-survey-button' " +
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
@@ -202,10 +202,13 @@ function resumeGreeting() {
         "value=\"Restart\">" +
         "ประวัติย่อ" +
         "</button>" +
-        "</div>";
+        "</div>"
     }
     else{
-        contents+="<p>Hi! I am the chatbot for this App.</p>" +
+        contents +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue'>" +
+        "<p>Hi! I am the chatbot for this App.</p>" +
         "<p>Please select \"Resume\" to resume your " +
         "previous survey or \"Restart\" to start again if you want change your previous answers.</p>" +
         "</div>" +
@@ -216,7 +219,7 @@ function resumeGreeting() {
         "class=\"mdl-button mdl-js-button " +
         "mdl-button--raised mdl-js-ripple-effect\" " +
         "onclick=\"resumeSurvey(this)\" " +
-        "value=\"Resume\">" 
+        "value=\"Resume\">" +
         "Resume" +
         "</button>" +
 
@@ -229,7 +232,6 @@ function resumeGreeting() {
         "</button>" +
         "</div>";
     }
-
     let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
     setTimeout(() => messages.innerHTML += contents, delay);
     disableTextInput();
