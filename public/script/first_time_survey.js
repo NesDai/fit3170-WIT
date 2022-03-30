@@ -25,15 +25,19 @@ let select_language = localStorage.getItem(LANGUAGE_KEY);
 
 let branch_id;
 if (select_language == "English") {
+    document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"Chat bot"
     messageLabel.innerHTML="message..."
     branch_id = EN_INDEX;
 } else if (select_language == "Chinese (Simplified)") {
+    document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"聊天机器人"
     messageLabel.innerHTML="消息。。。"
     branch_id = ZH_CN_INDEX;
 } else if (select_language == "Malay") {
+    document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"Bot Sembang"
     messageLabel.innerHTML="Mesej..."
     branch_id = MS_INDEX;
 } else if (select_language == "Thai") {
+    document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"แชทบอท"
     messageLabel.innerHTML="ข้อความ"
     branch_id = TH_INDEX;
 }
@@ -202,7 +206,7 @@ function select(button, index) {
 function addMessage() {
     let message = input.value;
     let type = currentQuestionObject.type;
-
+    disableInput();
     // check if the input is valid
     if (message.length > 0) {
         if (type ===TYPE_MULTIPLE_CHOICE ||

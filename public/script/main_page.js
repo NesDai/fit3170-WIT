@@ -70,8 +70,8 @@ function changeLang(lang){
  localStorage.setItem(LANGUAGE_KEY, lang);
  if(lang == "English"){
      document.getElementById("username").innerHTML = "Welcome @" + current_us["username"];
-     document.getElementById("translate_btn").innerHTML = "Translate";
-     document.getElementById("chatbox_btn").innerHTML = "Chat Bot";
+     document.getElementById("translate_btn").innerHTML = '<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+"Translate";
+     document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"Chat Bot";
 
      document.getElementById("homeBanner").innerHTML = "Home Page";
      document.getElementById("chooseLang").innerHTML = "Choose Language:";
@@ -87,8 +87,8 @@ function changeLang(lang){
  }
  else if(lang == "Malay"){
      document.getElementById("username").innerHTML = "selamat datang @" + current_us["username"];
-     document.getElementById("translate_btn").innerHTML = "terjemah";
-     document.getElementById("chatbox_btn").innerHTML = "Bot Sembang";
+     document.getElementById("translate_btn").innerHTML = '<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+"terjemah";
+     document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"Bot Sembang";
 
      document.getElementById("homeBanner").innerHTML = "Halaman Utama";
      document.getElementById("chooseLang").innerHTML = "Pilih Bahasa:";
@@ -104,8 +104,8 @@ function changeLang(lang){
  }
  else if(lang == "Chinese (Simplified)"){
      document.getElementById("username").innerHTML = "欢迎 @" + current_us["username"];
-     document.getElementById("translate_btn").innerHTML = "翻译";
-     document.getElementById("chatbox_btn").innerHTML = "聊天机器人";
+     document.getElementById("translate_btn").innerHTML ='<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+ "翻译";
+     document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"聊天机器人";
 
      document.getElementById("homeBanner").innerHTML = "主页";
      document.getElementById("chooseLang").innerHTML = "选择语言：";
@@ -121,8 +121,8 @@ function changeLang(lang){
  }
  else{
      document.getElementById("username").innerHTML = "ยินดีต้อนรับ @" + current_us["username"];
-     document.getElementById("translate_btn").innerHTML = "แปลภาษา";
-     document.getElementById("chatbox_btn").innerHTML = "แชทบอท";
+     document.getElementById("translate_btn").innerHTML ='<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+ "แปลภาษา";
+     document.getElementById("chatbox_btn").innerHTML ='<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+ "แชทบอท";
 
      document.getElementById("homeBanner").innerHTML = "หน้าแรก";
      document.getElementById("chooseLang").innerHTML = "เลือกภาษา:";
