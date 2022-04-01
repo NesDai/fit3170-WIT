@@ -27,18 +27,22 @@ let branch_id;
 if (select_language == "English") {
     document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"Chat bot"
     messageLabel.innerHTML="message..."
+    submit.innerHTML="Send"
     branch_id = EN_INDEX;
 } else if (select_language == "Chinese (Simplified)") {
     document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"聊天机器人"
     messageLabel.innerHTML="消息。。。"
+    submit.innerHTML="发送"
     branch_id = ZH_CN_INDEX;
 } else if (select_language == "Malay") {
     document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"Bot Sembang"
     messageLabel.innerHTML="Mesej..."
+    submit.innerHTML="Hantar"
     branch_id = MS_INDEX;
 } else if (select_language == "Thai") {
     document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"แชทบอท"
     messageLabel.innerHTML="ข้อความ"
+    submit.innerHTML="ส่ง"
     branch_id = TH_INDEX;
 }
 

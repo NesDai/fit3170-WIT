@@ -242,8 +242,7 @@ function resumeGreeting() {
  */
 function greeting() {
     // format starting message html
-    let select_language = localStorage.getItem(LANGUAGE_KEY);
-
+    console.log(select_language);
     let quesTemplate =
         "<div class='space'>" +
         "<div class='message-container sender blue'>";
@@ -255,7 +254,7 @@ function greeting() {
         "Are you ready?</p>" +
         "</div>" +
         "</div>";
-    }else if(select_language = "Malay"){
+    }else if(select_language == "Malay"){
         quesTemplate += '<p ">Hai! Saya adalah bot sembang untuk Apl ini.</p>' +
         "<p>Untuk bermula, bolehkah anda mengisi tinjauan ini." +
         "Anda hanya mempunyai satu percubaan untuk melengkapkan tinjauan." +
@@ -271,7 +270,7 @@ function greeting() {
         "你准备好了吗？</p>" +
         "</div>" +
         "</div>";
-    }else if(select_language == Thai){
+    }else if(select_language == "Thai"){
         quesTemplate += '<p >สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอพนี้</p>' +
         "<p>ในการเริ่มต้น โปรดกรอกแบบสำรวจนี้" +
         " คุณมีความพยายามเพียงครั้งเดียวในการกรอกแบบสำรวจ" +
