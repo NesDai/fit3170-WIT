@@ -1,6 +1,7 @@
 compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUESTION_IDS_TH];
 branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
 let language = ["English", "Chinese", "Malay", "Thai"];
+let options = {year: 'numeric', month: 'long', day: 'numeric'};
 
 /**
  * Compiles data from firebase to compiledData[] Array
@@ -34,14 +35,26 @@ async function exportQues() {
                                                 querySnapshot.forEach(response => {
                                                     let responseObj = response.data();
                                                     let subQuestionType = questionObjectTemp.type;
+                                                    // convert timestamp to date
+                                                    let dateObj = responseObj.timestamp.toDate();
+                                                    let date = dateObj.toLocaleDateString(undefined, options);
+                                                    // obtain phone number or ID, and admin phone number if available
+                                                    let user = responseObj.phone;
+                                                    let admin = "";
+                                                    if (!user.includes("+")) {
+                                                        getAdmin(user).then(data => {
+                                                            localStorage.setItem(ADMIN_KEY, data)
+                                                        });
+                                                        admin = localStorage.getItem(ADMIN_KEY);
+                                                    }
                                                     switch(subQuestionType) {
                                                         case TYPE_MULTIPLE_CHOICE:
                                                         case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                                         case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                             break;
                                                         default:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                             break;
                                                     }
                                                 });
@@ -56,15 +69,27 @@ async function exportQues() {
                                 .then((querySnapshot) => {
                                     querySnapshot.forEach(response => {
                                         let responseObj = response.data();
+                                        // convert timestamp to date
+                                        let dateObj = responseObj.timestamp.toDate();
+                                        let date = dateObj.toLocaleDateString(undefined, options);
+                                        // obtain phone number or ID, and admin phone number if available
+                                        let user = responseObj.phone;
+                                        let admin = "";
+                                        if (!user.includes("+")) {
+                                            getAdmin(user).then(data => {
+                                                localStorage.setItem(ADMIN_KEY, data)
+                                            });
+                                            admin = localStorage.getItem(ADMIN_KEY);
+                                        }
                                         switch(questionType){
                                             case TYPE_MULTIPLE_CHOICE:
                                             case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                             case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + responseObj.phone + "\"", "\"" + language[a] + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                 break;
 
                                             default:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + responseObj.phone + "\"" , "\"" + language[a] + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                 break;
                                         }
 
@@ -79,18 +104,29 @@ async function exportQues() {
 }
 
 /**
+ * Obtain admin phone number from user ID
+ */
+async function getAdmin(user) {
+    let adminPhone = "";
+    await firebase.database().ref(`users/${user}`).once('value', data => {
+        adminPhone = data.val().phone;
+    });
+    return adminPhone;
+}
+
+/**
  * Compiles csv file from the data, adds meta data and headers.
  */
 
 function download_csv_file(csvFileData) {
 
     //define the heading for each row of the data
-    let csv = 'For Likert Scales The following convention is used: \n';
+    let csv = "\ufeff" + 'For Likert Scales The following convention is used: \n';
     csv += 'Agreeableness: [1] Strongly Disagree [2] Disagree [3] Neutral [4] Agree [5] Strongly Agree\n';
     csv += 'Satisfaction: [0] Not Applicable (N/A) [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied\n';
     csv += 'Confidence: [0] Not Applicable (N/A) [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident\n';
     csv += 'Interest: [1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested\n';
-    csv += 'Question Number,Question,Response,Options,User,Language\n';
+    csv += 'Question Number,Question,Response,Options,User,Language,Date,Admin\n';
 
     //merge the data with CSV
     csvFileData.forEach(function(row) {

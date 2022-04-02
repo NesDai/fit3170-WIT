@@ -281,6 +281,9 @@ const LAST_QUESTION_DONE = QUESTION_IDS[0].length;
 // user responses
 const USERS_BRANCH = "users";
 
+// The key to store the admin phone number in local storage
+const ADMIN_KEY = "admin";
+
 // let hash = new Object();
 // hash[EN_INDEX] =
 //     [

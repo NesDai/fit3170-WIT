@@ -70,13 +70,13 @@ let ask_send_pin_txt = ["完成第 1 步和第 2 步后，请单击发送 PIN �
 // Send Pin
 let send_pin_txt = ["发送密码", "Hantar Pin", "ส่งพิน"];
 
-// Enter 6-digit pin E.g. 123456
-let pin_placeholder_txt = ["输入 6 位密码 例如 123456".bold(),
-                           "Masukkan pin 6 digit Cth 123456".bold(),
-                           "ใส่พิน 6 หลัก เช่น 123456".bold()];
+// Enter 6-digit pin (Example: 123456)
+let pin_placeholder_txt = ["输入 6 位密码（例如：123456）".bold(),
+                           "Masukkan pin 6 digit (Contoh: 123456)".bold(),
+                           "ป้อนรหัส PIN 6 หลัก (ตัวอย่าง: 123456)".bold()];
 
 // Go Back
-let back_txt = ["回去", "Pargi balik", "กลับไป"];
+let back_txt = ["回去", "Balik", "กลับไป"];
 
 // Username should be at least 2 characters long and not have any special characters like !@#$%^&*. Please try again.
 let username_error_txt = ["<p>用户名至少应包含 2 个字符，并且不能包含任何特殊字符，例如 !@#$%^&*。请再试一次。<p>",
