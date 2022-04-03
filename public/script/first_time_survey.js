@@ -723,17 +723,17 @@ function showOnlineTransactionOptions(){
     // display the options
     let options = "<div class=\"space\">"
     if(select_language=="Malay"){
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_2otWWj5OEYaGTLo','_blank')\">Perbankan</button>";
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">e-Wallet</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_2otWWj5OEYaGTLo','_blank')\">Online Banking</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_9FFrjrePW1hWT0G','_blank')\">e-Wallet/Grab/TnG</button>";
     }else if(select_language=="Chinese (Simplified)"){
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_6tlMCzO3HSKg8FU','_blank')\">银行业</button>";
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">电子钱包</button>";
-    }else if(select_language=="Chinese (Simplified)"){
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_5iGfB3c9gQXA4qW','_blank')\">电子钱包//Grab/TnG</button>";
+    }else if(select_language=="Thai"){
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">การธนาคาร</button>";
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">กระเป๋าเงินอิเล็กทรอนิกส์</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">กระเป๋าเงินอิเล็กทรอนิกส์//Grab/TnG</button>";
     }else{
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">Perbankan</button>";
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">e-wallet</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">Online Banking</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_baBzV5GgFOGDTYW','_blank')\">e-wallet//Grab/TnG</button>";
     }
     options += "</div>";
     messages.innerHTML += options;
