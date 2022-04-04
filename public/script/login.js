@@ -62,10 +62,10 @@ let enter_phone_placeholder_txt = ["输入例如 +60129356770 或 +668190677822"
                                    "Masukkan cth, +60129356770 atau +668190677822",
                                    "ป้อน เช่น +60129356770 หรือ +668190677822"];
 
-// Please click the SEND PIN button after you complete step 1 and 2
-let ask_send_pin_txt = ["完成第 1 步和第 2 步后，请单击发送 PIN 按钮".bold(),
-                        "Sila klik butang HANTAR PIN selepas anda melengkapkan langkah 1 dan 2".bold(),
-                        "โปรดคลิกปุ่มส่ง PIN หลังจากเสร็จสิ้นขั้นตอนที่ 1 และ 2".bold()];
+// Please click the SEND PIN button after you complete step 1 and 2, then tick "I'm not a robot"
+let ask_send_pin_txt = ["请在完成第 1 步和第 2 步后点击发送 PIN 按钮，然后勾选“I'm not a robot”".bold(),
+                        "Sila klik butang HANTAR PIN selepas anda melengkapkan langkah 1 dan 2, kemudian tandakan \"I'm not a robot\"".bold(),
+                        "โปรดคลิกปุ่มส่ง PIN หลังจากเสร็จสิ้นขั้นตอนที่ 1 และ 2 แล้วทำเครื่องหมายที่ \"I'm not a robot\"".bold()];
 
 // Send Pin
 let send_pin_txt = ["发送密码", "Hantar Pin", "ส่งพิน"];
