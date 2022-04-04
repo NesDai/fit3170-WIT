@@ -462,7 +462,7 @@ function showReadyClosingMessage(){
     // open the text box to take input
     input.disabled = false;
     submit.disabled = false;
-    submit.setAttribute("onclick", "textInputClosingQuestion(0)");
+    // submit.setAttribute("onclick", "textInputClosingQuestion(0)");
 }
 
 /**
@@ -483,6 +483,7 @@ function showFutureResearchQuestion(){
         "</div>" +
         "</div>";
     }else if(select_language=="Chinese (Simplified)"){
+        messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>我们希望在几个月后再次收到您的来信。您想参加定性研究（面试）吗？</p>` +
@@ -490,6 +491,7 @@ function showFutureResearchQuestion(){
         "</div>";
     }
     else if(select_language=="Thai"){
+        messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ(สัมภาษณ์)?</p>` +
@@ -497,6 +499,7 @@ function showFutureResearchQuestion(){
         "</div>";
     }
     else{
+        messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study(interview)? </p>` +
