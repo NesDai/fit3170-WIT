@@ -800,7 +800,7 @@ function showMoveToDifferentPages(){
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Muka surat utama</button>";
     }else if(select_language=="Chinese (Simplified)"){
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">主页</button>";
-    }else if(select_language=="Chinese (Simplified)"){
+    }else if(select_language=="Thai"){
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">หน้าหลัก</button>";
     }else{
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.location.href = \'main_page.html\'\">Main Page</button>";

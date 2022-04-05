@@ -49,10 +49,10 @@
  hash[MS_INDEX] =
      [
          // Agree
-         ["Sangat <br> Tidak <br>  Setuju", "Tidak <br> Setuju", "Berkecuali", "Setuju", "Sangat <br> Setuju"],
+         ["Sangat <br> Tidak <br>  Setuju", "Tidak <br> Setuju", "Neutral", "Setuju", "Sangat <br> Setuju"],
  
          // Satisfy
-         ["Tidak <br> Berkenaan", "Sangat Tidak<br> Berpuas<br> Hati", "Tidak <br> Berpuas <br>Hati", "Berkecuali", "Berpuas <br> Hati", "Sangat <br> Berpuas Hati"],
+         ["Tidak <br> Berkenaan", "Sangat Tidak<br> Berpuas<br> Hati", "Tidak <br> Berpuas <br>Hati", "Neutral", "Berpuas <br> Hati", "Sangat <br> Berpuas Hati"],
  
          // Confident
          ["Tidak <br> Berkenaan", "Tidak Yakin <br> Sama Sekali", "Agak <br> Tidak Yakin", "Cukup <br> Yakin" , "Agak <br> Yakin", "Sangat <br> Yakin"],
