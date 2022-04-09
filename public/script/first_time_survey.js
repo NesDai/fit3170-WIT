@@ -479,7 +479,7 @@ function showFutureResearchQuestion(){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
-        `<p>Kami ingin mendengar daripada anda sekali lagi dalam masa beberapa bulan. Adakah anda ingin mengambil bahagian dalam kajian kualitatif(temu bual)?</p>` +
+        `<p>Kami ingin mendengar daripada anda sekali lagi dalam masa beberapa bulan. Adakah anda ingin mengambil bahagian dalam kajian kualitatif (temu bual)?</p>` +
         "</div>" +
         "</div>";
     }else if(select_language=="Chinese (Simplified)"){
@@ -494,7 +494,7 @@ function showFutureResearchQuestion(){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
-        `<p>เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ(สัมภาษณ์)?</p>` +
+        `<p>เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ (สัมภาษณ์)?</p>` +
         "</div>" +
         "</div>";
     }
@@ -502,7 +502,7 @@ function showFutureResearchQuestion(){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
-        `<p>We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study(interview)? </p>` +
+        `<p>We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study (interview)? </p>` +
         "</div>" +
         "</div>";
     }
@@ -554,14 +554,42 @@ function selectClosingQuestionOption(button, index, closingQsID){
     // initialise choice and get the user's ID (phone number they registered under)
     let choice;
     let userID = getUserID();
+    let ansTranslate;
 
     // assign the choice with the strings used in the option
     if (index == 1) {
         choice = "Yes";
+        if (select_language=="Malay"){
+            ansTranslate="Ya";
+        }else if (select_language=="Chinese (Simplified)"){
+            ansTranslate="是的";
+        }else if (select_language=="Thai"){
+            ansTranslate="ใช่";
+        }else{
+            ansTranslate=choice;
+        }
     } else if (index == 2) {
         choice = "No";
+        if (select_language=="Malay"){
+            ansTranslate="Tidak";
+        }else if (select_language=="Chinese (Simplified)"){
+            ansTranslate="不";
+        }else if (select_language=="Thai"){
+            ansTranslate="ไม่";
+        }else{
+            ansTranslate=choice;
+        }
     } else if (index == 3) {
         choice = "Maybe";
+        if (select_language=="Malay"){
+            ansTranslate="Mungkin";
+        }else if (select_language=="Chinese (Simplified)"){
+            ansTranslate="说不定";
+        }else if (select_language=="Thai"){
+            ansTranslate="อาจจะ";
+        }else{
+            ansTranslate=choice;
+        }
     }
 
     // update user's branch in firestore with data based on which closingQsID was answered
@@ -581,7 +609,7 @@ function selectClosingQuestionOption(button, index, closingQsID){
     // format choice html text bubble
     let ansTemplate = '<div class="space">\
                             <div class="message-container receiver">\
-                                <p>' + choice + '</p>\
+                                <p>' + ansTranslate + '</p>\
                             </div>\
                         </div>';
 
@@ -726,10 +754,10 @@ function showOnlineTransactionOptions(){
     // display the options
     let options = "<div class=\"space\">"
     if(select_language=="Malay"){
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_2otWWj5OEYaGTLo','_blank')\">Online Banking</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_2otWWj5OEYaGTLo','_blank')\">Internet Banking</button>";
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_9FFrjrePW1hWT0G','_blank')\">e-Wallet/Grab/TnG</button>";
     }else if(select_language=="Chinese (Simplified)"){
-        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_6tlMCzO3HSKg8FU','_blank')\">银行业</button>";
+        options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_6tlMCzO3HSKg8FU','_blank')\">网上银行</button>";
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_5iGfB3c9gQXA4qW','_blank')\">电子钱包//Grab/TnG</button>";
     }else if(select_language=="Thai"){
         options += "<button class=\"mdl-button mdl-js-button mdl-button--raised\" onclick=\"window.open('https://businessmy.au1.qualtrics.com/jfe/form/SV_ewGEyXijAKfNeQe','_blank')\">การธนาคาร</button>";

@@ -58,7 +58,7 @@
          ["Tidak <br> Berkenaan", "Tidak Yakin <br> Sama Sekali", "Agak <br> Tidak Yakin", "Cukup <br> Yakin" , "Agak <br> Yakin", "Sangat <br> Yakin"],
  
          // Interested
-         ["Sangat <br> Tidak <br> Berminat", "Tidak <br> Berminat", "Neutral", "Berminat", "Sangat <br> Berminat"],
+         ["Sangat Tidak <br> Berminat", "Tidak <br> Berminat", "Neutral", "Berminat", "Sangat <br> Berminat"],
  
          // Often
          ["tidak pernah","Sekali sebulan","Beberapa <br>kali sebulan","Sekali <br>seminggu","Beberapa <br>kali seminggu","Sehari sekali","Banyak kali<br> sehari"]
@@ -142,7 +142,7 @@ function getScaleString(language, scaleIndex, options) {
             `<button 
              id = ${option}
              class="mdl-button mdl-js-button mdl-button--raised notranslate"
-             style="margin-bottom: 1em;display: inline-block;width: 28%; border-radius: 12px; margin-left: 8px; margin-right: 3px; font-size: `+fontSize+`; height: 80px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(${option},${scaleIndex})'><span class = 'likertText notranslate' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"><br></br>`+hash[language][scaleIndex][i]+` </span>
+             style="margin-bottom: 1em;display: inline-block;width: 28%; border-radius: 12px; margin-left: 8px; margin-right: 3px; font-size: `+fontSize+`; height: 80px; padding:0px; line-height: 1.2em; min-width: 0px; font-weight: 500;" onclick='likertSelect(${option},${scaleIndex})'><span class = 'likertText notranslate' style="display: block;position: absolute; top: 0px; text-align:center; width:100%"><br><font size="4"><b>${option}</b></font><br>`+hash[language][scaleIndex][i]+` </span>
              </button>`
     }
 
