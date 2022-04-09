@@ -57,10 +57,10 @@ let enter_phone_txt = ["第二步： 请输入您的电话号码".bold(),
                        "Langkah 2: Sila masukkan nombor telefon anda".bold(),
                        "ขั้นตอนที่ 2: โปรดป้อนหมายเลขโทรศัพท์ของคุณ".bold()];
 
-// Enter e.g., +60129356770 or +668190677822
-let enter_phone_placeholder_txt = ["输入例如 +60129356770 或 +668190677822",
-                                   "Masukkan cth, +60129356770 atau +668190677822",
-                                   "ป้อน เช่น +60129356770 หรือ +668190677822"];
+// Enter (example: +60129356770 or +668190677822)
+let enter_phone_placeholder_txt = ["输入（例如：+60129356770 或 +668190677822）",
+                                   "Masukkan (contoh: +60129356770 atau +668190677822)",
+                                   "ป้อน (ตัวอย่าง: +60129356770 หรือ +668190677822)"];
 
 // Please click the SEND PIN button after you complete step 1 and 2, then tick "I'm not a robot"
 let ask_send_pin_txt = ["请在完成第 1 步和第 2 步后点击发送 PIN 按钮，然后勾选“I'm not a robot”".bold(),
