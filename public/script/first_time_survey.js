@@ -1041,24 +1041,60 @@ function showNumeric(questionObject) {
                 } else if(message < 0){
                     // If the number is negative
                     errorText.style.visibility = "visible";
-                    errorText.innerHTML = "the number can not be less than 0";
+                    if (select_language=="Malay"){
+                        errorText.innerHTML = "bilangannya tidak boleh kurang daripada 0";
+                    }else if (select_language=="Chinese (Simplified)"){
+                        errorText.innerHTML="数字不能小于 0";
+                    }else if (select_language=="Thai"){
+                        errorText.innerHTML="จำนวนต้องไม่น้อยกว่า 0";
+                    }else{
+                        errorText.innerHTML = "the number can not be less than 0.";
+                    }
                     submit.onclick = null;
                 } else if(message > upperRange){
                     // If the number is larger than
                     errorText.style.visibility = "visible";
-                    errorText.innerHTML = "the number can not be larger than " + upperRange;
+                    if (select_language=="Malay"){
+                        errorText.innerHTML = "bilangannya tidak boleh lebih besar daripada "+ upperRange;
+                    }else if (select_language=="Chinese (Simplified)"){
+                        errorText.innerHTML="数字不能大于 " + upperRange;
+                    }else if (select_language=="Thai"){
+                        errorText.innerHTML="จำนวนต้องไม่เกิน " + upperRange;
+                    }else{
+                        errorText.innerHTML = "the number can not be larger than " + upperRange;
+                    }
                     submit.onclick = null;
                 } else {
                     // check if question requires use to end the survey if an invalid response is given
                     if (questionObject.restrictions.skipIfInvalid) {
                         if (questionObject.restrictions.skipTarget === SKIP_END_SURVEY) {
                             if(questionIndex==1){
-                                let ansTemplate = '<div class="space">\
+                                let ansTemplate;
+                                if (select_language=="Malay"){
+                                    ansTemplate = '<div class="space">\
+                                    <div class="message-container sender blue current notranslate">\
+                                    <p>Umur hendaklah antara 60 hingga 100 tahun</p>\
+                                    </div>\
+                                    </div>';
+                                }else if (select_language=="Chinese (Simplified)"){
+                                    ansTemplate = '<div class="space">\
+                                    <div class="message-container sender blue current notranslate">\
+                                    <p>年龄应该在60到100之间</p>\
+                                    </div>\
+                                    </div>';
+                                }else if (select_language=="Thai"){
+                                    ansTemplate = '<div class="space">\
+                                    <div class="message-container sender blue current notranslate">\
+                                    <p>อายุควรอยู่ระหว่าง 60 ถึง 100</p>\
+                                    </div>\
+                                    </div>';
+                                }else{
+                                    ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
                                     <p>The age should be between 60 to 100</p>\
                                     </div>\
                                     </div>';
-    
+                                }
                                 messages.innerHTML+=ansTemplate
                             }
                             submit.onclick = endSurveyText;
@@ -1071,7 +1107,15 @@ function showNumeric(questionObject) {
             else {
                 // If it's not a number
                 errorText.style.visibility = "visible";
-                errorText.innerHTML = "the answer needs to be a number.";
+                if (select_language=="Malay"){
+                    errorText.innerHTML = "jawapannya mestilah nombor.";
+                }else if (select_language=="Chinese (Simplified)"){
+                    errorText.innerHTML="答案必须是一个数字。";
+                }else if (select_language=="Thai"){
+                    errorText.innerHTML="คำตอบต้องเป็นตัวเลข";
+                }else{
+                    errorText.innerHTML = "the answer needs to be a number.";
+                }
                 submit.onclick = null;
             }
         } else {
