@@ -43,19 +43,30 @@ async function exportQues() {
                                                     let admin = "";
                                                     if (!user.includes("+")) {
                                                         getAdmin(user).then(data => {
-                                                            localStorage.setItem(ADMIN_KEY, data)
+                                                            admin = data;
+                                                            switch(subQuestionType) {
+                                                                case TYPE_MULTIPLE_CHOICE:
+                                                                case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                                                case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                                    compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                                    break;
+                                                                default:
+                                                                    compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                                    break;
+                                                            }
                                                         });
-                                                        admin = localStorage.getItem(ADMIN_KEY);
                                                     }
-                                                    switch(subQuestionType) {
-                                                        case TYPE_MULTIPLE_CHOICE:
-                                                        case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                                                        case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                            break;
-                                                        default:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                            break;
+                                                    else {
+                                                        switch(subQuestionType) {
+                                                            case TYPE_MULTIPLE_CHOICE:
+                                                            case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                                            case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                                compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                                break;
+                                                            default:
+                                                                compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                                break;
+                                                        }
                                                     }
                                                 });
                                             });
@@ -77,22 +88,33 @@ async function exportQues() {
                                         let admin = "";
                                         if (!user.includes("+")) {
                                             getAdmin(user).then(data => {
-                                                localStorage.setItem(ADMIN_KEY, data)
+                                                admin = data;
+                                                switch(questionType){
+                                                    case TYPE_MULTIPLE_CHOICE:
+                                                    case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                                    case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                        compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                        break;
+
+                                                    default:
+                                                        compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                        break;
+                                                }
                                             });
-                                            admin = localStorage.getItem(ADMIN_KEY);
                                         }
-                                        switch(questionType){
-                                            case TYPE_MULTIPLE_CHOICE:
-                                            case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                                            case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                break;
+                                        else {
+                                            switch(questionType){
+                                                case TYPE_MULTIPLE_CHOICE:
+                                                case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                                case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                    compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                    break;
 
-                                            default:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                break;
+                                                default:
+                                                    compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                    break;
+                                            }
                                         }
-
                                     });
                                 });
                             break;
@@ -107,11 +129,11 @@ async function exportQues() {
  * Obtain admin phone number from user ID
  */
 async function getAdmin(user) {
-    let adminPhone = "";
+    let phone = "";
     await firebase.database().ref(`users/${user}`).once('value', data => {
-        adminPhone = data.val().phone;
+        phone = data.val().phone;
     });
-    return adminPhone;
+    return phone;
 }
 
 /**
