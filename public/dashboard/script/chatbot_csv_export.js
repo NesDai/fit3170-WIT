@@ -2,6 +2,9 @@ compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUES
 branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
 let language = ["English", "Chinese", "Malay", "Thai"];
 let options = {year: 'numeric', month: 'long', day: 'numeric'};
+// TODO: add admin phone number in the field under user collection
+// temporarily
+let adminPhone = ["60133369205", "60106622702", "60146745200", "60166166659", "60163454897", "60193450134", "60162091373"]
 
 /**
  * Compiles data from firebase to compiledData[] Array
@@ -42,31 +45,40 @@ async function exportQues() {
                                                     let user = responseObj.phone;
                                                     let admin = "";
                                                     if (!user.includes("+")) {
-                                                        getAdmin(user).then(data => {
-                                                            admin = data;
-                                                            switch(subQuestionType) {
-                                                                case TYPE_MULTIPLE_CHOICE:
-                                                                case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                                                                case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                                    compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                                    break;
-                                                                default:
-                                                                    compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                                    break;
-                                                            }
-                                                        });
-                                                    }
-                                                    else {
-                                                        switch(subQuestionType) {
-                                                            case TYPE_MULTIPLE_CHOICE:
-                                                            case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                                                            case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                                compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                                break;
-                                                            default:
-                                                                compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                                break;
+                                                        let userId = parseInt(user);
+                                                        let adminPhone_ind = 0;
+                                                        if (userId <= 100) {
+                                                            adminPhone_ind = 0
                                                         }
+                                                        else if (userId <= 200) {
+                                                            adminPhone_ind = 1
+                                                        }
+                                                        else if (userId <= 300) {
+                                                            adminPhone_ind = 2
+                                                        }
+                                                        else if (userId <= 400) {
+                                                            adminPhone_ind = 3
+                                                        }
+                                                        else if (userId <= 500) {
+                                                            adminPhone_ind = 4
+                                                        }
+                                                        else if (userId < 950) {
+                                                            adminPhone_ind = 5
+                                                        }
+                                                        else {
+                                                            adminPhone_ind = 6
+                                                        }
+                                                        admin = adminPhone[adminPhone_ind]
+                                                    }
+                                                    switch(subQuestionType) {
+                                                        case TYPE_MULTIPLE_CHOICE:
+                                                        case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                                        case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                            break;
+                                                        default:
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                            break;
                                                     }
                                                 });
                                             });
@@ -87,33 +99,41 @@ async function exportQues() {
                                         let user = responseObj.phone;
                                         let admin = "";
                                         if (!user.includes("+")) {
-                                            getAdmin(user).then(data => {
-                                                admin = data;
-                                                switch(questionType){
-                                                    case TYPE_MULTIPLE_CHOICE:
-                                                    case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                                                    case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                        compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                        break;
-
-                                                    default:
-                                                        compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                        break;
-                                                }
-                                            });
-                                        }
-                                        else {
-                                            switch(questionType){
-                                                case TYPE_MULTIPLE_CHOICE:
-                                                case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
-                                                case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                    compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                    break;
-
-                                                default:
-                                                    compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                    break;
+                                            let userId = parseInt(user);
+                                            let adminPhone_ind = 0;
+                                            if (userId <= 100) {
+                                                adminPhone_ind = 0
                                             }
+                                            else if (userId <= 200) {
+                                                adminPhone_ind = 1
+                                            }
+                                            else if (userId <= 300) {
+                                                adminPhone_ind = 2
+                                            }
+                                            else if (userId <= 400) {
+                                                adminPhone_ind = 3
+                                            }
+                                            else if (userId <= 500) {
+                                                adminPhone_ind = 4
+                                            }
+                                            else if (userId < 950) {
+                                                adminPhone_ind = 5
+                                            }
+                                            else {
+                                                adminPhone_ind = 6
+                                            }
+                                            admin = adminPhone[adminPhone_ind]
+                                        }
+                                        switch(questionType){
+                                            case TYPE_MULTIPLE_CHOICE:
+                                            case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
+                                            case TYPE_MULTIPLE_CHOICE_OTHERS:
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                break;
+
+                                            default:
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                break;
                                         }
                                     });
                                 });
