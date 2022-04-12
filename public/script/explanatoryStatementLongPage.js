@@ -9,7 +9,7 @@ let titles = ["解释性声明", "Pernyataan Penjelasan", "คำชี้แจ
 let backButtonTexts = ["回页", "Kembali", "กลับมา"];
 
 // get selected language
-let select_language = localStorage.getItem("LANGUAGE");
+let select_language = localStorage.getItem(LANGUAGE_KEY);
 
 // checking if all translations for Explanatory Statement are on the firebase. If not , upload them.
 // initialise string array of language branches
