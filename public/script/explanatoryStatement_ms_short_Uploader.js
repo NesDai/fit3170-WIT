@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the short malay version of the explanatory statement onto the firestore
 * */
 
-function uploadExplanatoryStatement_ms_short(){
+function uploadExplanatoryStatement_ms_short() {
     let contents = "<center><b>(Kumpulan Peserta Tinjauan)</b></center><br>" +
         "<center><b>MUHREC Project ID: 29459</b><br>" +
         "<b>E-mel projek:</b> womenintech@monash.edu</center><br>" +
@@ -41,13 +41,5 @@ function uploadExplanatoryStatement_ms_short(){
         "bersetuju dengan maklumat yang diberikan dalam Pernyataan Penjelasan.<br><br>" +
         "<a href='./explanatoryStatementLongPage.html'>Pautan ke Penyataan Penjelasan Panjang</a>"
 
-    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_ms_short").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the short thai version of the explanatory statement onto the firestore
 * */
 
-function uploadExplanatoryStatement_th_short(){
+function uploadExplanatoryStatement_th_short() {
     let contents = "<center><b>(กลุ่มผู้เข้าร่วมสำรวจ)</b></center><br>" +
         "<center><b>MUHREC Project ID: 29459</b><br>" +
         "<b>อีเมลโครงการ: </b>womenintech@monash.edu</center><br>" +
@@ -36,13 +36,5 @@ function uploadExplanatoryStatement_th_short(){
         "โปรดทราบว่า การทำแบบสำรวจต่อแสดงว่าคุณยินยอมที่จะมีส่วนร่วมในการวิจัยนี้ และยอมรับข้อมูลที่ให้ไว้ในคำชี้แจงคำอธิบาย<br><br>" +
         "<a href='./explanatoryStatementLongPage.html'>ลิงก์ไปยังคำชี้แจงแบบยาว</a>"
 
-    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_th_short").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

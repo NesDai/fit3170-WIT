@@ -314,13 +314,5 @@ function uploadTermsOfUse_en(){
         "relationship created between you and us as a result of these Terms of Use or use of the Women-in-tech. You " +
         "agree that these Terms of Use will not be construed against us by virtue of having drafted them."
 
-    firebase.firestore().collection("TermsOfUse").doc("TermsOfUse_en").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

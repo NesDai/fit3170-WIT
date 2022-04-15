@@ -186,13 +186,5 @@ function uploadTermsOfUse_zn_CN(){
         "的这些使用条款，您和我们之间不存在合资企业、合伙企业、雇佣关系或代理关系。您同意，这些使用条款不会因起草而对我们不利。您特此放弃基于" +
         "本使用条款的电子形式以及本协议各方未签署本使用条款而提出的任何和所有抗辩。"
 
-    firebase.firestore().collection("TermsOfUse").doc("TermsOfUse_zn_CN").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

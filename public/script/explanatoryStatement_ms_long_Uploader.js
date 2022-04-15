@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the long malay version of the explanatory statement onto the firestore
 * */
 
-function uploadExplanatoryStatement_ms_long(){
+function uploadExplanatoryStatement_ms_long() {
     let contents = "<center><b>(Kumpulan Peserta Tinjauan)</b></center><br>" +
         "<b>Project ID: 29459</b><br>" +
         "<b>Tajuk projek: Kerja Lestari melalui Aplikasi Women-in-Tech untuk Wanita Berumur di Malaysia dan Thailand: " +
@@ -125,13 +125,5 @@ function uploadExplanatoryStatement_ms_long(){
         "School of Business, Monash University Malaysia.<br>" +
         "Tel: +603-55144971; E-mel: teh.pei.lee@monash.edu"
 
-    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_ms_long").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

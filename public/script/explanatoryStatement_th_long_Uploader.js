@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the long thai version of the explanatory statement onto the firestore
 * */
 
-function uploadExplanatoryStatement_th_long(){
+function uploadExplanatoryStatement_th_long() {
     let contents = "<center><b>(กลุ่มผู้เข้าร่วมสำรวจ)</b></center><br>" +
         "<b>Project ID: 29459</b><br>" +
         "<b>ชื่อโครงการ: งานที่ยั่งยืนผ่านแอพพลิเคชั่น Women-in-tech สำหรับสตรีสูงอายุในมาเลเซียและไทย: การบูรณาการการวิจัยเชิงปฏิบัติการและแน" +
@@ -98,13 +98,5 @@ function uploadExplanatoryStatement_th_long(){
         "คณะบริหารธุรกิจ, Monash University Malaysia.<br>" +
         "โทรศัพท์: +603-55144971; อีเมล: teh.pei.lee@monash.edu"
 
-    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_th_long").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

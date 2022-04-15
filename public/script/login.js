@@ -62,10 +62,10 @@ let enter_phone_placeholder_txt = ["输入（例如：+60129356770 或 +66819067
                                    "Masukkan (contoh: +60129356770 atau +668190677822)",
                                    "ป้อน (ตัวอย่าง: +60129356770 หรือ +668190677822)"];
 
-// Please click the SEND PIN button after you complete step 1 and 2, then tick "I'm not a robot"
-let ask_send_pin_txt = ["请在完成第 1 步和第 2 步后点击发送 PIN 按钮，然后勾选“I'm not a robot”".bold(),
-                        "Sila klik butang HANTAR PIN selepas anda melengkapkan langkah 1 dan 2, kemudian tandakan \"I'm not a robot\"".bold(),
-                        "โปรดคลิกปุ่มส่ง PIN หลังจากเสร็จสิ้นขั้นตอนที่ 1 และ 2 แล้วทำเครื่องหมายที่ \"I'm not a robot\"".bold()];
+// Please click the SEND PIN button after you complete step 1 and 2
+let ask_send_pin_txt = ["完成第 1 步和第 2 步后，请单击发送 PIN 按钮".bold(),
+                        "Sila klik butang HANTAR PIN selepas anda melengkapkan langkah 1 dan 2".bold(),
+                        "โปรดคลิกปุ่มส่ง PIN หลังจากเสร็จสิ้นขั้นตอนที่ 1 และ 2".bold()];
 
 // Send Pin
 let send_pin_txt = ["发送密码", "Hantar Pin", "ส่งพิน"];
@@ -284,19 +284,22 @@ function changeLanguage(newLanguage){
 
     setAuthLanguage();
 
-    // recaptchaVerifier.reset()
-    this.window.recaptchaVerifier.reset();
-    // window.location = window.location  // refresh the page to reinitialize captcha
+    recaptchaVerifier.reset()
 }
 
 
 
 
-window.onload = function(){
+// window.onload = function() {
+//     alert("Window onload")
+//     setAuthLanguage();
+//     render();
+// }
 
+window.addEventListener("load", initFunction);
+function initFunction() {
     setAuthLanguage();
     render();
-
 }
 
 
@@ -304,16 +307,15 @@ window.onload = function(){
  * Function renders a recaptcha
  * @returns none
  */
-function render(){
+function render() {
 
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('send-button', {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
         'size': 'invisible',
         'callback': (response) => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           onSignInSubmit();
         }
       });
-
     recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
@@ -329,7 +331,7 @@ let persisted = false; //true if the logged in user does not need to sign in aga
  */
  function phoneAuth() {
     //get the number
-    var number=document.getElementById('number').value;
+    var number = document.getElementById('number').value;
 
     //phone number authentication function of firebase
 
@@ -353,14 +355,14 @@ let persisted = false; //true if the logged in user does not need to sign in aga
     // var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     // var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
 
-    this.window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    // this.window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     // alert(this.window.recaptchaVerifier);
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
     //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
-    firebase.auth().signInWithPhoneNumber(number,this.window.recaptchaVerifier).then(function (confirmationResult) {
+    firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
-        window.confirmationResult=confirmationResult;
-        coderesult=confirmationResult;
+        window.confirmationResult = confirmationResult;
+        coderesult = confirmationResult;
         if (select_language == "Chinese (Simplified)") {
             pin_message.innerHTML = pin_instruct_txt[0];
         }
@@ -517,8 +519,9 @@ function codeverify() {
             else {
                 alert(error.message);
             }
-            // recaptchaVerifier.reset();
-            this.window.recaptchaVerifier.reset();
+
+            recaptchaVerifier.reset();
+
             if (select_language == "Chinese (Simplified)") {
                 pin_message.innerHTML = invalid_pin_txt[0];
             }
@@ -796,26 +799,6 @@ function checkUsernameValidity(){
     let username = document.getElementById("username").value;
     let valid = usernameValidation();
 
-    // //search the username in db. similar to phone number search
-    // firebase.database().ref('users').orderByChild('username')
-    // .equalTo(username).once('value', data => {
-    //     data.forEach(() => {
-    //         // If username exists, output an error
-    //         if (select_language == "Chinese (Simplified)") {
-    //             username_error.innerHTML = username_exist_txt[0];
-    //         }
-    //         else if (select_language == "Malay") {
-    //             username_error.innerHTML = username_exist_txt[1];
-    //         }
-    //         else if (select_language == "Thai") {
-    //             username_error.innerHTML = username_exist_txt[2];
-    //         }
-    //         else {
-    //             username_error.innerHTML = "<p>Username exists. Please choose another username</p>";
-    //         }
-    //         valid = false;
-    //     });
-    // }).then(() => {
     if (valid) {
         username_error.innerHTML = "";
         //if valid, register the user
@@ -852,5 +835,4 @@ function checkUsernameValidity(){
         // register(document.getElementById("username").value, JSON.parse(localStorage.getItem(USER_KEY))["phone"]);
         register(document.getElementById("username").value, phone_num);
     }
-    // });
 }

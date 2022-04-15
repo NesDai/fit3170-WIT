@@ -44,7 +44,7 @@ if (select_language == "Chinese (Simplified)") {
 }
 
 // function to check if user has clicked the checkbox before letting them continue to chatbot page
-function checkAccepted(){
+function checkAccepted() {
     // if it is checked, update user's realtime database data that they accept the terms of use
     if (checkbox.checked){
 
@@ -58,101 +58,19 @@ function checkAccepted(){
     }
 }
 
-// checking if all translations for terms and conditions are on the firebase. If not , upload them.
-// initialise string array of language branches
-let languageBranch = ["TermsOfUse_en", "TermsOfUse_zn_CN", "TermsOfUse_ms", "TermsOfUse_th"];
-let updatePage = false;
-
-// for-loop to check if all of the supported language translations are on the firebase
-for (let i  = 0; i < languageBranch.length; i++) {
-    let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[i]);
-    TermsOfUseRef.get().then((doc) => {
-        if (doc.exists == false) {
-            if (i == 0) {
-                // upload the english translation onto the firebase and update the page
-                uploadTermsOfUse_en();
-                updatePageContent(select_language, languageBranch);
-                updatePage = true;
-            } else if  (i == 1) {
-                // upload the chinese translation onto the firebase and update the page
-                uploadTermsOfUse_zn_CN();
-                updatePageContent(select_language, languageBranch);
-                updatePage = true;
-            } else if (i == 2) {
-                // upload the malay translation onto the firebase and update the page
-                uploadTermsOfUse_ms();
-                updatePageContent(select_language, languageBranch);
-                updatePage = true;
-            } else if (i == 3) {
-                // upload the thai translation onto the firebase and update the page
-                uploadTermsOfUse_th();
-                updatePageContent(select_language, languageBranch);
-                updatePage = true;
-            }
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
+// display terms of use contents as selected language
+if (select_language == "English") {
+    content_box.innerHTML = uploadTermsOfUse_en();
 }
-
-// if the page has not been updated, active updatePageContent
-if (!updatePage) {
-    updatePageContent(select_language, languageBranch);
-    updatePage = true;
+else if (select_language == "Chinese (Simplified)") {
+    content_box.innerHTML = uploadTermsOfUse_zn_CN();
 }
-
-/**
- * function to update the terms of use page content by extracting the terms of use from the firestore database depending
- * on the selected language and putting it on the html through the content_boxRef.
- * @param selected_language - a string that is either "en", "zh-CN", "ms" or "th" which represent english, chinese,
- * malay or thai respectively.
- * @param languageBranch - an array of the names of the specific branches on the firebase that contains a translation of
- * the terms of use.
- */
-function updatePageContent(selected_language, languageBranch) {
-    // initialize content for Terms of Use page
-    let content;
-
-    // check the selected language and and extract the corresponding translation of the terms of use and update the page
-    if (select_language == "English") {
-        let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[0]);
-        TermsOfUseRef.get().then((doc) => {
-            if (doc.exists) {
-                content =  doc.data();
-                content_box.innerHTML = content.contents;
-            }
-        }).catch((error) => { // print error in getting the terms of use from firestore
-            console.log("Error getting document:", error);
-        });
-    } else if (select_language == "Chinese (Simplified)") {
-        let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[1]);
-        TermsOfUseRef.get().then((doc) => {
-            if (doc.exists) {
-                content =  doc.data();
-                content_box.innerHTML = content.contents;
-            }
-        }).catch((error) => { // print error in getting the terms of use from firestore
-            console.log("Error getting document:", error);
-        });
-    } else if (select_language == "Malay") {
-        let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[2]);
-        TermsOfUseRef.get().then((doc) => {
-            if (doc.exists) {
-                content =  doc.data();
-                content_box.innerHTML = content.contents;
-            }
-        }).catch((error) => { // print error in getting the terms of use from firestore
-            console.log("Error getting document:", error);
-        });
-    } else if (select_language == "Thai") {
-        let TermsOfUseRef = firebase.firestore().collection("TermsOfUse").doc(languageBranch[3]);
-        TermsOfUseRef.get().then((doc) => {
-            if (doc.exists) {
-                content =  doc.data();
-                content_box.innerHTML = content.contents;
-            }
-        }).catch((error) => { // print error in getting the terms of use from firestore
-            console.log("Error getting document:", error);
-        });
-    }
+else if (select_language == "Malay") {
+    content_box.innerHTML = uploadTermsOfUse_ms();
+}
+else if (select_language == "Thai") {
+    content_box.innerHTML = uploadTermsOfUse_th();
+}
+else {
+    content_box.innerHTML = uploadTermsOfUse_en();
 }

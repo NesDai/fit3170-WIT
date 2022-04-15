@@ -245,13 +245,5 @@ function uploadTermsOfUse_th(){
         "างขึ้นระหว่างคุณและเราอันเป็นผลมาจากข้อกำหนดการหรือการใช้งาน Women-in-tech คุณตกลงว่าข้อตกลงการใช้งานจะไม่ถูกตีความอันเป็นผลร้ายกับ" +
         "เราโดยอาศัยตามอำนาจที่ได้ร่างไว้นี้"
 
-    firebase.firestore().collection("TermsOfUse").doc("TermsOfUse_th").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

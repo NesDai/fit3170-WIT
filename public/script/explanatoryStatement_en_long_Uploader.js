@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the long english version of the explanatory statement onto the firestore
 * */
 
-function uploadExplanatoryStatement_en_long(){
+function uploadExplanatoryStatement_en_long() {
     let contents = "<center><b>(Survey Participant Group)</b></center><br>" +
         "<b>Project ID: 29459</b><br>" +
         "<b>Project title: Sustainable Work through Women-in-tech Application for Older Women in Malaysia and Thailand: " +
@@ -111,13 +111,5 @@ function uploadExplanatoryStatement_en_long(){
         "School of Business, Monash University Malaysia.<br>" +
         "Tel: +603-55144971; Email: teh.pei.lee@monash.edu"
 
-    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_en_long").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the short english version of the explanatory statement onto the firestore
 * */
 
-function uploadExplanatoryStatement_en_short(){
+function uploadExplanatoryStatement_en_short() {
     let contents = "<center><b>(Survey Participant Group)</b></center><br>" +
         "<center><b>Project ID: 29459</b><br>" +
         "<b>Project email:</b> womenintech@monash.edu</center><br>" +
@@ -40,13 +40,5 @@ function uploadExplanatoryStatement_en_short(){
         "provided in the Explanatory Statement.<br><br>" +
         "<a href='./explanatoryStatementLongPage.html'>Long Version of Explanatory Statement</a>"
 
-    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_en_short").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

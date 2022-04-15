@@ -344,13 +344,5 @@ function uploadTermsOfUse_ms(){
         "kami sebagai hasil daripada Terma Penggunaan atau penggunaan Women-in-tech ini. Anda bersetuju bahawa " +
         "Terma Penggunaan ini tidak akan ditafsirkan terhadap kami kerana kami telah menyusunnya."
 
-    firebase.firestore().collection("TermsOfUse").doc("TermsOfUse_ms").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }

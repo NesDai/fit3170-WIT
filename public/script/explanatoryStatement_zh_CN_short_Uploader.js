@@ -2,7 +2,7 @@
 * This file is dedicated to uploading the short chinese version of the explanatory statement onto the firestore
 * */
 
-function uploadExplanatoryStatement_zh_CN_short(){
+function uploadExplanatoryStatement_zh_CN_short() {
     let contents = "<center><b>(调查参与者组)</b></center><br>" +
         "<center><b>MUHREC Project ID: 29459</b><br>" +
         "<b>项目邮箱: </b>womenintech@monash.edu</center><br>" +
@@ -32,13 +32,5 @@ function uploadExplanatoryStatement_zh_CN_short(){
         "请注意，继续调查即表示您同意参与本研究，并同意解释性声明中提供的信息。<br><br>" +
         "<a href='./explanatoryStatementLongPage.html'>链接到解释性声明完整版</a>"
 
-    firebase.firestore().collection("ExplanatoryStatement").doc("ExplanatoryStatement_zh_CN_short").set({
-        contents: contents
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    return contents;
 }
