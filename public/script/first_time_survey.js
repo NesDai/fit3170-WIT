@@ -20,6 +20,15 @@ let question_bubble_no = 0;
 var speechSynth = window.speechSynthesis;
 var voices = [];
 
+// Translated text of "Please type your answer in the text box."
+errorMsg_no_input = ["请在文本框中输入您的答案。", "Sila taip jawapan anda dalam kotak teks.", "กรุณาพิมพ์คำตอบของคุณในกล่องข้อความ"];
+
+// Translated text of "character limit exceeded"
+errorMsg_char_limit = ["超出字数限制", "melebihi had aksara", "เกินจำนวนอักขระสูงสุด"];
+
+// Translated text of "The answer is too long"
+errorMsg_ans_long = ["答案太长", "Jawapannya terlalu panjang", "คำตอบยาวเกินไป"];
+
 // get user's selected language and set the questions branches id to the corresponding index for that language
 let select_language = localStorage.getItem(LANGUAGE_KEY);
 
@@ -111,7 +120,7 @@ function select(button, index) {
         space.childNodes[i].disabled = true;
     }
 
-    
+
 
     // display user's choice on chat
     messages.innerHTML += ansTemplate;
@@ -264,12 +273,12 @@ function addMessage() {
                         // Set the current question index to the question before the skip target since nextQuestion increments
                         // the question index by 1
                         questionIndex = QUESTION_IDS[branch_id].indexOf(currentQuestionObject.restrictions.skipTarget) - 1;
-                        
+
 
                         // In case the user was answering a long question, reset params related to long questions
                         currentSubQuestionIds = null;
-                        
-                        
+
+
 
                         // call sync progress to update currentSubQuestionIds and questionID after nextQuestion
                         syncProgress();
@@ -301,9 +310,21 @@ function addMessage() {
         // Prevent users from using text box
         //disableInput();
     }
-    else{
+    else {
       errorText.style.visibility = "visible";
-      errorText.innerHTML = "Please type your answer in the text box.";
+      if (select_language == "Chinese (Simplified)") {
+          errorText.innerHTML = errorMsg_no_input[0];
+      }
+      else if (select_language == "Malay") {
+          errorText.innerHTML = errorMsg_no_input[1];
+      }
+      else if (select_language == "Thai") {
+          errorText.innerHTML = errorMsg_no_input[2];
+      }
+      else {
+          errorText.innerHTML = "Please type your answer in the text box.";
+      }
+      enableInput();
     }
 }
 
@@ -408,9 +429,9 @@ function showEndingMessage() {
 function showReadyClosingMessage(){
 
     let select_language = localStorage.getItem(LANGUAGE_KEY);
-    
+
     // display a question asking if the user wants to participate in future research
-    
+
     if(select_language=="Malay"){
         messages.innerHTML +=
         "<div class='space'>" +
@@ -951,7 +972,7 @@ function showQuestion(isSubQuestion) {
                 case TYPE_NUMERIC:
                 case TYPE_NUMERIC_SUB_QUESTION:
                     showNumeric(questionObject);
-                    
+
                     if (agreeLikertQues.includes(questionIndex)) {
                         disableInput();
                         makeLikertScale(branch_id, "agree");
@@ -1242,7 +1263,7 @@ function checkMCQInput(){
     if (found) {
         errorText.innerHTML = "";
         addMessage();
-        
+
     } else {
         errorText.innerHTML = "";
         errorText.style.visibility = "visible";
@@ -1362,8 +1383,19 @@ function othersOptionInput(){
             submit.onclick = addMessage;
         } else {
             // If it's super long
+            if (select_language == "Chinese (Simplified)") {
+                errorText.innerHTML = errorMsg_char_limit[0];
+            }
+            else if (select_language == "Malay") {
+                errorText.innerHTML = errorMsg_char_limit[1];
+            }
+            else if (select_language == "Thai") {
+                errorText.innerHTML = errorMsg_char_limit[2];
+            }
+            else {
+                errorText.innerHTML = "character limit exceeded";
+            }
             errorText.style.visibility = "visible";
-            errorText.innerHTML = "character limit exceeded";
         }
     }
 
@@ -1421,8 +1453,19 @@ function showShortText(questionObject) {
             submit.onclick = addMessage;
         } else {
             // If it's super long
+            if (select_language == "Chinese (Simplified)") {
+                errorText.innerHTML = errorMsg_ans_long[0];
+            }
+            else if (select_language == "Malay") {
+                errorText.innerHTML = errorMsg_ans_long[1];
+            }
+            else if (select_language == "Thai") {
+                errorText.innerHTML = errorMsg_ans_long[2];
+            }
+            else {
+                errorText.innerHTML = "The answer is too long";
+            }
             errorText.style.visibility = "visible";
-            errorText.innerHTML = "The answer is too long";
             submit.onclick = null;
             //submit.onclick = repromptQuestion;
         }
@@ -1645,7 +1688,7 @@ function hashString(scaleIndex,number){
 
 /** Function of selecting likert options **/
 function likertSelect(number,scaleIndex)
-{   
+{
     document.getElementById('likert_scale').innerHTML='';
     // format choice html text bubble
     let ansTemp = '<div class="space">\
@@ -1656,7 +1699,7 @@ function likertSelect(number,scaleIndex)
 
     // display user's choice on chat
     messages.innerHTML += ansTemp;
-    
+
 
     // Prevent users from using text box
     disableInput();

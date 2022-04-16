@@ -9,7 +9,7 @@ let titles = ["解释性声明", "Pernyataan Penjelasan", "คำชี้แจ
 let backButtonTexts = ["回页", "Kembali", "กลับมา"];
 
 // get selected language
-let select_language = localStorage.getItem("LANGUAGE");
+let select_language = localStorage.getItem(LANGUAGE_KEY);
 
 // change page elements according to selected language
 // display long explanatory statement in selected language

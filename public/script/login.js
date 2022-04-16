@@ -438,6 +438,38 @@ function codeverify() {
         code += pin_digit.value.toString();
     });
 
+    if (code.length < 6) {
+        // alert the input is incorrect
+        if (select_language == "Chinese (Simplified)") {
+            alert(pin_alert[0]);
+        }
+        else if (select_language == "Malay") {
+            alert(pin_alert[1]);
+        }
+        else if (select_language == "Thai") {
+            alert(pin_alert[2]);
+        }
+        else {
+            alert(error.message);
+        }
+
+        // display pin error message
+        if (select_language == "Chinese (Simplified)") {
+            pin_message.innerHTML = invalid_pin_txt[0];
+        }
+        else if (select_language == "Malay") {
+            pin_message.innerHTML = invalid_pin_txt[1];
+        }
+        else if (select_language == "Thai") {
+            pin_message.innerHTML = invalid_pin_txt[2];
+        }
+        else {
+            pin_message.innerHTML = "Invalid PIN entered. Please enter the correct PIN.";
+        }
+        pin_message.style.color = "red";
+        return;
+    }
+
     // console.log(test);
 
     // var code=document.getElementById('verificationCode').value;
