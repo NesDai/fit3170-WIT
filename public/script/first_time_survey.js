@@ -19,7 +19,8 @@ let othersAnswers = [];
 let question_bubble_no = 0;
 var speechSynth = window.speechSynthesis;
 var voices = [];
-
+let currSection = 0;
+let resumeCond = false;
 // Translated text of "Please type your answer in the text box."
 errorMsg_no_input = ["请在文本框中输入您的答案。", "Sila taip jawapan anda dalam kotak teks.", "กรุณาพิมพ์คำตอบของคุณในกล่องข้อความ"];
 
@@ -748,11 +749,23 @@ function showOnlineTransactionOptions(){
         `<p>ขอบคุณที่ทำแบบสำรวจให้เสร็จ! โทเค็นของการเข้าร่วมจะได้รับผ่านการทำธุรกรรมออนไลน์</p>` +
         "</div>" +
         "</div>";
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>โทเค็นแสดงความขอบคุณ RM10 จะไม่ถูกดำเนินการหากคุณไม่กรอกรายละเอียดการชำระเงินของคุณ</p>` +
+        "</div>" +
+        "</div>";
     }else if(select_language=="Malay"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>Terima kasih kerana melengkapkan tinjauan! Token penyertaan akan diberikan melalui transaksi dalam talian.</p>` +
+        "</div>" +
+        "</div>";
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Token penghargaan RM10 tidak akan diproses jika anda tidak mengisi butiran pembayaran anda.</p>` +
         "</div>" +
         "</div>";
     }else if(select_language=="Chinese (Simplified)"){
@@ -762,11 +775,24 @@ function showOnlineTransactionOptions(){
         `<p>感谢您完成调查！将通过在线交易授予参与令牌。</p>` +
         "</div>" +
         "</div>";
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>如果您不填写付款详细信息，感谢现金 RM10 将不予转入您的账户</p>` +
+        "</div>" +
+        "</div>";
+        
     }else{
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>Thank you for completing the survey! A token of participation will be granted via online transaction.</p>` +
+        "</div>" +
+        "</div>";
+        messages.innerHTML +=
+        "<div class='space'>" +
+        "<div class='message-container sender blue current'>" +
+        `<p>Token of appreciation RM10 will not be processed if you do not fill in your payment details.</p>` +
         "</div>" +
         "</div>";
     }
@@ -966,6 +992,42 @@ function showQuestion(isSubQuestion) {
 
             // DONT REMOVE THIS - Yong Peng
             console.log(currentQuestionObject);
+            if(resumeCond){
+                setCurrSection(currentQuestionObject.category);
+                resumeCond = false;
+            }
+            if(currentQuestionObject.category!=PART_TITLE[currSection]){
+                currSection += 1;
+                if(select_language=="Malay"){
+                    document.getElementById("messages").innerHTML +=
+                    "<div class='space'>" +
+                    "<div class='message-container sender blue current notranslate'><p>" +
+                    PART_TITLE_Malay[currSection] +
+                    "</p></div>" +
+                    "</div>";
+                }else if(select_language=="Chinese (Simplified)"){
+                    document.getElementById("messages").innerHTML +=
+                    "<div class='space'>" +
+                    "<div class='message-container sender blue current notranslate'><p>" +
+                    PART_TITLE_Chinese[currSection] +
+                    "</p></div>" +
+                    "</div>";
+                }else if(select_language=="Thai"){
+                    document.getElementById("messages").innerHTML +=
+                    "<div class='space'>" +
+                    "<div class='message-container sender blue current notranslate'><p>" +
+                    PART_TITLE_Thai[currSection] +
+                    "</p></div>" +
+                    "</div>";
+                }else{
+                    document.getElementById("messages").innerHTML +=
+                    "<div class='space'>" +
+                    "<div class='message-container sender blue current notranslate'><p>" +
+                    PART_TITLE[currSection] +
+                    "</p></div>" +
+                    "</div>";
+                }
+            }
 
             // checking the type of the question to assign the appropriate function to display it
             switch (questionType) {
@@ -1582,26 +1644,27 @@ function endSurveyText() {
     showMessageReceiver(input.value);
     console.log("GUQ "+questionIndex);
     if(questionIndex==0){
+        let ansTemplate;
         if(select_language=="Chinese (Simplified)"){
-            let ansTemplate = '<div class="space">\
+             ansTemplate = '<div class="space">\
                 <div class="message-container sender blue current notranslate">\
                 <p>此调查仅适用于年龄在 50 至 100 岁之间的人</p>\
                 </div>\
                 </div>';
         }else if(select_language=="Malay"){
-            let ansTemplate = '<div class="space">\
+             ansTemplate = '<div class="space">\
                 <div class="message-container sender blue current notranslate">\
                 <p>Survey ini hanya untuk mereka yang berumur antara 50 hingga 100 tahun</p>\
                 </div>\
                 </div>';
         }else if(select_language=="Thai"){
-            let ansTemplate = '<div class="space">\
+             ansTemplate = '<div class="space">\
                 <div class="message-container sender blue current notranslate">\
                 <p>การสำรวจนี้สำหรับผู้ที่มีอายุระหว่าง 50 ถึง 100 ปีเท่านั้น</p>\
                 </div>\
                 </div>';
         }else{
-            let ansTemplate = '<div class="space">\
+             ansTemplate = '<div class="space">\
                 <div class="message-container sender blue current notranslate">\
                 <p>This survery are only for people who are age between 50 to 100 years old</p>\
                 </div>\
@@ -1718,4 +1781,16 @@ function enableInput(){
 function disableInput(){
     textInput.style.display="none";
     document.getElementById('hint_area').innerHTML = "";
+}
+
+function setCurrSection(nameSection){
+        for(let i = 0;i<PART_TITLE.length;i++){
+        if(nameSection==PART_TITLE[i]){
+            currSection = i;
+        }
+    }
+}
+
+function enableResume(){
+    resumeCond=true;
 }

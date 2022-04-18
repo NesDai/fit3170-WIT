@@ -48,7 +48,40 @@ const PART_TITLE = [
     "Part 2: About your employment",
     "Part 3: About your mobile phone usage",
     "Part 4: About your learning interest",
-    "Part 4: About your learning engagement"
+    "Part 5: About your learning engagement"
+]
+
+const PART_TITLE_Malay = [
+    "",
+    // The above title is a placeholder to allow 1-indexing
+
+    "Bahagian 1: Tentang diri anda",
+    "Bahagian 2: Mengenai pekerjaan anda",
+    "Bahagian 3: Mengenai penggunaan telefon bimbit anda",
+    "Bahagian 4: Mengenai minat belajar anda",
+    "Bahagian 5: Mengenai penglibatan pembelajaran anda"
+]
+
+const PART_TITLE_Chinese = [
+    "",
+    // The above title is a placeholder to allow 1-indexing
+
+    "第 1 部分：关于你自己",
+    "第 2 部分：关于您的工作",
+    "第 3 部分：关于您的手机使用情况",
+    "第 4 部分：关于您的学习兴趣",
+    "第 5 部分：关于您的学习参与度"
+]
+
+const PART_TITLE_Thai = [
+    "",
+    // The above title is a placeholder to allow 1-indexing
+
+    "ตอนที่ 1: เกี่ยวกับตัวคุณ",
+    "ส่วนที่ 2: เกี่ยวกับการจ้างงานของคุณ",
+    "ส่วนที่ 3: เกี่ยวกับการใช้โทรศัพท์มือถือของคุณ",
+    "ส่วนที่ 4: เกี่ยวกับความสนใจในการเรียนรู้ของคุณ",
+    "ส่วนที่ 5: เกี่ยวกับการมีส่วนร่วมในการเรียนรู้ของคุณ"
 ]
 
 // The paths for storing/retrieving questions from

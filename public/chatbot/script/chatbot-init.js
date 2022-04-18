@@ -354,6 +354,7 @@ function resumeSurvey(button) {
     // Display the choice as a message bubble
     let choice = button.textContent.trim();
     showMessageReceiver(choice);
+    enableResume();
 
     // Populate the chatbot window with previous conversations
     noDelayMode = true;
@@ -369,7 +370,6 @@ function resumeSurvey(button) {
                 let question = responseObject.question;
                 let answer = responseObject.answer;
                 let questionChoices = responseObject.restrictions.choices;
-
                 if (titleQuestion !== null && titleQuestion !== undefined) {
                     // If this is the first sub-question of a long question type
                     if (lastTitleQuestion !== titleQuestion) {
