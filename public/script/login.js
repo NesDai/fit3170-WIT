@@ -33,7 +33,7 @@ let register_message = document.getElementById("registeredMessage");
 let username_error = document.getElementById("error_username");
 
 
-// Translated words that will display in login page in each languages
+// Translated words that will display in login page and sign up page in each languages
 
 // login
 let login_txt = ["登录", "log masuk", "เข้าสู่ระบบ"];
@@ -108,6 +108,11 @@ let invalid_pin_txt = ["输入的 PIN 无效。请输入正确的 PIN。",
                        "PIN tidak sah dimasukkan. Sila masukkan PIN yang betul.",
                        "ป้อน PIN ไม่ถูกต้อง โปรดป้อน PIN ที่ถูกต้อง"];
 
+// Please enter the full PIN number.
+let invalid_pin_len = ["请输入完整的 PIN 码。",
+                       "Sila masukkan nombor PIN penuh.",
+                       "โปรดป้อนหมายเลข PIN แบบเต็ม"];
+
 // Username exists. Please choose another username
 let username_exist_txt = ["<p>用户名存在。请选择其他用户名</p>",
                           "<p>Nama pengguna wujud. Sila pilih nama pengguna lain</p>",
@@ -124,8 +129,13 @@ let nav_reopen_page = ["有些不对劲。请关闭并重新打开页面。",
                        "Sesuatu telah berlaku. Sila tutup dan buka semula halaman.",
                        "อะไรบางอย่างผิดปกติ. กรุณาปิดและเปิดหน้าใหม่อีกครั้ง"];
 
+// Phone number entered on this page is different from the phone number entered on the login page.
+let diff_phone_txt = ["在此页面输入的电话号码与在登录页面输入的电话号码不同。",
+                      "Nombor telefon yang dimasukkan pada halaman ini adalah berbeza daripada nombor telefon yang dimasukkan pada halaman log masuk.",
+                      "หมายเลขโทรศัพท์ที่ป้อนในหน้านี้แตกต่างจากหมายเลขโทรศัพท์ที่ป้อนในหน้าเข้าสู่ระบบ"];
 
 const USER_KEY = "USER";
+const PHONE_KEY = "PHONE";
 
 
 // get selected language
@@ -153,17 +163,7 @@ Array.from(pin_digits).forEach(function(pin_digit) {
 
 // Display the phone number in sign up page input field
 if (current_page == "signup.html") {
-    var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
-    var phone_num = user_obj["phone"];
-
-    if (phone_num === undefined) {
-        for (var key in user_obj) {
-            phone_num = user_obj[key].phone;
-        }
-    }
-    if (phone_num.includes("-")) {
-        phone_num = phone_num.substring(0, phone_num.length - 4);
-    }
+    phone_num = localStorage.getItem(PHONE_KEY);
     phoneNum_placeholder.value = phone_num;
 }
 
@@ -333,6 +333,25 @@ let persisted = false; //true if the logged in user does not need to sign in aga
     //get the number
     var number = document.getElementById('number').value;
 
+    // check if the number enter in sign up page is same with the
+    // phone number entered in login page
+    number_login = localStorage.getItem(PHONE_KEY);
+    if (number != number_login) {
+        if (select_language == "Chinese (Simplified)") {
+            alert(diff_phone_txt[0]);
+        }
+        else if (select_language == "Malay") {
+            alert(diff_phone_txt[1]);
+        }
+        else if (select_language == "Thai") {
+            alert(diff_phone_txt[2]);
+        }
+        else {
+            alert("Phone number entered on this page is different from the phone number entered on the login page.");
+        }
+        return;
+    }
+
     //phone number authentication function of firebase
 
     //check invalid characters (space)
@@ -350,13 +369,9 @@ let persisted = false; //true if the logged in user does not need to sign in aga
         else {
             phone_space_error.innerHTML = "<p>Phone number obtain contains invalid characters. Please avoid using spaces and try again</p>";
         }
+        return;
     }
-    //it takes two parameter first one is number,,,second one is recaptcha
-    // var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    // var appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
 
-    // this.window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    // alert(this.window.recaptchaVerifier);
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>
     //the Persistence of the authentication is 'SESSION'. If window closed, then no longer signed in.
     firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
@@ -400,7 +415,7 @@ function phoneValidation() {
     var telephone = document.getElementById("number").value
 
     // test the input number based on the RegEx pattern stated
-    if (phone_regex.test(telephone) && telephone!="")
+    if (phone_regex.test(telephone) && telephone != "")
     {
         phone_char_error.innerHTML = "";
         document.getElementById("number").style.visibility="visible";
@@ -441,16 +456,16 @@ function codeverify() {
     if (code.length < 6) {
         // alert the input is incorrect
         if (select_language == "Chinese (Simplified)") {
-            alert(pin_alert[0]);
+            alert(invalid_pin_len[0]);
         }
         else if (select_language == "Malay") {
-            alert(pin_alert[1]);
+            alert(invalid_pin_len[1]);
         }
         else if (select_language == "Thai") {
-            alert(pin_alert[2]);
+            alert(invalid_pin_len[2]);
         }
         else {
-            alert(error.message);
+            alert("Please enter the full PIN number.");
         }
 
         // display pin error message
@@ -534,10 +549,8 @@ function codeverify() {
             else {
                 register_message.innerHTML="<h3>You are all set. You will be redirected shortly<h3>";
             }
-
             //check if this user is already registered
-            // checkUserExistence(document.getElementById("number").value);
-
+            checkUserExistence(phone);
         }).catch(function (error) {
             if (select_language == "Chinese (Simplified)") {
                 alert(pin_alert[0]);
@@ -595,11 +608,16 @@ function codeverify() {
  * @param {1} phone: the user's phone number
  * @returns boolean true if exists and false is does not
  */
-function checkUserExistence(phone){
+function checkUserExistence (phone) {
 
     let proceed = phoneValidation();
     let is_admin = false;
     let admin_id = "";
+
+    // store phone number in local storage (that will not change into ID)
+    if (current_page == "login.html") {
+        localStorage.setItem(PHONE_KEY, phone);
+    }
 
     // If the user enter admin phone number
     firebase.database().ref('adminPhone').orderByChild('phone')
@@ -628,7 +646,7 @@ function checkUserExistence(phone){
           }
           firebase.database().ref(`users/${phone}`).once("value", snapshot => {
 
-              if (snapshot.exists() && proceed){
+              if (snapshot.exists() && proceed) {
                   let user = snapshot.val(); // get the user
 
                   // if it is admin login
@@ -639,15 +657,14 @@ function checkUserExistence(phone){
                           phone: admin_id
                       }
                   }
-
                   console.log("set");
                   localStorage.setItem(USER_KEY,JSON.stringify(user));
                   window.location = "main_page.html"
               }
-              else if(!proceed){
+              else if(!proceed) {
                   return; // do not proceed
               }
-              else{  // keep as else if so as to not redirect if not proceed
+              else {  // keep as else if so as to not redirect if not proceed
                   //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
                   // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
                   let user = {
@@ -658,43 +675,10 @@ function checkUserExistence(phone){
                   console.log("not set");
                   localStorage.setItem(USER_KEY,JSON.stringify(user));
                   window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
-
               }
-
            })
         }
     });
-
-
-
-    // firebase.database().ref(`users/${phone}`).once("value", snapshot => {
-    //
-    //     if (snapshot.exists() && proceed){
-    //
-    //         let user = snapshot.val(); // get the user
-    //
-    //         console.log("set");
-    //         localStorage.setItem(USER_KEY,JSON.stringify(user));
-    //         window.location = "main_page.html"
-    //     }
-    //     else if(!proceed){
-    //         return; // do not proceed
-    //     }
-    //     else{  // keep as else if so as to not redirect if not proceed
-    //         //!Need to ask to make up a username MAKE LOCAL STORAGE AND REDIRECT
-    //         // localStorage.setItem(USER_KEY, JSON.stringify(phone)); //temporarily use the USER_KEY to store the users phone number
-    //         let user = {
-    //             username: "notset",
-    //             phone: phone
-    //
-    //         }
-    //         console.log("not set");
-    //         localStorage.setItem(USER_KEY,JSON.stringify(user));
-    //         window.location = "termsOfUsePage.html"; //TODO make this a proper redirect
-    //
-    //     }
-    //
-    //  })
 }
 
 
@@ -726,14 +710,18 @@ function makeNewUser(phone,username){
 
 firebase.auth().onAuthStateChanged(function(user){
     if (user) {
-        user.phone = user.phoneNumber;
-
-        localStorage.setItem(USER_KEY,JSON.stringify(user));
-        let userjson = JSON.parse(localStorage.getItem(USER_KEY));
-        userjson["phone"] = userjson["phoneNumber"]
-        localStorage.setItem(USER_KEY, JSON.stringify(userjson))
-        checkUserExistence(user.phoneNumber);
-
+        // user.phone = user.phoneNumber;
+        //
+        // localStorage.setItem(USER_KEY,JSON.stringify(user));
+        // let userjson = JSON.parse(localStorage.getItem(USER_KEY));
+        // userjson["phone"] = userjson["phoneNumber"]
+        // localStorage.setItem(USER_KEY, JSON.stringify(userjson))
+        // checkUserExistence(user.phoneNumber);
+        // console.log(user.phone);
+        // console.log(userjson);
+        // console.log(userjson["phoneNumber"]);
+        // console.log(userjson);
+        // alert("User exist")
 
 
 
@@ -753,7 +741,7 @@ firebase.auth().onAuthStateChanged(function(user){
  * @param {*} username the username input by user
  * @param {*} phone the user's phone number
  */
-function register(username,phone){
+function register(username,phone) {
     //retrieve phone from local storage
     makeNewUser(phone, username);
 
