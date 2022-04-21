@@ -136,7 +136,7 @@ let diff_phone_txt = ["在此页面输入的电话号码与在登录页面输入
 
 const USER_KEY = "USER";
 const PHONE_KEY = "PHONE";
-
+const API_KEY = "4385a16b0b39462190b376a7b34c4792";
 
 // get selected language
 let select_language = localStorage.getItem("LANGUAGE");
@@ -166,7 +166,6 @@ if (current_page == "signup.html") {
     phone_num = localStorage.getItem(PHONE_KEY);
     phoneNum_placeholder.value = phone_num;
 }
-
 
 // change signup.html elements according to selected language
 if (select_language == "Chinese (Simplified)") {
@@ -241,7 +240,7 @@ if (select_language == "Chinese (Simplified)") {
  * Function used to set the auth language
  * @returns none
  */
-function setAuthLanguage(){
+function setAuthLanguage() {
 
     let language = localStorage.getItem(LANGUAGE_KEY);
 
@@ -485,13 +484,6 @@ function codeverify() {
         return;
     }
 
-    // console.log(test);
-
-    // var code=document.getElementById('verificationCode').value;
-
-    // var credential = firebase.auth.PhoneAuthProvider.credential(confirmationResult.verificationId, code);
-    // firebase.auth().signInWithCredential(credential);
-
     // if the user never send the pin and click 'signup' button
     // or unable to send the pin
     if ((coderesult === undefined) || (coderesult == "undefined") || (coderesult === null)) {
@@ -513,7 +505,7 @@ function codeverify() {
         coderesult.confirm(code).then((result)=> {
 
             // increment ID if the admin phone number's user successfully sign up
-            var phone = document.getElementById("number").value;
+            var phone = localStorage.getItem(PHONE_KEY);
             var is_admin = false;
 
             firebase.database().ref('adminPhone').orderByChild('phone')
@@ -688,49 +680,32 @@ function checkUserExistence (phone) {
  * @param {1} phone : the new users mobile number
  * @param {2} username: the new users username
  */
-function makeNewUser(phone,username){
-    var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
-    var phone_num = user_obj["phone"];
+async function makeNewUser(phone, username) {
+    // phone number
+    let phone_actual = localStorage.getItem(PHONE_KEY);
+    // user's location (as city) and store
+    let city = "";
+    let url = "https://api.ipgeolocation.io/ipgeo?apiKey=" + API_KEY;
+    await fetch(url)
+    .then((response) => response.json())
+    .then(data => city = data.city);
 
-    if (phone_num === undefined) {
-        for (var key in user_obj) {
-            phone_num = user_obj[key].phone;
-        }
-    }
-    // store admin phone number under ID
-    if (phone_num.includes("-")) {
-        phone_num = phone_num.substring(0, phone_num.length - 4);
-    }
+    // create new reference (child) in firebase
     firebase.database().ref(`users/${phone}`).set({
         username: username,
-        phone: phone_num
-      });
+        phone: phone_actual,
+        city: city
+    });
 }
 
 
 firebase.auth().onAuthStateChanged(function(user){
     if (user) {
-        // user.phone = user.phoneNumber;
-        //
-        // localStorage.setItem(USER_KEY,JSON.stringify(user));
-        // let userjson = JSON.parse(localStorage.getItem(USER_KEY));
-        // userjson["phone"] = userjson["phoneNumber"]
-        // localStorage.setItem(USER_KEY, JSON.stringify(userjson))
-        // checkUserExistence(user.phoneNumber);
-        // console.log(user.phone);
-        // console.log(userjson);
-        // console.log(userjson["phoneNumber"]);
-        // console.log(userjson);
-        // alert("User exist")
-
-
-
     }
     else {
       // User is signed out.
     }
 })
-
 
 
 
@@ -741,18 +716,10 @@ firebase.auth().onAuthStateChanged(function(user){
  * @param {*} username the username input by user
  * @param {*} phone the user's phone number
  */
-function register(username,phone) {
+function register(username, phone) {
     //retrieve phone from local storage
     makeNewUser(phone, username);
 
-    var user_obj = JSON.parse(localStorage.getItem(USER_KEY));
-    var phone_num = user_obj["phone"];
-
-    if (phone_num === undefined) {
-        for (var key in user_obj) {
-            phone_num = user_obj[key].phone;
-        }
-    }
     //set logged in user into local storage
     let user = {
         username: username,
@@ -764,7 +731,7 @@ function register(username,phone) {
 
         // If username exists, output an error
         // user = data.val();
-        localStorage.setItem(USER_KEY,JSON.stringify(user));
+        localStorage.setItem(USER_KEY, JSON.stringify(user));
     })
 
     codeverify();
@@ -815,7 +782,7 @@ function usernameValidation() {
   * @param {*} username the chosen username of the user to be registered
   * @returns true if the username is valid and false if invalid
   */
-function checkUsernameValidity(){
+function checkUsernameValidity() {
     let username = document.getElementById("username").value;
     let valid = usernameValidation();
 

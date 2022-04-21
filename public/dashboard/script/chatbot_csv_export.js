@@ -7,10 +7,29 @@ let options = {year: 'numeric', month: 'long', day: 'numeric'};
 let adminPhone = ["60133369205", "60106622702", "60146745200", "60166166659", "60163454897", "60193450134", "60162091373"]
 
 /**
+ * Obtain users records contain phone number and username
+ */
+async function getUsers() {
+    let userData;
+
+    // iterate through the users child in firebase
+    await firebase.database().ref('users').once('value', data => {
+        userData = data.val();
+    })
+    // return the user records include phone number and username
+    return userData;
+}
+
+
+/**
  * Compiles data from firebase to compiledData[] Array
  */
 
 async function exportQues() {
+    // obtain the user records contain phone number and username
+    let userData = await getUsers();
+    // console.log(userData)
+
     let compiledData = [];
 
     // only gets the question number and name of english questions
@@ -44,40 +63,26 @@ async function exportQues() {
                                                     // obtain phone number or ID, and admin phone number if available
                                                     let user = responseObj.phone;
                                                     let admin = "";
+                                                    let userInfo = userData[user];
                                                     if (!user.includes("+")) {
-                                                        let userId = parseInt(user);
-                                                        let adminPhone_ind = 0;
-                                                        if (userId <= 100) {
-                                                            adminPhone_ind = 0
-                                                        }
-                                                        else if (userId <= 200) {
-                                                            adminPhone_ind = 1
-                                                        }
-                                                        else if (userId <= 300) {
-                                                            adminPhone_ind = 2
-                                                        }
-                                                        else if (userId <= 400) {
-                                                            adminPhone_ind = 3
-                                                        }
-                                                        else if (userId <= 500) {
-                                                            adminPhone_ind = 4
-                                                        }
-                                                        else if (userId < 950) {
-                                                            adminPhone_ind = 5
-                                                        }
-                                                        else {
-                                                            adminPhone_ind = 6
-                                                        }
-                                                        admin = adminPhone[adminPhone_ind]
+                                                        admin = userInfo.phone;
                                                     }
+                                                    // obtain username
+                                                    let username = userInfo.username;
+                                                    // obtain user's location (city)
+                                                    let city = userInfo.city;
+                                                    if (city === undefined) {
+                                                        city = "";
+                                                    }
+
                                                     switch(subQuestionType) {
                                                         case TYPE_MULTIPLE_CHOICE:
                                                         case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                                         case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                             break;
                                                         default:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                             break;
                                                     }
                                                 });
@@ -98,41 +103,27 @@ async function exportQues() {
                                         // obtain phone number or ID, and admin phone number if available
                                         let user = responseObj.phone;
                                         let admin = "";
+                                        let userInfo = userData[user];
                                         if (!user.includes("+")) {
-                                            let userId = parseInt(user);
-                                            let adminPhone_ind = 0;
-                                            if (userId <= 100) {
-                                                adminPhone_ind = 0
-                                            }
-                                            else if (userId <= 200) {
-                                                adminPhone_ind = 1
-                                            }
-                                            else if (userId <= 300) {
-                                                adminPhone_ind = 2
-                                            }
-                                            else if (userId <= 400) {
-                                                adminPhone_ind = 3
-                                            }
-                                            else if (userId <= 500) {
-                                                adminPhone_ind = 4
-                                            }
-                                            else if (userId < 950) {
-                                                adminPhone_ind = 5
-                                            }
-                                            else {
-                                                adminPhone_ind = 6
-                                            }
-                                            admin = adminPhone[adminPhone_ind]
+                                            admin = userInfo.phone;
                                         }
+                                        // obtain username
+                                        let username = userInfo.username;
+                                        // obtain user's location (city)
+                                        let city = userInfo.city;
+                                        if (city === undefined) {
+                                            city = "";
+                                        }
+
                                         switch(questionType){
                                             case TYPE_MULTIPLE_CHOICE:
                                             case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                             case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                 break;
 
                                             default:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                 break;
                                         }
                                     });
@@ -145,16 +136,6 @@ async function exportQues() {
     download_csv_file(compiledData);
 }
 
-/**
- * Obtain admin phone number from user ID
- */
-async function getAdmin(user) {
-    let phone = "";
-    await firebase.database().ref(`users/${user}`).once('value', data => {
-        phone = data.val().phone;
-    });
-    return phone;
-}
 
 /**
  * Compiles csv file from the data, adds meta data and headers.
@@ -168,7 +149,7 @@ function download_csv_file(csvFileData) {
     csv += 'Satisfaction: [0] Not Applicable (N/A) [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied\n';
     csv += 'Confidence: [0] Not Applicable (N/A) [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident\n';
     csv += 'Interest: [1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested\n';
-    csv += 'Question Number,Question,Response,Options,User,Language,Date,Admin\n';
+    csv += 'Question Number,Question,Response,Options,User,Username,City,Language,Date,Admin\n';
 
     //merge the data with CSV
     csvFileData.forEach(function(row) {
