@@ -233,8 +233,6 @@ if (select_language == "Chinese (Simplified)") {
     }
 }
 
-// To apply the default browser preference instead of explicitly setting it.
-// firebase.auth().useDeviceLanguage();
 
 /**
  * Function used to set the auth language
@@ -287,14 +285,6 @@ function changeLanguage(newLanguage){
 }
 
 
-
-
-// window.onload = function() {
-//     alert("Window onload")
-//     setAuthLanguage();
-//     render();
-// }
-
 window.addEventListener("load", initFunction);
 function initFunction() {
     setAuthLanguage();
@@ -308,7 +298,7 @@ function initFunction() {
  */
 function render() {
 
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('send-button', {
         'size': 'invisible',
         'callback': (response) => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
