@@ -2,9 +2,6 @@ compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUES
 branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
 let language = ["English", "Chinese", "Malay", "Thai"];
 let options = {year: 'numeric', month: 'long', day: 'numeric'};
-// TODO: add admin phone number in the field under user collection
-// temporarily
-let adminPhone = ["60133369205", "60106622702", "60146745200", "60166166659", "60163454897", "60193450134", "60162091373"]
 
 /**
  * Obtain users records contain phone number and username
@@ -69,20 +66,24 @@ async function exportQues() {
                                                     }
                                                     // obtain username
                                                     let username = userInfo.username;
-                                                    // obtain user's location (city)
+                                                    // obtain user's location (city and state)
                                                     let city = userInfo.city;
+                                                    let state = userInfo.state;
                                                     if (city === undefined) {
                                                         city = "";
+                                                    }
+                                                    if (state === undefined) {
+                                                        state = "";
                                                     }
 
                                                     switch(subQuestionType) {
                                                         case TYPE_MULTIPLE_CHOICE:
                                                         case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                                         case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                             break;
                                                         default:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                             break;
                                                     }
                                                 });
@@ -109,21 +110,25 @@ async function exportQues() {
                                         }
                                         // obtain username
                                         let username = userInfo.username;
-                                        // obtain user's location (city)
+                                        // obtain user's location (city and state)
                                         let city = userInfo.city;
+                                        let state = userInfo.state;
                                         if (city === undefined) {
                                             city = "";
+                                        }
+                                        if (state === undefined) {
+                                            state = "";
                                         }
 
                                         switch(questionType){
                                             case TYPE_MULTIPLE_CHOICE:
                                             case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                             case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                 break;
 
                                             default:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + username + "\"", "\"" + city + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
                                                 break;
                                         }
                                     });
@@ -149,7 +154,7 @@ function download_csv_file(csvFileData) {
     csv += 'Satisfaction: [0] Not Applicable (N/A) [1] Very Dissatisfied [2] Dissatisfied [3] Neutral [4] Satisfied [5] Very Satisfied\n';
     csv += 'Confidence: [0] Not Applicable (N/A) [1] Not Confident At All [2] Somewhat Not Confident [3] Moderately Confident [4] Somewhat Confident [5] Extremely Confident\n';
     csv += 'Interest: [1] Extremely Not Interested [2] Not Interested [3] Neutral [4] Interested [5] Extremely Interested\n';
-    csv += 'Question Number,Question,Response,Options,User,Username,City,Language,Date,Admin\n';
+    csv += 'Question Number,Question,Response,Options,User,Username,City,State,Language,Date,Admin\n';
 
     //merge the data with CSV
     csvFileData.forEach(function(row) {

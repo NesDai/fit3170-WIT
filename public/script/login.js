@@ -308,7 +308,7 @@ function render() {
     recaptchaVerifier.render().then(function(widgetId) {
       window.recaptchaWidgetId = widgetId;
     });
-
+    recaptchaVerifier.reset();
 }
 
 let credentials;
@@ -675,16 +675,21 @@ async function makeNewUser(phone, username) {
     let phone_actual = localStorage.getItem(PHONE_KEY);
     // user's location (as city) and store
     let city = "";
+    let state = "";
     let url = "https://api.ipgeolocation.io/ipgeo?apiKey=" + API_KEY;
     await fetch(url)
     .then((response) => response.json())
-    .then(data => city = data.city);
+    .then((data) => {
+        city = data.city;
+        state = data.state_prov;
+    });
 
     // create new reference (child) in firebase
     firebase.database().ref(`users/${phone}`).set({
         username: username,
         phone: phone_actual,
-        city: city
+        city: city,
+        state: state
     });
 }
 
