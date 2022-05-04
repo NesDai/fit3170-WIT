@@ -106,7 +106,7 @@ const TH_INDEX = 3;
 
 // The time it takes for the chat bot to output
 // a chat bubble (in milliseconds)
-const MESSAGE_OUTPUT_DELAY = 2000;
+const MESSAGE_OUTPUT_DELAY = 1000;
 
 // The maximum number of characters for short
 // text question responses

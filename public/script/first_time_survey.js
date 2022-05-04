@@ -163,15 +163,15 @@ function select(button, index) {
     // check the type of skip target
     if (skipTarget === SKIP_NOT_ALLOWED) {
         // Don't skip next question
-        let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-        setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
+        nextQuestion(); 
+        saveResponse(index-1);
     } else if (skipTarget === SKIP_END_SURVEY) {
         // check if one of the skipChoices were selected. If so, end survey
         if (skipChoices.includes(choice)) {
             endSurvey(index-1);
         } else { // else move onto the next question
-            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
+            nextQuestion(); 
+            saveResponse(index-1);
         }
     } else {
         // Skip to a question ID if the selected answer is in skipChoices
@@ -205,8 +205,8 @@ function select(button, index) {
                 }, delay);
         } else {
             // display the next question after a small delay
-            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => {nextQuestion(); saveResponse(index-1);}, delay);
+            nextQuestion(); 
+            saveResponse(index-1);
         }
     }
 
@@ -247,8 +247,8 @@ function addMessage() {
                 showMessageReceiver(message);
 
                 // display next question after time delay and scroll to bottom of screen
-                let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-                setTimeout(() => {nextQuestion(); saveResponse((currentQuestionObject.restrictions.choices.length - 1) + ". " + message);}, delay);
+                nextQuestion(); 
+                saveResponse((currentQuestionObject.restrictions.choices.length - 1) + ". " + message);
                 scrollToBottom();
             }
             else {
@@ -288,8 +288,8 @@ function addMessage() {
             }
 
             // display next question after time delay and scroll to bottom of screen
-            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => {nextQuestion(); saveResponse(parseInt(numInput));}, delay);
+            nextQuestion(); 
+            saveResponse(parseInt(numInput));
             scrollToBottom();
         }
         else {
@@ -300,9 +300,10 @@ function addMessage() {
             showMessageReceiver(message);
 
             // display next question after time delay and scroll to bottom of screen
-            let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-            setTimeout(() => {nextQuestion(); saveResponse(textInput);}, delay);
+            nextQuestion(); 
             scrollToBottom();
+            saveResponse(textInput);
+
         }
 
         // clear textbox
@@ -310,8 +311,7 @@ function addMessage() {
 
         // Prevent users from using text box
         //disableInput();
-    }
-    else {
+    } else {
       errorText.style.visibility = "visible";
       if (select_language == "Chinese (Simplified)") {
           errorText.innerHTML = errorMsg_no_input[0];
@@ -1768,9 +1768,9 @@ function likertSelect(number,scaleIndex)
     disableInput();
 
     // display next question and save user response after time delay and scroll to bottom of screen
-    let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
-    setTimeout(() => {nextQuestion(); saveResponse(number);}, delay);
+    nextQuestion(); 
     scrollToBottom();
+    saveResponse(number);
 }
 
 function enableInput(){
