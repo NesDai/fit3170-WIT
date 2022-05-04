@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="https://www.botlibre.com/scripts/sdk.js"></script>
+
+<!-- responsive voice -->
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=qNGql21p"></script>
+<!-- generate avatar and set attributes -->
+<script src='script/avatar.js'></script>
+
+<style>
+#btn_question {
+    position: absolute;
+    right: 50px;
+    bottom: 20px;
+    background-color: Blue;
+    padding: 15px 32px;
+    border: none;
+    color: white;
+    font-size: 30px;
+    border-radius: 10px;
+}
+#btn_question:hover {
+    background-color: #6495ED;
+}
+</style>
+
+<body onload="loadFunction()">
+<!-- test button for produce the chatbot question -->
+<button type="button" id="btn_question" onClick="generateSpeech()">Generate speech</button>
+</body>
+
+</html>
