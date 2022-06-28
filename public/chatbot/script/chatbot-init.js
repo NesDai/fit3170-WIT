@@ -9,7 +9,28 @@
  */
 let noDelayMode = false;
 
+// whether the chatbot is with avatar or not
+let isAvatar = localStorage.getItem("avatar");
+
 initFirebaseAuth();
+
+// for text-to-speech
+// greeting message
+let greet_msg = ["Hi! I am the chatbot for this App. To get started, can you please fill up this survey. You only have one attempt in completing the survey. You are allowed to restart the survey any number of times if it is still incomplete. Are you ready?",
+                 "你好！我是这个应用程序的聊天机器人。要开始，请您填写这份调查表。您只有一次尝试完成调查。如果调查仍未完成，您可以多次重新开始调查。你准备好了吗？",
+                 "Hai! Saya adalah bot sembang untuk Apl ini. Untuk bermula, bolehkah anda mengisi tinjauan ini. Anda hanya mempunyai satu percubaan untuk melengkapkan tinjauan. Anda dibenarkan untuk memulakan semula tinjauan beberapa kali jika ia masih tidak lengkap. Adakah anda bersedia?",
+                 "สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอพนี้ ในการเริ่มต้น โปรดกรอกแบบสำรวจนี้ คุณมีความพยายามเพียงครั้งเดียวในการกรอกแบบสำรวจ คุณได้รับอนุญาตให้เริ่มการสำรวจใหม่กี่ครั้งก็ได้หากยังไม่สมบูรณ์ คุณพร้อมไหม?"];
+
+let resume_greet_msg = ["Hi! I am the chatbot for this App. Please select Resume to resume your previous survey or Restart to start again if you want change your previous answers.",
+                        "你好！我是这个应用程序的聊天机器人。请选择 恢复 恢复你的 以前的调查或 续借 如果您想更改以前的答案，请重新开始。",
+                        "Hai! Saya adalah bot sembang untuk Apl ini. Sila pilih Sambung semula untuk menyambung semula anda tinjauan sebelumnya atau Mula semula untuk memulakan semula jika anda ingin menukar jawapan anda yang terdahulu.",
+                        "สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอปนี้ โปรดเลือก ดำเนินการต่อ เพื่อดำเนินการสำรวจก่อนหน้าของคุณต่อ หรือ เริ่มต้นใหม่ เพื่อเริ่มใหม่อีกครั้ง หากคุณต้องการเปลี่ยนคำตอบก่อนหน้าของคุณ"];
+
+let voice_en = [4, 1, 3]
+let voice_ch = [2, 10, 2]
+let voice_ma = [1, 28, 4]
+let voice_th = [1, 26, 4]
+
 
 window.onload = function () {
     // Initialises progress bar
@@ -28,6 +49,14 @@ function initFirebaseAuth() {
     firebase.auth().onAuthStateChanged(() => {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
+
+        if (isAvatar == "3dAvatar") {
+            AC_VHost_Embed(8525827,600,800,"",1,1,2750834,0,1,0,"tJp4bnkiRwLYL8T57WV1tMnGizgzu2Tu",0,0);
+        }
+        else if (isAvatar == "drawingAvatar") {
+            AC_VHost_Embed(8525827,600,800,"",1,1,2750835,0,1,0,"otHQnmjfsPHN7TZl0GNGVWaAsHaPbE8i",0,0);
+        }
+
         initProgressData().then(() => {
             initChatbot();
         })
@@ -128,7 +157,7 @@ function resumeGreeting() {
     let contents = "";
     let select_language = localStorage.getItem(LANGUAGE_KEY);
     // Welcome message
-    if(select_language=="Malay"){
+    if(select_language=="Malay") {
         contents +=
         "<div class='space'>" +
         "<div class='message-container sender blue'>" +
@@ -153,7 +182,13 @@ function resumeGreeting() {
         "Mula semula" +
         "</button>" +
         "</div>"
-    }else if(select_language=="Chinese (Simplified)"){
+
+        // speak if avatar chatBox
+        if (isAvatar != "N/A") {
+            sayText(resume_greet_msg[2], voice_ma[0], voice_ma[1], voice_ma[2]);
+        }
+    }
+    else if(select_language=="Chinese (Simplified)") {
         contents +=
         "<div class='space'>" +
         "<div class='message-container sender blue'>" +
@@ -178,13 +213,19 @@ function resumeGreeting() {
         "续借" +
         "</button>" +
         "</div>"
-    }else if(select_language=="Thai"){
+
+        // speak if avatar chatBox
+        if (isAvatar != "N/A") {
+            sayText(resume_greet_msg[1], voice_ch[0], voice_ch[1], voice_ch[2]);
+        }
+    }
+    else if(select_language=="Thai") {
         contents +=
         "<div class='space'>" +
         "<div class='message-container sender blue'>" +
-        "<p>สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอพนี้</p>" +
-        "<p>โปรดเลือก \"ประวัติย่อ\" เพื่อดำเนินการต่อของคุณ " +
-        "แบบสำรวจก่อนหน้าหรือ \"c\" เพื่อเริ่มต้นใหม่อีกครั้งหากคุณต้องการเปลี่ยนคำตอบก่อนหน้าของคุณ</p>" +
+        "<p>สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอปนี</p>" +
+        "<p>โปรดเลือก \"ดำเนินการต่อ\" เพื่อดำเนินการสำรวจก่อนหน้าของคุณต่อ " +
+        "หรือ \"เริ่มต้นใหม่\" เพื่อเริ่มใหม่อีกครั้ง หากคุณต้องการเปลี่ยนคำตอบก่อนหน้าของคุณ</p>" +
         "</div>" +
         "</div>"+
         "<div class=\"space\">" +
@@ -203,8 +244,13 @@ function resumeGreeting() {
         "ประวัติย่อ" +
         "</button>" +
         "</div>"
+
+        // speak if avatar chatbot
+        if (isAvatar != "N/A") {
+            sayText(resume_greet_msg[3], voice_th[0], voice_th[1], voice_th[2]);
+        }
     }
-    else{
+    else {
         contents +=
         "<div class='space'>" +
         "<div class='message-container sender blue'>" +
@@ -231,6 +277,11 @@ function resumeGreeting() {
         "Restart" +
         "</button>" +
         "</div>";
+
+        // speak if avatar chatbot
+        if (isAvatar != "N/A") {
+            sayText(resume_greet_msg[0], voice_en[0], voice_en[1], voice_en[2]);
+        }
     }
     let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
     setTimeout(() => messages.innerHTML += contents, delay);
@@ -246,7 +297,7 @@ function greeting() {
     let quesTemplate =
         "<div class='space'>" +
         "<div class='message-container sender blue'>";
-    if (select_language == "English" ){
+    if (select_language == "English") {
         quesTemplate += '<p ">Hi! I am the chatbot for this App.</p>' +
         "<p>To get started, can you please fill up this survey." +
         " You only have one attempt in completing the survey." +
@@ -254,7 +305,13 @@ function greeting() {
         "Are you ready?</p>" +
         "</div>" +
         "</div>";
-    }else if(select_language == "Malay"){
+
+        // speak if avatar chatBox
+        if (isAvatar != "N/A") {
+            sayText(greet_msg[0], voice_en[0], voice_en[1], voice_en[2]);
+        }
+    }
+    else if(select_language == "Malay") {
         quesTemplate += '<p ">Hai! Saya adalah bot sembang untuk Apl ini.</p>' +
         "<p>Untuk bermula, bolehkah anda mengisi tinjauan ini." +
         "Anda hanya mempunyai satu percubaan untuk melengkapkan tinjauan." +
@@ -262,7 +319,13 @@ function greeting() {
         "Adakah anda bersedia?</p>" +
         "</div>" +
         "</div>";
-    }else if(select_language =="Chinese (Simplified)"){
+
+        // speak if avatar chatBox
+        if (isAvatar != "N/A") {
+            sayText(greet_msg[2], voice_ma[0], voice_ma[1], voice_ma[2]);
+        }
+    }
+    else if(select_language =="Chinese (Simplified)"){
         quesTemplate += '<p >你好！我是这个应用程序的聊天机器人。</p>' +
         "<p>要开始，请您填写这份调查表。" +
         " 您只有一次尝试完成调查。" +
@@ -270,7 +333,13 @@ function greeting() {
         "你准备好了吗？</p>" +
         "</div>" +
         "</div>";
-    }else if(select_language == "Thai"){
+
+        // speak if avatar chatBox
+        if (isAvatar != "N/A") {
+            sayText(greet_msg[1], voice_ch[0], voice_ch[1], voice_ch[2]);
+        }
+    }
+    else if(select_language == "Thai"){
         quesTemplate += '<p >สวัสดี! ฉันเป็นแชทบ็อตสำหรับแอพนี้</p>' +
         "<p>ในการเริ่มต้น โปรดกรอกแบบสำรวจนี้" +
         " คุณมีความพยายามเพียงครั้งเดียวในการกรอกแบบสำรวจ" +
@@ -278,9 +347,12 @@ function greeting() {
         "คุณพร้อมไหม?</p>" +
         "</div>" +
         "</div>";
-    }
 
-    
+        // speak if avatar chatBox
+        if (isAvatar != "N/A") {
+            sayText(greet_msg[3], voice_th[0], voice_th[1], voice_th[2]);
+        }
+    }
 
     // format start survey button html
     let mcqOptions = "<div class=\"space\">"

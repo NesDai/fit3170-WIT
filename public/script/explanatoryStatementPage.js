@@ -57,11 +57,31 @@ else {
 
 // function to check if user has clicked the checkbox before letting them continue to chatbot page
 function checkAccepted () {
+    let isAvatar = localStorage.getItem("avatar");
     // if it is checked, update user's realtime database data that they accept the Explanatory Statement
-    if (checkbox.checked){
-        window.location.href = "./chatbot.html"
-    } else {
+    if (checkbox.checked) {
+        if (isAvatar == "3dAvatar") {
+            window.location.href = "./avatar.html"
+        }
+        else if (isAvatar == "drawingAvatar") {
+            window.location.href = "./avatar_drawing.html"
+        }
+        else {
+            window.location.href = "./chatbot.html"
+        }
+    }
+    else {
         // if the tickbox is not ticked, display error message
         tick_warningRef.hidden = false
     }
+}
+
+// if chatbot is with 3d avatar
+function set3dAvatar() {
+    localStorage.setItem("avatar", "3dAvatar")
+}
+
+// if chatbot is with drawing avatar
+function setDrawingAvatar() {
+    localStorage.setItem("avatar", "drawingAvatar")
 }

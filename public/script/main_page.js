@@ -1,4 +1,6 @@
 
+// indicate that chatbot is without avatar in local storage
+localStorage.setItem("avatar", "N/A");
 
 window.onload = function(){
   currLang = localStorage.getItem(LANGUAGE_KEY)
@@ -10,7 +12,7 @@ window.onload = function(){
     firebase.auth.onAuthStateChanged(user => {
         if (user) {
           console.log("logged in");
-    
+
         }
         else {
           // User is signed out.
@@ -137,6 +139,3 @@ function changeLang(lang){
      document.getElementById("forumText").innerHTML = "โต้ตอบกับผู้ใช้รายอื่นด้วยการกดไลค์และแสดงความคิดเห็นโพสต์ของพวกเขาและโพสต์ความคิดและคำถามของคุณเอง";
  }
 }
-
-
-

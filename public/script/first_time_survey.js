@@ -56,6 +56,36 @@ if (select_language == "English") {
     branch_id = TH_INDEX;
 }
 
+// ready close message
+let close_msg = ["Are you ready to finish the survey?",
+                 "你准备好完成调查了吗？",
+                 "Adakah anda bersedia untuk menyelesaikan tinjauan?",
+                 "คุณพร้อมจะทำแบบสำรวจให้เสร็จหรือไม่?"]
+
+// future research question
+let research_msg = ["We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study?",
+                    "我们希望在几个月后再次收到您的来信。您想参加定性研究吗？",
+                    "Kami ingin mendengar daripada anda sekali lagi dalam masa beberapa bulan. Adakah anda ingin mengambil bahagian dalam kajian kualitatif?",
+                    "เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ?"]
+
+// online transaction message
+let transaction_msg = ["Thank you for completing the survey! A token of participation will be granted via online transaction. Token of appreciation 10 ringgit will not be processed if you do not fill in your payment details.",
+                       "感谢您完成调查！将通过在线交易授予参与令牌。 如果您不填写付款详细信息，感谢现金 10 ringgit 将不予转入您的账户",
+                       "Terima kasih kerana melengkapkan tinjauan! Token penyertaan akan diberikan melalui transaksi dalam talian. Token penghargaan 10 ringgit tidak akan diproses jika anda tidak mengisi butiran pembayaran anda.",
+                       "ขอบคุณที่ทำแบบสำรวจให้เสร็จ! โทเค็นของการเข้าร่วมจะได้รับผ่านการทำธุรกรรมออนไลน์ โทเค็นแสดงความขอบคุณ 10 ringgit จะไม่ถูกดำเนินการหากคุณไม่กรอกรายละเอียดการชำระเงินของคุณ"]
+
+// ending message
+let end_msg = ["Thank you so much for your participation in this survey.",
+               "非常感谢您参与本次调查。",
+               "Terima kasih banyak atas penyertaan anda dalam tinjauan ini.",
+               "ขอบคุณมากสำหรับการเข้าร่วมในแบบสำรวจนี้"]
+
+// thank you message
+let thank_msg = ["Thank you for your time.",
+                 "感谢您的时间。",
+                 "Terima kasih atas masa anda.",
+                 "ขอขอบคุณสำหรับเวลาของคุณ."]
+
 disableInput();
 
 /*
@@ -163,14 +193,14 @@ function select(button, index) {
     // check the type of skip target
     if (skipTarget === SKIP_NOT_ALLOWED) {
         // Don't skip next question
-        nextQuestion(); 
+        nextQuestion();
         saveResponse(index-1);
     } else if (skipTarget === SKIP_END_SURVEY) {
         // check if one of the skipChoices were selected. If so, end survey
         if (skipChoices.includes(choice)) {
             endSurvey(index-1);
         } else { // else move onto the next question
-            nextQuestion(); 
+            nextQuestion();
             saveResponse(index-1);
         }
     } else {
@@ -205,7 +235,7 @@ function select(button, index) {
                 }, delay);
         } else {
             // display the next question after a small delay
-            nextQuestion(); 
+            nextQuestion();
             saveResponse(index-1);
         }
     }
@@ -247,7 +277,7 @@ function addMessage() {
                 showMessageReceiver(message);
 
                 // display next question after time delay and scroll to bottom of screen
-                nextQuestion(); 
+                nextQuestion();
                 saveResponse((currentQuestionObject.restrictions.choices.length - 1) + ". " + message);
                 scrollToBottom();
             }
@@ -288,7 +318,7 @@ function addMessage() {
             }
 
             // display next question after time delay and scroll to bottom of screen
-            nextQuestion(); 
+            nextQuestion();
             saveResponse(parseInt(numInput));
             scrollToBottom();
         }
@@ -300,7 +330,7 @@ function addMessage() {
             showMessageReceiver(message);
 
             // display next question after time delay and scroll to bottom of screen
-            nextQuestion(); 
+            nextQuestion();
             scrollToBottom();
             saveResponse(textInput);
 
@@ -440,20 +470,37 @@ function showReadyClosingMessage(){
         `<p>Adakah anda bersedia untuk menyelesaikan tinjauan?</p>` +
         "</div>" +
         "</div>";
-    }else if(select_language=="Chinese (Simplified)"){
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(close_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
+        }
+    }
+    else if(select_language=="Chinese (Simplified)"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>你准备好完成调查了吗？</p>` +
         "</div>" +
         "</div>";
-    }else if(select_language=="Thai"){
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(close_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
+        }
+    }
+    else if(select_language=="Thai"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>คุณพร้อมจะทำแบบสำรวจให้เสร็จหรือไม่?</p>` +
         "</div>" +
         "</div>";
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(close_msg[3], voice_th[0], voice_th[1], voice_th[2])
+        }
     }
     else {
         messages.innerHTML +=
@@ -462,6 +509,11 @@ function showReadyClosingMessage(){
         `<p>Are you ready to finish the survey?</p>` +
         "</div>" +
         "</div>";
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(close_msg[0], voice_en[0], voice_en[1], voice_en[2])
+        }
     }
     document.getElementById('hint_area').innerHTML = "";
 
@@ -504,13 +556,24 @@ function showFutureResearchQuestion(){
         `<p>Kami ingin mendengar daripada anda sekali lagi dalam masa beberapa bulan. Adakah anda ingin mengambil bahagian dalam kajian kualitatif (temu bual)?</p>` +
         "</div>" +
         "</div>";
-    }else if(select_language=="Chinese (Simplified)"){
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(research_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
+        }
+    }
+    else if(select_language=="Chinese (Simplified)"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
         `<p>我们希望在几个月后再次收到您的来信。您想参加定性研究（面试）吗？</p>` +
         "</div>" +
         "</div>";
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(research_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
+        }
     }
     else if(select_language=="Thai"){
         messages.innerHTML +=
@@ -519,6 +582,11 @@ function showFutureResearchQuestion(){
         `<p>เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ (สัมภาษณ์)?</p>` +
         "</div>" +
         "</div>";
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(research_msg[3], voice_th[0], voice_th[1], voice_th[2])
+        }
     }
     else{
         messages.innerHTML +=
@@ -527,6 +595,11 @@ function showFutureResearchQuestion(){
         `<p>We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study (interview)? </p>` +
         "</div>" +
         "</div>";
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(research_msg[0], voice_en[0], voice_en[1], voice_en[2])
+        }
     }
     document.getElementById('hint_area').innerHTML = "";
 
@@ -655,24 +728,47 @@ function selectClosingQuestionOption(button, index, closingQsID){
                 `<p>Terima kasih atas masa anda.</p>` +
                 "</div>" +
                 "</div>";
-            }else if (select_language=="Chinese (Simplified)"){
+
+                // text-to-speech if using avatar
+                if (isAvatar != "N/A") {
+                  sayText(thank_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
+                }
+            }
+            else if (select_language=="Chinese (Simplified)"){
                 messages.innerHTML +=
                 "<div class='space'>" +
                 "<div class='message-container sender blue current'>" +`<p>感谢您的时间。</p>` +
                 "</div>" +
                 "</div>";
-            }else if (select_language=="Thai"){
+
+                // text-to-speech if using avatar
+                if (isAvatar != "N/A") {
+                  sayText(thank_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
+                }
+            }
+            else if (select_language=="Thai"){
                 messages.innerHTML +=
                 "<div class='space'>" +
                 "<div class='message-container sender blue current'>" +`<p>ขอขอบคุณสำหรับเวลาของคุณ.</p>` +
                 "</div>" +
                 "</div>";
-            }else{
+
+                // text-to-speech if using avatar
+                if (isAvatar != "N/A") {
+                  sayText(thank_msg[3], voice_th[0], voice_th[1], voice_th[2])
+                }
+            }
+            else{
                 messages.innerHTML +=
                 "<div class='space'>" +
                 "<div class='message-container sender blue current'>" +`<p>Thank you for your time.</p>` +
                 "</div>" +
                 "</div>";
+
+                // text-to-speech if using avatar
+                if (isAvatar != "N/A") {
+                  sayText(thank_msg[0], voice_en[0], voice_en[1], voice_en[2])
+                }
             }
 
             // Show option to move to different pages of the app
@@ -755,7 +851,13 @@ function showOnlineTransactionOptions(){
         `<p>โทเค็นแสดงความขอบคุณ RM10 จะไม่ถูกดำเนินการหากคุณไม่กรอกรายละเอียดการชำระเงินของคุณ</p>` +
         "</div>" +
         "</div>";
-    }else if(select_language=="Malay"){
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(transaction_msg[3], voice_th[0], voice_th[1], voice_th[2])
+        }
+    }
+    else if(select_language=="Malay"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
@@ -768,7 +870,13 @@ function showOnlineTransactionOptions(){
         `<p>Token penghargaan RM10 tidak akan diproses jika anda tidak mengisi butiran pembayaran anda.</p>` +
         "</div>" +
         "</div>";
-    }else if(select_language=="Chinese (Simplified)"){
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(transaction_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
+        }
+    }
+    else if(select_language=="Chinese (Simplified)"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
@@ -781,8 +889,13 @@ function showOnlineTransactionOptions(){
         `<p>如果您不填写付款详细信息，感谢现金 RM10 将不予转入您的账户</p>` +
         "</div>" +
         "</div>";
-        
-    }else{
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(transaction_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
+        }
+    }
+    else{
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>" +
@@ -795,6 +908,11 @@ function showOnlineTransactionOptions(){
         `<p>Token of appreciation RM10 will not be processed if you do not fill in your payment details.</p>` +
         "</div>" +
         "</div>";
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(transaction_msg[0], voice_en[0], voice_en[1], voice_en[2])
+        }
     }
     document.getElementById('hint_area').innerHTML = "";
 
@@ -832,7 +950,13 @@ function showMoveToDifferentPages(){
         "</p>" +
         "</div>" +
         "</div>";
-    }else if (select_language=="Malay"){
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(end_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
+        }
+    }
+    else if (select_language=="Malay"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>"+
@@ -842,7 +966,13 @@ function showMoveToDifferentPages(){
         "</p>" +
         "</div>" +
         "</div>";
-    }else if (select_language=="Thai"){
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(end_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
+        }
+    }
+    else if (select_language=="Thai"){
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>"+
@@ -852,7 +982,13 @@ function showMoveToDifferentPages(){
         "</p>" +
         "</div>" +
         "</div>";
-    }else{
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(end_msg[3], voice_th[0], voice_th[1], voice_th[2])
+        }
+    }
+    else{
         messages.innerHTML +=
         "<div class='space'>" +
         "<div class='message-container sender blue current'>"+
@@ -862,6 +998,11 @@ function showMoveToDifferentPages(){
         "</p>" +
         "</div>" +
         "</div>";
+
+        // text-to-speech if using avatar
+        if (isAvatar != "N/A") {
+            sayText(end_msg[0], voice_en[0], voice_en[1], voice_en[2])
+        }
     }
     document.getElementById('hint_area').innerHTML = "";
 
@@ -992,6 +1133,28 @@ function showQuestion(isSubQuestion) {
 
             // DONT REMOVE THIS - Yong Peng
             console.log(currentQuestionObject);
+
+            // speak the question if chatbot is with avatar
+            if (isAvatar != "N/A") {
+                // get the question for text-to-speech in avatar
+                let question_txt = currentQuestionObject.question;
+                question_txt = question_txt.replaceAll("<b>", "");
+                question_txt = question_txt.replaceAll("</b>", "");
+                // speak the question
+                if (select_language == "Chinese (Simplified)") {
+                    sayText(question_txt, voice_ch[0], voice_ch[1], voice_ch[2])
+                }
+                else if (select_language == "Malay") {
+                    sayText(question_txt, voice_ma[0], voice_ma[1], voice_ma[2])
+                }
+                else if (select_language == "Thai") {
+                    sayText(question_txt, voice_th[0], voice_th[1], voice_th[2])
+                }
+                else {
+                    sayText(question_txt, voice_en[0], voice_en[1], voice_en[2])
+                }
+            }
+
             if(resumeCond){
                 setCurrSection(currentQuestionObject.category);
                 resumeCond = false;
@@ -1768,7 +1931,7 @@ function likertSelect(number,scaleIndex)
     disableInput();
 
     // display next question and save user response after time delay and scroll to bottom of screen
-    nextQuestion(); 
+    nextQuestion();
     scrollToBottom();
     saveResponse(number);
 }
