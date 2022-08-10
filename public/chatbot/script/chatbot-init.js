@@ -50,15 +50,15 @@ function initFirebaseAuth() {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
 
-        if (isAvatar == "3dAvatar") {
-            AC_VHost_Embed(8525827,600,800,"",1,1,2750834,0,1,0,"tJp4bnkiRwLYL8T57WV1tMnGizgzu2Tu",0,0);
-        }
-        else if (isAvatar == "drawingAvatar") {
-            AC_VHost_Embed(8525827,600,800,"",1,1,2750835,0,1,0,"otHQnmjfsPHN7TZl0GNGVWaAsHaPbE8i",0,0);
-        }
+        // if (isAvatar == "3dAvatar") {
+        //     AC_VHost_Embed(8525827,600,800,"",1,1,2750834,0,1,0,"tJp4bnkiRwLYL8T57WV1tMnGizgzu2Tu",0,0);
+        // }
+        // else if (isAvatar == "drawingAvatar") {
+        //     AC_VHost_Embed(8525827,600,800,"",1,1,2750835,0,1,0,"otHQnmjfsPHN7TZl0GNGVWaAsHaPbE8i",0,0);
+        // }
 
         initProgressData().then(() => {
-            initChatbot();
+            startChatbot();
         })
     });
 }
@@ -117,7 +117,8 @@ function initProgressData() {
                 .set({
                     questionIndex: NO_QUESTIONS_DONE,
                     currentSubQuestionIds: currentSubQuestionIds,
-                    subQuestionIndex: subQuestionIndex
+                    subQuestionIndex: subQuestionIndex,
+                    avatarState: isAvatar
                 })
                 .then(() => {
                     console.log(`Branch 'users/${userID}' created`);
@@ -132,11 +133,41 @@ function initProgressData() {
 
 }
 
+function startChatbot() {
+  let contents = "";
+  let select_language = localStorage.getItem(LANGUAGE_KEY);
+  // Welcome message
+  if(select_language=="Malay") {
+      contents += "<div>"
+      contents += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"initChatbot(this)\">Mulakan chatbot</button>";
+      contents += "</div>"
+  }
+  else if(select_language=="Chinese (Simplified)") {
+      contents += "<div>"
+      contents += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"initChatbot(this)\">启动聊天机器人</button>";
+      contents += "</div>"
+  }
+  else if(select_language=="Thai") {
+      contents += "<div>"
+      contents += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"initChatbot(this)\">เริ่มแชทบอท</button>";
+      contents += "</div>"
+  }
+  else {
+      contents += "<div>"
+      contents += "<button class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect\" onclick=\"initChatbot(this)\">Start Chatbot</button>";
+      contents += "</div>"
+  }
+  let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
+  setTimeout(() => messages.innerHTML += contents, delay);
+  disableTextInput();
+}
+
 /**
  * Initializes the chat bot based on the user's previous
  * survey instance.
  */
-function initChatbot() {
+function initChatbot(button) {
+    button.disabled = true;
     if (questionIndex === NO_QUESTIONS_DONE) {
         // Survey has not been started yet
         greeting();
