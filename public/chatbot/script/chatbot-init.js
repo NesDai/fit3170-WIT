@@ -50,13 +50,6 @@ function initFirebaseAuth() {
         // Initialize current user object
         currentUser = firebase.auth().currentUser;
 
-        // if (isAvatar == "3dAvatar") {
-        //     AC_VHost_Embed(8525827,600,800,"",1,1,2750834,0,1,0,"tJp4bnkiRwLYL8T57WV1tMnGizgzu2Tu",0,0);
-        // }
-        // else if (isAvatar == "drawingAvatar") {
-        //     AC_VHost_Embed(8525827,600,800,"",1,1,2750835,0,1,0,"otHQnmjfsPHN7TZl0GNGVWaAsHaPbE8i",0,0);
-        // }
-
         initProgressData().then(() => {
             startChatbot();
         })
@@ -216,6 +209,7 @@ function resumeGreeting() {
 
         // speak if avatar chatBox
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(resume_greet_msg[2], voice_ma[0], voice_ma[1], voice_ma[2]);
         }
     }
@@ -247,6 +241,7 @@ function resumeGreeting() {
 
         // speak if avatar chatBox
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(resume_greet_msg[1], voice_ch[0], voice_ch[1], voice_ch[2]);
         }
     }
@@ -278,6 +273,7 @@ function resumeGreeting() {
 
         // speak if avatar chatbot
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(resume_greet_msg[3], voice_th[0], voice_th[1], voice_th[2]);
         }
     }
@@ -311,6 +307,7 @@ function resumeGreeting() {
 
         // speak if avatar chatbot
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(resume_greet_msg[0], voice_en[0], voice_en[1], voice_en[2]);
         }
     }
@@ -339,6 +336,7 @@ function greeting() {
 
         // speak if avatar chatBox
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(greet_msg[0], voice_en[0], voice_en[1], voice_en[2]);
         }
     }
@@ -353,6 +351,7 @@ function greeting() {
 
         // speak if avatar chatBox
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(greet_msg[2], voice_ma[0], voice_ma[1], voice_ma[2]);
         }
     }
@@ -367,6 +366,7 @@ function greeting() {
 
         // speak if avatar chatBox
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(greet_msg[1], voice_ch[0], voice_ch[1], voice_ch[2]);
         }
     }
@@ -381,6 +381,7 @@ function greeting() {
 
         // speak if avatar chatBox
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(greet_msg[3], voice_th[0], voice_th[1], voice_th[2]);
         }
     }

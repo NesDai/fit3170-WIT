@@ -473,6 +473,7 @@ function showReadyClosingMessage(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(close_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
         }
     }
@@ -486,6 +487,7 @@ function showReadyClosingMessage(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(close_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
         }
     }
@@ -499,6 +501,7 @@ function showReadyClosingMessage(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(close_msg[3], voice_th[0], voice_th[1], voice_th[2])
         }
     }
@@ -512,6 +515,7 @@ function showReadyClosingMessage(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(close_msg[0], voice_en[0], voice_en[1], voice_en[2])
         }
     }
@@ -559,6 +563,7 @@ function showFutureResearchQuestion(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(research_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
         }
     }
@@ -572,6 +577,7 @@ function showFutureResearchQuestion(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(research_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
         }
     }
@@ -585,6 +591,7 @@ function showFutureResearchQuestion(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(research_msg[3], voice_th[0], voice_th[1], voice_th[2])
         }
     }
@@ -598,6 +605,7 @@ function showFutureResearchQuestion(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(research_msg[0], voice_en[0], voice_en[1], voice_en[2])
         }
     }
@@ -731,7 +739,8 @@ function selectClosingQuestionOption(button, index, closingQsID){
 
                 // text-to-speech if using avatar
                 if (isAvatar != "N/A") {
-                  sayText(thank_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
+                    stopSpeech()
+                    sayText(thank_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
                 }
             }
             else if (select_language=="Chinese (Simplified)"){
@@ -743,7 +752,8 @@ function selectClosingQuestionOption(button, index, closingQsID){
 
                 // text-to-speech if using avatar
                 if (isAvatar != "N/A") {
-                  sayText(thank_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
+                    stopSpeech()
+                    sayText(thank_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
                 }
             }
             else if (select_language=="Thai"){
@@ -755,7 +765,8 @@ function selectClosingQuestionOption(button, index, closingQsID){
 
                 // text-to-speech if using avatar
                 if (isAvatar != "N/A") {
-                  sayText(thank_msg[3], voice_th[0], voice_th[1], voice_th[2])
+                    stopSpeech()
+                    sayText(thank_msg[3], voice_th[0], voice_th[1], voice_th[2])
                 }
             }
             else{
@@ -767,7 +778,8 @@ function selectClosingQuestionOption(button, index, closingQsID){
 
                 // text-to-speech if using avatar
                 if (isAvatar != "N/A") {
-                  sayText(thank_msg[0], voice_en[0], voice_en[1], voice_en[2])
+                    stopSpeech()
+                    sayText(thank_msg[0], voice_en[0], voice_en[1], voice_en[2])
                 }
             }
 
@@ -854,6 +866,7 @@ function showOnlineTransactionOptions(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(transaction_msg[3], voice_th[0], voice_th[1], voice_th[2])
         }
     }
@@ -873,6 +886,7 @@ function showOnlineTransactionOptions(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(transaction_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
         }
     }
@@ -892,6 +906,7 @@ function showOnlineTransactionOptions(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(transaction_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
         }
     }
@@ -911,6 +926,7 @@ function showOnlineTransactionOptions(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(transaction_msg[0], voice_en[0], voice_en[1], voice_en[2])
         }
     }
@@ -953,6 +969,7 @@ function showMoveToDifferentPages(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(end_msg[1], voice_ch[0], voice_ch[1], voice_ch[2])
         }
     }
@@ -969,6 +986,7 @@ function showMoveToDifferentPages(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(end_msg[2], voice_ma[0], voice_ma[1], voice_ma[2])
         }
     }
@@ -985,6 +1003,7 @@ function showMoveToDifferentPages(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(end_msg[3], voice_th[0], voice_th[1], voice_th[2])
         }
     }
@@ -1001,6 +1020,7 @@ function showMoveToDifferentPages(){
 
         // text-to-speech if using avatar
         if (isAvatar != "N/A") {
+            stopSpeech()
             sayText(end_msg[0], voice_en[0], voice_en[1], voice_en[2])
         }
     }
@@ -1142,15 +1162,19 @@ function showQuestion(isSubQuestion) {
                 question_txt = question_txt.replaceAll("</b>", "");
                 // speak the question
                 if (select_language == "Chinese (Simplified)") {
+                    stopSpeech()
                     sayText(question_txt, voice_ch[0], voice_ch[1], voice_ch[2])
                 }
                 else if (select_language == "Malay") {
+                    stopSpeech()
                     sayText(question_txt, voice_ma[0], voice_ma[1], voice_ma[2])
                 }
                 else if (select_language == "Thai") {
+                    stopSpeech()
                     sayText(question_txt, voice_th[0], voice_th[1], voice_th[2])
                 }
                 else {
+                    stopSpeech()
                     sayText(question_txt, voice_en[0], voice_en[1], voice_en[2])
                 }
             }
