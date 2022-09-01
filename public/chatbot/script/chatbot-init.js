@@ -170,6 +170,7 @@ function initChatbot(button) {
     } else {
         // Survey has been left off halfway
         resumeGreeting();
+        scrollToBottom();
     }
 }
 
@@ -311,6 +312,7 @@ function resumeGreeting() {
             sayText(resume_greet_msg[0], voice_en[0], voice_en[1], voice_en[2]);
         }
     }
+
     let delay = noDelayMode ? 0 : MESSAGE_OUTPUT_DELAY;
     setTimeout(() => messages.innerHTML += contents, delay);
     disableTextInput();
@@ -385,6 +387,8 @@ function greeting() {
             sayText(greet_msg[3], voice_th[0], voice_th[1], voice_th[2]);
         }
     }
+
+    scrollToBottom();
 
     // format start survey button html
     let mcqOptions = "<div class=\"space\">"

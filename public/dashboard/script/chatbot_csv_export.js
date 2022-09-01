@@ -18,14 +18,35 @@ async function getUsers() {
     return userData;
 }
 
+// get the user who used avatar chatbot
+async function getAvatarUser(avatar) {
+    let avatarUser = [];
+    await firebase.firestore().collection("users").get()
+    .then((snapshot) => {
+        snapshot.forEach(response => {
+            let responseObj = response.data();
+            if (responseObj.avatarState == avatar) {
+                avatarUser.push(response.id)
+            }
+        })
+    })
+    return avatarUser;
+}
+
 /**
  * Compiles data from firebase to compiledData[] Array
  */
 
-async function exportQues() {
+async function exportQues(isAvatar) {
     // obtain the user records contain phone number and username
     let userData = await getUsers();
     // console.log(userData)
+
+    // get the list of user who used avatar chatbot when want to download only avatar chatbot response
+    let avatarUser = [];
+    if (isAvatar) {
+        avatarUser = await getAvatarUser(isAvatar)
+    }
 
     let compiledData = [];
 
@@ -76,30 +97,30 @@ async function exportQues() {
                                                         state = "";
                                                     }
 
-                                                    // let avatarState = "";
-                                                    // // whether the user use avatar chatbot or not
-                                                    // firebase.firestore().collection("users/" + user).get().then((querySnap) => {
-                                                    //     let state = querySnap.getString("avatarState");
-                                                    //     if (state === undefined) {
-                                                    //         avatarState = "";
-                                                    //     }
-                                                    //     else if (state === "N/A") {
-                                                    //         avatarState = "";
-                                                    //     }
-                                                    //     else {
-                                                    //         avatarState = state
-                                                    //     }
-                                                    // })
+                                                    // if the user is avatar user
+                                                    let isAvatarUser = false;
+                                                    if (isAvatar) {
+                                                        for (let x = 0; x < avatarUser.length; x++) {
+                                                            if (user == avatarUser[x]) {
+                                                                isAvatarUser = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
 
                                                     switch(subQuestionType) {
                                                         case TYPE_MULTIPLE_CHOICE:
                                                         case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                                         case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                            break;
+                                                            if((!isAvatar) || (isAvatar && isAvatarUser)) {
+                                                                compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObjectTemp.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                                break;
+                                                            }
                                                         default:
-                                                            compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                            break;
+                                                            if((!isAvatar) || (isAvatar && isAvatarUser)) {
+                                                                compiledData.push([questionObjectTemp.question_number, "\"" + questionObjectTemp.question.replaceAll('<b>', '').replaceAll('</b>', '') + "\"", "\"" + responseObj.answer + "\"", , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                                break;
+                                                            }
                                                     }
                                                 });
                                             });
@@ -135,31 +156,31 @@ async function exportQues() {
                                             state = "";
                                         }
 
-                                        // let avatarState = "";
-                                        // // whether the user use avatar chatbot or not
-                                        // firebase.firestore().collection("users/" + user).get().then((querySnap) => {
-                                        //     let state = querySnap.getString("avatarState");
-                                        //     if (state === undefined) {
-                                        //         avatarState = "";
-                                        //     }
-                                        //     else if (state === "N/A") {
-                                        //         avatarState = "";
-                                        //     }
-                                        //     else {
-                                        //         avatarState = state
-                                        //     }
-                                        // })
+                                        // if the user is avatar user
+                                        let isAvatarUser = false;
+                                        if (isAvatar) {
+                                            for (let x = 0; x < avatarUser.length; x++) {
+                                                if (user == avatarUser[x]) {
+                                                    isAvatarUser = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
 
                                         switch(questionType){
                                             case TYPE_MULTIPLE_CHOICE:
                                             case TYPE_MULTIPLE_CHOICE_SUB_QUESTION:
                                             case TYPE_MULTIPLE_CHOICE_OTHERS:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                break;
+                                                if((!isAvatar) || (isAvatar && isAvatarUser)) {
+                                                    compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"", "\"" + array_to_str(questionObject.restrictions.choices) + "\"" , "\"" + user + "\"", "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                    break;
+                                                }
 
                                             default:
-                                                compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
-                                                break;
+                                                if((!isAvatar) || (isAvatar && isAvatarUser)) {
+                                                    compiledData.push(["\"" + questionObject.question_number + "\"", "\"" + questionObject.question.replaceAll('<b>','').replaceAll('</b>','') + "\"", "\"" + responseObj.answer + "\"" , , "\"" + user + "\"" , "\"" + username + "\"", "\"" + city + "\"", "\"" + state + "\"", "\"" + language[a] + "\"", "\"" + date + "\"", "\"" + admin + "\""]);
+                                                    break;
+                                                }
                                         }
                                     });
                                 });
@@ -292,7 +313,6 @@ async function exportQues2() {
                 });
         }
     }
-    // console.log(user_ans)
     let data_csv = [];
     // for (var key in user_ans) {
     //     let data = user_ans[key]
