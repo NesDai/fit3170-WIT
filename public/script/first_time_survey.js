@@ -210,6 +210,8 @@ function select(button, index) {
         }
     }
 
+    MCQOptionIDs=[];
+
     // scroll to bottom of chat log
     scrollToBottom();
 }
@@ -364,6 +366,145 @@ function nextQuestion() {
     } else { //  else end the survey
         showEndingMessage();
     }
+}
+
+/**
+ * Function to increment through survey questions one by one and display them.
+ */
+ function prevQuestion() {
+    console.log("prevQuestion() is called.")
+
+    //Disable current select options
+    for(let i =0; i<MCQOptionIDs.length;i++){
+        console.log("mcq = "+MCQOptionIDs[i])
+        let option = document.getElementById(MCQOptionIDs[i]);
+        option.disabled =true;
+    }
+
+    //Disable textbox
+    disableInput()
+
+    //Reset Likert scale
+    document.getElementById('likert_scale').innerHTML='';
+
+    // check if currentQuestionObject is null
+    if (currentSubQuestionIds !== null && currentSubQuestionIds !== undefined) {
+        // The user is answering sub-questions
+        console.log("subquestionIndex is ", subQuestionIndex);
+
+        // check if the subQuestionIndex is at the end of  currentSubQuestionIds
+        if (subQuestionIndex <= 1 ) {
+            currentSubQuestionIds = null;
+            questionIndex--;
+            checkLongQuestion();
+        } else {
+            subQuestionIndex--;
+            subQuestionIndex--;
+            purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex]);
+            showQuestion(true);
+            subQuestionIndex++;
+        }
+    }else if (questionIndex < QUESTION_IDS[branch_id].length - 1) { // check if questionIndex is still not at the end of survey questions
+        // The user is answering a normal question
+        questionIndex--;
+        checkLongQuestion();
+    }
+}
+
+function checkLongQuestion(){
+    //Resets linkert scale
+    document.getElementById('likert_scale').innerHTML='';
+
+    // Get the ID of the current question
+    let question_id = "";
+    let subquestionCon = true;
+
+    // check if the current question is a sub-question
+    currentQuestionId = QUESTION_IDS[branch_id][questionIndex];
+    question_id = currentQuestionId;
+    
+    console.log("Reading ", question_id);
+
+    firebase.firestore().collection(QUESTIONS_BRANCHES[branch_id])
+        .doc(question_id)
+        .get()
+        .then((docRef) => {
+            let questionObject = docRef.data();
+            currentLongQuestionObject = questionObject;
+            let questionType = questionObject.type;
+
+
+            // DONT REMOVE THIS - Yong Peng
+            console.log(currentQuestionObject);
+            if(resumeCond){
+                setCurrSection(currentQuestionObject.category);
+                resumeCond = false;
+            }
+
+            if(questionType==TYPE_LONG_QUESTION){
+                titleQuestionString = questionObject.question;
+
+                subQuestionIndex = 0;
+                currentSubQuestionIds = questionObject.arrangement;
+                console.log(currentSubQuestionIds)
+                // Initialize fields for looping over the sub-question IDs array
+                firebase.firestore().collection(getUserResponsesBranch()).get().then(responses => {
+                    responses.forEach(response => {
+                        
+                        firebase.firestore().collection(getUserResponsesBranch()).doc(response.id)
+                            .get()
+                            .then((docRef) => {
+                                for(let i = 0;i<currentSubQuestionIds.length;i++){
+                                    let questionObject = docRef.data();
+                                    if(questionObject.type==TYPE_MULTIPLE_CHOICE||questionObject.type==TYPE_MULTIPLE_CHOICE_OTHERS){
+                                        if(currentSubQuestionIds[i]==questionObject.question_id){
+                                            if(questionObject.restrictions.choices[questionObject.answer]==questionObject.restrictions.skipChoices[0]){
+                                                currentSubQuestionId=currentSubQuestionIds[i]
+                                                subQuestionIndex=i
+                                                purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                                showQuestion(true);
+                                                subQuestionIndex=i+1
+                                                subquestionCon=false;
+                                            }else if(subQuestionIndex==currentSubQuestionIds.length -1 && subquestionCon){
+                                                console.log('passed here!')
+                                                currentSubQuestionId=currentSubQuestionIds[subQuestionIndex]
+                                                purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                                showQuestion(true);
+                                                subQuestionIndex++
+                                            }else{
+                                                subQuestionIndex++;     
+                                            }
+                                    }
+                                }else{
+                                    if(currentSubQuestionIds[i]==questionObject.question_id){
+                                        if(questionObject.restrictions.choices[questionObject.answer]==questionObject.restrictions.skipChoices[0]){
+                                            currentSubQuestionId=currentSubQuestionIds[i]
+                                            subQuestionIndex=i
+                                            purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                            showQuestion(true);
+                                            subQuestionIndex=i+1
+                                        }else if(subQuestionIndex==currentSubQuestionIds.length -1){
+                                            console.log('passed here!')
+                                            currentSubQuestionId=currentSubQuestionIds[subQuestionIndex]
+                                            purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                            showQuestion(true);
+                                            subQuestionIndex++
+                                        }else{
+                                            subQuestionIndex++;     
+                                        }
+                                    }
+                                }
+                            }
+                                    
+                        })
+                        
+                    });
+                });
+            }else{
+                purgeUserResponsesById(question_id)
+                showQuestion(false);
+            }
+        });
 }
 
 /**
@@ -972,6 +1113,7 @@ function showQuestion(isSubQuestion) {
     // check if the current question is a sub-question
     if (isSubQuestion) {
         // get the firebase ID of the sub-question
+        console.log("hello!!!! "+subQuestionIndex);
         currentSubQuestionId = currentSubQuestionIds[subQuestionIndex];
         question_id = currentSubQuestionId;
     } else {
@@ -1156,25 +1298,25 @@ function showNumeric(questionObject) {
                                 if (select_language=="Malay"){
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>Umur hendaklah antara 60 hingga 100 tahun</p>\
+                                    <p>Umur hendaklah antara 50 hingga 100 tahun</p>\
                                     </div>\
                                     </div>';
                                 }else if (select_language=="Chinese (Simplified)"){
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>年龄应该在60到100之间</p>\
+                                    <p>年龄应该在50到100之间</p>\
                                     </div>\
                                     </div>';
                                 }else if (select_language=="Thai"){
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>อายุควรอยู่ระหว่าง 60 ถึง 100</p>\
+                                    <p>อายุควรอยู่ระหว่าง 50 ถึง 100</p>\
                                     </div>\
                                     </div>';
                                 }else{
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>The age should be between 60 to 100</p>\
+                                    <p>The age should be between 59 to 100</p>\
                                     </div>\
                                     </div>';
                                 }
@@ -1555,28 +1697,53 @@ function showOptions(choices, hasOther) {
     let mcqOptions = "<div class=\"space\">"
     let numberOption = 1;
     let index = 1;
-
+    let repeat = true;
+    let k =0;
     MCQOptionIDs = [];
 
     if(!hasOther) {
-        for (let i = 0; i < choices.length; i++){
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
-            numberOption ++;
-            index++;
-            MCQOptionIDs.push(currentQuestionObject.question_number + i);
+        while(repeat){
+            for (let i = 0 + choices.length*k; i < choices.length*(k+1); i++){
+                if(document.getElementById(currentQuestionObject.question_number + i)!=null){
+                    if(i==choices.length*k){
+                        console.log(i)
+                        k++;
+                    }
+                }
+                else{
+                    console.log(i)
+                    mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i-choices.length*k] + "</button>";
+                    numberOption ++;
+                    index++;
+                    MCQOptionIDs.push(currentQuestionObject.question_number + i);
+                    repeat = false;
+                }
+            }
         }
     } else {
-        for (let i = 0; i < choices.length -1; i++){
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
-            numberOption ++;
-            index++;
-            MCQOptionIDs.push(currentQuestionObject.question_number + i);
+        while(repeat){
+            for (let i = 0 + choices.length*k; i < choices.length*(k+1)-1; i++){
+                if(document.getElementById(currentQuestionObject.question_number + i)!=null){
+                    if(i==choices.length*k){
+                        k++;
+                    }
+                }
+                else{
+                    mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i-choices.length*k] + "</button>";
+                    numberOption ++;
+                    index++;
+                    MCQOptionIDs.push(currentQuestionObject.question_number + i);
+                    repeat = false;
+                }
+            }
         }
         mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"othersOptionInput()\" id=\"" + currentQuestionObject.question_number + (choices.length-1) + "\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
-        MCQOptionIDs.push(currentQuestionObject.question_number + (choices.length-1));
+        MCQOptionIDs.push(currentQuestionObject.question_number + (choices.length*(k+1)-1));
     }
 
     mcqOptions += "</div>";
+    console.log(mcqOptions)
+    console.log(MCQOptionIDs)
     messages.innerHTML += mcqOptions;
 }
 
@@ -1618,6 +1785,7 @@ function isAnsweringSubQuestions() {
         // If the current question object is set,
         // the user is answering sub-questions if
         // the list of sub-question IDs is not null.
+        console.log("isAns = "+currentSubQuestionIds !== null )
         return currentSubQuestionIds !== null;
     }
 }
