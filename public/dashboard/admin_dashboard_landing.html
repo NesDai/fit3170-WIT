@@ -132,9 +132,25 @@
 
         <main class="mdl-layout__content">
           <section class="mdl-layout__tab-panel is-active" id="fixed-chatbot">
-            <br class="desktop-br"> 
-            <button id ="csv_chatbot_export" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportQues()" 
+            <br class="desktop-br">
+            <button id ="csv_chatbot_export" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportQues(0)"
             style='background-color: #006DAE; position: relative; float: right; top: 10px; right: 270px;'>CSV Export (Chatbot)</button>
+            <br class="desktop-br"><br class="desktop-br">
+            <br>
+            <button id ="csv_chatbot_export2" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportQues2()"
+            style='background-color: #006DAE; position: relative; float: right; top: 10px; right: 270px;'>CSV Export 2 (Chatbot)</button>
+            <br class="desktop-br"><br class="desktop-br">
+            <br>
+            <button id ="csv_chatbot_export2" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportQues('3dAvatar')"
+            style='background-color: #006DAE; position: relative; float: right; top: 10px; right: 270px;'>CSV Export (3D Avatar chatbot)</button>
+            <br class="desktop-br"><br class="desktop-br">
+            <br>
+            <button id ="csv_chatbot_export2" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportQues('drawingAvatar')"
+            style='background-color: #006DAE; position: relative; float: right; top: 10px; right: 270px;'>CSV Export (Drawing Avatar chatbot)</button>
+            <br class="desktop-br"><br class="desktop-br">
+            <br>
+            <button id ="csv_chatbot_export2" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportQues('robotAvatar')"
+            style='background-color: #006DAE; position: relative; float: right; top: 10px; right: 270px;'>CSV Export (Robot Avatar chatbot)</button>
             <br class="desktop-br"><br class="desktop-br">
             <div class="page-content">
               <div class = "mdl-grid">
@@ -146,7 +162,7 @@
                         <h2 class = "mdl-card__title-text ">Questions & Responses</h2>
                      </div>
                      <div class = "mdl-card__supporting-text">
-                        Get user responses ordered by questions 
+                        Get user responses ordered by questions
                      </div>
                      <br class="desktop-br"> <br class="desktop-br">
                      <div class = "mdl-card__actions mdl-card--border">
@@ -157,7 +173,7 @@
             </div>
           </section>
           <section class="mdl-layout__tab-panel" id="fixed-recommender">
-            <br class="desktop-br"> 
+            <br class="desktop-br">
             <button id ="csv_recommender_export" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="csvExportRecommenderData()" style='background-color: #006DAE;'>CSV Export (Recommender)</button>
             <br class="desktop-br"><br class="desktop-br">
             <div class="page-content">
@@ -211,9 +227,9 @@
             </div>
           </section>
           <section class="mdl-layout__tab-panel" id="fixed-forum">
-            <br class="desktop-br"> 
+            <br class="desktop-br">
             <button id ="csv_forum_export" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="csvExportForumData()" style='background-color: #006DAE;'>CSV Export (Forum)</button>
-            <br class="desktop-br"><br class="desktop-br"> 
+            <br class="desktop-br"><br class="desktop-br">
             <div class="page-content">
               <!-- Your content goes here -->
               <div class = "mdl-grid">
