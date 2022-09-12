@@ -9,6 +9,7 @@ let textInput = document.getElementById("message-form");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
+let backBtn = document.getElementById("prev");
 let messageHistoryColour = 'white';
 let skippedToEnd = null;
 let joinFutureResearchExist = null;
@@ -57,7 +58,7 @@ if (select_language == "English") {
 }
 
 disableInput();
-
+disableBack();
 /*
 The user object of the currently logged in user.
 
@@ -336,6 +337,7 @@ function addMessage() {
  * Function to increment through survey questions one by one and display them.
  */
 function nextQuestion() {
+    enableBack();
     console.log("nextQuestion() is called.")
     // check if currentQuestionObject is null
     if (currentSubQuestionIds !== null && currentSubQuestionIds !== undefined) {
@@ -373,7 +375,7 @@ function nextQuestion() {
  */
  function prevQuestion() {
     console.log("prevQuestion() is called.")
-
+    disableBack()
     //Disable current select options
     for(let i =0; i<MCQOptionIDs.length;i++){
         console.log("mcq = "+MCQOptionIDs[i])
@@ -516,6 +518,7 @@ function showEndingMessage() {
     input.disabled = true;
     submit.disabled = true;
     input.onkeyup = () => {};
+    disableBack();
 
     // update progress bar
     questionIndex = QUESTION_IDS[branch_id].length;
@@ -1103,7 +1106,7 @@ function scrollToBottom() {
  * @param isSubQuestion
  */
 function showQuestion(isSubQuestion) {
-
+    enableBack()
     //Resets linkert scale
     document.getElementById('likert_scale').innerHTML='';
 
@@ -1961,4 +1964,12 @@ function setCurrSection(nameSection){
 
 function enableResume(){
     resumeCond=true;
+}
+
+function disableBack(){
+    backBtn.disabled = true;
+}
+
+function enableBack(){
+    backBtn.disabled = false;
 }
