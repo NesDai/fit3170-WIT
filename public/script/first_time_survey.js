@@ -41,7 +41,7 @@ if (select_language == "English") {
     branch_id = EN_INDEX;
 } else if (select_language == "Chinese (Simplified)") {
     document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"聊天机器人"
-    messageLabel.innerHTML="消息。。。"
+    messageLabel.innerHTML="信息。。。"
     submit.innerHTML="发送"
     branch_id = ZH_CN_INDEX;
 } else if (select_language == "Malay") {
@@ -1163,96 +1163,49 @@ function showQuestion(isSubQuestion) {
                 }
                 // speak the question
                 if (select_language == "Chinese (Simplified)") {
-                    if (currentQuestionObject.question_number == "2.4") {
-                        sayText("由于", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("covid", 6, 1, 3)
-                        sayText("19疫情失去了工作？", voice_ch[0], voice_ch[1], voice_ch[2])
-                    }
-                    else if (currentQuestionObject.question_number == "2.5") {
-                        sayText("您是否因", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("covid", 6, 1, 3)
-                        sayText("19疫情而失去了收入？", voice_ch[0], voice_ch[1], voice_ch[2])
-                    }
-                    else if (currentQuestionObject.question_number == "3.2a") {
-                        sayText("短信、短信（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Whatsapp", 6, 1, 3)
-                        sayText("微信等", voice_ch[0], voice_ch[1], voice_ch[2])
+                    if (currentQuestionObject.question_number == "3.2a") {
+                        sayText("短讯应用程序", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2d") {
-                        sayText("使用", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Zoom、Facetime、Skype、Google Talk", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("视频平台软件", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2e") {
-                        sayText("使用", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("covid", 6, 1, 3)
-                        sayText("19 联系人追踪应用程序（例如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("MySejahtera", 6, 1, 3)
+                        sayText("使用新冠疫情联系人追踪应用程序", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2f") {
-                        sayText("网上购物或电子商务（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Lazada、Shopee", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("网上购物或电子商务平台", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2g") {
-                        sayText("使用手机银行/电子钱包（例如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("GrabPay、BoostPay、FavePay、Touch N Go Pay", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("使用手机银行/电子钱包", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2i") {
-                        sayText("使用社交网络（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Facebook、Instagram、Twitter", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("使用社交网络", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2k") {
-                        sayText("地图导航器（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Google Map、Waze、Tom-Tom", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("地图导航器", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else {
                         sayText(question_txt, voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                 }
                 else if (select_language == "Malay") {
-                    if (currentQuestionObject.question_number == "2.4") {
-                        sayText("Adakah anda kehilangan pekerjaan kerana wabak", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("covid 19?", 6, 1, 3)
-                    }
-                    else if (currentQuestionObject.question_number == "2.5") {
-                        sayText("Adakah anda kehilangan pendapatan anda kerana wabak", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("covid 19?", 6, 1, 3)
+                    if (currentQuestionObject.question_number == "3.2a") {
+                        sayText("SMS, pesanan teks", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2d") {
-                        sayText("Menggunakan", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("Zoom、Facetime、Skype、Google Talk", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Menggunakan Zoom、Facetime、Skype、Google Talk", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
-                    else if (currentQuestionObject.question_number == "3.2e") {
-                        sayText("Menggunakan aplikasi pengesanan kontak", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("covid 19", 6, 1, 3)
-                        sayText("seperti MySejahtera", voice_ma[0], voice_ma[1], voice_ma[2])
+                    else if (currentQuestionObject.question_number == "3.2f") {
+                        sayText("Membeli-belah atas talian atau e-dagang", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2g") {
-                        sayText("Menggunakan perbankan mudah alih", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("e-wallet", 6, 1, 3)
-                        sayText("seperti", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("GrabPay, BoostPay, FavePay, Touch N Go Pay", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Menggunakan perbankan mudah alih / dompet elektronik", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2i") {
-                        sayText("Menggunakan rangkaian sosial (seperti", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("Facebook、Instagram、Twitter", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Menggunakan rangkaian sosial", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2k") {
-                        sayText("Pemetaan (seperti Peta", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("Google、Waze、Tom-Tom", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
-                    }
-                    else if (currentQuestionObject.question_number == "4.3a") {
-                        sayText("Kemahiran", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("ICT", 6, 1, 3)
-                        sayText("teknologi (seperti cara menggunakan perisian telefon bimbit atau komputer)", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Pemetaan", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else {
                         sayText(question_txt, voice_ma[0], voice_ma[1], voice_ma[2])
