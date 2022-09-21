@@ -53,6 +53,7 @@ function saveResponse(answer) {
     };
 
     if (isAnsweringSubQuestions()) {
+        console.log("It has reach this area")
         // For sub-questions
         // 1. Append the titleQuestion attribute which
         // stores the long question
@@ -67,6 +68,7 @@ function saveResponse(answer) {
             lastSubQuestionAnswering = true;
         }
     } else if (lastSubQuestionAnswering) {
+        console.log("It has reach this area2")
         // For sub-questions
         // 1. Append the titleQuestion attribute which
         // stores the long question
@@ -196,4 +198,68 @@ function delete_user_responses_in_response_branch(){
                 });
         }
     }
+}
+
+/**
+ * Deletes  survey responses of the current user by id, in the user branch
+ */
+ function purgeUserResponsesById(b) {
+    if(currentSubQuestionIds==null){
+        lastSubQuestionAnswering = false;
+    }
+    else if (subQuestionIndex === currentSubQuestionIds.length-1) {
+        lastSubQuestionAnswering = true;
+    }else{
+        lastSubQuestionAnswering = false;
+    }
+    let db = firebase.firestore();
+    let compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUESTION_IDS_TH];
+    let branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
+    db.collection(getUserResponsesBranch()).get().then(responses => {
+        responses.forEach(response => {
+            db.collection(getUserResponsesBranch()).doc(response.id)
+                .get()
+                .then((docRef) => {
+                    let questionObject = docRef.data();
+                    if(b==questionObject.question_id){
+                        db.collection(getUserResponsesBranch()).doc(response.id)
+                            .delete()
+                            .catch((error) => {
+                                console.error("Error removing response: ", error);
+                            });
+                        delete_user_response_id_in_response_branch(b)
+                        syncProgress()
+                    }
+                });
+        });
+
+    });
+    //delete_user_response_id_in_response_branch(b)
+}
+
+/**
+ * Deletes  survey responses by id of the current user in response branch
+ */
+function delete_user_response_id_in_response_branch(b){
+    let db = firebase.firestore();
+    let compiledQuestionIDs = [QUESTION_IDS_EN, QUESTION_IDS_ZH_CN, QUESTION_IDS_MS,QUESTION_IDS_TH];
+    let branch_ids = [EN_INDEX, ZH_CN_INDEX, MS_INDEX, TH_INDEX];
+
+    db.collection(RESPONSE_BRANCH + '/' + b).get().then(responses => {
+        responses.forEach(response => {
+            db.collection(RESPONSE_BRANCH + '/' + b).doc(response.id)
+                .get()
+                .then((docRef) => {
+                    let questionObject = docRef.data();
+                    if(questionObject.phone == getUserID()){
+                        db.collection(RESPONSE_BRANCH + '/' + b).doc(response.id)
+                            .delete()
+                            .catch((error) => {
+                                console.error("Error removing response: ", error);
+                            });
+                    }
+                });
+        });
+
+    });
 }

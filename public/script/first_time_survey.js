@@ -9,6 +9,7 @@ let textInput = document.getElementById("message-form");
 let submit = document.getElementById("submit");
 let input = document.getElementById("input-box");
 let errorText = document.getElementById("error-text");
+let backBtn = document.getElementById("prev");
 let messageHistoryColour = 'white';
 let skippedToEnd = null;
 let joinFutureResearchExist = null;
@@ -56,37 +57,8 @@ if (select_language == "English") {
     branch_id = TH_INDEX;
 }
 
-// ready close message
-let close_msg = ["Are you ready to finish the survey?",
-                 "你准备好完成调查了吗？",
-                 "Adakah anda bersedia untuk menyelesaikan tinjauan?",
-                 "คุณพร้อมจะทำแบบสำรวจให้เสร็จหรือไม่?"]
-
-// future research question
-let research_msg = ["We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study?",
-                    "我们希望在几个月后再次收到您的来信。您想参加定性研究吗？",
-                    "Kami ingin mendengar daripada anda sekali lagi dalam masa beberapa bulan. Adakah anda ingin mengambil bahagian dalam kajian kualitatif?",
-                    "เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ?"]
-
-// online transaction message
-let transaction_msg = ["Thank you for completing the survey! A token of participation will be granted via online transaction. Token of appreciation 10 ringgit will not be processed if you do not fill in your payment details.",
-                       "感谢您完成调查！将通过在线交易授予参与令牌。 如果您不填写付款详细信息，感谢现金 10 ringgit 将不予转入您的账户",
-                       "Terima kasih kerana melengkapkan tinjauan! Token penyertaan akan diberikan melalui transaksi dalam talian. Token penghargaan 10 ringgit tidak akan diproses jika anda tidak mengisi butiran pembayaran anda.",
-                       "ขอบคุณที่ทำแบบสำรวจให้เสร็จ! โทเค็นของการเข้าร่วมจะได้รับผ่านการทำธุรกรรมออนไลน์ โทเค็นแสดงความขอบคุณ 10 ringgit จะไม่ถูกดำเนินการหากคุณไม่กรอกรายละเอียดการชำระเงินของคุณ"]
-
-// ending message
-let end_msg = ["Thank you so much for your participation in this survey.",
-               "非常感谢您参与本次调查。",
-               "Terima kasih banyak atas penyertaan anda dalam tinjauan ini.",
-               "ขอบคุณมากสำหรับการเข้าร่วมในแบบสำรวจนี้"]
-
-// thank you message
-let thank_msg = ["Thank you for your time.",
-                 "感谢您的时间。",
-                 "Terima kasih atas masa anda.",
-                 "ขอขอบคุณสำหรับเวลาของคุณ."]
-
 disableInput();
+disableBack();
 
 /*
 The user object of the currently logged in user.
@@ -240,6 +212,8 @@ function select(button, index) {
         }
     }
 
+    MCQOptionIDs=[];
+
     // scroll to bottom of chat log
     scrollToBottom();
 }
@@ -364,6 +338,7 @@ function addMessage() {
  * Function to increment through survey questions one by one and display them.
  */
 function nextQuestion() {
+    enableBack();
     console.log("nextQuestion() is called.")
     // check if currentQuestionObject is null
     if (currentSubQuestionIds !== null && currentSubQuestionIds !== undefined) {
@@ -397,6 +372,145 @@ function nextQuestion() {
 }
 
 /**
+ * Function to increment through survey questions one by one and display them.
+ */
+ function prevQuestion() {
+    console.log("prevQuestion() is called.")
+    disableBack()
+    //Disable current select options
+    for(let i =0; i<MCQOptionIDs.length;i++){
+        console.log("mcq = "+MCQOptionIDs[i])
+        let option = document.getElementById(MCQOptionIDs[i]);
+        option.disabled =true;
+    }
+
+    //Disable textbox
+    disableInput()
+
+    //Reset Likert scale
+    document.getElementById('likert_scale').innerHTML='';
+
+    // check if currentQuestionObject is null
+    if (currentSubQuestionIds !== null && currentSubQuestionIds !== undefined) {
+        // The user is answering sub-questions
+        console.log("subquestionIndex is ", subQuestionIndex);
+
+        // check if the subQuestionIndex is at the end of  currentSubQuestionIds
+        if (subQuestionIndex <= 1 ) {
+            currentSubQuestionIds = null;
+            questionIndex--;
+            checkLongQuestion();
+        } else {
+            subQuestionIndex--;
+            subQuestionIndex--;
+            purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex]);
+            showQuestion(true);
+            subQuestionIndex++;
+        }
+    }else if (questionIndex < QUESTION_IDS[branch_id].length - 1) { // check if questionIndex is still not at the end of survey questions
+        // The user is answering a normal question
+        questionIndex--;
+        checkLongQuestion();
+    }
+}
+
+function checkLongQuestion(){
+    //Resets linkert scale
+    document.getElementById('likert_scale').innerHTML='';
+
+    // Get the ID of the current question
+    let question_id = "";
+    let subquestionCon = true;
+
+    // check if the current question is a sub-question
+    currentQuestionId = QUESTION_IDS[branch_id][questionIndex];
+    question_id = currentQuestionId;
+    
+    console.log("Reading ", question_id);
+
+    firebase.firestore().collection(QUESTIONS_BRANCHES[branch_id])
+        .doc(question_id)
+        .get()
+        .then((docRef) => {
+            let questionObject = docRef.data();
+            currentLongQuestionObject = questionObject;
+            let questionType = questionObject.type;
+
+
+            // DONT REMOVE THIS - Yong Peng
+            console.log(currentQuestionObject);
+            if(resumeCond){
+                setCurrSection(currentQuestionObject.category);
+                resumeCond = false;
+            }
+
+            if(questionType==TYPE_LONG_QUESTION){
+                titleQuestionString = questionObject.question;
+
+                subQuestionIndex = 0;
+                currentSubQuestionIds = questionObject.arrangement;
+                console.log(currentSubQuestionIds)
+                // Initialize fields for looping over the sub-question IDs array
+                firebase.firestore().collection(getUserResponsesBranch()).get().then(responses => {
+                    responses.forEach(response => {
+                        
+                        firebase.firestore().collection(getUserResponsesBranch()).doc(response.id)
+                            .get()
+                            .then((docRef) => {
+                                for(let i = 0;i<currentSubQuestionIds.length;i++){
+                                    let questionObject = docRef.data();
+                                    if(questionObject.type==TYPE_MULTIPLE_CHOICE||questionObject.type==TYPE_MULTIPLE_CHOICE_OTHERS){
+                                        if(currentSubQuestionIds[i]==questionObject.question_id){
+                                            if(questionObject.restrictions.choices[questionObject.answer]==questionObject.restrictions.skipChoices[0]){
+                                                currentSubQuestionId=currentSubQuestionIds[i]
+                                                subQuestionIndex=i
+                                                purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                                showQuestion(true);
+                                                subQuestionIndex=i+1
+                                                subquestionCon=false;
+                                            }else if(subQuestionIndex==currentSubQuestionIds.length -1 && subquestionCon){
+                                                console.log('passed here!')
+                                                currentSubQuestionId=currentSubQuestionIds[subQuestionIndex]
+                                                purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                                showQuestion(true);
+                                                subQuestionIndex++
+                                            }else{
+                                                subQuestionIndex++;     
+                                            }
+                                    }
+                                }else{
+                                    if(currentSubQuestionIds[i]==questionObject.question_id){
+                                        if(questionObject.restrictions.choices[questionObject.answer]==questionObject.restrictions.skipChoices[0]){
+                                            currentSubQuestionId=currentSubQuestionIds[i]
+                                            subQuestionIndex=i
+                                            purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                            showQuestion(true);
+                                            subQuestionIndex=i+1
+                                        }else if(subQuestionIndex==currentSubQuestionIds.length -1){
+                                            console.log('passed here!')
+                                            currentSubQuestionId=currentSubQuestionIds[subQuestionIndex]
+                                            purgeUserResponsesById(currentSubQuestionIds[subQuestionIndex])
+                                            showQuestion(true);
+                                            subQuestionIndex++
+                                        }else{
+                                            subQuestionIndex++;     
+                                        }
+                                    }
+                                }
+                            }
+                                    
+                        })
+                        
+                    });
+                });
+            }else{
+                purgeUserResponsesById(question_id)
+                showQuestion(false);
+            }
+        });
+}
+
+/**
  * Shows the ending message when the survey has been completed.
  */
 function showEndingMessage() {
@@ -405,6 +519,7 @@ function showEndingMessage() {
     input.disabled = true;
     submit.disabled = true;
     input.onkeyup = () => {};
+    disableBack();
 
     // update progress bar
     questionIndex = QUESTION_IDS[branch_id].length;
@@ -1119,7 +1234,7 @@ function scrollToBottom() {
  * @param isSubQuestion
  */
 function showQuestion(isSubQuestion) {
-
+    enableBack()
     //Resets linkert scale
     document.getElementById('likert_scale').innerHTML='';
 
@@ -1129,6 +1244,7 @@ function showQuestion(isSubQuestion) {
     // check if the current question is a sub-question
     if (isSubQuestion) {
         // get the firebase ID of the sub-question
+        console.log("hello!!!! "+subQuestionIndex);
         currentSubQuestionId = currentSubQuestionIds[subQuestionIndex];
         question_id = currentSubQuestionId;
     } else {
@@ -1383,25 +1499,25 @@ function showNumeric(questionObject) {
                                 if (select_language=="Malay"){
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>Umur hendaklah antara 60 hingga 100 tahun</p>\
+                                    <p>Umur hendaklah antara 50 hingga 100 tahun</p>\
                                     </div>\
                                     </div>';
                                 }else if (select_language=="Chinese (Simplified)"){
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>年龄应该在60到100之间</p>\
+                                    <p>年龄应该在50到100之间</p>\
                                     </div>\
                                     </div>';
                                 }else if (select_language=="Thai"){
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>อายุควรอยู่ระหว่าง 60 ถึง 100</p>\
+                                    <p>อายุควรอยู่ระหว่าง 50 ถึง 100</p>\
                                     </div>\
                                     </div>';
                                 }else{
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>The age should be between 60 to 100</p>\
+                                    <p>The age should be between 59 to 100</p>\
                                     </div>\
                                     </div>';
                                 }
@@ -1782,28 +1898,53 @@ function showOptions(choices, hasOther) {
     let mcqOptions = "<div class=\"space\">"
     let numberOption = 1;
     let index = 1;
-
+    let repeat = true;
+    let k =0;
     MCQOptionIDs = [];
 
     if(!hasOther) {
-        for (let i = 0; i < choices.length; i++){
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
-            numberOption ++;
-            index++;
-            MCQOptionIDs.push(currentQuestionObject.question_number + i);
+        while(repeat){
+            for (let i = 0 + choices.length*k; i < choices.length*(k+1); i++){
+                if(document.getElementById(currentQuestionObject.question_number + i)!=null){
+                    if(i==choices.length*k){
+                        console.log(i)
+                        k++;
+                    }
+                }
+                else{
+                    console.log(i)
+                    mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i-choices.length*k] + "</button>";
+                    numberOption ++;
+                    index++;
+                    MCQOptionIDs.push(currentQuestionObject.question_number + i);
+                    repeat = false;
+                }
+            }
         }
     } else {
-        for (let i = 0; i < choices.length -1; i++){
-            mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i] + "</button>";
-            numberOption ++;
-            index++;
-            MCQOptionIDs.push(currentQuestionObject.question_number + i);
+        while(repeat){
+            for (let i = 0 + choices.length*k; i < choices.length*(k+1)-1; i++){
+                if(document.getElementById(currentQuestionObject.question_number + i)!=null){
+                    if(i==choices.length*k){
+                        k++;
+                    }
+                }
+                else{
+                    mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"select(this, " + index + ")\" id=\"" + currentQuestionObject.question_number + i + "\">" + numberOption + ". " + choices[i-choices.length*k] + "</button>";
+                    numberOption ++;
+                    index++;
+                    MCQOptionIDs.push(currentQuestionObject.question_number + i);
+                    repeat = false;
+                }
+            }
         }
         mcqOptions += "<button class=\"mdl-button mdl-js-button mdl-button--raised notranslate\" onclick=\"othersOptionInput()\" id=\"" + currentQuestionObject.question_number + (choices.length-1) + "\">" + numberOption + ". " + choices[choices.length-1] + "</button>";
-        MCQOptionIDs.push(currentQuestionObject.question_number + (choices.length-1));
+        MCQOptionIDs.push(currentQuestionObject.question_number + (choices.length*(k+1)-1));
     }
 
     mcqOptions += "</div>";
+    console.log(mcqOptions)
+    console.log(MCQOptionIDs)
     messages.innerHTML += mcqOptions;
 }
 
@@ -1845,6 +1986,7 @@ function isAnsweringSubQuestions() {
         // If the current question object is set,
         // the user is answering sub-questions if
         // the list of sub-question IDs is not null.
+        console.log("isAns = "+currentSubQuestionIds !== null )
         return currentSubQuestionIds !== null;
     }
 }
@@ -2020,4 +2162,12 @@ function setCurrSection(nameSection){
 
 function enableResume(){
     resumeCond=true;
+}
+
+function disableBack(){
+    backBtn.disabled = true;
+}
+
+function enableBack(){
+    backBtn.disabled = false;
 }
