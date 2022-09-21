@@ -57,64 +57,11 @@ else {
 
 // function to check if user has clicked the checkbox before letting them continue to chatbot page
 function checkAccepted () {
-    let isAvatar = localStorage.getItem("avatar");
-
     // if it is checked, update user's realtime database data that they accept the Explanatory Statement
-    if (checkbox.checked) {
-        // if user is using phone
-        if ( navigator.userAgent.match(/Android/i)
-           || navigator.userAgent.match(/webOS/i)
-           || navigator.userAgent.match(/iPhone/i)
-           || navigator.userAgent.match(/iPad/i)
-           || navigator.userAgent.match(/iPod/i)
-           || navigator.userAgent.match(/BlackBerry/i)) {
-
-             if (isAvatar == "3dAvatar") {
-                 window.location.href = "./avatar_phone.html"
-             }
-             else if (isAvatar == "drawingAvatar") {
-                 window.location.href = "./avatar_drawing_phone.html"
-             }
-             else if (isAvatar == "robotAvatar") {
-                 window.location.href = "./avatar_robot_phone.html"
-             }
-             else {
-                 window.location.href = "./chatbot.html"
-             }
-
-        }
-        else {
-            if (isAvatar == "3dAvatar") {
-                window.location.href = "./avatar.html"
-            }
-            else if (isAvatar == "drawingAvatar") {
-                window.location.href = "./avatar_drawing.html"
-            }
-            else if (isAvatar == "robotAvatar") {
-                window.location.href = "./avatar_robot.html"
-            }
-            else {
-                window.location.href = "./chatbot.html"
-            }
-        }
-    }
-    else {
+    if (checkbox.checked){
+        window.location.href = "./chatbot.html"
+    } else {
         // if the tickbox is not ticked, display error message
         tick_warningRef.hidden = false
     }
-}
-
-// if chatbot is with 3d avatar
-function set3dAvatar() {
-    localStorage.setItem("avatar", "3dAvatar")
-}
-
-// if chatbot is with drawing avatar
-function setDrawingAvatar() {
-    localStorage.setItem("avatar", "drawingAvatar")
-}
-
-// if chatbot is with robot avatar
-function setRobotAvatar() {
-    localStorage.setItem("avatar", "robotAvatar")
 }

@@ -1,6 +1,4 @@
 
-// indicate that chatbot is without avatar in local storage
-localStorage.setItem("avatar", "N/A");
 
 window.onload = function(){
   currLang = localStorage.getItem(LANGUAGE_KEY)
@@ -12,7 +10,7 @@ window.onload = function(){
     firebase.auth.onAuthStateChanged(user => {
         if (user) {
           console.log("logged in");
-
+    
         }
         else {
           // User is signed out.
@@ -75,10 +73,6 @@ function changeLang(lang){
      document.getElementById("translate_btn").innerHTML = '<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+"Translate";
      document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"Chat Bot";
 
-     document.getElementById("avatar_btn").innerHTML = "Human avatar";
-     document.getElementById("avatar_drawing_btn").innerHTML = "Drawing avatar";
-     document.getElementById("avatar_robot_btn").innerHTML = "Robot avatar";
-
      document.getElementById("homeBanner").innerHTML = "Home Page";
      document.getElementById("chooseLang").innerHTML = "Choose Language:";
      document.getElementById("button-close-modal").innerHTML = "Back";
@@ -95,10 +89,6 @@ function changeLang(lang){
      document.getElementById("username").innerHTML = "selamat datang @" + current_us["username"];
      document.getElementById("translate_btn").innerHTML = '<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+"terjemah";
      document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"Bot Sembang";
-
-     document.getElementById("avatar_btn").innerHTML = "Avatar manusia";
-     document.getElementById("avatar_drawing_btn").innerHTML = "Melukis avatar";
-     document.getElementById("avatar_robot_btn").innerHTML = "Avatar robot";
 
      document.getElementById("homeBanner").innerHTML = "Halaman Utama";
      document.getElementById("chooseLang").innerHTML = "Pilih Bahasa:";
@@ -117,10 +107,6 @@ function changeLang(lang){
      document.getElementById("translate_btn").innerHTML ='<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+ "翻译";
      document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"聊天机器人";
 
-     document.getElementById("avatar_btn").innerHTML = "人类化身";
-     document.getElementById("avatar_drawing_btn").innerHTML = "绘图头像";
-     document.getElementById("avatar_robot_btn").innerHTML = "机器人头像";
-
      document.getElementById("homeBanner").innerHTML = "主页";
      document.getElementById("chooseLang").innerHTML = "选择语言：";
      document.getElementById("button-close-modal").innerHTML = "后面";
@@ -138,10 +124,6 @@ function changeLang(lang){
      document.getElementById("translate_btn").innerHTML ='<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+ "แปลภาษา";
      document.getElementById("chatbox_btn").innerHTML ='<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+ "แชทบอท";
 
-     document.getElementById("avatar_btn").innerHTML = "อวตารมนุษย์";
-     document.getElementById("avatar_drawing_btn").innerHTML = "วาดอวตาร";
-     document.getElementById("avatar_robot_btn").innerHTML = "อวตารหุ่นยนต์";
-
      document.getElementById("homeBanner").innerHTML = "หน้าแรก";
      document.getElementById("chooseLang").innerHTML = "เลือกภาษา:";
      document.getElementById("button-close-modal").innerHTML = "กลับ";
@@ -155,3 +137,6 @@ function changeLang(lang){
      document.getElementById("forumText").innerHTML = "โต้ตอบกับผู้ใช้รายอื่นด้วยการกดไลค์และแสดงความคิดเห็นโพสต์ของพวกเขาและโพสต์ความคิดและคำถามของคุณเอง";
  }
 }
+
+
+

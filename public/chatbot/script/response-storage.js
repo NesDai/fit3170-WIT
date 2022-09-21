@@ -12,8 +12,7 @@ function syncProgress() {
         .set({
             questionIndex: questionIndex,
             currentSubQuestionIds: currentSubQuestionIds,
-            subQuestionIndex: subQuestionIndex,
-            avatarState: isAvatar
+            subQuestionIndex: subQuestionIndex
         })
         .then(() => {
             console.log(
