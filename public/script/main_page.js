@@ -75,9 +75,10 @@ function changeLang(lang){
      document.getElementById("translate_btn").innerHTML = '<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+"Translate";
      document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"Chat Bot";
 
-     document.getElementById("avatar_btn").innerHTML = "Human avatar";
-     document.getElementById("avatar_drawing_btn").innerHTML = "Drawing avatar";
-     document.getElementById("avatar_robot_btn").innerHTML = "Robot avatar";
+     document.getElementById("avatar_btn").innerHTML = '<img src="./css/images/avatar_3d_icon.png"  class="nav_icon" id="3dAvatar_chatbot_icon"></img>'+"Human avatar";
+     document.getElementById("avatar_drawing_btn").innerHTML = '<img src="./css/images/avatar_2d_icon.png"  class="nav_icon" id="2dAvatar_chatbot_icon"></img>'+"Drawing avatar";
+     document.getElementById("avatar_robot_btn").innerHTML = '<img src="./css/images/avatar_robot_icon.png"  class="nav_icon" id="robotAvatar_chatbot_icon"></img>'+"Robot avatar";
+
 
      document.getElementById("homeBanner").innerHTML = "Home Page";
      document.getElementById("chooseLang").innerHTML = "Choose Language:";
@@ -96,9 +97,10 @@ function changeLang(lang){
      document.getElementById("translate_btn").innerHTML = '<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+"terjemah";
      document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"Bot Sembang";
 
-     document.getElementById("avatar_btn").innerHTML = "Avatar manusia";
-     document.getElementById("avatar_drawing_btn").innerHTML = "Melukis avatar";
-     document.getElementById("avatar_robot_btn").innerHTML = "Avatar robot";
+     document.getElementById("avatar_btn").innerHTML = '<img src="./css/images/avatar_3d_icon.png"  class="nav_icon" id="3dAvatar_chatbot_icon"></img>'+"Avatar manusia";
+     document.getElementById("avatar_drawing_btn").innerHTML = '<img src="./css/images/avatar_2d_icon.png"  class="nav_icon" id="2dAvatar_chatbot_icon"></img>'+"Melukis avatar";
+     document.getElementById("avatar_robot_btn").innerHTML = '<img src="./css/images/avatar_robot_icon.png"  class="nav_icon" id="robotAvatar_chatbot_icon"></img>'+"Avatar robot";
+
 
      document.getElementById("homeBanner").innerHTML = "Halaman Utama";
      document.getElementById("chooseLang").innerHTML = "Pilih Bahasa:";
@@ -117,9 +119,10 @@ function changeLang(lang){
      document.getElementById("translate_btn").innerHTML ='<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+ "翻译";
      document.getElementById("chatbox_btn").innerHTML = '<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+"聊天机器人";
 
-     document.getElementById("avatar_btn").innerHTML = "人类化身";
-     document.getElementById("avatar_drawing_btn").innerHTML = "绘图头像";
-     document.getElementById("avatar_robot_btn").innerHTML = "机器人头像";
+     document.getElementById("avatar_btn").innerHTML = '<img src="./css/images/avatar_3d_icon.png"  class="nav_icon" id="3dAvatar_chatbot_icon"></img>'+"人类化身";
+     document.getElementById("avatar_drawing_btn").innerHTML = '<img src="./css/images/avatar_2d_icon.png"  class="nav_icon" id="2dAvatar_chatbot_icon"></img>'+"绘图头像";
+     document.getElementById("avatar_robot_btn").innerHTML = '<img src="./css/images/avatar_robot_icon.png"  class="nav_icon" id="robotAvatar_chatbot_icon"></img>'+"机器人头像";
+
 
      document.getElementById("homeBanner").innerHTML = "主页";
      document.getElementById("chooseLang").innerHTML = "选择语言：";
@@ -138,9 +141,10 @@ function changeLang(lang){
      document.getElementById("translate_btn").innerHTML ='<img src="./css/images/translate_icon.png" class="nav_icon" id="translate_icon"></img>'+ "แปลภาษา";
      document.getElementById("chatbox_btn").innerHTML ='<img src="./css/images/chatbot_icon.png"  class="nav_icon" id="chatbot_icon"></img>'+ "แชทบอท";
 
-     document.getElementById("avatar_btn").innerHTML = "อวตารมนุษย์";
-     document.getElementById("avatar_drawing_btn").innerHTML = "วาดอวตาร";
-     document.getElementById("avatar_robot_btn").innerHTML = "อวตารหุ่นยนต์";
+     document.getElementById("avatar_btn").innerHTML = '<img src="./css/images/avatar_3d_icon.png"  class="nav_icon" id="3dAvatar_chatbot_icon"></img>'+"อวตารมนุษย์";
+     document.getElementById("avatar_drawing_btn").innerHTML = '<img src="./css/images/avatar_2d_icon.png"  class="nav_icon" id="2dAvatar_chatbot_icon"></img>'+"วาดอวตาร";
+     document.getElementById("avatar_robot_btn").innerHTML = '<img src="./css/images/avatar_robot_icon.png"  class="nav_icon" id="robotAvatar_chatbot_icon"></img>'+"อวตารหุ่นยนต์";
+
 
      document.getElementById("homeBanner").innerHTML = "หน้าแรก";
      document.getElementById("chooseLang").innerHTML = "เลือกภาษา:";
