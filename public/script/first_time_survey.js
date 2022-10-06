@@ -42,7 +42,7 @@ if (select_language == "English") {
     branch_id = EN_INDEX;
 } else if (select_language == "Chinese (Simplified)") {
     document.getElementById("chatBotTitle").innerHTML='<i class="material-icons">chat_bubble_outline</i>'+"聊天机器人"
-    messageLabel.innerHTML="消息。。。"
+    messageLabel.innerHTML="信息。。。"
     submit.innerHTML="发送"
     branch_id = ZH_CN_INDEX;
 } else if (select_language == "Malay") {
@@ -56,6 +56,35 @@ if (select_language == "English") {
     submit.innerHTML="ส่ง"
     branch_id = TH_INDEX;
 }
+// ready close message
+let close_msg = ["Are you ready to finish the survey?",
+                 "你准备好完成调查了吗？",
+                 "Adakah anda bersedia untuk menyelesaikan tinjauan?",
+                 "คุณพร้อมจะทำแบบสำรวจให้เสร็จหรือไม่?"]
+
+// future research question
+let research_msg = ["We would like to hear from you again in a few months' time. Would you like to participate in the qualitative study?",
+                    "我们希望在几个月后再次收到您的来信。您想参加定性研究吗？",
+                    "Kami ingin mendengar daripada anda sekali lagi dalam masa beberapa bulan. Adakah anda ingin mengambil bahagian dalam kajian kualitatif?",
+                    "เราอยากได้ยินจากคุณอีกครั้งในอีกไม่กี่เดือนข้างหน้า คุณต้องการที่จะมีส่วนร่วมในการศึกษาเชิงคุณภาพ?"]
+
+// online transaction message
+let transaction_msg = ["Thank you for completing the survey! A token of participation will be granted via online transaction. Token of appreciation 10 ringgit will not be processed if you do not fill in your payment details.",
+                       "感谢您完成调查！将通过在线交易授予参与令牌。 如果您不填写付款详细信息，感谢现金 10 ringgit 将不予转入您的账户",
+                       "Terima kasih kerana melengkapkan tinjauan! Token penyertaan akan diberikan melalui transaksi dalam talian. Token penghargaan 10 ringgit tidak akan diproses jika anda tidak mengisi butiran pembayaran anda.",
+                       "ขอบคุณที่ทำแบบสำรวจให้เสร็จ! โทเค็นของการเข้าร่วมจะได้รับผ่านการทำธุรกรรมออนไลน์ โทเค็นแสดงความขอบคุณ 10 ringgit จะไม่ถูกดำเนินการหากคุณไม่กรอกรายละเอียดการชำระเงินของคุณ"]
+
+// ending message
+let end_msg = ["Thank you so much for your participation in this survey.",
+               "非常感谢您参与本次调查。",
+               "Terima kasih banyak atas penyertaan anda dalam tinjauan ini.",
+               "ขอบคุณมากสำหรับการเข้าร่วมในแบบสำรวจนี้"]
+
+// thank you message
+let thank_msg = ["Thank you for your time.",
+                 "感谢您的时间。",
+                 "Terima kasih atas masa anda.",
+                 "ขอขอบคุณสำหรับเวลาของคุณ."]
 
 disableInput();
 disableBack();
@@ -1279,96 +1308,49 @@ function showQuestion(isSubQuestion) {
                 }
                 // speak the question
                 if (select_language == "Chinese (Simplified)") {
-                    if (currentQuestionObject.question_number == "2.4") {
-                        sayText("由于", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("covid", 6, 1, 3)
-                        sayText("19疫情失去了工作？", voice_ch[0], voice_ch[1], voice_ch[2])
-                    }
-                    else if (currentQuestionObject.question_number == "2.5") {
-                        sayText("您是否因", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("covid", 6, 1, 3)
-                        sayText("19疫情而失去了收入？", voice_ch[0], voice_ch[1], voice_ch[2])
-                    }
-                    else if (currentQuestionObject.question_number == "3.2a") {
-                        sayText("短信、短信（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Whatsapp", 6, 1, 3)
-                        sayText("微信等", voice_ch[0], voice_ch[1], voice_ch[2])
+                    if (currentQuestionObject.question_number == "3.2a") {
+                        sayText("短讯应用程序", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2d") {
-                        sayText("使用", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Zoom、Facetime、Skype、Google Talk", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("视频平台软件", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2e") {
-                        sayText("使用", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("covid", 6, 1, 3)
-                        sayText("19 联系人追踪应用程序（例如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("MySejahtera", 6, 1, 3)
+                        sayText("使用新冠疫情联系人追踪应用程序", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2f") {
-                        sayText("网上购物或电子商务（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Lazada、Shopee", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("网上购物或电子商务平台", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2g") {
-                        sayText("使用手机银行/电子钱包（例如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("GrabPay、BoostPay、FavePay、Touch N Go Pay", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("使用手机银行/电子钱包", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2i") {
-                        sayText("使用社交网络（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Facebook、Instagram、Twitter", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("使用社交网络", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2k") {
-                        sayText("地图导航器（如", voice_ch[0], voice_ch[1], voice_ch[2])
-                        sayText("Google Map、Waze、Tom-Tom", 6, 1, 3)
-                        sayText("等", voice_ch[0], voice_ch[1], voice_ch[2])
+                        sayText("地图导航器", voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                     else {
                         sayText(question_txt, voice_ch[0], voice_ch[1], voice_ch[2])
                     }
                 }
                 else if (select_language == "Malay") {
-                    if (currentQuestionObject.question_number == "2.4") {
-                        sayText("Adakah anda kehilangan pekerjaan kerana wabak", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("covid 19?", 6, 1, 3)
-                    }
-                    else if (currentQuestionObject.question_number == "2.5") {
-                        sayText("Adakah anda kehilangan pendapatan anda kerana wabak", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("covid 19?", 6, 1, 3)
+                    if (currentQuestionObject.question_number == "3.2a") {
+                        sayText("SMS, pesanan teks", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2d") {
-                        sayText("Menggunakan", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("Zoom、Facetime、Skype、Google Talk", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Menggunakan Zoom、Facetime、Skype、Google Talk", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2e") {
-                        sayText("Menggunakan aplikasi pengesanan kontak", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("covid 19", 6, 1, 3)
-                        sayText("seperti MySejahtera", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Membeli-belah atas talian atau e-dagang", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2g") {
-                        sayText("Menggunakan perbankan mudah alih", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("e-wallet", 6, 1, 3)
-                        sayText("seperti", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("GrabPay, BoostPay, FavePay, Touch N Go Pay", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Menggunakan perbankan mudah alih / dompet elektronik", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2i") {
-                        sayText("Menggunakan rangkaian sosial (seperti", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("Facebook、Instagram、Twitter", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Menggunakan rangkaian sosial", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else if (currentQuestionObject.question_number == "3.2k") {
-                        sayText("Pemetaan (seperti Peta", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("Google、Waze、Tom-Tom", 6, 1, 3)
-                        sayText("dll", voice_ma[0], voice_ma[1], voice_ma[2])
-                    }
-                    else if (currentQuestionObject.question_number == "4.3a") {
-                        sayText("Kemahiran", voice_ma[0], voice_ma[1], voice_ma[2])
-                        sayText("ICT", 6, 1, 3)
-                        sayText("teknologi (seperti cara menggunakan perisian telefon bimbit atau komputer)", voice_ma[0], voice_ma[1], voice_ma[2])
+                        sayText("Pemetaan", voice_ma[0], voice_ma[1], voice_ma[2])
                     }
                     else {
                         sayText(question_txt, voice_ma[0], voice_ma[1], voice_ma[2])
@@ -1564,7 +1546,7 @@ function showNumeric(questionObject) {
                                 }else{
                                     ansTemplate = '<div class="space">\
                                     <div class="message-container sender blue current notranslate">\
-                                    <p>The age should be between 59 to 100</p>\
+                                    <p>The age should be between 50 to 100</p>\
                                     </div>\
                                     </div>';
                                 }
